@@ -64,6 +64,7 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
         'object_id' => 'string',
         'threshold' => 'float',
         'max_recommendations' => 'float',
+        'min_recommendations' => 'float',
         'query_parameters' => 'array<string,object>',
         'fallback_parameters' => 'array<string,object>'
     ];
@@ -81,6 +82,7 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
         'object_id' => null,
         'threshold' => null,
         'max_recommendations' => null,
+        'min_recommendations' => null,
         'query_parameters' => null,
         'fallback_parameters' => null
     ];
@@ -117,6 +119,7 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
         'object_id' => 'objectID',
         'threshold' => 'threshold',
         'max_recommendations' => 'maxRecommendations',
+        'min_recommendations' => 'minRecommendations',
         'query_parameters' => 'queryParameters',
         'fallback_parameters' => 'fallbackParameters'
     ];
@@ -132,6 +135,7 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
         'object_id' => 'setObjectId',
         'threshold' => 'setThreshold',
         'max_recommendations' => 'setMaxRecommendations',
+        'min_recommendations' => 'setMinRecommendations',
         'query_parameters' => 'setQueryParameters',
         'fallback_parameters' => 'setFallbackParameters'
     ];
@@ -147,6 +151,7 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
         'object_id' => 'getObjectId',
         'threshold' => 'getThreshold',
         'max_recommendations' => 'getMaxRecommendations',
+        'min_recommendations' => 'getMinRecommendations',
         'query_parameters' => 'getQueryParameters',
         'fallback_parameters' => 'getFallbackParameters'
     ];
@@ -228,6 +233,7 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->container['object_id'] = $data['object_id'] ?? null;
         $this->container['threshold'] = $data['threshold'] ?? 0;
         $this->container['max_recommendations'] = $data['max_recommendations'] ?? 0;
+        $this->container['min_recommendations'] = $data['min_recommendations'] ?? 0;
         $this->container['query_parameters'] = $data['query_parameters'] ?? null;
         $this->container['fallback_parameters'] = $data['fallback_parameters'] ?? null;
     }
@@ -273,6 +279,14 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
 
         if (!is_null($this->container['max_recommendations']) && ($this->container['max_recommendations'] < 0)) {
             $invalidProperties[] = "invalid value for 'max_recommendations', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['min_recommendations']) && ($this->container['min_recommendations'] > 1000)) {
+            $invalidProperties[] = "invalid value for 'min_recommendations', must be smaller than or equal to 1000.";
+        }
+
+        if (!is_null($this->container['min_recommendations']) && ($this->container['min_recommendations'] < 0)) {
+            $invalidProperties[] = "invalid value for 'min_recommendations', must be bigger than or equal to 0.";
         }
 
         return $invalidProperties;
@@ -432,6 +446,38 @@ class InlineObject implements ModelInterface, ArrayAccess, \JsonSerializable
         }
 
         $this->container['max_recommendations'] = $max_recommendations;
+
+        return $this;
+    }
+
+    /**
+     * Gets min_recommendations
+     *
+     * @return float|null
+     */
+    public function getMinRecommendations()
+    {
+        return $this->container['min_recommendations'];
+    }
+
+    /**
+     * Sets min_recommendations
+     *
+     * @param float|null $min_recommendations min_recommendations
+     *
+     * @return self
+     */
+    public function setMinRecommendations($min_recommendations)
+    {
+
+        if (!is_null($min_recommendations) && ($min_recommendations > 1000)) {
+            throw new \InvalidArgumentException('invalid value for $min_recommendations when calling InlineObject., must be smaller than or equal to 1000.');
+        }
+        if (!is_null($min_recommendations) && ($min_recommendations < 0)) {
+            throw new \InvalidArgumentException('invalid value for $min_recommendations when calling InlineObject., must be bigger than or equal to 0.');
+        }
+
+        $this->container['min_recommendations'] = $min_recommendations;
 
         return $this;
     }

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **object_id** | **string** |  |
 **threshold** | **float** |  | [optional] [default to 0]
 **max_recommendations** | **float** |  | [optional] [default to 0]
+**min_recommendations** | **float** |  | [optional] [default to 0]
 **query_parameters** | **array<string,object>** | A key-value mapping of additional search parameters | [optional]
 **fallback_parameters** | **array<string,object>** | A key-value mapping of additional search parameters | [optional]
 

@@ -29,5 +29,4 @@ class RecommendConfig extends Configuration
     {
         return $this->algoliaApiKey;
     }
-
 }
