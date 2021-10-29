@@ -22,14 +22,18 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "algolia/algoliasearch-client-php": "^3.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0 || ^9.0",
         "friendsofphp/php-cs-fixer": "^2.12"
     },
     "autoload": {
-        "psr-4": { "OpenAPI\\Client\\" : "lib/" }
+        "psr-4": {
+            "OpenAPI\\Client\\" : "lib/",
+            "NewApiClient\\Client\\" : "custom/"
+        }
     },
     "autoload-dev": {
         "psr-4": { "OpenAPI\\Client\\Test\\" : "test/" }
