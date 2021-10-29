@@ -61,6 +61,7 @@ class RecommendationsBody implements ModelInterface, ArrayAccess
 'object_id' => 'string',
 'threshold' => 'float',
 'max_recommendations' => 'float',
+'min_recommendations' => 'float',
 'query_parameters' => 'map[string,object]',
 'fallback_parameters' => 'map[string,object]'    ];
 
@@ -75,6 +76,7 @@ class RecommendationsBody implements ModelInterface, ArrayAccess
 'object_id' => null,
 'threshold' => null,
 'max_recommendations' => null,
+'min_recommendations' => null,
 'query_parameters' => null,
 'fallback_parameters' => null    ];
 
@@ -110,6 +112,7 @@ class RecommendationsBody implements ModelInterface, ArrayAccess
 'object_id' => 'objectID',
 'threshold' => 'threshold',
 'max_recommendations' => 'maxRecommendations',
+'min_recommendations' => 'minRecommendations',
 'query_parameters' => 'queryParameters',
 'fallback_parameters' => 'fallbackParameters'    ];
 
@@ -124,6 +127,7 @@ class RecommendationsBody implements ModelInterface, ArrayAccess
 'object_id' => 'setObjectId',
 'threshold' => 'setThreshold',
 'max_recommendations' => 'setMaxRecommendations',
+'min_recommendations' => 'setMinRecommendations',
 'query_parameters' => 'setQueryParameters',
 'fallback_parameters' => 'setFallbackParameters'    ];
 
@@ -138,6 +142,7 @@ class RecommendationsBody implements ModelInterface, ArrayAccess
 'object_id' => 'getObjectId',
 'threshold' => 'getThreshold',
 'max_recommendations' => 'getMaxRecommendations',
+'min_recommendations' => 'getMinRecommendations',
 'query_parameters' => 'getQueryParameters',
 'fallback_parameters' => 'getFallbackParameters'    ];
 
@@ -217,6 +222,7 @@ self::MODEL_BOUGHT_TOGETHER,        ];
         $this->container['object_id'] = isset($data['object_id']) ? $data['object_id'] : null;
         $this->container['threshold'] = isset($data['threshold']) ? $data['threshold'] : null;
         $this->container['max_recommendations'] = isset($data['max_recommendations']) ? $data['max_recommendations'] : null;
+        $this->container['min_recommendations'] = isset($data['min_recommendations']) ? $data['min_recommendations'] : null;
         $this->container['query_parameters'] = isset($data['query_parameters']) ? $data['query_parameters'] : null;
         $this->container['fallback_parameters'] = isset($data['fallback_parameters']) ? $data['fallback_parameters'] : null;
     }
@@ -387,6 +393,30 @@ self::MODEL_BOUGHT_TOGETHER,        ];
     public function setMaxRecommendations($max_recommendations)
     {
         $this->container['max_recommendations'] = $max_recommendations;
+
+        return $this;
+    }
+
+    /**
+     * Gets min_recommendations
+     *
+     * @return float
+     */
+    public function getMinRecommendations()
+    {
+        return $this->container['min_recommendations'];
+    }
+
+    /**
+     * Sets min_recommendations
+     *
+     * @param float $min_recommendations min_recommendations
+     *
+     * @return $this
+     */
+    public function setMinRecommendations($min_recommendations)
+    {
+        $this->container['min_recommendations'] = $min_recommendations;
 
         return $this;
     }

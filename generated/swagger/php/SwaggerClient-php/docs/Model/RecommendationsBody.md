@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **object_id** | **string** |  | 
 **threshold** | **float** |  | [optional] 
 **max_recommendations** | **float** |  | [optional] 
+**min_recommendations** | **float** |  | [optional] 
 **query_parameters** | **map[string,object]** | A key-value mapping of additional search parameters | [optional] 
 **fallback_parameters** | **map[string,object]** | A key-value mapping of additional search parameters | [optional] 
 
