@@ -12,7 +12,7 @@
 
         "apiPackage": "client-search",
         "output": "#{cwd}/output/",
-        "glob": "search_spec.yml",
+        "glob": "openapi_spec/spec.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
