@@ -12,12 +12,24 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            requests:
-              type: array
-              items:
-                title: operation
+          type: array
+          items:
+            title: operation
+            type: object
+            additionalProperties: false
+            properties:
+              action:
+                type: string
+                enum:
+                  - 'addObject'
+                  - 'updateObject'
+                  - 'partialUpdateObject'
+                  - 'partialUpdateObjectNoCreate'
+                  - 'deleteObject'
+                  - 'delete'
+                  - 'clear'
+                description: type of operation
+              body:
                 type: object
                 additionalProperties: false
                 properties:
