@@ -1,6 +1,8 @@
 searchParams:
   type: object
   additionalProperties: false
+  required:
+    - query
   properties:
     query:
       type: string
@@ -64,12 +66,6 @@ searchParams:
       type: integer
       description: Controls the relevancy threshold below which less relevant results aren’t included in the results.
       default: 100
-    replicas:
-      type: array
-      items:
-        type: string
-      description: Creates replicas, exact copies of an index.
-      default: []
     filters:
       type: string
       description: Filter the query with numeric, facet and/or tag filters.
@@ -159,15 +155,11 @@ searchParams:
     offset:
       type: integer
       description: Specify the offset of the first hit to return.
-      default: null
     length:
       type: integer
       description: Set the number of hits to retrieve (used only with offset).
-      default: null
-    paginationLimitedTo:
-      type: integer
-      description: Set the maximum number of hits accessible via pagination.
-      default: 1000
+      minimum: 1
+      maximum: 1000
     minWordSizefor1Typo:
       type: integer
       description: Minimum number of characters a word in the query string must contain to accept matches with 1 typo.
@@ -191,12 +183,6 @@ searchParams:
         type: string
       description: List of attributes on which you want to disable typo tolerance.
       default: []
-    disableTypoToleranceOnWords:
-      type: array
-      items:
-        type: string
-      description: A list of words for which you want to turn off typo tolerance.
-      default: []
     separatorsToIndex:
       type: string
       description: Control which separators are indexed.
@@ -204,15 +190,18 @@ searchParams:
     aroundLatLng:
       type: string
       description: Search for entries around a central geolocation, enabling a geo search within a circular area.
-      default: null
+      default: ''
     aroundLatLngViaIP:
       type: boolean
       description: Search for entries around a given location automatically computed from the requester’s IP address.
       default: false
     aroundRadius:
-      type: string
-      description: Define the maximum radius for a geo search (in meters).
-      default: null
+      oneOf:
+        - type: integer
+          description: Define the maximum radius for a geo search (in meters).
+          minimum: 1
+        - type: string
+          enum: [all]
     aroundPrecision:
       type: integer
       description: Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
@@ -220,7 +209,7 @@ searchParams:
     minimumAroundRadius:
       type: integer
       description: Minimum radius (in meters) used for a geo search when aroundRadius is not set.
-      default: null
+      minimum: 1
     insideBoundingBox:
       type: array
       items:
@@ -237,46 +226,19 @@ searchParams:
       type: string
       description: Treats singular, plurals, and other forms of declensions as matching terms.
       default: false
-    attributesToTransliterate:
-      type: array
-      items:
-        type: string
-      description: Specify on which attributes to apply transliteration.
     removeStopWords:
       type: string
       description: Removes stop (common) words from the query before executing it.
       default: false
-    camelCaseAttributes:
-      type: array
-      items:
-        type: string
-      description: List of attributes on which to do a decomposition of camel case words.
-      default: []
-    decompoundedAttributes:
-      type: object
-      additionalProperties: true
-      description: Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
-      default: {}
     keepDiacriticsOnCharacters:
       type: string
       description: List of characters that the engine shouldn’t automatically normalize.
       default: ''
-    customNormalization:
-      type: object
-      additionalProperties: true
-      description: Override the default normalization handled by the engine.
-      default: {}
     queryLanguages:
       type: array
       items:
         type: string
       description: Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
-      default: []
-    indexLanguages:
-      type: array
-      items:
-        type: string
-      description: Sets the languages at the index level for language-specific processing such as tokenization and normalization.
       default: []
     naturalLanguages:
       type: array
@@ -292,10 +254,6 @@ searchParams:
       type: boolean
       description: Whether Rules should be globally enabled.
       default: true
-    filterPromotes:
-      type: boolean
-      description: Whether promoted results should match the filters of the current search, except for geographic filters.
-      default: false
     ruleContexts:
       type: array
       items:
@@ -333,12 +291,6 @@ searchParams:
         type: string
       description: A list of words that should be considered as optional when found in the query.
       default: []
-    disablePrefixOnAttributes:
-      type: array
-      items:
-        type: string
-      description: List of attributes on which you want to disable prefix matching.
-      default: []
     disableExactOnAttributes:
       type: array
       items:
@@ -364,20 +316,6 @@ searchParams:
         enum: ['exactPhrase', 'excludeWords']
       description: Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
       default: ['exactPhrase', 'excludeWords']
-    numericAttributesForFiltering:
-      type: array
-      items:
-        type: string
-      description: List of numeric attributes that can be used as numerical filters.
-      default: null
-    allowCompressionOfIntegerArray:
-      type: boolean
-      description: Enables compression of large integer arrays.
-      default: false
-    attributeForDistinct:
-      type: string
-      description: Name of the de-duplication attribute to be used with the distinct feature.
-      default: null
     distinct:
       type: integer
       minimum: 0
@@ -421,6 +359,7 @@ searchParams:
       items:
         type: string
       description: Choose which fields to return in the API response. This parameters applies to search and browse queries.
+      default: []
     maxFacetHits:
       type: integer
       description: Maximum number of facet hits to return during a search for facet values.
@@ -433,11 +372,6 @@ searchParams:
       type: boolean
       description: When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
       default: false
-    userData:
-      type: object
-      additionalProperties: true
-      description: Lets you store custom data in your indices.
-      default: {}
     enableABTest:
       type: boolean
       description: Whether this search should participate in running AB tests.
@@ -457,3 +391,92 @@ searchParamsString:
   properties:
     params:
       type: string
+
+# Not search related
+# TODO: move elsewhere
+
+allowCompressionOfIntegerArray:
+  type: boolean
+  description: Enables compression of large integer arrays.
+  default: false
+
+attributeForDistinct:
+  type: string
+  description: Name of the de-duplication attribute to be used with the distinct feature.
+  default: null
+
+attributesToTransliterate:
+  type: array
+  items:
+    type: string
+  description: Specify on which attributes to apply transliteration.
+
+camelCaseAttributes:
+  type: array
+  items:
+    type: string
+  description: List of attributes on which to do a decomposition of camel case words.
+  default: []
+
+customNormalization:
+  type: object
+  additionalProperties: true
+  description: Override the default normalization handled by the engine.
+  default: {}
+
+decompoundedAttributes:
+  type: object
+  additionalProperties: true
+  description: Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+  default: {}
+
+disablePrefixOnAttributes:
+  type: array
+  items:
+    type: string
+  description: List of attributes on which you want to disable prefix matching.
+  default: []
+
+disableTypoToleranceOnWords:
+  type: array
+  items:
+    type: string
+  description: A list of words for which you want to turn off typo tolerance.
+  default: []
+
+filterPromotes:
+  type: boolean
+  description: Whether promoted results should match the filters of the current search, except for geographic filters.
+  default: false
+
+indexLanguages:
+  type: array
+  items:
+    type: string
+  description: Sets the languages at the index level for language-specific processing such as tokenization and normalization.
+  default: []
+
+numericAttributesForFiltering:
+  type: array
+  items:
+    type: string
+  description: List of numeric attributes that can be used as numerical filters.
+  default: null
+
+paginationLimitedTo:
+  type: integer
+  description: Set the maximum number of hits accessible via pagination.
+  default: 1000
+
+replicas:
+  type: array
+  items:
+    type: string
+  description: Creates replicas, exact copies of an index.
+  default: []
+
+userData:
+  type: object
+  additionalProperties: true
+  description: Lets you store custom data in your indices.
+  default: {}

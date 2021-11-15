@@ -111,7 +111,7 @@ post:
                 type: string
                 description: Actual host name of the server that processed the request.
               userData:
-                $ref: ../../schemas/SearchParams.yml#/searchParams/properties/userData
+                $ref: ../../schemas/SearchParams.yml#/userData
 
     # Other codes
     '400':

@@ -4,7 +4,7 @@ export class SearchParams {
   /**
    * The text to search in the index.
    */
-  'query'?: string;
+  'query': string;
   /**
    * Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results.
    */
@@ -41,10 +41,6 @@ export class SearchParams {
    * Controls the relevancy threshold below which less relevant results aren’t included in the results.
    */
   'relevancyStrictness'?: number;
-  /**
-   * Creates replicas, exact copies of an index.
-   */
-  'replicas'?: Array<string>;
   /**
    * Filter the query with numeric, facet and/or tag filters.
    */
@@ -126,10 +122,6 @@ export class SearchParams {
    */
   'length'?: number;
   /**
-   * Set the maximum number of hits accessible via pagination.
-   */
-  'paginationLimitedTo'?: number;
-  /**
    * Minimum number of characters a word in the query string must contain to accept matches with 1 typo.
    */
   'minWordSizefor1Typo'?: number;
@@ -150,10 +142,6 @@ export class SearchParams {
    */
   'disableTypoToleranceOnAttributes'?: Array<string>;
   /**
-   * A list of words for which you want to turn off typo tolerance.
-   */
-  'disableTypoToleranceOnWords'?: Array<string>;
-  /**
    * Control which separators are indexed.
    */
   'separatorsToIndex'?: string;
@@ -165,10 +153,7 @@ export class SearchParams {
    * Search for entries around a given location automatically computed from the requester’s IP address.
    */
   'aroundLatLngViaIP'?: boolean;
-  /**
-   * Define the maximum radius for a geo search (in meters).
-   */
-  'aroundRadius'?: string;
+  'aroundRadius'?: number | string;
   /**
    * Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
    */
@@ -190,37 +175,17 @@ export class SearchParams {
    */
   'ignorePlurals'?: string;
   /**
-   * Specify on which attributes to apply transliteration.
-   */
-  'attributesToTransliterate'?: Array<string>;
-  /**
    * Removes stop (common) words from the query before executing it.
    */
   'removeStopWords'?: string;
-  /**
-   * List of attributes on which to do a decomposition of camel case words.
-   */
-  'camelCaseAttributes'?: Array<string>;
-  /**
-   * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
-   */
-  'decompoundedAttributes'?: { [key: string]: object };
   /**
    * List of characters that the engine shouldn’t automatically normalize.
    */
   'keepDiacriticsOnCharacters'?: string;
   /**
-   * Override the default normalization handled by the engine.
-   */
-  'customNormalization'?: { [key: string]: object };
-  /**
    * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
    */
   'queryLanguages'?: Array<string>;
-  /**
-   * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
-   */
-  'indexLanguages'?: Array<string>;
   /**
    * This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
    */
@@ -233,10 +198,6 @@ export class SearchParams {
    * Whether Rules should be globally enabled.
    */
   'enableRules'?: boolean;
-  /**
-   * Whether promoted results should match the filters of the current search, except for geographic filters.
-   */
-  'filterPromotes'?: boolean;
   /**
    * Enables contextual rules.
    */
@@ -270,10 +231,6 @@ export class SearchParams {
    */
   'optionalWords'?: Array<string>;
   /**
-   * List of attributes on which you want to disable prefix matching.
-   */
-  'disablePrefixOnAttributes'?: Array<string>;
-  /**
    * List of attributes on which you want to disable the exact ranking criterion.
    */
   'disableExactOnAttributes'?: Array<string>;
@@ -289,18 +246,6 @@ export class SearchParams {
    * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
    */
   'advancedSyntaxFeatures'?: Array<SearchParams.AdvancedSyntaxFeaturesEnum>;
-  /**
-   * List of numeric attributes that can be used as numerical filters.
-   */
-  'numericAttributesForFiltering'?: Array<string>;
-  /**
-   * Enables compression of large integer arrays.
-   */
-  'allowCompressionOfIntegerArray'?: boolean;
-  /**
-   * Name of the de-duplication attribute to be used with the distinct feature.
-   */
-  'attributeForDistinct'?: string;
   /**
    * Enables de-duplication or grouping of results.
    */
@@ -349,10 +294,6 @@ export class SearchParams {
    * When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
    */
   'attributeCriteriaComputedByMinProximity'?: boolean;
-  /**
-   * Lets you store custom data in your indices.
-   */
-  'userData'?: { [key: string]: object };
   /**
    * Whether this search should participate in running AB tests.
    */
@@ -418,11 +359,6 @@ export class SearchParams {
       name: 'relevancyStrictness',
       baseName: 'relevancyStrictness',
       type: 'number',
-    },
-    {
-      name: 'replicas',
-      baseName: 'replicas',
-      type: 'Array<string>',
     },
     {
       name: 'filters',
@@ -525,11 +461,6 @@ export class SearchParams {
       type: 'number',
     },
     {
-      name: 'paginationLimitedTo',
-      baseName: 'paginationLimitedTo',
-      type: 'number',
-    },
-    {
       name: 'minWordSizefor1Typo',
       baseName: 'minWordSizefor1Typo',
       type: 'number',
@@ -555,11 +486,6 @@ export class SearchParams {
       type: 'Array<string>',
     },
     {
-      name: 'disableTypoToleranceOnWords',
-      baseName: 'disableTypoToleranceOnWords',
-      type: 'Array<string>',
-    },
-    {
       name: 'separatorsToIndex',
       baseName: 'separatorsToIndex',
       type: 'string',
@@ -577,7 +503,7 @@ export class SearchParams {
     {
       name: 'aroundRadius',
       baseName: 'aroundRadius',
-      type: 'string',
+      type: 'number | string',
     },
     {
       name: 'aroundPrecision',
@@ -605,24 +531,9 @@ export class SearchParams {
       type: 'string',
     },
     {
-      name: 'attributesToTransliterate',
-      baseName: 'attributesToTransliterate',
-      type: 'Array<string>',
-    },
-    {
       name: 'removeStopWords',
       baseName: 'removeStopWords',
       type: 'string',
-    },
-    {
-      name: 'camelCaseAttributes',
-      baseName: 'camelCaseAttributes',
-      type: 'Array<string>',
-    },
-    {
-      name: 'decompoundedAttributes',
-      baseName: 'decompoundedAttributes',
-      type: '{ [key: string]: object; }',
     },
     {
       name: 'keepDiacriticsOnCharacters',
@@ -630,18 +541,8 @@ export class SearchParams {
       type: 'string',
     },
     {
-      name: 'customNormalization',
-      baseName: 'customNormalization',
-      type: '{ [key: string]: object; }',
-    },
-    {
       name: 'queryLanguages',
       baseName: 'queryLanguages',
-      type: 'Array<string>',
-    },
-    {
-      name: 'indexLanguages',
-      baseName: 'indexLanguages',
       type: 'Array<string>',
     },
     {
@@ -657,11 +558,6 @@ export class SearchParams {
     {
       name: 'enableRules',
       baseName: 'enableRules',
-      type: 'boolean',
-    },
-    {
-      name: 'filterPromotes',
-      baseName: 'filterPromotes',
       type: 'boolean',
     },
     {
@@ -705,11 +601,6 @@ export class SearchParams {
       type: 'Array<string>',
     },
     {
-      name: 'disablePrefixOnAttributes',
-      baseName: 'disablePrefixOnAttributes',
-      type: 'Array<string>',
-    },
-    {
       name: 'disableExactOnAttributes',
       baseName: 'disableExactOnAttributes',
       type: 'Array<string>',
@@ -728,21 +619,6 @@ export class SearchParams {
       name: 'advancedSyntaxFeatures',
       baseName: 'advancedSyntaxFeatures',
       type: 'Array<SearchParams.AdvancedSyntaxFeaturesEnum>',
-    },
-    {
-      name: 'numericAttributesForFiltering',
-      baseName: 'numericAttributesForFiltering',
-      type: 'Array<string>',
-    },
-    {
-      name: 'allowCompressionOfIntegerArray',
-      baseName: 'allowCompressionOfIntegerArray',
-      type: 'boolean',
-    },
-    {
-      name: 'attributeForDistinct',
-      baseName: 'attributeForDistinct',
-      type: 'string',
     },
     {
       name: 'distinct',
@@ -803,11 +679,6 @@ export class SearchParams {
       name: 'attributeCriteriaComputedByMinProximity',
       baseName: 'attributeCriteriaComputedByMinProximity',
       type: 'boolean',
-    },
-    {
-      name: 'userData',
-      baseName: 'userData',
-      type: '{ [key: string]: object; }',
     },
     {
       name: 'enableABTest',
