@@ -1,0 +1,57 @@
+record:
+  type: object
+  description: A single record
+  additionalProperties: true
+  properties:
+    objectID:
+      $ref: './common.yml#/objectID'
+
+recordWithRanking:
+  type: object
+  description: A single record with ranking info
+  additionalProperties: true
+  properties:
+    objectID:
+      $ref: './common.yml#/objectID'
+    _highlightResult:
+      type: object
+       additionalProperties:
+        $ref: '#/highilightResult'
+
+#       oneOf:
+# "_highlightResult": {
+#                 "name": {
+#                     "value": "<em>George</em> <em>Clo</em>oney",
+#                     "matchLevel": "full"
+#                     fullyHighlighted: false
+# matchLevel: "full"
+# matchedWords: ["a"]
+# value: "What is __aa-highlight__A__/aa-highlight__lgolia?"
+#                 }
+#             },
+
+# _snippetResult:
+#   description:
+#   matchLevel: "full"
+#   value: "Learn __aa-hi
+
+highlighResult:
+  type: object
+  properties:
+    value:
+      type: string
+      description: "Markup text with occurrences highlighted."
+      example: "<em>George</em> <em>Clo</em>oney",
+    matchLevel:
+      type: string
+      description: "Indicates how well the attribute matched the search query."
+      enum: [none, partial, full]
+    matchedWords:
+      type: array
+      description: List of words from the query that matched the object.
+      items:
+        type: string
+    fullyHighlighted:
+      type: boolean
+      description: "Whether the entire attribute value is highlighted."
+
