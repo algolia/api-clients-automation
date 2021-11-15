@@ -6,9 +6,9 @@ record:
     objectID:
       $ref: './common.yml#/objectID'
 
-recordWithRanking:
+recordWithHighlight:
   type: object
-  description: A single record with ranking info
+  description: A single record with highlight attributes
   additionalProperties: true
   properties:
     objectID:
@@ -16,32 +16,41 @@ recordWithRanking:
     _highlightResult:
       type: object
        additionalProperties:
-        $ref: '#/highilightResult'
+        $ref: '#/highlightResult'
 
-#       oneOf:
-# "_highlightResult": {
-#                 "name": {
-#                     "value": "<em>George</em> <em>Clo</em>oney",
-#                     "matchLevel": "full"
-#                     fullyHighlighted: false
-# matchLevel: "full"
-# matchedWords: ["a"]
-# value: "What is __aa-highlight__A__/aa-highlight__lgolia?"
-#                 }
-#             },
-
-# _snippetResult:
-#   description:
-#   matchLevel: "full"
-#   value: "Learn __aa-hi
-
-highlighResult:
+recordWithSnippet:
   type: object
+  description: A single record with snippeted attributes
+  additionalProperties: true
+  properties:
+    objectID:
+      $ref: './common.yml#/objectID'
+    _snippetResult:
+      type: object
+       additionalProperties:
+        $ref: '#/snippetResult'
+
+recordWithRanking:
+  type: object
+  description: A single record with ranking information
+  additionalProperties: true
+  properties:
+    objectID:
+      $ref: './common.yml#/objectID'
+    _rankingInfo:
+      $ref: '#/rankingInfo'
+
+
+
+# Props
+highlightResult:
+  type: object
+  additionalProperties: false
   properties:
     value:
       type: string
       description: "Markup text with occurrences highlighted."
-      example: "<em>George</em> <em>Clo</em>oney",
+      example: "<em>George</em> <em>Clo</em>oney"
     matchLevel:
       type: string
       description: "Indicates how well the attribute matched the search query."
@@ -55,3 +64,66 @@ highlighResult:
       type: boolean
       description: "Whether the entire attribute value is highlighted."
 
+
+snippetResult:
+  type: object
+  additionalProperties: false
+  properties:
+    value:
+      type: string
+      description: "Markup text with occurrences highlighted."
+      example: "<em>George</em> <em>Clo</em>oney..."
+    matchLevel:
+      type: string
+      description: "Indicates how well the attribute matched the search query."
+      enum: [none, partial, full]
+
+rankingInfo:
+  type: object
+  additionalProperties: false
+  properties:
+    filters:
+      type: integer
+      description: "This field is reserved for advanced usage."
+    firstMatchedWord:
+      type: integer
+      description: "Position of the most important matched attribute in the attributes to index list."
+    geoDistance:
+      type: integer
+      description: "Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters)."
+    geoPrecision:
+      type: integer
+      description: "Precision used when computing the geo distance, in meters."
+    matchedGeoLocation:
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties: false
+        properties:
+          lat:
+            type: float
+            description: "Latitude of the matched location."
+          lng:
+            type: float
+            description: "Longitude of the matched location."
+          distance:
+            type: integer
+            description: "Distance between the matched location and the search location (in meters)."
+    nbExactWords:
+      type: integer
+      description: "Number of exactly matched words."
+    nbTypos:
+      type: integer
+      description: "Number of typos encountered when matching the record."
+    promoted:
+      type: boolean
+      description: "Present and set to true if a Rule promoted the hit."
+    proximityDistance:
+      type: integer
+      description: "When the query contains more than one word, the sum of the distances between matched words (in meters)."
+    userScore:
+      type: integer
+      description: "Custom ranking for the object, expressed as a single integer value."
+    word:
+      type: integer
+      description: "Number of matched words, including prefixes and typos."
