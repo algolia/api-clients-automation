@@ -371,14 +371,10 @@ export class SearchApi {
   /**
    *
    * @summary Get search results
-   * @param xAlgoliaApplicationId Algolia appID
-   * @param xAlgoliaAPIKey Algolia API key
    * @param indexName The index in which to perform the request
    * @param searchParams
    */
   public async search(
-    xAlgoliaApplicationId: string,
-    xAlgoliaAPIKey: string,
     indexName: string,
     searchParams: SearchParams,
     options: { headers: { [name: string]: string } } = { headers: {} }
@@ -400,20 +396,6 @@ export class SearchApi {
     }
     let localVarFormParams: any = {};
 
-    // verify required parameter 'xAlgoliaApplicationId' is not null or undefined
-    if (xAlgoliaApplicationId === null || xAlgoliaApplicationId === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaApplicationId was null or undefined when calling search.'
-      );
-    }
-
-    // verify required parameter 'xAlgoliaAPIKey' is not null or undefined
-    if (xAlgoliaAPIKey === null || xAlgoliaAPIKey === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaAPIKey was null or undefined when calling search.'
-      );
-    }
-
     // verify required parameter 'indexName' is not null or undefined
     if (indexName === null || indexName === undefined) {
       throw new Error('Required parameter indexName was null or undefined when calling search.');
@@ -424,14 +406,6 @@ export class SearchApi {
       throw new Error('Required parameter searchParams was null or undefined when calling search.');
     }
 
-    localVarHeaderParams['X-Algolia-Application-Id'] = ObjectSerializer.serialize(
-      xAlgoliaApplicationId,
-      'string'
-    );
-    localVarHeaderParams['X-Algolia-API-Key'] = ObjectSerializer.serialize(
-      xAlgoliaAPIKey,
-      'string'
-    );
     (<any>Object).assign(localVarHeaderParams, options.headers);
 
     let localVarUseFormData = false;
@@ -447,6 +421,16 @@ export class SearchApi {
     };
 
     let authenticationPromise = Promise.resolve();
+    if (this.authentications.apiKey.apiKey) {
+      authenticationPromise = authenticationPromise.then(() =>
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions)
+      );
+    }
+    if (this.authentications.appId.apiKey) {
+      authenticationPromise = authenticationPromise.then(() =>
+        this.authentications.appId.applyToRequest(localVarRequestOptions)
+      );
+    }
     authenticationPromise = authenticationPromise.then(() =>
       this.authentications.default.applyToRequest(localVarRequestOptions)
     );
