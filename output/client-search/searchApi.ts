@@ -6,6 +6,8 @@ import { BatchResponse } from '../model/batchResponse';
 import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
+import { SearchParams } from '../model/searchParams';
+import { SingleQueryResponse } from '../model/singleQueryResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 
@@ -400,6 +402,120 @@ export class SearchApi {
               reject(error);
             } else {
               body = ObjectSerializer.deserialize(body, 'SaveObjectResponse');
+              if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                resolve({ response: response, body: body });
+              } else {
+                reject(new HttpError(response, body, response.statusCode));
+              }
+            }
+          });
+        }
+      );
+    });
+  }
+  /**
+   *
+   * @summary Get search results
+   * @param xAlgoliaApplicationId Algolia appID
+   * @param xAlgoliaAPIKey Algolia API key
+   * @param indexName The index in which to perform the request
+   * @param searchParams
+   */
+  public async search(
+    xAlgoliaApplicationId: string,
+    xAlgoliaAPIKey: string,
+    indexName: string,
+    searchParams: SearchParams,
+    options: { headers: { [name: string]: string } } = { headers: {} }
+  ): Promise<{ response: http.IncomingMessage; body: SingleQueryResponse }> {
+    const localVarPath =
+      this.basePath +
+      '/1/indexes/{indexName}/query'.replace(
+        '{' + 'indexName' + '}',
+        encodeURIComponent(String(indexName))
+      );
+    let localVarQueryParameters: any = {};
+    let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
+    const produces = ['application/json'];
+    // give precedence to 'application/json'
+    if (produces.indexOf('application/json') >= 0) {
+      localVarHeaderParams.Accept = 'application/json';
+    } else {
+      localVarHeaderParams.Accept = produces.join(',');
+    }
+    let localVarFormParams: any = {};
+
+    // verify required parameter 'xAlgoliaApplicationId' is not null or undefined
+    if (xAlgoliaApplicationId === null || xAlgoliaApplicationId === undefined) {
+      throw new Error(
+        'Required parameter xAlgoliaApplicationId was null or undefined when calling search.'
+      );
+    }
+
+    // verify required parameter 'xAlgoliaAPIKey' is not null or undefined
+    if (xAlgoliaAPIKey === null || xAlgoliaAPIKey === undefined) {
+      throw new Error(
+        'Required parameter xAlgoliaAPIKey was null or undefined when calling search.'
+      );
+    }
+
+    // verify required parameter 'indexName' is not null or undefined
+    if (indexName === null || indexName === undefined) {
+      throw new Error('Required parameter indexName was null or undefined when calling search.');
+    }
+
+    // verify required parameter 'searchParams' is not null or undefined
+    if (searchParams === null || searchParams === undefined) {
+      throw new Error('Required parameter searchParams was null or undefined when calling search.');
+    }
+
+    localVarHeaderParams['X-Algolia-Application-Id'] = ObjectSerializer.serialize(
+      xAlgoliaApplicationId,
+      'string'
+    );
+    localVarHeaderParams['X-Algolia-API-Key'] = ObjectSerializer.serialize(
+      xAlgoliaAPIKey,
+      'string'
+    );
+    (<any>Object).assign(localVarHeaderParams, options.headers);
+
+    let localVarUseFormData = false;
+
+    let localVarRequestOptions: localVarRequest.Options = {
+      method: 'POST',
+      qs: localVarQueryParameters,
+      headers: localVarHeaderParams,
+      uri: localVarPath,
+      useQuerystring: this._useQuerystring,
+      json: true,
+      body: ObjectSerializer.serialize(searchParams, 'SearchParams'),
+    };
+
+    let authenticationPromise = Promise.resolve();
+    authenticationPromise = authenticationPromise.then(() =>
+      this.authentications.default.applyToRequest(localVarRequestOptions)
+    );
+
+    let interceptorPromise = authenticationPromise;
+    for (const interceptor of this.interceptors) {
+      interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+    }
+
+    return interceptorPromise.then(() => {
+      if (Object.keys(localVarFormParams).length) {
+        if (localVarUseFormData) {
+          (<any>localVarRequestOptions).formData = localVarFormParams;
+        } else {
+          localVarRequestOptions.form = localVarFormParams;
+        }
+      }
+      return new Promise<{ response: http.IncomingMessage; body: SingleQueryResponse }>(
+        (resolve, reject) => {
+          localVarRequest(localVarRequestOptions, (error, response, body) => {
+            if (error) {
+              reject(error);
+            } else {
+              body = ObjectSerializer.deserialize(body, 'SingleQueryResponse');
               if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                 resolve({ response: response, body: body });
               } else {

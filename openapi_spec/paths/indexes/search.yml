@@ -8,7 +8,11 @@ post:
     - $ref: '../../parameters.yml#/ApiKey'
     - $ref: '../../parameters.yml#/IndexName'
   requestBody:
-    $ref: '../../schemas/SearchParams.yml'
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/SearchParams.yml
   responses:
     '200':
       description: OK
@@ -61,11 +65,7 @@ post:
               hits:
                 type: array
                 items:
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    objectID:
-                      $ref: ../../responses/common.yml#/objectID
+                  $ref: ../../schemas/Record.yml#/record
               hitsPerPage:
                 $ref: ../../schemas/SearchParams.yml#/properties/hitsPerPage
               index:

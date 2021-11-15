@@ -1,8 +1,8 @@
 import { RequestFile } from './models';
-import { MultipleQueriesResponseHits } from './multipleQueriesResponseHits';
+import { Record } from './record';
 
 export class MultipleQueriesResponseResults {
-  'hits'?: Array<MultipleQueriesResponseHits>;
+  'hits'?: Array<Record>;
   'nbHits'?: number;
   'queryID'?: string;
 
@@ -12,7 +12,7 @@ export class MultipleQueriesResponseResults {
     {
       name: 'hits',
       baseName: 'hits',
-      type: 'Array<MultipleQueriesResponseHits>',
+      type: 'Array<Record>',
     },
     {
       name: 'nbHits',

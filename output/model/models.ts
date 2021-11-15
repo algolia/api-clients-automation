@@ -6,10 +6,12 @@ export * from './modelError';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
-export * from './multipleQueriesResponseHits';
 export * from './multipleQueriesResponseResults';
 export * from './operation';
+export * from './record';
 export * from './saveObjectResponse';
+export * from './searchParams';
+export * from './singleQueryResponse';
 
 import * as fs from 'fs';
 
@@ -29,10 +31,12 @@ import { ModelError } from './modelError';
 import { MultipleQueries } from './multipleQueries';
 import { MultipleQueriesObject } from './multipleQueriesObject';
 import { MultipleQueriesResponse } from './multipleQueriesResponse';
-import { MultipleQueriesResponseHits } from './multipleQueriesResponseHits';
 import { MultipleQueriesResponseResults } from './multipleQueriesResponseResults';
 import { Operation } from './operation';
+import { Record } from './record';
 import { SaveObjectResponse } from './saveObjectResponse';
+import { SearchParams } from './searchParams';
+import { SingleQueryResponse } from './singleQueryResponse';
 
 let primitives = ['string', 'boolean', 'double', 'integer', 'long', 'float', 'number', 'any'];
 
@@ -40,6 +44,12 @@ let enumsMap: { [index: string]: any } = {
   'MultipleQueries.TypeEnum': MultipleQueries.TypeEnum,
   'MultipleQueriesObject.StrategyEnum': MultipleQueriesObject.StrategyEnum,
   'Operation.ActionEnum': Operation.ActionEnum,
+  'SearchParams.TypoToleranceEnum': SearchParams.TypoToleranceEnum,
+  'SearchParams.QueryTypeEnum': SearchParams.QueryTypeEnum,
+  'SearchParams.RemoveWordsIfNoResultsEnum': SearchParams.RemoveWordsIfNoResultsEnum,
+  'SearchParams.ExactOnSingleWordQueryEnum': SearchParams.ExactOnSingleWordQueryEnum,
+  'SearchParams.AlternativesAsExactEnum': SearchParams.AlternativesAsExactEnum,
+  'SearchParams.AdvancedSyntaxFeaturesEnum': SearchParams.AdvancedSyntaxFeaturesEnum,
 };
 
 let typeMap: { [index: string]: any } = {
@@ -49,10 +59,12 @@ let typeMap: { [index: string]: any } = {
   MultipleQueries: MultipleQueries,
   MultipleQueriesObject: MultipleQueriesObject,
   MultipleQueriesResponse: MultipleQueriesResponse,
-  MultipleQueriesResponseHits: MultipleQueriesResponseHits,
   MultipleQueriesResponseResults: MultipleQueriesResponseResults,
   Operation: Operation,
+  Record: Record,
   SaveObjectResponse: SaveObjectResponse,
+  SearchParams: SearchParams,
+  SingleQueryResponse: SingleQueryResponse,
 };
 
 export class ObjectSerializer {

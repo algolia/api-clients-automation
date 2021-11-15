@@ -27,8 +27,7 @@ post:
                     example: products
                     description: The Algolia index name
                   query:
-                    type: string
-                    description: The query to search for
+                    $ref: ../../schemas/SearchParams.yml#/properties/query
                   type:
                     type: string
                     enum: [default, facet]
@@ -66,11 +65,7 @@ post:
                     hits:
                       type: array
                       items:
-                        type: object
-                        additionalProperties: false
-                        properties:
-                          objectID:
-                            $ref: '../../responses/common.yml#/objectID'
+                        $ref: ../../schemas/Record.yml#/record
                     nbHits:
                       type: integer
                     queryID:
