@@ -10,7 +10,9 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../../schemas/SearchParams.yml
+          oneOf:
+            - $ref: ../../schemas/SearchParams.yml#/searchParams
+            - $ref: ../../schemas/SearchParams.yml#/searchParamsString
   responses:
     '200':
       description: OK
@@ -65,7 +67,7 @@ post:
                 items:
                   $ref: ../../schemas/Record.yml#/record
               hitsPerPage:
-                $ref: ../../schemas/SearchParams.yml#/properties/hitsPerPage
+                $ref: ../../schemas/SearchParams.yml#/searchParams/properties/hitsPerPage
               index:
                 type: string
                 example: indexName
@@ -87,7 +89,7 @@ post:
                 type: integer
                 description: The number of hits selected and sorted by the relevant sort algorithm
               page:
-                $ref: ../../schemas/SearchParams.yml#/properties/page
+                $ref: ../../schemas/SearchParams.yml#/searchParams/properties/page
               params:
                 type: string
                 description: A url-encoded string of all search parameters.
@@ -100,7 +102,7 @@ post:
                 description: Time the server took to process the request, in milliseconds.
                 example: 20
               query:
-                $ref: ../../schemas/SearchParams.yml#/properties/query
+                $ref: ../../schemas/SearchParams.yml#/searchParams/properties/query
               queryAfterRemoval:
                 type: string
                 description: A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
@@ -108,7 +110,7 @@ post:
                 type: string
                 description: Actual host name of the server that processed the request.
               userData:
-                $ref: ../../schemas/SearchParams.yml#/properties/userData
+                $ref: ../../schemas/SearchParams.yml#/searchParams/properties/userData
 
     # Other codes
     '400':

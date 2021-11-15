@@ -24,7 +24,7 @@ post:
                     example: products
                     description: The Algolia index name
                   query:
-                    $ref: ../../schemas/SearchParams.yml#/properties/query
+                    $ref: ../../schemas/SearchParams.yml#/searchParams/properties/query
                   type:
                     type: string
                     enum: [default, facet]

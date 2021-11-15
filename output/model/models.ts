@@ -11,6 +11,7 @@ export * from './operation';
 export * from './record';
 export * from './saveObjectResponse';
 export * from './searchParams';
+export * from './searchParamsString';
 export * from './singleQueryResponse';
 
 import * as fs from 'fs';
@@ -36,6 +37,7 @@ import { Operation } from './operation';
 import { Record } from './record';
 import { SaveObjectResponse } from './saveObjectResponse';
 import { SearchParams } from './searchParams';
+import { SearchParamsString } from './searchParamsString';
 import { SingleQueryResponse } from './singleQueryResponse';
 
 let primitives = ['string', 'boolean', 'double', 'integer', 'long', 'float', 'number', 'any'];
@@ -64,6 +66,7 @@ let typeMap: { [index: string]: any } = {
   Record: Record,
   SaveObjectResponse: SaveObjectResponse,
   SearchParams: SearchParams,
+  SearchParamsString: SearchParamsString,
   SingleQueryResponse: SingleQueryResponse,
 };
 

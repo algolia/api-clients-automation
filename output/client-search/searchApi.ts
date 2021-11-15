@@ -7,6 +7,7 @@ import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
 import { SearchParams } from '../model/searchParams';
+import { SearchParamsString } from '../model/searchParamsString';
 import { SingleQueryResponse } from '../model/singleQueryResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
@@ -372,11 +373,11 @@ export class SearchApi {
    *
    * @summary Get search results
    * @param indexName The index in which to perform the request
-   * @param searchParams
+   * @param searchParamsSearchParamsString
    */
   public async search(
     indexName: string,
-    searchParams: SearchParams,
+    searchParamsSearchParamsString: SearchParams | SearchParamsString,
     options: { headers: { [name: string]: string } } = { headers: {} }
   ): Promise<{ response: http.IncomingMessage; body: SingleQueryResponse }> {
     const localVarPath =
@@ -401,9 +402,11 @@ export class SearchApi {
       throw new Error('Required parameter indexName was null or undefined when calling search.');
     }
 
-    // verify required parameter 'searchParams' is not null or undefined
-    if (searchParams === null || searchParams === undefined) {
-      throw new Error('Required parameter searchParams was null or undefined when calling search.');
+    // verify required parameter 'searchParamsSearchParamsString' is not null or undefined
+    if (searchParamsSearchParamsString === null || searchParamsSearchParamsString === undefined) {
+      throw new Error(
+        'Required parameter searchParamsSearchParamsString was null or undefined when calling search.'
+      );
     }
 
     (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -417,7 +420,10 @@ export class SearchApi {
       uri: localVarPath,
       useQuerystring: this._useQuerystring,
       json: true,
-      body: ObjectSerializer.serialize(searchParams, 'SearchParams'),
+      body: ObjectSerializer.serialize(
+        searchParamsSearchParamsString,
+        'SearchParams | SearchParamsString'
+      ),
     };
 
     let authenticationPromise = Promise.resolve();
