@@ -1,14 +1,17 @@
-import { searchClient } from 'algoliasearch-client-javascript';
+import { searchClient, HttpError } from 'algoliasearch-client-javascript';
+import dotenv from 'dotenv';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID_1 || '**** APP_ID *****';
-const apiKey = process.env.ALGOLIA_ADMIN_KEY_1 || '**** API_KEY *****';
+dotenv.config();
+
+const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
+
 // Init client with appId and apiKey
 const client = new searchClient(appId, apiKey);
 
-async function testClient() {
-  // test openapi gen
+async function testMultiQueries() {
   try {
-    const res = await client.multipleQueries({
+    const { response, body } = await client.multipleQueries({
       requests: [
         {
           indexName: 'docsearch',
@@ -17,10 +20,27 @@ async function testClient() {
       ],
     });
 
-    console.log('[1-RESPONSE]', res);
+    console.log(`[${response.statusCode} - ${response.statusMessage}]`, body.results);
   } catch (e) {
-    console.error('[1-ERROR]', e);
+    if (e instanceof HttpError) {
+      console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
+    }
   }
 }
 
-testClient();
+async function testSearch() {
+  try {
+    const { response, body } = await client.search('docsearch', {
+      query: 'crawler',
+    });
+
+    console.log(`[${response.statusCode} - ${response.statusMessage}]`, body);
+  } catch (e) {
+    if (e instanceof HttpError) {
+      console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
+    }
+  }
+}
+
+// testMultiQueries();
+testSearch();

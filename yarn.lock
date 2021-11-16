@@ -11,6 +11,7 @@ __metadata:
   dependencies:
     "@openapitools/openapi-generator-cli": ^2.4.13
     algoliasearch-client-javascript: "file:output/"
+    dotenv: ^10.0.0
     prettier: 2.4.1
     swagger-cli: ^4.0.4
     typescript: 4.4.4
@@ -226,11 +227,11 @@ __metadata:
 
 "algoliasearch-client-javascript@file:output/::locator=%40algolia%2Fautomation-javascript-client%40workspace%3A.":
   version: 5.0.0
-  resolution: "algoliasearch-client-javascript@file:output/#output/::hash=90d1fe&locator=%40algolia%2Fautomation-javascript-client%40workspace%3A."
+  resolution: "algoliasearch-client-javascript@file:output/#output/::hash=41c0c3&locator=%40algolia%2Fautomation-javascript-client%40workspace%3A."
   dependencies:
     "@types/request": ^2.48.7
     request: ^2.81.0
-  checksum: 94c5f58ac41c79f9321705133231ba9acc0c38a16700b7cb96552a9d95d80799c3ecd7d63f270cd096613d79d0a6e9bc4140f1a93ba1e40969309e75f8445b11
+  checksum: 96e4076b74d5aebf5da0fffa1de20291ae8d9a235715b9e41bf2183e011f078cdfb5291b2b86e5b73961fbd4c6d7c7212fd1415f6182eed38074baa159012825
   languageName: node
   linkType: hard
 
@@ -606,6 +607,13 @@ __metadata:
   version: 1.0.0
   resolution: "delayed-stream@npm:1.0.0"
   checksum: 46fe6e83e2cb1d85ba50bd52803c68be9bd953282fa7096f51fc29edd5d67ff84ff753c51966061e5ba7cb5e47ef6d36a91924eddb7f3f3483b1c560f77a0020
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "dotenv@npm:10.0.0"
+  checksum: f412c5fe8c24fbe313d302d2500e247ba8a1946492db405a4de4d30dd0eb186a88a43f13c958c5a7de303938949c4231c56994f97d05c4bc1f22478d631b4005
   languageName: node
   linkType: hard
 
