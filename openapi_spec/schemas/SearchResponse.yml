@@ -71,6 +71,7 @@ searchResponse:
     index:
       type: string
       example: indexName
+      description: Index name used for the query.
     indexUsed:
       type: string
       description: Index name used for the query. In the case of an A/B test, the targeted index isn’t always the index used by the query.

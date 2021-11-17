@@ -44,6 +44,9 @@ export class SearchResponse {
    * Set the number of hits per page.
    */
   'hitsPerPage': number;
+  /**
+   * Index name used for the query.
+   */
   'index'?: string;
   /**
    * Index name used for the query. In the case of an A/B test, the targeted index isn’t always the index used by the query.
