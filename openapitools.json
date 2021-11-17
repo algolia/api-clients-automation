@@ -15,6 +15,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
         "additionalProperties": {
+          "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "algoliasearch-client-javascript",
           "npmVersion": "5.0.0"

@@ -2,17 +2,21 @@ import localVarRequest from 'request';
 
 export * from './batchObject';
 export * from './batchResponse';
+export * from './highlightResult';
 export * from './modelError';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
-export * from './multipleQueriesResponseResults';
 export * from './operation';
+export * from './rankingInfo';
+export * from './rankingInfoMatchedGeoLocation';
 export * from './record';
 export * from './saveObjectResponse';
 export * from './searchParams';
 export * from './searchParamsString';
-export * from './singleQueryResponse';
+export * from './searchResponse';
+export * from './searchResponseFacetsStats';
+export * from './snippetResult';
 
 import * as fs from 'fs';
 
@@ -28,21 +32,26 @@ export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
 import { BatchObject } from './batchObject';
 import { BatchResponse } from './batchResponse';
+import { HighlightResult } from './highlightResult';
 import { ModelError } from './modelError';
 import { MultipleQueries } from './multipleQueries';
 import { MultipleQueriesObject } from './multipleQueriesObject';
 import { MultipleQueriesResponse } from './multipleQueriesResponse';
-import { MultipleQueriesResponseResults } from './multipleQueriesResponseResults';
 import { Operation } from './operation';
+import { RankingInfo } from './rankingInfo';
+import { RankingInfoMatchedGeoLocation } from './rankingInfoMatchedGeoLocation';
 import { Record } from './record';
 import { SaveObjectResponse } from './saveObjectResponse';
 import { SearchParams } from './searchParams';
 import { SearchParamsString } from './searchParamsString';
-import { SingleQueryResponse } from './singleQueryResponse';
+import { SearchResponse } from './searchResponse';
+import { SearchResponseFacetsStats } from './searchResponseFacetsStats';
+import { SnippetResult } from './snippetResult';
 
 let primitives = ['string', 'boolean', 'double', 'integer', 'long', 'float', 'number', 'any'];
 
 let enumsMap: { [index: string]: any } = {
+  'HighlightResult.MatchLevelEnum': HighlightResult.MatchLevelEnum,
   'MultipleQueries.TypeEnum': MultipleQueries.TypeEnum,
   'MultipleQueriesObject.StrategyEnum': MultipleQueriesObject.StrategyEnum,
   'Operation.ActionEnum': Operation.ActionEnum,
@@ -52,22 +61,27 @@ let enumsMap: { [index: string]: any } = {
   'SearchParams.ExactOnSingleWordQueryEnum': SearchParams.ExactOnSingleWordQueryEnum,
   'SearchParams.AlternativesAsExactEnum': SearchParams.AlternativesAsExactEnum,
   'SearchParams.AdvancedSyntaxFeaturesEnum': SearchParams.AdvancedSyntaxFeaturesEnum,
+  'SnippetResult.MatchLevelEnum': SnippetResult.MatchLevelEnum,
 };
 
 let typeMap: { [index: string]: any } = {
   BatchObject: BatchObject,
   BatchResponse: BatchResponse,
+  HighlightResult: HighlightResult,
   ModelError: ModelError,
   MultipleQueries: MultipleQueries,
   MultipleQueriesObject: MultipleQueriesObject,
   MultipleQueriesResponse: MultipleQueriesResponse,
-  MultipleQueriesResponseResults: MultipleQueriesResponseResults,
   Operation: Operation,
+  RankingInfo: RankingInfo,
+  RankingInfoMatchedGeoLocation: RankingInfoMatchedGeoLocation,
   Record: Record,
   SaveObjectResponse: SaveObjectResponse,
   SearchParams: SearchParams,
   SearchParamsString: SearchParamsString,
-  SingleQueryResponse: SingleQueryResponse,
+  SearchResponse: SearchResponse,
+  SearchResponseFacetsStats: SearchResponseFacetsStats,
+  SnippetResult: SnippetResult,
 };
 
 export class ObjectSerializer {

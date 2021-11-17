@@ -1,45 +1,20 @@
-# TODO have a polymorphic record
 record:
   type: object
   description: A single record
   additionalProperties: true
-  properties:
-    objectID:
-      $ref: '../responses/common.yml#/objectID'
-
-recordWithHighlight:
-  type: object
-  description: A single record with highlight attributes
-  additionalProperties: true
+  required:
+    - objectID
   properties:
     objectID:
       $ref: '../responses/common.yml#/objectID'
     _highlightResult:
-      type: object
-      additionalProperties:
-        $ref: '#/highlightResult'
-
-recordWithSnippet:
-  type: object
-  description: A single record with snippeted attributes
-  additionalProperties: true
-  properties:
-    objectID:
-      $ref: '../responses/common.yml#/objectID'
+      $ref: '#/highlightResult'
     _snippetResult:
-      type: object
-      additionalProperties:
-        $ref: '#/snippetResult'
-
-recordWithRanking:
-  type: object
-  description: A single record with ranking information
-  additionalProperties: true
-  properties:
-    objectID:
-      $ref: '../responses/common.yml#/objectID'
+      $ref: '#/snippetResult'
     _rankingInfo:
       $ref: '#/rankingInfo'
+    _distinctSeqID:
+      type: number
 
 # Props
 highlightResult:

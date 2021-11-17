@@ -1,7 +1,8 @@
 import { RequestFile } from './models';
 import { Record } from './record';
+import { SearchResponseFacetsStats } from './searchResponseFacetsStats';
 
-export class SingleQueryResponse {
+export class SearchResponse {
   /**
    * If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
    */
@@ -25,11 +26,11 @@ export class SingleQueryResponse {
   /**
    * Indicate if the nbHits count was exhaustive or approximate
    */
-  'exhaustiveNbHits'?: boolean;
+  'exhaustiveNbHits': boolean;
   /**
    * Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled)
    */
-  'exhaustiveTypo'?: boolean;
+  'exhaustiveTypo': boolean;
   /**
    * A mapping of each facet name to the corresponding facet counts.
    */
@@ -37,12 +38,12 @@ export class SingleQueryResponse {
   /**
    * Statistics for numerical facets.
    */
-  'facetsStats'?: object;
-  'hits'?: Array<Record>;
+  'facets_stats'?: { [key: string]: SearchResponseFacetsStats };
+  'hits': Array<Record>;
   /**
    * Set the number of hits per page.
    */
-  'hitsPerPage'?: number;
+  'hitsPerPage': number;
   'index'?: string;
   /**
    * Index name used for the query. In the case of an A/B test, the targeted index isn’t always the index used by the query.
@@ -55,11 +56,11 @@ export class SingleQueryResponse {
   /**
    * Number of hits that the search query matched
    */
-  'nbHits'?: number;
+  'nbHits': number;
   /**
    * Number of pages available for the current query
    */
-  'nbPages'?: number;
+  'nbPages': number;
   /**
    * The number of hits selected and sorted by the relevant sort algorithm
    */
@@ -67,11 +68,11 @@ export class SingleQueryResponse {
   /**
    * Specify the page to retrieve.
    */
-  'page'?: number;
+  'page': number;
   /**
    * A url-encoded string of all search parameters.
    */
-  'params'?: string;
+  'params': string;
   /**
    * The query string that will be searched, after normalization.
    */
@@ -79,11 +80,11 @@ export class SingleQueryResponse {
   /**
    * Time the server took to process the request, in milliseconds.
    */
-  'processingTimeMS'?: number;
+  'processingTimeMS': number;
   /**
    * The text to search in the index.
    */
-  'query'?: string;
+  'query': string;
   /**
    * A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
    */
@@ -141,9 +142,9 @@ export class SingleQueryResponse {
       type: '{ [key: string]: { [key: string]: string; }; }',
     },
     {
-      name: 'facetsStats',
+      name: 'facets_stats',
       baseName: 'facets_stats',
-      type: 'object',
+      type: '{ [key: string]: SearchResponseFacetsStats; }',
     },
     {
       name: 'hits',
@@ -228,6 +229,6 @@ export class SingleQueryResponse {
   ];
 
   static getAttributeTypeMap() {
-    return SingleQueryResponse.attributeTypeMap;
+    return SearchResponse.attributeTypeMap;
   }
 }

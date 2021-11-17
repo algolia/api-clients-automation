@@ -56,18 +56,8 @@ post:
               results:
                 type: array
                 items:
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    hits:
-                      type: array
-                      items:
-                        $ref: ../../schemas/Record.yml#/record
-                    nbHits:
-                      type: integer
-                    queryID:
-                      $ref: '../../responses/common.yml#/queryID'
+                  $ref: ../../schemas/SearchResponse.yml#/searchResponse
     '400':
-      $ref: '../../responses/BadRequest.yml'
+      $ref: ../../responses/BadRequest.yml
     '404':
-      $ref: '../../responses/IndexNotFound.yml'
+      $ref: ../../responses/IndexNotFound.yml

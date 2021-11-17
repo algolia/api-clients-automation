@@ -8,7 +8,7 @@ import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
 import { SearchParams } from '../model/searchParams';
 import { SearchParamsString } from '../model/searchParamsString';
-import { SingleQueryResponse } from '../model/singleQueryResponse';
+import { SearchResponse } from '../model/searchResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
@@ -379,7 +379,7 @@ export class SearchApi {
     indexName: string,
     searchParamsSearchParamsString: SearchParams | SearchParamsString,
     options: { headers: { [name: string]: string } } = { headers: {} }
-  ): Promise<{ response: http.IncomingMessage; body: SingleQueryResponse }> {
+  ): Promise<{ response: http.IncomingMessage; body: SearchResponse }> {
     const localVarPath =
       this.basePath +
       '/1/indexes/{indexName}/query'.replace(
@@ -454,13 +454,13 @@ export class SearchApi {
           localVarRequestOptions.form = localVarFormParams;
         }
       }
-      return new Promise<{ response: http.IncomingMessage; body: SingleQueryResponse }>(
+      return new Promise<{ response: http.IncomingMessage; body: SearchResponse }>(
         (resolve, reject) => {
           localVarRequest(localVarRequestOptions, (error, response, body) => {
             if (error) {
               reject(error);
             } else {
-              body = ObjectSerializer.deserialize(body, 'SingleQueryResponse');
+              body = ObjectSerializer.deserialize(body, 'SearchResponse');
               if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                 resolve({ response: response, body: body });
               } else {
