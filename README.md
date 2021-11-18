@@ -6,20 +6,30 @@
 nvm use && yarn
 ```
 
-## Generate client based on `search_spec.yml`
+## Generate clients based on the [`spec.yml` file](./specs/spec.yml)
 
 ```bash
 yarn generate
 ```
 
-## Build generated client
+## Build generated clients
 
 ```bash
 yarn client:build
 ```
 
-## Test built client response
+## Test JavaScript client locally
 
 ```bash
 yarn client:test
+```
+
+# Troubleshooting
+
+> `Error: The operation couldn’t be completed. Unable to locate a Java Runtime.`
+
+Java is not located in your PATH, either source the right `.bash_profile`, `.zshrc` file or do the following command in this repository:
+
+```bash
+echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' > .bash_profile && source .bash_profile
 ```

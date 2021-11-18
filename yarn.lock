@@ -5,12 +5,12 @@ __metadata:
   version: 4
   cacheKey: 8
 
-"@algolia/automation-javascript-client@workspace:.":
+"@algolia/api-client-automation@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@algolia/automation-javascript-client@workspace:."
+  resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": ^2.4.13
-    algoliasearch-client-javascript: "file:output/"
+    algoliasearch-client-javascript: "file:clients/algoliasearch-client-javascript/"
     dotenv: 10.0.0
     prettier: 2.4.1
     swagger-cli: ^4.0.4
@@ -187,16 +187,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"algoliasearch-client-javascript@file:output/::locator=%40algolia%2Fautomation-javascript-client%40workspace%3A.":
+"algoliasearch-client-javascript@file:clients/algoliasearch-client-javascript/::locator=%40algolia%2Fapi-client-automation%40workspace%3A.":
   version: 5.0.0
-  resolution: "algoliasearch-client-javascript@file:output/#output/::hash=fb52f6&locator=%40algolia%2Fautomation-javascript-client%40workspace%3A."
-  checksum: 20ff5d88808c415a239014111cd7eb1b34a5feb33a4606088901f4d6cab484a34e5a0ebbc369fcf6e2633ed8a3ba5e0ba964bc0127f0af4974d68ebf9c363f86
+  resolution: "algoliasearch-client-javascript@file:clients/algoliasearch-client-javascript/#clients/algoliasearch-client-javascript/::hash=17be4b&locator=%40algolia%2Fapi-client-automation%40workspace%3A."
+  checksum: f14ee82e8dfc09feba8332c1d16a3e879957c8aded6efe13be4bac62ff19d38a528920e9be19d8949d73a519b38e6d0cfbaacb644c38c87a057c19877d11f937
   languageName: node
   linkType: hard
 
-"algoliasearch-client-javascript@workspace:output":
+"algoliasearch-client-javascript@workspace:clients/algoliasearch-client-javascript":
   version: 0.0.0-use.local
-  resolution: "algoliasearch-client-javascript@workspace:output"
+  resolution: "algoliasearch-client-javascript@workspace:clients/algoliasearch-client-javascript"
   dependencies:
     "@types/node": ^16.11.6
     typescript: ^4.4.4
@@ -1161,7 +1161,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@4.4.4, typescript@^4.4.4":
+typescript@4.4.4:
   version: 4.4.4
   resolution: "typescript@npm:4.4.4"
   bin:
@@ -1171,13 +1171,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.4.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
+typescript@^4.4.4:
+  version: 4.5.2
+  resolution: "typescript@npm:4.5.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 74f9ce65d532bdf5d0214b3f60cf37992180023388c87a11ee6f838a803067ef0b63c600fa501b0deb07f989257dce1e244c9635ed79feca40bbccf6e0aa1ebc
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@4.4.4#~builtin<compat/typescript>":
   version: 4.4.4
   resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=32657b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: c97c33903f1eb4f9e178649befdfc859d93157db1eccd1e521e84976ec6861db53412d8018e5e4c5d09268771c65498d42caa64bd881878346c3644f6b7cd202
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
+  version: 4.5.2
+  resolution: "typescript@patch:typescript@npm%3A4.5.2#~builtin<compat/typescript>::version=4.5.2&hash=32657b"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 02cf0f190f0cb6d216558d8db9c3a968feeab4965c340a351e5e6e84a42a3946e5e200a9538b6e427af9d17e4f713254dd0707d5fd6f238ce93f0aee1986ab57
   languageName: node
   linkType: hard
 
