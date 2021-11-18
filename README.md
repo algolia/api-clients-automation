@@ -28,7 +28,7 @@ yarn client:test
 
 > `Error: The operation couldn’t be completed. Unable to locate a Java Runtime.`
 
-Java is not located in your PATH, either source the right `.bash_profile`, `.zshrc` file or do the following command in this repository:
+Java is not located in your PATH, either source the right `.bash_profile`, `.zshrc`, etc. file or do the following command in this repository:
 
 ```bash
 echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' > .bash_profile && source .bash_profile
