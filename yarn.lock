@@ -189,8 +189,8 @@ __metadata:
 
 "algoliasearch-client-javascript@file:output/::locator=%40algolia%2Fautomation-javascript-client%40workspace%3A.":
   version: 5.0.0
-  resolution: "algoliasearch-client-javascript@file:output/#output/::hash=e9244c&locator=%40algolia%2Fautomation-javascript-client%40workspace%3A."
-  checksum: 21a8a09617882ec861970a4b6c069096952b60673941226da91f1daa1039a97caa932e6a7a69d9d70175bad15aa1627cc8eb50b9718757b5e7ae3aac77da5934
+  resolution: "algoliasearch-client-javascript@file:output/#output/::hash=fb52f6&locator=%40algolia%2Fautomation-javascript-client%40workspace%3A."
+  checksum: 20ff5d88808c415a239014111cd7eb1b34a5feb33a4606088901f4d6cab484a34e5a0ebbc369fcf6e2633ed8a3ba5e0ba964bc0127f0af4974d68ebf9c363f86
   languageName: node
   linkType: hard
 

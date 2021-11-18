@@ -11,7 +11,7 @@ const client = new searchClient(appId, apiKey);
 
 async function testMultiQueries() {
   try {
-    const { response, body } = await client.multipleQueries({
+    const res = await client.multipleQueries({
       requests: [
         {
           indexName: 'docsearch',
@@ -20,25 +20,29 @@ async function testMultiQueries() {
       ],
     });
 
-    console.log(`[${response.statusCode} - ${response.statusMessage}]`, body.results);
+    console.log(`[OK]`, res);
   } catch (e) {
     if (e instanceof HttpError) {
-      console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
+      return console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
     }
+
+    console.log('[ERROR]', e);
   }
 }
 
 async function testSearch() {
   try {
-    const { response, body } = await client.search('docsearch', {
+    const res = await client.search('docsearch', {
       query: 'crawler',
     });
 
-    console.log(`[${response.statusCode} - ${response.statusMessage}]`, body);
+    console.log(`[OK]`, res);
   } catch (e) {
     if (e instanceof HttpError) {
-      console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
+      return console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
     }
+
+    console.log('[ERROR]', e);
   }
 }
 
