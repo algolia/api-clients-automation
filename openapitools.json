@@ -5,7 +5,7 @@
     "generators": {
       "javascript-client": {
         "generatorName": "typescript-node",
-        "templateDir": "#{cwd}/templates/javascript-client-template/",
+        "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "client-search",
         "output": "#{cwd}/clients/algoliasearch-client-javascript",

@@ -18,10 +18,14 @@ yarn generate
 yarn client:build
 ```
 
-## Test JavaScript client locally
+# Testing clients
+
+Go to the [`playground`](./playground) folder to test your client
+
+## JavaScript
 
 ```bash
-yarn client:test
+cd playground/javascript && yarn start
 ```
 
 # Troubleshooting

@@ -1,34 +1,31 @@
 {
   "name": "@algolia/api-client-automation",
   "version": "0.0.0",
-  "workspaces": [
-    "clients/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "clients/algoliasearch-client-javascript/",
+      "playground/javascript/"
+    ]
+  },
   "scripts": {
     "build:spec": "yarn swagger-cli bundle openapi_spec/spec.yml --outfile dist/openapi.yml --type yaml",
-    "clean:clients": "rm -rf clients/algoliasearch-*/*",
     "clean": "rm -rf **/dist **/build **/node_modules",
     "client:build-js": "cd clients/algoliasearch-client-javascript/ && yarn install && yarn build && cd ../../",
     "client:build": "yarn client:build-js",
-    "client:test": "yarn install && tsc && node dist/app.js",
-    "client": "yarn client:build && yarn client:test",
     "lint:js": "yarn prettier --write clients/algoliasearch-client-javascript clients/utils/javascript",
     "lint:specs": "yarn prettier --write specs",
     "lint": "yarn lint:specs && yarn lint:js",
-    "generate:js": "PACKAGE_VERSION='4.11.0' yarn openapi-generator-cli generate --generator-key javascript-client && yarn utils:import-js",
+    "generate:js": "PACKAGE_VERSION='4.11.0' yarn openapi-generator-cli generate --generator-key javascript-client && yarn install && yarn utils:import-js",
     "generate": "yarn generate:js && yarn lint",
     "utils:import-js": "mkdir -p -- clients/algoliasearch-client-javascript/utils && cp -R clients/utils/javascript/ clients/algoliasearch-client-javascript/utils"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.13",
-    "algoliasearch-client-javascript": "file:clients/algoliasearch-client-javascript/",
-    "dotenv": "10.0.0",
     "prettier": "2.4.1",
-    "swagger-cli": "^4.0.4",
-    "typescript": "4.5.2"
+    "swagger-cli": "^4.0.4"
   },
   "engines": {
-    "node": ">= 12.0.0",
-    "yarn": ">= 2.0.0"
+    "node": "^16.0.0",
+    "yarn": "^3.0.0"
   }
 }
