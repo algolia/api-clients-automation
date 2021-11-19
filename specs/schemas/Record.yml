@@ -74,10 +74,10 @@ rankingInfo:
         additionalProperties: false
         properties:
           lat:
-            type: float
+            type: number
             description: 'Latitude of the matched location.'
           lng:
-            type: float
+            type: number
             description: 'Longitude of the matched location.'
           distance:
             type: integer
