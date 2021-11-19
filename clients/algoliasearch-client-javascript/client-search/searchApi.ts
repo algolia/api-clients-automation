@@ -5,6 +5,7 @@ import { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
+import { ErrorBase } from '../model/errorBase';
 import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
