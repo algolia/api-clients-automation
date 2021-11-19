@@ -1,12 +1,10 @@
 {
   "name": "@algolia/api-client-automation",
   "version": "0.0.0",
-  "workspaces": {
-    "packages": [
-      "clients/algoliasearch-client-javascript/",
-      "playground/javascript/"
-    ]
-  },
+  "workspaces": [
+    "clients/algoliasearch-client-javascript/",
+    "playground/javascript/"
+  ],
   "scripts": {
     "build:spec": "yarn swagger-cli bundle openapi_spec/spec.yml --outfile dist/openapi.yml --type yaml",
     "clean": "rm -rf **/dist **/build **/node_modules",
