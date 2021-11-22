@@ -14,7 +14,7 @@ record:
     _rankingInfo:
       $ref: '#/rankingInfo'
     _distinctSeqID:
-      type: number
+      type: integer
 
 # Props
 highlightResult:
@@ -75,9 +75,11 @@ rankingInfo:
         properties:
           lat:
             type: number
+            format: double
             description: 'Latitude of the matched location.'
           lng:
             type: number
+            format: double
             description: 'Longitude of the matched location.'
           distance:
             type: integer
