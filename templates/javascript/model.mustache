@@ -11,7 +11,7 @@ import { {{classname}} } from '{{filename}}';
 {{/description}}
 {{^isEnum}}
 {{#parent}}
-// Add this line back when we understnad where parent come from, but for now it's breaking the code
+{{! TODO: Add this line back when we understand where parent come from, but for now it's breaking the code}}
 // export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}
 {{/parent}}
 export class {{classname}} {

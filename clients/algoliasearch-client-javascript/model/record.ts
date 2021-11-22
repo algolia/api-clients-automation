@@ -5,7 +5,6 @@ import { SnippetResult } from './snippetResult';
 /**
  * A single record
  */
-// Add this line back when we understnad where parent come from, but for now it's breaking the code
 // export class Record extends null<String, object>
 export class Record {
   /**

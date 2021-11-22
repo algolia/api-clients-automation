@@ -1,7 +1,6 @@
 /**
  * Error
  */
-// Add this line back when we understnad where parent come from, but for now it's breaking the code
 // export class ErrorBase extends null<String, object>
 export class ErrorBase {
   'message'?: string;
