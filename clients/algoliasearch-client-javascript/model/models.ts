@@ -18,18 +18,6 @@ export * from './searchResponse';
 export * from './searchResponseFacetsStats';
 export * from './snippetResult';
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-  value: Buffer;
-  options?: {
-    filename?: string;
-    contentType?: string;
-  };
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
-
 import { BatchObject } from './batchObject';
 import { BatchResponse } from './batchResponse';
 import { ErrorBase } from './errorBase';

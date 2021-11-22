@@ -1,4 +1,3 @@
-import { RequestFile } from './models';
 import { HighlightResult } from './highlightResult';
 import { RankingInfo } from './rankingInfo';
 import { SnippetResult } from './snippetResult';

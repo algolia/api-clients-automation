@@ -1,4 +1,4 @@
-import { searchClient, HttpError } from 'algoliasearch-client-javascript';
+import { searchClient, ApiError } from 'algoliasearch-client-javascript';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -22,8 +22,8 @@ async function testMultiQueries() {
 
     console.log(`[OK]`, res);
   } catch (e) {
-    if (e instanceof HttpError) {
-      return console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
+    if (e instanceof ApiError) {
+      return console.log(`[${e.status}] ${e.message}`, e.stackTrace);
     }
 
     console.log('[ERROR]', e);
@@ -32,14 +32,14 @@ async function testMultiQueries() {
 
 async function testSearch() {
   try {
-    const res = await client.search('docsearch', {
+    const res = await client.search('test', {
       query: 'crawler',
     });
 
     console.log(`[OK]`, res);
   } catch (e) {
-    if (e instanceof HttpError) {
-      return console.log(`[${e.statusCode} - ${e.response.statusMessage}]`, e.response);
+    if (e instanceof ApiError) {
+      return console.log(`[${e.status}] ${e.message}`, e.stackTrace);
     }
 
     console.log('[ERROR]', e);

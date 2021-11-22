@@ -16,8 +16,6 @@ import { SearchResponse } from '../model/searchResponse';
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
-
 export enum SearchApiApiKeys {
   apiKey,
   appId,

@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 /**
  * Error
  */
