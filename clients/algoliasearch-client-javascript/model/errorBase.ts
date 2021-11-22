@@ -1,7 +1,9 @@
 /**
  * Error
  */
-export class ErrorBase extends null<String, object> {
+// Add this line back when we understnad where parent come from, but for now it's breaking the code
+// export class ErrorBase extends null<String, object>
+export class ErrorBase {
   'message'?: string;
 
   static discriminator: string | undefined = undefined;
@@ -15,6 +17,6 @@ export class ErrorBase extends null<String, object> {
   ];
 
   static getAttributeTypeMap() {
-    return super.getAttributeTypeMap().concat(ErrorBase.attributeTypeMap);
+    return ErrorBase.attributeTypeMap;
   }
 }

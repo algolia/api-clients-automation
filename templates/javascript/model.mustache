@@ -10,7 +10,11 @@ import { {{classname}} } from '{{filename}}';
 */
 {{/description}}
 {{^isEnum}}
-export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+{{#parent}}
+// Add this line back when we understnad where parent come from, but for now it's breaking the code
+// export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}
+{{/parent}}
+export class {{classname}} {
 {{#vars}}
 {{#description}}
     /**
@@ -40,12 +44,7 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
     ];
 
     static getAttributeTypeMap() {
-        {{#parent}}
-        return super.getAttributeTypeMap().concat({{classname}}.attributeTypeMap);
-        {{/parent}}
-        {{^parent}}
         return {{classname}}.attributeTypeMap;
-        {{/parent}}
     }
     {{/isArray}}
 }

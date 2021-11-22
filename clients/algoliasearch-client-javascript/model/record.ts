@@ -5,7 +5,9 @@ import { SnippetResult } from './snippetResult';
 /**
  * A single record
  */
-export class Record extends null<String, object> {
+// Add this line back when we understnad where parent come from, but for now it's breaking the code
+// export class Record extends null<String, object>
+export class Record {
   /**
    * Unique identifier of the object
    */
@@ -46,6 +48,6 @@ export class Record extends null<String, object> {
   ];
 
   static getAttributeTypeMap() {
-    return super.getAttributeTypeMap().concat(Record.attributeTypeMap);
+    return Record.attributeTypeMap;
   }
 }
