@@ -4,15 +4,15 @@ post:
   operationId: search
   summary: Get search results
   parameters:
-    - $ref: '../../parameters.yml#/IndexName'
+    - $ref: '../../../parameters.yml#/IndexName'
   requestBody:
     required: true
     content:
       application/json:
         schema:
           oneOf:
-            - $ref: ../../schemas/SearchParams.yml#/searchParams
-            - $ref: ../../schemas/SearchParams.yml#/searchParamsString
+            - $ref: ../../../schemas/SearchParams.yml#/searchParams
+            - $ref: ../../../schemas/SearchParams.yml#/searchParamsString
   responses:
     '200':
       description: OK
@@ -20,8 +20,8 @@ post:
         application/json:
           schema:
             title: singleQueryResponse
-            $ref: ../../schemas/SearchResponse.yml#/searchResponse
+            $ref: ../../../schemas/SearchResponse.yml#/searchResponse
     '400':
-      $ref: ../../responses/BadRequest.yml
+      $ref: ../../../responses/BadRequest.yml
     '404':
-      $ref: ../../responses/IndexNotFound.yml
+      $ref: ../../../responses/IndexNotFound.yml
