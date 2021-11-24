@@ -4,7 +4,7 @@ post:
   operationId: search
   summary: Get search results
   parameters:
-    - $ref: '../../common/parameters.yml#/IndexName'
+    - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
     required: true
     content:

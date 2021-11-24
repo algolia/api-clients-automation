@@ -14,9 +14,9 @@ searchResponse:
     - params
   properties:
     abTestID:
-      $ref: ../responses/common.yml#/abTestID
+      $ref: ../../../common/responses/common.yml#/abTestID
     abTestVariantID:
-      $ref: ../responses/common.yml#/abTestVariantID
+      $ref: ../../../common/responses/common.yml#/abTestVariantID
     aroundLatLng:
       type: string
       description: The computed geo location.

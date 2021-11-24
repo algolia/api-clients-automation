@@ -68,4 +68,3 @@ paths:
   #   $ref: './paths/click/getClickThroughRate.yml'
   # /2/clicks/averageClickPosition:
   #   $ref: './paths/click/getConversionRate.yml'
-
