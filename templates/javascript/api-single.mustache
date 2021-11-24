@@ -1,7 +1,7 @@
-import http from 'http';
 import { shuffle } from '../utils/helpers';
 import { Transporter } from '../utils/Transporter'; 
 import { Headers, Host, Request, RequestOptions } from '../utils/types';
+import { Requester } from '../utils/Requester';
 
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
@@ -51,7 +51,7 @@ export class {{classname}} {
 
     protected interceptors: Interceptor[] = [];
 
-    constructor(appId: string, apiKey: string) {
+    constructor(appId: string, apiKey: string, requester?: Requester) {
         this.setApiKey(SearchApiApiKeys.appId, appId);
         this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
         this.transporter = new Transporter({
@@ -74,6 +74,7 @@ export class {{classname}} {
             read: 5,
             write: 30,
           },
+          requester,
         });
     }
 
@@ -206,7 +207,7 @@ export class {{classname}} {
 
         await interceptorPromise;
 
-        return this.transporter.retryableRequest(request, requestOptions);
+        return this.transporter.request(request, requestOptions);
     }
 {{/operation}}
 }

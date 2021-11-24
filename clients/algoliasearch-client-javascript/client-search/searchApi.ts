@@ -1,7 +1,7 @@
-import http from 'http';
 import { shuffle } from '../utils/helpers';
 import { Transporter } from '../utils/Transporter';
 import { Headers, Host, Request, RequestOptions } from '../utils/types';
+import { Requester } from '../utils/Requester';
 
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
@@ -32,7 +32,7 @@ export class SearchApi {
 
   protected interceptors: Interceptor[] = [];
 
-  constructor(appId: string, apiKey: string) {
+  constructor(appId: string, apiKey: string, requester?: Requester) {
     this.setApiKey(SearchApiApiKeys.appId, appId);
     this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
     this.transporter = new Transporter({
@@ -57,6 +57,7 @@ export class SearchApi {
         read: 5,
         write: 30,
       },
+      requester,
     });
   }
 
@@ -143,7 +144,7 @@ export class SearchApi {
 
     await interceptorPromise;
 
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.transporter.request(request, requestOptions);
   }
   /**
    *
@@ -208,7 +209,7 @@ export class SearchApi {
 
     await interceptorPromise;
 
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.transporter.request(request, requestOptions);
   }
   /**
    * Add an object to the index, automatically assigning it an object ID
@@ -285,7 +286,7 @@ export class SearchApi {
 
     await interceptorPromise;
 
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.transporter.request(request, requestOptions);
   }
   /**
    *
@@ -363,6 +364,6 @@ export class SearchApi {
 
     await interceptorPromise;
 
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.transporter.request(request, requestOptions);
   }
 }
