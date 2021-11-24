@@ -71,10 +71,10 @@ export class Transporter {
      */
     const hostsAvailable = [...hostsUp, ...hostsTimeouted];
 
-    const statelessHostsAvailable = hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
+    const hosts = hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
 
     return {
-      hosts: statelessHostsAvailable,
+      hosts,
       getTimeout(timeoutsCount: number, baseTimeout: number): number {
         /**
          * Imagine that you have 4 hosts, if timeouts will increase
