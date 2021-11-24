@@ -19,7 +19,7 @@ import {
 } from './helpers';
 import { Headers } from './types';
 import { RetryError } from './errors';
-import * as resp from './Response';
+import * as responseUtils from './Response';
 import { Requester } from './Requester';
 import { HttpRequester } from './HttpRequester';
 
@@ -171,7 +171,7 @@ export class Transporter {
 
       const response = await this.requester.send(payload);
 
-      if (resp.isRetryable(response)) {
+      if (responseUtils.isRetryable(response)) {
         pushToStackTrace(response);
 
         // If response is a timeout, we increase the number of timeouts so we can increase the timeout later.
@@ -190,7 +190,7 @@ export class Transporter {
         );
         return retry(hosts, getTimeout);
       }
-      if (resp.isSuccess(response)) {
+      if (responseUtils.isSuccess(response)) {
         return deserializeSuccess(response);
       }
 
