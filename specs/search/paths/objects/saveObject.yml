@@ -5,7 +5,7 @@ post:
   summary: Save object
   description: Add an object to the index, automatically assigning it an object ID
   parameters:
-    - $ref: '../../../parameters.yml#/IndexName'
+    - $ref: '../../common/parameters.yml#/IndexName'
   requestBody:
     required: true
     content:
@@ -26,10 +26,10 @@ post:
               createdAt:
                 type: string
               taskID:
-                $ref: '../../../responses/common.yml#/taskID'
+                $ref: '../../common/responses/common.yml#/taskID'
               objectID:
-                $ref: '../../../responses/common.yml#/objectID'
+                $ref: '../../common/responses/common.yml#/objectID'
     '400':
-      $ref: '../../../responses/BadRequest.yml'
+      $ref: '../../common/responses/BadRequest.yml'
     '404':
-      $ref: '../../../responses/IndexNotFound.yml'
+      $ref: '../../common/responses/IndexNotFound.yml'

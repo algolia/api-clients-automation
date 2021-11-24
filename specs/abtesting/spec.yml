@@ -18,12 +18,12 @@ security:
     apiKey: []
 paths:
 #  /2/abtests:
-#    $ref: './paths/abtesting_client/addAbTest.yml'
+#    $ref: './paths/addAbTest.yml'
 #  /2/abtests/{id}:
-#    $ref: './paths/abtesting_client/getAbTest.yml'
+#    $ref: './paths/getAbTest.yml'
 #  /2/abtests:
-#    $ref: './paths/abtesting_client/listAbTests.yml'
+#    $ref: './paths/listAbTests.yml'
 #  /2/abtests/{id}/stop:
-#    $ref: './paths/abtesting_client/stopAbTest.yml'
+#    $ref: './paths/stopAbTest.yml'
 #  /2/abtests/{id}:
-#    $ref: './paths/abtesting_client/deleteAbTest.yml'
+#    $ref: './paths/deleteAbTest.yml'

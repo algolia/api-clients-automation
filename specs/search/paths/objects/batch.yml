@@ -4,7 +4,7 @@ post:
   operationId: batch
   summary: Performs multiple write operations in a single API call
   parameters:
-    - $ref: '../../../parameters.yml#/IndexName'
+    - $ref: '../../common/parameters.yml#/IndexName'
   requestBody:
     required: true
     content:
@@ -48,10 +48,10 @@ post:
             additionalProperties: false
             properties:
               taskID:
-                $ref: '../../../responses/common.yml#/taskID'
+                $ref: '../../common/responses/common.yml#/taskID'
               objectIDs:
-                $ref: '../../../responses/common.yml#/objectIDs'
+                $ref: '../../common/responses/common.yml#/objectIDs'
     '400':
-      $ref: '../../../responses/BadRequest.yml'
+      $ref: '../../common/responses/BadRequest.yml'
     '404':
-      $ref: '../../../responses/IndexNotFound.yml'
+      $ref: '../../common/responses/IndexNotFound.yml'

@@ -24,7 +24,7 @@ post:
                     example: products
                     description: The Algolia index name
                   query:
-                    $ref: ../../../schemas/SearchParams.yml#/searchParams/properties/query
+                    $ref: ../../common/schemas/SearchParams.yml#/searchParams/properties/query
                   type:
                     type: string
                     enum: [default, facet]
@@ -56,8 +56,8 @@ post:
               results:
                 type: array
                 items:
-                  $ref: ../../../schemas/SearchResponse.yml#/searchResponse
+                  $ref: ../../common/schemas/SearchResponse.yml#/searchResponse
     '400':
-      $ref: ../../../responses/BadRequest.yml
+      $ref: ../../common/responses/BadRequest.yml
     '404':
-      $ref: ../../../responses/IndexNotFound.yml
+      $ref: ../../common/responses/IndexNotFound.yml

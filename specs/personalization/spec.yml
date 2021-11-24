@@ -18,10 +18,10 @@ security:
     apiKey: []
 paths:
 #  /1/profiles/personalization/{userToken}:
-#    $ref: './paths/personalization_client/getUserTokenProfile.yml'
+#    $ref: './paths/getUserTokenProfile.yml'
 #  /1/profiles/{userToken}:
-#    $ref: './paths/personalization_client/deleteUserProfile.yml'
+#    $ref: './paths/deleteUserProfile.yml'
 #  /1/strategies/personalization:
-#    $ref: './paths/personalization_client/getPersonalizationStrategy.yml'
+#    $ref: './paths/getPersonalizationStrategy.yml'
 #  /1/strategies/personalization:
-#    $ref: './paths/personalization_client/setPersonalizationStrategy.yml'
+#    $ref: './paths/setPersonalizationStrategy.yml'

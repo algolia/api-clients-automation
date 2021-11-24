@@ -18,16 +18,16 @@ security:
     apiKey: []
 paths:
 #  /1/configs:
-#    $ref: './paths/query_suggestions_client/createConfiguration.yml'
+#    $ref: './paths/createConfiguration.yml'
 #  /1/configs/{indexName}:
-#    $ref: './paths/query_suggestions_client/updateConfiguration.yml'
+#    $ref: './paths/updateConfiguration.yml'
 #  /1/configs/{indexName}:
-#    $ref: './paths/query_suggestions_client/deleteConfiguration.yml'
+#    $ref: './paths/deleteConfiguration.yml'
 #  /1/configs/{indexName}:
-#    $ref: './paths/query_suggestions_client/getConfiguration.yml'
+#    $ref: './paths/getConfiguration.yml'
 #  /1/configs/{indexName}/status:
-#    $ref: './paths/query_suggestions_client/getConfigurationStatus.yml'
+#    $ref: './paths/getConfigurationStatus.yml'
 #  /1/configs:
-#    $ref: './paths/query_suggestions_client/getAllConfigurations.yml'
+#    $ref: './paths/getAllConfigurations.yml'
 #  /1/logs/{indexName}:
-#    $ref: './paths/query_suggestions_client/getLogFile.yml'
+#    $ref: './paths/getLogFile.yml'
