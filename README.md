@@ -9,7 +9,7 @@ nvm use && yarn
 ## Generate clients based on the [`spec_search.yml` file](./specs/spec_search.yml)
 
 ```bash
-yarn generate
+yarn generate:search
 ```
 
 ## Build generated clients
