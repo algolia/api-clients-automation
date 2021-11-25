@@ -116,7 +116,7 @@ paths:
   #   $ref: './paths/multiclusters/batchAssignUserIds.yml'
   # /1/clusters/mapping/top:
   #   $ref: './paths/multiclusters/getTopUserIds.yml'
-  # /1/clusters/mapping/${userID}:
+  # /1/clusters/mapping/{userID}:
   #   $ref: './paths/multiclusters/userId.yml'
   # /1/clusters:
   #   $ref: './paths/multiclusters/listClusters.yml'
