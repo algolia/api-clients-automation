@@ -1,0 +1,6 @@
+node_versions
+typings
+dist
+build
+.env
+.vscode
