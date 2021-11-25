@@ -1,139 +1,55 @@
-import { BaseSearchParams } from './baseSearchParams';
+import { BaseIndexSettings } from './baseIndexSettings';
 import { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
 
-export type SearchParams = {
+export type IndexSettings = {
   /**
-   * The text to search in the index.
+   * Creates replicas, exact copies of an index.
    */
-  query: string;
+  replicas?: Array<string>;
   /**
-   * Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results.
+   * Set the maximum number of hits accessible via pagination.
    */
-  similarQuery?: string;
+  paginationLimitedTo?: number;
   /**
-   * Filter the query with numeric, facet and/or tag filters.
+   * A list of words for which you want to turn off typo tolerance.
    */
-  filters?: string;
+  disableTypoToleranceOnWords?: Array<string>;
   /**
-   * Filter hits by facet value.
+   * Specify on which attributes to apply transliteration.
    */
-  facetFilters?: Array<string>;
+  attributesToTransliterate?: Array<string>;
   /**
-   * Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
+   * List of attributes on which to do a decomposition of camel case words.
    */
-  optionalFilters?: Array<string>;
+  camelCaseAttributes?: Array<string>;
   /**
-   * Filter on numeric attributes.
+   * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
    */
-  numericFilters?: Array<string>;
+  decompoundedAttributes?: { [key: string]: object };
   /**
-   * Filter hits by tags.
+   * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
    */
-  tagFilters?: Array<string>;
+  indexLanguages?: Array<string>;
   /**
-   * Determines how to calculate the total score for filtering.
+   * Whether promoted results should match the filters of the current search, except for geographic filters.
    */
-  sumOrFiltersScores?: boolean;
+  filterPromotes?: boolean;
   /**
-   * Retrieve facets and their facet values.
+   * List of attributes on which you want to disable prefix matching.
    */
-  facets?: Array<string>;
+  disablePrefixOnAttributes?: Array<string>;
   /**
-   * Maximum number of facet values to return for each facet during a regular search.
+   * Enables compression of large integer arrays.
    */
-  maxValuesPerFacet?: number;
+  allowCompressionOfIntegerArray?: boolean;
   /**
-   * Force faceting to be applied after de-duplication (via the Distinct setting).
+   * List of numeric attributes that can be used as numerical filters.
    */
-  facetingAfterDistinct?: boolean;
+  numericAttributesForFiltering?: Array<string>;
   /**
-   * Controls how facet values are fetched.
+   * Lets you store custom data in your indices.
    */
-  sortFacetValuesBy?: string;
-  /**
-   * Specify the page to retrieve.
-   */
-  page?: number;
-  /**
-   * Specify the offset of the first hit to return.
-   */
-  offset?: number;
-  /**
-   * Set the number of hits to retrieve (used only with offset).
-   */
-  length?: number;
-  /**
-   * Search for entries around a central geolocation, enabling a geo search within a circular area.
-   */
-  aroundLatLng?: string;
-  /**
-   * Search for entries around a given location automatically computed from the requester’s IP address.
-   */
-  aroundLatLngViaIP?: boolean;
-  /**
-   * Define the maximum radius for a geo search (in meters).
-   */
-  aroundRadius?: number | string | null;
-  /**
-   * Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
-   */
-  aroundPrecision?: number;
-  /**
-   * Minimum radius (in meters) used for a geo search when aroundRadius is not set.
-   */
-  minimumAroundRadius?: number;
-  /**
-   * Search inside a rectangular area (in geo coordinates).
-   */
-  insideBoundingBox?: Array<number>;
-  /**
-   * Search inside a polygon (in geo coordinates).
-   */
-  insidePolygon?: Array<number>;
-  /**
-   * This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
-   */
-  naturalLanguages?: Array<string>;
-  /**
-   * Enables contextual rules.
-   */
-  ruleContexts?: Array<string>;
-  /**
-   * Define the impact of the Personalization feature.
-   */
-  personalizationImpact?: number;
-  /**
-   * Associates a certain user token with the current search.
-   */
-  userToken?: string;
-  /**
-   * Retrieve detailed ranking information.
-   */
-  getRankingInfo?: boolean;
-  /**
-   * Enable the Click Analytics feature.
-   */
-  clickAnalytics?: boolean;
-  /**
-   * Whether the current query will be taken into account in the Analytics.
-   */
-  analytics?: boolean;
-  /**
-   * List of tags to apply to the query for analytics purposes.
-   */
-  analyticsTags?: Array<string>;
-  /**
-   * Whether to include or exclude a query from the processing-time percentile computation.
-   */
-  percentileComputation?: boolean;
-  /**
-   * Whether this search should participate in running AB tests.
-   */
-  enableABTest?: boolean;
-  /**
-   * Whether this search should use AI Re-Ranking.
-   */
-  enableReRanking?: boolean;
+  userData?: { [key: string]: object };
   /**
    * The complete list of attributes used for searching.
    */
@@ -205,7 +121,7 @@ export type SearchParams = {
   /**
    * Controls whether typo tolerance is enabled and how it is applied.
    */
-  typoTolerance?: SearchParams.TypoToleranceEnum;
+  typoTolerance?: IndexSettings.TypoToleranceEnum;
   /**
    * Whether to allow typos on numbers (“numeric tokens”) in the query string.
    */
@@ -249,11 +165,11 @@ export type SearchParams = {
   /**
    * Controls if and how query words are interpreted as prefixes.
    */
-  queryType?: SearchParams.QueryTypeEnum;
+  queryType?: IndexSettings.QueryTypeEnum;
   /**
    * Selects a strategy to remove words from the query when it doesn’t match any hits.
    */
-  removeWordsIfNoResults?: SearchParams.RemoveWordsIfNoResultsEnum;
+  removeWordsIfNoResults?: IndexSettings.RemoveWordsIfNoResultsEnum;
   /**
    * Enables the advanced query syntax.
    */
@@ -269,15 +185,15 @@ export type SearchParams = {
   /**
    * Controls how the exact ranking criterion is computed when the query contains only one word.
    */
-  exactOnSingleWordQuery?: SearchParams.ExactOnSingleWordQueryEnum;
+  exactOnSingleWordQuery?: IndexSettings.ExactOnSingleWordQueryEnum;
   /**
    * List of alternatives that should be considered an exact match by the exact ranking criterion.
    */
-  alternativesAsExact?: Array<SearchParams.AlternativesAsExactEnum>;
+  alternativesAsExact?: Array<IndexSettings.AlternativesAsExactEnum>;
   /**
    * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
    */
-  advancedSyntaxFeatures?: Array<SearchParams.AdvancedSyntaxFeaturesEnum>;
+  advancedSyntaxFeatures?: Array<IndexSettings.AdvancedSyntaxFeaturesEnum>;
   /**
    * Enables de-duplication or grouping of results.
    */
@@ -312,7 +228,7 @@ export type SearchParams = {
   renderingContent?: object;
 };
 
-export namespace SearchParams {
+export namespace IndexSettings {
   export enum TypoToleranceEnum {
     True = 'true',
     False = 'false',
