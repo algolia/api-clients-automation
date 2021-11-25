@@ -6,22 +6,16 @@ info:
 components:
   securitySchemes:
     appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
+      $ref: '../common/securitySchemes/common.yml#/appId'
     apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
+      $ref: '../common/securitySchemes/common.yml#/apiKey'
 security:
   - appId: []
     apiKey: []
 paths:
-#  /1/profiles/personalization/{userToken}:
-#    $ref: './paths/getUserTokenProfile.yml'
+  /1/profiles/personalization/{userToken}:
+    $ref: './paths/getUserTokenProfile.yml'
 #  /1/profiles/{userToken}:
 #    $ref: './paths/deleteUserProfile.yml'
 #  /1/strategies/personalization:
-#    $ref: './paths/getPersonalizationStrategy.yml'
-#  /1/strategies/personalization:
-#    $ref: './paths/setPersonalizationStrategy.yml'
+#    $ref: './paths/personalizationStrategy.yml'

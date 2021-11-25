@@ -6,24 +6,16 @@ info:
 components:
   securitySchemes:
     appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
+      $ref: '../common/securitySchemes/common.yml#/appId'
     apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
+      $ref: '../common/securitySchemes/common.yml#/apiKey'
 security:
   - appId: []
     apiKey: []
 paths:
-#  /2/abtests:
-#    $ref: './paths/addAbTest.yml'
+  /2/abtests:
+    $ref: './paths/abtests.yml'
 #  /2/abtests/{id}:
-#    $ref: './paths/getAbTest.yml'
-#  /2/abtests:
-#    $ref: './paths/listAbTests.yml'
+#    $ref: './paths/abtest.yml'
 #  /2/abtests/{id}/stop:
 #    $ref: './paths/stopAbTest.yml'
-#  /2/abtests/{id}:
-#    $ref: './paths/deleteAbTest.yml'

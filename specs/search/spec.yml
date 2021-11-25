@@ -6,13 +6,9 @@ info:
 components:
   securitySchemes:
     appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
+      $ref: '../common/securitySchemes/common.yml#/appId'
     apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
+      $ref: '../common/securitySchemes/common.yml#/apiKey'
 security:
   - appId: []
     apiKey: []
@@ -33,11 +29,9 @@ paths:
   # ### Objects Endpoints ###
   # #########################
   /1/indexes/{indexName}:
-    $ref: './paths/objects/saveObject.yml'
+    $ref: './paths/objects/objects.yml'
   # /1/indexes/{indexName}/{objectID}:
-  #   $ref: './paths/objects/updateObject.yml'
-  # /1/indexes/{indexName}/{objectID}:
-  #   $ref: './paths/objects/deleteObject.yml'
+  #   $ref: './paths/objects/object.yml'
   # /1/indexes/{indexName}/deleteByQuery:
   #   $ref: './paths/objects/deleteBy.yml'
   # /1/indexes/{indexName}/clear:
@@ -57,15 +51,11 @@ paths:
   # ### Settings Endpoints ###
   # ##########################
   # /1/indexes/{indexName}/settings:
-  #   $ref: './paths/settings/getSettings.yml'
-  # /1/indexes/{indexName}/settings:
-  #   $ref: './paths/settings/setSettings.yml'
+  #   $ref: './paths/settings/settings.yml'
   #
   # ################################
   # ### Manage Indices Endpoints ###
   # ################################
-  # /1/indexes/{indexName}:
-  #   $ref: './paths/manage_indices/deleteIndex.yml'
   # /1/indexes/{indexName}/operation:
   #   $ref: './paths/manage_indices/copyIndex.yml'
   # /1/indexes:
@@ -75,15 +65,11 @@ paths:
   # ### Synonyms Endpoints ###
   # ##########################
   # /1/indexes/{indexName}/synonyms/{objectID}:
-  #   $ref: './paths/synonyms/saveSynonym.yml'
+  #   $ref: './paths/synonyms/synonym.yml'
   # /1/indexes/{indexName}/synonyms/batch:
   #   $ref: './paths/synonyms/batchSynonyms.yml'
-  # /1/indexes/{indexName}/synonyms/{objectID}:
-  #   $ref: './paths/synonyms/getSynonym.yml'
   # /1/indexes/{indexName}/synonyms/clear:
   #   $ref: './paths/synonyms/clearAllSynonyms.yml'
-  # /1/indexes/{indexName}/synonyms/{objectID}:
-  #   $ref: './paths/synonyms/deleteSynonym.yml'
   # /1/indexes/{indexName}/synonyms/search:
   #   $ref: './paths/synonyms/searchSynonyms.yml'
   #
@@ -91,15 +77,9 @@ paths:
   # ### Keys Endpoints ###
   # ######################
   # /1/keys:
-  #   $ref: './paths/keys/addApiKey.yml'
+  #   $ref: './paths/keys/keys.yml'
   # /1/keys/{key}:
-  #   $ref: './paths/keys/updateApiKey.yml'
-  # /1/keys:
-  #   $ref: './paths/keys/listApiKeys.yml'
-  # /1/keys/{key}:
-  #   $ref: './paths/keys/getApiKey.yml'
-  # /1/keys/{key}:
-  #   $ref: './paths/keys/deleteApiKey.yml'
+  #   $ref: './paths/keys/key.yml'
   # /1/keys/{key}/restore:
   #   $ref: './paths/keys/restoreApiKey.yml'
   #
@@ -107,13 +87,9 @@ paths:
   # ### Rules Endpoints ###
   # #######################
   # /1/indexes/{indexName}/rules/{objectID}:
-  #   $ref: './paths/rules/saveRule.yml'
+  #   $ref: './paths/rules/rule.yml'
   # /1/indexes/{indexName}/rules/batch:
   #   $ref: './paths/rules/batchRules.yml'
-  # /1/indexes/{indexName}/rules/{objectID}:
-  #   $ref: './paths/rules/getRule.yml'
-  # /1/indexes/{indexName}/rules/{objectID}:
-  #   $ref: './paths/rules/deleteRule.yml'
   # /1/indexes/{indexName}/rules/clear:
   #   $ref: './paths/rules/clearRules.yml'
   # /1/indexes/{indexName}/rules/search:
@@ -127,9 +103,7 @@ paths:
   # /1/dictionaries/{dictionaryName}/search:
   #   $ref: './paths/dictionaries/searchDictionaryEntries.yml'
   # /1/dictionaries/*/settings:
-  #   $ref: './paths/dictionaries/setDictionarySettings.yml'
-  # /1/dictionaries/*/settings:
-  #   $ref: './paths/dictionaries/getDictionarySettings.yml'
+  #   $ref: './paths/dictionaries/dictionarySettings.yml'
   # /1/dictionaries/*/languages:
   #   $ref: './paths/dictionaries/getDictionaryLanguages.yml'
   #
@@ -137,19 +111,15 @@ paths:
   # ### MultiClusters Endpoints ###
   # ###############################
   # /1/clusters/mapping:
-  #   $ref: './paths/multiclusters/assignUserId.yml'
+  #   $ref: './paths/multiclusters/userIds.yml'
   # /1/clusters/mapping/batch:
   #   $ref: './paths/multiclusters/batchAssignUserIds.yml'
   # /1/clusters/mapping/top:
   #   $ref: './paths/multiclusters/getTopUserIds.yml'
   # /1/clusters/mapping/${userID}:
-  #   $ref: './paths/multiclusters/getUserId.yml'
+  #   $ref: './paths/multiclusters/userId.yml'
   # /1/clusters:
   #   $ref: './paths/multiclusters/listClusters.yml'
-  # /1/clusters/mapping:
-  #   $ref: './paths/multiclusters/listUserIds.yml'
-  # /1/clusters/mapping/${userID}:
-  #   $ref: './paths/multiclusters/removeUserId.yml'
   # /1/clusters/mapping/search:
   #   $ref: './paths/multiclusters/searchUserIds.yml'
   # /1/clusters/mapping/pending:
@@ -159,9 +129,7 @@ paths:
   # ### Vault Endpoints ###
   # #######################
   # /1/security/sources:
-  #   $ref: './paths/vault/listSources.yml'
-  # /1/security/sources:
-  #   $ref: './paths/vault/replaceSources.yml'
+  #   $ref: './paths/vault/vaultSources.yml'
   # /1/security/sources/append:
   #   $ref: './paths/vault/appendSource.yml'
   # /1/security/sources/{source}:

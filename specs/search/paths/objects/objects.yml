@@ -33,3 +33,5 @@ post:
       $ref: '../../common/responses/BadRequest.yml'
     '404':
       $ref: '../../common/responses/IndexNotFound.yml'
+#delete index
+# delete:

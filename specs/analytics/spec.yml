@@ -6,13 +6,9 @@ info:
 components:
   securitySchemes:
     appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
+      $ref: '../common/securitySchemes/common.yml#/appId'
     apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
+      $ref: '../common/securitySchemes/common.yml#/apiKey'
 security:
   - appId: []
     apiKey: []
@@ -20,8 +16,8 @@ paths:
   # ########################
   # ### Status Endpoints ###
   # ########################
-  # /2/status:
-  #  $ref: './paths/status/getStatus.yml'
+  /2/status:
+    $ref: './paths/status/getStatus.yml'
   #
   # ##################################
   # ### Search Analytics Endpoints ###
@@ -40,16 +36,12 @@ paths:
   #   $ref: './paths/search/getNoClickRate.yml'
   # /2/hits:
   #  $ref: './paths/search/getTopHits.yml'
-  # /2/hits?search=:
-  #   $ref: './paths/search/getSearchTopHits.yml'
   # /2/users/count:
   #   $ref: './paths/search/getUsersCount.yml'
   # /2/filters:
   #   $ref: './paths/search/getTopFilterAttributes.yml'
   # /2/filters/noResults?search=:
   #   $ref: './paths/search/getNoResultTopFilters.yml'
-  # /2/filters?search=:
-  #  $ref: './paths/search/getSearchTopFilters.yml'
   # /2/filters/{attribute list}?search=:
   #   $ref: './paths/search/getSearchAttributesTopFilters.yml'
   # /2/filters/{attribute}:
@@ -62,9 +54,9 @@ paths:
   # #################################
   # /2/clicks/averageClickPosition:
   #   $ref: './paths/click/getAverageTopClickPosition.yml'
-  # /2/clicks/averageClickPosition:
+  # /2/clicks/positions:
   #   $ref: './paths/click/getClickPositions.yml'
-  # /2/clicks/averageClickPosition:
+  # /2/clicks/clickThroughRate:
   #   $ref: './paths/click/getClickThroughRate.yml'
-  # /2/clicks/averageClickPosition:
+  # /2/conversions/conversionRate:
   #   $ref: './paths/click/getConversionRate.yml'

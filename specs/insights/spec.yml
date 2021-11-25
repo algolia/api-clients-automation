@@ -6,16 +6,12 @@ info:
 components:
   securitySchemes:
     appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
+      $ref: '../common/securitySchemes/common.yml#/appId'
     apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
+      $ref: '../common/securitySchemes/common.yml#/apiKey'
 security:
   - appId: []
     apiKey: []
 paths:
-#  /1/events:
-#    $ref: './paths/pushEvents.yml'
+  /1/events:
+    $ref: './paths/pushEvents.yml'

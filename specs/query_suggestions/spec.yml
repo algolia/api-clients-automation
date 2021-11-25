@@ -6,28 +6,18 @@ info:
 components:
   securitySchemes:
     appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
+      $ref: '../common/securitySchemes/common.yml#/appId'
     apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
+      $ref: '../common/securitySchemes/common.yml#/apiKey'
 security:
   - appId: []
     apiKey: []
 paths:
-#  /1/configs:
-#    $ref: './paths/createConfiguration.yml'
+  /1/configs:
+    $ref: './paths/qsConfigs.yml'
 #  /1/configs/{indexName}:
-#    $ref: './paths/updateConfiguration.yml'
-#  /1/configs/{indexName}:
-#    $ref: './paths/deleteConfiguration.yml'
-#  /1/configs/{indexName}:
-#    $ref: './paths/getConfiguration.yml'
+#    $ref: './paths/qsConfig.yml'
 #  /1/configs/{indexName}/status:
 #    $ref: './paths/getConfigurationStatus.yml'
-#  /1/configs:
-#    $ref: './paths/getAllConfigurations.yml'
 #  /1/logs/{indexName}:
 #    $ref: './paths/getLogFile.yml'
