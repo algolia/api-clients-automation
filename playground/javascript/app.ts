@@ -1,4 +1,4 @@
-import { searchClient, ApiError } from 'algoliasearch-client-javascript';
+import { searchClient, ApiError, EchoRequester } from 'algoliasearch-client-javascript';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -10,7 +10,7 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = new searchClient(appId, apiKey);
+const client = new searchClient(appId, apiKey, { requester: new EchoRequester() });
 
 async function testMultiQueries() {
   try {
