@@ -16,7 +16,7 @@ import { ApiKeyAuth } from '../model/models';
 * {{&description}}
 */
 {{/description}}
-export enum {{classname}}ApiKeys {
+export enum {{classname}}Keys {
   {{#authMethods}}
   {{#isApiKey}}
   {{name}},
@@ -38,8 +38,8 @@ export class {{classname}} {
   }
 
   constructor(appId: string, apiKey: string, requester?: Requester) {
-    this.setApiKey(SearchApiApiKeys.appId, appId);
-    this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
+    this.setApiKey({{classname}}Keys.appId, appId);
+    this.setApiKey({{classname}}Keys.apiKey, apiKey);
     this.transporter = new Transporter({
       hosts: (
         [
@@ -66,8 +66,8 @@ export class {{classname}} {
     });
   }
 
-  public setApiKey(key: {{classname}}ApiKeys, value: string) {
-    this.authentications[{{classname}}ApiKeys[key]].apiKey = value;
+  public setApiKey(key: {{classname}}Keys, value: string) {
+    this.authentications[{{classname}}Keys[key]].apiKey = value;
   }
   {{#hasAuthMethods}}
   {{#authMethods}}

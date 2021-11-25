@@ -8,11 +8,11 @@ import { {{ classname }} } from './{{ classFilename }}';
 export * from './{{ classFilename }}Interface'
 {{/withInterfaces}}
 {{/apis}}
-
-export class searchClient extends SearchApi{}
-
 export * from '../utils/errors';
 export { EchoRequester } from '../utils/EchoRequester';
 
+{{#apis}}
+export class {{ classname }}Client extends {{ classname }}{}
+{{/apis}}
 export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}];
 {{/apiInfo}}

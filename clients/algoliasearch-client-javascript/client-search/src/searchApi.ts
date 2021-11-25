@@ -16,7 +16,7 @@ import { SearchResponse } from '../model/searchResponse';
 import { SetSettingsResponse } from '../model/setSettingsResponse';
 import { ApiKeyAuth } from '../model/models';
 
-export enum SearchApiApiKeys {
+export enum SearchApiKeys {
   apiKey,
   appId,
 }
@@ -30,8 +30,8 @@ export class SearchApi {
   };
 
   constructor(appId: string, apiKey: string, requester?: Requester) {
-    this.setApiKey(SearchApiApiKeys.appId, appId);
-    this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
+    this.setApiKey(SearchApiKeys.appId, appId);
+    this.setApiKey(SearchApiKeys.apiKey, apiKey);
     this.transporter = new Transporter({
       hosts: (
         [
@@ -58,8 +58,8 @@ export class SearchApi {
     });
   }
 
-  public setApiKey(key: SearchApiApiKeys, value: string) {
-    this.authentications[SearchApiApiKeys[key]].apiKey = value;
+  public setApiKey(key: SearchApiKeys, value: string) {
+    this.authentications[SearchApiKeys[key]].apiKey = value;
   }
 
   private async sendRequest<TResponse>(

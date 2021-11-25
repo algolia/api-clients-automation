@@ -1,5 +1,7 @@
+import { BaseSearchResponse } from './baseSearchResponse';
+import { BaseSearchResponseFacetsStats } from './baseSearchResponseFacetsStats';
 import { Record } from './record';
-import { SearchResponseFacetsStats } from './searchResponseFacetsStats';
+import { SearchResponseAllOf } from './searchResponseAllOf';
 
 export type SearchResponse = {
   /**
@@ -37,8 +39,7 @@ export type SearchResponse = {
   /**
    * Statistics for numerical facets.
    */
-  facets_stats?: { [key: string]: SearchResponseFacetsStats };
-  hits: Array<Record>;
+  facets_stats?: { [key: string]: BaseSearchResponseFacetsStats };
   /**
    * Set the number of hits per page.
    */
@@ -99,4 +100,5 @@ export type SearchResponse = {
    * Lets you store custom data in your indices.
    */
   userData?: { [key: string]: object };
+  hits: Array<Record>;
 };
