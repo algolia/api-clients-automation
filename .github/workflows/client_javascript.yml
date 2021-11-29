@@ -40,4 +40,4 @@ jobs:
         run: yarn client:build-js:recommend
 
       - name: Lint
-        run: yarn lint:js --check
+        run: yarn prettier --check clients/algoliasearch-client-javascript

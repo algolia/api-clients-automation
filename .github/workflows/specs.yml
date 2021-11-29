@@ -34,4 +34,4 @@ jobs:
         run: yarn validate
 
       - name: Lint
-        run: yarn lint:specs --check
+        run: yarn prettier --check specs
