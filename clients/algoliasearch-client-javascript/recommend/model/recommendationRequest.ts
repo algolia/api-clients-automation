@@ -22,7 +22,13 @@ export type RecommendationRequest = {
    * The max number of recommendations to retrieve. If it’s set to 0, all the recommendations of the objectID may be returned.
    */
   maxRecommendations?: number;
-  _queryParameters?: (BaseSearchParams & IndexSettingsAsSearchParams) | null;
+  /**
+   * The Algolia search parameters.
+   */
+  queryParameters?: (BaseSearchParams & IndexSettingsAsSearchParams) | null;
+  /**
+   * The Algolia search parameters when there are no recommendations.
+   */
   fallbackParameters?: (BaseSearchParams & IndexSettingsAsSearchParams) | null;
 };
 

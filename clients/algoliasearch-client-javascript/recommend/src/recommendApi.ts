@@ -4,8 +4,8 @@ import { Headers, Host, Request, RequestOptions } from '../utils/types';
 import { Requester } from '../utils/Requester';
 
 import { ErrorBase } from '../model/errorBase';
+import { GetRecommendations } from '../model/getRecommendations';
 import { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
-import { RecommendationRequest } from '../model/recommendationRequest';
 import { ApiKeyAuth } from '../model/models';
 
 export enum RecommendApiKeys {
@@ -70,25 +70,25 @@ export class RecommendApi {
   /**
    *
    * @summary Returns recommendations for a specific model and objectID
-   * @param recommendationRequest
+   * @param getRecommendations
    */
   public async getRecommendations(
-    recommendationRequest: Array<RecommendationRequest>
+    getRecommendations: GetRecommendations
   ): Promise<GetRecommendationsResponse> {
     const path = '/1/indexes/*/recommendations';
     let headers: Headers = { Accept: 'application/json' };
     let queryParameters: Record<string, string> = {};
 
-    if (recommendationRequest === null || recommendationRequest === undefined) {
+    if (getRecommendations === null || getRecommendations === undefined) {
       throw new Error(
-        'Required parameter recommendationRequest was null or undefined when calling getRecommendations.'
+        'Required parameter getRecommendations was null or undefined when calling getRecommendations.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: recommendationRequest,
+      data: getRecommendations,
     };
 
     const requestOptions: RequestOptions = {

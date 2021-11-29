@@ -4,6 +4,7 @@ export * from './baseSearchParams';
 export * from './baseSearchResponse';
 export * from './baseSearchResponseFacetsStats';
 export * from './errorBase';
+export * from './getRecommendations';
 export * from './getRecommendationsResponse';
 export * from './highlightResult';
 export * from './indexSettingsAsSearchParams';

@@ -14,14 +14,16 @@ const client = new RecommendApiClient(appId, apiKey);
 
 async function testRecommend() {
   try {
-    const res = await client.getRecommendations([
-      {
-        indexName: searchIndex,
-        model: RecommendationRequest.ModelEnum['BoughtTogether'],
-        objectID: searchQuery,
-        threshold: 0,
-      },
-    ]);
+    const res = await client.getRecommendations({
+      requests: [
+        {
+          indexName: searchIndex,
+          model: RecommendationRequest.ModelEnum['BoughtTogether'],
+          objectID: searchQuery,
+          threshold: 0,
+        },
+      ],
+    });
 
     console.log(`[OK]`, res);
   } catch (e) {
