@@ -1,6 +1,6 @@
 import { BaseSearchResponse } from './baseSearchResponse';
 import { BaseSearchResponseFacetsStats } from './baseSearchResponseFacetsStats';
 import { Record } from './record';
-import { SearchResponseAllOf } from './searchResponseAllOf';
+import { SearchHits } from './searchHits';
 
-export type SearchResponse = BaseSearchResponse & SearchResponseAllOf;
+export type SearchResponse = BaseSearchResponse & SearchHits;

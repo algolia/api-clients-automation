@@ -1,13 +1,16 @@
 searchResponse:
   allOf:
     - $ref: '#/baseSearchResponse'
-    - type: object
-      additionalProperties: false
-      properties:
-        hits:
-          type: array
-          items:
-            $ref: 'Record.yml#/record'
+    - $ref: '#/searchHits'
+
+searchHits:
+  type: object
+  additionalProperties: false
+  properties:
+    hits:
+      type: array
+      items:
+        $ref: 'Record.yml#/record'
 
 baseSearchResponse:
   type: object

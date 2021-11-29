@@ -10,10 +10,10 @@ export * from './highlightResult';
 export * from './indexSettingsAsSearchParams';
 export * from './rankingInfo';
 export * from './rankingInfoMatchedGeoLocation';
+export * from './recommendHits';
 export * from './recommendRecord';
 export * from './recommendationRequest';
 export * from './recommendationsResponse';
-export * from './recommendationsResponseAllOf';
 export * from './snippetResult';
 
 export interface Authentication {

@@ -18,10 +18,10 @@ export * from './rankingInfo';
 export * from './rankingInfoMatchedGeoLocation';
 export * from './record';
 export * from './saveObjectResponse';
+export * from './searchHits';
 export * from './searchParams';
 export * from './searchParamsAsString';
 export * from './searchResponse';
-export * from './searchResponseAllOf';
 export * from './setSettingsResponse';
 export * from './snippetResult';
 

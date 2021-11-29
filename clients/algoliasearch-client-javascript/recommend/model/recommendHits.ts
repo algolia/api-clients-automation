@@ -1,5 +1,5 @@
 import { RecommendRecord } from './recommendRecord';
 
-export type RecommendationsResponseAllOf = {
+export type RecommendHits = {
   hits?: Array<RecommendRecord>;
 };
