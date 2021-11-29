@@ -1,9 +1,14 @@
 name: client_javascript
 
-on: [push]
+on:
+  workflow_run:
+    workflows: ['specs']
+    types:
+      - completed
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

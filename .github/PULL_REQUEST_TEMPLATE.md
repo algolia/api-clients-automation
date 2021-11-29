@@ -7,5 +7,3 @@
 - List changes
 
 ## 🧪 Test
-
-- `yarn dev`
