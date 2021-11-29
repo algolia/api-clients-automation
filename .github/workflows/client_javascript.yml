@@ -9,12 +9,7 @@ on:
 jobs:
   build:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        node: ['16']
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -25,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 16
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
 
@@ -46,3 +41,10 @@ jobs:
 
       - name: Lint
         run: yarn prettier --check clients/algoliasearch-client-javascript
+
+  build-failure:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Error on `specs` workflow
+        run: exit 1
