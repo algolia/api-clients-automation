@@ -1,4 +1,4 @@
-import { SearchApiClient, ApiError } from '@algolia/client-search';
+import { SearchApi, ApiError } from '@algolia/client-search';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -10,7 +10,7 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = new SearchApiClient(appId, apiKey);
+const client = new SearchApi(appId, apiKey);
 
 async function testSearch() {
   try {

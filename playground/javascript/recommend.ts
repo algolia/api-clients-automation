@@ -1,4 +1,4 @@
-import { RecommendApiClient, ApiError, RecommendationRequest } from '@algolia/recommend';
+import { RecommendApi, ApiError, RecommendationRequest } from '@algolia/recommend';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -10,7 +10,7 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = new RecommendApiClient(appId, apiKey);
+const client = new RecommendApi(appId, apiKey);
 
 async function testRecommend() {
   try {

@@ -7,7 +7,7 @@ import { {{classname}} } from '{{filename}}';
 {{! We handle types that depend on other interfaces }}
 {{#interfaces.size}}export type {{classname}} = {{#interfaces}}{{.}} {{^-last}}&{{/-last}} {{/interfaces}};{{/interfaces.size}}
 
-{{^interfaces.size}}
+{{^interfaces}}
 {{#description}}
 /**
 * {{{description}}}
@@ -53,6 +53,6 @@ export enum {{classname}} {
     {{/allowableValues}}
 }
 {{/isEnum}}
-{{/interfaces.size}}
+{{/interfaces}}
 {{/model}}
 {{/models}}
