@@ -1,0 +1,19 @@
+[
+    {
+        "name": "hello test",
+        "method": "search",
+        "parameters": [
+            "indexName",
+            {
+                "query": "coucou"
+            }
+        ],
+        "request": {
+            "path": "/1/indexes/indexName/query",
+            "method": "POST",
+            "body": {
+                "query": "coucou"
+            }
+        }
+    }
+]

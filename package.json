@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "workspaces": [
     "clients/algoliasearch-client-javascript/*",
-    "playground/javascript/"
+    "playground/javascript/",
+    "tests/"
   ],
   "scripts": {
     "build:spec:recommend:json": "yarn swagger-cli bundle specs/recommend/spec.yml --outfile specs/dist/recommend.json --type json",
@@ -17,11 +18,13 @@
     "client:build-js:recommend": "yarn workspace @algolia/recommend build",
     "client:build-js": "yarn client:build-js:search && yarn client:build-js:recommend",
     "client:build": "yarn client:build-js",
+    "cts:generate": "yarn workspace tests cts:generate",
+    "cts:test": "yarn workspace tests test",
     "lint:js": "yarn prettier --write clients/algoliasearch-client-javascript/${CLIENT}",
     "lint:specs": "yarn prettier --write specs",
     "lint": "yarn lint:specs && yarn lint:js",
     "generate:js:recommend": "yarn openapi-generator-cli generate --generator-key javascript-recommend && CLIENT=recommend yarn utils:import-js && CLIENT=recommend yarn lint:js",
-    "generate:js:search": "yarn openapi-generator-cli generate --generator-key javascript-client-search && CLIENT=client-search yarn utils:import-js && CLIENT=client-search yarn lint:js",
+    "generate:js:search": "yarn openapi-generator-cli generate --generator-key javascript-search && CLIENT=client-search yarn utils:import-js && CLIENT=client-search yarn lint:js",
     "generate:js": "yarn generate:js:search && yarn generate:js:recommend",
     "generate:recommend": "yarn generate:js:recommend",
     "generate:search": "yarn generate:js:search",
@@ -32,9 +35,9 @@
     "validate": "yarn swagger-cli validate specs/dist/search.yml && yarn swagger-cli validate specs/dist/recommend.yml"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.4.13",
-    "prettier": "2.4.1",
-    "swagger-cli": "^4.0.4"
+    "@openapitools/openapi-generator-cli": "2.4.18",
+    "prettier": "2.5.0",
+    "swagger-cli": "4.0.4"
   },
   "engines": {
     "node": "^16.0.0",
