@@ -1,13 +1,16 @@
 recommendationsResponse:
   allOf:
     - $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse'
-    - type: object
-      additionalProperties: false
-      properties:
-        hits:
-          type: array
-          items:
-            $ref: '#/recommendRecord'
+    - $ref: '#/recommendHits'
+
+recommendHits:
+  type: object
+  additionalProperties: false
+  properties:
+    hits:
+      type: array
+      items:
+        $ref: '#/recommendRecord'
 
 recommendRecord:
   type: object

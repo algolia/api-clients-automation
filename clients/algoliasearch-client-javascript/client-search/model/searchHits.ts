@@ -1,5 +1,5 @@
 import { Record } from './record';
 
-export type SearchResponseAllOf = {
+export type SearchHits = {
   hits?: Array<Record>;
 };
