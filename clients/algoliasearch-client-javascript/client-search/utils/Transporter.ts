@@ -1,4 +1,4 @@
-import * as responseUtils from './Response';
+import { isRetryable, isSuccess } from './Response';
 import { StatefulHost } from './StatefulHost';
 import type { Cache } from './cache/Cache';
 import { MemoryCache } from './cache/MemoryCache';
@@ -187,7 +187,7 @@ export class Transporter {
 
       const response = await this.requester.send(payload, request);
 
-      if (responseUtils.isRetryable(response)) {
+      if (isRetryable(response)) {
         const stackFrame = pushToStackTrace(response);
 
         // If response is a timeout, we increase the number of timeouts so we can increase the timeout later.
@@ -216,7 +216,7 @@ export class Transporter {
         );
         return retry(hosts, getTimeout);
       }
-      if (responseUtils.isSuccess(response)) {
+      if (isSuccess(response)) {
         return deserializeSuccess(response);
       }
 
