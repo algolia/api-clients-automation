@@ -552,7 +552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/core@npm:^27.4.1, @jest/core@npm:^27.4.2":
+"@jest/core@npm:^27.4.2":
   version: 27.4.2
   resolution: "@jest/core@npm:27.4.2"
   dependencies:
@@ -2715,7 +2715,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"jest-cli@npm:^27.4.1":
+"jest-cli@npm:^27.4.2":
   version: 27.4.2
   resolution: "jest-cli@npm:27.4.2"
   dependencies:
@@ -3155,13 +3155,13 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"jest@npm:27.4.1":
-  version: 27.4.1
-  resolution: "jest@npm:27.4.1"
+"jest@npm:27.4.2":
+  version: 27.4.2
+  resolution: "jest@npm:27.4.2"
   dependencies:
-    "@jest/core": ^27.4.1
+    "@jest/core": ^27.4.2
     import-local: ^3.0.2
-    jest-cli: ^27.4.1
+    jest-cli: ^27.4.2
   peerDependencies:
     node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
   peerDependenciesMeta:
@@ -3169,7 +3169,7 @@ fsevents@^2.3.2:
       optional: true
   bin:
     jest: bin/jest.js
-  checksum: 9a71284c588757d48e625e768d2de6381632f62726f13d466523d2111c2092c12b5498c2a7acf29c17654ac11f8876bf58477c5dab45d2ea5bd7e3bc9842ee3e
+  checksum: 726dbdaaad94eccae084a5bdd85cbe9c308b4a3d331f2315f1cad6447858cc5b1aaa730d6b63dcf29b4f8258a8271086bdc812a4dd04113085c48975782f8bfa
   languageName: node
   linkType: hard
 
@@ -4409,7 +4409,7 @@ resolve@^1.20.0:
     "@types/mustache": 4.1.2
     "@types/node": 16.11.11
     dotenv: 10.0.0
-    jest: 27.4.1
+    jest: 27.4.2
     mustache: 4.2.0
     openapi-types: 9.3.1
     swagger-parser: 10.0.3
