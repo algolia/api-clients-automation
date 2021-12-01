@@ -4,7 +4,7 @@
   "scripts": {
     "test": "jest",
     "lint:fix": "yarn prettier --write output",
-    "cts:generate": "ts-node -T generateCTS.ts ${0} && yarn lint:fix"
+    "cts:generate": "ts-node -T generateCTS.ts ${0:-all} && yarn lint:fix"
   },
   "devDependencies": {
     "@algolia/client-search": "5.0.0",

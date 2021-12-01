@@ -1,8 +1,9 @@
-import * as fsp from 'fs/promises';
+import fsp from 'fs/promises';
 import Mustache from 'mustache';
-import * as path from 'path';
+import path from 'path';
 import SwaggerParser from 'swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
+import openapitools from '../openapitools.json';
 
 const availableLanguages = ['javascript'] as const;
 type Language = typeof availableLanguages[number];
@@ -24,9 +25,19 @@ type CTS = Record<string, CTSBlock[]>;
 const packageNameMapping: Record<Language, string> = { javascript: 'npmName' };
 const extensionForLanguage: Record<Language, string> = { javascript: '.test.ts' };
 
-//For each language, for each client, we have a package name
-let packageNames: Record<string, Record<Language, string>> = {};
 let cts: CTS = {};
+
+// For each generator, we map the packageName with the language and client
+const packageNames: Record<string, Record<Language, string>> = Object.entries(
+  openapitools['generator-cli'].generators
+).reduce((prev, curr) => {
+  const [lang, client] = curr[0].split('-') as [Language, string];
+  if (!(lang in prev)) {
+    prev[lang] = {};
+  }
+  prev[lang][client] = curr[1].additionalProperties[packageNameMapping[lang]];
+  return prev;
+}, {});
 
 async function createOutputDir(language: Language) {
   await fsp.mkdir(`output/${language}`, { recursive: true });
@@ -42,22 +53,6 @@ async function* walk(dir: string): AsyncGenerator<{ path: string; name: string }
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-async function loadPackageNames(): Promise<void> {
-  const openapitools = JSON.parse((await fsp.readFile('../openapitools.json')).toString());
-  // For each generator, we map the packageName with the language and client
-  packageNames = Object.entries(openapitools['generator-cli'].generators).reduce(
-    (prev, curr: any) => {
-      const [lang, client] = curr[0].split('-') as [Language, string];
-      if (!(lang in prev)) {
-        prev[lang] = {};
-      }
-      prev[lang][client] = curr[1].additionalProperties[packageNameMapping[lang]];
-      return prev;
-    },
-    {}
-  );
 }
 
 async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
@@ -154,7 +149,6 @@ async function parseCLI(args: string[]) {
   }
 
   try {
-    await loadPackageNames();
     await loadCTS();
     for (const lang of toGenerate) {
       generateCode(lang);
