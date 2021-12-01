@@ -4,7 +4,7 @@ import * as path from 'path';
 import SwaggerParser from 'swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 
-const availableLangages = ['javascript'];
+const availableLanguages = ['javascript'];
 
 type CTSBlock = {
   name: string,
@@ -13,21 +13,21 @@ type CTSBlock = {
   request: {
     path: string,
     method: string,
-    body: string,
+    data: string,
   }
 };
 
 // Array of test per client
-type WholeCTS = Record<string, CTSBlock[]>;
+type CTS = Record<string, CTSBlock[]>;
 
 const packageNameMapping: Record<string, string> = { javascript: 'npmName' };
 
-//For each langage, for each client, we have a package name
+//For each language, for each client, we have a package name
 let packageNames: Record<string, Record<string, string>> = {};
-let cts: WholeCTS = {};
+let cts: CTS = {};
 
-async function createOutputDir(langage: string) {
-  await fsp.mkdir(`output/${langage}`, { recursive: true });
+async function createOutputDir(language: string) {
+  await fsp.mkdir(`output/${language}`, { recursive: true });
 }
 
 async function* walk(dir: string): AsyncGenerator<{ path: string, name: string }> {
@@ -44,6 +44,7 @@ function capitalize(str: string): string {
 
 async function loadPackageNames(): Promise<void> {
   const openapitools = JSON.parse((await fsp.readFile('../openapitools.json')).toString());
+  // For each generator, we map the packageName with the language and client
   packageNames = Object.entries(openapitools["generator-cli"].generators).reduce((prev, curr: any) => {
     const [lang, client] = curr[0].split("-");
     if (!(lang in prev)) {
@@ -66,16 +67,31 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       continue;
     }
     const operationId = file.name.replace('.json', '');
-    const test: CTSBlock[] = JSON.parse((await fsp.readFile(file.path)).toString());
-    for (let i = 0; i < test[0].parameters.length; i++) {
-      test[0].parameters[i] = JSON.stringify(test[0].parameters[i]);
+    const tests: CTSBlock[] = JSON.parse((await fsp.readFile(file.path)).toString());
+
+    // for now we stringify all params for mustache to render them properly
+    for (const test of tests) {
+      for (let i = 0; i < test.parameters.length; i++) {
+        // delete the object name for now, but it could be use for `new $objectName(params)`
+        delete test.parameters[i]["$objectName"];
+
+        // include the `-last` param to join with comma in mustache
+        test.parameters[i] = {
+          value: JSON.stringify(test.parameters[i]),
+          '-last': i === test.parameters.length - 1,
+        };
+      }
+
+      // stringify request.data too
+      test.request.data = JSON.stringify(test.request.data);
     }
 
-    //check test validity against spec
+
+    // check test validity against spec
     if (!operations.includes(operationId)) {
       throw new Error(`cannot find operationId ${operationId} for the ${client} client`);
     }
-    ctsClient.push(...test);
+    ctsClient.push(...tests);
   }
   return ctsClient;
 }
@@ -86,26 +102,30 @@ async function loadCTS(): Promise<void> {
   }
 }
 
-async function loadTemplate(langage: string): Promise<string> {
-  return (await fsp.readFile(`CTS/templates/${langage}.mustache`)).toString();
+async function loadTemplate(language: string): Promise<string> {
+  return (await fsp.readFile(`CTS/templates/${language}.mustache`)).toString();
 }
 
-async function generateCode(langage: string) {
-  const template = await loadTemplate(langage);
-  await createOutputDir(langage);
+async function generateCode(language: string) {
+  const template = await loadTemplate(language);
+  await createOutputDir(language);
   for (const client in cts) {
+    if (cts[client].length === 0) {
+      continue;
+    }
+
     const code = Mustache.render(template, {
-      import: packageNames[langage][client],
+      import: packageNames[language][client],
       client: `${capitalize(client)}Api`,
       tests: cts[client]
     });
-    await fsp.writeFile(`output/${langage}/${client}.test.ts`, code);
+    await fsp.writeFile(`output/${language}/${client}.test.ts`, code);
   }
 }
 
 function printUsage() {
-  console.log(`usage: generateCTS all | langage1 langage2...`);
-  console.log(`\tavailable langages: ${availableLangages.join(',')}`);
+  console.log(`usage: generateCTS all | language1 language2...`);
+  console.log(`\tavailable languages: ${availableLanguages.join(',')}`);
   process.exit(1);
 }
 
@@ -117,14 +137,14 @@ async function parseCLI(args: string[]) {
 
   let toGenerate: string[];
   if (args.length == 3 && args[2] === 'all') {
-    toGenerate = availableLangages;
+    toGenerate = availableLanguages;
   } else {
-    const langages = args.slice(2);
-    if (!langages.every((lang) => availableLangages.includes(lang))) {
-      console.log("unkown langage: ", langages.join(', '));
+    const languages = args.slice(2);
+    if (!languages.every((lang) => availableLanguages.includes(lang))) {
+      console.log("unkown language: ", languages.join(', '));
       printUsage();
     }
-    toGenerate = langages;
+    toGenerate = languages;
   }
 
   try {

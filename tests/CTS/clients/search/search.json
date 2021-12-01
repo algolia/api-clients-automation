@@ -1,18 +1,19 @@
 [
     {
-        "name": "hello test",
+        "name": "search",
         "method": "search",
         "parameters": [
             "indexName",
             {
-                "query": "coucou"
+                "$objectName": "Query",
+                "query": "queryString"
             }
         ],
         "request": {
             "path": "/1/indexes/indexName/query",
             "method": "POST",
-            "body": {
-                "query": "coucou"
+            "data": {
+                "query": "queryString"
             }
         }
     }
