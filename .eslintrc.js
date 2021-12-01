@@ -48,5 +48,16 @@ module.exports = {
         ],
       },
     ],
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        types: {
+          object: {
+            message: 'Use Record instead',
+            fixWith: 'Record<string, any>',
+          },
+        },
+      },
+    ],
   },
 };

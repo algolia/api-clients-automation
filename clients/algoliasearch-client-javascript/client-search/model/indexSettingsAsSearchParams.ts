@@ -174,7 +174,7 @@ export type IndexSettingsAsSearchParams = {
   /**
    * Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
    */
-  renderingContent?: Record<string, unknown>;
+  renderingContent?: Record<string, any>;
 };
 
 export namespace IndexSettingsAsSearchParams {

@@ -212,7 +212,7 @@ export class SearchApi {
    */
   saveObject(
     indexName: string,
-    requestBody: { [key: string]: Record<string, unknown> }
+    requestBody: { [key: string]: Record<string, any> }
   ): Promise<SaveObjectResponse> {
     const path = '/1/indexes/{indexName}'.replace(
       '{indexName}',
