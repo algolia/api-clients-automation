@@ -1,6 +1,6 @@
 [
   {
-    "name": "search",
+    "testName": "search",
     "method": "search",
     "parameters": [
       "indexName",

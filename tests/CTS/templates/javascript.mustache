@@ -4,7 +4,7 @@ describe('Common Test Suite', () => {
   const client = new {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_SEARCH_KEY, { requester: new EchoRequester() });
 
   {{#tests}}
-  test('{{name}}', async () => {
+  test('{{testName}}', async () => {
     const req = await client.{{method}}({{#parameters}}{{{value}}}{{^-last}}, {{/-last}}{{/parameters}});
     expect(req).toMatchObject({
       path: '{{{request.path}}}',
