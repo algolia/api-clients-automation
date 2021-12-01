@@ -11,6 +11,7 @@ yarn cts:test
 ```
 
 If you only want to generate the tests for a set of languages, you can run:
+
 ```bash
 yarn cts:generate "javascript ruby"
 ```
@@ -18,24 +19,25 @@ yarn cts:generate "javascript ruby"
 ## How to add test
 
 The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `CTS/<client>/` folder (e.g. `CTS/search/`).
+
 ```json
 [
-    {
-        "name": "test name",
-        "method": "the method to call (ex: search)",
-        "parameters": [
-            "indexName",
-            {
-                "$objectName": "the name of the object for strongly type language",
-                "query": "the string to search"
-            }
-        ],
-        "request": {
-            "path": "/1/indexes/indexName/query",
-            "method": "POST",
-            "data": { "query": "the string to search" }
-        }
+  {
+    "name": "test name",
+    "method": "the method to call (ex: search)",
+    "parameters": [
+      "indexName",
+      {
+        "$objectName": "the name of the object for strongly type language",
+        "query": "the string to search"
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "data": { "query": "the string to search" }
     }
+  }
 ]
 ```
 
@@ -45,4 +47,3 @@ And that's it! If the name of the file matches a real `operationId` in the spec,
 
 - Create a template in `test/CTS/templates/<your language>.mustache` that parse a array of test into your test framework of choice
 - Add the language in the array `languages` in `tests/generateCTS.ts`.
-
