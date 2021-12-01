@@ -16,9 +16,9 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
 
   settings: {
-    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    'import/extensions': ['.js', '.ts'],
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.ts'],
     },
     'import/ignore': ['node_modules'],
   },
