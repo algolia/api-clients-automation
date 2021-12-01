@@ -1,20 +1,20 @@
 [
-    {
-        "name": "search",
-        "method": "search",
-        "parameters": [
-            "indexName",
-            {
-                "$objectName": "Query",
-                "query": "queryString"
-            }
-        ],
-        "request": {
-            "path": "/1/indexes/indexName/query",
-            "method": "POST",
-            "data": {
-                "query": "queryString"
-            }
-        }
+  {
+    "name": "search",
+    "method": "search",
+    "parameters": [
+      "indexName",
+      {
+        "$objectName": "Query",
+        "query": "queryString"
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "data": {
+        "query": "queryString"
+      }
     }
+  }
 ]
