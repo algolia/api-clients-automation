@@ -5,6 +5,7 @@ import { Requester } from '../utils/requester/Requester';
 
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
+import { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import { ErrorBase } from '../model/errorBase';
 import { IndexSettings } from '../model/indexSettings';
 import { ListIndicesObject } from '../model/listIndicesObject';
@@ -117,6 +118,37 @@ export class SearchApi {
       method: 'POST',
       path,
       data: batchObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Delete an existing index.
+   * @summary delete index
+   * @param indexName The index in which to perform the request
+   */
+  public async deleteIndex(indexName: string): Promise<DeleteIndexResponse> {
+    const path = '/1/indexes/{indexName}'.replace(
+      '{' + 'indexName' + '}',
+      encodeURIComponent(String(indexName))
+    );
+    let headers: Headers = { Accept: 'application/json' };
+    let queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling deleteIndex.'
+      );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
     };
 
     const requestOptions: RequestOptions = {

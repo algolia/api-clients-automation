@@ -6,6 +6,7 @@ export * from './baseSearchResponse';
 export * from './baseSearchResponseFacetsStats';
 export * from './batchObject';
 export * from './batchResponse';
+export * from './deleteIndexResponse';
 export * from './errorBase';
 export * from './highlightResult';
 export * from './index';
