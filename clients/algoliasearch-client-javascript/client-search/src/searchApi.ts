@@ -7,8 +7,12 @@ import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
 import { ErrorBase } from '../model/errorBase';
 import { IndexSettings } from '../model/indexSettings';
+import { ListIndicesObject } from '../model/listIndicesObject';
+import { ListIndicesResponse } from '../model/listIndicesResponse';
 import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
+import { OperationIndexObject } from '../model/operationIndexObject';
+import { OperationIndexResponse } from '../model/operationIndexResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
 import { SearchParams } from '../model/searchParams';
 import { SearchParamsAsString } from '../model/searchParamsAsString';
@@ -155,6 +159,35 @@ export class SearchApi {
   }
   /**
    *
+   * @summary List existing indexes
+   * @param listIndicesObject
+   */
+  public async listIndices(listIndicesObject: ListIndicesObject): Promise<ListIndicesResponse> {
+    const path = '/1/indexes';
+    let headers: Headers = { Accept: 'application/json' };
+    let queryParameters: Record<string, string> = {};
+
+    if (listIndicesObject === null || listIndicesObject === undefined) {
+      throw new Error(
+        'Required parameter listIndicesObject was null or undefined when calling listIndices.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+      data: listIndicesObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   *
    * @summary Get search results for the given requests.
    * @param multipleQueriesObject
    */
@@ -175,6 +208,48 @@ export class SearchApi {
       method: 'POST',
       path,
       data: multipleQueriesObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Peforms a copy or a move operation on a index
+   * @summary Copy/move index
+   * @param indexName The index in which to perform the request
+   * @param operationIndexObject
+   */
+  public async operationIndex(
+    indexName: string,
+    operationIndexObject: OperationIndexObject
+  ): Promise<OperationIndexResponse> {
+    const path = '/1/indexes/{indexName}/operation'.replace(
+      '{' + 'indexName' + '}',
+      encodeURIComponent(String(indexName))
+    );
+    let headers: Headers = { Accept: 'application/json' };
+    let queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling operationIndex.'
+      );
+    }
+
+    if (operationIndexObject === null || operationIndexObject === undefined) {
+      throw new Error(
+        'Required parameter operationIndexObject was null or undefined when calling operationIndex.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: operationIndexObject,
     };
 
     const requestOptions: RequestOptions = {

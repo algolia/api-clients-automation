@@ -1,1 +1,34 @@
 get:
+  tags:
+    - search
+  operationId: listIndices
+  summary: List existing indexes
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: listIndicesObject
+          type: object
+          additionalProperties: false
+          properties:
+            page:
+              type: integer
+              default: null
+              description: Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: listIndicesResponse
+            $ref: '../../common/schemas/listIndicesResponse.yml#/listIndicesResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

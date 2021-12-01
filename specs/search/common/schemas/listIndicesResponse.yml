@@ -1,0 +1,44 @@
+listIndicesResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    items:
+      type: array
+      items:
+        $ref: '#/index'
+    nbPages:
+      type: integer
+      description: 'Number of pages'
+      example: 100
+
+index:
+  type: object
+  additionalProperties: false
+  properties:
+    name:
+      type: string
+      description: Name of the index
+    createdAt:
+      type: date-time
+      description: Date of the index creation. (ISO-8601 format)
+    updatedAt:
+      type: date-time
+      description: Date of the index last update. (ISO-8601 format)
+    entries:
+      type: integer
+      description: Entries in the index
+    dataSize:
+      type: integer
+      description: data size of the index
+    fileSize:
+      type: integer
+      description: file size of the index
+    lastBuildTimeS:
+      type: integer
+      description: Last build time
+    numberOfPendingTask:
+      type: integer
+      description: Number of pending tasks
+    pendingTask:
+      type: boolean
+      description: Pending task ?
