@@ -1,0 +1,50 @@
+personalizationStrategyObject:
+  type: object
+  additionalProperties: false
+  required:
+    - eventScoring
+    - facetScoring
+    - personalizationImpact
+  properties:
+    eventScoring:
+      type: array
+      description: Scores associated with the events.
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - score
+          - eventName
+          - eventType
+        properties:
+          score:
+            $ref: '#/score'
+          eventName:
+            type: string
+            description: The name of the event.
+          eventType:
+            type: string
+            description: The type of the event.
+    facetScoring:
+      type: array
+      description: Scores associated with the facets.
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - score
+          - facetName
+        properties:
+          score:
+            $ref: '#/score'
+          facetName:
+            type: string
+            description: The name of the facet.
+    personalizationImpact:
+      type: integer
+      description: 'The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled).'
+
+# props
+score:
+  type: integer
+  description: The score for the event.

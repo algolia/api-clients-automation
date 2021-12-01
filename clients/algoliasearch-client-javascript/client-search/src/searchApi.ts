@@ -45,10 +45,12 @@ export class SearchApi {
   constructor(
     appId: string,
     apiKey: string,
+
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     this.setApiKey(SearchApiKeys.appId, appId);
     this.setApiKey(SearchApiKeys.apiKey, apiKey);
+
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(appId),
       baseHeaders: {

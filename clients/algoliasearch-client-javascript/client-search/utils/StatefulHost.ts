@@ -12,8 +12,8 @@ export class StatefulHost implements Host {
 
   constructor(host: Host, status: StatefulHost['status'] = 'up') {
     this.url = host.url;
-    this.accept = host.accept;
-    this.protocol = host.protocol;
+    this.accept = host.accept || 'readWrite';
+    this.protocol = host.protocol || 'https';
 
     this.status = status;
     this.lastUpdate = Date.now();

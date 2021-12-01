@@ -8,6 +8,15 @@ IndexName:
     type: string
     example: 'myIndexName'
 
+UserToken:
+  name: userToken
+  in: path
+  description: userToken representing the user for which to fetch the Personalization profile.
+  required: true
+  schema:
+    type: string
+    example: 'theUserToken'
+
 # query
 ForwardToReplicas:
   in: query

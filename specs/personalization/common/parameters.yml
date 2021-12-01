@@ -1,0 +1,3 @@
+userToken:
+  type: string
+  description: userToken representing the user for which to fetch the Personalization profile.

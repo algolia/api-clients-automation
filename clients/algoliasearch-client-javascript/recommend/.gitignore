@@ -1,6 +1,6 @@
 node_modules
-typings
 dist
-build
+.git_push.sh
+.openapi-generator-ignore
+.openapi-generator
 .env
-.vscode
