@@ -19,10 +19,12 @@ index:
       type: string
       description: Name of the index
     createdAt:
-      type: date-time
+      type: string
+      format: date-time
       description: Date of the index creation. (ISO-8601 format)
     updatedAt:
-      type: date-time
+      type: string
+      format: date-time
       description: Date of the index last update. (ISO-8601 format)
     entries:
       type: integer
