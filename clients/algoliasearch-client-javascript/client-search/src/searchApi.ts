@@ -49,7 +49,6 @@ export class SearchApi {
   constructor(
     appId: string,
     apiKey: string,
-
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     this.setApiKey(SearchApiKeys.appId, appId);

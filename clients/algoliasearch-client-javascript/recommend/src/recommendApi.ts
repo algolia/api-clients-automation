@@ -37,7 +37,6 @@ export class RecommendApi {
   constructor(
     appId: string,
     apiKey: string,
-
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     this.setApiKey(RecommendApiKeys.appId, appId);

@@ -1,15 +1,15 @@
-import type { PersonalizationStrategyObjectEventScoring } from './personalizationStrategyObjectEventScoring';
-import type { PersonalizationStrategyObjectFacetScoring } from './personalizationStrategyObjectFacetScoring';
+import type { EventScoring } from './eventScoring';
+import type { FacetScoring } from './facetScoring';
 
 export type PersonalizationStrategyObject = {
   /**
    * Scores associated with the events.
    */
-  eventScoring: PersonalizationStrategyObjectEventScoring[];
+  eventScoring: EventScoring[];
   /**
    * Scores associated with the facets.
    */
-  facetScoring: PersonalizationStrategyObjectFacetScoring[];
+  facetScoring: FacetScoring[];
   /**
    * The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled).
    */

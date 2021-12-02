@@ -3,10 +3,10 @@ import type { RequestOptions } from '../utils/types';
 
 export * from './deleteUserProfileResponse';
 export * from './errorBase';
+export * from './eventScoring';
+export * from './facetScoring';
 export * from './getUserTokenResponse';
 export * from './personalizationStrategyObject';
-export * from './personalizationStrategyObjectEventScoring';
-export * from './personalizationStrategyObjectFacetScoring';
 export * from './setPersonalizationStrategyResponse';
 
 export interface Authentication {

@@ -1,14 +1,14 @@
-export type SetPersonalizationStrategyObjectEventScoring = {
+export type EventScoring = {
   /**
    * The score for the event.
    */
-  score?: number;
+  score: number;
   /**
    * The name of the event.
    */
-  eventName?: string;
+  eventName: string;
   /**
    * The type of the event.
    */
-  eventType?: string;
+  eventType: string;
 };

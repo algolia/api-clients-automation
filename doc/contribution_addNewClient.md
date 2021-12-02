@@ -28,15 +28,12 @@ You will need to implement:
 
 - An `init` method
 - The `retry strategy` with your custom transporter
-<<<<<<< HEAD
 - Handle client with different hosts (e.g. `personalization`)
-=======
 - At least 2 requester:
   - http requester, using the standard library
   - echo requester that send the request back, used by the CTS
 - A logger that the user can swap
 - More to come...
->>>>>>> main
 
 ### Init method
 
@@ -56,6 +53,6 @@ See this PR of the first JavaScript implementation for reference: https://github
 
 Algolia search operations targets the default appId host (`${appId}-dsn.algolia.net`, `${appId}.algolia.net`, etc.), while clients like `personalization` have their own `host`.
 
-Since `.mustache` are logicless files, you need to provide the variable yourself in the [`openapitools.json`](../openapitools.json) config file and implement the `if` based logic
+Since `.mustache` are logicless files, you need to provide the variable yourself in the [`openapitools.json`](../openapitools.json) config file and implement the `if` based logic.
 
 See this PR of the first JavaScript implementation for reference: https://github.com/algolia/api-client-automation-experiment/pull/25

@@ -1,4 +1,4 @@
-export type PersonalizationStrategyObjectFacetScoring = {
+export type FacetScoring = {
   /**
    * The score for the event.
    */
