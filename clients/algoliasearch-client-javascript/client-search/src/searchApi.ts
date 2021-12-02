@@ -1,33 +1,14 @@
-<<<<<<< HEAD
-import { shuffle } from '../utils/helpers';
-import { Transporter } from '../utils/Transporter';
-import { Headers, Host, Request, RequestOptions } from '../utils/types';
-import { Requester } from '../utils/requester/Requester';
-
-import { BatchObject } from '../model/batchObject';
-import { BatchResponse } from '../model/batchResponse';
-import { DeleteIndexResponse } from '../model/deleteIndexResponse';
-import { ErrorBase } from '../model/errorBase';
-import { IndexSettings } from '../model/indexSettings';
-import { ListIndicesObject } from '../model/listIndicesObject';
-import { ListIndicesResponse } from '../model/listIndicesResponse';
-import { MultipleQueriesObject } from '../model/multipleQueriesObject';
-import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
-import { OperationIndexObject } from '../model/operationIndexObject';
-import { OperationIndexResponse } from '../model/operationIndexResponse';
-import { SaveObjectResponse } from '../model/saveObjectResponse';
-import { SearchParams } from '../model/searchParams';
-import { SearchParamsAsString } from '../model/searchParamsAsString';
-import { SearchResponse } from '../model/searchResponse';
-import { SetSettingsResponse } from '../model/setSettingsResponse';
-=======
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
+import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { IndexSettings } from '../model/indexSettings';
->>>>>>> main
+import type { ListIndicesObject } from '../model/listIndicesObject';
+import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import { ApiKeyAuth } from '../model/models';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
+import type { OperationIndexObject } from '../model/operationIndexObject';
+import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
@@ -167,18 +148,18 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-<<<<<<< HEAD
    * Delete an existing index.
-   * @summary delete index
-   * @param indexName The index in which to perform the request
+   *
+   * @summary Delete index.
+   * @param indexName  - The index in which to perform the request.
    */
-  public async deleteIndex(indexName: string): Promise<DeleteIndexResponse> {
+  deleteIndex(indexName: string): Promise<DeleteIndexResponse> {
     const path = '/1/indexes/{indexName}'.replace(
-      '{' + 'indexName' + '}',
+      '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (indexName === null || indexName === undefined) {
       throw new Error(
@@ -199,9 +180,7 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-=======
    * Retrieve settings of a given indexName.
->>>>>>> main
    *
    * @param indexName  - The index in which to perform the request.
    */
@@ -232,16 +211,17 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Get search results for the given requests.
+   * List existing indexes from an application.
    *
-<<<<<<< HEAD
-   * @summary List existing indexes
-   * @param listIndicesObject
+   * @summary List existing indexes.
+   * @param listIndicesObject - The listIndicesObject.
    */
-  public async listIndices(listIndicesObject: ListIndicesObject): Promise<ListIndicesResponse> {
+  listIndices(
+    listIndicesObject: ListIndicesObject
+  ): Promise<ListIndicesResponse> {
     const path = '/1/indexes';
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (listIndicesObject === null || listIndicesObject === undefined) {
       throw new Error(
@@ -263,12 +243,9 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Get search results for the given requests.
    *
-   * @summary Get search results for the given requests.
-   * @param multipleQueriesObject
-=======
    * @param multipleQueriesObject - The multipleQueriesObject.
->>>>>>> main
    */
   multipleQueries(
     multipleQueriesObject: MultipleQueriesObject
@@ -297,22 +274,22 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-<<<<<<< HEAD
-   * Peforms a copy or a move operation on a index
-   * @summary Copy/move index
-   * @param indexName The index in which to perform the request
-   * @param operationIndexObject
+   * Peforms a copy or a move operation on a index.
+   *
+   * @summary Copy/move index.
+   * @param indexName  - The index in which to perform the request.
+   * @param operationIndexObject - The operationIndexObject.
    */
-  public async operationIndex(
+  operationIndex(
     indexName: string,
     operationIndexObject: OperationIndexObject
   ): Promise<OperationIndexResponse> {
     const path = '/1/indexes/{indexName}/operation'.replace(
-      '{' + 'indexName' + '}',
+      '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (indexName === null || indexName === undefined) {
       throw new Error(
@@ -340,16 +317,10 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Add an object to the index, automatically assigning it an object ID
-   * @summary Save object
-   * @param indexName The index in which to perform the request
-   * @param requestBody
-=======
    * Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName  - The index in which to perform the request.
    * @param requestBody  - The Algolia object.
->>>>>>> main
    */
   saveObject(
     indexName: string,

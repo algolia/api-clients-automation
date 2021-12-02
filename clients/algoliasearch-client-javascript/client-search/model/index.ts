@@ -1,34 +1,34 @@
 export type Index = {
   /**
-   * Name of the index
+   * Name of the index.
    */
   name?: string;
   /**
-   * Date of the index creation. (ISO-8601 format)
+   * Date of the index creation. (ISO-8601 format).
    */
   createdAt?: Date;
   /**
-   * Date of the index last update. (ISO-8601 format)
+   * Date of the index last update. (ISO-8601 format).
    */
   updatedAt?: Date;
   /**
-   * Entries in the index
+   * Entries in the index.
    */
   entries?: number;
   /**
-   * data size of the index
+   * Data size of the index.
    */
   dataSize?: number;
   /**
-   * file size of the index
+   * File size of the index.
    */
   fileSize?: number;
   /**
-   * Last build time
+   * Last build time.
    */
   lastBuildTimeS?: number;
   /**
-   * Number of pending tasks
+   * Number of pending tasks.
    */
   numberOfPendingTask?: number;
   /**

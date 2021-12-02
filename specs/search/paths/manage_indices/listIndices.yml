@@ -3,6 +3,7 @@ get:
     - search
   operationId: listIndices
   summary: List existing indexes
+  description: List existing indexes from an application.
   requestBody:
     required: true
     content:

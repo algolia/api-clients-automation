@@ -1,9 +1,9 @@
-import { Index } from './index';
+import type { Index } from './index';
 
 export type ListIndicesResponse = {
-  items?: Array<Index>;
+  items?: Index[];
   /**
-   * Number of pages
+   * Number of pages.
    */
   nbPages?: number;
 };
