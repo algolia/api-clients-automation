@@ -24,7 +24,7 @@
     "lint": "eslint --ext=ts .",
     "format:specs": "yarn prettier --write specs",
     "generate:js:recommend": "yarn openapi-generator-cli generate --generator-key javascript-recommend && CLIENT=recommend yarn utils:import-js && CLIENT=clients/algoliasearch-client-javascript/recommend/ yarn lint:client:fix",
-    "generate:js:search": "yarn openapi-generator-cli generate --generator-key javascript-client-search && CLIENT=client-search yarn utils:import-js && CLIENT=clients/algoliasearch-client-javascript/client-search/ yarn lint:client:fix",
+    "generate:js:search": "yarn openapi-generator-cli generate --generator-key javascript-search && CLIENT=client-search yarn utils:import-js && CLIENT=clients/algoliasearch-client-javascript/client-search/ yarn lint:client:fix",
     "generate:js": "yarn generate:js:search && yarn generate:js:recommend",
     "generate:recommend": "yarn generate:js:recommend",
     "generate:search": "yarn generate:js:search",
