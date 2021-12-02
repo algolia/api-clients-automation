@@ -8,7 +8,7 @@ listIndicesResponse:
         $ref: '#/index'
     nbPages:
       type: integer
-      description: 'Number of pages'
+      description: Number of pages
       example: 100
 
 index:
@@ -21,11 +21,11 @@ index:
     createdAt:
       type: string
       format: date-time
-      description: Date of the index creation. (ISO-8601 format)
+      description: Date of the index creation (ISO-8601 format).
     updatedAt:
       type: string
       format: date-time
-      description: Date of the index last update. (ISO-8601 format)
+      description: Date of the index last update (ISO-8601 format).
     entries:
       type: integer
       description: Entries in the index
@@ -44,3 +44,12 @@ index:
     pendingTask:
       type: boolean
       description: Pending task ?
+  required:
+    - name
+    - createdAt
+    - updatedAt
+    - entries
+    - dataSize
+    - fileSize
+    - lastBuildTimeS
+    - pendingTask

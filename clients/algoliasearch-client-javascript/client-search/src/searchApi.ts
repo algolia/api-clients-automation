@@ -2,7 +2,6 @@ import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { IndexSettings } from '../model/indexSettings';
-import type { ListIndicesObject } from '../model/listIndicesObject';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import { ApiKeyAuth } from '../model/models';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
@@ -214,25 +213,20 @@ export class SearchApi {
    * List existing indexes from an application.
    *
    * @summary List existing indexes.
-   * @param listIndicesObject - The listIndicesObject.
+   * @param page  - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    */
-  listIndices(
-    listIndicesObject: ListIndicesObject
-  ): Promise<ListIndicesResponse> {
+  listIndices(page?: number): Promise<ListIndicesResponse> {
     const path = '/1/indexes';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (listIndicesObject === null || listIndicesObject === undefined) {
-      throw new Error(
-        'Required parameter listIndicesObject was null or undefined when calling listIndices.'
-      );
+    if (page !== undefined) {
+      queryParameters.Page = page.toString();
     }
 
     const request: Request = {
       method: 'GET',
       path,
-      data: listIndicesObject,
     };
 
     const requestOptions: RequestOptions = {

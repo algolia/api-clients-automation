@@ -4,7 +4,7 @@ export type DeleteIndexResponse = {
    */
   taskID?: number;
   /**
-   * Date of deletion. (ISO-8601 format).
+   * Date of deletion (ISO-8601 format).
    */
   deleteAt?: Date;
 };

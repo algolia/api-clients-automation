@@ -13,7 +13,6 @@ export * from './highlightResult';
 export * from './index';
 export * from './indexSettings';
 export * from './indexSettingsAsSearchParams';
-export * from './listIndicesObject';
 export * from './listIndicesResponse';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';

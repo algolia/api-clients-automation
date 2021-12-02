@@ -4,26 +4,14 @@ get:
   operationId: listIndices
   summary: List existing indexes
   description: List existing indexes from an application.
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          title: listIndicesObject
-          type: object
-          additionalProperties: false
-          properties:
-            page:
-              type: integer
-              default: null
-              description: Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Page'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            title: listIndicesResponse
             $ref: '../../common/schemas/listIndicesResponse.yml#/listIndicesResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
