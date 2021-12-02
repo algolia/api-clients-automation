@@ -47,8 +47,8 @@ export type Headers = Record<string, string>;
 
 export type Host = {
   url: string;
-  accept?: 'read' | 'readWrite' | 'write';
-  protocol?: 'http' | 'https';
+  accept: 'read' | 'readWrite' | 'write';
+  protocol: 'http' | 'https';
 };
 
 export type StackFrame = {
