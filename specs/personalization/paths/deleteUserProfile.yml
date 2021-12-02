@@ -15,7 +15,7 @@ delete:
             title: deleteUserProfileResponse
             type: object
             additionalProperties: false
-            require:
+            required:
               - userToken
               - deletedUntil
             properties:
