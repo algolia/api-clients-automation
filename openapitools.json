@@ -17,6 +17,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-search",
+          "packageName": "@algolia/client-search",
           "npmVersion": "5.0.0"
         }
       },
@@ -35,6 +36,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/recommend",
+          "packageName": "@algolia/recommend",
           "npmVersion": "5.0.0"
         }
       }

@@ -25,7 +25,6 @@ type CTSBlock = {
 // Array of test per client
 type CTS = Record<string, CTSBlock[]>;
 
-const packageNameMapping: Record<Language, string> = { javascript: 'npmName' };
 const extensionForLanguage: Record<Language, string> = {
   javascript: '.test.ts',
 };
@@ -35,15 +34,18 @@ const cts: CTS = {};
 // For each generator, we map the packageName with the language and client
 const packageNames: Record<string, Record<Language, string>> = Object.entries(
   openapitools['generator-cli'].generators
-).reduce((prev, curr) => {
-  const [lang, client] = curr[0].split('-') as [Language, string];
+).reduce((prev, [clientName, clientConfig]) => {
   const obj = prev;
+  const [lang, client] = clientName.split('-') as [Language, string];
+
   if (!(lang in prev)) {
     obj[lang] = {};
   }
-  obj[lang][client] = curr[1].additionalProperties[packageNameMapping[lang]];
+
+  obj[lang][client] = clientConfig.additionalProperties.packageName;
+
   return obj;
-}, {});
+}, {} as Record<string, Record<string, string>>);
 
 async function createOutputDir(language: Language): Promise<void> {
   await fsp.mkdir(`output/${language}`, { recursive: true });
@@ -81,6 +83,13 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       (await fsp.readFile(file.path)).toString()
     );
 
+    // check test validity against spec
+    if (!operations.includes(operationId)) {
+      throw new Error(
+        `cannot find operationId ${operationId} for the ${client} client`
+      );
+    }
+
     // for now we stringify all params for mustache to render them properly
     for (const test of tests) {
       for (let i = 0; i < test.parameters.length; i++) {
@@ -96,13 +105,6 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
 
       // stringify request.data too
       test.request.data = JSON.stringify(test.request.data);
-    }
-
-    // check test validity against spec
-    if (!operations.includes(operationId)) {
-      throw new Error(
-        `cannot find operationId ${operationId} for the ${client} client`
-      );
     }
     ctsClient.push(...tests);
   }
@@ -156,9 +158,12 @@ async function parseCLI(args: string[]): Promise<void> {
   if (args.length === 3 && args[2] === 'all') {
     toGenerate = [...availableLanguages];
   } else {
-    const languages = args.slice(2).flatMap((l) => l.split(' ')) as Language[];
-    if (!languages.every((lang) => availableLanguages.includes(lang))) {
-      console.log('unkown language: ', languages.join(', '));
+    const languages = args[2].split(' ') as Language[];
+    const unknownLanguages = languages.filter(
+      (lang) => !availableLanguages.includes(lang)
+    );
+    if (unknownLanguages.length > 0) {
+      console.log('unkown language(s): ', unknownLanguages.join(', '));
       printUsage();
     }
     toGenerate = languages;

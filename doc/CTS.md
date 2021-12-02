@@ -6,7 +6,7 @@ It is automaticaly generated for all languages, from a JSON entry point.
 ## How to run it
 
 ```bash
-yarn cts:generate all
+yarn cts:generate
 yarn cts:test
 ```
 
