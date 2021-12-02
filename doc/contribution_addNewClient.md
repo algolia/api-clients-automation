@@ -28,7 +28,15 @@ You will need to implement:
 
 - An `init` method
 - The `retry strategy` with your custom transporter
+<<<<<<< HEAD
 - Handle client with different hosts (e.g. `personalization`)
+=======
+- At least 2 requester:
+  - http requester, using the standard library
+  - echo requester that send the request back, used by the CTS
+- A logger that the user can swap
+- More to come...
+>>>>>>> main
 
 ### Init method
 
