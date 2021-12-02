@@ -1,26 +1,26 @@
 export type Index = {
   /**
-   * Name of the index.
+   * Index name.
    */
   name: string;
   /**
-   * Date of the index creation (ISO-8601 format).
+   * Index creation date. An empty string means that the index has no records.
    */
   createdAt: Date;
   /**
-   * Date of the index last update (ISO-8601 format).
+   * Date of last update (ISO-8601 format).
    */
   updatedAt: Date;
   /**
-   * Entries in the index.
+   * Number of records contained in the index.
    */
   entries: number;
   /**
-   * Data size of the index.
+   * Number of bytes of the index in minified format.
    */
   dataSize: number;
   /**
-   * File size of the index.
+   * Number of bytes of the index binary file.
    */
   fileSize: number;
   /**
@@ -28,11 +28,19 @@ export type Index = {
    */
   lastBuildTimeS: number;
   /**
-   * Number of pending tasks.
+   * Number of pending indexing operations. This value is deprecated and should not be used.
    */
   numberOfPendingTask?: number;
   /**
-   * Pending task ?
+   * A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
    */
   pendingTask: boolean;
+  /**
+   * Only present if the index is a replica. Contains the name of the related primary index.
+   */
+  primary?: string;
+  /**
+   * Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
+   */
+  replicas?: string[];
 };

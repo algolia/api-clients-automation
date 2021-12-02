@@ -4,11 +4,12 @@ listIndicesResponse:
   properties:
     items:
       type: array
+      description: List of the fetched indices.
       items:
         $ref: '#/index'
     nbPages:
       type: integer
-      description: Number of pages
+      description: Number of pages.
       example: 100
 
 index:
@@ -17,33 +18,39 @@ index:
   properties:
     name:
       type: string
-      description: Name of the index
+      description: Index name.
     createdAt:
       type: string
       format: date-time
-      description: Date of the index creation (ISO-8601 format).
+      description: Index creation date. An empty string means that the index has no records.
     updatedAt:
-      type: string
-      format: date-time
-      description: Date of the index last update (ISO-8601 format).
+      $ref: '../../../common/parameters.yml#/updatedAt'
     entries:
       type: integer
-      description: Entries in the index
+      description: Number of records contained in the index.
     dataSize:
       type: integer
-      description: data size of the index
+      description: Number of bytes of the index in minified format.
     fileSize:
       type: integer
-      description: file size of the index
+      description: Number of bytes of the index binary file.
     lastBuildTimeS:
       type: integer
       description: Last build time
     numberOfPendingTask:
       type: integer
-      description: Number of pending tasks
+      description: Number of pending indexing operations. This value is deprecated and should not be used.
     pendingTask:
       type: boolean
-      description: Pending task ?
+      description: A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
+    primary:
+      type: string
+      description: Only present if the index is a replica. Contains the name of the related primary index.
+    replicas:
+      type: array
+      items:
+        type: string
+      description: Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
   required:
     - name
     - createdAt

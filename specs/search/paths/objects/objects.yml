@@ -42,7 +42,7 @@ delete:
   tags:
     - search
   operationId: deleteIndex
-  summary: delete index
+  summary: Delete index.
   description: Delete an existing index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
