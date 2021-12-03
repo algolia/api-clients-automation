@@ -26,7 +26,6 @@ export * from './record';
 export * from './saveObjectResponse';
 export * from './searchHits';
 export * from './searchParams';
-export * from './searchParamsAsString';
 export * from './searchResponse';
 export * from './setSettingsResponse';
 export * from './snippetResult';
