@@ -1,6 +1,4 @@
 node_modules
 dist
-.git_push.sh
-.openapi-generator-ignore
 .openapi-generator
 .env
