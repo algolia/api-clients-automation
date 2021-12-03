@@ -8,6 +8,15 @@ IndexName:
     type: string
     example: 'myIndexName'
 
+ObjectID:
+  name: objectID
+  in: path
+  description: Unique identifier of an object.
+  required: true
+  schema:
+    type: string
+    example: '123'
+
 # query
 ForwardToReplicas:
   in: query
@@ -16,7 +25,6 @@ ForwardToReplicas:
   schema:
     type: boolean
 
-# query
 Page:
   in: query
   name: Page
@@ -26,6 +34,14 @@ Page:
     nullable: true
     default: null
 
+HitsPerPage:
+  in: query
+  name: hitsPerPage
+  description: Maximum number of objects to retrieve.
+  schema:
+    type: integer
+    default: 100
+
 # misc
 taskID:
   type: integer
@@ -34,6 +50,10 @@ taskID:
 objectID:
   type: string
   description: Unique identifier of the object.
+
+id:
+  type: string
+  description: objectID of the inserted object.
 
 objectIDs:
   type: array

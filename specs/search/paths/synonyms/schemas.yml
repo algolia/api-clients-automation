@@ -1,0 +1,69 @@
+synonymsObject:
+  type: array
+  description: Array of synonym objects.
+  items:
+    $ref: '#/synonymObject'
+
+synonymObject:
+  type: object
+  description: Synonym object.
+  additionalProperties: false
+  properties:
+    objectID:
+      type: string
+      description: Unique identifier of the synonym object to be created or updated.
+    type:
+      $ref: '#/synonymType'
+    synonyms:
+      type: array
+      items:
+        type: string
+      description: Words or phrases to be considered equivalent.
+    input:
+      type: string
+      description: Word or phrase to appear in query strings (for onewaysynonym).
+    word:
+      type: string
+      description: Word or phrase to appear in query strings (for altcorrection1 and altcorrection2).
+    corrections:
+      type: array
+      items:
+        type: string
+      description: Words to be matched in records.
+    placeholder:
+      type: string
+      description: Token to be put inside records.
+    replacements:
+      type: array
+      items:
+        type: string
+      description: List of query words that will match the token.
+  required:
+    - operation
+    - destination
+
+synonymType:
+  type: string
+  enum:
+    [
+      'synonym',
+      'onewaysynonym',
+      'altcorrection1',
+      'altcorrection2',
+      'placeholder',
+    ]
+  description: Type of the synonym object.
+
+searchSynonymsResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    hits:
+      type: array
+      items:
+        $ref: '#/synonymObject'
+      description: List of synonym hits.
+    nbHits:
+      type: integer
+      description: Number of hits that the search query matched
+      example: 20
