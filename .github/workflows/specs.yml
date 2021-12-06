@@ -8,16 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: '11'
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+      - uses: './.github/setup/action.yml'
 
       - name: Install Dependencies
         run: yarn install
@@ -29,4 +20,4 @@ jobs:
         run: yarn validate
 
       - name: Lint
-        run: yarn prettier --check specs
+        run: yamllint specs
