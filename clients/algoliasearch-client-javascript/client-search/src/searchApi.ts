@@ -59,6 +59,7 @@ export class SearchApi {
   ) {
     this.setApiKey(SearchApiKeys.appId, appId);
     this.setApiKey(SearchApiKeys.apiKey, apiKey);
+
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(appId),
       baseHeaders: {
