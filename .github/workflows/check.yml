@@ -1,4 +1,4 @@
-name: specs
+name: Checks
 
 on: [push]
 
@@ -63,7 +63,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: 'clients/algoliasearch-client-javascript'
-          key: build-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-clients-${{ hashFiles('**/yarn.lock') }}
 
   cts:
     runs-on: ubuntu-latest

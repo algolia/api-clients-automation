@@ -3,8 +3,7 @@ yaml-files:
   - '*.yml'
 
 rules:
-  line-length:
-    level: warning
+  line-length: disable
   braces: enable
   brackets: enable
   colons: enable
@@ -14,8 +13,7 @@ rules:
   comments-indentation:
     level: warning
   document-end: disable
-  document-start:
-    level: warning
+  document-start: { present: false }
   empty-lines: enable
   empty-values: disable
   hyphens: enable
