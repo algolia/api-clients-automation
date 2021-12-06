@@ -1,31 +1,29 @@
 name: Setup
 
-description: Setup GitHub Actions environment
+description: Setup CI environment.
 
 runs:
   using: 'composite'
   steps:
-    - name: Update ubuntu packages
+    - name: Restore cache
+      uses: ./.github/actions/cache
+
+    - name: Update apt packages
       shell: bash
       run: sudo apt update
 
-    - uses: actions/setup-java@v2
+    - name: Install Java
+      uses: actions/setup-java@v2
       with:
         distribution: 'zulu'
         java-version: '11'
 
-    - uses: actions/setup-node@v2
+    - name: Install Node
+      uses: actions/setup-node@v2
       with:
         node-version-file: '.nvmrc'
-        cache: 'yarn'
-        cache-dependency-path: 'yarn.lock'
 
-    - uses: actions/cache@v2
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-    - name: Install Dependencies
+    - name: Install JavaScript Dependencies
       shell: bash
       run: yarn install
 
