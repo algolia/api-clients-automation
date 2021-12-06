@@ -7,7 +7,7 @@ runs:
   steps:
     - name: Update ubuntu packages
       shell: bash
-      run: apt update
+      run: sudo apt update
 
     - uses: actions/setup-java@v2
       with:
@@ -31,4 +31,4 @@ runs:
 
     - name: Install spec linter
       shell: bash
-      run: apt-get -y install yamllint
+      run: sudo apt-get -y install yamllint
