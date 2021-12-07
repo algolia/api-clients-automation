@@ -15,16 +15,10 @@ runs:
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore node_modules
       uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-    - name: Restore JavaScript client
-      uses: actions/cache@v2
-      with:
-        path: 'clients/algoliasearch-client-javascript'
-        key: ${{ runner.os }}-clients--${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
