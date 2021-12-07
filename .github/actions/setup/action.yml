@@ -16,7 +16,7 @@ runs:
       uses: actions/setup-java@v2
       with:
         distribution: 'zulu'
-        java-version: '11.52.13'
+        java-version: '11.0.4'
 
     - name: Install Node
       uses: actions/setup-node@v2
