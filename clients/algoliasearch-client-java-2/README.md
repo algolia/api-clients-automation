@@ -2,7 +2,6 @@
 
 Search API
 - API version: 0.1.0
-  - Build date: 2021-12-03T15:12:45.552525+01:00[Europe/Paris]
 
 API powering the Search feature of Algolia.
 
