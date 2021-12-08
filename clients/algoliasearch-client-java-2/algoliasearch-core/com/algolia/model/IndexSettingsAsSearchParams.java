@@ -501,7 +501,7 @@ public class IndexSettingsAsSearchParams {
 
   public static final String SERIALIZED_NAME_RENDERING_CONTENT = "renderingContent";
   @SerializedName(SERIALIZED_NAME_RENDERING_CONTENT)
-  private Object renderingContent;
+  private Object renderingContent = new Object();
 
 
   public IndexSettingsAsSearchParams searchableAttributes(List<String> searchableAttributes) {

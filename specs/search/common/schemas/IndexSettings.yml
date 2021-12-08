@@ -39,7 +39,7 @@ baseIndexSettings:
       type: object
       additionalProperties: true
       description: Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
-      default: null
+      default: {}
     indexLanguages:
       type: array
       items:
@@ -70,7 +70,7 @@ baseIndexSettings:
       type: object
       additionalProperties: true
       description: Lets you store custom data in your indices.
-      default: null
+      default: {}
 
 indexSettingsAsSearchParams:
   type: object
@@ -300,4 +300,4 @@ indexSettingsAsSearchParams:
     renderingContent:
       type: object
       description: Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
-      default: null
+      default: {}
