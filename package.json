@@ -30,7 +30,6 @@
     "playground:js:personalization": "yarn workspace javascript-playground start:personalization",
     "playground:js:recommend": "yarn workspace javascript-playground start:recommend",
     "playground:js:search": "yarn workspace javascript-playground start:search",
-    "utils:import-js": "mkdir -p -- clients/algoliasearch-client-javascript/${CLIENT}/utils && cp -R clients/algoliasearch-client-javascript/utils/ clients/algoliasearch-client-javascript/${CLIENT}/utils",
     "validate": "yarn swagger-cli validate specs/dist/search.yml && yarn swagger-cli validate specs/dist/recommend.yml && yarn swagger-cli validate specs/dist/personalization.yml"
   },
   "devDependencies": {
