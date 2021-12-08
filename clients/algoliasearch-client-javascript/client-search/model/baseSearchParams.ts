@@ -70,7 +70,7 @@ export type BaseSearchParams = {
   /**
    * Define the maximum radius for a geo search (in meters).
    */
-  aroundRadius?: number;
+  aroundRadius?: number | string | null;
   /**
    * Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
    */
