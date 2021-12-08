@@ -27,8 +27,6 @@
       <groupId>com.algolia</groupId>
       <artifactId>algoliasearch-client-java-2</artifactId>
       <version>0.1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/../../clients/algoliasearch-client-java-2/target/algoliasearch-client-java-2-0.1.0.jar</systemPath>
     </dependency>
   </dependencies>
 
@@ -76,7 +74,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2.1</version>
+        <version>3.0.0</version>
         <configuration>
           <mainClass>com.test.App</mainClass>
         </configuration>

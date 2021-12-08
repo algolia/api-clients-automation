@@ -15,3 +15,5 @@ yarn-error.log
 
 .vscode
 target
+
+**/.DS_Store
