@@ -90,7 +90,11 @@ baseSearchParams:
       default: false
     aroundRadius:
       description: Define the maximum radius for a geo search (in meters).
-      type: integer
+      oneOf:
+        - type: integer
+          minimum: 1
+        - type: string
+          enum: [all]
     aroundPrecision:
       type: integer
       description: Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
