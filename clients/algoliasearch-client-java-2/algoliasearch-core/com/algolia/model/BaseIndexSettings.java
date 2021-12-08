@@ -90,7 +90,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings addReplicasItem(String replicasItem) {
     if (this.replicas == null) {
-      this.replicas = new ArrayList<String>();
+      this.replicas = new ArrayList<>();
     }
     this.replicas.add(replicasItem);
     return this;
@@ -144,7 +144,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings addDisableTypoToleranceOnWordsItem(String disableTypoToleranceOnWordsItem) {
     if (this.disableTypoToleranceOnWords == null) {
-      this.disableTypoToleranceOnWords = new ArrayList<String>();
+      this.disableTypoToleranceOnWords = new ArrayList<>();
     }
     this.disableTypoToleranceOnWords.add(disableTypoToleranceOnWordsItem);
     return this;
@@ -175,7 +175,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings addAttributesToTransliterateItem(String attributesToTransliterateItem) {
     if (this.attributesToTransliterate == null) {
-      this.attributesToTransliterate = new ArrayList<String>();
+      this.attributesToTransliterate = new ArrayList<>();
     }
     this.attributesToTransliterate.add(attributesToTransliterateItem);
     return this;
@@ -206,7 +206,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings addCamelCaseAttributesItem(String camelCaseAttributesItem) {
     if (this.camelCaseAttributes == null) {
-      this.camelCaseAttributes = new ArrayList<String>();
+      this.camelCaseAttributes = new ArrayList<>();
     }
     this.camelCaseAttributes.add(camelCaseAttributesItem);
     return this;
@@ -237,7 +237,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings putDecompoundedAttributesItem(String key, Object decompoundedAttributesItem) {
     if (this.decompoundedAttributes == null) {
-      this.decompoundedAttributes = new HashMap<String, Object>();
+      this.decompoundedAttributes = new HashMap<>();
     }
     this.decompoundedAttributes.put(key, decompoundedAttributesItem);
     return this;
@@ -268,7 +268,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings addIndexLanguagesItem(String indexLanguagesItem) {
     if (this.indexLanguages == null) {
-      this.indexLanguages = new ArrayList<String>();
+      this.indexLanguages = new ArrayList<>();
     }
     this.indexLanguages.add(indexLanguagesItem);
     return this;
@@ -322,7 +322,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings addDisablePrefixOnAttributesItem(String disablePrefixOnAttributesItem) {
     if (this.disablePrefixOnAttributes == null) {
-      this.disablePrefixOnAttributes = new ArrayList<String>();
+      this.disablePrefixOnAttributes = new ArrayList<>();
     }
     this.disablePrefixOnAttributes.add(disablePrefixOnAttributesItem);
     return this;
@@ -376,7 +376,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings addNumericAttributesForFilteringItem(String numericAttributesForFilteringItem) {
     if (this.numericAttributesForFiltering == null) {
-      this.numericAttributesForFiltering = new ArrayList<String>();
+      this.numericAttributesForFiltering = new ArrayList<>();
     }
     this.numericAttributesForFiltering.add(numericAttributesForFilteringItem);
     return this;
@@ -407,7 +407,7 @@ public class BaseIndexSettings {
 
   public BaseIndexSettings putUserDataItem(String key, Object userDataItem) {
     if (this.userData == null) {
-      this.userData = new HashMap<String, Object>();
+      this.userData = new HashMap<>();
     }
     this.userData.put(key, userDataItem);
     return this;

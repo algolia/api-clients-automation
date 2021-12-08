@@ -71,7 +71,7 @@ public class BatchResponse {
 
   public BatchResponse addObjectIDsItem(String objectIDsItem) {
     if (this.objectIDs == null) {
-      this.objectIDs = new ArrayList<String>();
+      this.objectIDs = new ArrayList<>();
     }
     this.objectIDs.add(objectIDsItem);
     return this;

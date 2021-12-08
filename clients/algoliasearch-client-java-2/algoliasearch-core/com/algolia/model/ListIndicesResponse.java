@@ -49,7 +49,7 @@ public class ListIndicesResponse {
 
   public ListIndicesResponse addItemsItem(Index itemsItem) {
     if (this.items == null) {
-      this.items = new ArrayList<Index>();
+      this.items = new ArrayList<>();
     }
     this.items.add(itemsItem);
     return this;

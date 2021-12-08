@@ -194,7 +194,7 @@ public class OperationIndexObject {
 
   public OperationIndexObject addScopeItem(ScopeEnum scopeItem) {
     if (this.scope == null) {
-      this.scope = new ArrayList<ScopeEnum>();
+      this.scope = new ArrayList<>();
     }
     this.scope.add(scopeItem);
     return this;

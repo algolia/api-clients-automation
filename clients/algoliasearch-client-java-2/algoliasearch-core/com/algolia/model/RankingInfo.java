@@ -178,7 +178,7 @@ public class RankingInfo {
 
   public RankingInfo putMatchedGeoLocationItem(String key, RankingInfoMatchedGeoLocation matchedGeoLocationItem) {
     if (this.matchedGeoLocation == null) {
-      this.matchedGeoLocation = new HashMap<String, RankingInfoMatchedGeoLocation>();
+      this.matchedGeoLocation = new HashMap<>();
     }
     this.matchedGeoLocation.put(key, matchedGeoLocationItem);
     return this;

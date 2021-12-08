@@ -46,7 +46,7 @@ public class BatchObject {
 
   public BatchObject addRequestsItem(Operation requestsItem) {
     if (this.requests == null) {
-      this.requests = new ArrayList<Operation>();
+      this.requests = new ArrayList<>();
     }
     this.requests.add(requestsItem);
     return this;

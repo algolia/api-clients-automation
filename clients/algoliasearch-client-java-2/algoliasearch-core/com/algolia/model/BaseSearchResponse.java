@@ -299,7 +299,7 @@ public class BaseSearchResponse {
 
   public BaseSearchResponse putFacetsItem(String key, Map<String, String> facetsItem) {
     if (this.facets == null) {
-      this.facets = new HashMap<String, Map<String, String>>();
+      this.facets = new HashMap<>();
     }
     this.facets.put(key, facetsItem);
     return this;
@@ -330,7 +330,7 @@ public class BaseSearchResponse {
 
   public BaseSearchResponse putFacetsStatsItem(String key, BaseSearchResponseFacetsStats facetsStatsItem) {
     if (this.facetsStats == null) {
-      this.facetsStats = new HashMap<String, BaseSearchResponseFacetsStats>();
+      this.facetsStats = new HashMap<>();
     }
     this.facetsStats.put(key, facetsStatsItem);
     return this;
@@ -683,7 +683,7 @@ public class BaseSearchResponse {
 
   public BaseSearchResponse putUserDataItem(String key, Object userDataItem) {
     if (this.userData == null) {
-      this.userData = new HashMap<String, Object>();
+      this.userData = new HashMap<>();
     }
     this.userData.put(key, userDataItem);
     return this;

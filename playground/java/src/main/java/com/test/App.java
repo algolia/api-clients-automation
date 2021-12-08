@@ -1,4 +1,4 @@
-package com.algolia;
+package com.test;
 
 /**
  * Hello world!
@@ -8,6 +8,9 @@ package com.algolia;
 import com.algolia.auth.*;
 import com.algolia.model.*;
 import com.algolia.search.SearchApi;
+import com.algolia.ApiClient;
+import com.algolia.ApiException;
+import com.algolia.Configuration;
 
 public class App {
     public static void main(String[] args) {

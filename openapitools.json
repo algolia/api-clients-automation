@@ -76,7 +76,9 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-java-2",
         "additionalProperties": {
-          "sourceFolder": "algoliasearch-core"
+          "sourceFolder": "algoliasearch-core",
+          "java8": true,
+          "dateLibrary": "java8"
         }
       }
     }

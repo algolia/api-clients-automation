@@ -23,9 +23,9 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.threeten.bp.OffsetDateTime;
 
 /**
  * Index
@@ -315,7 +315,7 @@ public class Index {
 
   public Index addReplicasItem(String replicasItem) {
     if (this.replicas == null) {
-      this.replicas = new ArrayList<String>();
+      this.replicas = new ArrayList<>();
     }
     this.replicas.add(replicasItem);
     return this;

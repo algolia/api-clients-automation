@@ -716,7 +716,7 @@ public class SearchParams {
 
   public SearchParams addFacetFiltersItem(String facetFiltersItem) {
     if (this.facetFilters == null) {
-      this.facetFilters = new ArrayList<String>();
+      this.facetFilters = new ArrayList<>();
     }
     this.facetFilters.add(facetFiltersItem);
     return this;
@@ -747,7 +747,7 @@ public class SearchParams {
 
   public SearchParams addOptionalFiltersItem(String optionalFiltersItem) {
     if (this.optionalFilters == null) {
-      this.optionalFilters = new ArrayList<String>();
+      this.optionalFilters = new ArrayList<>();
     }
     this.optionalFilters.add(optionalFiltersItem);
     return this;
@@ -778,7 +778,7 @@ public class SearchParams {
 
   public SearchParams addNumericFiltersItem(String numericFiltersItem) {
     if (this.numericFilters == null) {
-      this.numericFilters = new ArrayList<String>();
+      this.numericFilters = new ArrayList<>();
     }
     this.numericFilters.add(numericFiltersItem);
     return this;
@@ -809,7 +809,7 @@ public class SearchParams {
 
   public SearchParams addTagFiltersItem(String tagFiltersItem) {
     if (this.tagFilters == null) {
-      this.tagFilters = new ArrayList<String>();
+      this.tagFilters = new ArrayList<>();
     }
     this.tagFilters.add(tagFiltersItem);
     return this;
@@ -863,7 +863,7 @@ public class SearchParams {
 
   public SearchParams addFacetsItem(String facetsItem) {
     if (this.facets == null) {
-      this.facets = new ArrayList<String>();
+      this.facets = new ArrayList<>();
     }
     this.facets.add(facetsItem);
     return this;
@@ -1150,7 +1150,7 @@ public class SearchParams {
 
   public SearchParams addInsideBoundingBoxItem(BigDecimal insideBoundingBoxItem) {
     if (this.insideBoundingBox == null) {
-      this.insideBoundingBox = new ArrayList<BigDecimal>();
+      this.insideBoundingBox = new ArrayList<>();
     }
     this.insideBoundingBox.add(insideBoundingBoxItem);
     return this;
@@ -1181,7 +1181,7 @@ public class SearchParams {
 
   public SearchParams addInsidePolygonItem(BigDecimal insidePolygonItem) {
     if (this.insidePolygon == null) {
-      this.insidePolygon = new ArrayList<BigDecimal>();
+      this.insidePolygon = new ArrayList<>();
     }
     this.insidePolygon.add(insidePolygonItem);
     return this;
@@ -1212,7 +1212,7 @@ public class SearchParams {
 
   public SearchParams addNaturalLanguagesItem(String naturalLanguagesItem) {
     if (this.naturalLanguages == null) {
-      this.naturalLanguages = new ArrayList<String>();
+      this.naturalLanguages = new ArrayList<>();
     }
     this.naturalLanguages.add(naturalLanguagesItem);
     return this;
@@ -1243,7 +1243,7 @@ public class SearchParams {
 
   public SearchParams addRuleContextsItem(String ruleContextsItem) {
     if (this.ruleContexts == null) {
-      this.ruleContexts = new ArrayList<String>();
+      this.ruleContexts = new ArrayList<>();
     }
     this.ruleContexts.add(ruleContextsItem);
     return this;
@@ -1389,7 +1389,7 @@ public class SearchParams {
 
   public SearchParams addAnalyticsTagsItem(String analyticsTagsItem) {
     if (this.analyticsTags == null) {
-      this.analyticsTags = new ArrayList<String>();
+      this.analyticsTags = new ArrayList<>();
     }
     this.analyticsTags.add(analyticsTagsItem);
     return this;
@@ -1489,7 +1489,7 @@ public class SearchParams {
 
   public SearchParams addSearchableAttributesItem(String searchableAttributesItem) {
     if (this.searchableAttributes == null) {
-      this.searchableAttributes = new ArrayList<String>();
+      this.searchableAttributes = new ArrayList<>();
     }
     this.searchableAttributes.add(searchableAttributesItem);
     return this;
@@ -1520,7 +1520,7 @@ public class SearchParams {
 
   public SearchParams addAttributesForFacetingItem(String attributesForFacetingItem) {
     if (this.attributesForFaceting == null) {
-      this.attributesForFaceting = new ArrayList<String>();
+      this.attributesForFaceting = new ArrayList<>();
     }
     this.attributesForFaceting.add(attributesForFacetingItem);
     return this;
@@ -1551,7 +1551,7 @@ public class SearchParams {
 
   public SearchParams addUnretrievableAttributesItem(String unretrievableAttributesItem) {
     if (this.unretrievableAttributes == null) {
-      this.unretrievableAttributes = new ArrayList<String>();
+      this.unretrievableAttributes = new ArrayList<>();
     }
     this.unretrievableAttributes.add(unretrievableAttributesItem);
     return this;
@@ -1582,7 +1582,7 @@ public class SearchParams {
 
   public SearchParams addAttributesToRetrieveItem(String attributesToRetrieveItem) {
     if (this.attributesToRetrieve == null) {
-      this.attributesToRetrieve = new ArrayList<String>();
+      this.attributesToRetrieve = new ArrayList<>();
     }
     this.attributesToRetrieve.add(attributesToRetrieveItem);
     return this;
@@ -1613,7 +1613,7 @@ public class SearchParams {
 
   public SearchParams addRestrictSearchableAttributesItem(String restrictSearchableAttributesItem) {
     if (this.restrictSearchableAttributes == null) {
-      this.restrictSearchableAttributes = new ArrayList<String>();
+      this.restrictSearchableAttributes = new ArrayList<>();
     }
     this.restrictSearchableAttributes.add(restrictSearchableAttributesItem);
     return this;
@@ -1644,7 +1644,7 @@ public class SearchParams {
 
   public SearchParams addRankingItem(String rankingItem) {
     if (this.ranking == null) {
-      this.ranking = new ArrayList<String>();
+      this.ranking = new ArrayList<>();
     }
     this.ranking.add(rankingItem);
     return this;
@@ -1675,7 +1675,7 @@ public class SearchParams {
 
   public SearchParams addCustomRankingItem(String customRankingItem) {
     if (this.customRanking == null) {
-      this.customRanking = new ArrayList<String>();
+      this.customRanking = new ArrayList<>();
     }
     this.customRanking.add(customRankingItem);
     return this;
@@ -1729,7 +1729,7 @@ public class SearchParams {
 
   public SearchParams addAttributesToHighlightItem(String attributesToHighlightItem) {
     if (this.attributesToHighlight == null) {
-      this.attributesToHighlight = new ArrayList<String>();
+      this.attributesToHighlight = new ArrayList<>();
     }
     this.attributesToHighlight.add(attributesToHighlightItem);
     return this;
@@ -1760,7 +1760,7 @@ public class SearchParams {
 
   public SearchParams addAttributesToSnippetItem(String attributesToSnippetItem) {
     if (this.attributesToSnippet == null) {
-      this.attributesToSnippet = new ArrayList<String>();
+      this.attributesToSnippet = new ArrayList<>();
     }
     this.attributesToSnippet.add(attributesToSnippetItem);
     return this;
@@ -1998,7 +1998,7 @@ public class SearchParams {
 
   public SearchParams addDisableTypoToleranceOnAttributesItem(String disableTypoToleranceOnAttributesItem) {
     if (this.disableTypoToleranceOnAttributes == null) {
-      this.disableTypoToleranceOnAttributes = new ArrayList<String>();
+      this.disableTypoToleranceOnAttributes = new ArrayList<>();
     }
     this.disableTypoToleranceOnAttributes.add(disableTypoToleranceOnAttributesItem);
     return this;
@@ -2121,7 +2121,7 @@ public class SearchParams {
 
   public SearchParams addQueryLanguagesItem(String queryLanguagesItem) {
     if (this.queryLanguages == null) {
-      this.queryLanguages = new ArrayList<String>();
+      this.queryLanguages = new ArrayList<>();
     }
     this.queryLanguages.add(queryLanguagesItem);
     return this;
@@ -2290,7 +2290,7 @@ public class SearchParams {
 
   public SearchParams addOptionalWordsItem(String optionalWordsItem) {
     if (this.optionalWords == null) {
-      this.optionalWords = new ArrayList<String>();
+      this.optionalWords = new ArrayList<>();
     }
     this.optionalWords.add(optionalWordsItem);
     return this;
@@ -2321,7 +2321,7 @@ public class SearchParams {
 
   public SearchParams addDisableExactOnAttributesItem(String disableExactOnAttributesItem) {
     if (this.disableExactOnAttributes == null) {
-      this.disableExactOnAttributes = new ArrayList<String>();
+      this.disableExactOnAttributes = new ArrayList<>();
     }
     this.disableExactOnAttributes.add(disableExactOnAttributesItem);
     return this;
@@ -2375,7 +2375,7 @@ public class SearchParams {
 
   public SearchParams addAlternativesAsExactItem(AlternativesAsExactEnum alternativesAsExactItem) {
     if (this.alternativesAsExact == null) {
-      this.alternativesAsExact = new ArrayList<AlternativesAsExactEnum>();
+      this.alternativesAsExact = new ArrayList<>();
     }
     this.alternativesAsExact.add(alternativesAsExactItem);
     return this;
@@ -2406,7 +2406,7 @@ public class SearchParams {
 
   public SearchParams addAdvancedSyntaxFeaturesItem(AdvancedSyntaxFeaturesEnum advancedSyntaxFeaturesItem) {
     if (this.advancedSyntaxFeatures == null) {
-      this.advancedSyntaxFeatures = new ArrayList<AdvancedSyntaxFeaturesEnum>();
+      this.advancedSyntaxFeatures = new ArrayList<>();
     }
     this.advancedSyntaxFeatures.add(advancedSyntaxFeaturesItem);
     return this;
@@ -2533,7 +2533,7 @@ public class SearchParams {
 
   public SearchParams addResponseFieldsItem(String responseFieldsItem) {
     if (this.responseFields == null) {
-      this.responseFields = new ArrayList<String>();
+      this.responseFields = new ArrayList<>();
     }
     this.responseFields.add(responseFieldsItem);
     return this;

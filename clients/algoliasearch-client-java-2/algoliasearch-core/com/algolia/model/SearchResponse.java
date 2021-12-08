@@ -135,7 +135,7 @@ public class SearchResponse {
 
   public static final String SERIALIZED_NAME_HITS = "hits";
   @SerializedName(SERIALIZED_NAME_HITS)
-  private List<Record> hits = new ArrayList<Record>();
+  private List<Record> hits = new ArrayList<>();
 
 
   public SearchResponse abTestID(Integer abTestID) {
@@ -307,7 +307,7 @@ public class SearchResponse {
 
   public SearchResponse putFacetsItem(String key, Map<String, String> facetsItem) {
     if (this.facets == null) {
-      this.facets = new HashMap<String, Map<String, String>>();
+      this.facets = new HashMap<>();
     }
     this.facets.put(key, facetsItem);
     return this;
@@ -338,7 +338,7 @@ public class SearchResponse {
 
   public SearchResponse putFacetsStatsItem(String key, BaseSearchResponseFacetsStats facetsStatsItem) {
     if (this.facetsStats == null) {
-      this.facetsStats = new HashMap<String, BaseSearchResponseFacetsStats>();
+      this.facetsStats = new HashMap<>();
     }
     this.facetsStats.put(key, facetsStatsItem);
     return this;
@@ -691,7 +691,7 @@ public class SearchResponse {
 
   public SearchResponse putUserDataItem(String key, Object userDataItem) {
     if (this.userData == null) {
-      this.userData = new HashMap<String, Object>();
+      this.userData = new HashMap<>();
     }
     this.userData.put(key, userDataItem);
     return this;

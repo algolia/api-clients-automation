@@ -512,7 +512,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addSearchableAttributesItem(String searchableAttributesItem) {
     if (this.searchableAttributes == null) {
-      this.searchableAttributes = new ArrayList<String>();
+      this.searchableAttributes = new ArrayList<>();
     }
     this.searchableAttributes.add(searchableAttributesItem);
     return this;
@@ -543,7 +543,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addAttributesForFacetingItem(String attributesForFacetingItem) {
     if (this.attributesForFaceting == null) {
-      this.attributesForFaceting = new ArrayList<String>();
+      this.attributesForFaceting = new ArrayList<>();
     }
     this.attributesForFaceting.add(attributesForFacetingItem);
     return this;
@@ -574,7 +574,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addUnretrievableAttributesItem(String unretrievableAttributesItem) {
     if (this.unretrievableAttributes == null) {
-      this.unretrievableAttributes = new ArrayList<String>();
+      this.unretrievableAttributes = new ArrayList<>();
     }
     this.unretrievableAttributes.add(unretrievableAttributesItem);
     return this;
@@ -605,7 +605,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addAttributesToRetrieveItem(String attributesToRetrieveItem) {
     if (this.attributesToRetrieve == null) {
-      this.attributesToRetrieve = new ArrayList<String>();
+      this.attributesToRetrieve = new ArrayList<>();
     }
     this.attributesToRetrieve.add(attributesToRetrieveItem);
     return this;
@@ -636,7 +636,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addRestrictSearchableAttributesItem(String restrictSearchableAttributesItem) {
     if (this.restrictSearchableAttributes == null) {
-      this.restrictSearchableAttributes = new ArrayList<String>();
+      this.restrictSearchableAttributes = new ArrayList<>();
     }
     this.restrictSearchableAttributes.add(restrictSearchableAttributesItem);
     return this;
@@ -667,7 +667,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addRankingItem(String rankingItem) {
     if (this.ranking == null) {
-      this.ranking = new ArrayList<String>();
+      this.ranking = new ArrayList<>();
     }
     this.ranking.add(rankingItem);
     return this;
@@ -698,7 +698,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addCustomRankingItem(String customRankingItem) {
     if (this.customRanking == null) {
-      this.customRanking = new ArrayList<String>();
+      this.customRanking = new ArrayList<>();
     }
     this.customRanking.add(customRankingItem);
     return this;
@@ -752,7 +752,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addAttributesToHighlightItem(String attributesToHighlightItem) {
     if (this.attributesToHighlight == null) {
-      this.attributesToHighlight = new ArrayList<String>();
+      this.attributesToHighlight = new ArrayList<>();
     }
     this.attributesToHighlight.add(attributesToHighlightItem);
     return this;
@@ -783,7 +783,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addAttributesToSnippetItem(String attributesToSnippetItem) {
     if (this.attributesToSnippet == null) {
-      this.attributesToSnippet = new ArrayList<String>();
+      this.attributesToSnippet = new ArrayList<>();
     }
     this.attributesToSnippet.add(attributesToSnippetItem);
     return this;
@@ -1021,7 +1021,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addDisableTypoToleranceOnAttributesItem(String disableTypoToleranceOnAttributesItem) {
     if (this.disableTypoToleranceOnAttributes == null) {
-      this.disableTypoToleranceOnAttributes = new ArrayList<String>();
+      this.disableTypoToleranceOnAttributes = new ArrayList<>();
     }
     this.disableTypoToleranceOnAttributes.add(disableTypoToleranceOnAttributesItem);
     return this;
@@ -1144,7 +1144,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addQueryLanguagesItem(String queryLanguagesItem) {
     if (this.queryLanguages == null) {
-      this.queryLanguages = new ArrayList<String>();
+      this.queryLanguages = new ArrayList<>();
     }
     this.queryLanguages.add(queryLanguagesItem);
     return this;
@@ -1313,7 +1313,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addOptionalWordsItem(String optionalWordsItem) {
     if (this.optionalWords == null) {
-      this.optionalWords = new ArrayList<String>();
+      this.optionalWords = new ArrayList<>();
     }
     this.optionalWords.add(optionalWordsItem);
     return this;
@@ -1344,7 +1344,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addDisableExactOnAttributesItem(String disableExactOnAttributesItem) {
     if (this.disableExactOnAttributes == null) {
-      this.disableExactOnAttributes = new ArrayList<String>();
+      this.disableExactOnAttributes = new ArrayList<>();
     }
     this.disableExactOnAttributes.add(disableExactOnAttributesItem);
     return this;
@@ -1398,7 +1398,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addAlternativesAsExactItem(AlternativesAsExactEnum alternativesAsExactItem) {
     if (this.alternativesAsExact == null) {
-      this.alternativesAsExact = new ArrayList<AlternativesAsExactEnum>();
+      this.alternativesAsExact = new ArrayList<>();
     }
     this.alternativesAsExact.add(alternativesAsExactItem);
     return this;
@@ -1429,7 +1429,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addAdvancedSyntaxFeaturesItem(AdvancedSyntaxFeaturesEnum advancedSyntaxFeaturesItem) {
     if (this.advancedSyntaxFeatures == null) {
-      this.advancedSyntaxFeatures = new ArrayList<AdvancedSyntaxFeaturesEnum>();
+      this.advancedSyntaxFeatures = new ArrayList<>();
     }
     this.advancedSyntaxFeatures.add(advancedSyntaxFeaturesItem);
     return this;
@@ -1556,7 +1556,7 @@ public class IndexSettingsAsSearchParams {
 
   public IndexSettingsAsSearchParams addResponseFieldsItem(String responseFieldsItem) {
     if (this.responseFields == null) {
-      this.responseFields = new ArrayList<String>();
+      this.responseFields = new ArrayList<>();
     }
     this.responseFields.add(responseFieldsItem);
     return this;

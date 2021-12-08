@@ -45,7 +45,7 @@ public class SearchHits {
 
   public SearchHits addHitsItem(Record hitsItem) {
     if (this.hits == null) {
-      this.hits = new ArrayList<Record>();
+      this.hits = new ArrayList<>();
     }
     this.hits.add(hitsItem);
     return this;

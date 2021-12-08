@@ -151,7 +151,7 @@ public class HighlightResult {
 
   public HighlightResult addMatchedWordsItem(String matchedWordsItem) {
     if (this.matchedWords == null) {
-      this.matchedWords = new ArrayList<String>();
+      this.matchedWords = new ArrayList<>();
     }
     this.matchedWords.add(matchedWordsItem);
     return this;

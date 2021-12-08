@@ -129,7 +129,7 @@ public class Operation {
 
   public Operation putBodyItem(String key, Object bodyItem) {
     if (this.body == null) {
-      this.body = new HashMap<String, Object>();
+      this.body = new HashMap<>();
     }
     this.body.put(key, bodyItem);
     return this;

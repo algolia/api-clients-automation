@@ -45,7 +45,7 @@ public class MultipleQueriesResponse {
 
   public MultipleQueriesResponse addResultsItem(SearchResponse resultsItem) {
     if (this.results == null) {
-      this.results = new ArrayList<SearchResponse>();
+      this.results = new ArrayList<>();
     }
     this.results.add(resultsItem);
     return this;

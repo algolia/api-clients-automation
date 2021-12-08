@@ -34,7 +34,7 @@ import java.util.List;
 public class MultipleQueriesObject {
   public static final String SERIALIZED_NAME_REQUESTS = "requests";
   @SerializedName(SERIALIZED_NAME_REQUESTS)
-  private List<MultipleQueries> requests = new ArrayList<MultipleQueries>();
+  private List<MultipleQueries> requests = new ArrayList<>();
 
   /**
    * Gets or Sets strategy

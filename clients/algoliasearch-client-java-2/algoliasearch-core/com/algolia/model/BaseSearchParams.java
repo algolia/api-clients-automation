@@ -242,7 +242,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addFacetFiltersItem(String facetFiltersItem) {
     if (this.facetFilters == null) {
-      this.facetFilters = new ArrayList<String>();
+      this.facetFilters = new ArrayList<>();
     }
     this.facetFilters.add(facetFiltersItem);
     return this;
@@ -273,7 +273,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addOptionalFiltersItem(String optionalFiltersItem) {
     if (this.optionalFilters == null) {
-      this.optionalFilters = new ArrayList<String>();
+      this.optionalFilters = new ArrayList<>();
     }
     this.optionalFilters.add(optionalFiltersItem);
     return this;
@@ -304,7 +304,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addNumericFiltersItem(String numericFiltersItem) {
     if (this.numericFilters == null) {
-      this.numericFilters = new ArrayList<String>();
+      this.numericFilters = new ArrayList<>();
     }
     this.numericFilters.add(numericFiltersItem);
     return this;
@@ -335,7 +335,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addTagFiltersItem(String tagFiltersItem) {
     if (this.tagFilters == null) {
-      this.tagFilters = new ArrayList<String>();
+      this.tagFilters = new ArrayList<>();
     }
     this.tagFilters.add(tagFiltersItem);
     return this;
@@ -389,7 +389,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addFacetsItem(String facetsItem) {
     if (this.facets == null) {
-      this.facets = new ArrayList<String>();
+      this.facets = new ArrayList<>();
     }
     this.facets.add(facetsItem);
     return this;
@@ -676,7 +676,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addInsideBoundingBoxItem(BigDecimal insideBoundingBoxItem) {
     if (this.insideBoundingBox == null) {
-      this.insideBoundingBox = new ArrayList<BigDecimal>();
+      this.insideBoundingBox = new ArrayList<>();
     }
     this.insideBoundingBox.add(insideBoundingBoxItem);
     return this;
@@ -707,7 +707,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addInsidePolygonItem(BigDecimal insidePolygonItem) {
     if (this.insidePolygon == null) {
-      this.insidePolygon = new ArrayList<BigDecimal>();
+      this.insidePolygon = new ArrayList<>();
     }
     this.insidePolygon.add(insidePolygonItem);
     return this;
@@ -738,7 +738,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addNaturalLanguagesItem(String naturalLanguagesItem) {
     if (this.naturalLanguages == null) {
-      this.naturalLanguages = new ArrayList<String>();
+      this.naturalLanguages = new ArrayList<>();
     }
     this.naturalLanguages.add(naturalLanguagesItem);
     return this;
@@ -769,7 +769,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addRuleContextsItem(String ruleContextsItem) {
     if (this.ruleContexts == null) {
-      this.ruleContexts = new ArrayList<String>();
+      this.ruleContexts = new ArrayList<>();
     }
     this.ruleContexts.add(ruleContextsItem);
     return this;
@@ -915,7 +915,7 @@ public class BaseSearchParams {
 
   public BaseSearchParams addAnalyticsTagsItem(String analyticsTagsItem) {
     if (this.analyticsTags == null) {
-      this.analyticsTags = new ArrayList<String>();
+      this.analyticsTags = new ArrayList<>();
     }
     this.analyticsTags.add(analyticsTagsItem);
     return this;
