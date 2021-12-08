@@ -157,6 +157,7 @@ Class | Method | HTTP request | Description
  - [SaveObjectResponse](docs/SaveObjectResponse.md)
  - [SearchHits](docs/SearchHits.md)
  - [SearchParams](docs/SearchParams.md)
+ - [SearchParamsAsString](docs/SearchParamsAsString.md)
  - [SearchResponse](docs/SearchResponse.md)
  - [SetSettingsResponse](docs/SetSettingsResponse.md)
  - [SnippetResult](docs/SnippetResult.md)

@@ -28,12 +28,13 @@ import com.algolia.model.IndexSettings;
 import com.algolia.model.ListIndicesResponse;
 import com.algolia.model.MultipleQueriesObject;
 import com.algolia.model.MultipleQueriesResponse;
+import com.algolia.model.OneOfsearchParamsAsStringsearchParams;
 import com.algolia.model.OperationIndexObject;
 import com.algolia.model.OperationIndexResponse;
 import com.algolia.model.SaveObjectResponse;
-import com.algolia.model.SearchParams;
 import com.algolia.model.SearchResponse;
 import com.algolia.model.SetSettingsResponse;
+import com.algolia.model.UNKNOWN_BASE_TYPE;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -1240,7 +1241,7 @@ public class SearchApi {
   /**
      * Build call for search
      * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
+     * @param UNKNOWN_BASE_TYPE  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1256,10 +1257,10 @@ public class SearchApi {
      */
   public okhttp3.Call searchCall(
     String indexName,
-    SearchParams searchParams,
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE,
     final ApiCallback _callback
   ) throws ApiException {
-    Object localVarPostBody = searchParams;
+    Object localVarPostBody = UNKNOWN_BASE_TYPE;
 
     // create path and map variables
     String localVarPath =
@@ -1306,7 +1307,7 @@ public class SearchApi {
   @SuppressWarnings("rawtypes")
   private okhttp3.Call searchValidateBeforeCall(
     String indexName,
-    SearchParams searchParams,
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
@@ -1316,14 +1317,18 @@ public class SearchApi {
       );
     }
 
-    // verify the required parameter 'searchParams' is set
-    if (searchParams == null) {
+    // verify the required parameter 'UNKNOWN_BASE_TYPE' is set
+    if (UNKNOWN_BASE_TYPE == null) {
       throw new ApiException(
-        "Missing the required parameter 'searchParams' when calling search(Async)"
+        "Missing the required parameter 'UNKNOWN_BASE_TYPE' when calling search(Async)"
       );
     }
 
-    okhttp3.Call localVarCall = searchCall(indexName, searchParams, _callback);
+    okhttp3.Call localVarCall = searchCall(
+      indexName,
+      UNKNOWN_BASE_TYPE,
+      _callback
+    );
     return localVarCall;
   }
 
@@ -1331,7 +1336,7 @@ public class SearchApi {
      * 
      * Get search results.
      * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
+     * @param UNKNOWN_BASE_TYPE  (required)
      * @return SearchResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1344,11 +1349,13 @@ public class SearchApi {
         <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
      </table>
      */
-  public SearchResponse search(String indexName, SearchParams searchParams)
-    throws ApiException {
+  public SearchResponse search(
+    String indexName,
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE
+  ) throws ApiException {
     ApiResponse<SearchResponse> localVarResp = searchWithHttpInfo(
       indexName,
-      searchParams
+      UNKNOWN_BASE_TYPE
     );
     return localVarResp.getData();
   }
@@ -1357,7 +1364,7 @@ public class SearchApi {
      * 
      * Get search results.
      * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
+     * @param UNKNOWN_BASE_TYPE  (required)
      * @return ApiResponse&lt;SearchResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1372,11 +1379,11 @@ public class SearchApi {
      */
   public ApiResponse<SearchResponse> searchWithHttpInfo(
     String indexName,
-    SearchParams searchParams
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE
   ) throws ApiException {
     okhttp3.Call localVarCall = searchValidateBeforeCall(
       indexName,
-      searchParams,
+      UNKNOWN_BASE_TYPE,
       null
     );
     Type localVarReturnType = new TypeToken<SearchResponse>() {}.getType();
@@ -1387,7 +1394,7 @@ public class SearchApi {
      *  (asynchronously)
      * Get search results.
      * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
+     * @param UNKNOWN_BASE_TYPE  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1403,12 +1410,12 @@ public class SearchApi {
      */
   public okhttp3.Call searchAsync(
     String indexName,
-    SearchParams searchParams,
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE,
     final ApiCallback<SearchResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = searchValidateBeforeCall(
       indexName,
-      searchParams,
+      UNKNOWN_BASE_TYPE,
       _callback
     );
     Type localVarReturnType = new TypeToken<SearchResponse>() {}.getType();

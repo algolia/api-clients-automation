@@ -10,6 +10,7 @@ import type { OperationIndexObject } from '../model/operationIndexObject';
 import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SearchParams } from '../model/searchParams';
+import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
 import { Transporter } from '../utils/Transporter';
@@ -356,11 +357,11 @@ export class SearchApi {
    * Get search results.
    *
    * @param indexName - The index in which to perform the request.
-   * @param searchParams - The searchParams.
+   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
    */
   search(
     indexName: string,
-    searchParams: SearchParams
+    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
   ): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
@@ -375,16 +376,19 @@ export class SearchApi {
       );
     }
 
-    if (searchParams === null || searchParams === undefined) {
+    if (
+      searchParamsAsStringSearchParams === null ||
+      searchParamsAsStringSearchParams === undefined
+    ) {
       throw new Error(
-        'Required parameter searchParams was null or undefined when calling search.'
+        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling search.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParams,
+      data: searchParamsAsStringSearchParams,
     };
 
     const requestOptions: RequestOptions = {
