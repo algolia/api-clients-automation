@@ -12,24 +12,16 @@
 
 package com.algolia.model;
 
-import com.algolia.model.SearchResponse;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * MultipleQueriesResponse
- */
+/** MultipleQueriesResponse */
 @JsonPropertyOrder({ MultipleQueriesResponse.JSON_PROPERTY_RESULTS })
 @JsonTypeName("multipleQueriesResponse")
 public class MultipleQueriesResponse {
@@ -52,8 +44,9 @@ public class MultipleQueriesResponse {
 
   /**
    * Get results
+   *
    * @return results
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_RESULTS)
@@ -95,8 +88,7 @@ public class MultipleQueriesResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

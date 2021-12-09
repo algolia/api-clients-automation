@@ -1,6 +1,5 @@
 package com.algolia;
 
-import com.algolia.ApiResponseDecoder;
 import com.algolia.auth.ApiKeyAuth;
 import com.algolia.auth.HttpBasicAuth;
 import com.algolia.auth.HttpBearerAuth;
@@ -11,7 +10,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import feign.Feign;
 import feign.RequestInterceptor;
 import feign.form.FormEncoder;
-import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
@@ -23,7 +21,7 @@ import org.openapitools.jackson.nullable.JsonNullableModule;
 
 @javax.annotation.Generated(
   value = "org.openapitools.codegen.languages.JavaClientCodegen",
-  date = "2021-12-09T15:22:27.248809+01:00[Europe/Paris]"
+  date = "2021-12-09T15:52:44.533542+01:00[Europe/Paris]"
 )
 public class ApiClient {
 
@@ -68,6 +66,7 @@ public class ApiClient {
 
   /**
    * Basic constructor for single auth name
+   *
    * @param authName
    */
   public ApiClient(String authName) {
@@ -76,6 +75,7 @@ public class ApiClient {
 
   /**
    * Helper constructor for single api key
+   *
    * @param authName
    * @param apiKey
    */
@@ -137,11 +137,10 @@ public class ApiClient {
   /**
    * Creates a feign client for given API interface.
    *
-   * Usage:
-   *    ApiClient apiClient = new ApiClient();
-   *    apiClient.setBasePath("http://localhost:8080");
-   *    XYZApi api = apiClient.buildClient(XYZApi.class);
-   *    XYZResponse response = api.someMethod(...);
+   * <p>Usage: ApiClient apiClient = new ApiClient();
+   * apiClient.setBasePath("http://localhost:8080"); XYZApi api =
+   * apiClient.buildClient(XYZApi.class); XYZResponse response = api.someMethod(...);
+   *
    * @param <T> Type
    * @param clientClass Client class
    * @return The Client
@@ -151,13 +150,12 @@ public class ApiClient {
   }
 
   /**
-   * Select the Accept header's value from the given accepts array:
-   *   if JSON exists in the given array, use it;
-   *   otherwise use all of them (joining into a string)
+   * Select the Accept header's value from the given accepts array: if JSON exists in the given
+   * array, use it; otherwise use all of them (joining into a string)
    *
    * @param accepts The accepts array to select from
-   * @return The Accept header to use. If the given array is empty,
-   *   null will be returned (not to set the Accept header explicitly).
+   * @return The Accept header to use. If the given array is empty, null will be returned (not to
+   *     set the Accept header explicitly).
    */
   public String selectHeaderAccept(String[] accepts) {
     if (accepts.length == 0) return null;
@@ -168,13 +166,11 @@ public class ApiClient {
   }
 
   /**
-   * Select the Content-Type header's value from the given array:
-   *   if JSON exists in the given array, use it;
-   *   otherwise use the first one of the array.
+   * Select the Content-Type header's value from the given array: if JSON exists in the given array,
+   * use it; otherwise use the first one of the array.
    *
    * @param contentTypes The Content-Type array to select from
-   * @return The Content-Type header to use. If the given array is empty,
-   *   JSON will be used.
+   * @return The Content-Type header to use. If the given array is empty, JSON will be used.
    */
   public String selectHeaderContentType(String[] contentTypes) {
     if (contentTypes.length == 0) return "application/json";
@@ -186,6 +182,7 @@ public class ApiClient {
 
   /**
    * Helper method to configure the bearer token.
+   *
    * @param bearerToken the bearer token.
    */
   public void setBearerToken(String bearerToken) {
@@ -195,6 +192,7 @@ public class ApiClient {
 
   /**
    * Helper method to configure the first api key found
+   *
    * @param apiKey API key
    */
   public void setApiKey(String apiKey) {
@@ -204,6 +202,7 @@ public class ApiClient {
 
   /**
    * Helper method to configure the username/password for basic auth
+   *
    * @param username Username
    * @param password Password
    */
@@ -214,6 +213,7 @@ public class ApiClient {
 
   /**
    * Gets request interceptor based on authentication name
+   *
    * @param authName Authentication name
    * @return Request Interceptor
    */
@@ -223,6 +223,7 @@ public class ApiClient {
 
   /**
    * Adds an authorization to be used by the client
+   *
    * @param authName Authentication name
    * @param authorization Request interceptor
    */

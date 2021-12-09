@@ -12,23 +12,16 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-/**
- * Error.
- */
+/** Error. */
 @ApiModel(description = "Error.")
 @JsonPropertyOrder({ ErrorBase.JSON_PROPERTY_MESSAGE })
 @JsonTypeName("ErrorBase")
@@ -44,8 +37,9 @@ public class ErrorBase extends HashMap<String, Object> {
 
   /**
    * Get message
+   *
    * @return message
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(example = "Invalid Application-Id or API-Key", value = "")
   @JsonProperty(JSON_PROPERTY_MESSAGE)
@@ -88,8 +82,7 @@ public class ErrorBase extends HashMap<String, Object> {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

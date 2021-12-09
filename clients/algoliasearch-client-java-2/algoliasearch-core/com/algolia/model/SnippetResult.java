@@ -17,16 +17,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * SnippetResult
- */
+/** SnippetResult */
 @JsonPropertyOrder(
   { SnippetResult.JSON_PROPERTY_VALUE, SnippetResult.JSON_PROPERTY_MATCH_LEVEL }
 )
@@ -36,9 +31,7 @@ public class SnippetResult {
   public static final String JSON_PROPERTY_VALUE = "value";
   private String value;
 
-  /**
-   * Indicates how well the attribute matched the search query.
-   */
+  /** Indicates how well the attribute matched the search query. */
   public enum MatchLevelEnum {
     NONE("none"),
 
@@ -83,8 +76,9 @@ public class SnippetResult {
 
   /**
    * Markup text with occurrences highlighted.
+   *
    * @return value
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "<em>George</em> <em>Clo</em>oney...",
@@ -109,8 +103,9 @@ public class SnippetResult {
 
   /**
    * Indicates how well the attribute matched the search query.
+   *
    * @return matchLevel
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Indicates how well the attribute matched the search query."
@@ -161,8 +156,7 @@ public class SnippetResult {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

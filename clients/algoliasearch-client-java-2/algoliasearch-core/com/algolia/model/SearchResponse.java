@@ -12,29 +12,18 @@
 
 package com.algolia.model;
 
-import com.algolia.model.BaseSearchResponse;
-import com.algolia.model.BaseSearchResponseFacetsStats;
-import com.algolia.model.Record;
-import com.algolia.model.SearchHits;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * SearchResponse
- */
+/** SearchResponse */
 @JsonPropertyOrder(
   {
     SearchResponse.JSON_PROPERTY_AB_TEST_I_D,
@@ -153,12 +142,15 @@ public class SearchResponse {
   }
 
   /**
-   * If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
+   * If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test
+   * ID.
+   *
    * @return abTestID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID."
+    value = "If a search encounters an index that is being A/B tested, abTestID reports the ongoing" +
+    " A/B test ID."
   )
   @JsonProperty(JSON_PROPERTY_AB_TEST_I_D)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -178,12 +170,15 @@ public class SearchResponse {
   }
 
   /**
-   * If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used.
+   * If a search encounters an index that is being A/B tested, abTestVariantID reports the variant
+   * ID of the index used.
+   *
    * @return abTestVariantID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used."
+    value = "If a search encounters an index that is being A/B tested, abTestVariantID reports the" +
+    " variant ID of the index used."
   )
   @JsonProperty(JSON_PROPERTY_AB_TEST_VARIANT_I_D)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -204,8 +199,9 @@ public class SearchResponse {
 
   /**
    * The computed geo location.
+   *
    * @return aroundLatLng
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The computed geo location.")
   @JsonProperty(JSON_PROPERTY_AROUND_LAT_LNG)
@@ -226,12 +222,15 @@ public class SearchResponse {
   }
 
   /**
-   * The automatically computed radius. For legacy reasons, this parameter is a string and not an integer.
+   * The automatically computed radius. For legacy reasons, this parameter is a string and not an
+   * integer.
+   *
    * @return automaticRadius
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "The automatically computed radius. For legacy reasons, this parameter is a string and not an integer."
+    value = "The automatically computed radius. For legacy reasons, this parameter is a string and" +
+    " not an integer."
   )
   @JsonProperty(JSON_PROPERTY_AUTOMATIC_RADIUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -252,8 +251,9 @@ public class SearchResponse {
 
   /**
    * Whether the facet count is exhaustive or approximate.
+   *
    * @return exhaustiveFacetsCount
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether the facet count is exhaustive or approximate."
@@ -277,8 +277,9 @@ public class SearchResponse {
 
   /**
    * Indicate if the nbHits count was exhaustive or approximate
+   *
    * @return exhaustiveNbHits
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -302,13 +303,16 @@ public class SearchResponse {
   }
 
   /**
-   * Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled)
+   * Indicate if the typo-tolerence search was exhaustive or approximate (only included when
+   * typo-tolerance is enabled)
+   *
    * @return exhaustiveTypo
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
-    value = "Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled)"
+    value = "Indicate if the typo-tolerence search was exhaustive or approximate (only included when" +
+    " typo-tolerance is enabled)"
   )
   @JsonProperty(JSON_PROPERTY_EXHAUSTIVE_TYPO)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
@@ -340,8 +344,9 @@ public class SearchResponse {
 
   /**
    * A mapping of each facet name to the corresponding facet counts.
+   *
    * @return facets
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "{\"category\":{\"food\":1,\"tech\":42}}",
@@ -379,8 +384,9 @@ public class SearchResponse {
 
   /**
    * Statistics for numerical facets.
+   *
    * @return facetsStats
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Statistics for numerical facets.")
   @JsonProperty(JSON_PROPERTY_FACETS_STATS)
@@ -404,8 +410,9 @@ public class SearchResponse {
 
   /**
    * Set the number of hits per page.
+   *
    * @return hitsPerPage
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Set the number of hits per page.")
   @JsonProperty(JSON_PROPERTY_HITS_PER_PAGE)
@@ -427,8 +434,9 @@ public class SearchResponse {
 
   /**
    * Index name used for the query.
+   *
    * @return index
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "indexName",
@@ -452,13 +460,16 @@ public class SearchResponse {
   }
 
   /**
-   * Index name used for the query. In the case of an A/B test, the targeted index isn’t always the index used by the query.
+   * Index name used for the query. In the case of an A/B test, the targeted index isn’t always the
+   * index used by the query.
+   *
    * @return indexUsed
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "indexNameAlt",
-    value = "Index name used for the query. In the case of an A/B test, the targeted index isn’t always the index used by the query."
+    value = "Index name used for the query. In the case of an A/B test, the targeted index isn’t" +
+    " always the index used by the query."
   )
   @JsonProperty(JSON_PROPERTY_INDEX_USED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -479,8 +490,9 @@ public class SearchResponse {
 
   /**
    * Used to return warnings about the query.
+   *
    * @return message
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Used to return warnings about the query.")
   @JsonProperty(JSON_PROPERTY_MESSAGE)
@@ -502,8 +514,9 @@ public class SearchResponse {
 
   /**
    * Number of hits that the search query matched
+   *
    * @return nbHits
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "20",
@@ -529,8 +542,9 @@ public class SearchResponse {
 
   /**
    * Number of pages available for the current query
+   *
    * @return nbPages
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "1",
@@ -556,8 +570,9 @@ public class SearchResponse {
 
   /**
    * The number of hits selected and sorted by the relevant sort algorithm
+   *
    * @return nbSortedHits
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "20",
@@ -582,8 +597,9 @@ public class SearchResponse {
 
   /**
    * Specify the page to retrieve.
+   *
    * @return page
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Specify the page to retrieve.")
   @JsonProperty(JSON_PROPERTY_PAGE)
@@ -605,8 +621,9 @@ public class SearchResponse {
 
   /**
    * A url-encoded string of all search parameters.
+   *
    * @return params
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "query=a&hitsPerPage=20",
@@ -632,8 +649,9 @@ public class SearchResponse {
 
   /**
    * The query string that will be searched, after normalization.
+   *
    * @return parsedQuery
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "The query string that will be searched, after normalization."
@@ -657,8 +675,9 @@ public class SearchResponse {
 
   /**
    * Time the server took to process the request, in milliseconds.
+   *
    * @return processingTimeMS
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "20",
@@ -684,8 +703,9 @@ public class SearchResponse {
 
   /**
    * The text to search in the index.
+   *
    * @return query
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "The text to search in the index.")
   @JsonProperty(JSON_PROPERTY_QUERY)
@@ -706,12 +726,15 @@ public class SearchResponse {
   }
 
   /**
-   * A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
+   * A markup text indicating which parts of the original query have been removed in order to
+   * retrieve a non-empty result set.
+   *
    * @return queryAfterRemoval
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set."
+    value = "A markup text indicating which parts of the original query have been removed in order to" +
+    " retrieve a non-empty result set."
   )
   @JsonProperty(JSON_PROPERTY_QUERY_AFTER_REMOVAL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -732,8 +755,9 @@ public class SearchResponse {
 
   /**
    * Actual host name of the server that processed the request.
+   *
    * @return serverUsed
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Actual host name of the server that processed the request."
@@ -765,8 +789,9 @@ public class SearchResponse {
 
   /**
    * Lets you store custom data in your indices.
+   *
    * @return userData
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Lets you store custom data in your indices.")
   @JsonProperty(JSON_PROPERTY_USER_DATA)
@@ -799,8 +824,9 @@ public class SearchResponse {
 
   /**
    * Get hits
+   *
    * @return hits
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
   @JsonProperty(JSON_PROPERTY_HITS)
@@ -966,8 +992,7 @@ public class SearchResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

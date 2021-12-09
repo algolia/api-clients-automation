@@ -12,22 +12,15 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * OperationIndexResponse
- */
+/** OperationIndexResponse */
 @JsonPropertyOrder(
   {
     OperationIndexResponse.JSON_PROPERTY_TASK_I_D,
@@ -50,8 +43,9 @@ public class OperationIndexResponse {
 
   /**
    * taskID of the indexing task to wait for.
+   *
    * @return taskID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
   @JsonProperty(JSON_PROPERTY_TASK_I_D)
@@ -73,8 +67,9 @@ public class OperationIndexResponse {
 
   /**
    * Date of last update (ISO-8601 format).
+   *
    * @return updatedAt
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Date of last update (ISO-8601 format).")
   @JsonProperty(JSON_PROPERTY_UPDATED_AT)
@@ -123,8 +118,7 @@ public class OperationIndexResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

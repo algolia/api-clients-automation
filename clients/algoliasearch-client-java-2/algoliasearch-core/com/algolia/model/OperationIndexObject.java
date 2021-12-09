@@ -17,18 +17,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * OperationIndexObject
- */
+/** OperationIndexObject */
 @JsonPropertyOrder(
   {
     OperationIndexObject.JSON_PROPERTY_OPERATION,
@@ -39,9 +34,7 @@ import java.util.Objects;
 @JsonTypeName("operationIndexObject")
 public class OperationIndexObject {
 
-  /**
-   * Type of operation to perform (move or copy).
-   */
+  /** Type of operation to perform (move or copy). */
   public enum OperationEnum {
     MOVE("move"),
 
@@ -80,9 +73,7 @@ public class OperationIndexObject {
   public static final String JSON_PROPERTY_DESTINATION = "destination";
   private String destination;
 
-  /**
-   * Gets or Sets scope
-   */
+  /** Gets or Sets scope */
   public enum ScopeEnum {
     SETTINGS("settings"),
 
@@ -127,8 +118,9 @@ public class OperationIndexObject {
 
   /**
    * Type of operation to perform (move or copy).
+   *
    * @return operation
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -153,8 +145,9 @@ public class OperationIndexObject {
 
   /**
    * The Algolia index name.
+   *
    * @return destination
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "products",
@@ -187,12 +180,15 @@ public class OperationIndexObject {
   }
 
   /**
-   * Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
+   * Scope of the data to copy. When absent, a full copy is performed. When present, only the
+   * selected scopes are copied.
+   *
    * @return scope
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied."
+    value = "Scope of the data to copy. When absent, a full copy is performed. When present, only the" +
+    " selected scopes are copied."
   )
   @JsonProperty(JSON_PROPERTY_SCOPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -245,8 +241,7 @@ public class OperationIndexObject {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

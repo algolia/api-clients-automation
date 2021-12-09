@@ -12,25 +12,18 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * BaseIndexSettings
- */
+/** BaseIndexSettings */
 @JsonPropertyOrder(
   {
     BaseIndexSettings.JSON_PROPERTY_REPLICAS,
@@ -109,8 +102,9 @@ public class BaseIndexSettings {
 
   /**
    * Creates replicas, exact copies of an index.
+   *
    * @return replicas
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Creates replicas, exact copies of an index.")
   @JsonProperty(JSON_PROPERTY_REPLICAS)
@@ -132,8 +126,9 @@ public class BaseIndexSettings {
 
   /**
    * Set the maximum number of hits accessible via pagination.
+   *
    * @return paginationLimitedTo
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Set the maximum number of hits accessible via pagination."
@@ -169,8 +164,9 @@ public class BaseIndexSettings {
 
   /**
    * A list of words for which you want to turn off typo tolerance.
+   *
    * @return disableTypoToleranceOnWords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "A list of words for which you want to turn off typo tolerance."
@@ -208,8 +204,9 @@ public class BaseIndexSettings {
 
   /**
    * Specify on which attributes to apply transliteration.
+   *
    * @return attributesToTransliterate
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Specify on which attributes to apply transliteration."
@@ -247,8 +244,9 @@ public class BaseIndexSettings {
 
   /**
    * List of attributes on which to do a decomposition of camel case words.
+   *
    * @return camelCaseAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which to do a decomposition of camel case words."
@@ -284,12 +282,15 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+   * Specify on which attributes in your index Algolia should apply word segmentation, also known as
+   * decompounding.
+   *
    * @return decompoundedAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding."
+    value = "Specify on which attributes in your index Algolia should apply word segmentation, also" +
+    " known as decompounding."
   )
   @JsonProperty(JSON_PROPERTY_DECOMPOUNDED_ATTRIBUTES)
   @JsonInclude(
@@ -325,12 +326,15 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
+   * Sets the languages at the index level for language-specific processing such as tokenization and
+   * normalization.
+   *
    * @return indexLanguages
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Sets the languages at the index level for language-specific processing such as tokenization and normalization."
+    value = "Sets the languages at the index level for language-specific processing such as" +
+    " tokenization and normalization."
   )
   @JsonProperty(JSON_PROPERTY_INDEX_LANGUAGES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -350,12 +354,15 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Whether promoted results should match the filters of the current search, except for geographic filters.
+   * Whether promoted results should match the filters of the current search, except for geographic
+   * filters.
+   *
    * @return filterPromotes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Whether promoted results should match the filters of the current search, except for geographic filters."
+    value = "Whether promoted results should match the filters of the current search, except for" +
+    " geographic filters."
   )
   @JsonProperty(JSON_PROPERTY_FILTER_PROMOTES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -388,8 +395,9 @@ public class BaseIndexSettings {
 
   /**
    * List of attributes on which you want to disable prefix matching.
+   *
    * @return disablePrefixOnAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which you want to disable prefix matching."
@@ -417,8 +425,9 @@ public class BaseIndexSettings {
 
   /**
    * Enables compression of large integer arrays.
+   *
    * @return allowCompressionOfIntegerArray
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables compression of large integer arrays.")
   @JsonProperty(JSON_PROPERTY_ALLOW_COMPRESSION_OF_INTEGER_ARRAY)
@@ -454,8 +463,9 @@ public class BaseIndexSettings {
 
   /**
    * List of numeric attributes that can be used as numerical filters.
+   *
    * @return numericAttributesForFiltering
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of numeric attributes that can be used as numerical filters."
@@ -489,8 +499,9 @@ public class BaseIndexSettings {
 
   /**
    * Lets you store custom data in your indices.
+   *
    * @return userData
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Lets you store custom data in your indices.")
   @JsonProperty(JSON_PROPERTY_USER_DATA)
@@ -629,8 +640,7 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

@@ -12,26 +12,16 @@
 
 package com.algolia.model;
 
-import com.algolia.model.HighlightResult;
-import com.algolia.model.RankingInfo;
-import com.algolia.model.SnippetResult;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-/**
- * A single record.
- */
+/** A single record. */
 @ApiModel(description = "A single record.")
 @JsonPropertyOrder(
   {
@@ -68,8 +58,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Unique identifier of the object.
+   *
    * @return objectID
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Unique identifier of the object.")
   @JsonProperty(JSON_PROPERTY_OBJECT_I_D)
@@ -91,8 +82,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get highlightResult
+   *
    * @return highlightResult
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_HIGHLIGHT_RESULT)
@@ -114,8 +106,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get snippetResult
+   *
    * @return snippetResult
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_SNIPPET_RESULT)
@@ -137,8 +130,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get rankingInfo
+   *
    * @return rankingInfo
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_RANKING_INFO)
@@ -160,8 +154,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get distinctSeqID
+   *
    * @return distinctSeqID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_DISTINCT_SEQ_I_D)
@@ -234,8 +229,7 @@ public class Record extends HashMap<String, Object> {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

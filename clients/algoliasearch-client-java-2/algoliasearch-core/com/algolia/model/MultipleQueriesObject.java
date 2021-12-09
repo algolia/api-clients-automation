@@ -12,24 +12,18 @@
 
 package com.algolia.model;
 
-import com.algolia.model.MultipleQueries;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * MultipleQueriesObject
- */
+/** MultipleQueriesObject */
 @JsonPropertyOrder(
   {
     MultipleQueriesObject.JSON_PROPERTY_REQUESTS,
@@ -42,9 +36,7 @@ public class MultipleQueriesObject {
   public static final String JSON_PROPERTY_REQUESTS = "requests";
   private List<MultipleQueries> requests = new ArrayList<>();
 
-  /**
-   * Gets or Sets strategy
-   */
+  /** Gets or Sets strategy */
   public enum StrategyEnum {
     NONE("none"),
 
@@ -92,8 +84,9 @@ public class MultipleQueriesObject {
 
   /**
    * Get requests
+   *
    * @return requests
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
   @JsonProperty(JSON_PROPERTY_REQUESTS)
@@ -115,8 +108,9 @@ public class MultipleQueriesObject {
 
   /**
    * Get strategy
+   *
    * @return strategy
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_STRATEGY)
@@ -162,8 +156,7 @@ public class MultipleQueriesObject {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

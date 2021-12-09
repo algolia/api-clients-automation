@@ -12,27 +12,21 @@
 
 package com.algolia.model;
 
-import com.algolia.model.BaseIndexSettings;
-import com.algolia.model.IndexSettingsAsSearchParams;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * The Algolia index settings.
- */
+/** The Algolia index settings. */
 @ApiModel(description = "The Algolia index settings.")
 @JsonPropertyOrder(
   {
@@ -206,9 +200,7 @@ public class IndexSettings {
     "minWordSizefor2Typos";
   private Integer minWordSizefor2Typos = 8;
 
-  /**
-   * Controls whether typo tolerance is enabled and how it is applied.
-   */
+  /** Controls whether typo tolerance is enabled and how it is applied. */
   public enum TypoToleranceEnum {
     TRUE("true"),
 
@@ -284,9 +276,7 @@ public class IndexSettings {
     "enablePersonalization";
   private Boolean enablePersonalization = false;
 
-  /**
-   * Controls if and how query words are interpreted as prefixes.
-   */
+  /** Controls if and how query words are interpreted as prefixes. */
   public enum QueryTypeEnum {
     PREFIXLAST("prefixLast"),
 
@@ -324,9 +314,7 @@ public class IndexSettings {
   public static final String JSON_PROPERTY_QUERY_TYPE = "queryType";
   private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
 
-  /**
-   * Selects a strategy to remove words from the query when it doesn’t match any hits.
-   */
+  /** Selects a strategy to remove words from the query when it doesn’t match any hits. */
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
 
@@ -378,9 +366,7 @@ public class IndexSettings {
     "disableExactOnAttributes";
   private List<String> disableExactOnAttributes = null;
 
-  /**
-   * Controls how the exact ranking criterion is computed when the query contains only one word.
-   */
+  /** Controls how the exact ranking criterion is computed when the query contains only one word. */
   public enum ExactOnSingleWordQueryEnum {
     ATTRIBUTE("attribute"),
 
@@ -420,9 +406,7 @@ public class IndexSettings {
   private ExactOnSingleWordQueryEnum exactOnSingleWordQuery =
     ExactOnSingleWordQueryEnum.ATTRIBUTE;
 
-  /**
-   * Gets or Sets alternativesAsExact
-   */
+  /** Gets or Sets alternativesAsExact */
   public enum AlternativesAsExactEnum {
     IGNOREPLURALS("ignorePlurals"),
 
@@ -461,9 +445,7 @@ public class IndexSettings {
     "alternativesAsExact";
   private List<AlternativesAsExactEnum> alternativesAsExact = null;
 
-  /**
-   * Gets or Sets advancedSyntaxFeatures
-   */
+  /** Gets or Sets advancedSyntaxFeatures */
   public enum AdvancedSyntaxFeaturesEnum {
     EXACTPHRASE("exactPhrase"),
 
@@ -542,8 +524,9 @@ public class IndexSettings {
 
   /**
    * Creates replicas, exact copies of an index.
+   *
    * @return replicas
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Creates replicas, exact copies of an index.")
   @JsonProperty(JSON_PROPERTY_REPLICAS)
@@ -565,8 +548,9 @@ public class IndexSettings {
 
   /**
    * Set the maximum number of hits accessible via pagination.
+   *
    * @return paginationLimitedTo
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Set the maximum number of hits accessible via pagination."
@@ -602,8 +586,9 @@ public class IndexSettings {
 
   /**
    * A list of words for which you want to turn off typo tolerance.
+   *
    * @return disableTypoToleranceOnWords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "A list of words for which you want to turn off typo tolerance."
@@ -641,8 +626,9 @@ public class IndexSettings {
 
   /**
    * Specify on which attributes to apply transliteration.
+   *
    * @return attributesToTransliterate
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Specify on which attributes to apply transliteration."
@@ -678,8 +664,9 @@ public class IndexSettings {
 
   /**
    * List of attributes on which to do a decomposition of camel case words.
+   *
    * @return camelCaseAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which to do a decomposition of camel case words."
@@ -715,12 +702,15 @@ public class IndexSettings {
   }
 
   /**
-   * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+   * Specify on which attributes in your index Algolia should apply word segmentation, also known as
+   * decompounding.
+   *
    * @return decompoundedAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding."
+    value = "Specify on which attributes in your index Algolia should apply word segmentation, also" +
+    " known as decompounding."
   )
   @JsonProperty(JSON_PROPERTY_DECOMPOUNDED_ATTRIBUTES)
   @JsonInclude(
@@ -756,12 +746,15 @@ public class IndexSettings {
   }
 
   /**
-   * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
+   * Sets the languages at the index level for language-specific processing such as tokenization and
+   * normalization.
+   *
    * @return indexLanguages
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Sets the languages at the index level for language-specific processing such as tokenization and normalization."
+    value = "Sets the languages at the index level for language-specific processing such as" +
+    " tokenization and normalization."
   )
   @JsonProperty(JSON_PROPERTY_INDEX_LANGUAGES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -781,12 +774,15 @@ public class IndexSettings {
   }
 
   /**
-   * Whether promoted results should match the filters of the current search, except for geographic filters.
+   * Whether promoted results should match the filters of the current search, except for geographic
+   * filters.
+   *
    * @return filterPromotes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Whether promoted results should match the filters of the current search, except for geographic filters."
+    value = "Whether promoted results should match the filters of the current search, except for" +
+    " geographic filters."
   )
   @JsonProperty(JSON_PROPERTY_FILTER_PROMOTES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -819,8 +815,9 @@ public class IndexSettings {
 
   /**
    * List of attributes on which you want to disable prefix matching.
+   *
    * @return disablePrefixOnAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which you want to disable prefix matching."
@@ -848,8 +845,9 @@ public class IndexSettings {
 
   /**
    * Enables compression of large integer arrays.
+   *
    * @return allowCompressionOfIntegerArray
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables compression of large integer arrays.")
   @JsonProperty(JSON_PROPERTY_ALLOW_COMPRESSION_OF_INTEGER_ARRAY)
@@ -885,8 +883,9 @@ public class IndexSettings {
 
   /**
    * List of numeric attributes that can be used as numerical filters.
+   *
    * @return numericAttributesForFiltering
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of numeric attributes that can be used as numerical filters."
@@ -920,8 +919,9 @@ public class IndexSettings {
 
   /**
    * Lets you store custom data in your indices.
+   *
    * @return userData
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Lets you store custom data in your indices.")
   @JsonProperty(JSON_PROPERTY_USER_DATA)
@@ -959,8 +959,9 @@ public class IndexSettings {
 
   /**
    * The complete list of attributes used for searching.
+   *
    * @return searchableAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "The complete list of attributes used for searching."
@@ -996,8 +997,9 @@ public class IndexSettings {
 
   /**
    * The complete list of attributes that will be used for faceting.
+   *
    * @return attributesForFaceting
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "The complete list of attributes that will be used for faceting."
@@ -1033,8 +1035,9 @@ public class IndexSettings {
 
   /**
    * List of attributes that can’t be retrieved at query time.
+   *
    * @return unretrievableAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes that can’t be retrieved at query time."
@@ -1068,8 +1071,9 @@ public class IndexSettings {
 
   /**
    * This parameter controls which attributes to retrieve and which not to retrieve.
+   *
    * @return attributesToRetrieve
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "This parameter controls which attributes to retrieve and which not to retrieve."
@@ -1105,8 +1109,9 @@ public class IndexSettings {
 
   /**
    * Restricts a given query to look in only a subset of your searchable attributes.
+   *
    * @return restrictSearchableAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Restricts a given query to look in only a subset of your searchable attributes."
@@ -1140,8 +1145,9 @@ public class IndexSettings {
 
   /**
    * Controls how Algolia should sort your results.
+   *
    * @return ranking
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Controls how Algolia should sort your results.")
   @JsonProperty(JSON_PROPERTY_RANKING)
@@ -1171,8 +1177,9 @@ public class IndexSettings {
 
   /**
    * Specifies the custom ranking criterion.
+   *
    * @return customRanking
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specifies the custom ranking criterion.")
   @JsonProperty(JSON_PROPERTY_CUSTOM_RANKING)
@@ -1193,12 +1200,15 @@ public class IndexSettings {
   }
 
   /**
-   * Controls the relevancy threshold below which less relevant results aren’t included in the results.
+   * Controls the relevancy threshold below which less relevant results aren’t included in the
+   * results.
+   *
    * @return relevancyStrictness
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Controls the relevancy threshold below which less relevant results aren’t included in the results."
+    value = "Controls the relevancy threshold below which less relevant results aren’t included in" +
+    " the results."
   )
   @JsonProperty(JSON_PROPERTY_RELEVANCY_STRICTNESS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1231,8 +1241,9 @@ public class IndexSettings {
 
   /**
    * List of attributes to highlight.
+   *
    * @return attributesToHighlight
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of attributes to highlight.")
   @JsonProperty(JSON_PROPERTY_ATTRIBUTES_TO_HIGHLIGHT)
@@ -1264,8 +1275,9 @@ public class IndexSettings {
 
   /**
    * List of attributes to snippet, with an optional maximum number of words to snippet.
+   *
    * @return attributesToSnippet
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes to snippet, with an optional maximum number of words to snippet."
@@ -1289,11 +1301,13 @@ public class IndexSettings {
 
   /**
    * The HTML string to insert before the highlighted parts in all highlight and snippet results.
+   *
    * @return highlightPreTag
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "The HTML string to insert before the highlighted parts in all highlight and snippet results."
+    value = "The HTML string to insert before the highlighted parts in all highlight and snippet" +
+    " results."
   )
   @JsonProperty(JSON_PROPERTY_HIGHLIGHT_PRE_TAG)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1314,11 +1328,13 @@ public class IndexSettings {
 
   /**
    * The HTML string to insert after the highlighted parts in all highlight and snippet results.
+   *
    * @return highlightPostTag
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "The HTML string to insert after the highlighted parts in all highlight and snippet results."
+    value = "The HTML string to insert after the highlighted parts in all highlight and snippet" +
+    " results."
   )
   @JsonProperty(JSON_PROPERTY_HIGHLIGHT_POST_TAG)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1339,8 +1355,9 @@ public class IndexSettings {
 
   /**
    * String used as an ellipsis indicator when a snippet is truncated.
+   *
    * @return snippetEllipsisText
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "String used as an ellipsis indicator when a snippet is truncated."
@@ -1366,8 +1383,9 @@ public class IndexSettings {
 
   /**
    * Restrict highlighting and snippeting to items that matched the query.
+   *
    * @return restrictHighlightAndSnippetArrays
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Restrict highlighting and snippeting to items that matched the query."
@@ -1393,8 +1411,9 @@ public class IndexSettings {
 
   /**
    * Set the number of hits per page.
+   *
    * @return hitsPerPage
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Set the number of hits per page.")
   @JsonProperty(JSON_PROPERTY_HITS_PER_PAGE)
@@ -1415,12 +1434,15 @@ public class IndexSettings {
   }
 
   /**
-   * Minimum number of characters a word in the query string must contain to accept matches with 1 typo.
+   * Minimum number of characters a word in the query string must contain to accept matches with 1
+   * typo.
+   *
    * @return minWordSizefor1Typo
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Minimum number of characters a word in the query string must contain to accept matches with 1 typo."
+    value = "Minimum number of characters a word in the query string must contain to accept matches" +
+    " with 1 typo."
   )
   @JsonProperty(JSON_PROPERTY_MIN_WORD_SIZEFOR1_TYPO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1440,12 +1462,15 @@ public class IndexSettings {
   }
 
   /**
-   * Minimum number of characters a word in the query string must contain to accept matches with 2 typos.
+   * Minimum number of characters a word in the query string must contain to accept matches with 2
+   * typos.
+   *
    * @return minWordSizefor2Typos
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Minimum number of characters a word in the query string must contain to accept matches with 2 typos."
+    value = "Minimum number of characters a word in the query string must contain to accept matches" +
+    " with 2 typos."
   )
   @JsonProperty(JSON_PROPERTY_MIN_WORD_SIZEFOR2_TYPOS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1466,8 +1491,9 @@ public class IndexSettings {
 
   /**
    * Controls whether typo tolerance is enabled and how it is applied.
+   *
    * @return typoTolerance
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Controls whether typo tolerance is enabled and how it is applied."
@@ -1493,8 +1519,9 @@ public class IndexSettings {
 
   /**
    * Whether to allow typos on numbers (“numeric tokens”) in the query string.
+   *
    * @return allowTyposOnNumericTokens
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether to allow typos on numbers (“numeric tokens”) in the query string."
@@ -1532,8 +1559,9 @@ public class IndexSettings {
 
   /**
    * List of attributes on which you want to disable typo tolerance.
+   *
    * @return disableTypoToleranceOnAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which you want to disable typo tolerance."
@@ -1559,8 +1587,9 @@ public class IndexSettings {
 
   /**
    * Control which separators are indexed.
+   *
    * @return separatorsToIndex
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Control which separators are indexed.")
   @JsonProperty(JSON_PROPERTY_SEPARATORS_TO_INDEX)
@@ -1582,8 +1611,9 @@ public class IndexSettings {
 
   /**
    * Treats singular, plurals, and other forms of declensions as matching terms.
+   *
    * @return ignorePlurals
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Treats singular, plurals, and other forms of declensions as matching terms."
@@ -1607,8 +1637,9 @@ public class IndexSettings {
 
   /**
    * Removes stop (common) words from the query before executing it.
+   *
    * @return removeStopWords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Removes stop (common) words from the query before executing it."
@@ -1634,8 +1665,9 @@ public class IndexSettings {
 
   /**
    * List of characters that the engine shouldn’t automatically normalize.
+   *
    * @return keepDiacriticsOnCharacters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of characters that the engine shouldn’t automatically normalize."
@@ -1666,12 +1698,15 @@ public class IndexSettings {
   }
 
   /**
-   * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
+   * Sets the languages to be used by language-specific settings and functionalities such as
+   * ignorePlurals, removeStopWords, and CJK word-detection.
+   *
    * @return queryLanguages
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection."
+    value = "Sets the languages to be used by language-specific settings and functionalities such as" +
+    " ignorePlurals, removeStopWords, and CJK word-detection."
   )
   @JsonProperty(JSON_PROPERTY_QUERY_LANGUAGES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1692,8 +1727,9 @@ public class IndexSettings {
 
   /**
    * Splits compound words into their composing atoms in the query.
+   *
    * @return decompoundQuery
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Splits compound words into their composing atoms in the query."
@@ -1717,8 +1753,9 @@ public class IndexSettings {
 
   /**
    * Whether Rules should be globally enabled.
+   *
    * @return enableRules
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Whether Rules should be globally enabled.")
   @JsonProperty(JSON_PROPERTY_ENABLE_RULES)
@@ -1740,8 +1777,9 @@ public class IndexSettings {
 
   /**
    * Enable the Personalization feature.
+   *
    * @return enablePersonalization
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enable the Personalization feature.")
   @JsonProperty(JSON_PROPERTY_ENABLE_PERSONALIZATION)
@@ -1763,8 +1801,9 @@ public class IndexSettings {
 
   /**
    * Controls if and how query words are interpreted as prefixes.
+   *
    * @return queryType
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Controls if and how query words are interpreted as prefixes."
@@ -1790,8 +1829,9 @@ public class IndexSettings {
 
   /**
    * Selects a strategy to remove words from the query when it doesn’t match any hits.
+   *
    * @return removeWordsIfNoResults
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Selects a strategy to remove words from the query when it doesn’t match any hits."
@@ -1817,8 +1857,9 @@ public class IndexSettings {
 
   /**
    * Enables the advanced query syntax.
+   *
    * @return advancedSyntax
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables the advanced query syntax.")
   @JsonProperty(JSON_PROPERTY_ADVANCED_SYNTAX)
@@ -1848,8 +1889,9 @@ public class IndexSettings {
 
   /**
    * A list of words that should be considered as optional when found in the query.
+   *
    * @return optionalWords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "A list of words that should be considered as optional when found in the query."
@@ -1885,8 +1927,9 @@ public class IndexSettings {
 
   /**
    * List of attributes on which you want to disable the exact ranking criterion.
+   *
    * @return disableExactOnAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which you want to disable the exact ranking criterion."
@@ -1914,11 +1957,13 @@ public class IndexSettings {
 
   /**
    * Controls how the exact ranking criterion is computed when the query contains only one word.
+   *
    * @return exactOnSingleWordQuery
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Controls how the exact ranking criterion is computed when the query contains only one word."
+    value = "Controls how the exact ranking criterion is computed when the query contains only one" +
+    " word."
   )
   @JsonProperty(JSON_PROPERTY_EXACT_ON_SINGLE_WORD_QUERY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1953,11 +1998,13 @@ public class IndexSettings {
 
   /**
    * List of alternatives that should be considered an exact match by the exact ranking criterion.
+   *
    * @return alternativesAsExact
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "List of alternatives that should be considered an exact match by the exact ranking criterion."
+    value = "List of alternatives that should be considered an exact match by the exact ranking" +
+    " criterion."
   )
   @JsonProperty(JSON_PROPERTY_ALTERNATIVES_AS_EXACT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -1991,12 +2038,15 @@ public class IndexSettings {
   }
 
   /**
-   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
+   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is
+   * enabled.
+   *
    * @return advancedSyntaxFeatures
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled."
+    value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is" +
+    " enabled."
   )
   @JsonProperty(JSON_PROPERTY_ADVANCED_SYNTAX_FEATURES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -2018,11 +2068,10 @@ public class IndexSettings {
   }
 
   /**
-   * Enables de-duplication or grouping of results.
-   * minimum: 0
-   * maximum: 4
+   * Enables de-duplication or grouping of results. minimum: 0 maximum: 4
+   *
    * @return distinct
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables de-duplication or grouping of results.")
   @JsonProperty(JSON_PROPERTY_DISTINCT)
@@ -2044,8 +2093,9 @@ public class IndexSettings {
 
   /**
    * Whether to take into account an index’s synonyms for a particular search.
+   *
    * @return synonyms
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether to take into account an index’s synonyms for a particular search."
@@ -2070,12 +2120,15 @@ public class IndexSettings {
   }
 
   /**
-   * Whether to highlight and snippet the original word that matches the synonym or the synonym itself.
+   * Whether to highlight and snippet the original word that matches the synonym or the synonym
+   * itself.
+   *
    * @return replaceSynonymsInHighlight
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Whether to highlight and snippet the original word that matches the synonym or the synonym itself."
+    value = "Whether to highlight and snippet the original word that matches the synonym or the" +
+    " synonym itself."
   )
   @JsonProperty(JSON_PROPERTY_REPLACE_SYNONYMS_IN_HIGHLIGHT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -2097,11 +2150,10 @@ public class IndexSettings {
   }
 
   /**
-   * Precision of the proximity ranking criterion.
-   * minimum: 1
-   * maximum: 7
+   * Precision of the proximity ranking criterion. minimum: 1 maximum: 7
+   *
    * @return minProximity
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Precision of the proximity ranking criterion.")
   @JsonProperty(JSON_PROPERTY_MIN_PROXIMITY)
@@ -2130,12 +2182,15 @@ public class IndexSettings {
   }
 
   /**
-   * Choose which fields to return in the API response. This parameters applies to search and browse queries.
+   * Choose which fields to return in the API response. This parameters applies to search and browse
+   * queries.
+   *
    * @return responseFields
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Choose which fields to return in the API response. This parameters applies to search and browse queries."
+    value = "Choose which fields to return in the API response. This parameters applies to search and" +
+    " browse queries."
   )
   @JsonProperty(JSON_PROPERTY_RESPONSE_FIELDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -2156,8 +2211,9 @@ public class IndexSettings {
 
   /**
    * Maximum number of facet hits to return during a search for facet values.
+   *
    * @return maxFacetHits
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Maximum number of facet hits to return during a search for facet values."
@@ -2183,12 +2239,15 @@ public class IndexSettings {
   }
 
   /**
-   * When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
+   * When attribute is ranked above proximity in your ranking formula, proximity is used to select
+   * which searchable attribute is matched in the attribute ranking stage.
+   *
    * @return attributeCriteriaComputedByMinProximity
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage."
+    value = "When attribute is ranked above proximity in your ranking formula, proximity is used to" +
+    " select which searchable attribute is matched in the attribute ranking stage."
   )
   @JsonProperty(JSON_PROPERTY_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -2211,12 +2270,15 @@ public class IndexSettings {
   }
 
   /**
-   * Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
+   * Content defining how the search interface should be rendered. Can be set via the settings for a
+   * default value and can be overridden via rules.
+   *
    * @return renderingContent
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules."
+    value = "Content defining how the search interface should be rendered. Can be set via the" +
+    " settings for a default value and can be overridden via rules."
   )
   @JsonProperty(JSON_PROPERTY_RENDERING_CONTENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -2672,8 +2734,7 @@ public class IndexSettings {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

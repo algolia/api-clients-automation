@@ -11,7 +11,7 @@ import com.github.scribejava.core.oauth2.clientauthentication.RequestBodyAuthent
 
 @javax.annotation.Generated(
   value = "org.openapitools.codegen.languages.JavaClientCodegen",
-  date = "2021-12-09T15:22:27.248809+01:00[Europe/Paris]"
+  date = "2021-12-09T15:52:44.533542+01:00[Europe/Paris]"
 )
 public class DefaultApi20Impl extends DefaultApi20 {
 

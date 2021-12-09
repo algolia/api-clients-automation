@@ -12,24 +12,17 @@
 
 package com.algolia.model;
 
-import com.algolia.model.Operation;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * The &#x60;batch&#x60; requests.
- */
+/** The &#x60;batch&#x60; requests. */
 @ApiModel(description = "The `batch` requests.")
 @JsonPropertyOrder({ BatchObject.JSON_PROPERTY_REQUESTS })
 @JsonTypeName("batchObject")
@@ -53,8 +46,9 @@ public class BatchObject {
 
   /**
    * Get requests
+   *
    * @return requests
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_REQUESTS)
@@ -96,8 +90,7 @@ public class BatchObject {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

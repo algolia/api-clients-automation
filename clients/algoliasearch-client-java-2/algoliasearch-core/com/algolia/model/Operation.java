@@ -17,28 +17,20 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Operation
- */
+/** Operation */
 @JsonPropertyOrder(
   { Operation.JSON_PROPERTY_ACTION, Operation.JSON_PROPERTY_BODY }
 )
 @JsonTypeName("operation")
 public class Operation {
 
-  /**
-   * type of operation.
-   */
+  /** type of operation. */
   public enum ActionEnum {
     ADDOBJECT("addObject"),
 
@@ -94,8 +86,9 @@ public class Operation {
 
   /**
    * type of operation.
+   *
    * @return action
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "type of operation.")
   @JsonProperty(JSON_PROPERTY_ACTION)
@@ -125,8 +118,9 @@ public class Operation {
 
   /**
    * arguments to the operation (depends on the type of the operation).
+   *
    * @return body
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "arguments to the operation (depends on the type of the operation)."
@@ -180,8 +174,7 @@ public class Operation {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

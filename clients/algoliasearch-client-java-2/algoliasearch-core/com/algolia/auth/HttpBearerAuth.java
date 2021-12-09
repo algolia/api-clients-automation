@@ -3,9 +3,7 @@ package com.algolia.auth;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
-/**
- * An interceptor that adds the request header needed to use HTTP bearer authentication.
- */
+/** An interceptor that adds the request header needed to use HTTP bearer authentication. */
 public class HttpBearerAuth implements RequestInterceptor {
 
   private final String scheme;
@@ -16,14 +14,16 @@ public class HttpBearerAuth implements RequestInterceptor {
   }
 
   /**
-   * Gets the token, which together with the scheme, will be sent as the value of the Authorization header.
+   * Gets the token, which together with the scheme, will be sent as the value of the Authorization
+   * header.
    */
   public String getBearerToken() {
     return bearerToken;
   }
 
   /**
-   * Sets the token, which together with the scheme, will be sent as the value of the Authorization header.
+   * Sets the token, which together with the scheme, will be sent as the value of the Authorization
+   * header.
    */
   public void setBearerToken(String bearerToken) {
     this.bearerToken = bearerToken;

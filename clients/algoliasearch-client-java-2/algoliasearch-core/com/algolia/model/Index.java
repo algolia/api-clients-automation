@@ -12,24 +12,17 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Index
- */
+/** Index */
 @JsonPropertyOrder(
   {
     Index.JSON_PROPERTY_NAME,
@@ -89,8 +82,9 @@ public class Index {
 
   /**
    * Index name.
+   *
    * @return name
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Index name.")
   @JsonProperty(JSON_PROPERTY_NAME)
@@ -112,8 +106,9 @@ public class Index {
 
   /**
    * Index creation date. An empty string means that the index has no records.
+   *
    * @return createdAt
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -138,8 +133,9 @@ public class Index {
 
   /**
    * Date of last update (ISO-8601 format).
+   *
    * @return updatedAt
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -164,8 +160,9 @@ public class Index {
 
   /**
    * Number of records contained in the index.
+   *
    * @return entries
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -190,8 +187,9 @@ public class Index {
 
   /**
    * Number of bytes of the index in minified format.
+   *
    * @return dataSize
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -216,8 +214,9 @@ public class Index {
 
   /**
    * Number of bytes of the index binary file.
+   *
    * @return fileSize
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -242,8 +241,9 @@ public class Index {
 
   /**
    * Last build time
+   *
    * @return lastBuildTimeS
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Last build time")
   @JsonProperty(JSON_PROPERTY_LAST_BUILD_TIME_S)
@@ -265,8 +265,9 @@ public class Index {
 
   /**
    * Number of pending indexing operations. This value is deprecated and should not be used.
+   *
    * @return numberOfPendingTask
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Number of pending indexing operations. This value is deprecated and should not be used."
@@ -289,13 +290,16 @@ public class Index {
   }
 
   /**
-   * A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
+   * A boolean which says whether the index has pending tasks. This value is deprecated and should
+   * not be used.
+   *
    * @return pendingTask
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
-    value = "A boolean which says whether the index has pending tasks. This value is deprecated and should not be used."
+    value = "A boolean which says whether the index has pending tasks. This value is deprecated and" +
+    " should not be used."
   )
   @JsonProperty(JSON_PROPERTY_PENDING_TASK)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
@@ -316,8 +320,9 @@ public class Index {
 
   /**
    * Only present if the index is a replica. Contains the name of the related primary index.
+   *
    * @return primary
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Only present if the index is a replica. Contains the name of the related primary index."
@@ -348,12 +353,15 @@ public class Index {
   }
 
   /**
-   * Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
+   * Only present if the index is a primary index with replicas. Contains the names of all linked
+   * replicas.
+   *
    * @return replicas
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Only present if the index is a primary index with replicas. Contains the names of all linked replicas."
+    value = "Only present if the index is a primary index with replicas. Contains the names of all" +
+    " linked replicas."
   )
   @JsonProperty(JSON_PROPERTY_REPLICAS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -443,8 +451,7 @@ public class Index {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

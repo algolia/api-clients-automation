@@ -12,21 +12,14 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * SearchParamsAsString
- */
+/** SearchParamsAsString */
 @JsonPropertyOrder({ SearchParamsAsString.JSON_PROPERTY_PARAMS })
 @JsonTypeName("searchParamsAsString")
 public class SearchParamsAsString {
@@ -41,8 +34,9 @@ public class SearchParamsAsString {
 
   /**
    * Get params
+   *
    * @return params
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_PARAMS)
@@ -84,8 +78,7 @@ public class SearchParamsAsString {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

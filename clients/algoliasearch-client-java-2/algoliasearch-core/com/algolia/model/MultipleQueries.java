@@ -17,16 +17,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * MultipleQueries
- */
+/** MultipleQueries */
 @JsonPropertyOrder(
   {
     MultipleQueries.JSON_PROPERTY_INDEX_NAME,
@@ -46,7 +41,8 @@ public class MultipleQueries {
   private String query = "";
 
   /**
-   * Perform a search query with &#x60;default&#x60;, will search for facet values if &#x60;facet&#x60; is given.
+   * Perform a search query with &#x60;default&#x60;, will search for facet values if
+   * &#x60;facet&#x60; is given.
    */
   public enum TypeEnum {
     DEFAULT("default"),
@@ -96,8 +92,9 @@ public class MultipleQueries {
 
   /**
    * The Algolia index name.
+   *
    * @return indexName
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "products",
@@ -123,8 +120,9 @@ public class MultipleQueries {
 
   /**
    * The text to search in the index.
+   *
    * @return query
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The text to search in the index.")
   @JsonProperty(JSON_PROPERTY_QUERY)
@@ -145,12 +143,15 @@ public class MultipleQueries {
   }
 
   /**
-   * Perform a search query with &#x60;default&#x60;, will search for facet values if &#x60;facet&#x60; is given.
+   * Perform a search query with &#x60;default&#x60;, will search for facet values if
+   * &#x60;facet&#x60; is given.
+   *
    * @return type
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Perform a search query with `default`, will search for facet values if `facet` is given."
+    value = "Perform a search query with `default`, will search for facet values if `facet` is" +
+    " given."
   )
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -171,8 +172,9 @@ public class MultipleQueries {
 
   /**
    * The &#x60;facet&#x60; name.
+   *
    * @return facet
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The `facet` name.")
   @JsonProperty(JSON_PROPERTY_FACET)
@@ -194,8 +196,9 @@ public class MultipleQueries {
 
   /**
    * A query string of search parameters.
+   *
    * @return params
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "A query string of search parameters.")
   @JsonProperty(JSON_PROPERTY_PARAMS)
@@ -250,8 +253,7 @@ public class MultipleQueries {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

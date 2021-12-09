@@ -12,21 +12,14 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * RankingInfoMatchedGeoLocation
- */
+/** RankingInfoMatchedGeoLocation */
 @JsonPropertyOrder(
   {
     RankingInfoMatchedGeoLocation.JSON_PROPERTY_LAT,
@@ -53,8 +46,9 @@ public class RankingInfoMatchedGeoLocation {
 
   /**
    * Latitude of the matched location.
+   *
    * @return lat
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Latitude of the matched location.")
   @JsonProperty(JSON_PROPERTY_LAT)
@@ -76,8 +70,9 @@ public class RankingInfoMatchedGeoLocation {
 
   /**
    * Longitude of the matched location.
+   *
    * @return lng
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Longitude of the matched location.")
   @JsonProperty(JSON_PROPERTY_LNG)
@@ -99,8 +94,9 @@ public class RankingInfoMatchedGeoLocation {
 
   /**
    * Distance between the matched location and the search location (in meters).
+   *
    * @return distance
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Distance between the matched location and the search location (in meters)."
@@ -150,8 +146,7 @@ public class RankingInfoMatchedGeoLocation {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

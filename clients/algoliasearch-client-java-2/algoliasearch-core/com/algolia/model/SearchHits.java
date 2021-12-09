@@ -12,24 +12,16 @@
 
 package com.algolia.model;
 
-import com.algolia.model.Record;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * SearchHits
- */
+/** SearchHits */
 @JsonPropertyOrder({ SearchHits.JSON_PROPERTY_HITS })
 @JsonTypeName("searchHits")
 public class SearchHits {
@@ -52,8 +44,9 @@ public class SearchHits {
 
   /**
    * Get hits
+   *
    * @return hits
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_HITS)
@@ -95,8 +88,7 @@ public class SearchHits {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

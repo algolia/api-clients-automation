@@ -12,24 +12,16 @@
 
 package com.algolia.model;
 
-import com.algolia.model.Index;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * ListIndicesResponse
- */
+/** ListIndicesResponse */
 @JsonPropertyOrder(
   {
     ListIndicesResponse.JSON_PROPERTY_ITEMS,
@@ -60,8 +52,9 @@ public class ListIndicesResponse {
 
   /**
    * List of the fetched indices.
+   *
    * @return items
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of the fetched indices.")
   @JsonProperty(JSON_PROPERTY_ITEMS)
@@ -83,8 +76,9 @@ public class ListIndicesResponse {
 
   /**
    * Number of pages.
+   *
    * @return nbPages
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(example = "100", value = "Number of pages.")
   @JsonProperty(JSON_PROPERTY_NB_PAGES)
@@ -130,8 +124,7 @@ public class ListIndicesResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {
