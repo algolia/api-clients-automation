@@ -4,4 +4,4 @@ export CLIENT=$(cat openapitools.json | yarn json "generator-cli.generators.java
 mkdir -p $CLIENT/utils
 cp -R clients/algoliasearch-client-javascript/utils/ $CLIENT/utils
 
-yarn lint:client:fix
+eslint --ext=ts ${CLIENT} --fix

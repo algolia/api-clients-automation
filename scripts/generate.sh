@@ -3,49 +3,28 @@
 # Break on non-zero code
 set -e
 
-LANGUAGE=$1
-CLIENT=$2
-
-LANGUAGES=(javascript)
-CLIENTS=(search recommend personalization)
-
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
 cd ${DIR}/..
 
-generate_client() {
-    local lang=$1
-    local client=$2
-    echo "Generating code for ${lang}-${client}"
-    yarn openapi-generator-cli generate --generator-key "${lang}-${client}"
-    
-    # run the post generation script if it exists (linting and additional files)
-    local postgen="./scripts/post-gen/${lang}.sh"
-    if [[ -f "$postgen" ]]; then
-        $postgen $client
-    fi
-}
+lang=$1
+client=$2
 
-if [[ $LANGUAGE == "all" ]]; then
-    LANGUAGE=("${LANGUAGES[@]}")
-elif [[ " ${LANGUAGES[*]} " =~ " ${LANGUAGE} " ]]; then
-    LANGUAGE=($LANGUAGE)
-else
-    echo "Unknown language ${LANGUAGE}"
-    exit 1
+# run the pre generation script if it exists (spec v)
+pregen="./scripts/pre-gen/${lang}.sh"
+if [[ -f "$pregen" ]]; then
+    echo "Pre-gen for ${lang}-${client}"
+    $pregen $client
 fi
 
-if [[ $CLIENT == "all" ]]; then
-    CLIENT=("${CLIENTS[@]}")
-elif [[ " ${CLIENTS[*]} " =~ " ${CLIENT} " ]]; then
-    CLIENT=($CLIENT)
-else
-    echo "Unknown client ${CLIENT}"
-    exit 1
+echo "Generating code for ${lang}-${client}"
+yarn openapi-generator-cli generate --generator-key "${lang}-${client}"
+
+# run the post generation script if it exists (linting and additional files)
+postgen="./scripts/post-gen/${lang}.sh"
+if [[ -f "$postgen" ]]; then
+    echo "Post-gen for ${lang}-${client}"
+    $postgen $client
 fi
 
-for lang in "${LANGUAGE[@]}"; do
-    for client in "${CLIENT[@]}"; do
-        generate_client $lang $client
-    done
-done
+./scripts/post-gen/global.sh
