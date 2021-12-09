@@ -12,36 +12,38 @@
 
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * RankingInfoMatchedGeoLocation
  */
-
+@JsonPropertyOrder(
+  {
+    RankingInfoMatchedGeoLocation.JSON_PROPERTY_LAT,
+    RankingInfoMatchedGeoLocation.JSON_PROPERTY_LNG,
+    RankingInfoMatchedGeoLocation.JSON_PROPERTY_DISTANCE,
+  }
+)
+@JsonTypeName("rankingInfo_matchedGeoLocation")
 public class RankingInfoMatchedGeoLocation {
 
-  public static final String SERIALIZED_NAME_LAT = "lat";
-
-  @SerializedName(SERIALIZED_NAME_LAT)
+  public static final String JSON_PROPERTY_LAT = "lat";
   private Double lat;
 
-  public static final String SERIALIZED_NAME_LNG = "lng";
-
-  @SerializedName(SERIALIZED_NAME_LNG)
+  public static final String JSON_PROPERTY_LNG = "lng";
   private Double lng;
 
-  public static final String SERIALIZED_NAME_DISTANCE = "distance";
-
-  @SerializedName(SERIALIZED_NAME_DISTANCE)
+  public static final String JSON_PROPERTY_DISTANCE = "distance";
   private Integer distance;
 
   public RankingInfoMatchedGeoLocation lat(Double lat) {
@@ -55,10 +57,14 @@ public class RankingInfoMatchedGeoLocation {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Latitude of the matched location.")
+  @JsonProperty(JSON_PROPERTY_LAT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Double getLat() {
     return lat;
   }
 
+  @JsonProperty(JSON_PROPERTY_LAT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLat(Double lat) {
     this.lat = lat;
   }
@@ -74,10 +80,14 @@ public class RankingInfoMatchedGeoLocation {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Longitude of the matched location.")
+  @JsonProperty(JSON_PROPERTY_LNG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Double getLng() {
     return lng;
   }
 
+  @JsonProperty(JSON_PROPERTY_LNG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLng(Double lng) {
     this.lng = lng;
   }
@@ -95,10 +105,14 @@ public class RankingInfoMatchedGeoLocation {
   @ApiModelProperty(
     value = "Distance between the matched location and the search location (in meters)."
   )
+  @JsonProperty(JSON_PROPERTY_DISTANCE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getDistance() {
     return distance;
   }
 
+  @JsonProperty(JSON_PROPERTY_DISTANCE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDistance(Integer distance) {
     this.distance = distance;
   }

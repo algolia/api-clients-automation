@@ -13,14 +13,15 @@
 package com.algolia.model;
 
 import com.algolia.model.SearchResponse;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,12 +30,11 @@ import java.util.Objects;
 /**
  * MultipleQueriesResponse
  */
-
+@JsonPropertyOrder({ MultipleQueriesResponse.JSON_PROPERTY_RESULTS })
+@JsonTypeName("multipleQueriesResponse")
 public class MultipleQueriesResponse {
 
-  public static final String SERIALIZED_NAME_RESULTS = "results";
-
-  @SerializedName(SERIALIZED_NAME_RESULTS)
+  public static final String JSON_PROPERTY_RESULTS = "results";
   private List<SearchResponse> results = null;
 
   public MultipleQueriesResponse results(List<SearchResponse> results) {
@@ -56,10 +56,14 @@ public class MultipleQueriesResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_RESULTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<SearchResponse> getResults() {
     return results;
   }
 
+  @JsonProperty(JSON_PROPERTY_RESULTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResults(List<SearchResponse> results) {
     this.results = results;
   }

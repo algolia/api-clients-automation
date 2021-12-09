@@ -12,36 +12,38 @@
 
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * SaveObjectResponse
  */
-
+@JsonPropertyOrder(
+  {
+    SaveObjectResponse.JSON_PROPERTY_CREATED_AT,
+    SaveObjectResponse.JSON_PROPERTY_TASK_I_D,
+    SaveObjectResponse.JSON_PROPERTY_OBJECT_I_D,
+  }
+)
+@JsonTypeName("saveObjectResponse")
 public class SaveObjectResponse {
 
-  public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
-
-  @SerializedName(SERIALIZED_NAME_CREATED_AT)
+  public static final String JSON_PROPERTY_CREATED_AT = "createdAt";
   private String createdAt;
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  public static final String JSON_PROPERTY_TASK_I_D = "taskID";
   private Integer taskID;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  public static final String JSON_PROPERTY_OBJECT_I_D = "objectID";
   private String objectID;
 
   public SaveObjectResponse createdAt(String createdAt) {
@@ -55,10 +57,14 @@ public class SaveObjectResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_CREATED_AT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getCreatedAt() {
     return createdAt;
   }
 
+  @JsonProperty(JSON_PROPERTY_CREATED_AT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
   }
@@ -74,10 +80,14 @@ public class SaveObjectResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
+  @JsonProperty(JSON_PROPERTY_TASK_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getTaskID() {
     return taskID;
   }
 
+  @JsonProperty(JSON_PROPERTY_TASK_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTaskID(Integer taskID) {
     this.taskID = taskID;
   }
@@ -93,10 +103,14 @@ public class SaveObjectResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Unique identifier of the object.")
+  @JsonProperty(JSON_PROPERTY_OBJECT_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getObjectID() {
     return objectID;
   }
 
+  @JsonProperty(JSON_PROPERTY_OBJECT_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setObjectID(String objectID) {
     this.objectID = objectID;
   }

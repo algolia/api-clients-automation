@@ -12,41 +12,42 @@
 
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * BaseSearchResponseFacetsStats
  */
-
+@JsonPropertyOrder(
+  {
+    BaseSearchResponseFacetsStats.JSON_PROPERTY_MIN,
+    BaseSearchResponseFacetsStats.JSON_PROPERTY_MAX,
+    BaseSearchResponseFacetsStats.JSON_PROPERTY_AVG,
+    BaseSearchResponseFacetsStats.JSON_PROPERTY_SUM,
+  }
+)
+@JsonTypeName("baseSearchResponse_facets_stats")
 public class BaseSearchResponseFacetsStats {
 
-  public static final String SERIALIZED_NAME_MIN = "min";
-
-  @SerializedName(SERIALIZED_NAME_MIN)
+  public static final String JSON_PROPERTY_MIN = "min";
   private Integer min;
 
-  public static final String SERIALIZED_NAME_MAX = "max";
-
-  @SerializedName(SERIALIZED_NAME_MAX)
+  public static final String JSON_PROPERTY_MAX = "max";
   private Integer max;
 
-  public static final String SERIALIZED_NAME_AVG = "avg";
-
-  @SerializedName(SERIALIZED_NAME_AVG)
+  public static final String JSON_PROPERTY_AVG = "avg";
   private Integer avg;
 
-  public static final String SERIALIZED_NAME_SUM = "sum";
-
-  @SerializedName(SERIALIZED_NAME_SUM)
+  public static final String JSON_PROPERTY_SUM = "sum";
   private Integer sum;
 
   public BaseSearchResponseFacetsStats min(Integer min) {
@@ -60,10 +61,14 @@ public class BaseSearchResponseFacetsStats {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The minimum value in the result set.")
+  @JsonProperty(JSON_PROPERTY_MIN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMin() {
     return min;
   }
 
+  @JsonProperty(JSON_PROPERTY_MIN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMin(Integer min) {
     this.min = min;
   }
@@ -79,10 +84,14 @@ public class BaseSearchResponseFacetsStats {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The maximum value in the result set.")
+  @JsonProperty(JSON_PROPERTY_MAX)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMax() {
     return max;
   }
 
+  @JsonProperty(JSON_PROPERTY_MAX)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMax(Integer max) {
     this.max = max;
   }
@@ -98,10 +107,14 @@ public class BaseSearchResponseFacetsStats {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The average facet value in the result set.")
+  @JsonProperty(JSON_PROPERTY_AVG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getAvg() {
     return avg;
   }
 
+  @JsonProperty(JSON_PROPERTY_AVG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAvg(Integer avg) {
     this.avg = avg;
   }
@@ -117,10 +130,14 @@ public class BaseSearchResponseFacetsStats {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The sum of all values in the result set.")
+  @JsonProperty(JSON_PROPERTY_SUM)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getSum() {
     return sum;
   }
 
+  @JsonProperty(JSON_PROPERTY_SUM)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSum(Integer sum) {
     this.sum = sum;
   }

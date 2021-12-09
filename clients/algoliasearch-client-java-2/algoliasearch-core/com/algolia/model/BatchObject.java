@@ -13,14 +13,15 @@
 package com.algolia.model;
 
 import com.algolia.model.Operation;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,11 +31,11 @@ import java.util.Objects;
  * The &#x60;batch&#x60; requests.
  */
 @ApiModel(description = "The `batch` requests.")
+@JsonPropertyOrder({ BatchObject.JSON_PROPERTY_REQUESTS })
+@JsonTypeName("batchObject")
 public class BatchObject {
 
-  public static final String SERIALIZED_NAME_REQUESTS = "requests";
-
-  @SerializedName(SERIALIZED_NAME_REQUESTS)
+  public static final String JSON_PROPERTY_REQUESTS = "requests";
   private List<Operation> requests = null;
 
   public BatchObject requests(List<Operation> requests) {
@@ -56,10 +57,14 @@ public class BatchObject {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_REQUESTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<Operation> getRequests() {
     return requests;
   }
 
+  @JsonProperty(JSON_PROPERTY_REQUESTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRequests(List<Operation> requests) {
     this.requests = requests;
   }

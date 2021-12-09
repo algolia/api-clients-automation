@@ -13,204 +13,176 @@
 package com.algolia.model;
 
 import com.algolia.model.OneOfintegerstring;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 /**
  * BaseSearchParams
  */
-
+@JsonPropertyOrder(
+  {
+    BaseSearchParams.JSON_PROPERTY_QUERY,
+    BaseSearchParams.JSON_PROPERTY_SIMILAR_QUERY,
+    BaseSearchParams.JSON_PROPERTY_FILTERS,
+    BaseSearchParams.JSON_PROPERTY_FACET_FILTERS,
+    BaseSearchParams.JSON_PROPERTY_OPTIONAL_FILTERS,
+    BaseSearchParams.JSON_PROPERTY_NUMERIC_FILTERS,
+    BaseSearchParams.JSON_PROPERTY_TAG_FILTERS,
+    BaseSearchParams.JSON_PROPERTY_SUM_OR_FILTERS_SCORES,
+    BaseSearchParams.JSON_PROPERTY_FACETS,
+    BaseSearchParams.JSON_PROPERTY_MAX_VALUES_PER_FACET,
+    BaseSearchParams.JSON_PROPERTY_FACETING_AFTER_DISTINCT,
+    BaseSearchParams.JSON_PROPERTY_SORT_FACET_VALUES_BY,
+    BaseSearchParams.JSON_PROPERTY_PAGE,
+    BaseSearchParams.JSON_PROPERTY_OFFSET,
+    BaseSearchParams.JSON_PROPERTY_LENGTH,
+    BaseSearchParams.JSON_PROPERTY_AROUND_LAT_LNG,
+    BaseSearchParams.JSON_PROPERTY_AROUND_LAT_LNG_VIA_I_P,
+    BaseSearchParams.JSON_PROPERTY_AROUND_RADIUS,
+    BaseSearchParams.JSON_PROPERTY_AROUND_PRECISION,
+    BaseSearchParams.JSON_PROPERTY_MINIMUM_AROUND_RADIUS,
+    BaseSearchParams.JSON_PROPERTY_INSIDE_BOUNDING_BOX,
+    BaseSearchParams.JSON_PROPERTY_INSIDE_POLYGON,
+    BaseSearchParams.JSON_PROPERTY_NATURAL_LANGUAGES,
+    BaseSearchParams.JSON_PROPERTY_RULE_CONTEXTS,
+    BaseSearchParams.JSON_PROPERTY_PERSONALIZATION_IMPACT,
+    BaseSearchParams.JSON_PROPERTY_USER_TOKEN,
+    BaseSearchParams.JSON_PROPERTY_GET_RANKING_INFO,
+    BaseSearchParams.JSON_PROPERTY_CLICK_ANALYTICS,
+    BaseSearchParams.JSON_PROPERTY_ANALYTICS,
+    BaseSearchParams.JSON_PROPERTY_ANALYTICS_TAGS,
+    BaseSearchParams.JSON_PROPERTY_PERCENTILE_COMPUTATION,
+    BaseSearchParams.JSON_PROPERTY_ENABLE_A_B_TEST,
+    BaseSearchParams.JSON_PROPERTY_ENABLE_RE_RANKING,
+  }
+)
+@JsonTypeName("baseSearchParams")
 public class BaseSearchParams {
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  public static final String JSON_PROPERTY_QUERY = "query";
   private String query = "";
 
-  public static final String SERIALIZED_NAME_SIMILAR_QUERY = "similarQuery";
-
-  @SerializedName(SERIALIZED_NAME_SIMILAR_QUERY)
+  public static final String JSON_PROPERTY_SIMILAR_QUERY = "similarQuery";
   private String similarQuery = "";
 
-  public static final String SERIALIZED_NAME_FILTERS = "filters";
-
-  @SerializedName(SERIALIZED_NAME_FILTERS)
+  public static final String JSON_PROPERTY_FILTERS = "filters";
   private String filters = "";
 
-  public static final String SERIALIZED_NAME_FACET_FILTERS = "facetFilters";
-
-  @SerializedName(SERIALIZED_NAME_FACET_FILTERS)
+  public static final String JSON_PROPERTY_FACET_FILTERS = "facetFilters";
   private List<String> facetFilters = null;
 
-  public static final String SERIALIZED_NAME_OPTIONAL_FILTERS =
-    "optionalFilters";
-
-  @SerializedName(SERIALIZED_NAME_OPTIONAL_FILTERS)
+  public static final String JSON_PROPERTY_OPTIONAL_FILTERS = "optionalFilters";
   private List<String> optionalFilters = null;
 
-  public static final String SERIALIZED_NAME_NUMERIC_FILTERS = "numericFilters";
-
-  @SerializedName(SERIALIZED_NAME_NUMERIC_FILTERS)
+  public static final String JSON_PROPERTY_NUMERIC_FILTERS = "numericFilters";
   private List<String> numericFilters = null;
 
-  public static final String SERIALIZED_NAME_TAG_FILTERS = "tagFilters";
-
-  @SerializedName(SERIALIZED_NAME_TAG_FILTERS)
+  public static final String JSON_PROPERTY_TAG_FILTERS = "tagFilters";
   private List<String> tagFilters = null;
 
-  public static final String SERIALIZED_NAME_SUM_OR_FILTERS_SCORES =
+  public static final String JSON_PROPERTY_SUM_OR_FILTERS_SCORES =
     "sumOrFiltersScores";
-
-  @SerializedName(SERIALIZED_NAME_SUM_OR_FILTERS_SCORES)
   private Boolean sumOrFiltersScores = false;
 
-  public static final String SERIALIZED_NAME_FACETS = "facets";
-
-  @SerializedName(SERIALIZED_NAME_FACETS)
+  public static final String JSON_PROPERTY_FACETS = "facets";
   private List<String> facets = null;
 
-  public static final String SERIALIZED_NAME_MAX_VALUES_PER_FACET =
+  public static final String JSON_PROPERTY_MAX_VALUES_PER_FACET =
     "maxValuesPerFacet";
-
-  @SerializedName(SERIALIZED_NAME_MAX_VALUES_PER_FACET)
   private Integer maxValuesPerFacet = 100;
 
-  public static final String SERIALIZED_NAME_FACETING_AFTER_DISTINCT =
+  public static final String JSON_PROPERTY_FACETING_AFTER_DISTINCT =
     "facetingAfterDistinct";
-
-  @SerializedName(SERIALIZED_NAME_FACETING_AFTER_DISTINCT)
   private Boolean facetingAfterDistinct = false;
 
-  public static final String SERIALIZED_NAME_SORT_FACET_VALUES_BY =
+  public static final String JSON_PROPERTY_SORT_FACET_VALUES_BY =
     "sortFacetValuesBy";
-
-  @SerializedName(SERIALIZED_NAME_SORT_FACET_VALUES_BY)
   private String sortFacetValuesBy = "count";
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  public static final String JSON_PROPERTY_PAGE = "page";
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_OFFSET = "offset";
-
-  @SerializedName(SERIALIZED_NAME_OFFSET)
+  public static final String JSON_PROPERTY_OFFSET = "offset";
   private Integer offset;
 
-  public static final String SERIALIZED_NAME_LENGTH = "length";
-
-  @SerializedName(SERIALIZED_NAME_LENGTH)
+  public static final String JSON_PROPERTY_LENGTH = "length";
   private Integer length;
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG = "aroundLatLng";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG)
+  public static final String JSON_PROPERTY_AROUND_LAT_LNG = "aroundLatLng";
   private String aroundLatLng = "";
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG_VIA_I_P =
+  public static final String JSON_PROPERTY_AROUND_LAT_LNG_VIA_I_P =
     "aroundLatLngViaIP";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG_VIA_I_P)
   private Boolean aroundLatLngViaIP = false;
 
-  public static final String SERIALIZED_NAME_AROUND_RADIUS = "aroundRadius";
+  public static final String JSON_PROPERTY_AROUND_RADIUS = "aroundRadius";
+  private JsonNullable<OneOfintegerstring> aroundRadius = JsonNullable.<OneOfintegerstring>undefined();
 
-  @SerializedName(SERIALIZED_NAME_AROUND_RADIUS)
-  private OneOfintegerstring aroundRadius;
-
-  public static final String SERIALIZED_NAME_AROUND_PRECISION =
-    "aroundPrecision";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_PRECISION)
+  public static final String JSON_PROPERTY_AROUND_PRECISION = "aroundPrecision";
   private Integer aroundPrecision = 10;
 
-  public static final String SERIALIZED_NAME_MINIMUM_AROUND_RADIUS =
+  public static final String JSON_PROPERTY_MINIMUM_AROUND_RADIUS =
     "minimumAroundRadius";
-
-  @SerializedName(SERIALIZED_NAME_MINIMUM_AROUND_RADIUS)
   private Integer minimumAroundRadius;
 
-  public static final String SERIALIZED_NAME_INSIDE_BOUNDING_BOX =
+  public static final String JSON_PROPERTY_INSIDE_BOUNDING_BOX =
     "insideBoundingBox";
-
-  @SerializedName(SERIALIZED_NAME_INSIDE_BOUNDING_BOX)
   private List<BigDecimal> insideBoundingBox = null;
 
-  public static final String SERIALIZED_NAME_INSIDE_POLYGON = "insidePolygon";
-
-  @SerializedName(SERIALIZED_NAME_INSIDE_POLYGON)
+  public static final String JSON_PROPERTY_INSIDE_POLYGON = "insidePolygon";
   private List<BigDecimal> insidePolygon = null;
 
-  public static final String SERIALIZED_NAME_NATURAL_LANGUAGES =
+  public static final String JSON_PROPERTY_NATURAL_LANGUAGES =
     "naturalLanguages";
-
-  @SerializedName(SERIALIZED_NAME_NATURAL_LANGUAGES)
   private List<String> naturalLanguages = null;
 
-  public static final String SERIALIZED_NAME_RULE_CONTEXTS = "ruleContexts";
-
-  @SerializedName(SERIALIZED_NAME_RULE_CONTEXTS)
+  public static final String JSON_PROPERTY_RULE_CONTEXTS = "ruleContexts";
   private List<String> ruleContexts = null;
 
-  public static final String SERIALIZED_NAME_PERSONALIZATION_IMPACT =
+  public static final String JSON_PROPERTY_PERSONALIZATION_IMPACT =
     "personalizationImpact";
-
-  @SerializedName(SERIALIZED_NAME_PERSONALIZATION_IMPACT)
   private Integer personalizationImpact = 100;
 
-  public static final String SERIALIZED_NAME_USER_TOKEN = "userToken";
-
-  @SerializedName(SERIALIZED_NAME_USER_TOKEN)
+  public static final String JSON_PROPERTY_USER_TOKEN = "userToken";
   private String userToken;
 
-  public static final String SERIALIZED_NAME_GET_RANKING_INFO =
-    "getRankingInfo";
-
-  @SerializedName(SERIALIZED_NAME_GET_RANKING_INFO)
+  public static final String JSON_PROPERTY_GET_RANKING_INFO = "getRankingInfo";
   private Boolean getRankingInfo = false;
 
-  public static final String SERIALIZED_NAME_CLICK_ANALYTICS = "clickAnalytics";
-
-  @SerializedName(SERIALIZED_NAME_CLICK_ANALYTICS)
+  public static final String JSON_PROPERTY_CLICK_ANALYTICS = "clickAnalytics";
   private Boolean clickAnalytics = false;
 
-  public static final String SERIALIZED_NAME_ANALYTICS = "analytics";
-
-  @SerializedName(SERIALIZED_NAME_ANALYTICS)
+  public static final String JSON_PROPERTY_ANALYTICS = "analytics";
   private Boolean analytics = true;
 
-  public static final String SERIALIZED_NAME_ANALYTICS_TAGS = "analyticsTags";
-
-  @SerializedName(SERIALIZED_NAME_ANALYTICS_TAGS)
+  public static final String JSON_PROPERTY_ANALYTICS_TAGS = "analyticsTags";
   private List<String> analyticsTags = null;
 
-  public static final String SERIALIZED_NAME_PERCENTILE_COMPUTATION =
+  public static final String JSON_PROPERTY_PERCENTILE_COMPUTATION =
     "percentileComputation";
-
-  @SerializedName(SERIALIZED_NAME_PERCENTILE_COMPUTATION)
   private Boolean percentileComputation = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_A_B_TEST = "enableABTest";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_A_B_TEST)
+  public static final String JSON_PROPERTY_ENABLE_A_B_TEST = "enableABTest";
   private Boolean enableABTest = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_RE_RANKING =
+  public static final String JSON_PROPERTY_ENABLE_RE_RANKING =
     "enableReRanking";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_RE_RANKING)
   private Boolean enableReRanking = true;
 
   public BaseSearchParams query(String query) {
@@ -224,10 +196,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "The text to search in the index.")
+  @JsonProperty(JSON_PROPERTY_QUERY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getQuery() {
     return query;
   }
 
+  @JsonProperty(JSON_PROPERTY_QUERY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setQuery(String query) {
     this.query = query;
   }
@@ -245,10 +221,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results."
   )
+  @JsonProperty(JSON_PROPERTY_SIMILAR_QUERY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getSimilarQuery() {
     return similarQuery;
   }
 
+  @JsonProperty(JSON_PROPERTY_SIMILAR_QUERY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
   }
@@ -266,10 +246,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Filter the query with numeric, facet and/or tag filters."
   )
+  @JsonProperty(JSON_PROPERTY_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getFilters() {
     return filters;
   }
 
+  @JsonProperty(JSON_PROPERTY_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFilters(String filters) {
     this.filters = filters;
   }
@@ -293,10 +277,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Filter hits by facet value.")
+  @JsonProperty(JSON_PROPERTY_FACET_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getFacetFilters() {
     return facetFilters;
   }
 
+  @JsonProperty(JSON_PROPERTY_FACET_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFacetFilters(List<String> facetFilters) {
     this.facetFilters = facetFilters;
   }
@@ -322,10 +310,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter."
   )
+  @JsonProperty(JSON_PROPERTY_OPTIONAL_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getOptionalFilters() {
     return optionalFilters;
   }
 
+  @JsonProperty(JSON_PROPERTY_OPTIONAL_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOptionalFilters(List<String> optionalFilters) {
     this.optionalFilters = optionalFilters;
   }
@@ -349,10 +341,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Filter on numeric attributes.")
+  @JsonProperty(JSON_PROPERTY_NUMERIC_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getNumericFilters() {
     return numericFilters;
   }
 
+  @JsonProperty(JSON_PROPERTY_NUMERIC_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumericFilters(List<String> numericFilters) {
     this.numericFilters = numericFilters;
   }
@@ -376,10 +372,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Filter hits by tags.")
+  @JsonProperty(JSON_PROPERTY_TAG_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getTagFilters() {
     return tagFilters;
   }
 
+  @JsonProperty(JSON_PROPERTY_TAG_FILTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTagFilters(List<String> tagFilters) {
     this.tagFilters = tagFilters;
   }
@@ -397,10 +397,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Determines how to calculate the total score for filtering."
   )
+  @JsonProperty(JSON_PROPERTY_SUM_OR_FILTERS_SCORES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getSumOrFiltersScores() {
     return sumOrFiltersScores;
   }
 
+  @JsonProperty(JSON_PROPERTY_SUM_OR_FILTERS_SCORES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSumOrFiltersScores(Boolean sumOrFiltersScores) {
     this.sumOrFiltersScores = sumOrFiltersScores;
   }
@@ -424,10 +428,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Retrieve facets and their facet values.")
+  @JsonProperty(JSON_PROPERTY_FACETS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getFacets() {
     return facets;
   }
 
+  @JsonProperty(JSON_PROPERTY_FACETS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFacets(List<String> facets) {
     this.facets = facets;
   }
@@ -445,10 +453,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Maximum number of facet values to return for each facet during a regular search."
   )
+  @JsonProperty(JSON_PROPERTY_MAX_VALUES_PER_FACET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMaxValuesPerFacet() {
     return maxValuesPerFacet;
   }
 
+  @JsonProperty(JSON_PROPERTY_MAX_VALUES_PER_FACET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
   }
@@ -466,10 +478,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Force faceting to be applied after de-duplication (via the Distinct setting)."
   )
+  @JsonProperty(JSON_PROPERTY_FACETING_AFTER_DISTINCT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getFacetingAfterDistinct() {
     return facetingAfterDistinct;
   }
 
+  @JsonProperty(JSON_PROPERTY_FACETING_AFTER_DISTINCT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFacetingAfterDistinct(Boolean facetingAfterDistinct) {
     this.facetingAfterDistinct = facetingAfterDistinct;
   }
@@ -485,10 +501,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Controls how facet values are fetched.")
+  @JsonProperty(JSON_PROPERTY_SORT_FACET_VALUES_BY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getSortFacetValuesBy() {
     return sortFacetValuesBy;
   }
 
+  @JsonProperty(JSON_PROPERTY_SORT_FACET_VALUES_BY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSortFacetValuesBy(String sortFacetValuesBy) {
     this.sortFacetValuesBy = sortFacetValuesBy;
   }
@@ -504,10 +524,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specify the page to retrieve.")
+  @JsonProperty(JSON_PROPERTY_PAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getPage() {
     return page;
   }
 
+  @JsonProperty(JSON_PROPERTY_PAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPage(Integer page) {
     this.page = page;
   }
@@ -523,10 +547,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specify the offset of the first hit to return.")
+  @JsonProperty(JSON_PROPERTY_OFFSET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getOffset() {
     return offset;
   }
 
+  @JsonProperty(JSON_PROPERTY_OFFSET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOffset(Integer offset) {
     this.offset = offset;
   }
@@ -546,10 +574,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Set the number of hits to retrieve (used only with offset)."
   )
+  @JsonProperty(JSON_PROPERTY_LENGTH)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getLength() {
     return length;
   }
 
+  @JsonProperty(JSON_PROPERTY_LENGTH)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLength(Integer length) {
     this.length = length;
   }
@@ -567,10 +599,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Search for entries around a central geolocation, enabling a geo search within a circular area."
   )
+  @JsonProperty(JSON_PROPERTY_AROUND_LAT_LNG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getAroundLatLng() {
     return aroundLatLng;
   }
 
+  @JsonProperty(JSON_PROPERTY_AROUND_LAT_LNG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
   }
@@ -588,16 +624,21 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Search for entries around a given location automatically computed from the requester’s IP address."
   )
+  @JsonProperty(JSON_PROPERTY_AROUND_LAT_LNG_VIA_I_P)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getAroundLatLngViaIP() {
     return aroundLatLngViaIP;
   }
 
+  @JsonProperty(JSON_PROPERTY_AROUND_LAT_LNG_VIA_I_P)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAroundLatLngViaIP(Boolean aroundLatLngViaIP) {
     this.aroundLatLngViaIP = aroundLatLngViaIP;
   }
 
   public BaseSearchParams aroundRadius(OneOfintegerstring aroundRadius) {
-    this.aroundRadius = aroundRadius;
+    this.aroundRadius = JsonNullable.<OneOfintegerstring>of(aroundRadius);
+
     return this;
   }
 
@@ -609,12 +650,26 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Define the maximum radius for a geo search (in meters)."
   )
+  @JsonIgnore
   public OneOfintegerstring getAroundRadius() {
+    return aroundRadius.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_AROUND_RADIUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public JsonNullable<OneOfintegerstring> getAroundRadius_JsonNullable() {
     return aroundRadius;
   }
 
-  public void setAroundRadius(OneOfintegerstring aroundRadius) {
+  @JsonProperty(JSON_PROPERTY_AROUND_RADIUS)
+  public void setAroundRadius_JsonNullable(
+    JsonNullable<OneOfintegerstring> aroundRadius
+  ) {
     this.aroundRadius = aroundRadius;
+  }
+
+  public void setAroundRadius(OneOfintegerstring aroundRadius) {
+    this.aroundRadius = JsonNullable.<OneOfintegerstring>of(aroundRadius);
   }
 
   public BaseSearchParams aroundPrecision(Integer aroundPrecision) {
@@ -630,10 +685,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Precision of geo search (in meters), to add grouping by geo location to the ranking formula."
   )
+  @JsonProperty(JSON_PROPERTY_AROUND_PRECISION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getAroundPrecision() {
     return aroundPrecision;
   }
 
+  @JsonProperty(JSON_PROPERTY_AROUND_PRECISION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAroundPrecision(Integer aroundPrecision) {
     this.aroundPrecision = aroundPrecision;
   }
@@ -652,10 +711,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Minimum radius (in meters) used for a geo search when aroundRadius is not set."
   )
+  @JsonProperty(JSON_PROPERTY_MINIMUM_AROUND_RADIUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMinimumAroundRadius() {
     return minimumAroundRadius;
   }
 
+  @JsonProperty(JSON_PROPERTY_MINIMUM_AROUND_RADIUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMinimumAroundRadius(Integer minimumAroundRadius) {
     this.minimumAroundRadius = minimumAroundRadius;
   }
@@ -685,10 +748,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Search inside a rectangular area (in geo coordinates)."
   )
+  @JsonProperty(JSON_PROPERTY_INSIDE_BOUNDING_BOX)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<BigDecimal> getInsideBoundingBox() {
     return insideBoundingBox;
   }
 
+  @JsonProperty(JSON_PROPERTY_INSIDE_BOUNDING_BOX)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setInsideBoundingBox(List<BigDecimal> insideBoundingBox) {
     this.insideBoundingBox = insideBoundingBox;
   }
@@ -712,10 +779,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Search inside a polygon (in geo coordinates).")
+  @JsonProperty(JSON_PROPERTY_INSIDE_POLYGON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<BigDecimal> getInsidePolygon() {
     return insidePolygon;
   }
 
+  @JsonProperty(JSON_PROPERTY_INSIDE_POLYGON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setInsidePolygon(List<BigDecimal> insidePolygon) {
     this.insidePolygon = insidePolygon;
   }
@@ -741,10 +812,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search."
   )
+  @JsonProperty(JSON_PROPERTY_NATURAL_LANGUAGES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getNaturalLanguages() {
     return naturalLanguages;
   }
 
+  @JsonProperty(JSON_PROPERTY_NATURAL_LANGUAGES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNaturalLanguages(List<String> naturalLanguages) {
     this.naturalLanguages = naturalLanguages;
   }
@@ -768,10 +843,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables contextual rules.")
+  @JsonProperty(JSON_PROPERTY_RULE_CONTEXTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getRuleContexts() {
     return ruleContexts;
   }
 
+  @JsonProperty(JSON_PROPERTY_RULE_CONTEXTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRuleContexts(List<String> ruleContexts) {
     this.ruleContexts = ruleContexts;
   }
@@ -787,10 +866,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Define the impact of the Personalization feature.")
+  @JsonProperty(JSON_PROPERTY_PERSONALIZATION_IMPACT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getPersonalizationImpact() {
     return personalizationImpact;
   }
 
+  @JsonProperty(JSON_PROPERTY_PERSONALIZATION_IMPACT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPersonalizationImpact(Integer personalizationImpact) {
     this.personalizationImpact = personalizationImpact;
   }
@@ -808,10 +891,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Associates a certain user token with the current search."
   )
+  @JsonProperty(JSON_PROPERTY_USER_TOKEN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getUserToken() {
     return userToken;
   }
 
+  @JsonProperty(JSON_PROPERTY_USER_TOKEN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUserToken(String userToken) {
     this.userToken = userToken;
   }
@@ -827,10 +914,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Retrieve detailed ranking information.")
+  @JsonProperty(JSON_PROPERTY_GET_RANKING_INFO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getGetRankingInfo() {
     return getRankingInfo;
   }
 
+  @JsonProperty(JSON_PROPERTY_GET_RANKING_INFO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setGetRankingInfo(Boolean getRankingInfo) {
     this.getRankingInfo = getRankingInfo;
   }
@@ -846,10 +937,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enable the Click Analytics feature.")
+  @JsonProperty(JSON_PROPERTY_CLICK_ANALYTICS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getClickAnalytics() {
     return clickAnalytics;
   }
 
+  @JsonProperty(JSON_PROPERTY_CLICK_ANALYTICS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setClickAnalytics(Boolean clickAnalytics) {
     this.clickAnalytics = clickAnalytics;
   }
@@ -867,10 +962,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Whether the current query will be taken into account in the Analytics."
   )
+  @JsonProperty(JSON_PROPERTY_ANALYTICS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getAnalytics() {
     return analytics;
   }
 
+  @JsonProperty(JSON_PROPERTY_ANALYTICS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAnalytics(Boolean analytics) {
     this.analytics = analytics;
   }
@@ -896,10 +995,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "List of tags to apply to the query for analytics purposes."
   )
+  @JsonProperty(JSON_PROPERTY_ANALYTICS_TAGS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getAnalyticsTags() {
     return analyticsTags;
   }
 
+  @JsonProperty(JSON_PROPERTY_ANALYTICS_TAGS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAnalyticsTags(List<String> analyticsTags) {
     this.analyticsTags = analyticsTags;
   }
@@ -917,10 +1020,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Whether to include or exclude a query from the processing-time percentile computation."
   )
+  @JsonProperty(JSON_PROPERTY_PERCENTILE_COMPUTATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getPercentileComputation() {
     return percentileComputation;
   }
 
+  @JsonProperty(JSON_PROPERTY_PERCENTILE_COMPUTATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPercentileComputation(Boolean percentileComputation) {
     this.percentileComputation = percentileComputation;
   }
@@ -938,10 +1045,14 @@ public class BaseSearchParams {
   @ApiModelProperty(
     value = "Whether this search should participate in running AB tests."
   )
+  @JsonProperty(JSON_PROPERTY_ENABLE_A_B_TEST)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getEnableABTest() {
     return enableABTest;
   }
 
+  @JsonProperty(JSON_PROPERTY_ENABLE_A_B_TEST)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnableABTest(Boolean enableABTest) {
     this.enableABTest = enableABTest;
   }
@@ -957,10 +1068,14 @@ public class BaseSearchParams {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Whether this search should use AI Re-Ranking.")
+  @JsonProperty(JSON_PROPERTY_ENABLE_RE_RANKING)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getEnableReRanking() {
     return enableReRanking;
   }
 
+  @JsonProperty(JSON_PROPERTY_ENABLE_RE_RANKING)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnableReRanking(Boolean enableReRanking) {
     this.enableReRanking = enableReRanking;
   }
@@ -1007,7 +1122,7 @@ public class BaseSearchParams {
         this.aroundLatLngViaIP,
         baseSearchParams.aroundLatLngViaIP
       ) &&
-      Objects.equals(this.aroundRadius, baseSearchParams.aroundRadius) &&
+      equalsNullable(this.aroundRadius, baseSearchParams.aroundRadius) &&
       Objects.equals(this.aroundPrecision, baseSearchParams.aroundPrecision) &&
       Objects.equals(
         this.minimumAroundRadius,
@@ -1077,7 +1192,7 @@ public class BaseSearchParams {
       length,
       aroundLatLng,
       aroundLatLngViaIP,
-      aroundRadius,
+      hashCodeNullable(aroundRadius),
       aroundPrecision,
       minimumAroundRadius,
       insideBoundingBox,

@@ -13,14 +13,15 @@
 package com.algolia.model;
 
 import com.algolia.model.MultipleQueries;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,18 +30,21 @@ import java.util.Objects;
 /**
  * MultipleQueriesObject
  */
-
+@JsonPropertyOrder(
+  {
+    MultipleQueriesObject.JSON_PROPERTY_REQUESTS,
+    MultipleQueriesObject.JSON_PROPERTY_STRATEGY,
+  }
+)
+@JsonTypeName("multipleQueriesObject")
 public class MultipleQueriesObject {
 
-  public static final String SERIALIZED_NAME_REQUESTS = "requests";
-
-  @SerializedName(SERIALIZED_NAME_REQUESTS)
+  public static final String JSON_PROPERTY_REQUESTS = "requests";
   private List<MultipleQueries> requests = new ArrayList<>();
 
   /**
    * Gets or Sets strategy
    */
-  @JsonAdapter(StrategyEnum.Adapter.class)
   public enum StrategyEnum {
     NONE("none"),
 
@@ -52,6 +56,7 @@ public class MultipleQueriesObject {
       this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
       return value;
     }
@@ -61,6 +66,7 @@ public class MultipleQueriesObject {
       return String.valueOf(value);
     }
 
+    @JsonCreator
     public static StrategyEnum fromValue(String value) {
       for (StrategyEnum b : StrategyEnum.values()) {
         if (b.value.equals(value)) {
@@ -69,28 +75,9 @@ public class MultipleQueriesObject {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
-
-    public static class Adapter extends TypeAdapter<StrategyEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final StrategyEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public StrategyEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return StrategyEnum.fromValue(value);
-      }
-    }
   }
 
-  public static final String SERIALIZED_NAME_STRATEGY = "strategy";
-
-  @SerializedName(SERIALIZED_NAME_STRATEGY)
+  public static final String JSON_PROPERTY_STRATEGY = "strategy";
   private StrategyEnum strategy;
 
   public MultipleQueriesObject requests(List<MultipleQueries> requests) {
@@ -109,10 +96,14 @@ public class MultipleQueriesObject {
    **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty(JSON_PROPERTY_REQUESTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public List<MultipleQueries> getRequests() {
     return requests;
   }
 
+  @JsonProperty(JSON_PROPERTY_REQUESTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setRequests(List<MultipleQueries> requests) {
     this.requests = requests;
   }
@@ -128,10 +119,14 @@ public class MultipleQueriesObject {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_STRATEGY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public StrategyEnum getStrategy() {
     return strategy;
   }
 
+  @JsonProperty(JSON_PROPERTY_STRATEGY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStrategy(StrategyEnum strategy) {
     this.strategy = strategy;
   }

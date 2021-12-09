@@ -12,14 +12,15 @@
 
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Objects;
@@ -27,17 +28,19 @@ import java.util.Objects;
 /**
  * OperationIndexResponse
  */
-
+@JsonPropertyOrder(
+  {
+    OperationIndexResponse.JSON_PROPERTY_TASK_I_D,
+    OperationIndexResponse.JSON_PROPERTY_UPDATED_AT,
+  }
+)
+@JsonTypeName("operationIndexResponse")
 public class OperationIndexResponse {
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  public static final String JSON_PROPERTY_TASK_I_D = "taskID";
   private Integer taskID;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  public static final String JSON_PROPERTY_UPDATED_AT = "updatedAt";
   private OffsetDateTime updatedAt;
 
   public OperationIndexResponse taskID(Integer taskID) {
@@ -51,10 +54,14 @@ public class OperationIndexResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
+  @JsonProperty(JSON_PROPERTY_TASK_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getTaskID() {
     return taskID;
   }
 
+  @JsonProperty(JSON_PROPERTY_TASK_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTaskID(Integer taskID) {
     this.taskID = taskID;
   }
@@ -70,10 +77,14 @@ public class OperationIndexResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Date of last update (ISO-8601 format).")
+  @JsonProperty(JSON_PROPERTY_UPDATED_AT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
 
+  @JsonProperty(JSON_PROPERTY_UPDATED_AT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUpdatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }

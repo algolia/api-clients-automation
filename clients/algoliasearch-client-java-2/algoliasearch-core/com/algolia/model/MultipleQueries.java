@@ -12,37 +12,42 @@
 
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * MultipleQueries
  */
-
+@JsonPropertyOrder(
+  {
+    MultipleQueries.JSON_PROPERTY_INDEX_NAME,
+    MultipleQueries.JSON_PROPERTY_QUERY,
+    MultipleQueries.JSON_PROPERTY_TYPE,
+    MultipleQueries.JSON_PROPERTY_FACET,
+    MultipleQueries.JSON_PROPERTY_PARAMS,
+  }
+)
+@JsonTypeName("multipleQueries")
 public class MultipleQueries {
 
-  public static final String SERIALIZED_NAME_INDEX_NAME = "indexName";
-
-  @SerializedName(SERIALIZED_NAME_INDEX_NAME)
+  public static final String JSON_PROPERTY_INDEX_NAME = "indexName";
   private String indexName;
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  public static final String JSON_PROPERTY_QUERY = "query";
   private String query = "";
 
   /**
    * Perform a search query with &#x60;default&#x60;, will search for facet values if &#x60;facet&#x60; is given.
    */
-  @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
     DEFAULT("default"),
 
@@ -54,6 +59,7 @@ public class MultipleQueries {
       this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
       return value;
     }
@@ -63,6 +69,7 @@ public class MultipleQueries {
       return String.valueOf(value);
     }
 
+    @JsonCreator
     public static TypeEnum fromValue(String value) {
       for (TypeEnum b : TypeEnum.values()) {
         if (b.value.equals(value)) {
@@ -71,38 +78,15 @@ public class MultipleQueries {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
-
-    public static class Adapter extends TypeAdapter<TypeEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final TypeEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public TypeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return TypeEnum.fromValue(value);
-      }
-    }
   }
 
-  public static final String SERIALIZED_NAME_TYPE = "type";
-
-  @SerializedName(SERIALIZED_NAME_TYPE)
+  public static final String JSON_PROPERTY_TYPE = "type";
   private TypeEnum type = TypeEnum.DEFAULT;
 
-  public static final String SERIALIZED_NAME_FACET = "facet";
-
-  @SerializedName(SERIALIZED_NAME_FACET)
+  public static final String JSON_PROPERTY_FACET = "facet";
   private String facet;
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  public static final String JSON_PROPERTY_PARAMS = "params";
   private String params;
 
   public MultipleQueries indexName(String indexName) {
@@ -120,10 +104,14 @@ public class MultipleQueries {
     required = true,
     value = "The Algolia index name."
   )
+  @JsonProperty(JSON_PROPERTY_INDEX_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getIndexName() {
     return indexName;
   }
 
+  @JsonProperty(JSON_PROPERTY_INDEX_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setIndexName(String indexName) {
     this.indexName = indexName;
   }
@@ -139,10 +127,14 @@ public class MultipleQueries {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The text to search in the index.")
+  @JsonProperty(JSON_PROPERTY_QUERY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getQuery() {
     return query;
   }
 
+  @JsonProperty(JSON_PROPERTY_QUERY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setQuery(String query) {
     this.query = query;
   }
@@ -160,10 +152,14 @@ public class MultipleQueries {
   @ApiModelProperty(
     value = "Perform a search query with `default`, will search for facet values if `facet` is given."
   )
+  @JsonProperty(JSON_PROPERTY_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public TypeEnum getType() {
     return type;
   }
 
+  @JsonProperty(JSON_PROPERTY_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(TypeEnum type) {
     this.type = type;
   }
@@ -179,10 +175,14 @@ public class MultipleQueries {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The `facet` name.")
+  @JsonProperty(JSON_PROPERTY_FACET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getFacet() {
     return facet;
   }
 
+  @JsonProperty(JSON_PROPERTY_FACET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFacet(String facet) {
     this.facet = facet;
   }
@@ -198,10 +198,14 @@ public class MultipleQueries {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "A query string of search parameters.")
+  @JsonProperty(JSON_PROPERTY_PARAMS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getParams() {
     return params;
   }
 
+  @JsonProperty(JSON_PROPERTY_PARAMS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setParams(String params) {
     this.params = params;
   }

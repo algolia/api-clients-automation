@@ -1,20 +1,10 @@
-{{>licenseInfo}}
+package {{modelPackage}};
 
-package {{invokerPackage}};
-
-import java.util.List;
 import java.util.Map;
-{{#caseInsensitiveResponseHeaders}}
-import java.util.Map.Entry;
-import java.util.TreeMap;
-{{/caseInsensitiveResponseHeaders}}
+import java.util.List;
 
-/**
- * API response returned by API call.
- *
- * @param <T> The type of data that is deserialized from response body
- */
-public class ApiResponse<T> {
+public class ApiResponse<T>{
+
     final private int statusCode;
     final private Map<String, List<String>> headers;
     final private T data;
@@ -34,13 +24,7 @@ public class ApiResponse<T> {
      */
     public ApiResponse(int statusCode, Map<String, List<String>> headers, T data) {
         this.statusCode = statusCode;
-        {{#caseInsensitiveResponseHeaders}}
-        Map<String, List<String>> responseHeaders = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
-        for(Entry<String, List<String>> entry : headers.entrySet()){
-           responseHeaders.put(entry.getKey().toLowerCase(), entry.getValue());
-        }
-        {{/caseInsensitiveResponseHeaders}}
-        this.headers = {{#caseInsensitiveResponseHeaders}}responseHeaders{{/caseInsensitiveResponseHeaders}}{{^caseInsensitiveResponseHeaders}}headers{{/caseInsensitiveResponseHeaders}};
+        this.headers = headers;
         this.data = data;
     }
 
@@ -55,4 +39,5 @@ public class ApiResponse<T> {
     public T getData() {
         return data;
     }
+  
 }

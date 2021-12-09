@@ -12,32 +12,33 @@
 
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * SnippetResult
  */
-
+@JsonPropertyOrder(
+  { SnippetResult.JSON_PROPERTY_VALUE, SnippetResult.JSON_PROPERTY_MATCH_LEVEL }
+)
+@JsonTypeName("snippetResult")
 public class SnippetResult {
 
-  public static final String SERIALIZED_NAME_VALUE = "value";
-
-  @SerializedName(SERIALIZED_NAME_VALUE)
+  public static final String JSON_PROPERTY_VALUE = "value";
   private String value;
 
   /**
    * Indicates how well the attribute matched the search query.
    */
-  @JsonAdapter(MatchLevelEnum.Adapter.class)
   public enum MatchLevelEnum {
     NONE("none"),
 
@@ -51,6 +52,7 @@ public class SnippetResult {
       this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
       return value;
     }
@@ -60,6 +62,7 @@ public class SnippetResult {
       return String.valueOf(value);
     }
 
+    @JsonCreator
     public static MatchLevelEnum fromValue(String value) {
       for (MatchLevelEnum b : MatchLevelEnum.values()) {
         if (b.value.equals(value)) {
@@ -68,29 +71,9 @@ public class SnippetResult {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
-
-    public static class Adapter extends TypeAdapter<MatchLevelEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final MatchLevelEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public MatchLevelEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return MatchLevelEnum.fromValue(value);
-      }
-    }
   }
 
-  public static final String SERIALIZED_NAME_MATCH_LEVEL = "matchLevel";
-
-  @SerializedName(SERIALIZED_NAME_MATCH_LEVEL)
+  public static final String JSON_PROPERTY_MATCH_LEVEL = "matchLevel";
   private MatchLevelEnum matchLevel;
 
   public SnippetResult value(String value) {
@@ -107,10 +90,14 @@ public class SnippetResult {
     example = "<em>George</em> <em>Clo</em>oney...",
     value = "Markup text with occurrences highlighted."
   )
+  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getValue() {
     return value;
   }
 
+  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValue(String value) {
     this.value = value;
   }
@@ -128,10 +115,14 @@ public class SnippetResult {
   @ApiModelProperty(
     value = "Indicates how well the attribute matched the search query."
   )
+  @JsonProperty(JSON_PROPERTY_MATCH_LEVEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public MatchLevelEnum getMatchLevel() {
     return matchLevel;
   }
 
+  @JsonProperty(JSON_PROPERTY_MATCH_LEVEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMatchLevel(MatchLevelEnum matchLevel) {
     this.matchLevel = matchLevel;
   }

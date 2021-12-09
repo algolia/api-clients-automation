@@ -13,14 +13,15 @@
 package com.algolia.model;
 
 import com.algolia.model.Record;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,12 +30,11 @@ import java.util.Objects;
 /**
  * SearchHits
  */
-
+@JsonPropertyOrder({ SearchHits.JSON_PROPERTY_HITS })
+@JsonTypeName("searchHits")
 public class SearchHits {
 
-  public static final String SERIALIZED_NAME_HITS = "hits";
-
-  @SerializedName(SERIALIZED_NAME_HITS)
+  public static final String JSON_PROPERTY_HITS = "hits";
   private List<Record> hits = null;
 
   public SearchHits hits(List<Record> hits) {
@@ -56,10 +56,14 @@ public class SearchHits {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_HITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<Record> getHits() {
     return hits;
   }
 
+  @JsonProperty(JSON_PROPERTY_HITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHits(List<Record> hits) {
     this.hits = hits;
   }

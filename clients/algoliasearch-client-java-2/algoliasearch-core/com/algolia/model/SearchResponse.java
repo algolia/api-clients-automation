@@ -16,14 +16,15 @@ import com.algolia.model.BaseSearchResponse;
 import com.algolia.model.BaseSearchResponseFacetsStats;
 import com.algolia.model.Record;
 import com.algolia.model.SearchHits;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,138 +35,116 @@ import java.util.Objects;
 /**
  * SearchResponse
  */
-
+@JsonPropertyOrder(
+  {
+    SearchResponse.JSON_PROPERTY_AB_TEST_I_D,
+    SearchResponse.JSON_PROPERTY_AB_TEST_VARIANT_I_D,
+    SearchResponse.JSON_PROPERTY_AROUND_LAT_LNG,
+    SearchResponse.JSON_PROPERTY_AUTOMATIC_RADIUS,
+    SearchResponse.JSON_PROPERTY_EXHAUSTIVE_FACETS_COUNT,
+    SearchResponse.JSON_PROPERTY_EXHAUSTIVE_NB_HITS,
+    SearchResponse.JSON_PROPERTY_EXHAUSTIVE_TYPO,
+    SearchResponse.JSON_PROPERTY_FACETS,
+    SearchResponse.JSON_PROPERTY_FACETS_STATS,
+    SearchResponse.JSON_PROPERTY_HITS_PER_PAGE,
+    SearchResponse.JSON_PROPERTY_INDEX,
+    SearchResponse.JSON_PROPERTY_INDEX_USED,
+    SearchResponse.JSON_PROPERTY_MESSAGE,
+    SearchResponse.JSON_PROPERTY_NB_HITS,
+    SearchResponse.JSON_PROPERTY_NB_PAGES,
+    SearchResponse.JSON_PROPERTY_NB_SORTED_HITS,
+    SearchResponse.JSON_PROPERTY_PAGE,
+    SearchResponse.JSON_PROPERTY_PARAMS,
+    SearchResponse.JSON_PROPERTY_PARSED_QUERY,
+    SearchResponse.JSON_PROPERTY_PROCESSING_TIME_M_S,
+    SearchResponse.JSON_PROPERTY_QUERY,
+    SearchResponse.JSON_PROPERTY_QUERY_AFTER_REMOVAL,
+    SearchResponse.JSON_PROPERTY_SERVER_USED,
+    SearchResponse.JSON_PROPERTY_USER_DATA,
+    SearchResponse.JSON_PROPERTY_HITS,
+  }
+)
+@JsonTypeName("searchResponse")
 public class SearchResponse {
 
-  public static final String SERIALIZED_NAME_AB_TEST_I_D = "abTestID";
-
-  @SerializedName(SERIALIZED_NAME_AB_TEST_I_D)
+  public static final String JSON_PROPERTY_AB_TEST_I_D = "abTestID";
   private Integer abTestID;
 
-  public static final String SERIALIZED_NAME_AB_TEST_VARIANT_I_D =
+  public static final String JSON_PROPERTY_AB_TEST_VARIANT_I_D =
     "abTestVariantID";
-
-  @SerializedName(SERIALIZED_NAME_AB_TEST_VARIANT_I_D)
   private Integer abTestVariantID;
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG = "aroundLatLng";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG)
+  public static final String JSON_PROPERTY_AROUND_LAT_LNG = "aroundLatLng";
   private String aroundLatLng;
 
-  public static final String SERIALIZED_NAME_AUTOMATIC_RADIUS =
-    "automaticRadius";
-
-  @SerializedName(SERIALIZED_NAME_AUTOMATIC_RADIUS)
+  public static final String JSON_PROPERTY_AUTOMATIC_RADIUS = "automaticRadius";
   private String automaticRadius;
 
-  public static final String SERIALIZED_NAME_EXHAUSTIVE_FACETS_COUNT =
+  public static final String JSON_PROPERTY_EXHAUSTIVE_FACETS_COUNT =
     "exhaustiveFacetsCount";
-
-  @SerializedName(SERIALIZED_NAME_EXHAUSTIVE_FACETS_COUNT)
   private Boolean exhaustiveFacetsCount;
 
-  public static final String SERIALIZED_NAME_EXHAUSTIVE_NB_HITS =
+  public static final String JSON_PROPERTY_EXHAUSTIVE_NB_HITS =
     "exhaustiveNbHits";
-
-  @SerializedName(SERIALIZED_NAME_EXHAUSTIVE_NB_HITS)
   private Boolean exhaustiveNbHits;
 
-  public static final String SERIALIZED_NAME_EXHAUSTIVE_TYPO = "exhaustiveTypo";
-
-  @SerializedName(SERIALIZED_NAME_EXHAUSTIVE_TYPO)
+  public static final String JSON_PROPERTY_EXHAUSTIVE_TYPO = "exhaustiveTypo";
   private Boolean exhaustiveTypo;
 
-  public static final String SERIALIZED_NAME_FACETS = "facets";
-
-  @SerializedName(SERIALIZED_NAME_FACETS)
+  public static final String JSON_PROPERTY_FACETS = "facets";
   private Map<String, Map<String, String>> facets = null;
 
-  public static final String SERIALIZED_NAME_FACETS_STATS = "facets_stats";
-
-  @SerializedName(SERIALIZED_NAME_FACETS_STATS)
+  public static final String JSON_PROPERTY_FACETS_STATS = "facets_stats";
   private Map<String, BaseSearchResponseFacetsStats> facetsStats = null;
 
-  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
-
-  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
+  public static final String JSON_PROPERTY_HITS_PER_PAGE = "hitsPerPage";
   private Integer hitsPerPage = 20;
 
-  public static final String SERIALIZED_NAME_INDEX = "index";
-
-  @SerializedName(SERIALIZED_NAME_INDEX)
+  public static final String JSON_PROPERTY_INDEX = "index";
   private String index;
 
-  public static final String SERIALIZED_NAME_INDEX_USED = "indexUsed";
-
-  @SerializedName(SERIALIZED_NAME_INDEX_USED)
+  public static final String JSON_PROPERTY_INDEX_USED = "indexUsed";
   private String indexUsed;
 
-  public static final String SERIALIZED_NAME_MESSAGE = "message";
-
-  @SerializedName(SERIALIZED_NAME_MESSAGE)
+  public static final String JSON_PROPERTY_MESSAGE = "message";
   private String message;
 
-  public static final String SERIALIZED_NAME_NB_HITS = "nbHits";
-
-  @SerializedName(SERIALIZED_NAME_NB_HITS)
+  public static final String JSON_PROPERTY_NB_HITS = "nbHits";
   private Integer nbHits;
 
-  public static final String SERIALIZED_NAME_NB_PAGES = "nbPages";
-
-  @SerializedName(SERIALIZED_NAME_NB_PAGES)
+  public static final String JSON_PROPERTY_NB_PAGES = "nbPages";
   private Integer nbPages;
 
-  public static final String SERIALIZED_NAME_NB_SORTED_HITS = "nbSortedHits";
-
-  @SerializedName(SERIALIZED_NAME_NB_SORTED_HITS)
+  public static final String JSON_PROPERTY_NB_SORTED_HITS = "nbSortedHits";
   private Integer nbSortedHits;
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  public static final String JSON_PROPERTY_PAGE = "page";
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  public static final String JSON_PROPERTY_PARAMS = "params";
   private String params;
 
-  public static final String SERIALIZED_NAME_PARSED_QUERY = "parsedQuery";
-
-  @SerializedName(SERIALIZED_NAME_PARSED_QUERY)
+  public static final String JSON_PROPERTY_PARSED_QUERY = "parsedQuery";
   private String parsedQuery;
 
-  public static final String SERIALIZED_NAME_PROCESSING_TIME_M_S =
+  public static final String JSON_PROPERTY_PROCESSING_TIME_M_S =
     "processingTimeMS";
-
-  @SerializedName(SERIALIZED_NAME_PROCESSING_TIME_M_S)
   private Integer processingTimeMS;
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  public static final String JSON_PROPERTY_QUERY = "query";
   private String query = "";
 
-  public static final String SERIALIZED_NAME_QUERY_AFTER_REMOVAL =
+  public static final String JSON_PROPERTY_QUERY_AFTER_REMOVAL =
     "queryAfterRemoval";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_AFTER_REMOVAL)
   private String queryAfterRemoval;
 
-  public static final String SERIALIZED_NAME_SERVER_USED = "serverUsed";
-
-  @SerializedName(SERIALIZED_NAME_SERVER_USED)
+  public static final String JSON_PROPERTY_SERVER_USED = "serverUsed";
   private String serverUsed;
 
-  public static final String SERIALIZED_NAME_USER_DATA = "userData";
-
-  @SerializedName(SERIALIZED_NAME_USER_DATA)
+  public static final String JSON_PROPERTY_USER_DATA = "userData";
   private Map<String, Object> userData = null;
 
-  public static final String SERIALIZED_NAME_HITS = "hits";
-
-  @SerializedName(SERIALIZED_NAME_HITS)
+  public static final String JSON_PROPERTY_HITS = "hits";
   private List<Record> hits = new ArrayList<>();
 
   public SearchResponse abTestID(Integer abTestID) {
@@ -181,10 +160,14 @@ public class SearchResponse {
   @ApiModelProperty(
     value = "If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID."
   )
+  @JsonProperty(JSON_PROPERTY_AB_TEST_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getAbTestID() {
     return abTestID;
   }
 
+  @JsonProperty(JSON_PROPERTY_AB_TEST_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
   }
@@ -202,10 +185,14 @@ public class SearchResponse {
   @ApiModelProperty(
     value = "If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used."
   )
+  @JsonProperty(JSON_PROPERTY_AB_TEST_VARIANT_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getAbTestVariantID() {
     return abTestVariantID;
   }
 
+  @JsonProperty(JSON_PROPERTY_AB_TEST_VARIANT_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAbTestVariantID(Integer abTestVariantID) {
     this.abTestVariantID = abTestVariantID;
   }
@@ -221,10 +208,14 @@ public class SearchResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The computed geo location.")
+  @JsonProperty(JSON_PROPERTY_AROUND_LAT_LNG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getAroundLatLng() {
     return aroundLatLng;
   }
 
+  @JsonProperty(JSON_PROPERTY_AROUND_LAT_LNG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
   }
@@ -242,10 +233,14 @@ public class SearchResponse {
   @ApiModelProperty(
     value = "The automatically computed radius. For legacy reasons, this parameter is a string and not an integer."
   )
+  @JsonProperty(JSON_PROPERTY_AUTOMATIC_RADIUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getAutomaticRadius() {
     return automaticRadius;
   }
 
+  @JsonProperty(JSON_PROPERTY_AUTOMATIC_RADIUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAutomaticRadius(String automaticRadius) {
     this.automaticRadius = automaticRadius;
   }
@@ -263,10 +258,14 @@ public class SearchResponse {
   @ApiModelProperty(
     value = "Whether the facet count is exhaustive or approximate."
   )
+  @JsonProperty(JSON_PROPERTY_EXHAUSTIVE_FACETS_COUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getExhaustiveFacetsCount() {
     return exhaustiveFacetsCount;
   }
 
+  @JsonProperty(JSON_PROPERTY_EXHAUSTIVE_FACETS_COUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
     this.exhaustiveFacetsCount = exhaustiveFacetsCount;
   }
@@ -285,10 +284,14 @@ public class SearchResponse {
     required = true,
     value = "Indicate if the nbHits count was exhaustive or approximate"
   )
+  @JsonProperty(JSON_PROPERTY_EXHAUSTIVE_NB_HITS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Boolean getExhaustiveNbHits() {
     return exhaustiveNbHits;
   }
 
+  @JsonProperty(JSON_PROPERTY_EXHAUSTIVE_NB_HITS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setExhaustiveNbHits(Boolean exhaustiveNbHits) {
     this.exhaustiveNbHits = exhaustiveNbHits;
   }
@@ -307,10 +310,14 @@ public class SearchResponse {
     required = true,
     value = "Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled)"
   )
+  @JsonProperty(JSON_PROPERTY_EXHAUSTIVE_TYPO)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Boolean getExhaustiveTypo() {
     return exhaustiveTypo;
   }
 
+  @JsonProperty(JSON_PROPERTY_EXHAUSTIVE_TYPO)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setExhaustiveTypo(Boolean exhaustiveTypo) {
     this.exhaustiveTypo = exhaustiveTypo;
   }
@@ -340,10 +347,14 @@ public class SearchResponse {
     example = "{\"category\":{\"food\":1,\"tech\":42}}",
     value = "A mapping of each facet name to the corresponding facet counts."
   )
+  @JsonProperty(JSON_PROPERTY_FACETS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Map<String, Map<String, String>> getFacets() {
     return facets;
   }
 
+  @JsonProperty(JSON_PROPERTY_FACETS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFacets(Map<String, Map<String, String>> facets) {
     this.facets = facets;
   }
@@ -372,10 +383,14 @@ public class SearchResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Statistics for numerical facets.")
+  @JsonProperty(JSON_PROPERTY_FACETS_STATS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Map<String, BaseSearchResponseFacetsStats> getFacetsStats() {
     return facetsStats;
   }
 
+  @JsonProperty(JSON_PROPERTY_FACETS_STATS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFacetsStats(
     Map<String, BaseSearchResponseFacetsStats> facetsStats
   ) {
@@ -393,10 +408,14 @@ public class SearchResponse {
    **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Set the number of hits per page.")
+  @JsonProperty(JSON_PROPERTY_HITS_PER_PAGE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
 
+  @JsonProperty(JSON_PROPERTY_HITS_PER_PAGE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
   }
@@ -415,10 +434,14 @@ public class SearchResponse {
     example = "indexName",
     value = "Index name used for the query."
   )
+  @JsonProperty(JSON_PROPERTY_INDEX)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getIndex() {
     return index;
   }
 
+  @JsonProperty(JSON_PROPERTY_INDEX)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIndex(String index) {
     this.index = index;
   }
@@ -437,10 +460,14 @@ public class SearchResponse {
     example = "indexNameAlt",
     value = "Index name used for the query. In the case of an A/B test, the targeted index isn’t always the index used by the query."
   )
+  @JsonProperty(JSON_PROPERTY_INDEX_USED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getIndexUsed() {
     return indexUsed;
   }
 
+  @JsonProperty(JSON_PROPERTY_INDEX_USED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIndexUsed(String indexUsed) {
     this.indexUsed = indexUsed;
   }
@@ -456,10 +483,14 @@ public class SearchResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Used to return warnings about the query.")
+  @JsonProperty(JSON_PROPERTY_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getMessage() {
     return message;
   }
 
+  @JsonProperty(JSON_PROPERTY_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMessage(String message) {
     this.message = message;
   }
@@ -479,10 +510,14 @@ public class SearchResponse {
     required = true,
     value = "Number of hits that the search query matched"
   )
+  @JsonProperty(JSON_PROPERTY_NB_HITS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getNbHits() {
     return nbHits;
   }
 
+  @JsonProperty(JSON_PROPERTY_NB_HITS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
   }
@@ -502,10 +537,14 @@ public class SearchResponse {
     required = true,
     value = "Number of pages available for the current query"
   )
+  @JsonProperty(JSON_PROPERTY_NB_PAGES)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getNbPages() {
     return nbPages;
   }
 
+  @JsonProperty(JSON_PROPERTY_NB_PAGES)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
   }
@@ -524,10 +563,14 @@ public class SearchResponse {
     example = "20",
     value = "The number of hits selected and sorted by the relevant sort algorithm"
   )
+  @JsonProperty(JSON_PROPERTY_NB_SORTED_HITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getNbSortedHits() {
     return nbSortedHits;
   }
 
+  @JsonProperty(JSON_PROPERTY_NB_SORTED_HITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
   }
@@ -543,10 +586,14 @@ public class SearchResponse {
    **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Specify the page to retrieve.")
+  @JsonProperty(JSON_PROPERTY_PAGE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getPage() {
     return page;
   }
 
+  @JsonProperty(JSON_PROPERTY_PAGE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setPage(Integer page) {
     this.page = page;
   }
@@ -566,10 +613,14 @@ public class SearchResponse {
     required = true,
     value = "A url-encoded string of all search parameters."
   )
+  @JsonProperty(JSON_PROPERTY_PARAMS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getParams() {
     return params;
   }
 
+  @JsonProperty(JSON_PROPERTY_PARAMS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setParams(String params) {
     this.params = params;
   }
@@ -587,10 +638,14 @@ public class SearchResponse {
   @ApiModelProperty(
     value = "The query string that will be searched, after normalization."
   )
+  @JsonProperty(JSON_PROPERTY_PARSED_QUERY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getParsedQuery() {
     return parsedQuery;
   }
 
+  @JsonProperty(JSON_PROPERTY_PARSED_QUERY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setParsedQuery(String parsedQuery) {
     this.parsedQuery = parsedQuery;
   }
@@ -610,10 +665,14 @@ public class SearchResponse {
     required = true,
     value = "Time the server took to process the request, in milliseconds."
   )
+  @JsonProperty(JSON_PROPERTY_PROCESSING_TIME_M_S)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getProcessingTimeMS() {
     return processingTimeMS;
   }
 
+  @JsonProperty(JSON_PROPERTY_PROCESSING_TIME_M_S)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setProcessingTimeMS(Integer processingTimeMS) {
     this.processingTimeMS = processingTimeMS;
   }
@@ -629,10 +688,14 @@ public class SearchResponse {
    **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "The text to search in the index.")
+  @JsonProperty(JSON_PROPERTY_QUERY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getQuery() {
     return query;
   }
 
+  @JsonProperty(JSON_PROPERTY_QUERY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setQuery(String query) {
     this.query = query;
   }
@@ -650,10 +713,14 @@ public class SearchResponse {
   @ApiModelProperty(
     value = "A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set."
   )
+  @JsonProperty(JSON_PROPERTY_QUERY_AFTER_REMOVAL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getQueryAfterRemoval() {
     return queryAfterRemoval;
   }
 
+  @JsonProperty(JSON_PROPERTY_QUERY_AFTER_REMOVAL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setQueryAfterRemoval(String queryAfterRemoval) {
     this.queryAfterRemoval = queryAfterRemoval;
   }
@@ -671,10 +738,14 @@ public class SearchResponse {
   @ApiModelProperty(
     value = "Actual host name of the server that processed the request."
   )
+  @JsonProperty(JSON_PROPERTY_SERVER_USED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getServerUsed() {
     return serverUsed;
   }
 
+  @JsonProperty(JSON_PROPERTY_SERVER_USED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setServerUsed(String serverUsed) {
     this.serverUsed = serverUsed;
   }
@@ -698,10 +769,20 @@ public class SearchResponse {
    **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Lets you store custom data in your indices.")
+  @JsonProperty(JSON_PROPERTY_USER_DATA)
+  @JsonInclude(
+    content = JsonInclude.Include.ALWAYS,
+    value = JsonInclude.Include.USE_DEFAULTS
+  )
   public Map<String, Object> getUserData() {
     return userData;
   }
 
+  @JsonProperty(JSON_PROPERTY_USER_DATA)
+  @JsonInclude(
+    content = JsonInclude.Include.ALWAYS,
+    value = JsonInclude.Include.USE_DEFAULTS
+  )
   public void setUserData(Map<String, Object> userData) {
     this.userData = userData;
   }
@@ -722,10 +803,14 @@ public class SearchResponse {
    **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty(JSON_PROPERTY_HITS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public List<Record> getHits() {
     return hits;
   }
 
+  @JsonProperty(JSON_PROPERTY_HITS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setHits(List<Record> hits) {
     this.hits = hits;
   }
