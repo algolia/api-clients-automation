@@ -1,0 +1,42 @@
+# query
+Tags:
+  name: tags
+  in: query
+  description: |
+    Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+  schema:
+    type: string
+
+# misc
+average:
+  type: number
+  format: double
+  description: The average of all the click count event.
+
+clickCount:
+  type: number
+  format: integer
+  description: The number of click event.
+
+date:
+  type: string
+  format: date-time
+  description: Date of the event.
+
+rate:
+  type: number
+  format: double
+  description: The click-through rate.
+
+trackedSearchCount:
+  type: number
+  format: integer
+  description: The number of tracked search click.
+
+conversionCount:
+  type: number
+  format: integer
+  description: The number of converted clicks.
+
+updatedAt:
+  $ref: '../../../common/parameters.yml#/updatedAt'

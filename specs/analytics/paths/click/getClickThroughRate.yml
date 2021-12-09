@@ -1,1 +1,66 @@
 get:
+  tags:
+    - analytics
+  operationId: getClickThroughRate
+  description: |
+    Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.
+
+    Tracked searches are searches for which the engine returned a queryID, so searches where you've set the clickAnalytics search parameter to true. This is different than the “count” attribute of the response, which includes tracked searches and searches where you didn't enable the clickAnalytics search parameter.
+
+    If the CTR is null, it means that Algolia didn't receive any queries with the clickAnalytics search parameter set to true.
+    If the CTR is 0, it means Algolia didn't receive any click events for the queries with the clickAnalytics search parameter set to true.
+  summary: Returns a click-through rate (CTR).
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../../../common/parameters.yml#/StartDate'
+    - $ref: '../../../common/parameters.yml#/EndDate'
+    - $ref: '../common/parameters.yml#/Tags'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getClickThroughRateResponse
+            type: object
+            additionalProperties: false
+            required:
+              - dates
+              - clickCount
+              - trackedSearchCount
+              - rate
+            properties:
+              rate:
+                $ref: '../common/parameters.yml#/rate'
+              clickCount:
+                $ref: '../common/parameters.yml#/clickCount'
+              trackedSearchCount:
+                $ref: '../common/parameters.yml#/trackedSearchCount'
+              dates:
+                type: array
+                description: A list of click-through rate events with their date.
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - rate
+                    - clickCount
+                    - trackedSearchCount
+                    - date
+                  properties:
+                    rate:
+                      $ref: '../common/parameters.yml#/rate'
+                    clickCount:
+                      $ref: '../common/parameters.yml#/clickCount'
+                    trackedSearchCount:
+                      $ref: '../common/parameters.yml#/trackedSearchCount'
+                    date:
+                      $ref: '../common/parameters.yml#/date'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

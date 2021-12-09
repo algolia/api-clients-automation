@@ -46,14 +46,14 @@ paths:
   # #################################
   # ### Click Analytics Endpoints ###
   # #################################
-  # /2/clicks/averageClickPosition:
-  #   $ref: './paths/click/getAverageTopClickPosition.yml'
-  # /2/clicks/positions:
-  #   $ref: './paths/click/getClickPositions.yml'
-  # /2/clicks/clickThroughRate:
-  #   $ref: './paths/click/getClickThroughRate.yml'
-  # /2/conversions/conversionRate:
-  #   $ref: './paths/click/getConversionRate.yml'
+  /2/clicks/averageClickPosition:
+    $ref: './paths/click/getAverageClickPosition.yml'
+  /2/clicks/positions:
+    $ref: './paths/click/getClickPositions.yml'
+  /2/clicks/clickThroughRate:
+    $ref: './paths/click/getClickThroughRate.yml'
+  /2/conversions/conversionRate:
+    $ref: './paths/click/getConversionRate.yml'
 
   # ########################
   # ### Status Endpoints ###
