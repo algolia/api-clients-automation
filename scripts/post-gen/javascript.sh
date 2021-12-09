@@ -1,7 +1,10 @@
-client=$1
+export GENERATOR=$1
+export CLIENT=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."generator-cli".generators[$generator].output' | sed 's/#{cwd}\///g')
 
-export CLIENT=$(cat openapitools.json | yarn json "generator-cli.generators.javascript-${client}.output" | sed 's/#{cwd}\///g')
+echo "> Exporting utils for ${GENERATOR}..."
 mkdir -p $CLIENT/utils
+
 cp -R clients/algoliasearch-client-javascript/utils/ $CLIENT/utils
 
+echo "> Linting ${GENERATOR}..."
 yarn lint:client:fix
