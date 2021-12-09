@@ -15,7 +15,6 @@
     "client:build": "yarn client:build-js",
     "cts:generate": "yarn workspace tests cts:generate",
     "cts:test": "yarn workspace tests test",
-    "lint:client:fix": "eslint --ext=ts ${CLIENT} --fix",
     "lint": "eslint --ext=ts .",
     "post:generate": "./scripts/post-gen/global.sh",
     "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
@@ -39,6 +38,7 @@
     "eslint-plugin-jsdoc": "37.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
+    "json": "11.0.0",
     "prettier": "2.5.0",
     "swagger-cli": "4.0.4",
     "typescript": "4.5.2"

@@ -7,4 +7,4 @@ mkdir -p $CLIENT/utils
 cp -R clients/algoliasearch-client-javascript/utils/ $CLIENT/utils
 
 echo "> Linting ${GENERATOR}..."
-yarn lint:client:fix
+eslint --ext=ts ${CLIENT} --fix
