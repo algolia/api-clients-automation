@@ -25,7 +25,7 @@
     "cts:test": "yarn workspace tests test",
     "lint": "eslint --ext=ts .",
     "format:specs": "yarn prettier --write specs",
-    "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all}",
+    "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && ./scripts/post-gen/global.sh",
     "playground:js:personalization": "yarn workspace javascript-playground start:personalization",
     "playground:js:recommend": "yarn workspace javascript-playground start:recommend",
     "playground:js:search": "yarn workspace javascript-playground start:search",

@@ -17,8 +17,14 @@ if [[ -f "$pregen" ]]; then
     $pregen $client
 fi
 
+set +e
 echo "Generating code for ${lang}-${client}"
-yarn openapi-generator-cli generate --generator-key "${lang}-${client}"
+log=$(yarn openapi-generator-cli generate --generator-key "${lang}-${client}")
+if [[ $? != 0 ]]; then
+    echo "$log"
+    exit 1
+fi
+set -e
 
 # run the post generation script if it exists (linting and additional files)
 postgen="./scripts/post-gen/${lang}.sh"
@@ -26,5 +32,3 @@ if [[ -f "$postgen" ]]; then
     echo "Post-gen for ${lang}-${client}"
     $postgen $client
 fi
-
-./scripts/post-gen/global.sh

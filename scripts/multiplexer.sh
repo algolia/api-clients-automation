@@ -13,7 +13,7 @@ CMD=$1
 LANGUAGE=$2
 CLIENT=$3
 
-LANGUAGES=(javascript java)
+LANGUAGES=(javascript)
 CLIENTS=(search recommend personalization)
 
 if [[ $LANGUAGE == "all" ]]; then
