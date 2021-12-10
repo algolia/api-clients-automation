@@ -1,0 +1,145 @@
+page:
+  type: integer
+  description: Current page.
+  example: 0
+
+nbHits:
+  type: integer
+  description: Number of hits that the search query matched.
+  example: 20
+
+assignUserIdObject:
+  type: object
+  description: Assign userID object.
+  additionalProperties: false
+  properties:
+    cluster:
+      $ref: '../../common/schemas/Cluster.yml#/cluster.properties.clusterName'
+
+listUserIdsReponse:
+  type: object
+  description: UserIDs data.
+  properties:
+    userIDs:
+      type: array
+      items:
+        $ref: '../../common/schemas/UserId.yml#/userId'
+
+batchAssignUserIdsObject:
+  type: object
+  description: Assign userID object.
+  additionalProperties: false
+  properties:
+    cluster:
+      $ref: '../../common/schemas/Cluster.yml#/cluster.properties.clusterName'
+    users:
+      type: array
+      items:
+        type: string
+
+getTopUserIdsReponse:
+  type: object
+  description: Array of userIDs and clusters.
+  properties:
+    topUsers:
+      type: array
+      items:
+        type: object
+        patternProperties:
+          '^.*$':
+            $ref: '../../common/schemas/UserId.yml#/userId'
+
+getUserIdReponse:
+  type: object
+  description: userID data.
+  properties:
+    $ref: '../../common/schemas/UserId.yml#/userId'
+
+listClustersReponse:
+  type: object
+  description: Array of clusters.
+  properties:
+    topUsers:
+      type: array
+      items:
+        $ref: '../../common/schemas/Cluster.yml#/cluster.properties.clusterName'
+
+searchUserIdsObject:
+  type: object
+  description: Search userID object.
+  additionalProperties: false
+  properties:
+    query:
+      type: string
+      required: true
+      description: Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
+    clusterName:
+      $ref: '../../common/schemas/Cluster.yml#/cluster.properties.clusterName'
+    page:
+      $ref: '#/page'
+    hitsPerPage:
+      $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+
+searchUserIdsReponse:
+  type: object
+  description: userIDs data.
+  properties:
+    hits:
+      type: array
+      description: List of user object matching the query.
+      items:
+        type: object
+        properties:
+          userID:
+            type: string
+            example: "user9"
+          clusterName:
+            $ref: '../../common/schemas/Cluster.yml#/cluster.properties.clusterName'
+          nbRecords:
+            $ref: '../../common/schemas/Cluster.yml#/cluster.properties.nbRecords'
+          dataSize:
+            $ref: '../../common/schemas/Cluster.yml#/cluster.properties.dataSize'
+          objectID:
+            type: string
+            example: "user9"
+          "_highlightResult":
+            type: object
+            properties:
+              userID:
+                type: object
+                properties:
+                  value:
+                    type: string
+                    example: "<b>user<\/b>9"
+                  matchLevel:
+                    type: string
+                    example: "full"
+                  fullyHightlited:
+                    type: boolean
+                    example: false
+                  matchedWords:
+                    type: array
+                    items:
+                      type: string
+              clusterName:
+                type: object
+                properties:
+                  value:
+                    type: string
+                    example: "c11-test"
+                  matchLevel:
+                    type: string
+                    example: "none"
+                  matchedWords:
+                    type: array
+                    items:
+                      type: string
+    nbHits:
+      $ref: '#/nbHits'
+    page:
+      $ref: '#/page'
+    hitsPerPage:
+      $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+    updatedAt:
+      $ref: '../../../common/parameters.yml#/updatedAt'
+      

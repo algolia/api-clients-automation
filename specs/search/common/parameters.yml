@@ -1,0 +1,35 @@
+userID:
+  name: X-Algolia-User-ID
+  description: userID to assign.
+  in: header
+  required: true
+  schema:
+    type: string
+    pattern: '^[a-zA-Z0-9 \-\*\.]+$'
+
+users:
+  name: users
+  required: true
+  schema:
+    type: array
+    items:
+      type: string
+
+cluster:
+  name: cluster
+  description: Cluster name.
+  required: true
+  schema:
+    type: string
+
+page:
+  type: integer
+  description: Page to retrieve.
+  default: 0
+  required: false
+
+hitsPerPage:
+  type: integer
+  description: The number of userIDs per page.
+  default: 1000
+  required: false

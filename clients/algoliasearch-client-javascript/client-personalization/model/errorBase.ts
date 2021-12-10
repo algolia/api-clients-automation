@@ -1,6 +1,10 @@
+
+
+
 /**
- * Error.
- */
+* Error.
+*/
 export type ErrorBase = {
-  message?: string;
-};
+    message?: string;
+}
+

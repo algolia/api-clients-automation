@@ -1,0 +1,16 @@
+cluster:
+  type: object
+  description: A cluster.
+  properties:
+    clusterName:
+      type: string
+      description: Cluster name.
+      example: "c11-test"
+    nbRecords:
+      type: integer
+      example: 3
+    nbUserIDs:
+      type: integer
+    dataSize:
+      type: integer
+      example: 481

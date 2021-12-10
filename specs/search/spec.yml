@@ -20,8 +20,8 @@ paths:
     $ref: './paths/search/search.yml'
   /1/indexes/*/queries:
     $ref: './paths/search/multipleQueries.yml'
-  # /1/indexes/{indexName}/facets/{facetName}/query:
-  #  $ref: './paths/search/searchForFacetValues.yml'
+  /1/indexes/{indexName}/facets/{facetName}/query:
+    $ref: './paths/search/searchForFacetValues.yml'
   # /1/indexes/{indexName}/browse:
   #  $ref: './paths/search/browse.yml'
 
@@ -102,20 +102,20 @@ paths:
   # ###############################
   # ### MultiClusters Endpoints ###
   # ###############################
-  # /1/clusters/mapping:
-  #   $ref: './paths/multiclusters/userIds.yml'
-  # /1/clusters/mapping/batch:
-  #   $ref: './paths/multiclusters/batchAssignUserIds.yml'
-  # /1/clusters/mapping/top:
-  #   $ref: './paths/multiclusters/getTopUserIds.yml'
-  # /1/clusters/mapping/{userID}:
-  #   $ref: './paths/multiclusters/userId.yml'
-  # /1/clusters:
-  #   $ref: './paths/multiclusters/listClusters.yml'
-  # /1/clusters/mapping/search:
-  #   $ref: './paths/multiclusters/searchUserIds.yml'
-  # /1/clusters/mapping/pending:
-  #   $ref: './paths/multiclusters/hasPendingMappings.yml'
+  /1/clusters/mapping:
+    $ref: './paths/multiclusters/userIds.yml'
+  /1/clusters/mapping/batch:
+    $ref: './paths/multiclusters/batchAssignUserIds.yml'
+  /1/clusters/mapping/top:
+    $ref: './paths/multiclusters/getTopUserIds.yml'
+  /1/clusters/mapping/{userID}:
+    $ref: './paths/multiclusters/userId.yml'
+  /1/clusters:
+    $ref: './paths/multiclusters/listClusters.yml'
+  /1/clusters/mapping/search:
+    $ref: './paths/multiclusters/searchUserIds.yml'
+  /1/clusters/mapping/pending:
+    $ref: './paths/multiclusters/hasPendingMappings.yml'
 
   # #######################
   # ### Vault Endpoints ###

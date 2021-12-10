@@ -1,2 +1,58 @@
 post:
+  tags:
+    - search
+  operationId: assignUserId
+  summary: Assign or Move a userID to a cluster.
+  parameters:
+    - $ref: '../../common/parameters.yml#/userId'
+    - $ref: '../../common/parameters.yml#/cluster'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yml#/assignUserIdObject'
+  responses:
+    '200':
+      description: The operation has been taken into account, and the userID is directly usable.
+      content:
+        application/json:
+          schema:
+            title: assignUserIdResponse
+            type: object
+            additionalProperties: false
+            properties:
+              createdAt:
+                $ref: '../../../common/parameters.yml#/createdAt'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+
 get:
+  tags:
+    - search
+  operationId: listUserIds
+  summary: List the userIDs assigned to a multi-clusters appID.
+  parameters:
+    - $ref: '../../common/parameters.yml#/page'
+    - $ref: '../../common/parameters.yml#/hitsPerPage'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './schemas.yml#/listUserIdsResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

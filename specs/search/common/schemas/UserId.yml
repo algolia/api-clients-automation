@@ -1,0 +1,12 @@
+userId:
+  type: object
+  description: A userID.
+  properties:
+    userID:
+      type: string
+    clusterName:
+      type: string
+    nbRecords:
+      type: number
+    dataSize:
+      type: number

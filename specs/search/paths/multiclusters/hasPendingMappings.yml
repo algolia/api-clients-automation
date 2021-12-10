@@ -1,1 +1,29 @@
 get:
+  tags:
+    - search
+  operationId: hasPendingMappins
+  summary: Get the status of your clusters’ migrations or user creations.
+  parameters:
+    - in: query
+      name: getClusters
+      schema:
+        type: boolean
+  responses:
+    '200':
+      description: The operation has been taken into account, and the userIDs are directly usable.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              createdAt:
+                $ref: '../../../common/parameters.yml#/createdAt'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
