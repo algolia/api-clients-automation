@@ -1,3 +1,5 @@
+import type { SynonymHitHighlightResult } from './synonymHitHighlightResult';
+
 /**
  * Synonym object.
  */
@@ -34,6 +36,7 @@ export type SynonymHit = {
    * List of query words that will match the token.
    */
   replacements?: string[];
+  _highlightResult?: SynonymHitHighlightResult;
 };
 
 export namespace SynonymHit {

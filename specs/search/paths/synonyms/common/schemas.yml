@@ -47,9 +47,41 @@ synonymHit:
       items:
         type: string
       description: List of query words that will match the token.
+    _highlightResult:
+      type: object
+      description: Highlighted results
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/highlightedSynonym'
+        synonyms:
+          type: array
+          items:
+            $ref: '#/highlightedSynonym'
   required:
     - operation
     - destination
+
+highlightedSynonym:
+  type: object
+  additionalProperties: false
+  properties:
+    value:
+      type: string
+      description: Markup text with occurrences highlighted.
+      example: '<em>George</em> <em>Clo</em>oney'
+    matchLevel:
+      type: string
+      description: Indicates how well the attribute matched the search query.
+      enum: [none, partial, full]
+    matchedWords:
+      type: array
+      description: List of words from the query that matched the object.
+      items:
+        type: string
+    fullyHighlighted:
+      type: boolean
+      description: Whether the entire attribute value is highlighted.
 
 searchSynonymsResponse:
   type: object
