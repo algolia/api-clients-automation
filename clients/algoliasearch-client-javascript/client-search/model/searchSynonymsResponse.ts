@@ -1,10 +1,10 @@
-import type { SynonymObject } from './synonymObject';
+import type { SynonymHit } from './synonymHit';
 
 export type SearchSynonymsResponse = {
   /**
    * List of synonym hits.
    */
-  hits?: SynonymObject[];
+  hits?: SynonymHit[];
   /**
    * Number of hits that the search query matched.
    */

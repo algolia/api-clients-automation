@@ -1,10 +1,10 @@
-synonymsObject:
+synonymHits:
   type: array
   description: Array of synonym objects.
   items:
-    $ref: '#/synonymObject'
+    $ref: '#/synonymHit'
 
-synonymObject:
+synonymHit:
   type: object
   description: Synonym object.
   additionalProperties: false
@@ -13,7 +13,16 @@ synonymObject:
       type: string
       description: Unique identifier of the synonym object to be created or updated.
     type:
-      $ref: '#/synonymType'
+      type: string
+      description: Type of the synonym object.
+      enum:
+        [
+          'synonym',
+          'onewaysynonym',
+          'altcorrection1',
+          'altcorrection2',
+          'placeholder',
+        ]
     synonyms:
       type: array
       items:
@@ -42,18 +51,6 @@ synonymObject:
     - operation
     - destination
 
-synonymType:
-  type: string
-  enum:
-    [
-      'synonym',
-      'onewaysynonym',
-      'altcorrection1',
-      'altcorrection2',
-      'placeholder',
-    ]
-  description: Type of the synonym object.
-
 searchSynonymsResponse:
   type: object
   additionalProperties: true
@@ -61,7 +58,7 @@ searchSynonymsResponse:
     hits:
       type: array
       items:
-        $ref: '#/synonymObject'
+        $ref: '#/synonymHit'
       description: List of synonym hits.
     nbHits:
       type: integer

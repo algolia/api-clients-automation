@@ -13,7 +13,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: './schemas.yml#/synonymObject'
+          $ref: 'common/schemas.yml#/synonymHit'
   responses:
     '200':
       description: OK
@@ -54,7 +54,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: './schemas.yml#/synonymObject'
+            $ref: './common/schemas.yml#/synonymHit'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

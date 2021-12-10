@@ -18,7 +18,7 @@ import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
-import type { SynonymObject } from '../model/synonymObject';
+import type { SynonymHit } from '../model/synonymHit';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
 import type { Requester } from '../utils/requester/Requester';
@@ -310,7 +310,7 @@ export class SearchApi {
    * @param indexName - The index in which to perform the request.
    * @param objectID - Unique identifier of an object.
    */
-  getSynonym(indexName: string, objectID: string): Promise<SynonymObject> {
+  getSynonym(indexName: string, objectID: string): Promise<SynonymHit> {
     const path = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -490,13 +490,13 @@ export class SearchApi {
    * @summary Save synonym.
    * @param indexName - The index in which to perform the request.
    * @param objectID - Unique identifier of an object.
-   * @param synonymObject - The synonymObject.
+   * @param synonymHit - The synonymHit.
    * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
   saveSynonym(
     indexName: string,
     objectID: string,
-    synonymObject: SynonymObject,
+    synonymHit: SynonymHit,
     forwardToReplicas?: boolean
   ): Promise<SaveSynonymResponse> {
     const path = '/1/indexes/{indexName}/synonyms/{objectID}'
@@ -517,9 +517,9 @@ export class SearchApi {
       );
     }
 
-    if (synonymObject === null || synonymObject === undefined) {
+    if (synonymHit === null || synonymHit === undefined) {
       throw new Error(
-        'Required parameter synonymObject was null or undefined when calling saveSynonym.'
+        'Required parameter synonymHit was null or undefined when calling saveSynonym.'
       );
     }
 
@@ -530,7 +530,7 @@ export class SearchApi {
     const request: Request = {
       method: 'PUT',
       path,
-      data: synonymObject,
+      data: synonymHit,
     };
 
     const requestOptions: RequestOptions = {
@@ -545,13 +545,13 @@ export class SearchApi {
    *
    * @summary Save a batch of synonyms.
    * @param indexName - The index in which to perform the request.
-   * @param synonymObject - The synonymObject.
+   * @param synonymHit - The synonymHit.
    * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    * @param replaceExistingSynonyms - Replace all synonyms of the index with the ones sent with this request.
    */
   saveSynonyms(
     indexName: string,
-    synonymObject: SynonymObject[],
+    synonymHit: SynonymHit[],
     forwardToReplicas?: boolean,
     replaceExistingSynonyms?: boolean
   ): Promise<SaveSynonymsResponse> {
@@ -568,9 +568,9 @@ export class SearchApi {
       );
     }
 
-    if (synonymObject === null || synonymObject === undefined) {
+    if (synonymHit === null || synonymHit === undefined) {
       throw new Error(
-        'Required parameter synonymObject was null or undefined when calling saveSynonyms.'
+        'Required parameter synonymHit was null or undefined when calling saveSynonyms.'
       );
     }
 
@@ -586,7 +586,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: synonymObject,
+      data: synonymHit,
     };
 
     const requestOptions: RequestOptions = {

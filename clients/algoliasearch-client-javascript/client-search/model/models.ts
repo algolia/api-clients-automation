@@ -35,8 +35,7 @@ export * from './searchResponse';
 export * from './searchSynonymsResponse';
 export * from './setSettingsResponse';
 export * from './snippetResult';
-export * from './synonymObject';
-export * from './synonymType';
+export * from './synonymHit';
 
 export interface Authentication {
   /**

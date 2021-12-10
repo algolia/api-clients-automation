@@ -7,13 +7,13 @@ post:
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
-    - $ref: 'parameters.yml#/ReplaceExistingSynonyms'
+    - $ref: 'common/parameters.yml#/ReplaceExistingSynonyms'
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: './schemas.yml#/synonymsObject'
+          $ref: 'common/schemas.yml#/synonymHits'
   responses:
     '200':
       description: OK

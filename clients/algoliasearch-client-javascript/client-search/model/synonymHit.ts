@@ -1,14 +1,15 @@
-import type { SynonymType } from './synonymType';
-
 /**
  * Synonym object.
  */
-export type SynonymObject = {
+export type SynonymHit = {
   /**
    * Unique identifier of the synonym object to be created or updated.
    */
   objectID?: string;
-  type?: SynonymType;
+  /**
+   * Type of the synonym object.
+   */
+  type?: SynonymHit.TypeEnum;
   /**
    * Words or phrases to be considered equivalent.
    */
@@ -34,3 +35,13 @@ export type SynonymObject = {
    */
   replacements?: string[];
 };
+
+export namespace SynonymHit {
+  export enum TypeEnum {
+    Synonym = 'synonym',
+    Onewaysynonym = 'onewaysynonym',
+    Altcorrection1 = 'altcorrection1',
+    Altcorrection2 = 'altcorrection2',
+    Placeholder = 'placeholder',
+  }
+}
