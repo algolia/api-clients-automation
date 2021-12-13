@@ -1,1 +1,26 @@
 post:
+  tags:
+    - vault
+  operationId: appendSource
+  description: Add a single source to the list of allowed sources.
+  requestBody:
+    required: true
+    description: The sources to allow
+    content:
+      application/json:
+        schema:
+          title: sourcesObject
+          $ref: '../../common/schemas/Vault.yml#/sourceObject'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            tite: appendSourceResponse
+            type: object
+            additionalProperties: false
+            properties:
+              createdAt:
+                type: string
+                format: date-time

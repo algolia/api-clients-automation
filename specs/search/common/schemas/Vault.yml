@@ -1,0 +1,15 @@
+sourceObject:
+  type: object
+  description: A vault source.
+  additionalProperties: false
+  required:
+    - source
+  properties:
+    source:
+      type: string
+      description: 'The IP range of the source'
+      example: "10.0.0.1/32"
+    description:
+      type: string
+      description: 'A description of the source'
+      example: "Office IP range"
