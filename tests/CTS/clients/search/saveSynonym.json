@@ -16,11 +16,9 @@
       "path": "/1/indexes/indexName/synonyms/id1",
       "method": "PUT",
       "data": {
-        "synonymHit": {
-          "objectID" : "id1",
-          "type": "synonym",
-          "synonyms": ["car", "vehicule", "auto"]
-        }
+        "objectID" : "id1",
+        "type": "synonym",
+        "synonyms": ["car", "vehicule", "auto"]
       }
     }
   }
