@@ -120,8 +120,8 @@ paths:
   # #######################
   # ### Vault Endpoints ###
   # #######################
-  # /1/security/sources:
-  #   $ref: './paths/vault/vaultSources.yml'
+   /1/security/sources:
+     $ref: './paths/vault/vaultSources.yml'
    /1/security/sources/append:
      $ref: './paths/vault/appendSource.yml'
    /1/security/sources/{source}:

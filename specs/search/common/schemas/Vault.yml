@@ -1,4 +1,5 @@
 sourceObject:
+  title: sourceObject
   type: object
   description: A vault source.
   additionalProperties: false

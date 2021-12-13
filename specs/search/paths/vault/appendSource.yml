@@ -9,7 +9,6 @@ post:
     content:
       application/json:
         schema:
-          title: sourcesObject
           $ref: '../../common/schemas/Vault.yml#/sourceObject'
   responses:
     '200':

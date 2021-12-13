@@ -1,2 +1,44 @@
 get:
+  tags:
+    - vault
+  operationId: getSources
+  description: List all allowed sources.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: listSourceResponse
+            type: array
+            items:
+              $ref: '../../common/schemas/Vault.yml#/sourceObject'
+
 put:
+  tags:
+    - vault
+  operationId: getSources
+  description: List all allowed sources.
+  requestBody:
+    required: true
+    description: The sources to allow
+    content:
+      application/json:
+        schema:
+          title: sourceObjectList
+          type: array
+          items:
+            $ref: '../../common/schemas/Vault.yml#/sourceObject'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: appendSourceResponse
+            type: object
+            additionalProperties: false
+            properties:
+              updatedAt:
+                type: string
+                format: date-time
