@@ -25,7 +25,7 @@ delete:
   operationId: removeUserId
   summary: Remove a userID and its associated data from the multi-clusters.
   parameters:
-    - $ref: '../../common/parameters.yml#/userId'
+    - $ref: '../../common/parameters.yml#/userID'
   responses:
     '200':
       description: A task is created to remove the userID data and mapping

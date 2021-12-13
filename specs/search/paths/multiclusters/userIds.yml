@@ -4,7 +4,7 @@ post:
   operationId: assignUserId
   summary: Assign or Move a userID to a cluster.
   parameters:
-    - $ref: '../../common/parameters.yml#/userId'
+    - $ref: '../../common/parameters.yml#/userID'
     - $ref: '../../common/parameters.yml#/cluster'
   requestBody:
     required: true
