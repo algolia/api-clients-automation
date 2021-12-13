@@ -1,28 +1,30 @@
-userID:
+# query
+HitsPerPage:
+  name: hitsPerPage
+  in: query
+  schema:
+    type: integer
+    description: Number of hits per page.
+    default: 20
+
+UserIDInQuery:
   name: X-Algolia-User-ID
   description: userID to assign.
   in: query
   required: true
   schema:
-    type: string
-    pattern: '^[a-zA-Z0-9 \-\*\.]+$'
+    $ref: '#/userID'
 
-users:
-  name: users
+# path
+UserIDInPath:
+  name: userID
+  description: userID to assign.
+  in: path
   required: true
   schema:
-    type: array
-    items:
-      type: string
+    $ref: '#/userID'
 
-page:
-  name: page
-  in: query
-  schema:
-    $ref: './schemas/SearchParams.yml#/baseSearchParams/properties/page'
-
-hitsPerPage:
-  name: hitsPerPage
-  in: query
-  schema:
-    $ref: './schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+# misc
+userID:
+  type: string
+  pattern: '^[a-zA-Z0-9 \-\*\.]+$'

@@ -3,6 +3,7 @@ get:
     - search
   operationId: listClusters
   summary: List the clusters available in a multi-clusters setup for a single appID.
+  description: List the clusters available in a multi-clusters setup for a single appID.
   responses:
     '200':
       description: OK

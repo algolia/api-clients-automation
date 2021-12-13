@@ -3,6 +3,9 @@ get:
     - search
   operationId: getUserId
   summary: Returns the userID data stored in the mapping.
+  description: Returns the userID data stored in the mapping.
+  parameters:
+    - $ref: '../../common/parameters.yml#/UserIDInPath'
   responses:
     '200':
       description: OK

@@ -3,6 +3,7 @@ get:
     - search
   operationId: getTopUserIds
   summary: Get the top 10 userIDs with the highest number of records per cluster.
+  description: Get the top 10 userIDs with the highest number of records per cluster.
   responses:
     '200':
       description: OK

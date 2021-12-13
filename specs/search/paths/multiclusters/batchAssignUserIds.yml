@@ -3,8 +3,9 @@ post:
     - search
   operationId: batchAssignUserIds
   summary: Assign multiple userIDs to a cluster.
+  description: Assign multiple userIDs to a cluster.
   parameters:
-    - $ref: '../../common/parameters.yml#/userID'
+    - $ref: '../../common/parameters.yml#/UserIDInQuery'
   requestBody:
     required: true
     content:

@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import type { RequestOptions } from '../utils/types';
 
+export * from './assignUserIdObject';
+export * from './assignUserIdResponse';
 export * from './baseIndexSettings';
 export * from './baseSearchParams';
 export * from './baseSearchResponse';
@@ -9,11 +11,15 @@ export * from './batchObject';
 export * from './batchResponse';
 export * from './deleteIndexResponse';
 export * from './errorBase';
+export * from './getTopUserIdsReponse';
 export * from './highlightResult';
 export * from './index';
 export * from './indexSettings';
 export * from './indexSettingsAsSearchParams';
+export * from './inlineResponse200';
+export * from './listClustersReponse';
 export * from './listIndicesResponse';
+export * from './listUserIdsResponse';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
@@ -23,13 +29,16 @@ export * from './operationIndexResponse';
 export * from './rankingInfo';
 export * from './rankingInfoMatchedGeoLocation';
 export * from './record';
+export * from './removeUserIdResponse';
 export * from './saveObjectResponse';
 export * from './searchHits';
 export * from './searchParams';
 export * from './searchParamsAsString';
 export * from './searchResponse';
+export * from './searchUserIdsObject';
 export * from './setSettingsResponse';
 export * from './snippetResult';
+export * from './userId';
 
 export interface Authentication {
   /**

@@ -3,6 +3,7 @@ get:
     - search
   operationId: getUserId
   summary: Returns the userID data stored in the mapping.
+  description: Returns the userID data stored in the mapping.
   responses:
     '200':
       description: OK

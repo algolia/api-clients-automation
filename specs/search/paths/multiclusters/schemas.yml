@@ -1,3 +1,13 @@
+page:
+  type: integer
+  description: Page number (zero-based).
+  default: 0
+
+hitsPerPage:
+  type: integer
+  description: Number of hits per page.
+  default: 20
+
 nbHits:
   type: integer
   description: Number of hits that the search query matched.
@@ -68,9 +78,9 @@ searchUserIdsObject:
     clusterName:
       $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
     page:
-      $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams/properties/page'
+      $ref: '#/page'
     hitsPerPage:
-      $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+      $ref: '#/hitsPerPage'
   required:
     - query
 
@@ -131,8 +141,8 @@ searchUserIdsReponse:
     nbHits:
       $ref: '#/nbHits'
     page:
-      $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams/properties/page'
+      $ref: '#/page'
     hitsPerPage:
-      $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+      $ref: '#/hitsPerPage'
     updatedAt:
       $ref: '../../../common/parameters.yml#/updatedAt'

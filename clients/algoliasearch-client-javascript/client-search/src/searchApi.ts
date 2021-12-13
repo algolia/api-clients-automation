@@ -1,18 +1,27 @@
+import type { AssignUserIdObject } from '../model/assignUserIdObject';
+import type { AssignUserIdResponse } from '../model/assignUserIdResponse';
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
+import type { GetTopUserIdsReponse } from '../model/getTopUserIdsReponse';
 import type { IndexSettings } from '../model/indexSettings';
+import type { InlineResponse200 } from '../model/inlineResponse200';
+import type { ListClustersReponse } from '../model/listClustersReponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
+import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
 import { ApiKeyAuth } from '../model/models';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
 import type { OperationIndexResponse } from '../model/operationIndexResponse';
+import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
+import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
+import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
 import type { Requester } from '../utils/requester/Requester';
@@ -109,6 +118,50 @@ export class SearchApi {
   }
 
   /**
+   * Assign or Move a userID to a cluster.
+   *
+   * @summary Assign or Move a userID to a cluster.
+   * @param xAlgoliaUserID - UserID to assign.
+   * @param assignUserIdObject - The assignUserIdObject.
+   */
+  assignUserId(
+    xAlgoliaUserID: Record<string, any>,
+    assignUserIdObject: AssignUserIdObject
+  ): Promise<AssignUserIdResponse> {
+    const path = '/1/clusters/mapping';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (xAlgoliaUserID === null || xAlgoliaUserID === undefined) {
+      throw new Error(
+        'Required parameter xAlgoliaUserID was null or undefined when calling assignUserId.'
+      );
+    }
+
+    if (assignUserIdObject === null || assignUserIdObject === undefined) {
+      throw new Error(
+        'Required parameter assignUserIdObject was null or undefined when calling assignUserId.'
+      );
+    }
+
+    if (xAlgoliaUserID !== undefined) {
+      queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: assignUserIdObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Performs multiple write operations in a single API call.
    *
    * @param indexName - The index in which to perform the request.
@@ -138,6 +191,50 @@ export class SearchApi {
       method: 'POST',
       path,
       data: batchObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Assign multiple userIDs to a cluster.
+   *
+   * @summary Assign multiple userIDs to a cluster.
+   * @param xAlgoliaUserID - UserID to assign.
+   * @param assignUserIdObject - The assignUserIdObject.
+   */
+  batchAssignUserIds(
+    xAlgoliaUserID: Record<string, any>,
+    assignUserIdObject: AssignUserIdObject
+  ): Promise<AssignUserIdResponse> {
+    const path = '/1/clusters/mapping/batch';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (xAlgoliaUserID === null || xAlgoliaUserID === undefined) {
+      throw new Error(
+        'Required parameter xAlgoliaUserID was null or undefined when calling batchAssignUserIds.'
+      );
+    }
+
+    if (assignUserIdObject === null || assignUserIdObject === undefined) {
+      throw new Error(
+        'Required parameter assignUserIdObject was null or undefined when calling batchAssignUserIds.'
+      );
+    }
+
+    if (xAlgoliaUserID !== undefined) {
+      queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: assignUserIdObject,
     };
 
     const requestOptions: RequestOptions = {
@@ -211,6 +308,109 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Get the top 10 userIDs with the highest number of records per cluster.
+   *
+   * @summary Get the top 10 userIDs with the highest number of records per cluster.
+   */
+  getTopUserIds(): Promise<GetTopUserIdsReponse> {
+    const path = '/1/clusters/mapping/top';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns the userID data stored in the mapping.
+   *
+   * @summary Returns the userID data stored in the mapping.
+   * @param userID - UserID to assign.
+   */
+  getUserId(userID: Record<string, any>): Promise<UserId> {
+    const path = '/1/clusters/mapping/{userID}'.replace(
+      '{userID}',
+      encodeURIComponent(String(userID))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (userID === null || userID === undefined) {
+      throw new Error(
+        'Required parameter userID was null or undefined when calling getUserId.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Get the status of your clusters’ migrations or user creations.
+   *
+   * @summary Get the status of your clusters’ migrations or user creations.
+   * @param getClusters - The getClusters.
+   */
+  hasPendingMappins(getClusters?: boolean): Promise<InlineResponse200> {
+    const path = '/1/clusters/mapping/pending';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (getClusters !== undefined) {
+      queryParameters.getClusters = getClusters.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * List the clusters available in a multi-clusters setup for a single appID.
+   *
+   * @summary List the clusters available in a multi-clusters setup for a single appID.
+   */
+  listClusters(): Promise<ListClustersReponse> {
+    const path = '/1/clusters';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * List existing indexes from an application.
    *
    * @summary List existing indexes.
@@ -223,6 +423,41 @@ export class SearchApi {
 
     if (page !== undefined) {
       queryParameters.Page = page.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * List the userIDs assigned to a multi-clusters appID.
+   *
+   * @summary List the userIDs assigned to a multi-clusters appID.
+   * @param page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   * @param hitsPerPage - Number of hits returned per page.
+   */
+  listUserIds(
+    page?: number,
+    hitsPerPage?: number
+  ): Promise<ListUserIdsResponse> {
+    const path = '/1/clusters/mapping';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (page !== undefined) {
+      queryParameters.Page = page.toString();
+    }
+
+    if (hitsPerPage !== undefined) {
+      queryParameters.hitsPerPage = hitsPerPage.toString();
     }
 
     const request: Request = {
@@ -312,6 +547,41 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Remove a userID and its associated data from the multi-clusters.
+   *
+   * @summary Remove a userID and its associated data from the multi-clusters.
+   * @param xAlgoliaUserID - UserID to assign.
+   */
+  removeUserId(
+    xAlgoliaUserID: Record<string, any>
+  ): Promise<RemoveUserIdResponse> {
+    const path = '/1/clusters/mapping';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (xAlgoliaUserID === null || xAlgoliaUserID === undefined) {
+      throw new Error(
+        'Required parameter xAlgoliaUserID was null or undefined when calling removeUserId.'
+      );
+    }
+
+    if (xAlgoliaUserID !== undefined) {
+      queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName - The index in which to perform the request.
@@ -389,6 +659,38 @@ export class SearchApi {
       method: 'POST',
       path,
       data: searchParamsAsStringSearchParams,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Search for userIDs.
+   *
+   * @summary Search for userIDs.
+   * @param searchUserIdsObject - The searchUserIdsObject.
+   */
+  searchUserIds(
+    searchUserIdsObject: SearchUserIdsObject
+  ): Promise<AssignUserIdResponse> {
+    const path = '/1/clusters/mapping/search';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (searchUserIdsObject === null || searchUserIdsObject === undefined) {
+      throw new Error(
+        'Required parameter searchUserIdsObject was null or undefined when calling searchUserIds.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: searchUserIdsObject,
     };
 
     const requestOptions: RequestOptions = {

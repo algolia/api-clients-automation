@@ -26,6 +26,13 @@ Page:
     nullable: true
     default: null
 
+HitsPerPage:
+  in: query
+  name: hitsPerPage
+  description: Number of hits returned per page.
+  schema:
+    type: integer
+
 # misc
 taskID:
   type: integer

@@ -3,6 +3,7 @@ post:
     - search
   operationId: searchUserIds
   summary: Search for userIDs.
+  description: Search for userIDs.
   requestBody:
     required: true
     content:

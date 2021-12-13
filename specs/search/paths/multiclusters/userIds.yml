@@ -3,8 +3,9 @@ post:
     - search
   operationId: assignUserId
   summary: Assign or Move a userID to a cluster.
+  description: Assign or Move a userID to a cluster.
   parameters:
-    - $ref: '../../common/parameters.yml#/userID'
+    - $ref: '../../common/parameters.yml#/UserIDInQuery'
   requestBody:
     required: true
     content:
@@ -37,9 +38,10 @@ get:
     - search
   operationId: listUserIds
   summary: List the userIDs assigned to a multi-clusters appID.
+  description: List the userIDs assigned to a multi-clusters appID.
   parameters:
-    - $ref: '../../common/parameters.yml#/page'
-    - $ref: '../../common/parameters.yml#/hitsPerPage'
+    - $ref: '../../../common/parameters.yml#/Page'
+    - $ref: '../../../common/parameters.yml#/HitsPerPage'
   responses:
     '200':
       description: OK
@@ -61,8 +63,9 @@ delete:
     - search
   operationId: removeUserId
   summary: Remove a userID and its associated data from the multi-clusters.
+  description: Remove a userID and its associated data from the multi-clusters.
   parameters:
-    - $ref: '../../common/parameters.yml#/userID'
+    - $ref: '../../common/parameters.yml#/UserIDInQuery'
   responses:
     '200':
       description: A task is created to remove the userID data and mapping

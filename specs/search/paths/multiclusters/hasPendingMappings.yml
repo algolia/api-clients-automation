@@ -3,6 +3,7 @@ get:
     - search
   operationId: hasPendingMappins
   summary: Get the status of your clusters’ migrations or user creations.
+  description: Get the status of your clusters’ migrations or user creations.
   parameters:
     - in: query
       name: getClusters
