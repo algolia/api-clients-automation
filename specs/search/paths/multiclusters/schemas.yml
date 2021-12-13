@@ -86,7 +86,7 @@ searchUserIdsReponse:
         properties:
           userID:
             type: string
-            example: "user9"
+            example: 'user9'
           clusterName:
             $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
           nbRecords:
@@ -95,8 +95,8 @@ searchUserIdsReponse:
             $ref: '../../common/schemas/Cluster.yml#/cluster.properties.dataSize'
           objectID:
             type: string
-            example: "user9"
-          "_highlightResult":
+            example: 'user9'
+          '_highlightResult':
             type: object
             properties:
               userID:
@@ -107,7 +107,7 @@ searchUserIdsReponse:
                     example: '<b>user<\/b>9'
                   matchLevel:
                     type: string
-                    example: "full"
+                    example: 'full'
                   fullyHightlited:
                     type: boolean
                     example: false
@@ -120,10 +120,10 @@ searchUserIdsReponse:
                 properties:
                   value:
                     type: string
-                    example: "c11-test"
+                    example: 'c11-test'
                   matchLevel:
                     type: string
-                    example: "none"
+                    example: 'none'
                   matchedWords:
                     type: array
                     items:

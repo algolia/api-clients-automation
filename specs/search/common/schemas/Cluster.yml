@@ -5,7 +5,7 @@ cluster:
     clusterName:
       type: string
       description: Cluster name.
-      example: "c11-test"
+      example: 'c11-test'
     nbRecords:
       type: integer
       example: 3

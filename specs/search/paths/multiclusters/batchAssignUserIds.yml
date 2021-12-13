@@ -31,4 +31,3 @@ post:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
-
