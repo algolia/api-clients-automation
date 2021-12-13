@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export GENERATOR=$1
 export CLIENT=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."generator-cli".generators[$generator].output' | sed 's/#{cwd}\///g')
 

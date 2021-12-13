@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [[ $__CI__ ]]; then
     exit 0
 fi
