@@ -1,9 +1,22 @@
 #!/bin/bash
 
-if [[ $__CI__ ]]; then
+if [[ $CI ]]; then
     exit 0
 fi
 
-echo "> Formatting specs..."
+format_specs() {
+    set +e
 
-yarn specs:format
+    echo "> Formatting specs..."
+
+    log=$(yarn specs:format)
+
+    if [[ $? != 0 ]]; then
+        echo "$log"
+        exit 1
+    fi
+
+    set -e
+}
+
+format_specs
