@@ -2,7 +2,7 @@ import type { SynonymHit } from './synonymHit';
 
 export type SearchSynonymsResponse = {
   /**
-   * List of synonym hits.
+   * Array of synonym objects.
    */
   hits?: SynonymHit[];
   /**

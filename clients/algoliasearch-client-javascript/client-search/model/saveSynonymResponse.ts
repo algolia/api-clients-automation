@@ -2,13 +2,13 @@ export type SaveSynonymResponse = {
   /**
    * TaskID of the indexing task to wait for.
    */
-  taskID?: number;
+  taskID: number;
   /**
    * Date of last update (ISO-8601 format).
    */
-  updatedAt?: Date;
+  updatedAt: Date;
   /**
    * ObjectID of the inserted object.
    */
-  id?: string;
+  id: string;
 };

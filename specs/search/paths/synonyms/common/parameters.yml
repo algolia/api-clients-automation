@@ -11,6 +11,7 @@ Query:
   description: Search for specific synonyms matching this string.
   schema:
     type: string
+    default: ''
 
 Type:
   in: query

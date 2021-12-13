@@ -12,7 +12,6 @@ export * from './deleteIndexResponse';
 export * from './deleteSynonymResponse';
 export * from './errorBase';
 export * from './highlightResult';
-export * from './highlightedSynonym';
 export * from './index';
 export * from './indexSettings';
 export * from './indexSettingsAsSearchParams';

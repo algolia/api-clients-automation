@@ -53,46 +53,20 @@ synonymHit:
       additionalProperties: false
       properties:
         type:
-          $ref: '#/highlightedSynonym'
+          $ref: '../../../common/schemas/Record.yml#/highlightResult'
         synonyms:
           type: array
           items:
-            $ref: '#/highlightedSynonym'
+            $ref: '../../../common/schemas/Record.yml#/highlightResult'
   required:
     - operation
     - destination
-
-highlightedSynonym:
-  type: object
-  additionalProperties: false
-  properties:
-    value:
-      type: string
-      description: Markup text with occurrences highlighted.
-      example: '<em>George</em> <em>Clo</em>oney'
-    matchLevel:
-      type: string
-      description: Indicates how well the attribute matched the search query.
-      enum: [none, partial, full]
-    matchedWords:
-      type: array
-      description: List of words from the query that matched the object.
-      items:
-        type: string
-    fullyHighlighted:
-      type: boolean
-      description: Whether the entire attribute value is highlighted.
 
 searchSynonymsResponse:
   type: object
   additionalProperties: true
   properties:
     hits:
-      type: array
-      items:
-        $ref: '#/synonymHit'
-      description: List of synonym hits.
+      $ref: '#/synonymHits'
     nbHits:
-      type: integer
-      description: Number of hits that the search query matched
-      example: 20
+      $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'

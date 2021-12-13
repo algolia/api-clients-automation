@@ -1,9 +1,9 @@
-import type { HighlightedSynonym } from './highlightedSynonym';
+import type { HighlightResult } from './highlightResult';
 
 /**
  * Highlighted results.
  */
 export type SynonymHitHighlightResult = {
-  type?: HighlightedSynonym;
-  synonyms?: HighlightedSynonym[];
+  type?: HighlightResult;
+  synonyms?: HighlightResult[];
 };

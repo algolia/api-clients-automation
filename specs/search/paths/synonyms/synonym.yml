@@ -30,6 +30,10 @@ put:
                 $ref: '../../../common/parameters.yml#/updatedAt'
               id:
                 $ref: '../../../common/parameters.yml#/id'
+            required:
+              - taskID
+              - updatedAt
+              - id
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
@@ -88,6 +92,9 @@ delete:
                 $ref: '../../../common/parameters.yml#/taskID'
               deletedAt:
                 $ref: '../../../common/parameters.yml#/deleteAt'
+            required:
+              - taskID
+              - deletedAt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

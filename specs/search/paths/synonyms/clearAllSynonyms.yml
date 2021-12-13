@@ -21,6 +21,9 @@ post:
                 $ref: '../../../common/parameters.yml#/taskID'
               updatedAt:
                 $ref: '../../../common/parameters.yml#/updatedAt'
+            required:
+              - taskID
+              - updatedAt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

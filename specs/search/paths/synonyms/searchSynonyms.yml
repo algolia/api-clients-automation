@@ -8,7 +8,7 @@ post:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/Query'
     - $ref: 'common/parameters.yml#/Type'
-    - $ref: '../../../common/parameters.yml#/Page'
+    - $ref: '../../../common/parameters.yml#/PageDefault0'
     - $ref: '../../../common/parameters.yml#/HitsPerPage'
   responses:
     '200':
