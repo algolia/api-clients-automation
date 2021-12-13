@@ -40,8 +40,7 @@ get:
                         Positions from 21 and up are grouped together.
                       type: array
                       items:
-                        type: number
-                        format: integer
+                        type: integer
                     clickCount:
                       $ref: '../common/parameters.yml#/clickCount'
     '400':

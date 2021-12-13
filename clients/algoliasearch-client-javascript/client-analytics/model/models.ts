@@ -2,6 +2,8 @@
 import type { RequestOptions } from '../utils/types';
 
 export * from './errorBase';
+export * from './getAttributeTopFiltersResponse';
+export * from './getAttributeTopFiltersResponseValues';
 export * from './getAverageClickPositionResponse';
 export * from './getAverageClickPositionResponseDates';
 export * from './getClickPositionsResponse';
@@ -10,6 +12,13 @@ export * from './getClickThroughRateResponse';
 export * from './getClickThroughRateResponseDates';
 export * from './getConversationRateResponse';
 export * from './getConversationRateResponseDates';
+export * from './getNoClickRateResponse';
+export * from './getNoClickRateResponseDates';
+export * from './getNoResultTopFiltersResponse';
+export * from './getNoResultTopFiltersResponseValues';
+export * from './getNoResultTopFiltersResponseValues1';
+export * from './getNoResultsRateResponse';
+export * from './getNoResultsRateResponseSearches';
 export * from './getStatusResponse';
 
 export interface Authentication {

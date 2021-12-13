@@ -1,9 +1,40 @@
 # query
+Attribute:
+  in: query
+  name: attribute
+  description: The exact name of the attribute.
+  required: true
+  schema:
+    type: string
+
+Limit:
+  in: query
+  name: limit
+  description: How many items to fetch.
+  schema:
+    type: integer
+    default: 10
+
+Search:
+  in: query
+  name: search
+  description: The query term. Must match the exact user input.
+  required: true
+  schema:
+    type: string
+
+Offset:
+  in: query
+  name: offset
+  description: From which position to start retrieving results.
+  schema:
+    type: integer
+    default: 0
+
 Tags:
   name: tags
   in: query
-  description: |
-    Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+  description: Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
   schema:
     type: string
 
@@ -14,8 +45,7 @@ average:
   description: The average of all the click count event.
 
 clickCount:
-  type: number
-  format: integer
+  type: integer
   description: The number of click event.
 
 date:
@@ -29,14 +59,24 @@ rate:
   description: The click-through rate.
 
 trackedSearchCount:
-  type: number
-  format: integer
+  type: integer
   description: The number of tracked search click.
 
 conversionCount:
-  type: number
-  format: integer
+  type: integer
   description: The number of converted clicks.
 
 updatedAt:
   $ref: '../../../common/parameters.yml#/updatedAt'
+
+attribute:
+  description: The attribute.
+  type: string
+
+operator:
+  description: The operator.
+  type: string
+
+value:
+  description: The value of the attribute.
+  type: string
