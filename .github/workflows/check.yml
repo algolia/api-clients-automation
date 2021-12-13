@@ -20,11 +20,14 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
-      - name: Build
-        run: yarn build:spec
+      - name: Checking search specs
+        run: yarn specs search
 
-      - name: Validate
-        run: yarn validate
+      - name: Checking recommend specs
+        run: yarn specs recommend
+
+      - name: Checking personalization specs
+        run: yarn specs personalization
 
       - name: Lint
         run: yamllint specs
@@ -39,19 +42,19 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Generate search client
-        run: yarn generate:js:search
+        run: yarn generate javascript search
 
       - name: Build search client
         run: yarn client:build-js:search
 
       - name: Generate recommend client
-        run: yarn generate:js:recommend
+        run: yarn generate javascript recommend
 
       - name: Build recommend client
         run: yarn client:build-js:recommend
 
       - name: Generate personalization client
-        run: yarn generate:js:personalization
+        run: yarn generate javascript personalization
 
       - name: Build personalization client
         run: yarn client:build-js:personalization
