@@ -1,7 +1,7 @@
 userID:
   name: X-Algolia-User-ID
   description: userID to assign.
-  in: header
+  in: query
   required: true
   schema:
     type: string
@@ -15,21 +15,14 @@ users:
     items:
       type: string
 
-cluster:
-  name: cluster
-  description: Cluster name.
-  required: true
-  schema:
-    type: string
-
 page:
-  type: integer
-  description: Page to retrieve.
-  default: 0
-  required: false
+  name: page
+  in: query
+  schema:
+    $ref: './schemas/SearchParams.yml#/baseSearchParams/properties/page'
 
 hitsPerPage:
-  type: integer
-  description: The number of userIDs per page.
-  default: 1000
-  required: false
+  name: hitsPerPage
+  in: query
+  schema:
+    $ref: './schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'

@@ -5,7 +5,6 @@ post:
   summary: Assign or Move a userID to a cluster.
   parameters:
     - $ref: '../../common/parameters.yml#/userID'
-    - $ref: '../../common/parameters.yml#/cluster'
   requestBody:
     required: true
     content:
@@ -48,6 +47,34 @@ get:
         application/json:
           schema:
             $ref: './schemas.yml#/listUserIdsResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+
+delete:
+  tags:
+    - search
+  operationId: removeUserId
+  summary: Remove a userID and its associated data from the multi-clusters.
+  parameters:
+    - $ref: '../../common/parameters.yml#/userID'
+  responses:
+    '200':
+      description: A task is created to remove the userID data and mapping
+      content:
+        application/json:
+          schema:
+            title: removeUserIdResponse
+            type: object
+            additionalProperties: false
+            properties:
+              deletedAt:
+                $ref: '../../../common/parameters.yml#/deletedAt'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

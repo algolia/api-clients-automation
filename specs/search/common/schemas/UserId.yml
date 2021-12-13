@@ -4,9 +4,13 @@ userId:
   properties:
     userID:
       type: string
+      example: 'user1'
     clusterName:
       type: string
+      example: 'c1-test'
     nbRecords:
-      type: number
+      type: integer
+      example: 42
     dataSize:
-      type: number
+      type: integer
+      example: 0

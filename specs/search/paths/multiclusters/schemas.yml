@@ -1,8 +1,3 @@
-page:
-  type: integer
-  description: Current page.
-  example: 0
-
 nbHits:
   type: integer
   description: Number of hits that the search query matched.
@@ -45,15 +40,13 @@ getTopUserIdsReponse:
       type: array
       items:
         type: object
-        patternProperties:
-          '^.*$':
+        additionalProperties:
+          type: array
+          items:
             $ref: '../../common/schemas/UserId.yml#/userId'
 
 getUserIdReponse:
-  type: object
-  description: userID data.
-  properties:
-    $ref: '../../common/schemas/UserId.yml#/userId'
+  $ref: '../../common/schemas/UserId.yml#/userId'
 
 listClustersReponse:
   type: object
@@ -71,14 +64,15 @@ searchUserIdsObject:
   properties:
     query:
       type: string
-      required: true
       description: Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
     clusterName:
       $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
     page:
-      $ref: '#/page'
+      $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams/properties/page'
     hitsPerPage:
       $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+  required:
+    - query
 
 searchUserIdsReponse:
   type: object
@@ -137,7 +131,7 @@ searchUserIdsReponse:
     nbHits:
       $ref: '#/nbHits'
     page:
-      $ref: '#/page'
+      $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams/properties/page'
     hitsPerPage:
       $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
     updatedAt:
