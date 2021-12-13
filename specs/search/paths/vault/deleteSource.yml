@@ -1,1 +1,23 @@
 delete:
+  tags:
+    - vault
+  operationId: deleteSource
+  description: Remove a single source from the list of allowed sources.
+  parameters:
+    - source:
+        type: string
+        description: 'The IP range of the source'
+        example: "10.0.0.1/32"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: deleteSourceResponse
+            type: object
+            additionalProperties: false
+            properties:
+              deletedAt:
+                type: string
+                format: date-time
