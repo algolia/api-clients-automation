@@ -31,9 +31,6 @@ post:
               $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
           required:
             - query
-            - clusterName
-            - page
-            - hitsPerPage
   responses:
     '200':
       description: OK

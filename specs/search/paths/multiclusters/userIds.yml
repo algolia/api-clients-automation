@@ -24,6 +24,8 @@ post:
           properties:
             cluster:
               $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+          required:
+            - cluster
   responses:
     '200':
       description: OK

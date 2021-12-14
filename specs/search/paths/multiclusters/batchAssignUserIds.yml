@@ -26,6 +26,9 @@ post:
               type: array
               items:
                 type: string
+          required:
+            - cluster
+            - users
   responses:
     '200':
       description: OK
