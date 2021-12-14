@@ -24,6 +24,8 @@ get:
               status:
                 type: string
                 enum: [published, notPublished]
+            required:
+              - status
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
