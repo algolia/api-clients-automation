@@ -1135,7 +1135,7 @@ export class AnalyticsApi {
    * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
-   * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopHitsForSearch(
     index: string,
@@ -1217,8 +1217,8 @@ export class AnalyticsApi {
    * @param orderBy - Reorder the results.
    * @param direction - The sorting of the result.
    * @param limit - How many items to fetch.
-   * @param offset From which position to start retrieving results.
-   * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopSearches(
     index: string,
