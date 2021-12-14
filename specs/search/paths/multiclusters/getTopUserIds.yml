@@ -20,6 +20,7 @@ get:
             properties:
               topUsers:
                 type: array
+                description: Mapping of cluster names to top users.
                 items:
                   type: object
                   additionalProperties:

@@ -74,6 +74,7 @@ get:
             properties:
               userIDs:
                 type: array
+                description: List of userIDs.
                 items:
                   $ref: '../../common/schemas/UserId.yml#/userId'
             required:
