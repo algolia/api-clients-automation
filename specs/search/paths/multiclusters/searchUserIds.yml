@@ -51,38 +51,13 @@ post:
                     objectID:
                       type: string
                       example: 'user9'
-                    '_highlightResult':
+                    _highlightResult:
                       type: object
                       properties:
                         userID:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                              example: '<b>user<\/b>9'
-                            matchLevel:
-                              type: string
-                              example: 'full'
-                            fullyHightlited:
-                              type: boolean
-                              example: false
-                            matchedWords:
-                              type: array
-                              items:
-                                type: string
+                          $ref: '../../common/schemas/Record.yml#/highlightResult'
                         clusterName:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                              example: 'c11-test'
-                            matchLevel:
-                              type: string
-                              example: 'none'
-                            matchedWords:
-                              type: array
-                              items:
-                                type: string
+                          $ref: '../../common/schemas/Record.yml#/highlightResult'
               nbHits:
                 $ref: './schemas.yml#/nbHits'
               page:
