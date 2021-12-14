@@ -1,7 +1,7 @@
 get:
   tags:
     - analytics
-  operationId: getTopFilterAttributes
+  operationId: getTopFilterAttributesForSearch
   description: Returns top filter attributes for a given search. Limited to the 1000 most used filters.
   summary: Returns top filter attributes for a given search.
   parameters:
@@ -18,7 +18,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/getTopFilterAttributes.yml'
+            $ref: '../common/schemas/getTopFilterAttributes.yml#/getTopFilterAttributesResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

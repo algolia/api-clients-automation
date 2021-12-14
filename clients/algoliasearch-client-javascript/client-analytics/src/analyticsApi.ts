@@ -9,7 +9,9 @@ import type { GetSearchesNoClicksResponse } from '../model/getSearchesNoClicksRe
 import type { GetSearchesNoResultsResponse } from '../model/getSearchesNoResultsResponse';
 import type { GetStatusResponse } from '../model/getStatusResponse';
 import type { GetTopCountriesResponse } from '../model/getTopCountriesResponse';
+import type { GetTopFilterAttributesResponse } from '../model/getTopFilterAttributesResponse';
 import type { GetTopFilterForAttributeResponse } from '../model/getTopFilterForAttributeResponse';
+import type { GetTopFiltersNoResultsResponse } from '../model/getTopFiltersNoResultsResponse';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 import { ApiKeyAuth } from '../model/models';
 import type { TopHitsReponse } from '../model/topHitsReponse';
@@ -711,7 +713,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<Record<string, any>> {
+  ): Promise<GetTopFilterAttributesResponse> {
     const path = '/2/filters';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -770,7 +772,7 @@ export class AnalyticsApi {
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFilterAttributes_1(
+  getTopFilterAttributesForSearch(
     index: string,
     search: string,
     startDate?: Date,
@@ -778,7 +780,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<Record<string, any>> {
+  ): Promise<GetTopFilterAttributesResponse> {
     const path = '/2/filters?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))
@@ -788,13 +790,13 @@ export class AnalyticsApi {
 
     if (index === null || index === undefined) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getTopFilterAttributes_1.'
+        'Required parameter index was null or undefined when calling getTopFilterAttributesForSearch.'
       );
     }
 
     if (search === null || search === undefined) {
       throw new Error(
-        'Required parameter search was null or undefined when calling getTopFilterAttributes_1.'
+        'Required parameter search was null or undefined when calling getTopFilterAttributesForSearch.'
       );
     }
 
@@ -928,7 +930,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<Record<string, any>> {
+  ): Promise<GetTopFiltersNoResultsResponse> {
     const path = '/2/filters/noResults';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -995,7 +997,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<Record<string, any>> {
+  ): Promise<GetTopFiltersNoResultsResponse> {
     const path = '/2/filters/noResults?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))

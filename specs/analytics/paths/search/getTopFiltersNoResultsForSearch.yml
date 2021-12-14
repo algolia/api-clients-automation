@@ -18,7 +18,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/getTopFiltersNoResults.yml'
+            $ref: '../common/schemas/getTopFiltersNoResults.yml#/getTopFiltersNoResultsResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

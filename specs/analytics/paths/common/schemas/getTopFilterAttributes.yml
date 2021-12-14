@@ -9,9 +9,9 @@ getTopFilterAttributesResponse:
       type: array
       description: A list of attributes with their count.
       items:
-        $ref: '#/getTopFilterAttributes'
+        $ref: '#/getTopFilterAttribute'
 
-getTopFilterAttributes:
+getTopFilterAttribute:
   type: object
   additionalProperties: false
   required:
