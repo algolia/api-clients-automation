@@ -16,6 +16,8 @@ CLIENT=$3
 LANGUAGES=()
 CLIENTS=()
 
+GENERATORS=()
+
 find_clients_and_languages() {
     echo "> Searching for available languages and clients..."
 
@@ -24,6 +26,8 @@ find_clients_and_languages() {
     for generator in "${generators[@]}"; do
         local lang=${generator%-*}
         local client=${generator#*-}
+
+        GENERATORS+=($generator)
 
         if [[ ! ${LANGUAGES[*]} =~ $lang ]]; then
             LANGUAGES+=($lang)
@@ -57,6 +61,8 @@ fi
 
 for lang in "${LANGUAGE[@]}"; do
     for client in "${CLIENT[@]}"; do
-        $CMD $lang $client
+        if [[ " ${GENERATORS[*]} " =~ " ${lang}-${client} " ]]; then
+            $CMD $lang $client
+        fi
     done
 done
