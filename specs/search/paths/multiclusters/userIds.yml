@@ -11,7 +11,12 @@ post:
     content:
       application/json:
         schema:
-          $ref: './schemas.yml#/assignUserIdObject'
+          type: object
+          description: Assign userID object.
+          additionalProperties: false
+          properties:
+            cluster:
+              $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
   responses:
     '200':
       description: The operation has been taken into account, and the userID is directly usable.
@@ -48,7 +53,13 @@ get:
       content:
         application/json:
           schema:
-            $ref: './schemas.yml#/listUserIdsResponse'
+            type: object
+            description: UserIDs data.
+            properties:
+              userIDs:
+                type: array
+                items:
+                  $ref: '../../common/schemas/UserId.yml#/userId'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

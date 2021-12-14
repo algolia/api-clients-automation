@@ -10,7 +10,17 @@ get:
       content:
         application/json:
           schema:
-            $ref: './schemas.yml#/getTopUserIdsReponse'
+            type: object
+            description: Array of userIDs and clusters.
+            properties:
+              topUsers:
+                type: array
+                items:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      $ref: '../../common/schemas/UserId.yml#/userId'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

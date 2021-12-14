@@ -10,7 +10,13 @@ get:
       content:
         application/json:
           schema:
-            $ref: './schemas.yml#/listClustersReponse'
+            type: object
+            description: Array of clusters.
+            properties:
+              topUsers:
+                type: array
+                items:
+                  $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

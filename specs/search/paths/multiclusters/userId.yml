@@ -12,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: './schemas.yml#/getUserIdReponse'
+            $ref: '../../common/schemas/UserId.yml#/userId'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

@@ -9,19 +9,88 @@ post:
     content:
       application/json:
         schema:
-          $ref: './schemas.yml#/searchUserIdsObject'
+          type: object
+          description: Search userID object.
+          additionalProperties: false
+          properties:
+            query:
+              type: string
+              description: Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
+            clusterName:
+              $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+            page:
+              $ref: './schemas.yml#/page'
+            hitsPerPage:
+              $ref: './schemas.yml#/hitsPerPage'
+          required:
+            - query
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            title: assignUserIdResponse
             type: object
-            additionalProperties: false
+            description: userIDs data.
             properties:
-              createdAt:
-                $ref: '../../../common/parameters.yml#/createdAt'
+              hits:
+                type: array
+                description: List of user object matching the query.
+                items:
+                  type: object
+                  properties:
+                    userID:
+                      type: string
+                      example: 'user9'
+                    clusterName:
+                      $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+                    nbRecords:
+                      $ref: '../../common/schemas/Cluster.yml#/cluster.properties.nbRecords'
+                    dataSize:
+                      $ref: '../../common/schemas/Cluster.yml#/cluster.properties.dataSize'
+                    objectID:
+                      type: string
+                      example: 'user9'
+                    '_highlightResult':
+                      type: object
+                      properties:
+                        userID:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              example: '<b>user<\/b>9'
+                            matchLevel:
+                              type: string
+                              example: 'full'
+                            fullyHightlited:
+                              type: boolean
+                              example: false
+                            matchedWords:
+                              type: array
+                              items:
+                                type: string
+                        clusterName:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              example: 'c11-test'
+                            matchLevel:
+                              type: string
+                              example: 'none'
+                            matchedWords:
+                              type: array
+                              items:
+                                type: string
+              nbHits:
+                $ref: './schemas.yml#/nbHits'
+              page:
+                $ref: './schemas.yml#/page'
+              hitsPerPage:
+                $ref: './schemas.yml#/hitsPerPage'
+              updatedAt:
+                $ref: '../../../common/parameters.yml#/updatedAt'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

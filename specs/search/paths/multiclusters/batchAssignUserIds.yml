@@ -11,7 +11,16 @@ post:
     content:
       application/json:
         schema:
-          $ref: './schemas.yml#/assignUserIdObject'
+          type: object
+          description: Assign userID object.
+          additionalProperties: false
+          properties:
+            cluster:
+              $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+            users:
+              type: array
+              items:
+                type: string
   responses:
     '200':
       description: The operation has been taken into account, and the userIDs are directly usable.
