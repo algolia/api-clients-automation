@@ -81,7 +81,7 @@ jobs:
         run: yarn cts:generate
 
       - name: Check commited generation
-        run: git status --porcelain
+        run: git diff --exit-code
 
       - name: Run CTS
         run: yarn cts:test
