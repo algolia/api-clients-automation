@@ -7,11 +7,11 @@ export type SynonymHit = {
   /**
    * Unique identifier of the synonym object to be created or updated.
    */
-  objectID?: string;
+  objectID: string;
   /**
    * Type of the synonym object.
    */
-  type?: SynonymHit.TypeEnum;
+  type: SynonymHit.TypeEnum;
   /**
    * Words or phrases to be considered equivalent.
    */

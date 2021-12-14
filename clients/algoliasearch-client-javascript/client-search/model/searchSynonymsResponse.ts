@@ -4,9 +4,9 @@ export type SearchSynonymsResponse = {
   /**
    * Array of synonym objects.
    */
-  hits?: SynonymHit[];
+  hits: SynonymHit[];
   /**
    * Number of hits that the search query matched.
    */
-  nbHits?: number;
+  nbHits: number;
 };

@@ -59,8 +59,8 @@ synonymHit:
           items:
             $ref: '../../../common/schemas/Record.yml#/highlightResult'
   required:
-    - operation
-    - destination
+    - objectID
+    - type
 
 searchSynonymsResponse:
   type: object
@@ -70,3 +70,6 @@ searchSynonymsResponse:
       $ref: '#/synonymHits'
     nbHits:
       $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
+  required:
+    - hits
+    - nbHits
