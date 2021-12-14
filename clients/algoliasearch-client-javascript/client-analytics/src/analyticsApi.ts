@@ -913,6 +913,89 @@ export class AnalyticsApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Returns top filters for the given attributes and search. Several attributes can be given by separating them with a comma. Several attributes can be given by separating them with a comma.
+   *
+   * @summary Returns top filters for the given attributes and search.
+   * @param attributes - The exact names of the attributes, separated by commas.
+   * @param index - The index name to target.
+   * @param search - The query term. Must match the exact user input.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopFiltersForAttributesSearch(
+    attributes: string,
+    index: string,
+    search: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetTopFilterAttributesResponse> {
+    const path = '/2/filters/{attributes}?search={search}'
+      .replace('{attributes}', encodeURIComponent(String(attributes)))
+      .replace('{search}', encodeURIComponent(String(search)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (attributes === null || attributes === undefined) {
+      throw new Error(
+        'Required parameter attributes was null or undefined when calling getTopFiltersForAttributesSearch.'
+      );
+    }
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopFiltersForAttributesSearch.'
+      );
+    }
+
+    if (search === null || search === undefined) {
+      throw new Error(
+        'Required parameter search was null or undefined when calling getTopFiltersForAttributesSearch.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Returns top filters with no results. Limited to the 1000 most used filters.
    *
    * @summary Returns top filters with no results.

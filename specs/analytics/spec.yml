@@ -44,8 +44,8 @@ paths:
     $ref: './paths/search/getTopFiltersNoResults.yml'
   /2/filters/noResults?search={search}:
     $ref: './paths/search/getTopFiltersNoResultsForSearch.yml'
-  # /2/filters/{attribute list}?search=:
-  # $ref: './paths/search/getSearchAttributesTolFilters.yml'
+  /2/filters/{attributes}?search={search}:
+    $ref: './paths/search/getTopFiltersForAttributesSearch.yml'
   /2/countries:
     $ref: './paths/search/getTopCountries.yml'
 
