@@ -80,8 +80,5 @@ jobs:
       - name: Generate CTS
         run: yarn cts:generate
 
-      - name: Check commited generation
-        run: git diff --exit-code
-
       - name: Run CTS
         run: yarn cts:test
