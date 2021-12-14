@@ -12,13 +12,13 @@ get:
             title: listSourceResponse
             type: array
             items:
-              $ref: '../../common/schemas/Vault.yml#/sourceObject'
+              $ref: './common/schemas.yml#/sourceObject'
 
 put:
   tags:
     - vault
-  operationId: getSources
-  description: List all allowed sources.
+  operationId: replaceSources
+  description: Replace all allowed sources.
   requestBody:
     required: true
     description: The sources to allow
@@ -28,17 +28,16 @@ put:
           title: sourceObjectList
           type: array
           items:
-            $ref: '../../common/schemas/Vault.yml#/sourceObject'
+            $ref: './common/schemas.yml#/sourceObject'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            title: appendSourceResponse
+            title: replaceSourceResponse
             type: object
             additionalProperties: false
             properties:
               updatedAt:
-                type: string
-                format: date-time
+                $ref: '../../../common/parameters.yml#/updatedAt'

@@ -22,5 +22,4 @@ delete:
             additionalProperties: false
             properties:
               deletedAt:
-                type: string
-                format: date-time
+                $ref: '../../../common/parameters.yml#/updatedAt'

@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/Vault.yml#/sourceObject'
+          $ref: './common/schemas.yml#/sourceObject'
   responses:
     '200':
       description: OK
@@ -21,5 +21,4 @@ post:
             additionalProperties: false
             properties:
               createdAt:
-                type: string
-                format: date-time
+                $ref: '../../../common/parameters.yml#/updatedAt'

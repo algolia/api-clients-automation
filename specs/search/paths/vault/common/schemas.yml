@@ -1,0 +1,2 @@
+updatedAt:
+  $ref: '../../../common/parameters.yml#/updatedAt'
