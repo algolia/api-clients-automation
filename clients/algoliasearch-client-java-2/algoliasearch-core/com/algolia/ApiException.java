@@ -15,10 +15,6 @@ package com.algolia;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(
-  value = "org.openapitools.codegen.languages.JavaClientCodegen",
-  date = "2021-12-14T10:18:30.595134+01:00[Europe/Paris]"
-)
 public class ApiException extends Exception {
 
   private int code = 0;
