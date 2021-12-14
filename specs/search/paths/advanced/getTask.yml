@@ -18,6 +18,7 @@ get:
       content:
         application/json:
           schema:
+            title: getTaskResponse
             type: object
             additionalProperties: false
             properties:
