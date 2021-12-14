@@ -14,3 +14,8 @@ userId:
     dataSize:
       type: integer
       example: 0
+  required:
+    - userID
+    - clusterName
+    - nbRecords
+    - dataSize

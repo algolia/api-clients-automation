@@ -38,6 +38,8 @@ post:
             properties:
               createdAt:
                 $ref: '../../../common/parameters.yml#/createdAt'
+            required:
+              - createdAt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

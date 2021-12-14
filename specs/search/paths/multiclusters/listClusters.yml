@@ -20,6 +20,8 @@ get:
                 type: array
                 items:
                   $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+            required:
+              - topUsers
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

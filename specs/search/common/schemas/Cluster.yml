@@ -14,3 +14,8 @@ cluster:
     dataSize:
       type: integer
       example: 481
+  required:
+    - clusterName
+    - nbRecords
+    - nbUserIDs
+    - dataSize

@@ -31,6 +31,9 @@ post:
               $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
           required:
             - query
+            - clusterName
+            - page
+            - hitsPerPage
   responses:
     '200':
       description: OK
@@ -73,6 +76,12 @@ post:
                 $ref: '../../common/schemas/SearchResponse.yml#/baseSearchResponse/properties/hitsPerPage'
               updatedAt:
                 $ref: '../../../common/parameters.yml#/updatedAt'
+            required:
+              - hits
+              - nbHits
+              - page
+              - hitsPerPage
+              - updatedAt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

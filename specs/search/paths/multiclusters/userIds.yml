@@ -36,6 +36,8 @@ post:
             properties:
               createdAt:
                 $ref: '../../../common/parameters.yml#/createdAt'
+            required:
+              - createdAt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
@@ -72,6 +74,8 @@ get:
                 type: array
                 items:
                   $ref: '../../common/schemas/UserId.yml#/userId'
+            required:
+              - userIDs
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
