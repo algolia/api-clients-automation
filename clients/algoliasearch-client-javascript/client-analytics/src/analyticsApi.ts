@@ -9,9 +9,7 @@ import type { GetSearchesNoClicksResponse } from '../model/getSearchesNoClicksRe
 import type { GetSearchesNoResultsResponse } from '../model/getSearchesNoResultsResponse';
 import type { GetStatusResponse } from '../model/getStatusResponse';
 import type { GetTopCountriesResponse } from '../model/getTopCountriesResponse';
-import type { GetTopFilterAttributes } from '../model/getTopFilterAttributes';
 import type { GetTopFilterForAttributeResponse } from '../model/getTopFilterForAttributeResponse';
-import type { GetTopFiltersNoResults } from '../model/getTopFiltersNoResults';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 import { ApiKeyAuth } from '../model/models';
 import type { TopHitsReponse } from '../model/topHitsReponse';
@@ -713,7 +711,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<GetTopFilterAttributes> {
+  ): Promise<Record<string, any>> {
     const path = '/2/filters';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -780,7 +778,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<GetTopFilterAttributes> {
+  ): Promise<Record<string, any>> {
     const path = '/2/filters?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))
@@ -930,7 +928,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<GetTopFiltersNoResults> {
+  ): Promise<Record<string, any>> {
     const path = '/2/filters/noResults';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -997,7 +995,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<GetTopFiltersNoResults> {
+  ): Promise<Record<string, any>> {
     const path = '/2/filters/noResults?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))
