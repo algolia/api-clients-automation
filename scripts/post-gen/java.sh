@@ -6,11 +6,13 @@ export CLIENT=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."ge
 # Restore the oneOf spec
 mv ./specs/search/paths/search/search.yml.bak ./specs/search/paths/search/search.yml
 
+# Replace {} (Openapi default) with new Object
 find $CLIENT -type f -name "*.java" | xargs sed -i '' -e 's/= {}/= new Object()/g'
 
+# Create a special class for the OneOf integer string (not complete yet, juste here for compilation)
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
 
-# Download the formatter if not present
+# Download the formatter if not present and run it
 javaFormatter="google-java-format-1.13.0-all-deps.jar"
 if [[ ! -f "dist/$javaFormatter" ]]; then
     echo "Downloading formatter dependency"

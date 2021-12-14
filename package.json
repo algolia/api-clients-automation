@@ -17,7 +17,6 @@
     "cts:generate": "yarn workspace tests cts:generate",
     "cts:test": "yarn workspace tests test",
     "lint": "eslint --ext=ts .",
-    "format:specs": "yarn prettier --write specs",
     "post:generate": "./scripts/post-gen/global.sh",
     "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
     "playground:java": "mvn clean compile exec:java -f playground/java/pom.xml",
