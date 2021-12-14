@@ -1,6 +1,6 @@
 /**
  * Array of clusters.
  */
-export type ListClustersReponse = {
+export type InlineResponse2002 = {
   topUsers?: string[];
 };

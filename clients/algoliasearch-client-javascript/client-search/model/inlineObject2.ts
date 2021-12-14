@@ -1,7 +1,7 @@
 /**
- * Search userID object.
+ * OK.
  */
-export type SearchUserIdsObject = {
+export type InlineObject2 = {
   /**
    * Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
    */
@@ -11,11 +11,11 @@ export type SearchUserIdsObject = {
    */
   clusterName?: string;
   /**
-   * Page number (zero-based).
+   * Specify the page to retrieve.
    */
   page?: number;
   /**
-   * Number of hits per page.
+   * Set the number of hits per page.
    */
   hitsPerPage?: number;
 };

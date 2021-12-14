@@ -1,6 +1,8 @@
+import type { UserId } from './userId';
+
+/**
+ * UserIDs data.
+ */
 export type InlineResponse200 = {
-  /**
-   * Date of creation (ISO-8601 format).
-   */
-  createdAt?: Date;
+  userIDs?: UserId[];
 };

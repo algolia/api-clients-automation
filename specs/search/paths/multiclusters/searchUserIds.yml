@@ -52,9 +52,9 @@ post:
                     clusterName:
                       $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
                     nbRecords:
-                      $ref: '../../common/schemas/Cluster.yml#/cluster.properties.nbRecords'
+                      $ref: '../../common/schemas/Cluster.yml#/cluster/properties/nbRecords'
                     dataSize:
-                      $ref: '../../common/schemas/Cluster.yml#/cluster.properties.dataSize'
+                      $ref: '../../common/schemas/Cluster.yml#/cluster/properties/dataSize'
                     objectID:
                       type: string
                       example: 'user9'

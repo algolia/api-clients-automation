@@ -1,7 +1,7 @@
 /**
  * Assign userID object.
  */
-export type AssignUserIdObject = {
+export type InlineObject = {
   /**
    * Cluster name.
    */
