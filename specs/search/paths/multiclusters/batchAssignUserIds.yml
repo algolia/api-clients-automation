@@ -16,6 +16,7 @@ post:
     content:
       application/json:
         schema:
+          title: batchAssignUserIdsObject
           type: object
           description: Assign userID object.
           additionalProperties: false
@@ -32,12 +33,11 @@ post:
             - users
   responses:
     '200':
-      name: batchAssignUserIdsResponse
       description: OK
       content:
         application/json:
           schema:
-            title: assignUserIdResponse
+            title: batchAssignUserIdsResponse
             type: object
             additionalProperties: false
             properties:

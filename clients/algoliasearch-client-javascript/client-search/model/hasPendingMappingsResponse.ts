@@ -1,4 +1,4 @@
-export type InlineResponse2004 = {
+export type HasPendingMappingsResponse = {
   /**
    * Date of creation (ISO-8601 format).
    */

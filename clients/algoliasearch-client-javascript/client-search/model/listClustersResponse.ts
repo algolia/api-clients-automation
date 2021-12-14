@@ -1,7 +1,7 @@
 /**
  * Array of clusters.
  */
-export type InlineResponse2002 = {
+export type ListClustersResponse = {
   /**
    * Mapping of cluster names to top users.
    */

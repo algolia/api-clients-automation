@@ -18,11 +18,11 @@ get:
         type: boolean
   responses:
     '200':
-      name: hasPendingMappings
       description: OK
       content:
         application/json:
           schema:
+            title: hasPendingMappingsResponse
             type: object
             additionalProperties: false
             properties:

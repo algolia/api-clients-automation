@@ -3,7 +3,7 @@ import type { UserId } from './userId';
 /**
  * Array of userIDs and clusters.
  */
-export type InlineResponse2001 = {
+export type GetTopUserIdsResponse = {
   /**
    * Mapping of cluster names to top users.
    */

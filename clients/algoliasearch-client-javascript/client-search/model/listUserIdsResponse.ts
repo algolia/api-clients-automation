@@ -3,7 +3,7 @@ import type { UserId } from './userId';
 /**
  * UserIDs data.
  */
-export type InlineResponse200 = {
+export type ListUserIdsResponse = {
   /**
    * List of userIDs.
    */

@@ -1,4 +1,5 @@
 userId:
+  title: userID
   type: object
   description: A userID.
   properties:

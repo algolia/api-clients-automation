@@ -1,19 +1,18 @@
+import type { AssignUserIdObject } from '../model/assignUserIdObject';
 import type { AssignUserIdResponse } from '../model/assignUserIdResponse';
+import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
+import type { BatchAssignUserIdsResponse } from '../model/batchAssignUserIdsResponse';
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
+import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
+import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
 import type { IndexSettings } from '../model/indexSettings';
-import type { InlineObject } from '../model/inlineObject';
-import type { InlineObject1 } from '../model/inlineObject1';
-import type { InlineObject2 } from '../model/inlineObject2';
-import type { InlineResponse200 } from '../model/inlineResponse200';
-import type { InlineResponse2001 } from '../model/inlineResponse2001';
-import type { InlineResponse2002 } from '../model/inlineResponse2002';
-import type { InlineResponse2003 } from '../model/inlineResponse2003';
-import type { InlineResponse2004 } from '../model/inlineResponse2004';
+import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
+import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
 import { ApiKeyAuth } from '../model/models';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
@@ -27,6 +26,8 @@ import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
+import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
+import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UserId } from '../model/userId';
@@ -130,11 +131,11 @@ export class SearchApi {
    *
    * @summary Assign or Move userID.
    * @param xAlgoliaUserID - UserID to assign.
-   * @param inlineObject - The inlineObject.
+   * @param assignUserIdObject - The assignUserIdObject.
    */
   assignUserId(
     xAlgoliaUserID: Record<string, any>,
-    inlineObject: InlineObject
+    assignUserIdObject: AssignUserIdObject
   ): Promise<AssignUserIdResponse> {
     const path = '/1/clusters/mapping';
     const headers: Headers = { Accept: 'application/json' };
@@ -146,9 +147,9 @@ export class SearchApi {
       );
     }
 
-    if (inlineObject === null || inlineObject === undefined) {
+    if (assignUserIdObject === null || assignUserIdObject === undefined) {
       throw new Error(
-        'Required parameter inlineObject was null or undefined when calling assignUserId.'
+        'Required parameter assignUserIdObject was null or undefined when calling assignUserId.'
       );
     }
 
@@ -159,7 +160,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: inlineObject,
+      data: assignUserIdObject,
     };
 
     const requestOptions: RequestOptions = {
@@ -213,12 +214,12 @@ export class SearchApi {
    *
    * @summary Batch assign userIDs.
    * @param xAlgoliaUserID - UserID to assign.
-   * @param inlineObject1 - The inlineObject1.
+   * @param batchAssignUserIdsObject - The batchAssignUserIdsObject.
    */
   batchAssignUserIds(
     xAlgoliaUserID: Record<string, any>,
-    inlineObject1: InlineObject1
-  ): Promise<AssignUserIdResponse> {
+    batchAssignUserIdsObject: BatchAssignUserIdsObject
+  ): Promise<BatchAssignUserIdsResponse> {
     const path = '/1/clusters/mapping/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -229,9 +230,12 @@ export class SearchApi {
       );
     }
 
-    if (inlineObject1 === null || inlineObject1 === undefined) {
+    if (
+      batchAssignUserIdsObject === null ||
+      batchAssignUserIdsObject === undefined
+    ) {
       throw new Error(
-        'Required parameter inlineObject1 was null or undefined when calling batchAssignUserIds.'
+        'Required parameter batchAssignUserIdsObject was null or undefined when calling batchAssignUserIds.'
       );
     }
 
@@ -242,7 +246,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: inlineObject1,
+      data: batchAssignUserIdsObject,
     };
 
     const requestOptions: RequestOptions = {
@@ -445,7 +449,7 @@ export class SearchApi {
    *
    * @summary Get top userID.
    */
-  getTopUserIds(): Promise<InlineResponse2001> {
+  getTopUserIds(): Promise<GetTopUserIdsResponse> {
     const path = '/1/clusters/mapping/top';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -500,7 +504,9 @@ export class SearchApi {
    * @summary Has pending mappings.
    * @param getClusters - The getClusters.
    */
-  hasPendingMappins(getClusters?: boolean): Promise<InlineResponse2004> {
+  hasPendingMappings(
+    getClusters?: boolean
+  ): Promise<HasPendingMappingsResponse> {
     const path = '/1/clusters/mapping/pending';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -526,7 +532,7 @@ export class SearchApi {
    *
    * @summary List clusters.
    */
-  listClusters(): Promise<InlineResponse2002> {
+  listClusters(): Promise<ListClustersResponse> {
     const path = '/1/clusters';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -577,7 +583,10 @@ export class SearchApi {
    * @param page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    * @param hitsPerPage - Maximum number of objects to retrieve.
    */
-  listUserIds(page?: number, hitsPerPage?: number): Promise<InlineResponse200> {
+  listUserIds(
+    page?: number,
+    hitsPerPage?: number
+  ): Promise<ListUserIdsResponse> {
     const path = '/1/clusters/mapping';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -974,23 +983,25 @@ export class SearchApi {
    * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn\'t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
    *
    * @summary Search userID.
-   * @param inlineObject2 - The inlineObject2.
+   * @param searchUserIdsObject - The searchUserIdsObject.
    */
-  searchUserIds(inlineObject2: InlineObject2): Promise<InlineResponse2003> {
+  searchUserIds(
+    searchUserIdsObject: SearchUserIdsObject
+  ): Promise<SearchUserIdsResponse> {
     const path = '/1/clusters/mapping/search';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (inlineObject2 === null || inlineObject2 === undefined) {
+    if (searchUserIdsObject === null || searchUserIdsObject === undefined) {
       throw new Error(
-        'Required parameter inlineObject2 was null or undefined when calling searchUserIds.'
+        'Required parameter searchUserIdsObject was null or undefined when calling searchUserIds.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: inlineObject2,
+      data: searchUserIdsObject,
     };
 
     const requestOptions: RequestOptions = {

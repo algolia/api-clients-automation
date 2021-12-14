@@ -11,11 +11,11 @@ get:
     Upon success, the response is 200 OK and contains the following array of userIDs and clusters.
   responses:
     '200':
-      name: getTopUserIdsResponse
       description: OK
       content:
         application/json:
           schema:
+            title: getTopUserIdsResponse
             type: object
             description: Array of userIDs and clusters.
             properties:

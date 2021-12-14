@@ -1,13 +1,13 @@
-import type { InlineResponse2003Hits } from './inlineResponse2003Hits';
+import type { SearchUserIdsResponseHits } from './searchUserIdsResponseHits';
 
 /**
  * UserIDs data.
  */
-export type InlineResponse2003 = {
+export type SearchUserIdsResponse = {
   /**
    * List of user object matching the query.
    */
-  hits: InlineResponse2003Hits[];
+  hits: SearchUserIdsResponseHits[];
   nbHits: Record<string, any>;
   /**
    * Specify the page to retrieve.

@@ -18,6 +18,7 @@ post:
     content:
       application/json:
         schema:
+          title: assignUserIdObject
           type: object
           description: Assign userID object.
           additionalProperties: false
@@ -28,7 +29,6 @@ post:
             - cluster
   responses:
     '200':
-      name: assignUserIdResponse
       description: OK
       content:
         application/json:
@@ -66,11 +66,11 @@ get:
     - $ref: '../../../common/parameters.yml#/HitsPerPage'
   responses:
     '200':
-      name: listUserIdsResponse
       description: OK
       content:
         application/json:
           schema:
+            title: listUserIdsResponse
             type: object
             description: UserIDs data.
             properties:

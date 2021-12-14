@@ -16,6 +16,7 @@ post:
     content:
       application/json:
         schema:
+          title: searchUserIdsObject
           type: object
           description: OK
           additionalProperties: false
@@ -33,11 +34,11 @@ post:
             - query
   responses:
     '200':
-      name: searchUserIdsResponse
       description: OK
       content:
         application/json:
           schema:
+            title: searchUserIdsResponse
             type: object
             description: userIDs data.
             properties:
@@ -48,7 +49,7 @@ post:
                   type: object
                   properties:
                     userID:
-                      $ref: '../../commons/schemas/UserId.yml#/userId/properties/userID'
+                      $ref: '../../common/schemas/UserId.yml#/userId/properties/userID'
                     clusterName:
                       $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
                     nbRecords:
