@@ -14,7 +14,7 @@ export type GetConversationRateResponse = {
    */
   conversionCount: number;
   /**
-   * A list of click-through rate events with their date.
+   * A list of conversion events with their date.
    */
   dates: GetConversationRateResponseDates[];
 };

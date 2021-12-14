@@ -2,14 +2,12 @@ get:
   tags:
     - analytics
   operationId: getNoResultsRate
-  description: Returns top searches that didn't return any results. Limited to the 1000 most frequent ones.
-  summary: Returns top searches that didn't return any results.
+  description: Returns the rate at which searches didn't return any results. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without results used to compute the rates.
+  summary: Returns the rate at which searches didn't return any results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
-    - $ref: '../common/parameters.yml#/Limit'
-    - $ref: '../common/parameters.yml#/Offset'
     - $ref: '../common/parameters.yml#/Tags'
   responses:
     '200':
@@ -21,28 +19,37 @@ get:
             type: object
             additionalProperties: false
             required:
-              - searches
+              - rate
+              - count
+              - noResultCount
+              - dates
             properties:
-              searches:
+              rate:
+                $ref: '../common/parameters.yml#/rate'
+              count:
+                $ref: '../common/parameters.yml#/count'
+              noResultCount:
+                $ref: '../common/parameters.yml#/count'
+              dates:
                 type: array
-                description: A list of top searches with their count.
+                description: A list of searches without results with their date, rate and counts.
                 items:
                   type: object
                   additionalProperties: false
                   required:
-                    - search
+                    - date
+                    - noResultCount
                     - count
-                    - withFilterCount
+                    - rate
                   properties:
-                    search:
-                      description: The search query.
-                      type: string
+                    date:
+                      $ref: '../common/parameters.yml#/date'
+                    noResultCount:
+                      $ref: '../common/parameters.yml#/count'
                     count:
-                      description: The number of occurrences.
-                      type: integer
-                    withFilterCount:
-                      description: The number of occurrences with filter.
-                      type: integer
+                      $ref: '../common/parameters.yml#/count'
+                    rate:
+                      $ref: '../common/parameters.yml#/rate'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

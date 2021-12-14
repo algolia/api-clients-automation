@@ -1,0 +1,20 @@
+title: getTopFilterAttributesResponse
+type: object
+additionalProperties: false
+required:
+  - attributes
+properties:
+  attributes:
+    type: array
+    description: A list of attributes with their count.
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - attribute
+        - count
+      properties:
+        attribute:
+          $ref: '../parameters.yml#/attribute'
+        count:
+          $ref: '../parameters.yml#/count'

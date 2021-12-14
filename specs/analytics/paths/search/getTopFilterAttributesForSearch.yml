@@ -1,12 +1,12 @@
 get:
   tags:
     - analytics
-  operationId: getTopHits
-  description: Returns top hits. Limited to the 1000 most frequent ones.
-  summary: Returns top hits.
+  operationId: getTopFilterAttributes
+  description: Returns top filter attributes for a given search. Limited to the 1000 most used filters.
+  summary: Returns top filter attributes for a given search.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
-    - $ref: '../common/parameters.yml#/ClickAnalytics'
+    - $ref: '../common/parameters.yml#/SearchInPath'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../common/parameters.yml#/Limit'
@@ -18,9 +18,7 @@ get:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../common/schemas/getTopHits.yml#/topHitsReponse'
-              - $ref: '../common/schemas/getTopHits.yml#/topHitsResponseWithAnalytics'
+            $ref: '../common/schemas/getTopFilterAttributes.yml'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

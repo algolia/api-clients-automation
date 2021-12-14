@@ -36,7 +36,7 @@ module.exports = {
     'no-redeclare': 0,
     '@typescript-eslint/no-redeclare': 0,
 
-    'max-params': ['error', 7],
+    'max-params': ['error', 9],
     '@typescript-eslint/no-unused-vars': 2,
     'unused-imports/no-unused-imports-ts': 2,
     '@typescript-eslint/member-ordering': [

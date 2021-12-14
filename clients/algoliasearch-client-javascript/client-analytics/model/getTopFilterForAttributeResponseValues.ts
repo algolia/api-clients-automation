@@ -1,4 +1,4 @@
-export type GetNoResultTopFiltersResponseValues = {
+export type GetTopFilterForAttributeResponseValues = {
   /**
    * The attribute.
    */
@@ -11,4 +11,8 @@ export type GetNoResultTopFiltersResponseValues = {
    * The value of the attribute.
    */
   value: string;
+  /**
+   * The number of occurrences.
+   */
+  count: number;
 };

@@ -1,4 +1,4 @@
-export type GetNoResultsRateResponseSearches = {
+export type GetSearchesNoResultsResponseSearches = {
   /**
    * The search query.
    */
@@ -8,7 +8,7 @@ export type GetNoResultsRateResponseSearches = {
    */
   count: number;
   /**
-   * The number of occurrences with filter.
+   * Number of hits that the search query matched.
    */
-  withFilterCount: number;
+  nbHits: number;
 };

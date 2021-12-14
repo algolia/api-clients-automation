@@ -10,7 +10,7 @@ export type GetAverageClickPositionResponse = {
    */
   clickCount: number;
   /**
-   * A list of click events with their date.
+   * A list of average click position with their date.
    */
   dates: GetAverageClickPositionResponseDates[];
 };

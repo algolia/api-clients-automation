@@ -1,8 +1,20 @@
-import type { GetNoResultsRateResponseSearches } from './getNoResultsRateResponseSearches';
+import type { GetNoResultsRateResponseDates } from './getNoResultsRateResponseDates';
 
 export type GetNoResultsRateResponse = {
   /**
-   * A list of top searches with their count.
+   * The click-through rate.
    */
-  searches: GetNoResultsRateResponseSearches[];
+  rate: number;
+  /**
+   * The number of occurrences.
+   */
+  count: number;
+  /**
+   * The number of occurrences.
+   */
+  noResultCount: number;
+  /**
+   * A list of searches without results with their date, rate and counts.
+   */
+  dates: GetNoResultsRateResponseDates[];
 };

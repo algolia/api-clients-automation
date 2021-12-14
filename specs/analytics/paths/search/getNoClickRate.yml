@@ -32,7 +32,7 @@ get:
                 $ref: '../common/parameters.yml#/clickCount'
               dates:
                 type: array
-                description: A list of click-through rate events with their date.
+                description: A list of searches without clicks with their date, rate and counts.
                 items:
                   type: object
                   additionalProperties: false

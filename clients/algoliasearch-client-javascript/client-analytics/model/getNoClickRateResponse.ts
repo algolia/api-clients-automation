@@ -14,7 +14,7 @@ export type GetNoClickRateResponse = {
    */
   noClickCount: number;
   /**
-   * A list of click-through rate events with their date.
+   * A list of searches without clicks with their date, rate and counts.
    */
   dates: GetNoClickRateResponseDates[];
 };

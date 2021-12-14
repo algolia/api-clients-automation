@@ -2,8 +2,6 @@
 import type { RequestOptions } from '../utils/types';
 
 export * from './errorBase';
-export * from './getAttributeTopFiltersResponse';
-export * from './getAttributeTopFiltersResponseValues';
 export * from './getAverageClickPositionResponse';
 export * from './getAverageClickPositionResponseDates';
 export * from './getClickPositionsResponse';
@@ -14,12 +12,32 @@ export * from './getConversationRateResponse';
 export * from './getConversationRateResponseDates';
 export * from './getNoClickRateResponse';
 export * from './getNoClickRateResponseDates';
-export * from './getNoResultTopFiltersResponse';
-export * from './getNoResultTopFiltersResponseValues';
-export * from './getNoResultTopFiltersResponseValues1';
 export * from './getNoResultsRateResponse';
-export * from './getNoResultsRateResponseSearches';
+export * from './getNoResultsRateResponseDates';
+export * from './getSearchesCountResponse';
+export * from './getSearchesCountResponseDates';
+export * from './getSearchesNoClicksResponse';
+export * from './getSearchesNoClicksResponseSearches';
+export * from './getSearchesNoResultsResponse';
+export * from './getSearchesNoResultsResponseSearches';
 export * from './getStatusResponse';
+export * from './getTopCountriesResponse';
+export * from './getTopCountriesResponseCountries';
+export * from './getTopFilterAttributes';
+export * from './getTopFilterAttributesAttributes';
+export * from './getTopFilterForAttributeResponse';
+export * from './getTopFilterForAttributeResponseValues';
+export * from './getTopFiltersNoResults';
+export * from './getTopFiltersNoResultsValues';
+export * from './getTopFiltersNoResultsValues1';
+export * from './getUsersCountResponse';
+export * from './topHitsReponse';
+export * from './topHitsReponseHits';
+export * from './topHitsResponseWithAnalytics';
+export * from './topHitsResponseWithAnalyticsHits';
+export * from './topSearchesResponse';
+export * from './topSearchesResponseWithAnalytics';
+export * from './topSearchesResponseWithAnalyticsSearches';
 
 export interface Authentication {
   /**

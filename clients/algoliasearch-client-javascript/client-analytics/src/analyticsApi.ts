@@ -1,13 +1,23 @@
-import type { GetAttributeTopFiltersResponse } from '../model/getAttributeTopFiltersResponse';
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
 import type { GetClickPositionsResponse } from '../model/getClickPositionsResponse';
 import type { GetClickThroughRateResponse } from '../model/getClickThroughRateResponse';
 import type { GetConversationRateResponse } from '../model/getConversationRateResponse';
 import type { GetNoClickRateResponse } from '../model/getNoClickRateResponse';
-import type { GetNoResultTopFiltersResponse } from '../model/getNoResultTopFiltersResponse';
 import type { GetNoResultsRateResponse } from '../model/getNoResultsRateResponse';
+import type { GetSearchesCountResponse } from '../model/getSearchesCountResponse';
+import type { GetSearchesNoClicksResponse } from '../model/getSearchesNoClicksResponse';
+import type { GetSearchesNoResultsResponse } from '../model/getSearchesNoResultsResponse';
 import type { GetStatusResponse } from '../model/getStatusResponse';
+import type { GetTopCountriesResponse } from '../model/getTopCountriesResponse';
+import type { GetTopFilterAttributes } from '../model/getTopFilterAttributes';
+import type { GetTopFilterForAttributeResponse } from '../model/getTopFilterForAttributeResponse';
+import type { GetTopFiltersNoResults } from '../model/getTopFiltersNoResults';
+import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 import { ApiKeyAuth } from '../model/models';
+import type { TopHitsReponse } from '../model/topHitsReponse';
+import type { TopHitsResponseWithAnalytics } from '../model/topHitsResponseWithAnalytics';
+import type { TopSearchesResponse } from '../model/topSearchesResponse';
+import type { TopSearchesResponseWithAnalytics } from '../model/topSearchesResponseWithAnalytics';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
@@ -87,84 +97,7 @@ export class AnalyticsApi {
   }
 
   /**
-   * Returns top filters for the given attribute. Limited to the 1000 most used filters.
-   *
-   * @summary Returns top filters for the given attribute.
-   * @param attribute - The exact name of the attribute.
-   * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
-   */
-  getAttributeTopFilters(
-    attribute: string,
-    index: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetAttributeTopFiltersResponse> {
-    const path = '/2/filters';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
-
-    if (attribute === null || attribute === undefined) {
-      throw new Error(
-        'Required parameter attribute was null or undefined when calling getAttributeTopFilters.'
-      );
-    }
-
-    if (index === null || index === undefined) {
-      throw new Error(
-        'Required parameter index was null or undefined when calling getAttributeTopFilters.'
-      );
-    }
-
-    if (attribute !== undefined) {
-      queryParameters.attribute = attribute.toString();
-    }
-
-    if (index !== undefined) {
-      queryParameters.index = index.toString();
-    }
-
-    if (startDate !== undefined) {
-      queryParameters.startDate = startDate.toString();
-    }
-
-    if (endDate !== undefined) {
-      queryParameters.endDate = endDate.toString();
-    }
-
-    if (limit !== undefined) {
-      queryParameters.limit = limit.toString();
-    }
-
-    if (offset !== undefined) {
-      queryParameters.offset = offset.toString();
-    }
-
-    if (tags !== undefined) {
-      queryParameters.tags = tags.toString();
-    }
-
-    const request: Request = {
-      method: 'GET',
-      path,
-    };
-
-    const requestOptions: RequestOptions = {
-      headers,
-      queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
-  }
-  /**
-   * Returns the average click position. The endpoint returns a value for the complete given time range, as well as a value per day.  An average of null means Algolia didn\'t receive any click events for the queries with the clickAnalytics search parameter set to true. The average is null until Algolia receives at least one click event.
+   * Returns the average click position. The endpoint returns a value for the complete given time range, as well as a value per day.
    *
    * @summary Returns the average click position.
    * @param index - The index name to target.
@@ -217,7 +150,7 @@ export class AnalyticsApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Returns the distribution of clicks per range of positions.  If the groups all have a count of 0, it means Algolia didn\'t receive any click events for the queries with the clickAnalytics search parameter set to true. The count is 0 until Algolia receives at least one click event.
+   * Returns the distribution of clicks per range of positions.
    *
    * @summary Returns the distribution of clicks per range of positions.
    * @param index - The index name to target.
@@ -270,7 +203,7 @@ export class AnalyticsApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.  Tracked searches are searches for which the engine returned a queryID, so searches where you\'ve set the clickAnalytics search parameter to true. This is different than the “count” attribute of the response, which includes tracked searches and searches where you didn\'t enable the clickAnalytics search parameter.  If the CTR is null, it means that Algolia didn\'t receive any queries with the clickAnalytics search parameter set to true. If the CTR is 0, it means Algolia didn\'t receive any click events for the queries with the clickAnalytics search parameter set to true.
+   * Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.
    *
    * @summary Returns a click-through rate (CTR).
    * @param index - The index name to target.
@@ -323,7 +256,7 @@ export class AnalyticsApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Returns a conversion rate (CR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of conversion and searches used to compute the rates.  Tracked searches are searches for which the engine returned a queryID, so searches where you\'ve set the clickAnalytics search parameter to true. This is different than the “count” attribute of the response, which includes tracked searches and searches where you didn\'t enable the clickAnalytics search parameter.  If the CR is null, it means that Algolia didn\'t receive any queries with the clickAnalytics search parameter set to true. If the CR is 0, it means Algolia didn\'t receive any conversion events for the queries with the clickAnalytics search parameter set to true.
+   * Returns a conversion rate (CR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of conversion and searches used to compute the rates.
    *
    * @summary Returns a conversion rate (CR).
    * @param index - The index name to target.
@@ -429,39 +362,27 @@ export class AnalyticsApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Returns top filters for the given no result search. Limited to the 1000 most used filters.
+   * Returns the rate at which searches didn\'t return any results. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without results used to compute the rates.
    *
-   * @summary Returns top filters for the given no result search.
+   * @summary Returns the rate at which searches didn\'t return any results.
    * @param index - The index name to target.
-   * @param search - The query term. Must match the exact user input.
    * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
    * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getNoResultTopFilters(
+  getNoResultsRate(
     index: string,
-    search: string,
     startDate?: Date,
     endDate?: Date,
-    limit?: number,
-    offset?: number,
     tags?: string
-  ): Promise<GetNoResultTopFiltersResponse> {
-    const path = '/2/filters/noResults';
+  ): Promise<GetNoResultsRateResponse> {
+    const path = '/2/searches/noResultRate';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     if (index === null || index === undefined) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getNoResultTopFilters.'
-      );
-    }
-
-    if (search === null || search === undefined) {
-      throw new Error(
-        'Required parameter search was null or undefined when calling getNoResultTopFilters.'
+        'Required parameter index was null or undefined when calling getNoResultsRate.'
       );
     }
 
@@ -469,8 +390,114 @@ export class AnalyticsApi {
       queryParameters.index = index.toString();
     }
 
-    if (search !== undefined) {
-      queryParameters.search = search.toString();
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns the number of searches across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
+   *
+   * @summary Returns the number of searches across the given time range.
+   * @param index - The index name to target.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getSearchesCount(
+    index: string,
+    startDate?: Date,
+    endDate?: Date,
+    tags?: string
+  ): Promise<GetSearchesCountResponse> {
+    const path = '/2/searches/count';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getSearchesCount.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top searches that didn\'t lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
+   *
+   * @summary Returns top searches that didn\'t lead to any clicks.
+   * @param index - The index name to target.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getSearchesNoClicks(
+    index: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetSearchesNoClicksResponse> {
+    const path = '/2/searches/noClicks';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getSearchesNoClicks.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
     }
 
     if (startDate !== undefined) {
@@ -516,21 +543,21 @@ export class AnalyticsApi {
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getNoResultsRate(
+  getSearchesNoResults(
     index: string,
     startDate?: Date,
     endDate?: Date,
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<GetNoResultsRateResponse> {
-    const path = '/2/searches/noResultRate';
+  ): Promise<GetSearchesNoResultsResponse> {
+    const path = '/2/searches/noResults';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     if (index === null || index === undefined) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getNoResultsRate.'
+        'Required parameter index was null or undefined when calling getSearchesNoResults.'
       );
     }
 
@@ -589,6 +616,718 @@ export class AnalyticsApi {
 
     if (index !== undefined) {
       queryParameters.index = index.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top countries. Limited to the 1000 most frequent ones.
+   *
+   * @summary Returns top countries.
+   * @param index - The index name to target.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopCountries(
+    index: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetTopCountriesResponse> {
+    const path = '/2/countries';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopCountries.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top filter attributes. Limited to the 1000 most used filters.
+   *
+   * @summary Returns top filter attributes.
+   * @param index - The index name to target.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopFilterAttributes(
+    index: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetTopFilterAttributes> {
+    const path = '/2/filters';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopFilterAttributes.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top filter attributes for a given search. Limited to the 1000 most used filters.
+   *
+   * @summary Returns top filter attributes for a given search.
+   * @param index - The index name to target.
+   * @param search - The query term. Must match the exact user input.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopFilterAttributes_1(
+    index: string,
+    search: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetTopFilterAttributes> {
+    const path = '/2/filters?search={search}'.replace(
+      '{search}',
+      encodeURIComponent(String(search))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopFilterAttributes_1.'
+      );
+    }
+
+    if (search === null || search === undefined) {
+      throw new Error(
+        'Required parameter search was null or undefined when calling getTopFilterAttributes_1.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top filters for the given attribute. Limited to the 1000 most used filters.
+   *
+   * @summary Returns top filters for the given attribute.
+   * @param attribute - The exact name of the attribute.
+   * @param index - The index name to target.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopFilterForAttribute(
+    attribute: string,
+    index: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetTopFilterForAttributeResponse> {
+    const path = '/2/filters/{attribute}'.replace(
+      '{attribute}',
+      encodeURIComponent(String(attribute))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (attribute === null || attribute === undefined) {
+      throw new Error(
+        'Required parameter attribute was null or undefined when calling getTopFilterForAttribute.'
+      );
+    }
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopFilterForAttribute.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top filters with no results. Limited to the 1000 most used filters.
+   *
+   * @summary Returns top filters with no results.
+   * @param index - The index name to target.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopFiltersNoResults(
+    index: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetTopFiltersNoResults> {
+    const path = '/2/filters/noResults';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopFiltersNoResults.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top filters for the given no result search. Limited to the 1000 most used filters.
+   *
+   * @summary Returns top filters for the given no result search.
+   * @param index - The index name to target.
+   * @param search - The query term. Must match the exact user input.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopFiltersNoResultsForSearch(
+    index: string,
+    search: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<GetTopFiltersNoResults> {
+    const path = '/2/filters/noResults?search={search}'.replace(
+      '{search}',
+      encodeURIComponent(String(search))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopFiltersNoResultsForSearch.'
+      );
+    }
+
+    if (search === null || search === undefined) {
+      throw new Error(
+        'Required parameter search was null or undefined when calling getTopFiltersNoResultsForSearch.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top hits. Limited to the 1000 most frequent ones.
+   *
+   * @summary Returns top hits.
+   * @param index - The index name to target.
+   * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopHits(
+    index: string,
+    clickAnalytics?: boolean,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<TopHitsReponse | TopHitsResponseWithAnalytics> {
+    const path = '/2/hits';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopHits.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (clickAnalytics !== undefined) {
+      queryParameters.clickAnalytics = clickAnalytics.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top hits for the given search. Limited to the 1000 most frequent ones.
+   *
+   * @summary Returns top hits for the given search.
+   * @param index - The index name to target.
+   * @param search - The query term. Must match the exact user input.
+   * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param limit - How many items to fetch.
+   * @param offset - From which position to start retrieving results.
+   * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopHitsForSearch(
+    index: string,
+    search: string,
+    clickAnalytics?: boolean,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<TopHitsReponse | TopHitsResponseWithAnalytics> {
+    const path = '/2/hits?search={search}'.replace(
+      '{search}',
+      encodeURIComponent(String(search))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopHitsForSearch.'
+      );
+    }
+
+    if (search === null || search === undefined) {
+      throw new Error(
+        'Required parameter search was null or undefined when calling getTopHitsForSearch.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (clickAnalytics !== undefined) {
+      queryParameters.clickAnalytics = clickAnalytics.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns top searches. Limited to the 1000 most frequent ones. For each search, also returns the average number of hits returned.
+   *
+   * @summary Returns top searches.
+   * @param index - The index name to target.
+   * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param orderBy - Reorder the results.
+   * @param direction - The sorting of the result.
+   * @param limit - How many items to fetch.
+   * @param offset From which position to start retrieving results.
+   * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getTopSearches(
+    index: string,
+    clickAnalytics?: boolean,
+    startDate?: Date,
+    endDate?: Date,
+    orderBy?: Record<string, any>,
+    direction?: Record<string, any>,
+    limit?: number,
+    offset?: number,
+    tags?: string
+  ): Promise<TopSearchesResponse | TopSearchesResponseWithAnalytics> {
+    const path = '/2/searches';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getTopSearches.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (clickAnalytics !== undefined) {
+      queryParameters.clickAnalytics = clickAnalytics.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (orderBy !== undefined) {
+      queryParameters.orderBy = orderBy.toString();
+    }
+
+    if (direction !== undefined) {
+      queryParameters.direction = direction.toString();
+    }
+
+    if (limit !== undefined) {
+      queryParameters.limit = limit.toString();
+    }
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Returns the distinct count of users across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
+   *
+   * @summary Returns the distinct count of users across the given time range.
+   * @param index - The index name to target.
+   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
+  getUsersCount(
+    index: string,
+    startDate?: Date,
+    endDate?: Date,
+    tags?: string
+  ): Promise<GetUsersCountResponse> {
+    const path = '/2/users/count';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (index === null || index === undefined) {
+      throw new Error(
+        'Required parameter index was null or undefined when calling getUsersCount.'
+      );
+    }
+
+    if (index !== undefined) {
+      queryParameters.index = index.toString();
+    }
+
+    if (startDate !== undefined) {
+      queryParameters.startDate = startDate.toString();
+    }
+
+    if (endDate !== undefined) {
+      queryParameters.endDate = endDate.toString();
+    }
+
+    if (tags !== undefined) {
+      queryParameters.tags = tags.toString();
     }
 
     const request: Request = {

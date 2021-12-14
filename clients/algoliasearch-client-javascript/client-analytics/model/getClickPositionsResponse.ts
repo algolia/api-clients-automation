@@ -2,7 +2,7 @@ import type { GetClickPositionsResponsePositions } from './getClickPositionsResp
 
 export type GetClickPositionsResponse = {
   /**
-   * A list of the positions with their click count.
+   * A list of the click positions with their click count.
    */
   positions: GetClickPositionsResponsePositions[];
 };

@@ -1,7 +1,7 @@
 get:
   tags:
     - analytics
-  operationId: getAttributeTopFilters
+  operationId: getTopFilterForAttribute
   description: Returns top filters for the given attribute. Limited to the 1000 most used filters.
   summary: Returns top filters for the given attribute.
   parameters:
@@ -18,7 +18,7 @@ get:
       content:
         application/json:
           schema:
-            title: getAttributeTopFiltersResponse
+            title: getTopFilterForAttributeResponse
             type: object
             additionalProperties: false
             required:
@@ -26,7 +26,7 @@ get:
             properties:
               values:
                 type: array
-                description: A list of filters for an attributes.
+                description: A list of filters for the given attributes.
                 items:
                   type: object
                   additionalProperties: false
@@ -43,8 +43,7 @@ get:
                     value:
                       $ref: '../common/parameters.yml#/value'
                     count:
-                      description: The number of events for the attribute.
-                      type: integer
+                      $ref: '../common/parameters.yml#/count'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
