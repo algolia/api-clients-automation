@@ -3,7 +3,7 @@
  */
 export type InlineObject = {
   /**
-   * Cluster name.
+   * Name of the cluster.
    */
   cluster: string;
 };

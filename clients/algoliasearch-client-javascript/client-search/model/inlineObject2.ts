@@ -7,7 +7,7 @@ export type InlineObject2 = {
    */
   query: string;
   /**
-   * Cluster name.
+   * Name of the cluster.
    */
   clusterName?: string;
   /**
