@@ -1,4 +1,4 @@
-export type GetTopFilterForAttributeResponseValues = {
+export type GetTopFilterForAttribute = {
   /**
    * The attribute.
    */

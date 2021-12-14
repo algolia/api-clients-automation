@@ -1,8 +1,8 @@
-export type TopSearchesResponseWithAnalyticsSearches = {
+export type GetTopHitsResponseWithAnalyticsHits = {
   /**
-   * The search query.
+   * The hit.
    */
-  search: string;
+  hit: string;
   /**
    * The number of occurrences.
    */
@@ -11,10 +11,6 @@ export type TopSearchesResponseWithAnalyticsSearches = {
    * The click-through rate.
    */
   clickThroughRate: number;
-  /**
-   * The average position of all the click count event.
-   */
-  averageClickPosition: number;
   /**
    * The conversion rate.
    */
@@ -31,8 +27,4 @@ export type TopSearchesResponseWithAnalyticsSearches = {
    * The number of converted clicks.
    */
   conversionCount: number;
-  /**
-   * Number of hits that the search query matched.
-   */
-  nbHits: number;
 };

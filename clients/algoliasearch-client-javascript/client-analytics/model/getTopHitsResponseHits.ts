@@ -1,4 +1,4 @@
-export type TopHitsReponseHits = {
+export type GetTopHitsResponseHits = {
   /**
    * The hit.
    */

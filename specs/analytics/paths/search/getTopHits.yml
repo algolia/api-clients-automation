@@ -19,8 +19,8 @@ get:
         application/json:
           schema:
             oneOf:
-              - $ref: '../common/schemas/getTopHits.yml#/topHitsReponse'
-              - $ref: '../common/schemas/getTopHits.yml#/topHitsResponseWithAnalytics'
+              - $ref: '../common/schemas/getTopHits.yml#/getTopHitsResponse'
+              - $ref: '../common/schemas/getTopHits.yml#/getTopHitsResponseWithAnalytics'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

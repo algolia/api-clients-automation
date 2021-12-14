@@ -1,5 +1,4 @@
 getTopFilterAttributesResponse:
-  title: getTopFilterAttributesResponse
   type: object
   additionalProperties: false
   required:

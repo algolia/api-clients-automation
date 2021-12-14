@@ -12,12 +12,12 @@ import type { GetTopCountriesResponse } from '../model/getTopCountriesResponse';
 import type { GetTopFilterAttributesResponse } from '../model/getTopFilterAttributesResponse';
 import type { GetTopFilterForAttributeResponse } from '../model/getTopFilterForAttributeResponse';
 import type { GetTopFiltersNoResultsResponse } from '../model/getTopFiltersNoResultsResponse';
+import type { GetTopHitsResponse } from '../model/getTopHitsResponse';
+import type { GetTopHitsResponseWithAnalytics } from '../model/getTopHitsResponseWithAnalytics';
+import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
+import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 import { ApiKeyAuth } from '../model/models';
-import type { TopHitsReponse } from '../model/topHitsReponse';
-import type { TopHitsResponseWithAnalytics } from '../model/topHitsResponseWithAnalytics';
-import type { TopSearchesResponse } from '../model/topSearchesResponse';
-import type { TopSearchesResponseWithAnalytics } from '../model/topSearchesResponseWithAnalytics';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
@@ -934,7 +934,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<GetTopFilterAttributesResponse> {
+  ): Promise<GetTopFilterForAttributeResponse> {
     const path = '/2/filters/{attributes}?search={search}'
       .replace('{attributes}', encodeURIComponent(String(attributes)))
       .replace('{search}', encodeURIComponent(String(search)));
@@ -1156,7 +1156,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<TopHitsReponse | TopHitsResponseWithAnalytics> {
+  ): Promise<GetTopHitsResponse | GetTopHitsResponseWithAnalytics> {
     const path = '/2/hits';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1229,7 +1229,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<TopHitsReponse | TopHitsResponseWithAnalytics> {
+  ): Promise<GetTopHitsResponse | GetTopHitsResponseWithAnalytics> {
     const path = '/2/hits?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))
@@ -1313,7 +1313,7 @@ export class AnalyticsApi {
     limit?: number,
     offset?: number,
     tags?: string
-  ): Promise<TopSearchesResponse | TopSearchesResponseWithAnalytics> {
+  ): Promise<GetTopSearchesResponse | GetTopSearchesResponseWithAnalytics> {
     const path = '/2/searches';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};

@@ -18,32 +18,7 @@ get:
       content:
         application/json:
           schema:
-            title: getTopFilterForAttributeResponse
-            type: object
-            additionalProperties: false
-            required:
-              - values
-            properties:
-              values:
-                type: array
-                description: A list of filters for the given attributes.
-                items:
-                  type: object
-                  additionalProperties: false
-                  required:
-                    - operator
-                    - attribute
-                    - value
-                    - count
-                  properties:
-                    attribute:
-                      $ref: '../common/parameters.yml#/attribute'
-                    operator:
-                      $ref: '../common/parameters.yml#/operator'
-                    value:
-                      $ref: '../common/parameters.yml#/value'
-                    count:
-                      $ref: '../common/parameters.yml#/count'
+            $ref: '../common/schemas/getTopFilterForAttribute.yml#/getTopFilterForAttributeResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

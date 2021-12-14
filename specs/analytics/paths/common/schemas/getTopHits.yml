@@ -1,5 +1,4 @@
-topHitsReponse:
-  title: getTopHitsResponse
+getTopHitsResponse:
   type: object
   additionalProperties: false
   required:
@@ -20,8 +19,7 @@ topHitsReponse:
           count:
             $ref: '../parameters.yml#/count'
 
-topHitsResponseWithAnalytics:
-  title: getTopHitsResponseWithAnalytics
+getTopHitsResponseWithAnalytics:
   type: object
   additionalProperties: false
   required:

@@ -1,5 +1,4 @@
-topSearchesResponse:
-  title: getTopSearchesResponse
+getTopSearchesResponse:
   type: object
   additionalProperties: false
   required:
@@ -23,8 +22,7 @@ topSearchesResponse:
           nbHits:
             $ref: '../parameters.yml#/nbHits'
 
-topSearchesResponseWithAnalytics:
-  title: getTopSearchesResponseWithAnalytics
+getTopSearchesResponseWithAnalytics:
   type: object
   additionalProperties: false
   required:

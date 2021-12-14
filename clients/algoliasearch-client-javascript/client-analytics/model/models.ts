@@ -25,19 +25,19 @@ export * from './getTopCountriesResponse';
 export * from './getTopCountriesResponseCountries';
 export * from './getTopFilterAttribute';
 export * from './getTopFilterAttributesResponse';
+export * from './getTopFilterForAttribute';
 export * from './getTopFilterForAttributeResponse';
-export * from './getTopFilterForAttributeResponseValues';
 export * from './getTopFiltersNoResultsResponse';
 export * from './getTopFiltersNoResultsValue';
 export * from './getTopFiltersNoResultsValues';
+export * from './getTopHitsResponse';
+export * from './getTopHitsResponseHits';
+export * from './getTopHitsResponseWithAnalytics';
+export * from './getTopHitsResponseWithAnalyticsHits';
+export * from './getTopSearchesResponse';
+export * from './getTopSearchesResponseWithAnalytics';
+export * from './getTopSearchesResponseWithAnalyticsSearches';
 export * from './getUsersCountResponse';
-export * from './topHitsReponse';
-export * from './topHitsReponseHits';
-export * from './topHitsResponseWithAnalytics';
-export * from './topHitsResponseWithAnalyticsHits';
-export * from './topSearchesResponse';
-export * from './topSearchesResponseWithAnalytics';
-export * from './topSearchesResponseWithAnalyticsSearches';
 
 export interface Authentication {
   /**

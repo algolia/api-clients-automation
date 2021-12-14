@@ -1,6 +1,6 @@
 import type { GetSearchesNoResultsResponseSearches } from './getSearchesNoResultsResponseSearches';
 
-export type TopSearchesResponse = {
+export type GetTopSearchesResponse = {
   /**
    * A list of top searches with their count.
    */

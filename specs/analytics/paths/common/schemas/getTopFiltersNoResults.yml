@@ -1,5 +1,4 @@
 getTopFiltersNoResultsResponse:
-  title: getTopFiltersNoResultsResponse
   type: object
   additionalProperties: false
   required:

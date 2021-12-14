@@ -24,7 +24,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/getTopFilterAttributes.yml#/getTopFilterAttributesResponse'
+            $ref: '../common/schemas/getTopFilterForAttribute.yml#/getTopFilterForAttributeResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
