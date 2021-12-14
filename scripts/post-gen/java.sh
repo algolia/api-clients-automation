@@ -1,5 +1,7 @@
-client=$1
-export CLIENT=$(cat openapitools.json | yarn json "generator-cli.generators.java-${client}.output" | sed 's/#{cwd}\///g')
+#!/bin/bash
+
+export GENERATOR=$1
+export CLIENT=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."generator-cli".generators[$generator].output' | sed 's/#{cwd}\///g')
 
 # Restore the oneOf spec
 mv ./specs/search/paths/search/search.yml.bak ./specs/search/paths/search/search.yml
