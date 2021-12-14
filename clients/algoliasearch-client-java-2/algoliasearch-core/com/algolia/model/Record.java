@@ -12,10 +12,7 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
@@ -23,32 +20,33 @@ import java.util.Objects;
 
 /** A single record. */
 @ApiModel(description = "A single record.")
-@JsonPropertyOrder(
-  {
-    Record.JSON_PROPERTY_OBJECT_I_D,
-    Record.JSON_PROPERTY_HIGHLIGHT_RESULT,
-    Record.JSON_PROPERTY_SNIPPET_RESULT,
-    Record.JSON_PROPERTY_RANKING_INFO,
-    Record.JSON_PROPERTY_DISTINCT_SEQ_I_D,
-  }
-)
-@JsonTypeName("record")
 public class Record extends HashMap<String, Object> {
 
-  public static final String JSON_PROPERTY_OBJECT_I_D = "objectID";
+  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
+
+  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
   private String objectID;
 
-  public static final String JSON_PROPERTY_HIGHLIGHT_RESULT =
+  public static final String SERIALIZED_NAME_HIGHLIGHT_RESULT =
     "_highlightResult";
+
+  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_RESULT)
   private HighlightResult highlightResult;
 
-  public static final String JSON_PROPERTY_SNIPPET_RESULT = "_snippetResult";
+  public static final String SERIALIZED_NAME_SNIPPET_RESULT = "_snippetResult";
+
+  @SerializedName(SERIALIZED_NAME_SNIPPET_RESULT)
   private SnippetResult snippetResult;
 
-  public static final String JSON_PROPERTY_RANKING_INFO = "_rankingInfo";
+  public static final String SERIALIZED_NAME_RANKING_INFO = "_rankingInfo";
+
+  @SerializedName(SERIALIZED_NAME_RANKING_INFO)
   private RankingInfo rankingInfo;
 
-  public static final String JSON_PROPERTY_DISTINCT_SEQ_I_D = "_distinctSeqID";
+  public static final String SERIALIZED_NAME_DISTINCT_SEQ_I_D =
+    "_distinctSeqID";
+
+  @SerializedName(SERIALIZED_NAME_DISTINCT_SEQ_I_D)
   private Integer distinctSeqID;
 
   public Record objectID(String objectID) {
@@ -63,14 +61,10 @@ public class Record extends HashMap<String, Object> {
    */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Unique identifier of the object.")
-  @JsonProperty(JSON_PROPERTY_OBJECT_I_D)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getObjectID() {
     return objectID;
   }
 
-  @JsonProperty(JSON_PROPERTY_OBJECT_I_D)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setObjectID(String objectID) {
     this.objectID = objectID;
   }
@@ -87,14 +81,10 @@ public class Record extends HashMap<String, Object> {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_HIGHLIGHT_RESULT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public HighlightResult getHighlightResult() {
     return highlightResult;
   }
 
-  @JsonProperty(JSON_PROPERTY_HIGHLIGHT_RESULT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHighlightResult(HighlightResult highlightResult) {
     this.highlightResult = highlightResult;
   }
@@ -111,14 +101,10 @@ public class Record extends HashMap<String, Object> {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_SNIPPET_RESULT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public SnippetResult getSnippetResult() {
     return snippetResult;
   }
 
-  @JsonProperty(JSON_PROPERTY_SNIPPET_RESULT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSnippetResult(SnippetResult snippetResult) {
     this.snippetResult = snippetResult;
   }
@@ -135,14 +121,10 @@ public class Record extends HashMap<String, Object> {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_RANKING_INFO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public RankingInfo getRankingInfo() {
     return rankingInfo;
   }
 
-  @JsonProperty(JSON_PROPERTY_RANKING_INFO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRankingInfo(RankingInfo rankingInfo) {
     this.rankingInfo = rankingInfo;
   }
@@ -159,14 +141,10 @@ public class Record extends HashMap<String, Object> {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_DISTINCT_SEQ_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getDistinctSeqID() {
     return distinctSeqID;
   }
 
-  @JsonProperty(JSON_PROPERTY_DISTINCT_SEQ_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDistinctSeqID(Integer distinctSeqID) {
     this.distinctSeqID = distinctSeqID;
   }

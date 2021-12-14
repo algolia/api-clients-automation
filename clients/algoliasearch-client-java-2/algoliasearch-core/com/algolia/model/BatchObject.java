@@ -12,10 +12,7 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -24,11 +21,11 @@ import java.util.Objects;
 
 /** The &#x60;batch&#x60; requests. */
 @ApiModel(description = "The `batch` requests.")
-@JsonPropertyOrder({ BatchObject.JSON_PROPERTY_REQUESTS })
-@JsonTypeName("batchObject")
 public class BatchObject {
 
-  public static final String JSON_PROPERTY_REQUESTS = "requests";
+  public static final String SERIALIZED_NAME_REQUESTS = "requests";
+
+  @SerializedName(SERIALIZED_NAME_REQUESTS)
   private List<Operation> requests = null;
 
   public BatchObject requests(List<Operation> requests) {
@@ -51,14 +48,10 @@ public class BatchObject {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_REQUESTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<Operation> getRequests() {
     return requests;
   }
 
-  @JsonProperty(JSON_PROPERTY_REQUESTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRequests(List<Operation> requests) {
     this.requests = requests;
   }

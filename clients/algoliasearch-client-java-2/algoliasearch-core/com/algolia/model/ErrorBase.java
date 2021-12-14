@@ -12,10 +12,7 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
@@ -23,11 +20,11 @@ import java.util.Objects;
 
 /** Error. */
 @ApiModel(description = "Error.")
-@JsonPropertyOrder({ ErrorBase.JSON_PROPERTY_MESSAGE })
-@JsonTypeName("ErrorBase")
 public class ErrorBase extends HashMap<String, Object> {
 
-  public static final String JSON_PROPERTY_MESSAGE = "message";
+  public static final String SERIALIZED_NAME_MESSAGE = "message";
+
+  @SerializedName(SERIALIZED_NAME_MESSAGE)
   private String message;
 
   public ErrorBase message(String message) {
@@ -42,14 +39,10 @@ public class ErrorBase extends HashMap<String, Object> {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(example = "Invalid Application-Id or API-Key", value = "")
-  @JsonProperty(JSON_PROPERTY_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getMessage() {
     return message;
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMessage(String message) {
     this.message = message;
   }

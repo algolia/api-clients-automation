@@ -12,29 +12,23 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** ListIndicesResponse */
-@JsonPropertyOrder(
-  {
-    ListIndicesResponse.JSON_PROPERTY_ITEMS,
-    ListIndicesResponse.JSON_PROPERTY_NB_PAGES,
-  }
-)
-@JsonTypeName("listIndicesResponse")
 public class ListIndicesResponse {
 
-  public static final String JSON_PROPERTY_ITEMS = "items";
+  public static final String SERIALIZED_NAME_ITEMS = "items";
+
+  @SerializedName(SERIALIZED_NAME_ITEMS)
   private List<Index> items = null;
 
-  public static final String JSON_PROPERTY_NB_PAGES = "nbPages";
+  public static final String SERIALIZED_NAME_NB_PAGES = "nbPages";
+
+  @SerializedName(SERIALIZED_NAME_NB_PAGES)
   private Integer nbPages;
 
   public ListIndicesResponse items(List<Index> items) {
@@ -57,14 +51,10 @@ public class ListIndicesResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of the fetched indices.")
-  @JsonProperty(JSON_PROPERTY_ITEMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<Index> getItems() {
     return items;
   }
 
-  @JsonProperty(JSON_PROPERTY_ITEMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setItems(List<Index> items) {
     this.items = items;
   }
@@ -81,14 +71,10 @@ public class ListIndicesResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(example = "100", value = "Number of pages.")
-  @JsonProperty(JSON_PROPERTY_NB_PAGES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getNbPages() {
     return nbPages;
   }
 
-  @JsonProperty(JSON_PROPERTY_NB_PAGES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
   }

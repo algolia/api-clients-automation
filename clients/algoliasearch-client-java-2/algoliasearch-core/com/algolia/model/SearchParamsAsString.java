@@ -12,19 +12,16 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** SearchParamsAsString */
-@JsonPropertyOrder({ SearchParamsAsString.JSON_PROPERTY_PARAMS })
-@JsonTypeName("searchParamsAsString")
 public class SearchParamsAsString {
 
-  public static final String JSON_PROPERTY_PARAMS = "params";
+  public static final String SERIALIZED_NAME_PARAMS = "params";
+
+  @SerializedName(SERIALIZED_NAME_PARAMS)
   private String params;
 
   public SearchParamsAsString params(String params) {
@@ -39,14 +36,10 @@ public class SearchParamsAsString {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_PARAMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getParams() {
     return params;
   }
 
-  @JsonProperty(JSON_PROPERTY_PARAMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setParams(String params) {
     this.params = params;
   }

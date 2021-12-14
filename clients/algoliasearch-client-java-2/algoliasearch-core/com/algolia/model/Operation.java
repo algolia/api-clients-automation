@@ -12,25 +12,22 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 /** Operation */
-@JsonPropertyOrder(
-  { Operation.JSON_PROPERTY_ACTION, Operation.JSON_PROPERTY_BODY }
-)
-@JsonTypeName("operation")
 public class Operation {
 
   /** type of operation. */
+  @JsonAdapter(ActionEnum.Adapter.class)
   public enum ActionEnum {
     ADDOBJECT("addObject"),
 
@@ -52,7 +49,6 @@ public class Operation {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -62,7 +58,6 @@ public class Operation {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static ActionEnum fromValue(String value) {
       for (ActionEnum b : ActionEnum.values()) {
         if (b.value.equals(value)) {
@@ -71,12 +66,33 @@ public class Operation {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<ActionEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final ActionEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public ActionEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return ActionEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ACTION = "action";
+  public static final String SERIALIZED_NAME_ACTION = "action";
+
+  @SerializedName(SERIALIZED_NAME_ACTION)
   private ActionEnum action;
 
-  public static final String JSON_PROPERTY_BODY = "body";
+  public static final String SERIALIZED_NAME_BODY = "body";
+
+  @SerializedName(SERIALIZED_NAME_BODY)
   private Map<String, Object> body = null;
 
   public Operation action(ActionEnum action) {
@@ -91,14 +107,10 @@ public class Operation {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "type of operation.")
-  @JsonProperty(JSON_PROPERTY_ACTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public ActionEnum getAction() {
     return action;
   }
 
-  @JsonProperty(JSON_PROPERTY_ACTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAction(ActionEnum action) {
     this.action = action;
   }
@@ -125,20 +137,10 @@ public class Operation {
   @ApiModelProperty(
     value = "arguments to the operation (depends on the type of the operation)."
   )
-  @JsonProperty(JSON_PROPERTY_BODY)
-  @JsonInclude(
-    content = JsonInclude.Include.ALWAYS,
-    value = JsonInclude.Include.USE_DEFAULTS
-  )
   public Map<String, Object> getBody() {
     return body;
   }
 
-  @JsonProperty(JSON_PROPERTY_BODY)
-  @JsonInclude(
-    content = JsonInclude.Include.ALWAYS,
-    value = JsonInclude.Include.USE_DEFAULTS
-  )
   public void setBody(Map<String, Object> body) {
     this.body = body;
   }

@@ -12,29 +12,22 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** OperationIndexObject */
-@JsonPropertyOrder(
-  {
-    OperationIndexObject.JSON_PROPERTY_OPERATION,
-    OperationIndexObject.JSON_PROPERTY_DESTINATION,
-    OperationIndexObject.JSON_PROPERTY_SCOPE,
-  }
-)
-@JsonTypeName("operationIndexObject")
 public class OperationIndexObject {
 
   /** Type of operation to perform (move or copy). */
+  @JsonAdapter(OperationEnum.Adapter.class)
   public enum OperationEnum {
     MOVE("move"),
 
@@ -46,7 +39,6 @@ public class OperationIndexObject {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -56,7 +48,6 @@ public class OperationIndexObject {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static OperationEnum fromValue(String value) {
       for (OperationEnum b : OperationEnum.values()) {
         if (b.value.equals(value)) {
@@ -65,15 +56,38 @@ public class OperationIndexObject {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<OperationEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final OperationEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public OperationEnum read(final JsonReader jsonReader)
+        throws IOException {
+        String value = jsonReader.nextString();
+        return OperationEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_OPERATION = "operation";
+  public static final String SERIALIZED_NAME_OPERATION = "operation";
+
+  @SerializedName(SERIALIZED_NAME_OPERATION)
   private OperationEnum operation;
 
-  public static final String JSON_PROPERTY_DESTINATION = "destination";
+  public static final String SERIALIZED_NAME_DESTINATION = "destination";
+
+  @SerializedName(SERIALIZED_NAME_DESTINATION)
   private String destination;
 
   /** Gets or Sets scope */
+  @JsonAdapter(ScopeEnum.Adapter.class)
   public enum ScopeEnum {
     SETTINGS("settings"),
 
@@ -87,7 +101,6 @@ public class OperationIndexObject {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -97,7 +110,6 @@ public class OperationIndexObject {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static ScopeEnum fromValue(String value) {
       for (ScopeEnum b : ScopeEnum.values()) {
         if (b.value.equals(value)) {
@@ -106,9 +118,28 @@ public class OperationIndexObject {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<ScopeEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final ScopeEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public ScopeEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return ScopeEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_SCOPE = "scope";
+  public static final String SERIALIZED_NAME_SCOPE = "scope";
+
+  @SerializedName(SERIALIZED_NAME_SCOPE)
   private List<ScopeEnum> scope = null;
 
   public OperationIndexObject operation(OperationEnum operation) {
@@ -126,14 +157,10 @@ public class OperationIndexObject {
     required = true,
     value = "Type of operation to perform (move or copy)."
   )
-  @JsonProperty(JSON_PROPERTY_OPERATION)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OperationEnum getOperation() {
     return operation;
   }
 
-  @JsonProperty(JSON_PROPERTY_OPERATION)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setOperation(OperationEnum operation) {
     this.operation = operation;
   }
@@ -154,14 +181,10 @@ public class OperationIndexObject {
     required = true,
     value = "The Algolia index name."
   )
-  @JsonProperty(JSON_PROPERTY_DESTINATION)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getDestination() {
     return destination;
   }
 
-  @JsonProperty(JSON_PROPERTY_DESTINATION)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setDestination(String destination) {
     this.destination = destination;
   }
@@ -190,14 +213,10 @@ public class OperationIndexObject {
     value = "Scope of the data to copy. When absent, a full copy is performed. When present, only the" +
     " selected scopes are copied."
   )
-  @JsonProperty(JSON_PROPERTY_SCOPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<ScopeEnum> getScope() {
     return scope;
   }
 
-  @JsonProperty(JSON_PROPERTY_SCOPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setScope(List<ScopeEnum> scope) {
     this.scope = scope;
   }

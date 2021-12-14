@@ -12,68 +12,71 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 /** RankingInfo */
-@JsonPropertyOrder(
-  {
-    RankingInfo.JSON_PROPERTY_FILTERS,
-    RankingInfo.JSON_PROPERTY_FIRST_MATCHED_WORD,
-    RankingInfo.JSON_PROPERTY_GEO_DISTANCE,
-    RankingInfo.JSON_PROPERTY_GEO_PRECISION,
-    RankingInfo.JSON_PROPERTY_MATCHED_GEO_LOCATION,
-    RankingInfo.JSON_PROPERTY_NB_EXACT_WORDS,
-    RankingInfo.JSON_PROPERTY_NB_TYPOS,
-    RankingInfo.JSON_PROPERTY_PROMOTED,
-    RankingInfo.JSON_PROPERTY_PROXIMITY_DISTANCE,
-    RankingInfo.JSON_PROPERTY_USER_SCORE,
-    RankingInfo.JSON_PROPERTY_WORD,
-  }
-)
-@JsonTypeName("rankingInfo")
 public class RankingInfo {
 
-  public static final String JSON_PROPERTY_FILTERS = "filters";
+  public static final String SERIALIZED_NAME_FILTERS = "filters";
+
+  @SerializedName(SERIALIZED_NAME_FILTERS)
   private Integer filters;
 
-  public static final String JSON_PROPERTY_FIRST_MATCHED_WORD =
+  public static final String SERIALIZED_NAME_FIRST_MATCHED_WORD =
     "firstMatchedWord";
+
+  @SerializedName(SERIALIZED_NAME_FIRST_MATCHED_WORD)
   private Integer firstMatchedWord;
 
-  public static final String JSON_PROPERTY_GEO_DISTANCE = "geoDistance";
+  public static final String SERIALIZED_NAME_GEO_DISTANCE = "geoDistance";
+
+  @SerializedName(SERIALIZED_NAME_GEO_DISTANCE)
   private Integer geoDistance;
 
-  public static final String JSON_PROPERTY_GEO_PRECISION = "geoPrecision";
+  public static final String SERIALIZED_NAME_GEO_PRECISION = "geoPrecision";
+
+  @SerializedName(SERIALIZED_NAME_GEO_PRECISION)
   private Integer geoPrecision;
 
-  public static final String JSON_PROPERTY_MATCHED_GEO_LOCATION =
+  public static final String SERIALIZED_NAME_MATCHED_GEO_LOCATION =
     "matchedGeoLocation";
+
+  @SerializedName(SERIALIZED_NAME_MATCHED_GEO_LOCATION)
   private Map<String, RankingInfoMatchedGeoLocation> matchedGeoLocation = null;
 
-  public static final String JSON_PROPERTY_NB_EXACT_WORDS = "nbExactWords";
+  public static final String SERIALIZED_NAME_NB_EXACT_WORDS = "nbExactWords";
+
+  @SerializedName(SERIALIZED_NAME_NB_EXACT_WORDS)
   private Integer nbExactWords;
 
-  public static final String JSON_PROPERTY_NB_TYPOS = "nbTypos";
+  public static final String SERIALIZED_NAME_NB_TYPOS = "nbTypos";
+
+  @SerializedName(SERIALIZED_NAME_NB_TYPOS)
   private Integer nbTypos;
 
-  public static final String JSON_PROPERTY_PROMOTED = "promoted";
+  public static final String SERIALIZED_NAME_PROMOTED = "promoted";
+
+  @SerializedName(SERIALIZED_NAME_PROMOTED)
   private Boolean promoted;
 
-  public static final String JSON_PROPERTY_PROXIMITY_DISTANCE =
+  public static final String SERIALIZED_NAME_PROXIMITY_DISTANCE =
     "proximityDistance";
+
+  @SerializedName(SERIALIZED_NAME_PROXIMITY_DISTANCE)
   private Integer proximityDistance;
 
-  public static final String JSON_PROPERTY_USER_SCORE = "userScore";
+  public static final String SERIALIZED_NAME_USER_SCORE = "userScore";
+
+  @SerializedName(SERIALIZED_NAME_USER_SCORE)
   private Integer userScore;
 
-  public static final String JSON_PROPERTY_WORD = "word";
+  public static final String SERIALIZED_NAME_WORD = "word";
+
+  @SerializedName(SERIALIZED_NAME_WORD)
   private Integer word;
 
   public RankingInfo filters(Integer filters) {
@@ -88,14 +91,10 @@ public class RankingInfo {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "This field is reserved for advanced usage.")
-  @JsonProperty(JSON_PROPERTY_FILTERS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getFilters() {
     return filters;
   }
 
-  @JsonProperty(JSON_PROPERTY_FILTERS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFilters(Integer filters) {
     this.filters = filters;
   }
@@ -114,14 +113,10 @@ public class RankingInfo {
   @ApiModelProperty(
     value = "Position of the most important matched attribute in the attributes to index list."
   )
-  @JsonProperty(JSON_PROPERTY_FIRST_MATCHED_WORD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getFirstMatchedWord() {
     return firstMatchedWord;
   }
 
-  @JsonProperty(JSON_PROPERTY_FIRST_MATCHED_WORD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFirstMatchedWord(Integer firstMatchedWord) {
     this.firstMatchedWord = firstMatchedWord;
   }
@@ -142,14 +137,10 @@ public class RankingInfo {
     value = "Distance between the geo location in the search query and the best matching geo location" +
     " in the record, divided by the geo precision (in meters)."
   )
-  @JsonProperty(JSON_PROPERTY_GEO_DISTANCE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getGeoDistance() {
     return geoDistance;
   }
 
-  @JsonProperty(JSON_PROPERTY_GEO_DISTANCE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setGeoDistance(Integer geoDistance) {
     this.geoDistance = geoDistance;
   }
@@ -168,14 +159,10 @@ public class RankingInfo {
   @ApiModelProperty(
     value = "Precision used when computing the geo distance, in meters."
   )
-  @JsonProperty(JSON_PROPERTY_GEO_PRECISION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getGeoPrecision() {
     return geoPrecision;
   }
 
-  @JsonProperty(JSON_PROPERTY_GEO_PRECISION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setGeoPrecision(Integer geoPrecision) {
     this.geoPrecision = geoPrecision;
   }
@@ -205,14 +192,10 @@ public class RankingInfo {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MATCHED_GEO_LOCATION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Map<String, RankingInfoMatchedGeoLocation> getMatchedGeoLocation() {
     return matchedGeoLocation;
   }
 
-  @JsonProperty(JSON_PROPERTY_MATCHED_GEO_LOCATION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMatchedGeoLocation(
     Map<String, RankingInfoMatchedGeoLocation> matchedGeoLocation
   ) {
@@ -231,14 +214,10 @@ public class RankingInfo {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Number of exactly matched words.")
-  @JsonProperty(JSON_PROPERTY_NB_EXACT_WORDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getNbExactWords() {
     return nbExactWords;
   }
 
-  @JsonProperty(JSON_PROPERTY_NB_EXACT_WORDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNbExactWords(Integer nbExactWords) {
     this.nbExactWords = nbExactWords;
   }
@@ -257,14 +236,10 @@ public class RankingInfo {
   @ApiModelProperty(
     value = "Number of typos encountered when matching the record."
   )
-  @JsonProperty(JSON_PROPERTY_NB_TYPOS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getNbTypos() {
     return nbTypos;
   }
 
-  @JsonProperty(JSON_PROPERTY_NB_TYPOS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNbTypos(Integer nbTypos) {
     this.nbTypos = nbTypos;
   }
@@ -283,14 +258,10 @@ public class RankingInfo {
   @ApiModelProperty(
     value = "Present and set to true if a Rule promoted the hit."
   )
-  @JsonProperty(JSON_PROPERTY_PROMOTED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getPromoted() {
     return promoted;
   }
 
-  @JsonProperty(JSON_PROPERTY_PROMOTED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPromoted(Boolean promoted) {
     this.promoted = promoted;
   }
@@ -311,14 +282,10 @@ public class RankingInfo {
     value = "When the query contains more than one word, the sum of the distances between matched" +
     " words (in meters)."
   )
-  @JsonProperty(JSON_PROPERTY_PROXIMITY_DISTANCE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getProximityDistance() {
     return proximityDistance;
   }
 
-  @JsonProperty(JSON_PROPERTY_PROXIMITY_DISTANCE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setProximityDistance(Integer proximityDistance) {
     this.proximityDistance = proximityDistance;
   }
@@ -337,14 +304,10 @@ public class RankingInfo {
   @ApiModelProperty(
     value = "Custom ranking for the object, expressed as a single integer value."
   )
-  @JsonProperty(JSON_PROPERTY_USER_SCORE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getUserScore() {
     return userScore;
   }
 
-  @JsonProperty(JSON_PROPERTY_USER_SCORE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUserScore(Integer userScore) {
     this.userScore = userScore;
   }
@@ -363,14 +326,10 @@ public class RankingInfo {
   @ApiModelProperty(
     value = "Number of matched words, including prefixes and typos."
   )
-  @JsonProperty(JSON_PROPERTY_WORD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getWord() {
     return word;
   }
 
-  @JsonProperty(JSON_PROPERTY_WORD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setWord(Integer word) {
     this.word = word;
   }

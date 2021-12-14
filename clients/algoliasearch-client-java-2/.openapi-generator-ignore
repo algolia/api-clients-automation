@@ -15,3 +15,7 @@ build.sbt
 git_push.sh
 gradle*
 settings.gradle
+
+# Selective source file
+algoliasearch-core/com/algolia/auth/**
+algoliasearch-core/com/algolia/Configuration.java

@@ -12,28 +12,22 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** DeleteIndexResponse */
-@JsonPropertyOrder(
-  {
-    DeleteIndexResponse.JSON_PROPERTY_TASK_I_D,
-    DeleteIndexResponse.JSON_PROPERTY_DELETE_AT,
-  }
-)
-@JsonTypeName("deleteIndexResponse")
 public class DeleteIndexResponse {
 
-  public static final String JSON_PROPERTY_TASK_I_D = "taskID";
+  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
+
+  @SerializedName(SERIALIZED_NAME_TASK_I_D)
   private Integer taskID;
 
-  public static final String JSON_PROPERTY_DELETE_AT = "deleteAt";
+  public static final String SERIALIZED_NAME_DELETE_AT = "deleteAt";
+
+  @SerializedName(SERIALIZED_NAME_DELETE_AT)
   private OffsetDateTime deleteAt;
 
   public DeleteIndexResponse taskID(Integer taskID) {
@@ -48,14 +42,10 @@ public class DeleteIndexResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
-  @JsonProperty(JSON_PROPERTY_TASK_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getTaskID() {
     return taskID;
   }
 
-  @JsonProperty(JSON_PROPERTY_TASK_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTaskID(Integer taskID) {
     this.taskID = taskID;
   }
@@ -72,14 +62,10 @@ public class DeleteIndexResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Date of deletion (ISO-8601 format).")
-  @JsonProperty(JSON_PROPERTY_DELETE_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OffsetDateTime getDeleteAt() {
     return deleteAt;
   }
 
-  @JsonProperty(JSON_PROPERTY_DELETE_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDeleteAt(OffsetDateTime deleteAt) {
     this.deleteAt = deleteAt;
   }

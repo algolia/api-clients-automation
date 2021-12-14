@@ -12,10 +12,7 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -23,56 +20,63 @@ import java.util.List;
 import java.util.Objects;
 
 /** Index */
-@JsonPropertyOrder(
-  {
-    Index.JSON_PROPERTY_NAME,
-    Index.JSON_PROPERTY_CREATED_AT,
-    Index.JSON_PROPERTY_UPDATED_AT,
-    Index.JSON_PROPERTY_ENTRIES,
-    Index.JSON_PROPERTY_DATA_SIZE,
-    Index.JSON_PROPERTY_FILE_SIZE,
-    Index.JSON_PROPERTY_LAST_BUILD_TIME_S,
-    Index.JSON_PROPERTY_NUMBER_OF_PENDING_TASK,
-    Index.JSON_PROPERTY_PENDING_TASK,
-    Index.JSON_PROPERTY_PRIMARY,
-    Index.JSON_PROPERTY_REPLICAS,
-  }
-)
-@JsonTypeName("index")
 public class Index {
 
-  public static final String JSON_PROPERTY_NAME = "name";
+  public static final String SERIALIZED_NAME_NAME = "name";
+
+  @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
-  public static final String JSON_PROPERTY_CREATED_AT = "createdAt";
+  public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
+
+  @SerializedName(SERIALIZED_NAME_CREATED_AT)
   private OffsetDateTime createdAt;
 
-  public static final String JSON_PROPERTY_UPDATED_AT = "updatedAt";
+  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
+
+  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private OffsetDateTime updatedAt;
 
-  public static final String JSON_PROPERTY_ENTRIES = "entries";
+  public static final String SERIALIZED_NAME_ENTRIES = "entries";
+
+  @SerializedName(SERIALIZED_NAME_ENTRIES)
   private Integer entries;
 
-  public static final String JSON_PROPERTY_DATA_SIZE = "dataSize";
+  public static final String SERIALIZED_NAME_DATA_SIZE = "dataSize";
+
+  @SerializedName(SERIALIZED_NAME_DATA_SIZE)
   private Integer dataSize;
 
-  public static final String JSON_PROPERTY_FILE_SIZE = "fileSize";
+  public static final String SERIALIZED_NAME_FILE_SIZE = "fileSize";
+
+  @SerializedName(SERIALIZED_NAME_FILE_SIZE)
   private Integer fileSize;
 
-  public static final String JSON_PROPERTY_LAST_BUILD_TIME_S = "lastBuildTimeS";
+  public static final String SERIALIZED_NAME_LAST_BUILD_TIME_S =
+    "lastBuildTimeS";
+
+  @SerializedName(SERIALIZED_NAME_LAST_BUILD_TIME_S)
   private Integer lastBuildTimeS;
 
-  public static final String JSON_PROPERTY_NUMBER_OF_PENDING_TASK =
+  public static final String SERIALIZED_NAME_NUMBER_OF_PENDING_TASK =
     "numberOfPendingTask";
+
+  @SerializedName(SERIALIZED_NAME_NUMBER_OF_PENDING_TASK)
   private Integer numberOfPendingTask;
 
-  public static final String JSON_PROPERTY_PENDING_TASK = "pendingTask";
+  public static final String SERIALIZED_NAME_PENDING_TASK = "pendingTask";
+
+  @SerializedName(SERIALIZED_NAME_PENDING_TASK)
   private Boolean pendingTask;
 
-  public static final String JSON_PROPERTY_PRIMARY = "primary";
+  public static final String SERIALIZED_NAME_PRIMARY = "primary";
+
+  @SerializedName(SERIALIZED_NAME_PRIMARY)
   private String primary;
 
-  public static final String JSON_PROPERTY_REPLICAS = "replicas";
+  public static final String SERIALIZED_NAME_REPLICAS = "replicas";
+
+  @SerializedName(SERIALIZED_NAME_REPLICAS)
   private List<String> replicas = null;
 
   public Index name(String name) {
@@ -87,14 +91,10 @@ public class Index {
    */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Index name.")
-  @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getName() {
     return name;
   }
 
-  @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
   }
@@ -114,14 +114,10 @@ public class Index {
     required = true,
     value = "Index creation date. An empty string means that the index has no records."
   )
-  @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OffsetDateTime getCreatedAt() {
     return createdAt;
   }
 
-  @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCreatedAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
   }
@@ -141,14 +137,10 @@ public class Index {
     required = true,
     value = "Date of last update (ISO-8601 format)."
   )
-  @JsonProperty(JSON_PROPERTY_UPDATED_AT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  @JsonProperty(JSON_PROPERTY_UPDATED_AT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setUpdatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
@@ -168,14 +160,10 @@ public class Index {
     required = true,
     value = "Number of records contained in the index."
   )
-  @JsonProperty(JSON_PROPERTY_ENTRIES)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getEntries() {
     return entries;
   }
 
-  @JsonProperty(JSON_PROPERTY_ENTRIES)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setEntries(Integer entries) {
     this.entries = entries;
   }
@@ -195,14 +183,10 @@ public class Index {
     required = true,
     value = "Number of bytes of the index in minified format."
   )
-  @JsonProperty(JSON_PROPERTY_DATA_SIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getDataSize() {
     return dataSize;
   }
 
-  @JsonProperty(JSON_PROPERTY_DATA_SIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setDataSize(Integer dataSize) {
     this.dataSize = dataSize;
   }
@@ -222,14 +206,10 @@ public class Index {
     required = true,
     value = "Number of bytes of the index binary file."
   )
-  @JsonProperty(JSON_PROPERTY_FILE_SIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getFileSize() {
     return fileSize;
   }
 
-  @JsonProperty(JSON_PROPERTY_FILE_SIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setFileSize(Integer fileSize) {
     this.fileSize = fileSize;
   }
@@ -246,14 +226,10 @@ public class Index {
    */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Last build time")
-  @JsonProperty(JSON_PROPERTY_LAST_BUILD_TIME_S)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getLastBuildTimeS() {
     return lastBuildTimeS;
   }
 
-  @JsonProperty(JSON_PROPERTY_LAST_BUILD_TIME_S)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setLastBuildTimeS(Integer lastBuildTimeS) {
     this.lastBuildTimeS = lastBuildTimeS;
   }
@@ -272,14 +248,10 @@ public class Index {
   @ApiModelProperty(
     value = "Number of pending indexing operations. This value is deprecated and should not be used."
   )
-  @JsonProperty(JSON_PROPERTY_NUMBER_OF_PENDING_TASK)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getNumberOfPendingTask() {
     return numberOfPendingTask;
   }
 
-  @JsonProperty(JSON_PROPERTY_NUMBER_OF_PENDING_TASK)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberOfPendingTask(Integer numberOfPendingTask) {
     this.numberOfPendingTask = numberOfPendingTask;
   }
@@ -301,14 +273,10 @@ public class Index {
     value = "A boolean which says whether the index has pending tasks. This value is deprecated and" +
     " should not be used."
   )
-  @JsonProperty(JSON_PROPERTY_PENDING_TASK)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Boolean getPendingTask() {
     return pendingTask;
   }
 
-  @JsonProperty(JSON_PROPERTY_PENDING_TASK)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setPendingTask(Boolean pendingTask) {
     this.pendingTask = pendingTask;
   }
@@ -327,14 +295,10 @@ public class Index {
   @ApiModelProperty(
     value = "Only present if the index is a replica. Contains the name of the related primary index."
   )
-  @JsonProperty(JSON_PROPERTY_PRIMARY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getPrimary() {
     return primary;
   }
 
-  @JsonProperty(JSON_PROPERTY_PRIMARY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPrimary(String primary) {
     this.primary = primary;
   }
@@ -363,14 +327,10 @@ public class Index {
     value = "Only present if the index is a primary index with replicas. Contains the names of all" +
     " linked replicas."
   )
-  @JsonProperty(JSON_PROPERTY_REPLICAS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getReplicas() {
     return replicas;
   }
 
-  @JsonProperty(JSON_PROPERTY_REPLICAS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReplicas(List<String> replicas) {
     this.replicas = replicas;
   }

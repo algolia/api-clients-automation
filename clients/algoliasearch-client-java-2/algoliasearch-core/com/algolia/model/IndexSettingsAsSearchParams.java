@@ -12,135 +12,121 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** IndexSettingsAsSearchParams */
-@JsonPropertyOrder(
-  {
-    IndexSettingsAsSearchParams.JSON_PROPERTY_SEARCHABLE_ATTRIBUTES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ATTRIBUTES_FOR_FACETING,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_UNRETRIEVABLE_ATTRIBUTES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ATTRIBUTES_TO_RETRIEVE,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_RESTRICT_SEARCHABLE_ATTRIBUTES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_RANKING,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_CUSTOM_RANKING,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_RELEVANCY_STRICTNESS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ATTRIBUTES_TO_HIGHLIGHT,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ATTRIBUTES_TO_SNIPPET,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_HIGHLIGHT_PRE_TAG,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_HIGHLIGHT_POST_TAG,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_SNIPPET_ELLIPSIS_TEXT,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_HITS_PER_PAGE,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_MIN_WORD_SIZEFOR1_TYPO,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_MIN_WORD_SIZEFOR2_TYPOS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_TYPO_TOLERANCE,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ALLOW_TYPOS_ON_NUMERIC_TOKENS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_SEPARATORS_TO_INDEX,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_IGNORE_PLURALS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_REMOVE_STOP_WORDS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_KEEP_DIACRITICS_ON_CHARACTERS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_QUERY_LANGUAGES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_DECOMPOUND_QUERY,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ENABLE_RULES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ENABLE_PERSONALIZATION,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_QUERY_TYPE,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_REMOVE_WORDS_IF_NO_RESULTS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ADVANCED_SYNTAX,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_OPTIONAL_WORDS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_DISABLE_EXACT_ON_ATTRIBUTES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_EXACT_ON_SINGLE_WORD_QUERY,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ALTERNATIVES_AS_EXACT,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ADVANCED_SYNTAX_FEATURES,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_DISTINCT,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_SYNONYMS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_REPLACE_SYNONYMS_IN_HIGHLIGHT,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_MIN_PROXIMITY,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_RESPONSE_FIELDS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_MAX_FACET_HITS,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY,
-    IndexSettingsAsSearchParams.JSON_PROPERTY_RENDERING_CONTENT,
-  }
-)
-@JsonTypeName("indexSettingsAsSearchParams")
 public class IndexSettingsAsSearchParams {
 
-  public static final String JSON_PROPERTY_SEARCHABLE_ATTRIBUTES =
+  public static final String SERIALIZED_NAME_SEARCHABLE_ATTRIBUTES =
     "searchableAttributes";
+
+  @SerializedName(SERIALIZED_NAME_SEARCHABLE_ATTRIBUTES)
   private List<String> searchableAttributes = null;
 
-  public static final String JSON_PROPERTY_ATTRIBUTES_FOR_FACETING =
+  public static final String SERIALIZED_NAME_ATTRIBUTES_FOR_FACETING =
     "attributesForFaceting";
+
+  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_FOR_FACETING)
   private List<String> attributesForFaceting = null;
 
-  public static final String JSON_PROPERTY_UNRETRIEVABLE_ATTRIBUTES =
+  public static final String SERIALIZED_NAME_UNRETRIEVABLE_ATTRIBUTES =
     "unretrievableAttributes";
+
+  @SerializedName(SERIALIZED_NAME_UNRETRIEVABLE_ATTRIBUTES)
   private List<String> unretrievableAttributes = null;
 
-  public static final String JSON_PROPERTY_ATTRIBUTES_TO_RETRIEVE =
+  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_RETRIEVE =
     "attributesToRetrieve";
+
+  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_RETRIEVE)
   private List<String> attributesToRetrieve = null;
 
-  public static final String JSON_PROPERTY_RESTRICT_SEARCHABLE_ATTRIBUTES =
+  public static final String SERIALIZED_NAME_RESTRICT_SEARCHABLE_ATTRIBUTES =
     "restrictSearchableAttributes";
+
+  @SerializedName(SERIALIZED_NAME_RESTRICT_SEARCHABLE_ATTRIBUTES)
   private List<String> restrictSearchableAttributes = null;
 
-  public static final String JSON_PROPERTY_RANKING = "ranking";
+  public static final String SERIALIZED_NAME_RANKING = "ranking";
+
+  @SerializedName(SERIALIZED_NAME_RANKING)
   private List<String> ranking = null;
 
-  public static final String JSON_PROPERTY_CUSTOM_RANKING = "customRanking";
+  public static final String SERIALIZED_NAME_CUSTOM_RANKING = "customRanking";
+
+  @SerializedName(SERIALIZED_NAME_CUSTOM_RANKING)
   private List<String> customRanking = null;
 
-  public static final String JSON_PROPERTY_RELEVANCY_STRICTNESS =
+  public static final String SERIALIZED_NAME_RELEVANCY_STRICTNESS =
     "relevancyStrictness";
+
+  @SerializedName(SERIALIZED_NAME_RELEVANCY_STRICTNESS)
   private Integer relevancyStrictness = 100;
 
-  public static final String JSON_PROPERTY_ATTRIBUTES_TO_HIGHLIGHT =
+  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_HIGHLIGHT =
     "attributesToHighlight";
+
+  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_HIGHLIGHT)
   private List<String> attributesToHighlight = null;
 
-  public static final String JSON_PROPERTY_ATTRIBUTES_TO_SNIPPET =
+  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_SNIPPET =
     "attributesToSnippet";
+
+  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_SNIPPET)
   private List<String> attributesToSnippet = null;
 
-  public static final String JSON_PROPERTY_HIGHLIGHT_PRE_TAG =
+  public static final String SERIALIZED_NAME_HIGHLIGHT_PRE_TAG =
     "highlightPreTag";
+
+  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_PRE_TAG)
   private String highlightPreTag = "<em>";
 
-  public static final String JSON_PROPERTY_HIGHLIGHT_POST_TAG =
+  public static final String SERIALIZED_NAME_HIGHLIGHT_POST_TAG =
     "highlightPostTag";
+
+  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_POST_TAG)
   private String highlightPostTag = "</em>";
 
-  public static final String JSON_PROPERTY_SNIPPET_ELLIPSIS_TEXT =
+  public static final String SERIALIZED_NAME_SNIPPET_ELLIPSIS_TEXT =
     "snippetEllipsisText";
+
+  @SerializedName(SERIALIZED_NAME_SNIPPET_ELLIPSIS_TEXT)
   private String snippetEllipsisText = "…";
 
-  public static final String JSON_PROPERTY_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS =
+  public static final String SERIALIZED_NAME_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS =
     "restrictHighlightAndSnippetArrays";
+
+  @SerializedName(SERIALIZED_NAME_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS)
   private Boolean restrictHighlightAndSnippetArrays = false;
 
-  public static final String JSON_PROPERTY_HITS_PER_PAGE = "hitsPerPage";
+  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
+
+  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
   private Integer hitsPerPage = 20;
 
-  public static final String JSON_PROPERTY_MIN_WORD_SIZEFOR1_TYPO =
+  public static final String SERIALIZED_NAME_MIN_WORD_SIZEFOR1_TYPO =
     "minWordSizefor1Typo";
+
+  @SerializedName(SERIALIZED_NAME_MIN_WORD_SIZEFOR1_TYPO)
   private Integer minWordSizefor1Typo = 4;
 
-  public static final String JSON_PROPERTY_MIN_WORD_SIZEFOR2_TYPOS =
+  public static final String SERIALIZED_NAME_MIN_WORD_SIZEFOR2_TYPOS =
     "minWordSizefor2Typos";
+
+  @SerializedName(SERIALIZED_NAME_MIN_WORD_SIZEFOR2_TYPOS)
   private Integer minWordSizefor2Typos = 8;
 
   /** Controls whether typo tolerance is enabled and how it is applied. */
+  @JsonAdapter(TypoToleranceEnum.Adapter.class)
   public enum TypoToleranceEnum {
     TRUE("true"),
 
@@ -156,7 +142,6 @@ public class IndexSettingsAsSearchParams {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -166,7 +151,6 @@ public class IndexSettingsAsSearchParams {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static TypoToleranceEnum fromValue(String value) {
       for (TypoToleranceEnum b : TypoToleranceEnum.values()) {
         if (b.value.equals(value)) {
@@ -175,48 +159,90 @@ public class IndexSettingsAsSearchParams {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<TypoToleranceEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final TypoToleranceEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public TypoToleranceEnum read(final JsonReader jsonReader)
+        throws IOException {
+        String value = jsonReader.nextString();
+        return TypoToleranceEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_TYPO_TOLERANCE = "typoTolerance";
+  public static final String SERIALIZED_NAME_TYPO_TOLERANCE = "typoTolerance";
+
+  @SerializedName(SERIALIZED_NAME_TYPO_TOLERANCE)
   private TypoToleranceEnum typoTolerance = TypoToleranceEnum.TRUE;
 
-  public static final String JSON_PROPERTY_ALLOW_TYPOS_ON_NUMERIC_TOKENS =
+  public static final String SERIALIZED_NAME_ALLOW_TYPOS_ON_NUMERIC_TOKENS =
     "allowTyposOnNumericTokens";
+
+  @SerializedName(SERIALIZED_NAME_ALLOW_TYPOS_ON_NUMERIC_TOKENS)
   private Boolean allowTyposOnNumericTokens = true;
 
-  public static final String JSON_PROPERTY_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES =
+  public static final String SERIALIZED_NAME_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES =
     "disableTypoToleranceOnAttributes";
+
+  @SerializedName(SERIALIZED_NAME_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES)
   private List<String> disableTypoToleranceOnAttributes = null;
 
-  public static final String JSON_PROPERTY_SEPARATORS_TO_INDEX =
+  public static final String SERIALIZED_NAME_SEPARATORS_TO_INDEX =
     "separatorsToIndex";
+
+  @SerializedName(SERIALIZED_NAME_SEPARATORS_TO_INDEX)
   private String separatorsToIndex = "";
 
-  public static final String JSON_PROPERTY_IGNORE_PLURALS = "ignorePlurals";
+  public static final String SERIALIZED_NAME_IGNORE_PLURALS = "ignorePlurals";
+
+  @SerializedName(SERIALIZED_NAME_IGNORE_PLURALS)
   private String ignorePlurals = "false";
 
-  public static final String JSON_PROPERTY_REMOVE_STOP_WORDS =
+  public static final String SERIALIZED_NAME_REMOVE_STOP_WORDS =
     "removeStopWords";
+
+  @SerializedName(SERIALIZED_NAME_REMOVE_STOP_WORDS)
   private String removeStopWords = "false";
 
-  public static final String JSON_PROPERTY_KEEP_DIACRITICS_ON_CHARACTERS =
+  public static final String SERIALIZED_NAME_KEEP_DIACRITICS_ON_CHARACTERS =
     "keepDiacriticsOnCharacters";
+
+  @SerializedName(SERIALIZED_NAME_KEEP_DIACRITICS_ON_CHARACTERS)
   private String keepDiacriticsOnCharacters = "";
 
-  public static final String JSON_PROPERTY_QUERY_LANGUAGES = "queryLanguages";
+  public static final String SERIALIZED_NAME_QUERY_LANGUAGES = "queryLanguages";
+
+  @SerializedName(SERIALIZED_NAME_QUERY_LANGUAGES)
   private List<String> queryLanguages = null;
 
-  public static final String JSON_PROPERTY_DECOMPOUND_QUERY = "decompoundQuery";
+  public static final String SERIALIZED_NAME_DECOMPOUND_QUERY =
+    "decompoundQuery";
+
+  @SerializedName(SERIALIZED_NAME_DECOMPOUND_QUERY)
   private Boolean decompoundQuery = true;
 
-  public static final String JSON_PROPERTY_ENABLE_RULES = "enableRules";
+  public static final String SERIALIZED_NAME_ENABLE_RULES = "enableRules";
+
+  @SerializedName(SERIALIZED_NAME_ENABLE_RULES)
   private Boolean enableRules = true;
 
-  public static final String JSON_PROPERTY_ENABLE_PERSONALIZATION =
+  public static final String SERIALIZED_NAME_ENABLE_PERSONALIZATION =
     "enablePersonalization";
+
+  @SerializedName(SERIALIZED_NAME_ENABLE_PERSONALIZATION)
   private Boolean enablePersonalization = false;
 
   /** Controls if and how query words are interpreted as prefixes. */
+  @JsonAdapter(QueryTypeEnum.Adapter.class)
   public enum QueryTypeEnum {
     PREFIXLAST("prefixLast"),
 
@@ -230,7 +256,6 @@ public class IndexSettingsAsSearchParams {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -240,7 +265,6 @@ public class IndexSettingsAsSearchParams {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static QueryTypeEnum fromValue(String value) {
       for (QueryTypeEnum b : QueryTypeEnum.values()) {
         if (b.value.equals(value)) {
@@ -249,12 +273,33 @@ public class IndexSettingsAsSearchParams {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<QueryTypeEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final QueryTypeEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public QueryTypeEnum read(final JsonReader jsonReader)
+        throws IOException {
+        String value = jsonReader.nextString();
+        return QueryTypeEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_QUERY_TYPE = "queryType";
+  public static final String SERIALIZED_NAME_QUERY_TYPE = "queryType";
+
+  @SerializedName(SERIALIZED_NAME_QUERY_TYPE)
   private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
 
   /** Selects a strategy to remove words from the query when it doesn’t match any hits. */
+  @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
 
@@ -270,7 +315,6 @@ public class IndexSettingsAsSearchParams {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -280,7 +324,6 @@ public class IndexSettingsAsSearchParams {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static RemoveWordsIfNoResultsEnum fromValue(String value) {
       for (RemoveWordsIfNoResultsEnum b : RemoveWordsIfNoResultsEnum.values()) {
         if (b.value.equals(value)) {
@@ -289,24 +332,52 @@ public class IndexSettingsAsSearchParams {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter
+      extends TypeAdapter<RemoveWordsIfNoResultsEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final RemoveWordsIfNoResultsEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public RemoveWordsIfNoResultsEnum read(final JsonReader jsonReader)
+        throws IOException {
+        String value = jsonReader.nextString();
+        return RemoveWordsIfNoResultsEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_REMOVE_WORDS_IF_NO_RESULTS =
+  public static final String SERIALIZED_NAME_REMOVE_WORDS_IF_NO_RESULTS =
     "removeWordsIfNoResults";
+
+  @SerializedName(SERIALIZED_NAME_REMOVE_WORDS_IF_NO_RESULTS)
   private RemoveWordsIfNoResultsEnum removeWordsIfNoResults =
     RemoveWordsIfNoResultsEnum.NONE;
 
-  public static final String JSON_PROPERTY_ADVANCED_SYNTAX = "advancedSyntax";
+  public static final String SERIALIZED_NAME_ADVANCED_SYNTAX = "advancedSyntax";
+
+  @SerializedName(SERIALIZED_NAME_ADVANCED_SYNTAX)
   private Boolean advancedSyntax = false;
 
-  public static final String JSON_PROPERTY_OPTIONAL_WORDS = "optionalWords";
+  public static final String SERIALIZED_NAME_OPTIONAL_WORDS = "optionalWords";
+
+  @SerializedName(SERIALIZED_NAME_OPTIONAL_WORDS)
   private List<String> optionalWords = null;
 
-  public static final String JSON_PROPERTY_DISABLE_EXACT_ON_ATTRIBUTES =
+  public static final String SERIALIZED_NAME_DISABLE_EXACT_ON_ATTRIBUTES =
     "disableExactOnAttributes";
+
+  @SerializedName(SERIALIZED_NAME_DISABLE_EXACT_ON_ATTRIBUTES)
   private List<String> disableExactOnAttributes = null;
 
   /** Controls how the exact ranking criterion is computed when the query contains only one word. */
+  @JsonAdapter(ExactOnSingleWordQueryEnum.Adapter.class)
   public enum ExactOnSingleWordQueryEnum {
     ATTRIBUTE("attribute"),
 
@@ -320,7 +391,6 @@ public class IndexSettingsAsSearchParams {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -330,7 +400,6 @@ public class IndexSettingsAsSearchParams {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static ExactOnSingleWordQueryEnum fromValue(String value) {
       for (ExactOnSingleWordQueryEnum b : ExactOnSingleWordQueryEnum.values()) {
         if (b.value.equals(value)) {
@@ -339,14 +408,36 @@ public class IndexSettingsAsSearchParams {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter
+      extends TypeAdapter<ExactOnSingleWordQueryEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final ExactOnSingleWordQueryEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public ExactOnSingleWordQueryEnum read(final JsonReader jsonReader)
+        throws IOException {
+        String value = jsonReader.nextString();
+        return ExactOnSingleWordQueryEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_EXACT_ON_SINGLE_WORD_QUERY =
+  public static final String SERIALIZED_NAME_EXACT_ON_SINGLE_WORD_QUERY =
     "exactOnSingleWordQuery";
+
+  @SerializedName(SERIALIZED_NAME_EXACT_ON_SINGLE_WORD_QUERY)
   private ExactOnSingleWordQueryEnum exactOnSingleWordQuery =
     ExactOnSingleWordQueryEnum.ATTRIBUTE;
 
   /** Gets or Sets alternativesAsExact */
+  @JsonAdapter(AlternativesAsExactEnum.Adapter.class)
   public enum AlternativesAsExactEnum {
     IGNOREPLURALS("ignorePlurals"),
 
@@ -360,7 +451,6 @@ public class IndexSettingsAsSearchParams {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -370,7 +460,6 @@ public class IndexSettingsAsSearchParams {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static AlternativesAsExactEnum fromValue(String value) {
       for (AlternativesAsExactEnum b : AlternativesAsExactEnum.values()) {
         if (b.value.equals(value)) {
@@ -379,13 +468,34 @@ public class IndexSettingsAsSearchParams {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<AlternativesAsExactEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final AlternativesAsExactEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public AlternativesAsExactEnum read(final JsonReader jsonReader)
+        throws IOException {
+        String value = jsonReader.nextString();
+        return AlternativesAsExactEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ALTERNATIVES_AS_EXACT =
+  public static final String SERIALIZED_NAME_ALTERNATIVES_AS_EXACT =
     "alternativesAsExact";
+
+  @SerializedName(SERIALIZED_NAME_ALTERNATIVES_AS_EXACT)
   private List<AlternativesAsExactEnum> alternativesAsExact = null;
 
   /** Gets or Sets advancedSyntaxFeatures */
+  @JsonAdapter(AdvancedSyntaxFeaturesEnum.Adapter.class)
   public enum AdvancedSyntaxFeaturesEnum {
     EXACTPHRASE("exactPhrase"),
 
@@ -397,7 +507,6 @@ public class IndexSettingsAsSearchParams {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -407,7 +516,6 @@ public class IndexSettingsAsSearchParams {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static AdvancedSyntaxFeaturesEnum fromValue(String value) {
       for (AdvancedSyntaxFeaturesEnum b : AdvancedSyntaxFeaturesEnum.values()) {
         if (b.value.equals(value)) {
@@ -416,37 +524,74 @@ public class IndexSettingsAsSearchParams {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter
+      extends TypeAdapter<AdvancedSyntaxFeaturesEnum> {
+
+      @Override
+      public void write(
+        final JsonWriter jsonWriter,
+        final AdvancedSyntaxFeaturesEnum enumeration
+      ) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public AdvancedSyntaxFeaturesEnum read(final JsonReader jsonReader)
+        throws IOException {
+        String value = jsonReader.nextString();
+        return AdvancedSyntaxFeaturesEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ADVANCED_SYNTAX_FEATURES =
+  public static final String SERIALIZED_NAME_ADVANCED_SYNTAX_FEATURES =
     "advancedSyntaxFeatures";
+
+  @SerializedName(SERIALIZED_NAME_ADVANCED_SYNTAX_FEATURES)
   private List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures = null;
 
-  public static final String JSON_PROPERTY_DISTINCT = "distinct";
+  public static final String SERIALIZED_NAME_DISTINCT = "distinct";
+
+  @SerializedName(SERIALIZED_NAME_DISTINCT)
   private Integer distinct = 0;
 
-  public static final String JSON_PROPERTY_SYNONYMS = "synonyms";
+  public static final String SERIALIZED_NAME_SYNONYMS = "synonyms";
+
+  @SerializedName(SERIALIZED_NAME_SYNONYMS)
   private Boolean synonyms = true;
 
-  public static final String JSON_PROPERTY_REPLACE_SYNONYMS_IN_HIGHLIGHT =
+  public static final String SERIALIZED_NAME_REPLACE_SYNONYMS_IN_HIGHLIGHT =
     "replaceSynonymsInHighlight";
+
+  @SerializedName(SERIALIZED_NAME_REPLACE_SYNONYMS_IN_HIGHLIGHT)
   private Boolean replaceSynonymsInHighlight = false;
 
-  public static final String JSON_PROPERTY_MIN_PROXIMITY = "minProximity";
+  public static final String SERIALIZED_NAME_MIN_PROXIMITY = "minProximity";
+
+  @SerializedName(SERIALIZED_NAME_MIN_PROXIMITY)
   private Integer minProximity = 1;
 
-  public static final String JSON_PROPERTY_RESPONSE_FIELDS = "responseFields";
+  public static final String SERIALIZED_NAME_RESPONSE_FIELDS = "responseFields";
+
+  @SerializedName(SERIALIZED_NAME_RESPONSE_FIELDS)
   private List<String> responseFields = null;
 
-  public static final String JSON_PROPERTY_MAX_FACET_HITS = "maxFacetHits";
+  public static final String SERIALIZED_NAME_MAX_FACET_HITS = "maxFacetHits";
+
+  @SerializedName(SERIALIZED_NAME_MAX_FACET_HITS)
   private Integer maxFacetHits = 10;
 
-  public static final String JSON_PROPERTY_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY =
+  public static final String SERIALIZED_NAME_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY =
     "attributeCriteriaComputedByMinProximity";
+
+  @SerializedName(SERIALIZED_NAME_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY)
   private Boolean attributeCriteriaComputedByMinProximity = false;
 
-  public static final String JSON_PROPERTY_RENDERING_CONTENT =
+  public static final String SERIALIZED_NAME_RENDERING_CONTENT =
     "renderingContent";
+
+  @SerializedName(SERIALIZED_NAME_RENDERING_CONTENT)
   private Object renderingContent = new Object();
 
   public IndexSettingsAsSearchParams searchableAttributes(
@@ -475,14 +620,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "The complete list of attributes used for searching."
   )
-  @JsonProperty(JSON_PROPERTY_SEARCHABLE_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getSearchableAttributes() {
     return searchableAttributes;
   }
 
-  @JsonProperty(JSON_PROPERTY_SEARCHABLE_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSearchableAttributes(List<String> searchableAttributes) {
     this.searchableAttributes = searchableAttributes;
   }
@@ -513,14 +654,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "The complete list of attributes that will be used for faceting."
   )
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_FOR_FACETING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getAttributesForFaceting() {
     return attributesForFaceting;
   }
 
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_FOR_FACETING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAttributesForFaceting(List<String> attributesForFaceting) {
     this.attributesForFaceting = attributesForFaceting;
   }
@@ -551,14 +688,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "List of attributes that can’t be retrieved at query time."
   )
-  @JsonProperty(JSON_PROPERTY_UNRETRIEVABLE_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getUnretrievableAttributes() {
     return unretrievableAttributes;
   }
 
-  @JsonProperty(JSON_PROPERTY_UNRETRIEVABLE_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUnretrievableAttributes(List<String> unretrievableAttributes) {
     this.unretrievableAttributes = unretrievableAttributes;
   }
@@ -589,14 +722,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "This parameter controls which attributes to retrieve and which not to retrieve."
   )
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_TO_RETRIEVE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getAttributesToRetrieve() {
     return attributesToRetrieve;
   }
 
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_TO_RETRIEVE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAttributesToRetrieve(List<String> attributesToRetrieve) {
     this.attributesToRetrieve = attributesToRetrieve;
   }
@@ -627,14 +756,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Restricts a given query to look in only a subset of your searchable attributes."
   )
-  @JsonProperty(JSON_PROPERTY_RESTRICT_SEARCHABLE_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getRestrictSearchableAttributes() {
     return restrictSearchableAttributes;
   }
 
-  @JsonProperty(JSON_PROPERTY_RESTRICT_SEARCHABLE_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRestrictSearchableAttributes(
     List<String> restrictSearchableAttributes
   ) {
@@ -661,14 +786,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Controls how Algolia should sort your results.")
-  @JsonProperty(JSON_PROPERTY_RANKING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getRanking() {
     return ranking;
   }
 
-  @JsonProperty(JSON_PROPERTY_RANKING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRanking(List<String> ranking) {
     this.ranking = ranking;
   }
@@ -695,14 +816,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specifies the custom ranking criterion.")
-  @JsonProperty(JSON_PROPERTY_CUSTOM_RANKING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getCustomRanking() {
     return customRanking;
   }
 
-  @JsonProperty(JSON_PROPERTY_CUSTOM_RANKING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustomRanking(List<String> customRanking) {
     this.customRanking = customRanking;
   }
@@ -725,14 +842,10 @@ public class IndexSettingsAsSearchParams {
     value = "Controls the relevancy threshold below which less relevant results aren’t included in" +
     " the results."
   )
-  @JsonProperty(JSON_PROPERTY_RELEVANCY_STRICTNESS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getRelevancyStrictness() {
     return relevancyStrictness;
   }
 
-  @JsonProperty(JSON_PROPERTY_RELEVANCY_STRICTNESS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRelevancyStrictness(Integer relevancyStrictness) {
     this.relevancyStrictness = relevancyStrictness;
   }
@@ -761,14 +874,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of attributes to highlight.")
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_TO_HIGHLIGHT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getAttributesToHighlight() {
     return attributesToHighlight;
   }
 
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_TO_HIGHLIGHT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAttributesToHighlight(List<String> attributesToHighlight) {
     this.attributesToHighlight = attributesToHighlight;
   }
@@ -799,14 +908,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "List of attributes to snippet, with an optional maximum number of words to snippet."
   )
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_TO_SNIPPET)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getAttributesToSnippet() {
     return attributesToSnippet;
   }
 
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTES_TO_SNIPPET)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAttributesToSnippet(List<String> attributesToSnippet) {
     this.attributesToSnippet = attributesToSnippet;
   }
@@ -826,14 +931,10 @@ public class IndexSettingsAsSearchParams {
     value = "The HTML string to insert before the highlighted parts in all highlight and snippet" +
     " results."
   )
-  @JsonProperty(JSON_PROPERTY_HIGHLIGHT_PRE_TAG)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getHighlightPreTag() {
     return highlightPreTag;
   }
 
-  @JsonProperty(JSON_PROPERTY_HIGHLIGHT_PRE_TAG)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHighlightPreTag(String highlightPreTag) {
     this.highlightPreTag = highlightPreTag;
   }
@@ -853,14 +954,10 @@ public class IndexSettingsAsSearchParams {
     value = "The HTML string to insert after the highlighted parts in all highlight and snippet" +
     " results."
   )
-  @JsonProperty(JSON_PROPERTY_HIGHLIGHT_POST_TAG)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getHighlightPostTag() {
     return highlightPostTag;
   }
 
-  @JsonProperty(JSON_PROPERTY_HIGHLIGHT_POST_TAG)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHighlightPostTag(String highlightPostTag) {
     this.highlightPostTag = highlightPostTag;
   }
@@ -881,14 +978,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "String used as an ellipsis indicator when a snippet is truncated."
   )
-  @JsonProperty(JSON_PROPERTY_SNIPPET_ELLIPSIS_TEXT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getSnippetEllipsisText() {
     return snippetEllipsisText;
   }
 
-  @JsonProperty(JSON_PROPERTY_SNIPPET_ELLIPSIS_TEXT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSnippetEllipsisText(String snippetEllipsisText) {
     this.snippetEllipsisText = snippetEllipsisText;
   }
@@ -909,14 +1002,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Restrict highlighting and snippeting to items that matched the query."
   )
-  @JsonProperty(JSON_PROPERTY_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getRestrictHighlightAndSnippetArrays() {
     return restrictHighlightAndSnippetArrays;
   }
 
-  @JsonProperty(JSON_PROPERTY_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRestrictHighlightAndSnippetArrays(
     Boolean restrictHighlightAndSnippetArrays
   ) {
@@ -935,14 +1024,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Set the number of hits per page.")
-  @JsonProperty(JSON_PROPERTY_HITS_PER_PAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
 
-  @JsonProperty(JSON_PROPERTY_HITS_PER_PAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
   }
@@ -965,14 +1050,10 @@ public class IndexSettingsAsSearchParams {
     value = "Minimum number of characters a word in the query string must contain to accept matches" +
     " with 1 typo."
   )
-  @JsonProperty(JSON_PROPERTY_MIN_WORD_SIZEFOR1_TYPO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMinWordSizefor1Typo() {
     return minWordSizefor1Typo;
   }
 
-  @JsonProperty(JSON_PROPERTY_MIN_WORD_SIZEFOR1_TYPO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
   }
@@ -995,14 +1076,10 @@ public class IndexSettingsAsSearchParams {
     value = "Minimum number of characters a word in the query string must contain to accept matches" +
     " with 2 typos."
   )
-  @JsonProperty(JSON_PROPERTY_MIN_WORD_SIZEFOR2_TYPOS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMinWordSizefor2Typos() {
     return minWordSizefor2Typos;
   }
 
-  @JsonProperty(JSON_PROPERTY_MIN_WORD_SIZEFOR2_TYPOS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMinWordSizefor2Typos(Integer minWordSizefor2Typos) {
     this.minWordSizefor2Typos = minWordSizefor2Typos;
   }
@@ -1023,14 +1100,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Controls whether typo tolerance is enabled and how it is applied."
   )
-  @JsonProperty(JSON_PROPERTY_TYPO_TOLERANCE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public TypoToleranceEnum getTypoTolerance() {
     return typoTolerance;
   }
 
-  @JsonProperty(JSON_PROPERTY_TYPO_TOLERANCE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTypoTolerance(TypoToleranceEnum typoTolerance) {
     this.typoTolerance = typoTolerance;
   }
@@ -1051,14 +1124,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Whether to allow typos on numbers (“numeric tokens”) in the query string."
   )
-  @JsonProperty(JSON_PROPERTY_ALLOW_TYPOS_ON_NUMERIC_TOKENS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getAllowTyposOnNumericTokens() {
     return allowTyposOnNumericTokens;
   }
 
-  @JsonProperty(JSON_PROPERTY_ALLOW_TYPOS_ON_NUMERIC_TOKENS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAllowTyposOnNumericTokens(Boolean allowTyposOnNumericTokens) {
     this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
   }
@@ -1091,14 +1160,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "List of attributes on which you want to disable typo tolerance."
   )
-  @JsonProperty(JSON_PROPERTY_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getDisableTypoToleranceOnAttributes() {
     return disableTypoToleranceOnAttributes;
   }
 
-  @JsonProperty(JSON_PROPERTY_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDisableTypoToleranceOnAttributes(
     List<String> disableTypoToleranceOnAttributes
   ) {
@@ -1119,14 +1184,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Control which separators are indexed.")
-  @JsonProperty(JSON_PROPERTY_SEPARATORS_TO_INDEX)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getSeparatorsToIndex() {
     return separatorsToIndex;
   }
 
-  @JsonProperty(JSON_PROPERTY_SEPARATORS_TO_INDEX)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSeparatorsToIndex(String separatorsToIndex) {
     this.separatorsToIndex = separatorsToIndex;
   }
@@ -1145,14 +1206,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Treats singular, plurals, and other forms of declensions as matching terms."
   )
-  @JsonProperty(JSON_PROPERTY_IGNORE_PLURALS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getIgnorePlurals() {
     return ignorePlurals;
   }
 
-  @JsonProperty(JSON_PROPERTY_IGNORE_PLURALS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIgnorePlurals(String ignorePlurals) {
     this.ignorePlurals = ignorePlurals;
   }
@@ -1171,14 +1228,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Removes stop (common) words from the query before executing it."
   )
-  @JsonProperty(JSON_PROPERTY_REMOVE_STOP_WORDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getRemoveStopWords() {
     return removeStopWords;
   }
 
-  @JsonProperty(JSON_PROPERTY_REMOVE_STOP_WORDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRemoveStopWords(String removeStopWords) {
     this.removeStopWords = removeStopWords;
   }
@@ -1199,14 +1252,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "List of characters that the engine shouldn’t automatically normalize."
   )
-  @JsonProperty(JSON_PROPERTY_KEEP_DIACRITICS_ON_CHARACTERS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getKeepDiacriticsOnCharacters() {
     return keepDiacriticsOnCharacters;
   }
 
-  @JsonProperty(JSON_PROPERTY_KEEP_DIACRITICS_ON_CHARACTERS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
     this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
   }
@@ -1239,14 +1288,10 @@ public class IndexSettingsAsSearchParams {
     value = "Sets the languages to be used by language-specific settings and functionalities such as" +
     " ignorePlurals, removeStopWords, and CJK word-detection."
   )
-  @JsonProperty(JSON_PROPERTY_QUERY_LANGUAGES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getQueryLanguages() {
     return queryLanguages;
   }
 
-  @JsonProperty(JSON_PROPERTY_QUERY_LANGUAGES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setQueryLanguages(List<String> queryLanguages) {
     this.queryLanguages = queryLanguages;
   }
@@ -1265,14 +1310,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Splits compound words into their composing atoms in the query."
   )
-  @JsonProperty(JSON_PROPERTY_DECOMPOUND_QUERY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getDecompoundQuery() {
     return decompoundQuery;
   }
 
-  @JsonProperty(JSON_PROPERTY_DECOMPOUND_QUERY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDecompoundQuery(Boolean decompoundQuery) {
     this.decompoundQuery = decompoundQuery;
   }
@@ -1289,14 +1330,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Whether Rules should be globally enabled.")
-  @JsonProperty(JSON_PROPERTY_ENABLE_RULES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getEnableRules() {
     return enableRules;
   }
 
-  @JsonProperty(JSON_PROPERTY_ENABLE_RULES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnableRules(Boolean enableRules) {
     this.enableRules = enableRules;
   }
@@ -1315,14 +1352,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enable the Personalization feature.")
-  @JsonProperty(JSON_PROPERTY_ENABLE_PERSONALIZATION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
   }
 
-  @JsonProperty(JSON_PROPERTY_ENABLE_PERSONALIZATION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnablePersonalization(Boolean enablePersonalization) {
     this.enablePersonalization = enablePersonalization;
   }
@@ -1341,14 +1374,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Controls if and how query words are interpreted as prefixes."
   )
-  @JsonProperty(JSON_PROPERTY_QUERY_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public QueryTypeEnum getQueryType() {
     return queryType;
   }
 
-  @JsonProperty(JSON_PROPERTY_QUERY_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setQueryType(QueryTypeEnum queryType) {
     this.queryType = queryType;
   }
@@ -1369,14 +1398,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Selects a strategy to remove words from the query when it doesn’t match any hits."
   )
-  @JsonProperty(JSON_PROPERTY_REMOVE_WORDS_IF_NO_RESULTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public RemoveWordsIfNoResultsEnum getRemoveWordsIfNoResults() {
     return removeWordsIfNoResults;
   }
 
-  @JsonProperty(JSON_PROPERTY_REMOVE_WORDS_IF_NO_RESULTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRemoveWordsIfNoResults(
     RemoveWordsIfNoResultsEnum removeWordsIfNoResults
   ) {
@@ -1395,14 +1420,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables the advanced query syntax.")
-  @JsonProperty(JSON_PROPERTY_ADVANCED_SYNTAX)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getAdvancedSyntax() {
     return advancedSyntax;
   }
 
-  @JsonProperty(JSON_PROPERTY_ADVANCED_SYNTAX)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAdvancedSyntax(Boolean advancedSyntax) {
     this.advancedSyntax = advancedSyntax;
   }
@@ -1431,14 +1452,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "A list of words that should be considered as optional when found in the query."
   )
-  @JsonProperty(JSON_PROPERTY_OPTIONAL_WORDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getOptionalWords() {
     return optionalWords;
   }
 
-  @JsonProperty(JSON_PROPERTY_OPTIONAL_WORDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOptionalWords(List<String> optionalWords) {
     this.optionalWords = optionalWords;
   }
@@ -1469,14 +1486,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "List of attributes on which you want to disable the exact ranking criterion."
   )
-  @JsonProperty(JSON_PROPERTY_DISABLE_EXACT_ON_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getDisableExactOnAttributes() {
     return disableExactOnAttributes;
   }
 
-  @JsonProperty(JSON_PROPERTY_DISABLE_EXACT_ON_ATTRIBUTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDisableExactOnAttributes(
     List<String> disableExactOnAttributes
   ) {
@@ -1500,14 +1513,10 @@ public class IndexSettingsAsSearchParams {
     value = "Controls how the exact ranking criterion is computed when the query contains only one" +
     " word."
   )
-  @JsonProperty(JSON_PROPERTY_EXACT_ON_SINGLE_WORD_QUERY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public ExactOnSingleWordQueryEnum getExactOnSingleWordQuery() {
     return exactOnSingleWordQuery;
   }
 
-  @JsonProperty(JSON_PROPERTY_EXACT_ON_SINGLE_WORD_QUERY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setExactOnSingleWordQuery(
     ExactOnSingleWordQueryEnum exactOnSingleWordQuery
   ) {
@@ -1541,14 +1550,10 @@ public class IndexSettingsAsSearchParams {
     value = "List of alternatives that should be considered an exact match by the exact ranking" +
     " criterion."
   )
-  @JsonProperty(JSON_PROPERTY_ALTERNATIVES_AS_EXACT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<AlternativesAsExactEnum> getAlternativesAsExact() {
     return alternativesAsExact;
   }
 
-  @JsonProperty(JSON_PROPERTY_ALTERNATIVES_AS_EXACT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAlternativesAsExact(
     List<AlternativesAsExactEnum> alternativesAsExact
   ) {
@@ -1583,14 +1588,10 @@ public class IndexSettingsAsSearchParams {
     value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is" +
     " enabled."
   )
-  @JsonProperty(JSON_PROPERTY_ADVANCED_SYNTAX_FEATURES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<AdvancedSyntaxFeaturesEnum> getAdvancedSyntaxFeatures() {
     return advancedSyntaxFeatures;
   }
 
-  @JsonProperty(JSON_PROPERTY_ADVANCED_SYNTAX_FEATURES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAdvancedSyntaxFeatures(
     List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
   ) {
@@ -1609,14 +1610,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables de-duplication or grouping of results.")
-  @JsonProperty(JSON_PROPERTY_DISTINCT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getDistinct() {
     return distinct;
   }
 
-  @JsonProperty(JSON_PROPERTY_DISTINCT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDistinct(Integer distinct) {
     this.distinct = distinct;
   }
@@ -1635,14 +1632,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Whether to take into account an index’s synonyms for a particular search."
   )
-  @JsonProperty(JSON_PROPERTY_SYNONYMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getSynonyms() {
     return synonyms;
   }
 
-  @JsonProperty(JSON_PROPERTY_SYNONYMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSynonyms(Boolean synonyms) {
     this.synonyms = synonyms;
   }
@@ -1665,14 +1658,10 @@ public class IndexSettingsAsSearchParams {
     value = "Whether to highlight and snippet the original word that matches the synonym or the" +
     " synonym itself."
   )
-  @JsonProperty(JSON_PROPERTY_REPLACE_SYNONYMS_IN_HIGHLIGHT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getReplaceSynonymsInHighlight() {
     return replaceSynonymsInHighlight;
   }
 
-  @JsonProperty(JSON_PROPERTY_REPLACE_SYNONYMS_IN_HIGHLIGHT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReplaceSynonymsInHighlight(
     Boolean replaceSynonymsInHighlight
   ) {
@@ -1691,14 +1680,10 @@ public class IndexSettingsAsSearchParams {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Precision of the proximity ranking criterion.")
-  @JsonProperty(JSON_PROPERTY_MIN_PROXIMITY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMinProximity() {
     return minProximity;
   }
 
-  @JsonProperty(JSON_PROPERTY_MIN_PROXIMITY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMinProximity(Integer minProximity) {
     this.minProximity = minProximity;
   }
@@ -1731,14 +1716,10 @@ public class IndexSettingsAsSearchParams {
     value = "Choose which fields to return in the API response. This parameters applies to search and" +
     " browse queries."
   )
-  @JsonProperty(JSON_PROPERTY_RESPONSE_FIELDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getResponseFields() {
     return responseFields;
   }
 
-  @JsonProperty(JSON_PROPERTY_RESPONSE_FIELDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResponseFields(List<String> responseFields) {
     this.responseFields = responseFields;
   }
@@ -1757,14 +1738,10 @@ public class IndexSettingsAsSearchParams {
   @ApiModelProperty(
     value = "Maximum number of facet hits to return during a search for facet values."
   )
-  @JsonProperty(JSON_PROPERTY_MAX_FACET_HITS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getMaxFacetHits() {
     return maxFacetHits;
   }
 
-  @JsonProperty(JSON_PROPERTY_MAX_FACET_HITS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxFacetHits(Integer maxFacetHits) {
     this.maxFacetHits = maxFacetHits;
   }
@@ -1788,14 +1765,10 @@ public class IndexSettingsAsSearchParams {
     value = "When attribute is ranked above proximity in your ranking formula, proximity is used to" +
     " select which searchable attribute is matched in the attribute ranking stage."
   )
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getAttributeCriteriaComputedByMinProximity() {
     return attributeCriteriaComputedByMinProximity;
   }
 
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAttributeCriteriaComputedByMinProximity(
     Boolean attributeCriteriaComputedByMinProximity
   ) {
@@ -1819,14 +1792,10 @@ public class IndexSettingsAsSearchParams {
     value = "Content defining how the search interface should be rendered. Can be set via the" +
     " settings for a default value and can be overridden via rules."
   )
-  @JsonProperty(JSON_PROPERTY_RENDERING_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Object getRenderingContent() {
     return renderingContent;
   }
 
-  @JsonProperty(JSON_PROPERTY_RENDERING_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRenderingContent(Object renderingContent) {
     this.renderingContent = renderingContent;
   }

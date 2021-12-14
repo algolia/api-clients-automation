@@ -12,28 +12,22 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** OperationIndexResponse */
-@JsonPropertyOrder(
-  {
-    OperationIndexResponse.JSON_PROPERTY_TASK_I_D,
-    OperationIndexResponse.JSON_PROPERTY_UPDATED_AT,
-  }
-)
-@JsonTypeName("operationIndexResponse")
 public class OperationIndexResponse {
 
-  public static final String JSON_PROPERTY_TASK_I_D = "taskID";
+  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
+
+  @SerializedName(SERIALIZED_NAME_TASK_I_D)
   private Integer taskID;
 
-  public static final String JSON_PROPERTY_UPDATED_AT = "updatedAt";
+  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
+
+  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private OffsetDateTime updatedAt;
 
   public OperationIndexResponse taskID(Integer taskID) {
@@ -48,14 +42,10 @@ public class OperationIndexResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
-  @JsonProperty(JSON_PROPERTY_TASK_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getTaskID() {
     return taskID;
   }
 
-  @JsonProperty(JSON_PROPERTY_TASK_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTaskID(Integer taskID) {
     this.taskID = taskID;
   }
@@ -72,14 +62,10 @@ public class OperationIndexResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Date of last update (ISO-8601 format).")
-  @JsonProperty(JSON_PROPERTY_UPDATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  @JsonProperty(JSON_PROPERTY_UPDATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUpdatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }

@@ -12,29 +12,23 @@
 
 package com.algolia.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** BatchResponse */
-@JsonPropertyOrder(
-  {
-    BatchResponse.JSON_PROPERTY_TASK_I_D,
-    BatchResponse.JSON_PROPERTY_OBJECT_I_DS,
-  }
-)
-@JsonTypeName("batchResponse")
 public class BatchResponse {
 
-  public static final String JSON_PROPERTY_TASK_I_D = "taskID";
+  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
+
+  @SerializedName(SERIALIZED_NAME_TASK_I_D)
   private Integer taskID;
 
-  public static final String JSON_PROPERTY_OBJECT_I_DS = "objectIDs";
+  public static final String SERIALIZED_NAME_OBJECT_I_DS = "objectIDs";
+
+  @SerializedName(SERIALIZED_NAME_OBJECT_I_DS)
   private List<String> objectIDs = null;
 
   public BatchResponse taskID(Integer taskID) {
@@ -49,14 +43,10 @@ public class BatchResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
-  @JsonProperty(JSON_PROPERTY_TASK_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Integer getTaskID() {
     return taskID;
   }
 
-  @JsonProperty(JSON_PROPERTY_TASK_I_D)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTaskID(Integer taskID) {
     this.taskID = taskID;
   }
@@ -81,14 +71,10 @@ public class BatchResponse {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of objectID.")
-  @JsonProperty(JSON_PROPERTY_OBJECT_I_DS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getObjectIDs() {
     return objectIDs;
   }
 
-  @JsonProperty(JSON_PROPERTY_OBJECT_I_DS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setObjectIDs(List<String> objectIDs) {
     this.objectIDs = objectIDs;
   }
