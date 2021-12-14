@@ -12,7 +12,6 @@
 
 package com.algolia;
 
-import com.algolia.auth.Authentication;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -262,29 +261,6 @@ public class ApiClient {
       }
     }
     this.debugging = debugging;
-    return this;
-  }
-
-  /**
-   * The path of temporary folder used to store downloaded files from endpoints with file response.
-   * The default value is <code>null</code>, i.e. using the system's default temporary folder.
-   *
-   * @see <a
-   *     href="https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html#createTempFile(java.lang.String,%20java.lang.String,%20java.nio.file.attribute.FileAttribute...)">createTempFile</a>
-   * @return Temporary folder path
-   */
-  public String getTempFolderPath() {
-    return tempFolderPath;
-  }
-
-  /**
-   * Set the temporary folder path (for downloading files)
-   *
-   * @param tempFolderPath Temporary folder path
-   * @return ApiClient
-   */
-  public ApiClient setTempFolderPath(String tempFolderPath) {
-    this.tempFolderPath = tempFolderPath;
     return this;
   }
 
@@ -1082,13 +1058,8 @@ public class ApiClient {
     Map<String, String> headerParams,
     Map<String, String> cookieParams
   ) {
-    for (String authName : authNames) {
-      Authentication auth = authentications.get(authName);
-      if (auth == null) {
-        throw new RuntimeException("Authentication undefined: " + authName);
-      }
-      auth.applyToParams(queryParams, headerParams, cookieParams);
-    }
+    headerParams.put("X-Algolia-Application-Id", this.appId);
+    headerParams.put("X-Algolia-API-Key", this.apiKey);
   }
 
   /**

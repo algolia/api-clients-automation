@@ -6,7 +6,6 @@ import {{invokerPackage}}.ApiCallback;
 import {{invokerPackage}}.ApiClient;
 import {{invokerPackage}}.ApiException;
 import {{invokerPackage}}.ApiResponse;
-import {{invokerPackage}}.Configuration;
 import {{invokerPackage}}.Pair;
 import {{invokerPackage}}.ProgressRequestBody;
 import {{invokerPackage}}.ProgressResponseBody;
@@ -46,23 +45,9 @@ import java.io.InputStream;
 {{/fullJavaUtil}}
 
 {{#operations}}
-public class {{classname}} {
-    private ApiClient localVarApiClient;
-
-    public {{classname}}() {
-        this(Configuration.getDefaultApiClient());
-    }
-
-    public {{classname}}(ApiClient apiClient) {
-        this.localVarApiClient = apiClient;
-    }
-
-    public ApiClient getApiClient() {
-        return localVarApiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.localVarApiClient = apiClient;
+public class {{classname}} extends ApiClient {
+    public {{classname}}(String appId, String apiKey) {
+        super(appId, apiKey);
     }
 
     {{#operation}}
@@ -97,7 +82,7 @@ public class {{classname}} {
 
         // create path and map variables
         String localVarPath = "{{{path}}}"{{#pathParams}}
-            .replaceAll("\\{" + "{{baseName}}" + "\\}", localVarApiClient.escapeString({{#collectionFormat}}localVarApiClient.collectionPathParameterToString("{{{collectionFormat}}}", {{{paramName}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}.toString(){{/collectionFormat}})){{/pathParams}};
+            .replaceAll("\\{" + "{{baseName}}" + "\\}", this.escapeString({{#collectionFormat}}this.collectionPathParameterToString("{{{collectionFormat}}}", {{{paramName}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}.toString(){{/collectionFormat}})){{/pathParams}};
 
         {{javaUtilPrefix}}List<Pair> localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
         {{javaUtilPrefix}}List<Pair> localVarCollectionQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
@@ -113,26 +98,26 @@ public class {{classname}} {
         {{/formParams}}
         {{#queryParams}}
         if ({{paramName}} != null) {
-            {{#collectionFormat}}localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("{{{.}}}", {{/collectionFormat}}{{^collectionFormat}}localVarQueryParams.addAll(localVarApiClient.parameterToPair({{/collectionFormat}}"{{baseName}}", {{paramName}}));
+            {{#collectionFormat}}localVarCollectionQueryParams.addAll(this.parameterToPairs("{{{.}}}", {{/collectionFormat}}{{^collectionFormat}}localVarQueryParams.addAll(this.parameterToPair({{/collectionFormat}}"{{baseName}}", {{paramName}}));
         }
 
         {{/queryParams}}
         {{#headerParams}}
         if ({{paramName}} != null) {
-            localVarHeaderParams.put("{{baseName}}", localVarApiClient.parameterToString({{paramName}}));
+            localVarHeaderParams.put("{{baseName}}", this.parameterToString({{paramName}}));
         }
 
         {{/headerParams}}
         {{#cookieParams}}
         if ({{paramName}} != null) {
-            localVarCookieParams.put("{{baseName}}", localVarApiClient.parameterToString({{paramName}}));
+            localVarCookieParams.put("{{baseName}}", this.parameterToString({{paramName}}));
         }
 
         {{/cookieParams}}
         final String[] localVarAccepts = {
             {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}
         };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
             localVarHeaderParams.put("Accept", localVarAccept);
         }
@@ -140,11 +125,11 @@ public class {{classname}} {
         final String[] localVarContentTypes = {
             {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}}
         };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = this.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         String[] localVarAuthNames = new String[] { {{#authMethods}}"{{name}}"{{^-last}}, {{/-last}}{{/authMethods}} };
-        return localVarApiClient.buildCall(localVarPath, "{{httpMethod}}", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return this.buildCall(localVarPath, "{{httpMethod}}", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
     {{#isDeprecated}}
@@ -262,12 +247,12 @@ public class {{classname}} {
     public{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}private{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-streaming}} InputStream {{operationId}}WithHttpInfo({{#allParams}}{{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
         okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
         {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        return localVarApiClient.executeStream(localVarCall, localVarReturnType);{{/returnType}}
+        return this.executeStream(localVarCall, localVarReturnType);{{/returnType}}
     }
     {{/vendorExtensions.x-streaming}}{{^vendorExtensions.x-streaming}} ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
         okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
         {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);{{/returnType}}{{^returnType}}return localVarApiClient.execute(localVarCall);{{/returnType}}
+        return this.execute(localVarCall, localVarReturnType);{{/returnType}}{{^returnType}}return this.execute(localVarCall);{{/returnType}}
     }
     {{/vendorExtensions.x-streaming}}
 
@@ -302,7 +287,7 @@ public class {{classname}} {
 
         okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
         {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);{{/returnType}}{{^returnType}}localVarApiClient.executeAsync(localVarCall, _callback);{{/returnType}}
+        this.executeAsync(localVarCall, localVarReturnType, _callback);{{/returnType}}{{^returnType}}this.executeAsync(localVarCall, _callback);{{/returnType}}
         return localVarCall;
     }
     {{#vendorExtensions.x-group-parameters}}

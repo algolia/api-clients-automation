@@ -16,7 +16,6 @@ import com.algolia.ApiCallback;
 import com.algolia.ApiClient;
 import com.algolia.ApiException;
 import com.algolia.ApiResponse;
-import com.algolia.Configuration;
 import com.algolia.Pair;
 import com.algolia.model.BatchObject;
 import com.algolia.model.BatchResponse;
@@ -38,24 +37,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchApi {
+public class SearchApi extends ApiClient {
 
-  private ApiClient localVarApiClient;
-
-  public SearchApi() {
-    this(Configuration.getDefaultApiClient());
-  }
-
-  public SearchApi(ApiClient apiClient) {
-    this.localVarApiClient = apiClient;
-  }
-
-  public ApiClient getApiClient() {
-    return localVarApiClient;
-  }
-
-  public void setApiClient(ApiClient apiClient) {
-    this.localVarApiClient = apiClient;
+  public SearchApi(String appId, String apiKey) {
+    super(appId, apiKey);
   }
 
   /**
@@ -87,7 +72,7 @@ public class SearchApi {
     String localVarPath =
       "/1/indexes/{indexName}/batch".replaceAll(
           "\\{" + "indexName" + "\\}",
-          localVarApiClient.escapeString(indexName.toString())
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -97,32 +82,29 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = { "application/json" };
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "POST",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -204,7 +186,7 @@ public class SearchApi {
       null
     );
     Type localVarReturnType = new TypeToken<BatchResponse>() {}.getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -236,7 +218,7 @@ public class SearchApi {
       _callback
     );
     Type localVarReturnType = new TypeToken<BatchResponse>() {}.getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -267,7 +249,7 @@ public class SearchApi {
     String localVarPath =
       "/1/indexes/{indexName}".replaceAll(
           "\\{" + "indexName" + "\\}",
-          localVarApiClient.escapeString(indexName.toString())
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -277,33 +259,30 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = {};
 
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "DELETE",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "DELETE",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -368,7 +347,7 @@ public class SearchApi {
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteIndexValidateBeforeCall(indexName, null);
     Type localVarReturnType = new TypeToken<DeleteIndexResponse>() {}.getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -397,7 +376,7 @@ public class SearchApi {
       _callback
     );
     Type localVarReturnType = new TypeToken<DeleteIndexResponse>() {}.getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -428,7 +407,7 @@ public class SearchApi {
     String localVarPath =
       "/1/indexes/{indexName}/settings".replaceAll(
           "\\{" + "indexName" + "\\}",
-          localVarApiClient.escapeString(indexName.toString())
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -438,33 +417,30 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = {};
 
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "GET",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -528,7 +504,7 @@ public class SearchApi {
     throws ApiException {
     okhttp3.Call localVarCall = getSettingsValidateBeforeCall(indexName, null);
     Type localVarReturnType = new TypeToken<IndexSettings>() {}.getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -557,7 +533,7 @@ public class SearchApi {
       _callback
     );
     Type localVarReturnType = new TypeToken<IndexSettings>() {}.getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -596,39 +572,34 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     if (page != null) {
-      localVarQueryParams.addAll(
-        localVarApiClient.parameterToPair("Page", page)
-      );
+      localVarQueryParams.addAll(this.parameterToPair("Page", page));
     }
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = {};
 
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "GET",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -689,7 +660,7 @@ public class SearchApi {
     throws ApiException {
     okhttp3.Call localVarCall = listIndicesValidateBeforeCall(page, null);
     Type localVarReturnType = new TypeToken<ListIndicesResponse>() {}.getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -717,7 +688,7 @@ public class SearchApi {
   ) throws ApiException {
     okhttp3.Call localVarCall = listIndicesValidateBeforeCall(page, _callback);
     Type localVarReturnType = new TypeToken<ListIndicesResponse>() {}.getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -754,32 +725,29 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = { "application/json" };
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "POST",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -854,7 +822,7 @@ public class SearchApi {
     );
     Type localVarReturnType = new TypeToken<MultipleQueriesResponse>() {}
       .getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -884,7 +852,7 @@ public class SearchApi {
     );
     Type localVarReturnType = new TypeToken<MultipleQueriesResponse>() {}
       .getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -917,7 +885,7 @@ public class SearchApi {
     String localVarPath =
       "/1/indexes/{indexName}/operation".replaceAll(
           "\\{" + "indexName" + "\\}",
-          localVarApiClient.escapeString(indexName.toString())
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -927,32 +895,29 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = { "application/json" };
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "POST",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1042,7 +1007,7 @@ public class SearchApi {
     );
     Type localVarReturnType = new TypeToken<OperationIndexResponse>() {}
       .getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -1075,7 +1040,7 @@ public class SearchApi {
     );
     Type localVarReturnType = new TypeToken<OperationIndexResponse>() {}
       .getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -1108,7 +1073,7 @@ public class SearchApi {
     String localVarPath =
       "/1/indexes/{indexName}".replaceAll(
           "\\{" + "indexName" + "\\}",
-          localVarApiClient.escapeString(indexName.toString())
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1118,32 +1083,29 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = { "application/json" };
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "POST",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1231,7 +1193,7 @@ public class SearchApi {
       null
     );
     Type localVarReturnType = new TypeToken<SaveObjectResponse>() {}.getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -1263,7 +1225,7 @@ public class SearchApi {
       _callback
     );
     Type localVarReturnType = new TypeToken<SaveObjectResponse>() {}.getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -1296,7 +1258,7 @@ public class SearchApi {
     String localVarPath =
       "/1/indexes/{indexName}/query".replaceAll(
           "\\{" + "indexName" + "\\}",
-          localVarApiClient.escapeString(indexName.toString())
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1306,32 +1268,29 @@ public class SearchApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = { "application/json" };
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "POST",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1413,7 +1372,7 @@ public class SearchApi {
       null
     );
     Type localVarReturnType = new TypeToken<SearchResponse>() {}.getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -1445,7 +1404,7 @@ public class SearchApi {
       _callback
     );
     Type localVarReturnType = new TypeToken<SearchResponse>() {}.getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 
@@ -1481,7 +1440,7 @@ public class SearchApi {
     String localVarPath =
       "/1/indexes/{indexName}/settings".replaceAll(
           "\\{" + "indexName" + "\\}",
-          localVarApiClient.escapeString(indexName.toString())
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1492,40 +1451,34 @@ public class SearchApi {
 
     if (forwardToReplicas != null) {
       localVarQueryParams.addAll(
-        localVarApiClient.parameterToPair(
-          "forwardToReplicas",
-          forwardToReplicas
-        )
+        this.parameterToPair("forwardToReplicas", forwardToReplicas)
       );
     }
 
     final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = localVarApiClient.selectHeaderAccept(
-      localVarAccepts
-    );
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
     if (localVarAccept != null) {
       localVarHeaderParams.put("Accept", localVarAccept);
     }
 
     final String[] localVarContentTypes = { "application/json" };
-    final String localVarContentType = localVarApiClient.selectHeaderContentType(
-      localVarContentTypes
-    );
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
 
     String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return localVarApiClient.buildCall(
-      localVarPath,
-      "PUT",
-      localVarQueryParams,
-      localVarCollectionQueryParams,
-      localVarPostBody,
-      localVarHeaderParams,
-      localVarCookieParams,
-      localVarFormParams,
-      localVarAuthNames,
-      _callback
-    );
+    return this.buildCall(
+        localVarPath,
+        "PUT",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1625,7 +1578,7 @@ public class SearchApi {
       null
     );
     Type localVarReturnType = new TypeToken<SetSettingsResponse>() {}.getType();
-    return localVarApiClient.execute(localVarCall, localVarReturnType);
+    return this.execute(localVarCall, localVarReturnType);
   }
 
   /**
@@ -1663,7 +1616,7 @@ public class SearchApi {
       _callback
     );
     Type localVarReturnType = new TypeToken<SetSettingsResponse>() {}.getType();
-    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
 }

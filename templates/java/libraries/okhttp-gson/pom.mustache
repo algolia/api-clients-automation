@@ -203,13 +203,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3-version}</version>
         </dependency>
-        {{#joda}}
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${jodatime-version}</version>
-        </dependency>
-        {{/joda}}
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
@@ -223,19 +216,6 @@
             <version>${jackson-databind-nullable-version}</version>
         </dependency>
         {{/openApiNullable}}
-        <!-- test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>3.11.2</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <properties>
         <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
@@ -249,20 +229,7 @@
         {{#openApiNullable}}
         <jackson-databind-nullable-version>0.2.1</jackson-databind-nullable-version>
         {{/openApiNullable}}
-        {{#joda}}
-        <jodatime-version>2.10.9</jodatime-version>
-        {{/joda}}
-        {{#threetenbp}}
-        <threetenbp-version>1.5.0</threetenbp-version>
-        {{/threetenbp}}
         <jakarta-annotation-version>1.3.5</jakarta-annotation-version>
-{{#performBeanValidation}}
-        <jakarta.el-version>3.0.3</jakarta.el-version>
-{{/performBeanValidation}}
-{{#useBeanValidation}}
-		<beanvalidation-version>2.0.2</beanvalidation-version>
-{{/useBeanValidation}}
-        <junit-version>4.13.1</junit-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
