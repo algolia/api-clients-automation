@@ -2,8 +2,13 @@ post:
   tags:
     - search
   operationId: batchAssignUserIds
-  summary: Assign multiple userIDs to a cluster.
-  description: Assign multiple userIDs to a cluster.
+  summary: Batch assign userIDs
+  description: >
+    Assign multiple userIDs to a cluster.
+
+    Upon success, the response is 200 OK.
+
+    A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
   parameters:
     - $ref: '../../common/parameters.yml#/UserIDInQuery'
   requestBody:
@@ -23,7 +28,7 @@ post:
                 type: string
   responses:
     '200':
-      description: The operation has been taken into account, and the userIDs are directly usable.
+      description: OK
       content:
         application/json:
           schema:

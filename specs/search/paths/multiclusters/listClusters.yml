@@ -2,8 +2,11 @@ get:
   tags:
     - search
   operationId: listClusters
-  summary: List the clusters available in a multi-clusters setup for a single appID.
-  description: List the clusters available in a multi-clusters setup for a single appID.
+  summary: List clusters
+  description: >
+    List the clusters available in a multi-clusters setup for a single appID.
+
+    Upon success, the response is 200 OK and contains the following clusters.
   responses:
     '200':
       description: OK

@@ -2,8 +2,15 @@ get:
   tags:
     - search
   operationId: hasPendingMappins
-  summary: Get the status of your clusters’ migrations or user creations.
-  description: Get the status of your clusters’ migrations or user creations.
+  summary: Has pending mappings
+  description: >
+    Get the status of your clusters’ migrations or user creations.
+
+    Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it’s done.
+
+    Upon success, the response is 200 OK.
+
+    A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
   parameters:
     - in: query
       name: getClusters
@@ -11,7 +18,7 @@ get:
         type: boolean
   responses:
     '200':
-      description: The operation has been taken into account, and the userIDs are directly usable.
+      description: OK
       content:
         application/json:
           schema:
