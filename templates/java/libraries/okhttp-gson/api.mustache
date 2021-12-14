@@ -37,9 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-{{#supportStreaming}}
-import java.io.InputStream;
-{{/supportStreaming}}
 {{/fullJavaUtil}}
 
 {{#operations}}
@@ -85,15 +82,7 @@ public class {{classname}} extends ApiClient {
         {{javaUtilPrefix}}List<Pair> localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
         {{javaUtilPrefix}}List<Pair> localVarCollectionQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
         {{javaUtilPrefix}}Map<String, String> localVarHeaderParams = new {{javaUtilPrefix}}HashMap<String, String>();
-        {{javaUtilPrefix}}Map<String, String> localVarCookieParams = new {{javaUtilPrefix}}HashMap<String, String>();
-        {{javaUtilPrefix}}Map<String, Object> localVarFormParams = new {{javaUtilPrefix}}HashMap<String, Object>();
 
-        {{#formParams}}
-        if ({{paramName}} != null) {
-            localVarFormParams.put("{{baseName}}", {{paramName}});
-        }
-
-        {{/formParams}}
         {{#queryParams}}
         if ({{paramName}} != null) {
             {{#collectionFormat}}localVarCollectionQueryParams.addAll(this.parameterToPairs("{{{.}}}", {{/collectionFormat}}{{^collectionFormat}}localVarQueryParams.addAll(this.parameterToPair({{/collectionFormat}}"{{baseName}}", {{paramName}}));
@@ -106,12 +95,6 @@ public class {{classname}} extends ApiClient {
         }
 
         {{/headerParams}}
-        {{#cookieParams}}
-        if ({{paramName}} != null) {
-            localVarCookieParams.put("{{baseName}}", this.parameterToString({{paramName}}));
-        }
-
-        {{/cookieParams}}
         final String[] localVarAccepts = {
             {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}
         };
@@ -126,8 +109,7 @@ public class {{classname}} extends ApiClient {
         final String localVarContentType = this.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        String[] localVarAuthNames = new String[] { {{#authMethods}}"{{name}}"{{^-last}}, {{/-last}}{{/authMethods}} };
-        return this.buildCall(localVarPath, "{{httpMethod}}", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return this.buildCall(localVarPath, "{{httpMethod}}", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, _callback);
     }
 
     {{#isDeprecated}}
@@ -135,7 +117,6 @@ public class {{classname}} extends ApiClient {
     {{/isDeprecated}}
     @SuppressWarnings("rawtypes")
     private okhttp3.Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
-        {{^performBeanValidation}}
         {{#allParams}}{{#required}}
         // verify the required parameter '{{paramName}}' is set
         if ({{paramName}} == null) {
@@ -143,36 +124,7 @@ public class {{classname}} extends ApiClient {
         }
         {{/required}}{{/allParams}}
 
-        okhttp3.Call localVarCall = {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-        return localVarCall;
-
-        {{/performBeanValidation}}
-        {{#performBeanValidation}}
-        try {
-            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-            ExecutableValidator executableValidator = factory.getValidator().forExecutables();
-
-            Object[] parameterValues = { {{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}} };
-            Method method = this.getClass().getMethod("{{operationId}}WithHttpInfo"{{#allParams}}, {{#isArray}}java.util.List{{/isArray}}{{#isMap}}java.util.Map{{/isMap}}{{^isArray}}{{^isMap}}{{{dataType}}}{{/isMap}}{{/isArray}}.class{{/allParams}});
-            Set<ConstraintViolation<{{classname}}>> violations = executableValidator.validateParameters(this, method,
-                    parameterValues);
-
-            if (violations.size() == 0) {
-                okhttp3.Call localVarCall = {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-                return localVarCall;
-
-            } else {
-                throw new BeanValidationException((Set) violations);
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            throw new ApiException(e.getMessage());
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            throw new ApiException(e.getMessage());
-        }
-
-        {{/performBeanValidation}}
+        return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
     }
 
     {{^vendorExtensions.x-group-parameters}}
@@ -202,57 +154,13 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    {{#vendorExtensions.x-streaming}}
-    public {{#returnType}}InputStream {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        {{#returnType}}InputStream localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{#returnType}}
-        return localVarResp;{{/returnType}}
-    }
-    {{/vendorExtensions.x-streaming}}
-    {{^vendorExtensions.x-streaming}}
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        {{#returnType}}ApiResponse<{{{.}}}> localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{#returnType}}
-        return localVarResp.getData();{{/returnType}}
+        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
+        {{#returnType}}Type localVarReturnType = new TypeToken<{{{.}}}>(){}.getType();
+        ApiResponse<{{{.}}}> res = this.execute(localVarCall, localVarReturnType);
+        return res.getData();{{/returnType}}{{^returnType}}return this.execute(localVarCall).getData();{{/returnType}}
     }
-    {{/vendorExtensions.x-streaming}}
     {{/vendorExtensions.x-group-parameters}}
-
-    {{^vendorExtensions.x-group-parameters}}/**
-     * {{&summary}}
-     * {{&notes}}{{#allParams}}
-     * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
-     * @return ApiResponse&lt;{{returnType}}{{^returnType}}Void{{/returnType}}&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     {{#responses.0}}
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        {{#responses}}
-        <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-        {{/responses}}
-     </table>
-     {{/responses.0}}
-     {{#isDeprecated}}
-     * @deprecated
-     {{/isDeprecated}}
-        {{#externalDocs}}
-     * {{&description}}
-     * @see <a href="{{url}}">{{&summary}} Documentation</a>
-        {{/externalDocs}}
-     */
-    {{#isDeprecated}}
-    @Deprecated
-    {{/isDeprecated}}
-    public{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}private{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-streaming}} InputStream {{operationId}}WithHttpInfo({{#allParams}}{{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
-        {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        return this.executeStream(localVarCall, localVarReturnType);{{/returnType}}
-    }
-    {{/vendorExtensions.x-streaming}}{{^vendorExtensions.x-streaming}} ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
-        {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        return this.execute(localVarCall, localVarReturnType);{{/returnType}}{{^returnType}}return this.execute(localVarCall);{{/returnType}}
-    }
-    {{/vendorExtensions.x-streaming}}
 
     {{^vendorExtensions.x-group-parameters}}/**
      * {{&summary}} (asynchronously)

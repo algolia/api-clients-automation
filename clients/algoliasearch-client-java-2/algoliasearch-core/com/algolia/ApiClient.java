@@ -30,15 +30,11 @@ public class ApiClient {
 
   private boolean debugging = false;
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private Map<String, String> defaultCookieMap = new HashMap<String, String>();
 
   private String basePath;
   private String appId, apiKey;
 
   private DateFormat dateFormat;
-  private DateFormat datetimeFormat;
-  private boolean lenientDatetimeFormat;
-  private int dateLength;
 
   private InputStream sslCaCert;
   private boolean verifyingSsl;
@@ -204,18 +200,6 @@ public class ApiClient {
    */
   public ApiClient addDefaultHeader(String key, String value) {
     defaultHeaderMap.put(key, value);
-    return this;
-  }
-
-  /**
-   * Add a default cookie.
-   *
-   * @param key The cookie's key
-   * @param value The cookie's value
-   * @return ApiClient
-   */
-  public ApiClient addDefaultCookie(String key, String value) {
-    defaultCookieMap.put(key, value);
     return this;
   }
 
@@ -515,7 +499,11 @@ public class ApiClient {
         return accept;
       }
     }
-    return StringUtil.join(accepts, ",");
+    StringJoiner joiner = new StringJoiner(",");
+    for (String s : accepts) {
+      joiner.add(s);
+    }
+    return joiner.toString();
   }
 
   /**
@@ -812,9 +800,6 @@ public class ApiClient {
    * @param collectionQueryParams The collection query parameters
    * @param body The request body object
    * @param headerParams The header parameters
-   * @param cookieParams The cookie parameters
-   * @param formParams The form parameters
-   * @param authNames The authentications to apply
    * @param callback Callback for upload/download progress
    * @return The HTTP call
    * @throws ApiException If fail to serialize the request body object
@@ -826,9 +811,6 @@ public class ApiClient {
     List<Pair> collectionQueryParams,
     Object body,
     Map<String, String> headerParams,
-    Map<String, String> cookieParams,
-    Map<String, Object> formParams,
-    String[] authNames,
     ApiCallback callback
   ) throws ApiException {
     Request request = buildRequest(
@@ -838,9 +820,6 @@ public class ApiClient {
       collectionQueryParams,
       body,
       headerParams,
-      cookieParams,
-      formParams,
-      authNames,
       callback
     );
 
@@ -857,9 +836,6 @@ public class ApiClient {
    * @param collectionQueryParams The collection query parameters
    * @param body The request body object
    * @param headerParams The header parameters
-   * @param cookieParams The cookie parameters
-   * @param formParams The form parameters
-   * @param authNames The authentications to apply
    * @param callback Callback for upload/download progress
    * @return The HTTP request
    * @throws ApiException If fail to serialize the request body object
@@ -871,17 +847,14 @@ public class ApiClient {
     List<Pair> collectionQueryParams,
     Object body,
     Map<String, String> headerParams,
-    Map<String, String> cookieParams,
-    Map<String, Object> formParams,
-    String[] authNames,
     ApiCallback callback
   ) throws ApiException {
-    updateParamsForAuth(authNames, queryParams, headerParams, cookieParams);
+    headerParams.put("X-Algolia-Application-Id", this.appId);
+    headerParams.put("X-Algolia-API-Key", this.apiKey);
 
     final String url = buildUrl(path, queryParams, collectionQueryParams);
     final Request.Builder reqBuilder = new Request.Builder().url(url);
     processHeaderParams(headerParams, reqBuilder);
-    processCookieParams(cookieParams, reqBuilder);
 
     String contentType = (String) headerParams.get("Content-Type");
     // ensuring a default content type
@@ -892,10 +865,6 @@ public class ApiClient {
     RequestBody reqBody;
     if (!HttpMethod.permitsRequestBody(method)) {
       reqBody = null;
-    } else if ("application/x-www-form-urlencoded".equals(contentType)) {
-      reqBody = buildRequestBodyFormEncoding(formParams);
-    } else if ("multipart/form-data".equals(contentType)) {
-      reqBody = buildRequestBodyMultipart(formParams);
     } else if (body == null) {
       if ("DELETE".equals(method)) {
         // allow calling DELETE without sending a request body
@@ -1004,50 +973,6 @@ public class ApiClient {
         );
       }
     }
-  }
-
-  /**
-   * Set cookie parameters to the request builder, including default cookies.
-   *
-   * @param cookieParams Cookie parameters in the form of Map
-   * @param reqBuilder Request.Builder
-   */
-  public void processCookieParams(
-    Map<String, String> cookieParams,
-    Request.Builder reqBuilder
-  ) {
-    for (Entry<String, String> param : cookieParams.entrySet()) {
-      reqBuilder.addHeader(
-        "Cookie",
-        String.format("%s=%s", param.getKey(), param.getValue())
-      );
-    }
-    for (Entry<String, String> param : defaultCookieMap.entrySet()) {
-      if (!cookieParams.containsKey(param.getKey())) {
-        reqBuilder.addHeader(
-          "Cookie",
-          String.format("%s=%s", param.getKey(), param.getValue())
-        );
-      }
-    }
-  }
-
-  /**
-   * Update query and header parameters based on authentication settings.
-   *
-   * @param authNames The authentications to apply
-   * @param queryParams List of query parameters
-   * @param headerParams Map of header parameters
-   * @param cookieParams Map of cookie parameters
-   */
-  public void updateParamsForAuth(
-    String[] authNames,
-    List<Pair> queryParams,
-    Map<String, String> headerParams,
-    Map<String, String> cookieParams
-  ) {
-    headerParams.put("X-Algolia-Application-Id", this.appId);
-    headerParams.put("X-Algolia-API-Key", this.apiKey);
   }
 
   /**
