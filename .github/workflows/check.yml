@@ -80,5 +80,8 @@ jobs:
       - name: Generate CTS
         run: yarn cts:generate
 
+      - name: Check commited generation
+        run: git status --porcelain
+
       - name: Run CTS
         run: yarn cts:test
