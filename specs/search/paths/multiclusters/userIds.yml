@@ -68,7 +68,7 @@ delete:
     - $ref: '../../common/parameters.yml#/UserIDInQuery'
   responses:
     '200':
-      description: A task is created to remove the userID data and mapping
+      description: A task is created to remove the userID data and mapping.
       content:
         application/json:
           schema:
