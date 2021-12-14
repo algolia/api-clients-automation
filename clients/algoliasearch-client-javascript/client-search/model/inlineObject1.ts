@@ -5,6 +5,6 @@ export type InlineObject1 = {
   /**
    * Cluster name.
    */
-  cluster?: string;
-  users?: string[];
+  cluster: string;
+  users: string[];
 };
