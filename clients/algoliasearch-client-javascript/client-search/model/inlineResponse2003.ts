@@ -8,10 +8,7 @@ export type InlineResponse2003 = {
    * List of user object matching the query.
    */
   hits?: InlineResponse2003Hits[];
-  /**
-   * Number of hits that the search query matched.
-   */
-  nbHits?: number;
+  nbHits?: Record<string, any>;
   /**
    * Specify the page to retrieve.
    */

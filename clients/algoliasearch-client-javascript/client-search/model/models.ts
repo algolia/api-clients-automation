@@ -8,7 +8,9 @@ export * from './baseSearchResponse';
 export * from './baseSearchResponseFacetsStats';
 export * from './batchObject';
 export * from './batchResponse';
+export * from './clearAllSynonymsResponse';
 export * from './deleteIndexResponse';
+export * from './deleteSynonymResponse';
 export * from './errorBase';
 export * from './highlightResult';
 export * from './index';
@@ -36,12 +38,17 @@ export * from './rankingInfoMatchedGeoLocation';
 export * from './record';
 export * from './removeUserIdResponse';
 export * from './saveObjectResponse';
+export * from './saveSynonymResponse';
+export * from './saveSynonymsResponse';
 export * from './searchHits';
 export * from './searchParams';
 export * from './searchParamsAsString';
 export * from './searchResponse';
+export * from './searchSynonymsResponse';
 export * from './setSettingsResponse';
 export * from './snippetResult';
+export * from './synonymHit';
+export * from './synonymHitHighlightResult';
 export * from './userId';
 
 export interface Authentication {
