@@ -32,6 +32,7 @@ post:
             - users
   responses:
     '200':
+      name: batchAssignUserIdsResponse
       description: OK
       content:
         application/json:

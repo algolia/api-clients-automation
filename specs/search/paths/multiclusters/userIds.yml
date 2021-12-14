@@ -28,6 +28,7 @@ post:
             - cluster
   responses:
     '200':
+      name: assignUserIdResponse
       description: OK
       content:
         application/json:
@@ -65,6 +66,7 @@ get:
     - $ref: '../../../common/parameters.yml#/HitsPerPage'
   responses:
     '200':
+      name: listUserIdsResponse
       description: OK
       content:
         application/json:

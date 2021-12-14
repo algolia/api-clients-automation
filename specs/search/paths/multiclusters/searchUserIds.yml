@@ -33,6 +33,7 @@ post:
             - query
   responses:
     '200':
+      name: searchUserIdsResponse
       description: OK
       content:
         application/json:

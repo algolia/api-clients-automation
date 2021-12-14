@@ -13,6 +13,7 @@ get:
     - $ref: '../../common/parameters.yml#/UserIDInPath'
   responses:
     '200':
+      name: getUserIdResponse
       description: OK
       content:
         application/json:
@@ -40,6 +41,7 @@ delete:
     - $ref: '../../common/parameters.yml#/UserIDInPath'
   responses:
     '200':
+      name: removeUserIdResponse
       description: OK
       content:
         application/json:
