@@ -8,12 +8,7 @@
   ],
   "scripts": {
     "clean": "rm -rf **/dist **/build **/node_modules",
-    "client:build-java": "mvn clean install -f clients/algoliasearch-client-java-2/pom.xml",
-    "client:build-js:personalization": "yarn workspace @algolia/client-personalization build",
-    "client:build-js:recommend": "yarn workspace @algolia/recommend build",
-    "client:build-js:search": "yarn workspace @algolia/client-search build",
-    "client:build-js": "yarn client:build-js:search && yarn client:build-js:recommend && yarn client:build-js:personalization",
-    "client:build": "yarn client:build-js",
+    "clients": "./scripts/multiplexer.sh ./scripts/clients.sh ${0:-all} ${1:-all}",
     "cts:generate": "yarn workspace tests cts:generate",
     "cts:test": "yarn workspace tests test",
     "lint": "eslint --ext=ts .",
