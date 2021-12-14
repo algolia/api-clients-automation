@@ -680,23 +680,20 @@ export class SearchApi {
    * Remove a userID and its associated data from the multi-clusters. Upon success, the response is 200 OK and a task is created to remove the userID data and mapping.
    *
    * @summary Remove userID.
-   * @param xAlgoliaUserID - UserID to assign.
+   * @param userID - UserID to assign.
    */
-  removeUserId(
-    xAlgoliaUserID: Record<string, any>
-  ): Promise<RemoveUserIdResponse> {
-    const path = '/1/clusters/mapping/{userID}';
+  removeUserId(userID: Record<string, any>): Promise<RemoveUserIdResponse> {
+    const path = '/1/clusters/mapping/{userID}'.replace(
+      '{userID}',
+      encodeURIComponent(String(userID))
+    );
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (xAlgoliaUserID === null || xAlgoliaUserID === undefined) {
+    if (userID === null || userID === undefined) {
       throw new Error(
-        'Required parameter xAlgoliaUserID was null or undefined when calling removeUserId.'
+        'Required parameter userID was null or undefined when calling removeUserId.'
       );
-    }
-
-    if (xAlgoliaUserID !== undefined) {
-      queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
     }
 
     const request: Request = {

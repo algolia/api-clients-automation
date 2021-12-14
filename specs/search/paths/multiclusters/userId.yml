@@ -37,7 +37,7 @@ delete:
 
     Upon success, the response is 200 OK and a task is created to remove the userID data and mapping.
   parameters:
-    - $ref: '../../common/parameters.yml#/UserIDInQuery'
+    - $ref: '../../common/parameters.yml#/UserIDInPath'
   responses:
     '200':
       description: OK
