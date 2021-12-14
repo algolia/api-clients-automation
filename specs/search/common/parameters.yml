@@ -1,6 +1,7 @@
 # query
 HitsPerPage:
   name: hitsPerPage
+  description: Number of users to retrieve per page.
   in: query
   schema:
     type: integer

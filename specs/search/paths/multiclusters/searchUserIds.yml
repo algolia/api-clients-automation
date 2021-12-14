@@ -47,8 +47,7 @@ post:
                   type: object
                   properties:
                     userID:
-                      type: string
-                      example: 'user9'
+                      $ref: '../../commons/schemas/UserId.yml#/userId/properties/userID'
                     clusterName:
                       $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
                     nbRecords:
@@ -57,7 +56,7 @@ post:
                       $ref: '../../common/schemas/Cluster.yml#/cluster/properties/dataSize'
                     objectID:
                       type: string
-                      example: 'user9'
+                      description: userID of the requested user. Same as userID.
                     _highlightResult:
                       type: object
                       properties:
