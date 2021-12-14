@@ -80,35 +80,3 @@ get:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
-
-delete:
-  tags:
-    - search
-  operationId: removeUserId
-  summary: Remove userID
-  description: >
-    Remove a userID and its associated data from the multi-clusters.
-
-    Upon success, the response is 200 OK and a task is created to remove the userID data and mapping.
-  parameters:
-    - $ref: '../../common/parameters.yml#/UserIDInQuery'
-  responses:
-    '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: removeUserIdResponse
-            type: object
-            additionalProperties: false
-            properties:
-              deletedAt:
-                $ref: '../../../common/parameters.yml#/deletedAt'
-    '400':
-      $ref: '../../../common/responses/BadRequest.yml'
-    '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
-    '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
-    '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
