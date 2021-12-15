@@ -29,6 +29,9 @@ get:
                 items:
                   type: object
                   additionalProperties: false
+                  required:
+                    - position
+                    - clickCount
                   properties:
                     position:
                       description: |
