@@ -90,7 +90,7 @@ jobs:
         run: yarn generate
 
       - name: Build client
-        run: yarn client:build
+        run: yarn clients
 
       - name: Generate CTS
         run: yarn cts:generate
