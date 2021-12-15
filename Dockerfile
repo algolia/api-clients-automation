@@ -1,12 +1,13 @@
-ARG NODE_IMAGE=node:16.13.0-alpine
+ARG NODE_VERSION=16.13.0
 
-FROM $NODE_IMAGE
+FROM node:$NODE_VERSION-alpine
 
 RUN apk add openjdk11 maven jq bash yamllint perl curl
 
 WORKDIR /app
 
 COPY package.json yarn.lock .yarnrc.yml ./
+COPY clients/ ./clients/
 COPY .yarn .yarn
 RUN yarn install
 
