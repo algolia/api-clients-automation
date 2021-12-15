@@ -1,0 +1,6 @@
+KeyString:
+  in: path
+  name: key
+  schema:
+    type: string
+  description: API Key string.
