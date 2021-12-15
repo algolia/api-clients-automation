@@ -75,7 +75,7 @@ jobs:
         run: yarn generate java search
 
       - name: Build search client
-        run: yarn client:build-java
+        run: yarn clients java search
 
   cts:
     runs-on: ubuntu-20.04

@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN \
   apt update && \
   apt upgrade -y && \
-  apt install -y curl gnupg2 build-essential jq yamllint openjdk-11-jdk
+  apt install -y curl gnupg2 build-essential jq yamllint openjdk-11-jdk maven
 
 # Install Node
 RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -29,3 +29,7 @@ RUN \
 RUN /bin/bash -c "source /root/.bashrc"
 
 RUN command -v yarn
+
+# Install Java formatter
+RUN mkdir dist
+RUN curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar" > dist/google-java-format-1.13.0-all-deps.jar

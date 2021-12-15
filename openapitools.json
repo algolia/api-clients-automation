@@ -17,8 +17,9 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-search",
-          "packageName": "@algolia/client-search",
-          "npmVersion": "5.0.0"
+          "npmVersion": "5.0.0",
+
+          "packageName": "@algolia/client-search"
         }
       },
       "javascript-recommend": {
@@ -36,8 +37,9 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/recommend",
-          "packageName": "@algolia/recommend",
-          "npmVersion": "5.0.0"
+          "npmVersion": "5.0.0",
+
+          "packageName": "@algolia/recommend"
         }
       },
       "javascript-personalization": {
@@ -54,8 +56,9 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-personalization",
-          "packageName": "@algolia/client-personalization",
           "npmVersion": "5.0.0",
+
+          "packageName": "@algolia/client-personalization",
           "isPersonalizationHost": false
         }
       },
@@ -77,7 +80,9 @@
         "additionalProperties": {
           "sourceFolder": "algoliasearch-core",
           "java8": true,
-          "dateLibrary": "java8"
+          "dateLibrary": "java8",
+
+          "packageName": "algoliasearch-client-java-2"
         }
       }
     }

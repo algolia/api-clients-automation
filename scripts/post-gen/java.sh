@@ -12,13 +12,30 @@ find $CLIENT -type f -name "*.java" | xargs sed -i '' -e 's/= {}/= new Object()/
 # Create a special class for the OneOf integer string (not complete yet, juste here for compilation)
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
 
-# Download the formatter if not present and run it
-javaFormatter="google-java-format-1.13.0-all-deps.jar"
-if [[ ! -f "dist/$javaFormatter" ]]; then
-    echo "Downloading formatter dependency"
-    mkdir dist
-    curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/$javaFormatter" > dist/$javaFormatter
-fi
-find $CLIENT -type f -name "*.java" | xargs java -jar dist/$javaFormatter -r
+format_client() {
+    set +e
 
-yarn prettier --write $CLIENT/**/*.java
+    echo "> Formatting $GENERATOR..."
+
+    # Download the formatter if not present and run it
+    javaFormatter="google-java-format-1.13.0-all-deps.jar"
+
+    if [[ ! -f "dist/$javaFormatter" ]]; then
+        echo "Downloading formatter dependency"
+        mkdir dist
+        curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/$javaFormatter" > dist/$javaFormatter
+    fi
+
+    find $CLIENT -type f -name "*.java" | xargs java -jar dist/$javaFormatter -r
+
+    log=$(yarn prettier --write $CLIENT/**/*.java)
+
+    if [[ $? != 0 ]]; then
+        echo "$log"
+        exit 1
+    fi
+
+    set -e
+}
+
+format_client

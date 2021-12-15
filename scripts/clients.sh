@@ -13,16 +13,17 @@ package=$3
 
 # Commands are based on the lang
 build_client(){
+    local generator="$lang-$client"
+    echo "> Building $generator..."
+
     if [[ $lang == 'javascript' ]]; then
-        local generator="$lang-$client"
-
-        echo "> Building $generator..."
-
         yarn workspace $package build
+    elif [[ $lang == 'java' ]]; then
+        mvn clean install -f clients/$package/pom.xml
     fi
 }
 
-if [[ ! $package ]]; then
+if [[ -z $package ]]; then
     echo "Unknown package ${package}"
     exit 1
 fi
