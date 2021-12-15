@@ -1,0 +1,11 @@
+[
+  {
+    "method": "listApiKeys",
+    "parameters": [],
+    "request": {
+      "path": "/1/keys",
+      "method": "GET"
+    }
+  }
+]
+  

@@ -1,0 +1,12 @@
+[
+  {
+    "method": "deleteApiKey",
+    "parameters": [
+      "myApiKey"
+    ],
+    "request": {
+      "path": "/1/keys/myApiKey",
+      "method": "DELETE"
+    }
+  }
+]

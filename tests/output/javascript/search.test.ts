@@ -42,23 +42,19 @@ describe('Common Test Suite', () => {
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/batch',
       method: 'POST',
-      data: {
-        synonymHit: [
-          {
-            objectID: 'id1',
-            type: 'synonym',
-            synonyms: ['car', 'vehicule', 'auto'],
-          },
-          {
-            objectID: 'id2',
-            type: 'onewaysynonym',
-            input: 'iphone',
-            synonyms: ['ephone', 'aphone', 'yphone'],
-          },
-        ],
-        ForwardToReplicas: true,
-        ReplaceExistingSynonyms: false,
-      },
+      data: [
+        {
+          objectID: 'id1',
+          type: 'synonym',
+          synonyms: ['car', 'vehicule', 'auto'],
+        },
+        {
+          objectID: 'id2',
+          type: 'onewaysynonym',
+          input: 'iphone',
+          synonyms: ['ephone', 'aphone', 'yphone'],
+        },
+      ],
     });
   });
 
@@ -79,6 +75,33 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('', async () => {
+    const req = await client.updateApiKey('myApiKey', {
+      acl: ['search', 'addObject'],
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
+    });
+    expect(req).toMatchObject({
+      path: '/1/keys/myApiKey',
+      method: 'PUT',
+      data: {
+        acl: ['search', 'addObject'],
+        validity: 300,
+        maxQueriesPerIPPerHour: 100,
+        maxHitsPerQuery: 20,
+      },
+    });
+  });
+
+  test('', async () => {
+    const req = await client.deleteApiKey('myApiKey');
+    expect(req).toMatchObject({
+      path: '/1/keys/myApiKey',
+      method: 'DELETE',
+    });
+  });
+
   test('clearAllSynonyms', async () => {
     const req = await client.clearAllSynonyms('indexName');
     expect(req).toMatchObject({
@@ -87,11 +110,56 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('', async () => {
+    const req = await client.addApiKey({
+      acl: ['search', 'addObject'],
+      description: 'my new api key',
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
+    });
+    expect(req).toMatchObject({
+      path: '/1/keys',
+      method: 'POST',
+      data: {
+        acl: ['search', 'addObject'],
+        description: 'my new api key',
+        validity: 300,
+        maxQueriesPerIPPerHour: 100,
+        maxHitsPerQuery: 20,
+      },
+    });
+  });
+
+  test('', async () => {
+    const req = await client.restoreApiKey('myApiKey');
+    expect(req).toMatchObject({
+      path: '/1/keys/myApiKey/restore',
+      method: 'POST',
+    });
+  });
+
+  test('', async () => {
+    const req = await client.getApiKey('myApiKey');
+    expect(req).toMatchObject({
+      path: '/1/keys/myApiKey',
+      method: 'GET',
+    });
+  });
+
   test('deleteSynonym', async () => {
     const req = await client.deleteSynonym('indexName', 'id1');
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'DELETE',
+    });
+  });
+
+  test('', async () => {
+    const req = await client.listApiKeys();
+    expect(req).toMatchObject({
+      path: '/1/keys',
+      method: 'GET',
     });
   });
 
@@ -110,12 +178,9 @@ describe('Common Test Suite', () => {
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'PUT',
       data: {
-        synonymHit: {
-          objectID: 'id1',
-          type: 'synonym',
-          synonyms: ['car', 'vehicule', 'auto'],
-        },
-        ForwardToReplicas: true,
+        objectID: 'id1',
+        type: 'synonym',
+        synonyms: ['car', 'vehicule', 'auto'],
       },
     });
   });
