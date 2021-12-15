@@ -1,35 +1,18 @@
-FROM ubuntu:20.04
+ARG NODE_IMAGE=node:16.13.0-alpine
 
-WORKDIR /api-clients-automation
-ADD . /api-clients-automation/
+FROM $NODE_IMAGE
 
-ENV NVM_DIR /root/.nvm
-ENV DEBIAN_FRONTEND=noninteractive 
+RUN apk add openjdk11 maven jq bash yamllint perl curl
 
-# Setup
-RUN \
-  apt update && \
-  apt upgrade -y && \
-  apt install -y curl gnupg2 build-essential jq yamllint openjdk-11-jdk maven
+WORKDIR /app
 
-# Install Node
-RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn .yarn
+RUN yarn install
 
-RUN /bin/bash -c "source $NVM_DIR/nvm.sh; nvm install"
-RUN alias node=nodejs
-
-# Install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-RUN \
-  apt update && \
-  apt install -y --no-install-recommends yarn
-
-RUN /bin/bash -c "source /root/.bashrc"
-
-RUN command -v yarn
-
-# Install Java formatter
 RUN mkdir dist
 RUN curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar" > dist/google-java-format-1.13.0-all-deps.jar
+
+COPY . .
+
+CMD ["bash"]
