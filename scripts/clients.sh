@@ -22,4 +22,9 @@ build_client(){
     fi
 }
 
+if [[ ! $package ]]; then
+    echo "Unknown package ${package}"
+    exit 1
+fi
+
 build_client

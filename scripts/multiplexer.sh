@@ -15,7 +15,6 @@ CLIENT=$3
 
 LANGUAGES=()
 CLIENTS=()
-declare -A PACKAGES
 
 GENERATORS=()
 
@@ -27,7 +26,6 @@ find_clients_and_languages() {
     for generator in "${GENERATORS[@]}"; do
         local lang=${generator%-*}
         local client=${generator#*-}
-        local package=$(cat openapitools.json | jq -r --arg generator "$generator" '."generator-cli".generators[$generator].additionalProperties.packageName')
 
         if [[ ! ${LANGUAGES[*]} =~ $lang ]]; then
             LANGUAGES+=($lang)
@@ -35,10 +33,6 @@ find_clients_and_languages() {
 
         if [[ ! ${CLIENTS[*]} =~ $client ]]; then
             CLIENTS+=($client)
-        fi
-
-        if [[ ! ${PACKAGES[$package]} ]]; then
-            PACKAGES[$generator]=$package
         fi
     done
 }
@@ -66,7 +60,10 @@ fi
 for lang in "${LANGUAGE[@]}"; do
     for client in "${CLIENT[@]}"; do
         if [[ " ${GENERATORS[*]} " =~ " ${lang}-${client} " ]]; then
-            $CMD $lang $client
+            # find package in the openapitools config
+            package=$(cat openapitools.json | jq -r --arg generator "$lang-$client" '."generator-cli".generators[$generator].additionalProperties.packageName')
+
+            $CMD $lang $client $package
         fi
     done
 done
