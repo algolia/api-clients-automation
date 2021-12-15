@@ -1,28 +1,17 @@
 package com.algolia;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.security.GeneralSecurityException;
-import java.security.KeyStore;
-import java.security.SecureRandom;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
-import javax.net.ssl.*;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
-import okhttp3.internal.tls.OkHostnameVerifier;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 
@@ -36,10 +25,6 @@ public class ApiClient {
 
   private DateFormat dateFormat;
 
-  private InputStream sslCaCert;
-  private boolean verifyingSsl;
-  private KeyManager[] keyManagers;
-
   private OkHttpClient httpClient;
   private JSON json;
 
@@ -49,7 +34,8 @@ public class ApiClient {
    * Basic constructor for ApiClient
    */
   public ApiClient(String appId, String apiKey) {
-    init();
+    json = new JSON();
+    setUserAgent("OpenAPI-Generator/0.1.0/java");
     initHttpClient();
 
     this.basePath = "https://" + appId + "-1.algolianet.com";
@@ -69,15 +55,6 @@ public class ApiClient {
     }
 
     httpClient = builder.build();
-  }
-
-  private void init() {
-    verifyingSsl = true;
-
-    json = new JSON();
-
-    // Set default User-Agent.
-    setUserAgent("OpenAPI-Generator/0.1.0/java");
   }
 
   /**
@@ -100,78 +77,12 @@ public class ApiClient {
     return this;
   }
 
-  /**
-   * True if isVerifyingSsl flag is on
-   *
-   * @return True if isVerifySsl flag is on
-   */
-  public boolean isVerifyingSsl() {
-    return verifyingSsl;
-  }
-
-  /**
-   * Configure whether to verify certificate and hostname when making https requests. Default to
-   * true. NOTE: Do NOT set to false in production code, otherwise you would face multiple types of
-   * cryptographic attacks.
-   *
-   * @param verifyingSsl True to verify TLS/SSL connection
-   * @return ApiClient
-   */
-  public ApiClient setVerifyingSsl(boolean verifyingSsl) {
-    this.verifyingSsl = verifyingSsl;
-    applySslSettings();
-    return this;
-  }
-
-  /**
-   * Get SSL CA cert.
-   *
-   * @return Input stream to the SSL CA cert
-   */
-  public InputStream getSslCaCert() {
-    return sslCaCert;
-  }
-
-  /**
-   * Configure the CA certificate to be trusted when making https requests. Use null to reset to
-   * default.
-   *
-   * @param sslCaCert input stream for SSL CA cert
-   * @return ApiClient
-   */
-  public ApiClient setSslCaCert(InputStream sslCaCert) {
-    this.sslCaCert = sslCaCert;
-    applySslSettings();
-    return this;
-  }
-
-  public KeyManager[] getKeyManagers() {
-    return keyManagers;
-  }
-
-  /**
-   * Configure client keys to use for authorization in an SSL session. Use null to reset to default.
-   *
-   * @param managers The KeyManagers to use
-   * @return ApiClient
-   */
-  public ApiClient setKeyManagers(KeyManager[] managers) {
-    this.keyManagers = managers;
-    applySslSettings();
-    return this;
-  }
-
   public DateFormat getDateFormat() {
     return dateFormat;
   }
 
   public ApiClient setDateFormat(DateFormat dateFormat) {
     this.json.setDateFormat(dateFormat);
-    return this;
-  }
-
-  public ApiClient setSqlDateFormat(DateFormat dateFormat) {
-    this.json.setSqlDateFormat(dateFormat);
     return this;
   }
 
@@ -460,16 +371,6 @@ public class ApiClient {
   }
 
   /**
-   * Sanitize filename by removing path. e.g. ../../sun.gif becomes sun.gif
-   *
-   * @param filename The filename to be sanitized
-   * @return The sanitized filename
-   */
-  public String sanitizeFilename(String filename) {
-    return filename.replaceAll(".*[/\\\\]", "");
-  }
-
-  /**
    * Check if the given MIME is a JSON MIME. JSON MIME examples: application/json application/json;
    * charset=UTF8 APPLICATION/JSON application/vnd.company+json "* / *" is also default to JSON
    *
@@ -480,50 +381,6 @@ public class ApiClient {
     String jsonMime =
       "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
     return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
-  }
-
-  /**
-   * Select the Accept header's value from the given accepts array: if JSON exists in the given
-   * array, use it; otherwise use all of them (joining into a string)
-   *
-   * @param accepts The accepts array to select from
-   * @return The Accept header to use. If the given array is empty, null will be returned (not to
-   *     set the Accept header explicitly).
-   */
-  public String selectHeaderAccept(String[] accepts) {
-    if (accepts.length == 0) {
-      return null;
-    }
-    for (String accept : accepts) {
-      if (isJsonMime(accept)) {
-        return accept;
-      }
-    }
-    StringJoiner joiner = new StringJoiner(",");
-    for (String s : accepts) {
-      joiner.add(s);
-    }
-    return joiner.toString();
-  }
-
-  /**
-   * Select the Content-Type header's value from the given array: if JSON exists in the given array,
-   * use it; otherwise use the first one of the array.
-   *
-   * @param contentTypes The Content-Type array to select from
-   * @return The Content-Type header to use. If the given array is empty, or matches "any", JSON
-   *     will be used.
-   */
-  public String selectHeaderContentType(String[] contentTypes) {
-    if (contentTypes.length == 0 || contentTypes[0].equals("*/*")) {
-      return "application/json";
-    }
-    for (String contentType : contentTypes) {
-      if (isJsonMime(contentType)) {
-        return contentType;
-      }
-    }
-    return contentTypes[0];
   }
 
   /**
@@ -551,7 +408,6 @@ public class ApiClient {
    * @throws ApiException If fail to deserialize response body, i.e. cannot read response body or
    *     the Content-Type of the response is not supported.
    */
-  @SuppressWarnings("unchecked")
   public <T> T deserialize(Response response, Type returnType)
     throws ApiException {
     if (response == null || returnType == null) {
@@ -616,9 +472,6 @@ public class ApiClient {
     if (obj instanceof byte[]) {
       // Binary (byte array) body parameter support.
       return RequestBody.create((byte[]) obj, MediaType.parse(contentType));
-    } else if (obj instanceof File) {
-      // File body parameter support.
-      return RequestBody.create((File) obj, MediaType.parse(contentType));
     } else if (isJsonMime(contentType)) {
       String content;
       if (obj != null) {
@@ -691,7 +544,6 @@ public class ApiClient {
    * @param callback ApiCallback
    * @see #execute(Call, Type)
    */
-  @SuppressWarnings("unchecked")
   public <T> void executeAsync(
     Call call,
     final Type returnType,
@@ -797,7 +649,6 @@ public class ApiClient {
    * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and
    *     "DELETE"
    * @param queryParams The query parameters
-   * @param collectionQueryParams The collection query parameters
    * @param body The request body object
    * @param headerParams The header parameters
    * @param callback Callback for upload/download progress
@@ -808,7 +659,6 @@ public class ApiClient {
     String path,
     String method,
     List<Pair> queryParams,
-    List<Pair> collectionQueryParams,
     Object body,
     Map<String, String> headerParams,
     ApiCallback callback
@@ -817,7 +667,6 @@ public class ApiClient {
       path,
       method,
       queryParams,
-      collectionQueryParams,
       body,
       headerParams,
       callback
@@ -833,7 +682,6 @@ public class ApiClient {
    * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and
    *     "DELETE"
    * @param queryParams The query parameters
-   * @param collectionQueryParams The collection query parameters
    * @param body The request body object
    * @param headerParams The header parameters
    * @param callback Callback for upload/download progress
@@ -844,7 +692,6 @@ public class ApiClient {
     String path,
     String method,
     List<Pair> queryParams,
-    List<Pair> collectionQueryParams,
     Object body,
     Map<String, String> headerParams,
     ApiCallback callback
@@ -852,7 +699,7 @@ public class ApiClient {
     headerParams.put("X-Algolia-Application-Id", this.appId);
     headerParams.put("X-Algolia-API-Key", this.apiKey);
 
-    final String url = buildUrl(path, queryParams, collectionQueryParams);
+    final String url = buildUrl(path, queryParams);
     final Request.Builder reqBuilder = new Request.Builder().url(url);
     processHeaderParams(headerParams, reqBuilder);
 
@@ -901,14 +748,9 @@ public class ApiClient {
    *
    * @param path The sub path
    * @param queryParams The query parameters
-   * @param collectionQueryParams The collection query parameters
    * @return The full URL
    */
-  public String buildUrl(
-    String path,
-    List<Pair> queryParams,
-    List<Pair> collectionQueryParams
-  ) {
+  public String buildUrl(String path, List<Pair> queryParams) {
     final StringBuilder url = new StringBuilder();
     url.append(basePath).append(path);
 
@@ -928,23 +770,6 @@ public class ApiClient {
             .append(escapeString(param.getName()))
             .append("=")
             .append(escapeString(value));
-        }
-      }
-    }
-
-    if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
-      String prefix = url.toString().contains("?") ? "&" : "?";
-      for (Pair param : collectionQueryParams) {
-        if (param.getValue() != null) {
-          if (prefix != null) {
-            url.append(prefix);
-            prefix = null;
-          } else {
-            url.append("&");
-          }
-          String value = parameterToString(param.getValue());
-          // collection query parameter value already escaped as part of parameterToPairs
-          url.append(escapeString(param.getName())).append("=").append(value);
         }
       }
     }
@@ -992,58 +817,6 @@ public class ApiClient {
   }
 
   /**
-   * Build a multipart (file uploading) request body with the given form parameters, which could
-   * contain text fields and file fields.
-   *
-   * @param formParams Form parameters in the form of Map
-   * @return RequestBody
-   */
-  public RequestBody buildRequestBodyMultipart(Map<String, Object> formParams) {
-    MultipartBody.Builder mpBuilder = new MultipartBody.Builder()
-      .setType(MultipartBody.FORM);
-    for (Entry<String, Object> param : formParams.entrySet()) {
-      if (param.getValue() instanceof File) {
-        File file = (File) param.getValue();
-        Headers partHeaders = Headers.of(
-          "Content-Disposition",
-          "form-data; name=\"" +
-          param.getKey() +
-          "\"; filename=\"" +
-          file.getName() +
-          "\""
-        );
-        MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
-        mpBuilder.addPart(partHeaders, RequestBody.create(file, mediaType));
-      } else {
-        Headers partHeaders = Headers.of(
-          "Content-Disposition",
-          "form-data; name=\"" + param.getKey() + "\""
-        );
-        mpBuilder.addPart(
-          partHeaders,
-          RequestBody.create(parameterToString(param.getValue()), null)
-        );
-      }
-    }
-    return mpBuilder.build();
-  }
-
-  /**
-   * Guess Content-Type header from the given file (defaults to "application/octet-stream").
-   *
-   * @param file The given file
-   * @return The guessed Content-Type
-   */
-  public String guessContentTypeFromFile(File file) {
-    String contentType = URLConnection.guessContentTypeFromName(file.getName());
-    if (contentType == null) {
-      return "application/octet-stream";
-    } else {
-      return contentType;
-    }
-  }
-
-  /**
    * Get network interceptor to add it to the httpClient to track download progress for async
    * requests.
    */
@@ -1063,101 +836,5 @@ public class ApiClient {
         return originalResponse;
       }
     };
-  }
-
-  /**
-   * Apply SSL related settings to httpClient according to the current values of verifyingSsl and
-   * sslCaCert.
-   */
-  private void applySslSettings() {
-    try {
-      TrustManager[] trustManagers;
-      HostnameVerifier hostnameVerifier;
-      if (!verifyingSsl) {
-        trustManagers =
-          new TrustManager[] {
-            new X509TrustManager() {
-              @Override
-              public void checkClientTrusted(
-                java.security.cert.X509Certificate[] chain,
-                String authType
-              ) throws CertificateException {}
-
-              @Override
-              public void checkServerTrusted(
-                java.security.cert.X509Certificate[] chain,
-                String authType
-              ) throws CertificateException {}
-
-              @Override
-              public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                return new java.security.cert.X509Certificate[] {};
-              }
-            },
-          };
-        hostnameVerifier =
-          new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-              return true;
-            }
-          };
-      } else {
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
-          TrustManagerFactory.getDefaultAlgorithm()
-        );
-
-        if (sslCaCert == null) {
-          trustManagerFactory.init((KeyStore) null);
-        } else {
-          char[] password = null; // Any password will work.
-          CertificateFactory certificateFactory = CertificateFactory.getInstance(
-            "X.509"
-          );
-          Collection<? extends Certificate> certificates = certificateFactory.generateCertificates(
-            sslCaCert
-          );
-          if (certificates.isEmpty()) {
-            throw new IllegalArgumentException(
-              "expected non-empty set of trusted certificates"
-            );
-          }
-          KeyStore caKeyStore = newEmptyKeyStore(password);
-          int index = 0;
-          for (Certificate certificate : certificates) {
-            String certificateAlias = "ca" + Integer.toString(index++);
-            caKeyStore.setCertificateEntry(certificateAlias, certificate);
-          }
-          trustManagerFactory.init(caKeyStore);
-        }
-        trustManagers = trustManagerFactory.getTrustManagers();
-        hostnameVerifier = OkHostnameVerifier.INSTANCE;
-      }
-
-      SSLContext sslContext = SSLContext.getInstance("TLS");
-      sslContext.init(keyManagers, trustManagers, new SecureRandom());
-      httpClient =
-        httpClient
-          .newBuilder()
-          .sslSocketFactory(
-            sslContext.getSocketFactory(),
-            (X509TrustManager) trustManagers[0]
-          )
-          .hostnameVerifier(hostnameVerifier)
-          .build();
-    } catch (GeneralSecurityException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private KeyStore newEmptyKeyStore(char[] password)
-    throws GeneralSecurityException {
-    try {
-      KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-      keyStore.load(null, password);
-      return keyStore;
-    } catch (IOException e) {
-      throw new AssertionError(e);
-    }
   }
 }

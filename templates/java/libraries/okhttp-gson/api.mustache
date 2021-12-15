@@ -5,28 +5,10 @@ import {{invokerPackage}}.ApiClient;
 import {{invokerPackage}}.ApiException;
 import {{invokerPackage}}.ApiResponse;
 import {{invokerPackage}}.Pair;
-import {{invokerPackage}}.ProgressRequestBody;
-import {{invokerPackage}}.ProgressResponseBody;
-{{#performBeanValidation}}
-import {{invokerPackage}}.BeanValidationException;
-{{/performBeanValidation}}
 
 import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
-
-{{#useBeanValidation}}
-import javax.validation.constraints.*;
-{{/useBeanValidation}}
-{{#performBeanValidation}}
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-import javax.validation.executable.ExecutableValidator;
-import java.util.Set;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-{{/performBeanValidation}}
+import okhttp3.Call;
 
 {{#imports}}import {{import}};
 {{/imports}}
@@ -46,21 +28,12 @@ public class {{classname}} extends ApiClient {
     }
 
     {{#operation}}
-    {{^vendorExtensions.x-group-parameters}}/**
+    /**
      * Build call for {{operationId}}{{#allParams}}
      * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     {{#responses.0}}
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        {{#responses}}
-        <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-        {{/responses}}
-     </table>
-     {{/responses.0}}
      {{#isDeprecated}}
      * @deprecated
      {{/isDeprecated}}
@@ -72,51 +45,39 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}private{{/vendorExtensions.x-group-parameters}} okhttp3.Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
-        Object localVarPostBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+        Object body = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
         // create path and map variables
-        String localVarPath = "{{{path}}}"{{#pathParams}}
-            .replaceAll("\\{" + "{{baseName}}" + "\\}", this.escapeString({{#collectionFormat}}this.collectionPathParameterToString("{{{collectionFormat}}}", {{{paramName}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}.toString(){{/collectionFormat}})){{/pathParams}};
+        String path = "{{{path}}}"{{#pathParams}}
+            .replaceAll("\\{" + "{{baseName}}" + "\\}", this.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
-        {{javaUtilPrefix}}List<Pair> localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
-        {{javaUtilPrefix}}List<Pair> localVarCollectionQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
-        {{javaUtilPrefix}}Map<String, String> localVarHeaderParams = new {{javaUtilPrefix}}HashMap<String, String>();
+        {{javaUtilPrefix}}List<Pair> queryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
+        {{javaUtilPrefix}}Map<String, String> headers = new {{javaUtilPrefix}}HashMap<String, String>();
 
         {{#queryParams}}
         if ({{paramName}} != null) {
-            {{#collectionFormat}}localVarCollectionQueryParams.addAll(this.parameterToPairs("{{{.}}}", {{/collectionFormat}}{{^collectionFormat}}localVarQueryParams.addAll(this.parameterToPair({{/collectionFormat}}"{{baseName}}", {{paramName}}));
+            queryParams.addAll(this.parameterToPair("{{baseName}}", {{paramName}}));
         }
 
         {{/queryParams}}
         {{#headerParams}}
         if ({{paramName}} != null) {
-            localVarHeaderParams.put("{{baseName}}", this.parameterToString({{paramName}}));
+            headers.put("{{baseName}}", this.parameterToString({{paramName}}));
         }
 
-        {{/headerParams}}
-        final String[] localVarAccepts = {
-            {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}
-        };
-        final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
+        {{/headerParams}}        
+        headers.put("Accept", "application/json");
+        headers.put("Content-Type", "application/json");
 
-        final String[] localVarContentTypes = {
-            {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}}
-        };
-        final String localVarContentType = this.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        return this.buildCall(localVarPath, "{{httpMethod}}", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, _callback);
+        return this.buildCall(path, "{{httpMethod}}", queryParams, body, headers, _callback);
     }
 
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+    private Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
         {{#allParams}}{{#required}}
         // verify the required parameter '{{paramName}}' is set
         if ({{paramName}} == null) {
@@ -127,22 +88,12 @@ public class {{classname}} extends ApiClient {
         return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
     }
 
-    {{^vendorExtensions.x-group-parameters}}
     /**
      * {{&summary}}
      * {{&notes}}{{#allParams}}
      * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#returnType}}
      * @return {{.}}{{/returnType}}
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     {{#responses.0}}
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        {{#responses}}
-        <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-        {{/responses}}
-     </table>
-     {{/responses.0}}
      {{#isDeprecated}}
      * @deprecated
      {{/isDeprecated}}
@@ -155,29 +106,18 @@ public class {{classname}} extends ApiClient {
     @Deprecated
     {{/isDeprecated}}
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
-        {{#returnType}}Type localVarReturnType = new TypeToken<{{{.}}}>(){}.getType();
-        ApiResponse<{{{.}}}> res = this.execute(localVarCall, localVarReturnType);
-        return res.getData();{{/returnType}}{{^returnType}}return this.execute(localVarCall).getData();{{/returnType}}
+        Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
+        {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();
+        ApiResponse<{{{.}}}> res = this.execute(call, returnType);
+        return res.getData();{{/returnType}}{{^returnType}}return this.execute(call).getData();{{/returnType}}
     }
-    {{/vendorExtensions.x-group-parameters}}
-
-    {{^vendorExtensions.x-group-parameters}}/**
-     * {{&summary}} (asynchronously)
-     * {{&notes}}{{#allParams}}
-     * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
+    /**
+     * {{summary}} (asynchronously)
+     * {{notes}}{{#allParams}}
+     * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     {{#responses.0}}
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        {{#responses}}
-        <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-        {{/responses}}
-     </table>
-     {{/responses.0}}
      {{#isDeprecated}}
      * @deprecated
      {{/isDeprecated}}
@@ -189,170 +129,12 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}private{{/vendorExtensions.x-group-parameters}} okhttp3.Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-        {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        this.executeAsync(localVarCall, localVarReturnType, _callback);{{/returnType}}{{^returnType}}this.executeAsync(localVarCall, _callback);{{/returnType}}
-        return localVarCall;
+    public Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
+        Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+        {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
+        this.executeAsync(call, returnType, _callback);{{/returnType}}{{^returnType}}this.executeAsync(call, _callback);{{/returnType}}
+        return call;
     }
-    {{#vendorExtensions.x-group-parameters}}
-
-    public class API{{operationId}}Request {
-        {{#requiredParams}}
-        private final {{{dataType}}} {{paramName}};
-        {{/requiredParams}}
-        {{#optionalParams}}
-        private {{{dataType}}} {{paramName}};
-        {{/optionalParams}}
-
-        private API{{operationId}}Request({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) {
-            {{#requiredParams}}
-            this.{{paramName}} = {{paramName}};
-            {{/requiredParams}}
-        }
-
-        {{#optionalParams}}
-        /**
-         * Set {{paramName}}
-         * @param {{paramName}} {{&description}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}})
-         * @return API{{operationId}}Request
-         */
-        public API{{operationId}}Request {{paramName}}({{{dataType}}} {{paramName}}) {
-            this.{{paramName}} = {{paramName}};
-            return this;
-        }
-
-        {{/optionalParams}}
-        /**
-         * Build call for {{operationId}}
-         * @param _callback ApiCallback API callback
-         * @return Call to execute
-         * @throws ApiException If fail to serialize the request body object
-         {{#responses.0}}
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            {{#responses}}
-            <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-            {{/responses}}
-         </table>
-         {{/responses.0}}
-         {{#isDeprecated}}
-         * @deprecated
-         {{/isDeprecated}}
-         */
-        {{#isDeprecated}}
-        @Deprecated
-        {{/isDeprecated}}
-        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-        }
-
-        /**
-         * Execute {{operationId}} request{{#returnType}}
-         * @return {{.}}{{/returnType}}
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         {{#responses.0}}
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            {{#responses}}
-            <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-            {{/responses}}
-         </table>
-         {{/responses.0}}
-         {{#isDeprecated}}
-         * @deprecated
-         {{/isDeprecated}}
-         */
-        {{#isDeprecated}}
-        @Deprecated
-        {{/isDeprecated}}
-        public {{{returnType}}}{{^returnType}}void{{/returnType}} execute() throws ApiException {
-            {{#returnType}}ApiResponse<{{{.}}}> localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{#returnType}}
-            return localVarResp.getData();{{/returnType}}
-        }
-
-        /**
-         * Execute {{operationId}} request with HTTP info returned
-         * @return ApiResponse&lt;{{returnType}}{{^returnType}}Void{{/returnType}}&gt;
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         {{#responses.0}}
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            {{#responses}}
-            <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-            {{/responses}}
-         </table>
-         {{/responses.0}}
-         {{#isDeprecated}}
-         * @deprecated
-         {{/isDeprecated}}
-         */
-        {{#isDeprecated}}
-        @Deprecated
-        {{/isDeprecated}}
-        public ApiResponse<{{{returnType}}}{{^returnType}}Void{{/returnType}}> executeWithHttpInfo() throws ApiException {
-            return {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
-        }
-
-        /**
-         * Execute {{operationId}} request (asynchronously)
-         * @param _callback The callback to be executed when the API call finishes
-         * @return The request call
-         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-         {{#responses.0}}
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            {{#responses}}
-            <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-            {{/responses}}
-         </table>
-         {{/responses.0}}
-         {{#isDeprecated}}
-         * @deprecated
-         {{/isDeprecated}}
-         */
-        {{#isDeprecated}}
-        @Deprecated
-        {{/isDeprecated}}
-        public okhttp3.Call executeAsync(final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
-            return {{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-        }
-    }
-
-    /**
-     * {{&summary}}
-     * {{&notes}}{{#requiredParams}}
-     * @param {{paramName}} {{&description}} (required){{/requiredParams}}
-     * @return API{{operationId}}Request
-     {{#responses.0}}
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        {{#responses}}
-        <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{&description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
-        {{/responses}}
-     </table>
-     {{/responses.0}}
-     {{#isDeprecated}}
-     * @deprecated
-     {{/isDeprecated}}
-        {{#externalDocs}}
-     * {{&description}}
-     * @see <a href="{{url}}">{{&summary}} Documentation</a>
-        {{/externalDocs}}
-     */
-    {{#isDeprecated}}
-    @Deprecated
-    {{/isDeprecated}}
-    public API{{operationId}}Request {{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) {
-        return new API{{operationId}}Request({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}});
-    }
-    {{/vendorExtensions.x-group-parameters}}
     {{/operation}}
 }
 {{/operations}}
