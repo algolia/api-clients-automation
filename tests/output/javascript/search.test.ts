@@ -75,7 +75,7 @@ describe('Common Test Suite', () => {
     });
   });
 
-  test('', async () => {
+  test('updateApiKey', async () => {
     const req = await client.updateApiKey('myApiKey', {
       acl: ['search', 'addObject'],
       validity: 300,
@@ -94,7 +94,7 @@ describe('Common Test Suite', () => {
     });
   });
 
-  test('', async () => {
+  test('deleteApiKey', async () => {
     const req = await client.deleteApiKey('myApiKey');
     expect(req).toMatchObject({
       path: '/1/keys/myApiKey',
@@ -110,7 +110,7 @@ describe('Common Test Suite', () => {
     });
   });
 
-  test('', async () => {
+  test('addApiKey', async () => {
     const req = await client.addApiKey({
       acl: ['search', 'addObject'],
       description: 'my new api key',
@@ -131,7 +131,7 @@ describe('Common Test Suite', () => {
     });
   });
 
-  test('', async () => {
+  test('restoreApiKey', async () => {
     const req = await client.restoreApiKey('myApiKey');
     expect(req).toMatchObject({
       path: '/1/keys/myApiKey/restore',
@@ -139,7 +139,7 @@ describe('Common Test Suite', () => {
     });
   });
 
-  test('', async () => {
+  test('getApiKey', async () => {
     const req = await client.getApiKey('myApiKey');
     expect(req).toMatchObject({
       path: '/1/keys/myApiKey',
@@ -155,7 +155,7 @@ describe('Common Test Suite', () => {
     });
   });
 
-  test('', async () => {
+  test('listApiKeys', async () => {
     const req = await client.listApiKeys();
     expect(req).toMatchObject({
       path: '/1/keys',
