@@ -22,6 +22,8 @@ get:
       description: Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
       schema:
         type: string
+        nullable: true
+        default: null
     - name: type
       in: query
       description: Type of log entries to retrieve. When omitted, all log entries are retrieved.
