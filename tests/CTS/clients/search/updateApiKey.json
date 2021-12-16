@@ -4,7 +4,7 @@
     "parameters": [
       "myApiKey",
       {
-        "acl" : ["search", "addObject"],
+        "acl": ["search", "addObject"],
         "validity": 300,
         "maxQueriesPerIPPerHour": 100,
         "maxHitsPerQuery": 20
@@ -14,7 +14,7 @@
       "path": "/1/keys/myApiKey",
       "method": "PUT",
       "data": {
-        "acl" : ["search", "addObject"],
+        "acl": ["search", "addObject"],
         "validity": 300,
         "maxQueriesPerIPPerHour": 100,
         "maxHitsPerQuery": 20
@@ -22,4 +22,3 @@
     }
   }
 ]
-  
