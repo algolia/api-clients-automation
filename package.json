@@ -20,6 +20,7 @@
     "post:generate": "./scripts/post-gen/global.sh",
     "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
     "playground:java": "mvn clean compile exec:java -f playground/java/pom.xml",
+    "playground:js:analytics": "yarn workspace javascript-playground start:analytics",
     "playground:js:personalization": "yarn workspace javascript-playground start:personalization",
     "playground:js:recommend": "yarn workspace javascript-playground start:recommend",
     "playground:js:search": "yarn workspace javascript-playground start:search",
