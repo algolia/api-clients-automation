@@ -38,7 +38,7 @@ yarn generate all recommend
 yarn client:build
 ```
 
-# Testing clients
+# Testing
 
 The clients can be tested inside the [`playground`](./playground) folder
 
