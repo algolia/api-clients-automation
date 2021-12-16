@@ -471,21 +471,29 @@ export class AnalyticsApi {
    * Returns top searches that didn\'t lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
    *
    * @summary Returns top searches that didn\'t lead to any clicks.
-   * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getSearchesNoClicks - The getSearchesNoClicks parameters.
+   * @param getSearchesNoClicks.index - The index name to target.
+   * @param getSearchesNoClicks.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getSearchesNoClicks.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getSearchesNoClicks.limit - How many items to fetch.
+   * @param getSearchesNoClicks.offset - From which position to start retrieving results.
+   * @param getSearchesNoClicks.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getSearchesNoClicks(
-    index: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetSearchesNoClicksResponse> {
+  getSearchesNoClicks({
+    index,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetSearchesNoClicksResponse> {
     const path = '/2/searches/noClicks';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -536,21 +544,29 @@ export class AnalyticsApi {
    * Returns top searches that didn\'t return any results. Limited to the 1000 most frequent ones.
    *
    * @summary Returns top searches that didn\'t return any results.
-   * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getSearchesNoResults - The getSearchesNoResults parameters.
+   * @param getSearchesNoResults.index - The index name to target.
+   * @param getSearchesNoResults.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getSearchesNoResults.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getSearchesNoResults.limit - How many items to fetch.
+   * @param getSearchesNoResults.offset - From which position to start retrieving results.
+   * @param getSearchesNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getSearchesNoResults(
-    index: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetSearchesNoResultsResponse> {
+  getSearchesNoResults({
+    index,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetSearchesNoResultsResponse> {
     const path = '/2/searches/noResults';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -634,21 +650,29 @@ export class AnalyticsApi {
    * Returns top countries. Limited to the 1000 most frequent ones.
    *
    * @summary Returns top countries.
-   * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopCountries - The getTopCountries parameters.
+   * @param getTopCountries.index - The index name to target.
+   * @param getTopCountries.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopCountries.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopCountries.limit - How many items to fetch.
+   * @param getTopCountries.offset - From which position to start retrieving results.
+   * @param getTopCountries.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopCountries(
-    index: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopCountriesResponse> {
+  getTopCountries({
+    index,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopCountriesResponse> {
     const path = '/2/countries';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -699,21 +723,29 @@ export class AnalyticsApi {
    * Returns top filter attributes. Limited to the 1000 most used filters.
    *
    * @summary Returns top filter attributes.
-   * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopFilterAttributes - The getTopFilterAttributes parameters.
+   * @param getTopFilterAttributes.index - The index name to target.
+   * @param getTopFilterAttributes.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFilterAttributes.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFilterAttributes.limit - How many items to fetch.
+   * @param getTopFilterAttributes.offset - From which position to start retrieving results.
+   * @param getTopFilterAttributes.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFilterAttributes(
-    index: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopFilterAttributesResponse> {
+  getTopFilterAttributes({
+    index,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopFilterAttributesResponse> {
     const path = '/2/filters';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -764,23 +796,32 @@ export class AnalyticsApi {
    * Returns top filter attributes for a given search. Limited to the 1000 most used filters.
    *
    * @summary Returns top filter attributes for a given search.
-   * @param index - The index name to target.
-   * @param search - The query term. Must match the exact user input.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopFilterAttributesForSearch - The getTopFilterAttributesForSearch parameters.
+   * @param getTopFilterAttributesForSearch.index - The index name to target.
+   * @param getTopFilterAttributesForSearch.search - The query term. Must match the exact user input.
+   * @param getTopFilterAttributesForSearch.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFilterAttributesForSearch.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFilterAttributesForSearch.limit - How many items to fetch.
+   * @param getTopFilterAttributesForSearch.offset - From which position to start retrieving results.
+   * @param getTopFilterAttributesForSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFilterAttributesForSearch(
-    index: string,
-    search: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopFilterAttributesResponse> {
+  getTopFilterAttributesForSearch({
+    index,
+    search,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    search: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopFilterAttributesResponse> {
     const path = '/2/filters?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))
@@ -840,23 +881,32 @@ export class AnalyticsApi {
    * Returns top filters for the given attribute. Limited to the 1000 most used filters.
    *
    * @summary Returns top filters for the given attribute.
-   * @param attribute - The exact name of the attribute.
-   * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopFilterForAttribute - The getTopFilterForAttribute parameters.
+   * @param getTopFilterForAttribute.attribute - The exact name of the attribute.
+   * @param getTopFilterForAttribute.index - The index name to target.
+   * @param getTopFilterForAttribute.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFilterForAttribute.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFilterForAttribute.limit - How many items to fetch.
+   * @param getTopFilterForAttribute.offset - From which position to start retrieving results.
+   * @param getTopFilterForAttribute.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFilterForAttribute(
-    attribute: string,
-    index: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopFilterForAttributeResponse> {
+  getTopFilterForAttribute({
+    attribute,
+    index,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    attribute: string;
+    index: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopFilterForAttributeResponse> {
     const path = '/2/filters/{attribute}'.replace(
       '{attribute}',
       encodeURIComponent(String(attribute))
@@ -916,25 +966,35 @@ export class AnalyticsApi {
    * Returns top filters for the given attributes and search. Several attributes can be given by separating them with a comma. Several attributes can be given by separating them with a comma.
    *
    * @summary Returns top filters for the given attributes and search.
-   * @param attributes - The exact names of the attributes, separated by commas.
-   * @param index - The index name to target.
-   * @param search - The query term. Must match the exact user input.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopFiltersForAttributesSearch - The getTopFiltersForAttributesSearch parameters.
+   * @param getTopFiltersForAttributesSearch.attributes - The exact names of the attributes, separated by commas.
+   * @param getTopFiltersForAttributesSearch.index - The index name to target.
+   * @param getTopFiltersForAttributesSearch.search - The query term. Must match the exact user input.
+   * @param getTopFiltersForAttributesSearch.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFiltersForAttributesSearch.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFiltersForAttributesSearch.limit - How many items to fetch.
+   * @param getTopFiltersForAttributesSearch.offset - From which position to start retrieving results.
+   * @param getTopFiltersForAttributesSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFiltersForAttributesSearch(
-    attributes: string,
-    index: string,
-    search: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopFilterForAttributeResponse> {
+  getTopFiltersForAttributesSearch({
+    attributes,
+    index,
+    search,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    attributes: string;
+    index: string;
+    search: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopFilterForAttributeResponse> {
     const path = '/2/filters/{attributes}?search={search}'
       .replace('{attributes}', encodeURIComponent(String(attributes)))
       .replace('{search}', encodeURIComponent(String(search)));
@@ -999,21 +1059,29 @@ export class AnalyticsApi {
    * Returns top filters with no results. Limited to the 1000 most used filters.
    *
    * @summary Returns top filters with no results.
-   * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopFiltersNoResults - The getTopFiltersNoResults parameters.
+   * @param getTopFiltersNoResults.index - The index name to target.
+   * @param getTopFiltersNoResults.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFiltersNoResults.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFiltersNoResults.limit - How many items to fetch.
+   * @param getTopFiltersNoResults.offset - From which position to start retrieving results.
+   * @param getTopFiltersNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFiltersNoResults(
-    index: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopFiltersNoResultsResponse> {
+  getTopFiltersNoResults({
+    index,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopFiltersNoResultsResponse> {
     const path = '/2/filters/noResults';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1064,23 +1132,32 @@ export class AnalyticsApi {
    * Returns top filters for the given no result search. Limited to the 1000 most used filters.
    *
    * @summary Returns top filters for the given no result search.
-   * @param index - The index name to target.
-   * @param search - The query term. Must match the exact user input.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopFiltersNoResultsForSearch - The getTopFiltersNoResultsForSearch parameters.
+   * @param getTopFiltersNoResultsForSearch.index - The index name to target.
+   * @param getTopFiltersNoResultsForSearch.search - The query term. Must match the exact user input.
+   * @param getTopFiltersNoResultsForSearch.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFiltersNoResultsForSearch.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopFiltersNoResultsForSearch.limit - How many items to fetch.
+   * @param getTopFiltersNoResultsForSearch.offset - From which position to start retrieving results.
+   * @param getTopFiltersNoResultsForSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFiltersNoResultsForSearch(
-    index: string,
-    search: string,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopFiltersNoResultsResponse> {
+  getTopFiltersNoResultsForSearch({
+    index,
+    search,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    search: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopFiltersNoResultsResponse> {
     const path = '/2/filters/noResults?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))
@@ -1140,23 +1217,32 @@ export class AnalyticsApi {
    * Returns top hits. Limited to the 1000 most frequent ones.
    *
    * @summary Returns top hits.
-   * @param index - The index name to target.
-   * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopHits - The getTopHits parameters.
+   * @param getTopHits.index - The index name to target.
+   * @param getTopHits.clickAnalytics - Whether to include the click-through and conversion rates for a search.
+   * @param getTopHits.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopHits.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopHits.limit - How many items to fetch.
+   * @param getTopHits.offset - From which position to start retrieving results.
+   * @param getTopHits.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopHits(
-    index: string,
-    clickAnalytics?: boolean,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopHitsResponse | GetTopHitsResponseWithAnalytics> {
+  getTopHits({
+    index,
+    clickAnalytics,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    clickAnalytics?: boolean;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopHitsResponse | GetTopHitsResponseWithAnalytics> {
     const path = '/2/hits';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1211,25 +1297,35 @@ export class AnalyticsApi {
    * Returns top hits for the given search. Limited to the 1000 most frequent ones.
    *
    * @summary Returns top hits for the given search.
-   * @param index - The index name to target.
-   * @param search - The query term. Must match the exact user input.
-   * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopHitsForSearch - The getTopHitsForSearch parameters.
+   * @param getTopHitsForSearch.index - The index name to target.
+   * @param getTopHitsForSearch.search - The query term. Must match the exact user input.
+   * @param getTopHitsForSearch.clickAnalytics - Whether to include the click-through and conversion rates for a search.
+   * @param getTopHitsForSearch.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopHitsForSearch.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopHitsForSearch.limit - How many items to fetch.
+   * @param getTopHitsForSearch.offset - From which position to start retrieving results.
+   * @param getTopHitsForSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopHitsForSearch(
-    index: string,
-    search: string,
-    clickAnalytics?: boolean,
-    startDate?: Date,
-    endDate?: Date,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopHitsResponse | GetTopHitsResponseWithAnalytics> {
+  getTopHitsForSearch({
+    index,
+    search,
+    clickAnalytics,
+    startDate,
+    endDate,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    search: string;
+    clickAnalytics?: boolean;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopHitsResponse | GetTopHitsResponseWithAnalytics> {
     const path = '/2/hits?search={search}'.replace(
       '{search}',
       encodeURIComponent(String(search))
@@ -1293,27 +1389,38 @@ export class AnalyticsApi {
    * Returns top searches. Limited to the 1000 most frequent ones. For each search, also returns the average number of hits returned.
    *
    * @summary Returns top searches.
-   * @param index - The index name to target.
-   * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param orderBy - Reorder the results.
-   * @param direction - The sorting of the result.
-   * @param limit - How many items to fetch.
-   * @param offset - From which position to start retrieving results.
-   * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * @param getTopSearches - The getTopSearches parameters.
+   * @param getTopSearches.index - The index name to target.
+   * @param getTopSearches.clickAnalytics - Whether to include the click-through and conversion rates for a search.
+   * @param getTopSearches.startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopSearches.endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param getTopSearches.orderBy - Reorder the results.
+   * @param getTopSearches.direction - The sorting of the result.
+   * @param getTopSearches.limit - How many items to fetch.
+   * @param getTopSearches.offset - From which position to start retrieving results.
+   * @param getTopSearches.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopSearches(
-    index: string,
-    clickAnalytics?: boolean,
-    startDate?: Date,
-    endDate?: Date,
-    orderBy?: Record<string, any>,
-    direction?: Record<string, any>,
-    limit?: number,
-    offset?: number,
-    tags?: string
-  ): Promise<GetTopSearchesResponse | GetTopSearchesResponseWithAnalytics> {
+  getTopSearches({
+    index,
+    clickAnalytics,
+    startDate,
+    endDate,
+    orderBy,
+    direction,
+    limit,
+    offset,
+    tags,
+  }: {
+    index: string;
+    clickAnalytics?: boolean;
+    startDate?: Date;
+    endDate?: Date;
+    orderBy?: Record<string, any>;
+    direction?: Record<string, any>;
+    limit?: number;
+    offset?: number;
+    tags?: string;
+  }): Promise<GetTopSearchesResponse | GetTopSearchesResponseWithAnalytics> {
     const path = '/2/searches';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
