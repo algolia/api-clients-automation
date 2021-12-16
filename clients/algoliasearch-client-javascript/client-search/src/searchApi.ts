@@ -342,7 +342,6 @@ export class SearchApi {
 
     return this.sendRequest(request, requestOptions);
   }
-  
   /**
    * Get the permissions of an API key.
    *
@@ -374,8 +373,7 @@ export class SearchApi {
     };
 
     return this.sendRequest(request, requestOptions);
-  }  
-      
+  }
   /**
    * Return the lastest log entries.
    *
@@ -515,6 +513,28 @@ export class SearchApi {
         'Required parameter taskID was null or undefined when calling getTask.'
       );
     }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * List API keys, along with their associated rights.
+   *
+   * @summary Get the full list of API Keys.
+   */
+  listApiKeys(): Promise<ListApiKeysResponse> {
+    const path = '/1/keys';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
