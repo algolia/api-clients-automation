@@ -65,13 +65,13 @@ yarn docker generate
 #### Usage
 
 ```bash
-yarn docker clients <language | all> <client | all>
+yarn docker build:clients <language | all> <client | all>
 ```
 
 ### Build specific client for specific language
 
 ```bash
-yarn docker clients java recommend
+yarn docker build:clients java recommend
 ```
 
 ## Testing clients

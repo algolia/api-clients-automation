@@ -10,7 +10,7 @@ SPECS=()
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
-cd ${DIR}/..
+cd ${DIR}/../..
 
 find_specs() {
     echo "> Searching for available specs..."

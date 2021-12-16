@@ -60,10 +60,7 @@ fi
 for lang in "${LANGUAGE[@]}"; do
     for client in "${CLIENT[@]}"; do
         if [[ " ${GENERATORS[*]} " =~ " ${lang}-${client} " ]]; then
-            # find package in the openapitools config
-            package=$(cat openapitools.json | jq -r --arg generator "$lang-$client" '."generator-cli".generators[$generator].additionalProperties.packageName')
-
-            $CMD $lang $client $package
+            $CMD $lang $client
         fi
     done
 done

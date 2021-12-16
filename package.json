@@ -7,8 +7,10 @@
     "tests/"
   ],
   "scripts": {
+    "build:clients": "./scripts/multiplexer.sh ./scripts/build/clients.sh ${0:-all} ${1:-all}",
+    "build:specs": "./scripts/build/specs.sh ${0:-all} ${1:-yaml}",
+    "build": "yarn build:specs && yarn build:clients",
     "clean": "rm -rf **/dist **/build **/node_modules",
-    "clients": "./scripts/multiplexer.sh ./scripts/clients.sh ${0:-all} ${1:-all}",
     "cts:generate": "yarn workspace tests cts:generate",
     "cts:test": "yarn workspace tests test",
     "docker:build": "./scripts/docker/build.sh",
@@ -24,8 +26,7 @@
     "playground:js:personalization": "yarn workspace javascript-playground start:personalization",
     "playground:js:recommend": "yarn workspace javascript-playground start:recommend",
     "playground:js:search": "yarn workspace javascript-playground start:search",
-    "specs:format": "yarn prettier --write specs",
-    "specs": "./scripts/specs.sh ${0:-all} ${1:-yaml}"
+    "specs:format": "yarn prettier --write specs"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.18",

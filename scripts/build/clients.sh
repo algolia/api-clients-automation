@@ -5,15 +5,15 @@ set -e
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
-cd ${DIR}/..
+cd ${DIR}/../..
 
 lang=$1
 client=$2
-package=$3
+generator="$lang-$client"
+package=$(cat openapitools.json | jq -r --arg generator "$generator" '."generator-cli".generators[$generator].additionalProperties.packageName')
 
 # Commands are based on the lang
 build_client(){
-    local generator="$lang-$client"
     echo "> Building $generator..."
 
     if [[ $lang == 'javascript' ]]; then
@@ -31,6 +31,8 @@ build_client(){
         set -e
     fi
 }
+
+
 
 if [[ -z $package ]]; then
     echo "Unknown package ${package}"
