@@ -26,7 +26,12 @@ format_client() {
         curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/$javaFormatter" > dist/$javaFormatter
     fi
 
-    find $CLIENT -type f -name "*.java" | xargs java -jar dist/$javaFormatter -r
+    find $CLIENT -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+                                                     --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
+                                                     --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
+                                                     --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
+                                                     --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
+                                                     -jar dist/$javaFormatter -r
 
     log=$(yarn prettier --write $CLIENT/**/*.java)
 
