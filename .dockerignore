@@ -1,4 +1,5 @@
 .github
+.git
 .vscode
 **/dist
 **/build
