@@ -66,6 +66,16 @@ post:
                           $ref: '../../common/schemas/Record.yml#/highlightResult'
                         clusterName:
                           $ref: '../../common/schemas/Record.yml#/highlightResult'
+                      required:
+                        - userID
+                        - clusterName
+                  required:
+                    - userID
+                    - clusterName
+                    - nbRecords
+                    - dataSize
+                    - objectID
+                    - _highlightResult
               nbHits:
                 $ref: '../../common/schemas/SearchResponse.yml#/baseSearchResponse/properties/nbHits'
               page:
