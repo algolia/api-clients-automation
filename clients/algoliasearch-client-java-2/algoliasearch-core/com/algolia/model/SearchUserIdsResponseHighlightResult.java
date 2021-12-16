@@ -27,8 +27,8 @@ public class SearchUserIdsResponseHighlightResult {
    *
    * @return userID
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
   public HighlightResult getUserID() {
     return userID;
   }
@@ -49,8 +49,8 @@ public class SearchUserIdsResponseHighlightResult {
    *
    * @return clusterName
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
   public HighlightResult getClusterName() {
     return clusterName;
   }

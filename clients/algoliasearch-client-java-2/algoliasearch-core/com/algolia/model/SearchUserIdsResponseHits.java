@@ -48,8 +48,8 @@ public class SearchUserIdsResponseHits {
    *
    * @return userID
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
   public UserId getUserID() {
     return userID;
   }
@@ -68,8 +68,12 @@ public class SearchUserIdsResponseHits {
    *
    * @return clusterName
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "c11-test", value = "Name of the cluster.")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(
+    example = "c11-test",
+    required = true,
+    value = "Name of the cluster."
+  )
   public String getClusterName() {
     return clusterName;
   }
@@ -88,8 +92,12 @@ public class SearchUserIdsResponseHits {
    *
    * @return nbRecords
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "3", value = "Number of records in the cluster.")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(
+    example = "3",
+    required = true,
+    value = "Number of records in the cluster."
+  )
   public Integer getNbRecords() {
     return nbRecords;
   }
@@ -108,9 +116,10 @@ public class SearchUserIdsResponseHits {
    *
    * @return dataSize
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "481",
+    required = true,
     value = "Data size taken by all the users assigned to the cluster."
   )
   public Integer getDataSize() {
@@ -131,8 +140,11 @@ public class SearchUserIdsResponseHits {
    *
    * @return objectID
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "userID of the requested user. Same as userID.")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(
+    required = true,
+    value = "userID of the requested user. Same as userID."
+  )
   public String getObjectID() {
     return objectID;
   }
@@ -153,8 +165,8 @@ public class SearchUserIdsResponseHits {
    *
    * @return highlightResult
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
   public SearchUserIdsResponseHighlightResult getHighlightResult() {
     return highlightResult;
   }

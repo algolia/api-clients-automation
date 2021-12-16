@@ -2,22 +2,22 @@ import type { SearchUserIdsResponseHighlightResult } from './searchUserIdsRespon
 import type { UserId } from './userId';
 
 export type SearchUserIdsResponseHits = {
-  userID?: UserId;
+  userID: UserId;
   /**
    * Name of the cluster.
    */
-  clusterName?: string;
+  clusterName: string;
   /**
    * Number of records in the cluster.
    */
-  nbRecords?: number;
+  nbRecords: number;
   /**
    * Data size taken by all the users assigned to the cluster.
    */
-  dataSize?: number;
+  dataSize: number;
   /**
    * UserID of the requested user. Same as userID.
    */
-  objectID?: string;
-  _highlightResult?: SearchUserIdsResponseHighlightResult;
+  objectID: string;
+  _highlightResult: SearchUserIdsResponseHighlightResult;
 };
