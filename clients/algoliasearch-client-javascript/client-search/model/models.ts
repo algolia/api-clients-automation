@@ -2,7 +2,9 @@
 import type { RequestOptions } from '../utils/types';
 
 export * from './addApiKeyResponse';
+export * from './anchoring';
 export * from './apiKey';
+export * from './automaticFacetFilter';
 export * from './baseIndexSettings';
 export * from './baseSearchParams';
 export * from './baseSearchResponse';
@@ -10,6 +12,9 @@ export * from './baseSearchResponseFacetsStats';
 export * from './batchObject';
 export * from './batchResponse';
 export * from './clearAllSynonymsResponse';
+export * from './condition';
+export * from './consequence';
+export * from './consequenceHide';
 export * from './createdAtObject';
 export * from './deleteApiKeyResponse';
 export * from './deleteIndexResponse';
@@ -32,9 +37,12 @@ export * from './multipleQueriesResponse';
 export * from './operation';
 export * from './operationIndexObject';
 export * from './operationIndexResponse';
+export * from './params';
+export * from './promote';
 export * from './rankingInfo';
 export * from './rankingInfoMatchedGeoLocation';
 export * from './record';
+export * from './rule';
 export * from './saveObjectResponse';
 export * from './saveSynonymResponse';
 export * from './saveSynonymsResponse';
@@ -42,12 +50,17 @@ export * from './searchHits';
 export * from './searchParams';
 export * from './searchParamsAsString';
 export * from './searchResponse';
+export * from './searchRulesParams';
+export * from './searchRulesResponse';
 export * from './searchSynonymsResponse';
 export * from './setSettingsResponse';
 export * from './snippetResult';
 export * from './synonymHit';
 export * from './synonymHitHighlightResult';
+export * from './timeRange';
 export * from './updateApiKeyResponse';
+export * from './updatedRuleResponse';
+export * from './updatedRuleResponseWithoutObjectID';
 
 export interface Authentication {
   /**

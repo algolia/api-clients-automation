@@ -28,7 +28,7 @@ rule:
     - objectID
     - consequence
 
-condition: 
+condition:
   type: object
   additionalProperties: false
   properties:
@@ -36,15 +36,7 @@ condition:
       type: string
       description: Query pattern syntax
     anchoring:
-      type: string
-      description: Whether the pattern parameter must match the beginning or the end of the query string, or both, or none.
-      enum:
-        [
-          'is',
-          'startsWith',
-          'endsWith',
-          'contains',
-        ]
+      $ref: '#/anchoring'
     alternatives:
       type: boolean
       description: Whether the pattern matches on plurals, synonyms, and typos.
@@ -53,6 +45,10 @@ condition:
       type: string
       description: 'Rule context format: [A-Za-z0-9_-]+).'
 
+anchoring:
+  type: string
+  description: Whether the pattern parameter must match the beginning or the end of the query string, or both, or none.
+  enum: ['is', 'startsWith', 'endsWith', 'contains']
 
 consequence:
   type: object
@@ -63,24 +59,47 @@ consequence:
       $ref: '#/params'
     promote:
       type: array
-      description: Objects to promote as hits. 
+      description: Objects to promote as hits.
       items:
         $ref: '#/promote'
     filterPromotes:
+      type: boolean
+      default: false
+      description: Only use in combination with the promote consequence. When true, promoted results will be restricted to match the filters of the current search. When false, the promoted results will show up regardless of the filters.
     hide:
+      type: array
+      description: Objects to hide from hits. Each object must contain an objectID field. By default, you can hide up to 50 items per rule.
+      items:
+        type: object
+        description: Unique identifier of the object to hide.
+        additionalProperties: false
+        properties:
+          objectID:
+            $ref: '../../../../common/parameters.yml#/objectID'
+        required:
+          - objectID
     userData:
+      type: object
+      description: Custom JSON object that will be appended to the userData array in the response. This object isn’t interpreted by the API. It’s limited to 1kB of minified JSON.
+      additionalProperties: true
 
 promote:
   type: object
-  description: Object to promote as hits. 
+  description: Object to promote as hits.
   additionalProperties: false
   properties:
-    objectID: FIXME
+    objectID:
+      type: string
+      description: Unique identifier of the object to promote.
     objectIDs:
+      type: array
+      description: Array of unique identifiers of the objects to promote.
+      items:
+        type: string
     position:
+      type: integer
+      description: The position to promote the objects to (zero-based). If you pass objectIDs, the objects are placed at this position as a group. For example, if you pass four objectIDs to position 0, the objects take the first four positions.
   required:
-    - objectID
-    - objectIDs
     - position
 
 params:
@@ -92,21 +111,15 @@ params:
       type: string
       description: Query string.
     automaticFacetFilters:
-      $ref: '#/automaticFacetFilters'
+      type: array
+      description: Names of facets to which automatic filtering must be applied; they must match the facet name of a facet value placeholder in the query pattern.
+      items:
+        $ref: '#/automaticFacetFilter'
     automaticOptionalFacetFilters:
-      $ref: '#/automaticOptionalFacetFilters'
-
-automaticFacetFilters:
-  type: array
-  description: Names of facets to which automatic filtering must be applied; they must match the facet name of a facet value placeholder in the query pattern.
-  items: 
-    $ref: '#/automaticFacetFilter'
-
-automaticOptionalFacetFilters:
-  type: object
-  description: Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
-  items: 
-    $ref: '#/automaticFacetFilter'
+      type: object
+      description: Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
+      items:
+        $ref: '#/automaticFacetFilter'
 
 automaticFacetFilter:
   type: object
@@ -135,7 +148,7 @@ timeRange:
       type: integer
       description: Lower bound of the time range (Unix timestamp).
     until:
-      type: until
+      type: integer
       description: Upper bound of the time range (Unix timestamp).
   required:
     - from
@@ -156,7 +169,7 @@ updatedRuleResponse:
     - updatedAt
     - taskID
 
-deletedRule:
+updatedRuleResponseWithoutObjectID:
   type: object
   additionalProperties: false
   properties:

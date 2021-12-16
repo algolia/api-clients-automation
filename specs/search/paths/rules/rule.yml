@@ -71,7 +71,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: './common/schemas.yml#/deletedRule'
+            $ref: './common/schemas.yml#/updatedRuleResponseWithoutObjectID'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
