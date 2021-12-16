@@ -1,9 +1,5 @@
 package {{package}};
 
-{{#useReflectionEqualsHashCode}}
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-{{/useReflectionEqualsHashCode}}
 import java.util.Objects;
 import java.util.Arrays;
 {{#imports}}
@@ -12,16 +8,6 @@ import {{import}};
 {{#serializableModel}}
 import java.io.Serializable;
 {{/serializableModel}}
-{{#jackson}}
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-{{#withXml}}
-import com.fasterxml.jackson.dataformat.xml.annotation.*;
-{{/withXml}}
-{{/jackson}}
-{{#withXml}}
-import javax.xml.bind.annotation.*;
-{{/withXml}}
 {{#jsonb}}
 import java.lang.reflect.Type;
 import javax.json.bind.annotation.JsonbTypeDeserializer;
