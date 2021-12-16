@@ -18,7 +18,17 @@ put:
       content:
         application/json:
           schema:
-            $ref: './common/schemas.yml#/updateApiKeyResponse'
+            title: updateApiKeyResponse
+            type: object
+            additionalProperties: false
+            required:
+              - key
+              - updatedAt
+            properties:
+              key:
+                $ref: 'common/schemas.yml#/keyString'
+              updatedAt:
+                $ref: '../../../common/parameters.yml#/updatedAt'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
@@ -66,7 +76,14 @@ delete:
       content:
         application/json:
           schema:
-            $ref: './common/schemas.yml#/deleteApiKeyResponse'
+            title: deleteApiKeyResponse
+            type: object
+            additionalProperties: false
+            required:
+              - deletedAt
+            properties:
+              deletedAt:
+                $ref: '../../../common/parameters.yml#/deleteAt'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

@@ -38,7 +38,17 @@ get:
       content:
         application/json:
           schema:
-            $ref: './common/schemas.yml#/listApiKeysResponse'
+            title: listApiKeysResponse
+            type: object
+            additionalProperties: false
+            required:
+              - keys
+            properties:
+              keys:
+                type: array
+                description: List of api keys.
+                items:
+                  $ref: 'common/schemas.yml#/keyObject'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
