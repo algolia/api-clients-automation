@@ -124,6 +124,8 @@ export class {{classname}} {
     this.authentications[{{classname}}Keys[key]].apiKey = value;
   }
 
+  {{allParams}}
+
   {{#operation}}
   /**
   {{#notes}}
@@ -132,11 +134,40 @@ export class {{classname}} {
   {{#summary}}
   * @summary {{&summary}}
   {{/summary}}
-  {{#allParams}}
-  * @param {{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
-  {{/allParams}}
+  {{! We group parameters under an object if there are more than 5}}
+  {{^allParams.5}}
+    {{#allParams}}
+    * @param {{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+    {{/allParams}}
+  {{/allParams.5}}
+  {{#allParams.5}}
+    * @param {{nickname}} - The {{nickname}} parameters.
+    {{#allParams}}
+    * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+    {{/allParams}}
+  {{/allParams.5}}
   */
-  public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{{returnType}}}> {
+  public {{nickname}} (
+        {{! We group parameters under an object if there are more than 5}}
+        {{^allParams.5}}
+            {{#allParams}}
+              {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
+            {{/allParams}}
+        {{/allParams.5}}
+
+        {{#allParams.5}}
+            {
+                {{#allParams}}
+                  {{paramName}},
+                {{/allParams}}
+            }:
+            {
+                {{#allParams}}
+                  {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
+                {{/allParams}}
+            }
+        {{/allParams.5}}
+      ) : Promise<{{{returnType}}}> {
     const path = '{{{path}}}'{{#pathParams}}.replace(
     {{=<% %>=}}
       '{<%baseName%>}',
