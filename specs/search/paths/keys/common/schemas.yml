@@ -63,15 +63,18 @@ keyString:
   type: string
   description: Key string.
 
+createdAtObject:
+  type: object
+  required:
+    - createdAt
+  properties:
+    createdAt:
+      $ref: '../../../../common/parameters.yml#/createdAt'
+
 keyObject:
   allOf:
     - $ref: '#/apiKey'
-    - type: object
-      required:
-        - createdAt
-      properties:
-        createdAt:
-          $ref: '../../../../common/parameters.yml#/createdAt'
+    - $ref: '#/createdAtObject'
 
 addApiKeyResponse:
   type: object

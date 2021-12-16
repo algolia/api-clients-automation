@@ -1,4 +1,4 @@
 import type { ApiKey } from './apiKey';
-import type { KeyObjectAllOf } from './keyObjectAllOf';
+import type { CreatedAtObject } from './createdAtObject';
 
-export type KeyObject = ApiKey & KeyObjectAllOf;
+export type KeyObject = ApiKey & CreatedAtObject;
