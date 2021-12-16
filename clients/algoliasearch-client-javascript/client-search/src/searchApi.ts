@@ -26,6 +26,7 @@ import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
 import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
+import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
 import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
@@ -40,6 +41,8 @@ import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
+import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
+import type { UpdatedRuleResponseWithoutObjectID } from '../model/updatedRuleResponseWithoutObjectID';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
@@ -287,6 +290,61 @@ export class SearchApi {
       method: 'POST',
       path,
       data: batchAssignUserIdsObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Create or update a batch of Rules.
+   *
+   * @summary Batch Rules.
+   * @param indexName - The index in which to perform the request.
+   * @param rule - The rule.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   * @param clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
+   */
+  batchRules(
+    indexName: string,
+    rule: Rule[],
+    forwardToReplicas?: boolean,
+    clearExistingRules?: boolean
+  ): Promise<UpdatedRuleResponseWithoutObjectID> {
+    const path = '/1/indexes/{indexName}/rules/batch'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling batchRules.'
+      );
+    }
+
+    if (rule === null || rule === undefined) {
+      throw new Error(
+        'Required parameter rule was null or undefined when calling batchRules.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    if (clearExistingRules !== undefined) {
+      queryParameters.clearExistingRules = clearExistingRules.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: rule,
     };
 
     const requestOptions: RequestOptions = {

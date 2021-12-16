@@ -6,6 +6,7 @@ export * from './anchoring';
 export * from './apiKey';
 export * from './assignUserIdObject';
 export * from './assignUserIdResponse';
+export * from './automaticFacetFilter';
 export * from './baseIndexSettings';
 export * from './baseSearchParams';
 export * from './baseSearchResponse';
@@ -50,6 +51,7 @@ export * from './rankingInfo';
 export * from './rankingInfoMatchedGeoLocation';
 export * from './record';
 export * from './removeUserIdResponse';
+export * from './rule';
 export * from './saveObjectResponse';
 export * from './saveSynonymResponse';
 export * from './saveSynonymsResponse';
@@ -70,6 +72,8 @@ export * from './synonymHit';
 export * from './synonymHitHighlightResult';
 export * from './timeRange';
 export * from './updateApiKeyResponse';
+export * from './updatedRuleResponse';
+export * from './updatedRuleResponseWithoutObjectID';
 export * from './userId';
 
 export interface Authentication {
