@@ -95,9 +95,9 @@ describe('Common Test Suite', () => {
   });
 
   test('deleteApiKey', async () => {
-    const req = await client.deleteApiKey('myApiKey');
+    const req = await client.deleteApiKey('myTestApiKey');
     expect(req).toMatchObject({
-      path: '/1/keys/myApiKey',
+      path: '/1/keys/myTestApiKey',
       method: 'DELETE',
     });
   });
@@ -140,9 +140,9 @@ describe('Common Test Suite', () => {
   });
 
   test('getApiKey', async () => {
-    const req = await client.getApiKey('myApiKey');
+    const req = await client.getApiKey('myTestApiKey');
     expect(req).toMatchObject({
-      path: '/1/keys/myApiKey',
+      path: '/1/keys/myTestApiKey',
       method: 'GET',
     });
   });
