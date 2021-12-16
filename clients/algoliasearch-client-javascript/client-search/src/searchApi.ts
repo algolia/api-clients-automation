@@ -1,3 +1,5 @@
+import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
+import type { ApiKey } from '../model/apiKey';
 import type { AssignUserIdObject } from '../model/assignUserIdObject';
 import type { AssignUserIdResponse } from '../model/assignUserIdResponse';
 import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
@@ -5,6 +7,7 @@ import type { BatchAssignUserIdsResponse } from '../model/batchAssignUserIdsResp
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
+import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
@@ -12,6 +15,8 @@ import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
 import type { IndexSettings } from '../model/indexSettings';
+import type { KeyObject } from '../model/keyObject';
+import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
@@ -25,12 +30,14 @@ import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
 import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
 import type { SearchParams } from '../model/searchParams';
+import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
 import type { SynonymHit } from '../model/synonymHit';
+import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
@@ -127,6 +134,36 @@ export class SearchApi {
     this.authentications[SearchApiKeys[key]].apiKey = value;
   }
 
+  /**
+   * Add a new API Key with specific permissions/restrictions.
+   *
+   * @summary Create a new API key.
+   * @param apiKey - The apiKey.
+   */
+  addApiKey(apiKey: ApiKey): Promise<AddApiKeyResponse> {
+    const path = '/1/keys';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (apiKey === null || apiKey === undefined) {
+      throw new Error(
+        'Required parameter apiKey was null or undefined when calling addApiKey.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: apiKey,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
   /**
    * Assign or Move a userID to a cluster. The time it takes to migrate (move) a user is proportional to the amount of data linked to the userID. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userID is directly usable.
    *
@@ -298,6 +335,38 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Delete an existing API Key.
+   *
+   * @summary Delete an API key.
+   * @param key - API Key string.
+   */
+  deleteApiKey(key: string): Promise<DeleteApiKeyResponse> {
+    const path = '/1/keys/{key}'.replace(
+      '{key}',
+      encodeURIComponent(String(key))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (key === null || key === undefined) {
+      throw new Error(
+        'Required parameter key was null or undefined when calling deleteApiKey.'
+      );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Delete an existing index.
    *
    * @summary Delete index.
@@ -366,6 +435,38 @@ export class SearchApi {
 
     const request: Request = {
       method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Get the permissions of an API key.
+   *
+   * @summary Get an API key.
+   * @param key - API Key string.
+   */
+  getApiKey(key: string): Promise<KeyObject> {
+    const path = '/1/keys/{key}'.replace(
+      '{key}',
+      encodeURIComponent(String(key))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (key === null || key === undefined) {
+      throw new Error(
+        'Required parameter key was null or undefined when calling getApiKey.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
       path,
     };
 
@@ -612,6 +713,28 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * List API keys, along with their associated rights.
+   *
+   * @summary Get the full list of API Keys.
+   */
+  listApiKeys(): Promise<ListApiKeysResponse> {
+    const path = '/1/keys';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters.
    *
    * @summary List clusters.
@@ -802,6 +925,38 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Restore a deleted API key, along with its associated rights.
+   *
+   * @summary Restore an API key.
+   * @param key - API Key string.
+   */
+  restoreApiKey(key: string): Promise<AddApiKeyResponse> {
+    const path = '/1/keys/{key}/restore'.replace(
+      '{key}',
+      encodeURIComponent(String(key))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (key === null || key === undefined) {
+      throw new Error(
+        'Required parameter key was null or undefined when calling restoreApiKey.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName - The index in which to perform the request.
@@ -959,11 +1114,11 @@ export class SearchApi {
    * Get search results.
    *
    * @param indexName - The index in which to perform the request.
-   * @param searchParams - The searchParams.
+   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
    */
   search(
     indexName: string,
-    searchParams: SearchParams
+    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
   ): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
@@ -978,16 +1133,19 @@ export class SearchApi {
       );
     }
 
-    if (searchParams === null || searchParams === undefined) {
+    if (
+      searchParamsAsStringSearchParams === null ||
+      searchParamsAsStringSearchParams === undefined
+    ) {
       throw new Error(
-        'Required parameter searchParams was null or undefined when calling search.'
+        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling search.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParams,
+      data: searchParamsAsStringSearchParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1131,6 +1289,46 @@ export class SearchApi {
       method: 'PUT',
       path,
       data: indexSettings,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Replace every permission of an existing API key.
+   *
+   * @summary Update an API key.
+   * @param key - API Key string.
+   * @param apiKey - The apiKey.
+   */
+  updateApiKey(key: string, apiKey: ApiKey): Promise<UpdateApiKeyResponse> {
+    const path = '/1/keys/{key}'.replace(
+      '{key}',
+      encodeURIComponent(String(key))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (key === null || key === undefined) {
+      throw new Error(
+        'Required parameter key was null or undefined when calling updateApiKey.'
+      );
+    }
+
+    if (apiKey === null || apiKey === undefined) {
+      throw new Error(
+        'Required parameter apiKey was null or undefined when calling updateApiKey.'
+      );
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path,
+      data: apiKey,
     };
 
     const requestOptions: RequestOptions = {

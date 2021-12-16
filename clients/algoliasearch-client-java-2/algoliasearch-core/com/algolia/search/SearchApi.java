@@ -5,6 +5,8 @@ import com.algolia.ApiClient;
 import com.algolia.ApiException;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
+import com.algolia.model.AddApiKeyResponse;
+import com.algolia.model.ApiKey;
 import com.algolia.model.AssignUserIdObject;
 import com.algolia.model.AssignUserIdResponse;
 import com.algolia.model.BatchAssignUserIdsObject;
@@ -12,6 +14,7 @@ import com.algolia.model.BatchAssignUserIdsResponse;
 import com.algolia.model.BatchObject;
 import com.algolia.model.BatchResponse;
 import com.algolia.model.ClearAllSynonymsResponse;
+import com.algolia.model.DeleteApiKeyResponse;
 import com.algolia.model.DeleteIndexResponse;
 import com.algolia.model.DeleteSynonymResponse;
 import com.algolia.model.GetLogsResponse;
@@ -19,6 +22,8 @@ import com.algolia.model.GetTaskResponse;
 import com.algolia.model.GetTopUserIdsResponse;
 import com.algolia.model.HasPendingMappingsResponse;
 import com.algolia.model.IndexSettings;
+import com.algolia.model.KeyObject;
+import com.algolia.model.ListApiKeysResponse;
 import com.algolia.model.ListClustersResponse;
 import com.algolia.model.ListIndicesResponse;
 import com.algolia.model.ListUserIdsResponse;
@@ -37,6 +42,7 @@ import com.algolia.model.SearchUserIdsObject;
 import com.algolia.model.SearchUserIdsResponse;
 import com.algolia.model.SetSettingsResponse;
 import com.algolia.model.SynonymHit;
+import com.algolia.model.UpdateApiKeyResponse;
 import com.algolia.model.UserId;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -49,6 +55,152 @@ public class SearchApi extends ApiClient {
 
   public SearchApi(String appId, String apiKey) {
     super(appId, apiKey);
+  }
+
+  /**
+   * Build call for addApiKey
+   *
+   * @param apiKey (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call addApiKeyCall(ApiKey apiKey, final ApiCallback _callback)
+    throws ApiException {
+    Object localVarPostBody = apiKey;
+
+    // create path and map variables
+    String localVarPath = "/1/keys";
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = { "application/json" };
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call addApiKeyValidateBeforeCall(
+    ApiKey apiKey,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'apiKey' is set
+    if (apiKey == null) {
+      throw new ApiException(
+        "Missing the required parameter 'apiKey' when calling addApiKey(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = addApiKeyCall(apiKey, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Create a new API key. Add a new API Key with specific permissions/restrictions.
+   *
+   * @param apiKey (required)
+   * @return AddApiKeyResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public AddApiKeyResponse addApiKey(ApiKey apiKey) throws ApiException {
+    ApiResponse<AddApiKeyResponse> localVarResp = addApiKeyWithHttpInfo(apiKey);
+    return localVarResp.getData();
+  }
+
+  /**
+   * Create a new API key. Add a new API Key with specific permissions/restrictions.
+   *
+   * @param apiKey (required)
+   * @return ApiResponse&lt;AddApiKeyResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<AddApiKeyResponse> addApiKeyWithHttpInfo(ApiKey apiKey)
+    throws ApiException {
+    okhttp3.Call localVarCall = addApiKeyValidateBeforeCall(apiKey, null);
+    Type localVarReturnType = new TypeToken<AddApiKeyResponse>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Create a new API key. (asynchronously) Add a new API Key with specific
+   * permissions/restrictions.
+   *
+   * @param apiKey (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call addApiKeyAsync(
+    ApiKey apiKey,
+    final ApiCallback<AddApiKeyResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = addApiKeyValidateBeforeCall(apiKey, _callback);
+    Type localVarReturnType = new TypeToken<AddApiKeyResponse>() {}.getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
   }
 
   /**
@@ -816,6 +968,160 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for deleteApiKey
+   *
+   * @param key API Key string. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call deleteApiKeyCall(String key, final ApiCallback _callback)
+    throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/keys/{key}".replaceAll(
+          "\\{" + "key" + "\\}",
+          this.escapeString(key.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "DELETE",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call deleteApiKeyValidateBeforeCall(
+    String key,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'key' is set
+    if (key == null) {
+      throw new ApiException(
+        "Missing the required parameter 'key' when calling deleteApiKey(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = deleteApiKeyCall(key, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Delete an API key. Delete an existing API Key.
+   *
+   * @param key API Key string. (required)
+   * @return DeleteApiKeyResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public DeleteApiKeyResponse deleteApiKey(String key) throws ApiException {
+    ApiResponse<DeleteApiKeyResponse> localVarResp = deleteApiKeyWithHttpInfo(
+      key
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Delete an API key. Delete an existing API Key.
+   *
+   * @param key API Key string. (required)
+   * @return ApiResponse&lt;DeleteApiKeyResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<DeleteApiKeyResponse> deleteApiKeyWithHttpInfo(String key)
+    throws ApiException {
+    okhttp3.Call localVarCall = deleteApiKeyValidateBeforeCall(key, null);
+    Type localVarReturnType = new TypeToken<DeleteApiKeyResponse>() {}
+      .getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Delete an API key. (asynchronously) Delete an existing API Key.
+   *
+   * @param key API Key string. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call deleteApiKeyAsync(
+    String key,
+    final ApiCallback<DeleteApiKeyResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = deleteApiKeyValidateBeforeCall(key, _callback);
+    Type localVarReturnType = new TypeToken<DeleteApiKeyResponse>() {}
+      .getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
    * Build call for deleteIndex
    *
    * @param indexName The index in which to perform the request. (required)
@@ -1185,6 +1491,156 @@ public class SearchApi extends ApiClient {
     );
     Type localVarReturnType = new TypeToken<DeleteSynonymResponse>() {}
       .getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for getApiKey
+   *
+   * @param key API Key string. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getApiKeyCall(String key, final ApiCallback _callback)
+    throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/keys/{key}".replaceAll(
+          "\\{" + "key" + "\\}",
+          this.escapeString(key.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call getApiKeyValidateBeforeCall(
+    String key,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'key' is set
+    if (key == null) {
+      throw new ApiException(
+        "Missing the required parameter 'key' when calling getApiKey(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = getApiKeyCall(key, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Get an API key. Get the permissions of an API key.
+   *
+   * @param key API Key string. (required)
+   * @return KeyObject
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public KeyObject getApiKey(String key) throws ApiException {
+    ApiResponse<KeyObject> localVarResp = getApiKeyWithHttpInfo(key);
+    return localVarResp.getData();
+  }
+
+  /**
+   * Get an API key. Get the permissions of an API key.
+   *
+   * @param key API Key string. (required)
+   * @return ApiResponse&lt;KeyObject&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<KeyObject> getApiKeyWithHttpInfo(String key)
+    throws ApiException {
+    okhttp3.Call localVarCall = getApiKeyValidateBeforeCall(key, null);
+    Type localVarReturnType = new TypeToken<KeyObject>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Get an API key. (asynchronously) Get the permissions of an API key.
+   *
+   * @param key API Key string. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getApiKeyAsync(
+    String key,
+    final ApiCallback<KeyObject> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getApiKeyValidateBeforeCall(key, _callback);
+    Type localVarReturnType = new TypeToken<KeyObject>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2415,6 +2871,140 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for listApiKeys
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call listApiKeysCall(final ApiCallback _callback)
+    throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath = "/1/keys";
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call listApiKeysValidateBeforeCall(
+    final ApiCallback _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = listApiKeysCall(_callback);
+    return localVarCall;
+  }
+
+  /**
+   * Get the full list of API Keys. List API keys, along with their associated rights.
+   *
+   * @return ListApiKeysResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ListApiKeysResponse listApiKeys() throws ApiException {
+    ApiResponse<ListApiKeysResponse> localVarResp = listApiKeysWithHttpInfo();
+    return localVarResp.getData();
+  }
+
+  /**
+   * Get the full list of API Keys. List API keys, along with their associated rights.
+   *
+   * @return ApiResponse&lt;ListApiKeysResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<ListApiKeysResponse> listApiKeysWithHttpInfo()
+    throws ApiException {
+    okhttp3.Call localVarCall = listApiKeysValidateBeforeCall(null);
+    Type localVarReturnType = new TypeToken<ListApiKeysResponse>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Get the full list of API Keys. (asynchronously) List API keys, along with their associated
+   * rights.
+   *
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call listApiKeysAsync(
+    final ApiCallback<ListApiKeysResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = listApiKeysValidateBeforeCall(_callback);
+    Type localVarReturnType = new TypeToken<ListApiKeysResponse>() {}.getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
    * Build call for listClusters
    *
    * @param _callback Callback for upload/download progress
@@ -3408,6 +3998,161 @@ public class SearchApi extends ApiClient {
     );
     Type localVarReturnType = new TypeToken<RemoveUserIdResponse>() {}
       .getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for restoreApiKey
+   *
+   * @param key API Key string. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call restoreApiKeyCall(
+    String key,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/keys/{key}/restore".replaceAll(
+          "\\{" + "key" + "\\}",
+          this.escapeString(key.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call restoreApiKeyValidateBeforeCall(
+    String key,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'key' is set
+    if (key == null) {
+      throw new ApiException(
+        "Missing the required parameter 'key' when calling restoreApiKey(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = restoreApiKeyCall(key, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Restore an API key. Restore a deleted API key, along with its associated rights.
+   *
+   * @param key API Key string. (required)
+   * @return AddApiKeyResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public AddApiKeyResponse restoreApiKey(String key) throws ApiException {
+    ApiResponse<AddApiKeyResponse> localVarResp = restoreApiKeyWithHttpInfo(
+      key
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Restore an API key. Restore a deleted API key, along with its associated rights.
+   *
+   * @param key API Key string. (required)
+   * @return ApiResponse&lt;AddApiKeyResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<AddApiKeyResponse> restoreApiKeyWithHttpInfo(String key)
+    throws ApiException {
+    okhttp3.Call localVarCall = restoreApiKeyValidateBeforeCall(key, null);
+    Type localVarReturnType = new TypeToken<AddApiKeyResponse>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Restore an API key. (asynchronously) Restore a deleted API key, along with its associated
+   * rights.
+   *
+   * @param key API Key string. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call restoreApiKeyAsync(
+    String key,
+    final ApiCallback<AddApiKeyResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = restoreApiKeyValidateBeforeCall(key, _callback);
+    Type localVarReturnType = new TypeToken<AddApiKeyResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -4886,6 +5631,187 @@ public class SearchApi extends ApiClient {
       _callback
     );
     Type localVarReturnType = new TypeToken<SetSettingsResponse>() {}.getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for updateApiKey
+   *
+   * @param key API Key string. (required)
+   * @param apiKey (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call updateApiKeyCall(
+    String key,
+    ApiKey apiKey,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = apiKey;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/keys/{key}".replaceAll(
+          "\\{" + "key" + "\\}",
+          this.escapeString(key.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = { "application/json" };
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "PUT",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call updateApiKeyValidateBeforeCall(
+    String key,
+    ApiKey apiKey,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'key' is set
+    if (key == null) {
+      throw new ApiException(
+        "Missing the required parameter 'key' when calling updateApiKey(Async)"
+      );
+    }
+
+    // verify the required parameter 'apiKey' is set
+    if (apiKey == null) {
+      throw new ApiException(
+        "Missing the required parameter 'apiKey' when calling updateApiKey(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = updateApiKeyCall(key, apiKey, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Update an API key. Replace every permission of an existing API key.
+   *
+   * @param key API Key string. (required)
+   * @param apiKey (required)
+   * @return UpdateApiKeyResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public UpdateApiKeyResponse updateApiKey(String key, ApiKey apiKey)
+    throws ApiException {
+    ApiResponse<UpdateApiKeyResponse> localVarResp = updateApiKeyWithHttpInfo(
+      key,
+      apiKey
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Update an API key. Replace every permission of an existing API key.
+   *
+   * @param key API Key string. (required)
+   * @param apiKey (required)
+   * @return ApiResponse&lt;UpdateApiKeyResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<UpdateApiKeyResponse> updateApiKeyWithHttpInfo(
+    String key,
+    ApiKey apiKey
+  ) throws ApiException {
+    okhttp3.Call localVarCall = updateApiKeyValidateBeforeCall(
+      key,
+      apiKey,
+      null
+    );
+    Type localVarReturnType = new TypeToken<UpdateApiKeyResponse>() {}
+      .getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Update an API key. (asynchronously) Replace every permission of an existing API key.
+   *
+   * @param key API Key string. (required)
+   * @param apiKey (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call updateApiKeyAsync(
+    String key,
+    ApiKey apiKey,
+    final ApiCallback<UpdateApiKeyResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = updateApiKeyValidateBeforeCall(
+      key,
+      apiKey,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<UpdateApiKeyResponse>() {}
+      .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }

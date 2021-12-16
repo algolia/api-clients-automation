@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import type { RequestOptions } from '../utils/types';
 
+export * from './addApiKeyResponse';
+export * from './apiKey';
 export * from './assignUserIdObject';
 export * from './assignUserIdResponse';
 export * from './baseIndexSettings';
@@ -12,6 +14,8 @@ export * from './batchAssignUserIdsResponse';
 export * from './batchObject';
 export * from './batchResponse';
 export * from './clearAllSynonymsResponse';
+export * from './createdAtObject';
+export * from './deleteApiKeyResponse';
 export * from './deleteIndexResponse';
 export * from './deleteSynonymResponse';
 export * from './errorBase';
@@ -25,6 +29,8 @@ export * from './highlightResult';
 export * from './index';
 export * from './indexSettings';
 export * from './indexSettingsAsSearchParams';
+export * from './keyObject';
+export * from './listApiKeysResponse';
 export * from './listClustersResponse';
 export * from './listIndicesResponse';
 export * from './listUserIdsResponse';
@@ -43,6 +49,7 @@ export * from './saveSynonymResponse';
 export * from './saveSynonymsResponse';
 export * from './searchHits';
 export * from './searchParams';
+export * from './searchParamsAsString';
 export * from './searchResponse';
 export * from './searchSynonymsResponse';
 export * from './searchUserIdsObject';
@@ -53,6 +60,7 @@ export * from './setSettingsResponse';
 export * from './snippetResult';
 export * from './synonymHit';
 export * from './synonymHitHighlightResult';
+export * from './updateApiKeyResponse';
 export * from './userId';
 
 export interface Authentication {
