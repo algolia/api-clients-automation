@@ -5,6 +5,7 @@ import type { EndRequest, Response } from '../types';
 
 import { Requester } from './Requester';
 
+// Global agents allow us to reuse the TCP protocol with multiple clients
 const agentOptions = { keepAlive: true };
 const httpAgent = new http.Agent(agentOptions);
 const httpsAgent = new https.Agent(agentOptions);
