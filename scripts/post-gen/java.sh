@@ -20,12 +20,6 @@ format_client() {
     # Download the formatter if not present and run it
     javaFormatter="google-java-format-1.13.0-all-deps.jar"
 
-    if [[ ! -f "dist/$javaFormatter" ]]; then
-        echo "Downloading formatter dependency"
-        mkdir dist
-        curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/$javaFormatter" > dist/$javaFormatter
-    fi
-
     find $CLIENT -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
