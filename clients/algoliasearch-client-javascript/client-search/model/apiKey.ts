@@ -38,17 +38,19 @@ export type ApiKey = {
 
 export namespace ApiKey {
   export enum AclEnum {
-    Search = 'search',
-    Browse = 'browse',
     AddObject = 'addObject',
+    Analytics = 'analytics',
+    Browse = 'browse',
     DeleteObject = 'deleteObject',
     DeleteIndex = 'deleteIndex',
-    Settings = 'settings',
     EditSettings = 'editSettings',
-    Analytics = 'analytics',
-    Recommendation = 'recommendation',
     ListIndexes = 'listIndexes',
     Logs = 'logs',
+    Personalization = 'personalization',
+    Recommendation = 'recommendation',
+    Search = 'search',
     SeeUnretrievableAttributes = 'seeUnretrievableAttributes',
+    Settings = 'settings',
+    Usage = 'usage',
   }
 }

@@ -11,18 +11,20 @@ apiKey:
         type: string
         enum:
           [
-            'search',
-            'browse',
             'addObject',
+            'analytics',
+            'browse',
             'deleteObject',
             'deleteIndex',
-            'settings',
             'editSettings',
-            'analytics',
-            'recommendation',
             'listIndexes',
             'logs',
+            'personalization',
+            'recommendation',
+            'search',
             'seeUnretrievableAttributes',
+            'settings',
+            'usage',
           ]
     description:
       type: string
