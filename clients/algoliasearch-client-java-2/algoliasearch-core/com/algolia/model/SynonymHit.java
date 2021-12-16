@@ -1,6 +1,5 @@
 package com.algolia.model;
 
-import com.algolia.model.SynonymHitHighlightResult;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,13 +9,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Synonym object.
- */
+/** Synonym object. */
 @ApiModel(description = "Synonym object.")
 public class SynonymHit {
 
@@ -25,9 +21,7 @@ public class SynonymHit {
   @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
   private String objectID;
 
-  /**
-   * Type of the synonym object.
-   */
+  /** Type of the synonym object. */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
     SYNONYM("synonym"),
@@ -130,8 +124,9 @@ public class SynonymHit {
 
   /**
    * Unique identifier of the synonym object to be created or updated.
+   *
    * @return objectID
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -152,8 +147,9 @@ public class SynonymHit {
 
   /**
    * Type of the synonym object.
+   *
    * @return type
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Type of the synonym object.")
   public TypeEnum getType() {
@@ -179,8 +175,9 @@ public class SynonymHit {
 
   /**
    * Words or phrases to be considered equivalent.
+   *
    * @return synonyms
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Words or phrases to be considered equivalent.")
   public List<String> getSynonyms() {
@@ -198,8 +195,9 @@ public class SynonymHit {
 
   /**
    * Word or phrase to appear in query strings (for onewaysynonym).
+   *
    * @return input
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Word or phrase to appear in query strings (for onewaysynonym)."
@@ -219,8 +217,9 @@ public class SynonymHit {
 
   /**
    * Word or phrase to appear in query strings (for altcorrection1 and altcorrection2).
+   *
    * @return word
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Word or phrase to appear in query strings (for altcorrection1 and altcorrection2)."
@@ -248,8 +247,9 @@ public class SynonymHit {
 
   /**
    * Words to be matched in records.
+   *
    * @return corrections
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Words to be matched in records.")
   public List<String> getCorrections() {
@@ -267,8 +267,9 @@ public class SynonymHit {
 
   /**
    * Token to be put inside records.
+   *
    * @return placeholder
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Token to be put inside records.")
   public String getPlaceholder() {
@@ -294,8 +295,9 @@ public class SynonymHit {
 
   /**
    * List of query words that will match the token.
+   *
    * @return replacements
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of query words that will match the token.")
   public List<String> getReplacements() {
@@ -313,8 +315,9 @@ public class SynonymHit {
 
   /**
    * Get highlightResult
+   *
    * @return highlightResult
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public SynonymHitHighlightResult getHighlightResult() {
@@ -392,8 +395,7 @@ public class SynonymHit {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

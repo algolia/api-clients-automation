@@ -1,21 +1,10 @@
 package com.algolia.model;
 
-import com.algolia.model.HighlightResult;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * SearchUserIdsResponseHighlightResult
- */
-
+/** SearchUserIdsResponseHighlightResult */
 public class SearchUserIdsResponseHighlightResult {
 
   public static final String SERIALIZED_NAME_USER_I_D = "userID";
@@ -35,8 +24,9 @@ public class SearchUserIdsResponseHighlightResult {
 
   /**
    * Get userID
+   *
    * @return userID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public HighlightResult getUserID() {
@@ -56,8 +46,9 @@ public class SearchUserIdsResponseHighlightResult {
 
   /**
    * Get clusterName
+   *
    * @return clusterName
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public HighlightResult getClusterName() {
@@ -108,8 +99,7 @@ public class SearchUserIdsResponseHighlightResult {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

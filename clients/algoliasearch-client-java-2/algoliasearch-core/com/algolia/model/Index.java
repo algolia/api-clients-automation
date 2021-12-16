@@ -1,23 +1,13 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Index
- */
-
+/** Index */
 public class Index {
 
   public static final String SERIALIZED_NAME_NAME = "name";
@@ -84,8 +74,9 @@ public class Index {
 
   /**
    * Index name.
+   *
    * @return name
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Index name.")
   public String getName() {
@@ -103,8 +94,9 @@ public class Index {
 
   /**
    * Index creation date. An empty string means that the index has no records.
+   *
    * @return createdAt
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -125,8 +117,9 @@ public class Index {
 
   /**
    * Date of last update (ISO-8601 format).
+   *
    * @return updatedAt
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -147,8 +140,9 @@ public class Index {
 
   /**
    * Number of records contained in the index.
+   *
    * @return entries
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -169,8 +163,9 @@ public class Index {
 
   /**
    * Number of bytes of the index in minified format.
+   *
    * @return dataSize
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -191,8 +186,9 @@ public class Index {
 
   /**
    * Number of bytes of the index binary file.
+   *
    * @return fileSize
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -213,8 +209,9 @@ public class Index {
 
   /**
    * Last build time
+   *
    * @return lastBuildTimeS
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Last build time")
   public Integer getLastBuildTimeS() {
@@ -232,8 +229,9 @@ public class Index {
 
   /**
    * Number of pending indexing operations. This value is deprecated and should not be used.
+   *
    * @return numberOfPendingTask
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Number of pending indexing operations. This value is deprecated and should not be used."
@@ -252,13 +250,16 @@ public class Index {
   }
 
   /**
-   * A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
+   * A boolean which says whether the index has pending tasks. This value is deprecated and should
+   * not be used.
+   *
    * @return pendingTask
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
-    value = "A boolean which says whether the index has pending tasks. This value is deprecated and should not be used."
+    value = "A boolean which says whether the index has pending tasks. This value is deprecated and" +
+    " should not be used."
   )
   public Boolean getPendingTask() {
     return pendingTask;
@@ -275,8 +276,9 @@ public class Index {
 
   /**
    * Only present if the index is a replica. Contains the name of the related primary index.
+   *
    * @return primary
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Only present if the index is a replica. Contains the name of the related primary index."
@@ -303,12 +305,15 @@ public class Index {
   }
 
   /**
-   * Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
+   * Only present if the index is a primary index with replicas. Contains the names of all linked
+   * replicas.
+   *
    * @return replicas
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Only present if the index is a primary index with replicas. Contains the names of all linked replicas."
+    value = "Only present if the index is a primary index with replicas. Contains the names of all" +
+    " linked replicas."
   )
   public List<String> getReplicas() {
     return replicas;
@@ -394,8 +399,7 @@ public class Index {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

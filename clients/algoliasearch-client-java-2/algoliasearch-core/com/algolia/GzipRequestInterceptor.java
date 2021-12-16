@@ -10,7 +10,7 @@ import okio.Okio;
 /**
  * Encodes request bodies using gzip.
  *
- * Taken from https://github.com/square/okhttp/issues/350
+ * <p>Taken from https://github.com/square/okhttp/issues/350
  */
 class GzipRequestInterceptor implements Interceptor {
 

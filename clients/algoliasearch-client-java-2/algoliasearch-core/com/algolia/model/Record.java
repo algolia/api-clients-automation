@@ -1,24 +1,12 @@
 package com.algolia.model;
 
-import com.algolia.model.HighlightResult;
-import com.algolia.model.RankingInfo;
-import com.algolia.model.SnippetResult;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-/**
- * A single record.
- */
+/** A single record. */
 @ApiModel(description = "A single record.")
 public class Record extends HashMap<String, Object> {
 
@@ -56,8 +44,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Unique identifier of the object.
+   *
    * @return objectID
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Unique identifier of the object.")
   public String getObjectID() {
@@ -75,8 +64,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get highlightResult
+   *
    * @return highlightResult
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public HighlightResult getHighlightResult() {
@@ -94,8 +84,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get snippetResult
+   *
    * @return snippetResult
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public SnippetResult getSnippetResult() {
@@ -113,8 +104,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get rankingInfo
+   *
    * @return rankingInfo
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public RankingInfo getRankingInfo() {
@@ -132,8 +124,9 @@ public class Record extends HashMap<String, Object> {
 
   /**
    * Get distinctSeqID
+   *
    * @return distinctSeqID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public Integer getDistinctSeqID() {
@@ -202,8 +195,7 @@ public class Record extends HashMap<String, Object> {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

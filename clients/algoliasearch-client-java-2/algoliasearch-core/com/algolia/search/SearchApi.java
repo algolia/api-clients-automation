@@ -5,8 +5,6 @@ import com.algolia.ApiClient;
 import com.algolia.ApiException;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
-import com.algolia.ProgressRequestBody;
-import com.algolia.ProgressResponseBody;
 import com.algolia.model.AssignUserIdObject;
 import com.algolia.model.AssignUserIdResponse;
 import com.algolia.model.BatchAssignUserIdsObject;
@@ -16,7 +14,6 @@ import com.algolia.model.BatchResponse;
 import com.algolia.model.ClearAllSynonymsResponse;
 import com.algolia.model.DeleteIndexResponse;
 import com.algolia.model.DeleteSynonymResponse;
-import com.algolia.model.ErrorBase;
 import com.algolia.model.GetLogsResponse;
 import com.algolia.model.GetTaskResponse;
 import com.algolia.model.GetTopUserIdsResponse;
@@ -42,7 +39,6 @@ import com.algolia.model.SetSettingsResponse;
 import com.algolia.model.SynonymHit;
 import com.algolia.model.UserId;
 import com.google.gson.reflect.TypeToken;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,22 +52,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for assignUserId
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param assignUserIdObject  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for assignUserId
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param assignUserIdObject (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call assignUserIdCall(
     Object xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject,
@@ -149,22 +146,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Assign or Move userID
-     * Assign or Move a userID to a cluster. The time it takes to migrate (move) a user is proportional to the amount of data linked to the userID. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userID is directly usable. 
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param assignUserIdObject  (required)
-     * @return AssignUserIdResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Assign or Move userID Assign or Move a userID to a cluster. The time it takes to migrate (move)
+   * a user is proportional to the amount of data linked to the userID. Upon success, the response
+   * is 200 OK. A successful response indicates that the operation has been taken into account, and
+   * the userID is directly usable.
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param assignUserIdObject (required)
+   * @return AssignUserIdResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public AssignUserIdResponse assignUserId(
     Object xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject
@@ -177,22 +178,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Assign or Move userID
-     * Assign or Move a userID to a cluster. The time it takes to migrate (move) a user is proportional to the amount of data linked to the userID. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userID is directly usable. 
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param assignUserIdObject  (required)
-     * @return ApiResponse&lt;AssignUserIdResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Assign or Move userID Assign or Move a userID to a cluster. The time it takes to migrate (move)
+   * a user is proportional to the amount of data linked to the userID. Upon success, the response
+   * is 200 OK. A successful response indicates that the operation has been taken into account, and
+   * the userID is directly usable.
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param assignUserIdObject (required)
+   * @return ApiResponse&lt;AssignUserIdResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<AssignUserIdResponse> assignUserIdWithHttpInfo(
     Object xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject
@@ -208,23 +213,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Assign or Move userID (asynchronously)
-     * Assign or Move a userID to a cluster. The time it takes to migrate (move) a user is proportional to the amount of data linked to the userID. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userID is directly usable. 
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param assignUserIdObject  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Assign or Move userID (asynchronously) Assign or Move a userID to a cluster. The time it takes
+   * to migrate (move) a user is proportional to the amount of data linked to the userID. Upon
+   * success, the response is 200 OK. A successful response indicates that the operation has been
+   * taken into account, and the userID is directly usable.
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param assignUserIdObject (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call assignUserIdAsync(
     Object xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject,
@@ -242,22 +250,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for batch
-     * @param indexName The index in which to perform the request. (required)
-     * @param batchObject  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for batch
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param batchObject (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call batchCall(
     String indexName,
     BatchObject batchObject,
@@ -329,22 +338,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Performs multiple write operations in a single API call.
-     * @param indexName The index in which to perform the request. (required)
-     * @param batchObject  (required)
-     * @return BatchResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Performs multiple write operations in a single API call.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param batchObject (required)
+   * @return BatchResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public BatchResponse batch(String indexName, BatchObject batchObject)
     throws ApiException {
     ApiResponse<BatchResponse> localVarResp = batchWithHttpInfo(
@@ -355,22 +365,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Performs multiple write operations in a single API call.
-     * @param indexName The index in which to perform the request. (required)
-     * @param batchObject  (required)
-     * @return ApiResponse&lt;BatchResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Performs multiple write operations in a single API call.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param batchObject (required)
+   * @return ApiResponse&lt;BatchResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<BatchResponse> batchWithHttpInfo(
     String indexName,
     BatchObject batchObject
@@ -385,23 +396,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Performs multiple write operations in a single API call.
-     * @param indexName The index in which to perform the request. (required)
-     * @param batchObject  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Performs multiple write operations in a single API call.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param batchObject (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call batchAsync(
     String indexName,
     BatchObject batchObject,
@@ -418,22 +429,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for batchAssignUserIds
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param batchAssignUserIdsObject  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for batchAssignUserIds
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param batchAssignUserIdsObject (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call batchAssignUserIdsCall(
     Object xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject,
@@ -498,7 +510,8 @@ public class SearchApi extends ApiClient {
     // verify the required parameter 'batchAssignUserIdsObject' is set
     if (batchAssignUserIdsObject == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchAssignUserIdsObject' when calling batchAssignUserIds(Async)"
+        "Missing the required parameter 'batchAssignUserIdsObject' when calling" +
+        " batchAssignUserIds(Async)"
       );
     }
 
@@ -511,22 +524,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Batch assign userIDs
-     * Assign multiple userIDs to a cluster. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable. 
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param batchAssignUserIdsObject  (required)
-     * @return BatchAssignUserIdsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Batch assign userIDs Assign multiple userIDs to a cluster. Upon success, the response is 200
+   * OK. A successful response indicates that the operation has been taken into account, and the
+   * userIDs are directly usable.
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param batchAssignUserIdsObject (required)
+   * @return BatchAssignUserIdsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public BatchAssignUserIdsResponse batchAssignUserIds(
     Object xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject
@@ -539,22 +555,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Batch assign userIDs
-     * Assign multiple userIDs to a cluster. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable. 
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param batchAssignUserIdsObject  (required)
-     * @return ApiResponse&lt;BatchAssignUserIdsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Batch assign userIDs Assign multiple userIDs to a cluster. Upon success, the response is 200
+   * OK. A successful response indicates that the operation has been taken into account, and the
+   * userIDs are directly usable.
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param batchAssignUserIdsObject (required)
+   * @return ApiResponse&lt;BatchAssignUserIdsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<BatchAssignUserIdsResponse> batchAssignUserIdsWithHttpInfo(
     Object xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject
@@ -570,23 +589,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Batch assign userIDs (asynchronously)
-     * Assign multiple userIDs to a cluster. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable. 
-     * @param xAlgoliaUserID userID to assign. (required)
-     * @param batchAssignUserIdsObject  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Batch assign userIDs (asynchronously) Assign multiple userIDs to a cluster. Upon success, the
+   * response is 200 OK. A successful response indicates that the operation has been taken into
+   * account, and the userIDs are directly usable.
+   *
+   * @param xAlgoliaUserID userID to assign. (required)
+   * @param batchAssignUserIdsObject (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call batchAssignUserIdsAsync(
     Object xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject,
@@ -604,22 +625,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for clearAllSynonyms
-     * @param indexName The index in which to perform the request. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for clearAllSynonyms
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call clearAllSynonymsCall(
     String indexName,
     Boolean forwardToReplicas,
@@ -653,6 +676,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -694,22 +718,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Clear all synonyms.
-     * Remove all synonyms from an index.
-     * @param indexName The index in which to perform the request. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return ClearAllSynonymsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Clear all synonyms. Remove all synonyms from an index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return ClearAllSynonymsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ClearAllSynonymsResponse clearAllSynonyms(
     String indexName,
     Boolean forwardToReplicas
@@ -722,22 +748,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Clear all synonyms.
-     * Remove all synonyms from an index.
-     * @param indexName The index in which to perform the request. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return ApiResponse&lt;ClearAllSynonymsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Clear all synonyms. Remove all synonyms from an index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return ApiResponse&lt;ClearAllSynonymsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<ClearAllSynonymsResponse> clearAllSynonymsWithHttpInfo(
     String indexName,
     Boolean forwardToReplicas
@@ -753,23 +781,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Clear all synonyms. (asynchronously)
-     * Remove all synonyms from an index.
-     * @param indexName The index in which to perform the request. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Clear all synonyms. (asynchronously) Remove all synonyms from an index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call clearAllSynonymsAsync(
     String indexName,
     Boolean forwardToReplicas,
@@ -787,21 +816,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for deleteIndex
-     * @param indexName The index in which to perform the request. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for deleteIndex
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call deleteIndexCall(
     String indexName,
     final ApiCallback _callback
@@ -828,6 +858,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -864,21 +895,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Delete index.
-     * Delete an existing index.
-     * @param indexName The index in which to perform the request. (required)
-     * @return DeleteIndexResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Delete index. Delete an existing index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @return DeleteIndexResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public DeleteIndexResponse deleteIndex(String indexName) throws ApiException {
     ApiResponse<DeleteIndexResponse> localVarResp = deleteIndexWithHttpInfo(
       indexName
@@ -887,21 +919,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Delete index.
-     * Delete an existing index.
-     * @param indexName The index in which to perform the request. (required)
-     * @return ApiResponse&lt;DeleteIndexResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Delete index. Delete an existing index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @return ApiResponse&lt;DeleteIndexResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<DeleteIndexResponse> deleteIndexWithHttpInfo(
     String indexName
   ) throws ApiException {
@@ -911,22 +944,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Delete index. (asynchronously)
-     * Delete an existing index.
-     * @param indexName The index in which to perform the request. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Delete index. (asynchronously) Delete an existing index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call deleteIndexAsync(
     String indexName,
     final ApiCallback<DeleteIndexResponse> _callback
@@ -941,23 +974,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for deleteSynonym
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for deleteSynonym
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call deleteSynonymCall(
     String indexName,
     String objectID,
@@ -996,6 +1031,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -1046,23 +1082,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Delete synonym.
-     * Delete a single synonyms set, identified by the given objectID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return DeleteSynonymResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Delete synonym. Delete a single synonyms set, identified by the given objectID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return DeleteSynonymResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public DeleteSynonymResponse deleteSynonym(
     String indexName,
     String objectID,
@@ -1077,23 +1115,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Delete synonym.
-     * Delete a single synonyms set, identified by the given objectID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return ApiResponse&lt;DeleteSynonymResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Delete synonym. Delete a single synonyms set, identified by the given objectID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return ApiResponse&lt;DeleteSynonymResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<DeleteSynonymResponse> deleteSynonymWithHttpInfo(
     String indexName,
     String objectID,
@@ -1111,24 +1151,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Delete synonym. (asynchronously)
-     * Delete a single synonyms set, identified by the given objectID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Delete synonym. (asynchronously) Delete a single synonyms set, identified by the given
+   * objectID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call deleteSynonymAsync(
     String indexName,
     String objectID,
@@ -1148,24 +1190,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for getLogs
-     * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
-     * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
-     * @param indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional)
-     * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to all)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for getLogs
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getLogsCall(
     Integer offset,
     Integer length,
@@ -1207,6 +1254,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -1245,24 +1293,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Return the lastest log entries.
-     * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
-     * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
-     * @param indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional)
-     * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to all)
-     * @return GetLogsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Return the lastest log entries.
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @return GetLogsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public GetLogsResponse getLogs(
     Integer offset,
     Integer length,
@@ -1279,24 +1332,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Return the lastest log entries.
-     * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
-     * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
-     * @param indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional)
-     * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to all)
-     * @return ApiResponse&lt;GetLogsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Return the lastest log entries.
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @return ApiResponse&lt;GetLogsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<GetLogsResponse> getLogsWithHttpInfo(
     Integer offset,
     Integer length,
@@ -1315,25 +1373,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Return the lastest log entries.
-     * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
-     * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
-     * @param indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional)
-     * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to all)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Return the lastest log entries.
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getLogsAsync(
     Integer offset,
     Integer length,
@@ -1354,21 +1416,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for getSettings
-     * @param indexName The index in which to perform the request. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for getSettings
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getSettingsCall(
     String indexName,
     final ApiCallback _callback
@@ -1395,6 +1458,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -1431,21 +1495,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Retrieve settings of a given indexName.
-     * @param indexName The index in which to perform the request. (required)
-     * @return IndexSettings
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Retrieve settings of a given indexName.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @return IndexSettings
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public IndexSettings getSettings(String indexName) throws ApiException {
     ApiResponse<IndexSettings> localVarResp = getSettingsWithHttpInfo(
       indexName
@@ -1454,21 +1519,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Retrieve settings of a given indexName.
-     * @param indexName The index in which to perform the request. (required)
-     * @return ApiResponse&lt;IndexSettings&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Retrieve settings of a given indexName.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @return ApiResponse&lt;IndexSettings&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<IndexSettings> getSettingsWithHttpInfo(String indexName)
     throws ApiException {
     okhttp3.Call localVarCall = getSettingsValidateBeforeCall(indexName, null);
@@ -1477,22 +1543,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Retrieve settings of a given indexName.
-     * @param indexName The index in which to perform the request. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Retrieve settings of a given indexName.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getSettingsAsync(
     String indexName,
     final ApiCallback<IndexSettings> _callback
@@ -1507,22 +1573,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for getSynonym
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for getSynonym
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getSynonymCall(
     String indexName,
     String objectID,
@@ -1554,6 +1621,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -1598,22 +1666,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get synonym.
-     * Fetch a synonym object identified by its objectID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @return SynonymHit
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get synonym. Fetch a synonym object identified by its objectID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @return SynonymHit
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SynonymHit getSynonym(String indexName, String objectID)
     throws ApiException {
     ApiResponse<SynonymHit> localVarResp = getSynonymWithHttpInfo(
@@ -1624,22 +1693,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get synonym.
-     * Fetch a synonym object identified by its objectID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @return ApiResponse&lt;SynonymHit&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get synonym. Fetch a synonym object identified by its objectID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @return ApiResponse&lt;SynonymHit&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SynonymHit> getSynonymWithHttpInfo(
     String indexName,
     String objectID
@@ -1654,23 +1724,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get synonym. (asynchronously)
-     * Fetch a synonym object identified by its objectID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get synonym. (asynchronously) Fetch a synonym object identified by its objectID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getSynonymAsync(
     String indexName,
     String objectID,
@@ -1687,22 +1757,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for getTask
-     * @param indexName The index in which to perform the request. (required)
-     * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for getTask
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getTaskCall(
     String indexName,
     Integer taskID,
@@ -1734,6 +1805,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -1778,22 +1850,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Check the current status of a given task.
-     * @param indexName The index in which to perform the request. (required)
-     * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
-     * @return GetTaskResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Check the current status of a given task.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @return GetTaskResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public GetTaskResponse getTask(String indexName, Integer taskID)
     throws ApiException {
     ApiResponse<GetTaskResponse> localVarResp = getTaskWithHttpInfo(
@@ -1804,22 +1877,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Check the current status of a given task.
-     * @param indexName The index in which to perform the request. (required)
-     * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
-     * @return ApiResponse&lt;GetTaskResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Check the current status of a given task.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @return ApiResponse&lt;GetTaskResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<GetTaskResponse> getTaskWithHttpInfo(
     String indexName,
     Integer taskID
@@ -1834,23 +1908,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Check the current status of a given task.
-     * @param indexName The index in which to perform the request. (required)
-     * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Check the current status of a given task.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getTaskAsync(
     String indexName,
     Integer taskID,
@@ -1867,20 +1941,21 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for getTopUserIds
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for getTopUserIds
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getTopUserIdsCall(final ApiCallback _callback)
     throws ApiException {
     Object localVarPostBody = null;
@@ -1901,6 +1976,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -1929,40 +2005,48 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get top userID
-     * Get the top 10 userIDs with the highest number of records per cluster. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following array of userIDs and clusters. 
-     * @return GetTopUserIdsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get top userID Get the top 10 userIDs with the highest number of records per cluster. The data
+   * returned will usually be a few seconds behind real time, because userID usage may take up to a
+   * few seconds to propagate to the different clusters. Upon success, the response is 200 OK and
+   * contains the following array of userIDs and clusters.
+   *
+   * @return GetTopUserIdsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public GetTopUserIdsResponse getTopUserIds() throws ApiException {
     ApiResponse<GetTopUserIdsResponse> localVarResp = getTopUserIdsWithHttpInfo();
     return localVarResp.getData();
   }
 
   /**
-     * Get top userID
-     * Get the top 10 userIDs with the highest number of records per cluster. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following array of userIDs and clusters. 
-     * @return ApiResponse&lt;GetTopUserIdsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get top userID Get the top 10 userIDs with the highest number of records per cluster. The data
+   * returned will usually be a few seconds behind real time, because userID usage may take up to a
+   * few seconds to propagate to the different clusters. Upon success, the response is 200 OK and
+   * contains the following array of userIDs and clusters.
+   *
+   * @return ApiResponse&lt;GetTopUserIdsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<GetTopUserIdsResponse> getTopUserIdsWithHttpInfo()
     throws ApiException {
     okhttp3.Call localVarCall = getTopUserIdsValidateBeforeCall(null);
@@ -1972,21 +2056,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get top userID (asynchronously)
-     * Get the top 10 userIDs with the highest number of records per cluster. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following array of userIDs and clusters. 
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get top userID (asynchronously) Get the top 10 userIDs with the highest number of records per
+   * cluster. The data returned will usually be a few seconds behind real time, because userID usage
+   * may take up to a few seconds to propagate to the different clusters. Upon success, the response
+   * is 200 OK and contains the following array of userIDs and clusters.
+   *
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getTopUserIdsAsync(
     final ApiCallback<GetTopUserIdsResponse> _callback
   ) throws ApiException {
@@ -1998,21 +2085,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for getUserId
-     * @param userID userID to assign. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for getUserId
+   *
+   * @param userID userID to assign. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getUserIdCall(Object userID, final ApiCallback _callback)
     throws ApiException {
     Object localVarPostBody = null;
@@ -2037,6 +2125,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -2073,42 +2162,50 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get userID
-     * Returns the userID data stored in the mapping. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userID data. 
-     * @param userID userID to assign. (required)
-     * @return UserId
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get userID Returns the userID data stored in the mapping. The data returned will usually be a
+   * few seconds behind real time, because userID usage may take up to a few seconds to propagate to
+   * the different clusters. Upon success, the response is 200 OK and contains the following userID
+   * data.
+   *
+   * @param userID userID to assign. (required)
+   * @return UserId
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public UserId getUserId(Object userID) throws ApiException {
     ApiResponse<UserId> localVarResp = getUserIdWithHttpInfo(userID);
     return localVarResp.getData();
   }
 
   /**
-     * Get userID
-     * Returns the userID data stored in the mapping. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userID data. 
-     * @param userID userID to assign. (required)
-     * @return ApiResponse&lt;UserId&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get userID Returns the userID data stored in the mapping. The data returned will usually be a
+   * few seconds behind real time, because userID usage may take up to a few seconds to propagate to
+   * the different clusters. Upon success, the response is 200 OK and contains the following userID
+   * data.
+   *
+   * @param userID userID to assign. (required)
+   * @return ApiResponse&lt;UserId&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<UserId> getUserIdWithHttpInfo(Object userID)
     throws ApiException {
     okhttp3.Call localVarCall = getUserIdValidateBeforeCall(userID, null);
@@ -2117,22 +2214,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get userID (asynchronously)
-     * Returns the userID data stored in the mapping. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userID data. 
-     * @param userID userID to assign. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get userID (asynchronously) Returns the userID data stored in the mapping. The data returned
+   * will usually be a few seconds behind real time, because userID usage may take up to a few
+   * seconds to propagate to the different clusters. Upon success, the response is 200 OK and
+   * contains the following userID data.
+   *
+   * @param userID userID to assign. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call getUserIdAsync(
     Object userID,
     final ApiCallback<UserId> _callback
@@ -2144,21 +2244,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for hasPendingMappings
-     * @param getClusters  (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for hasPendingMappings
+   *
+   * @param getClusters (optional)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call hasPendingMappingsCall(
     Boolean getClusters,
     final ApiCallback _callback
@@ -2187,6 +2288,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -2216,21 +2318,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Has pending mappings
-     * Get the status of your clusters’ migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it’s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable. 
-     * @param getClusters  (optional)
-     * @return HasPendingMappingsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Has pending mappings Get the status of your clusters’ migrations or user creations. Creating a
+   * large batch of users or migrating your multi-cluster may take quite some time. This method lets
+   * you retrieve the status of the migration, so you can know when it’s done. Upon success, the
+   * response is 200 OK. A successful response indicates that the operation has been taken into
+   * account, and the userIDs are directly usable.
+   *
+   * @param getClusters (optional)
+   * @return HasPendingMappingsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public HasPendingMappingsResponse hasPendingMappings(Boolean getClusters)
     throws ApiException {
     ApiResponse<HasPendingMappingsResponse> localVarResp = hasPendingMappingsWithHttpInfo(
@@ -2240,21 +2347,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Has pending mappings
-     * Get the status of your clusters’ migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it’s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable. 
-     * @param getClusters  (optional)
-     * @return ApiResponse&lt;HasPendingMappingsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Has pending mappings Get the status of your clusters’ migrations or user creations. Creating a
+   * large batch of users or migrating your multi-cluster may take quite some time. This method lets
+   * you retrieve the status of the migration, so you can know when it’s done. Upon success, the
+   * response is 200 OK. A successful response indicates that the operation has been taken into
+   * account, and the userIDs are directly usable.
+   *
+   * @param getClusters (optional)
+   * @return ApiResponse&lt;HasPendingMappingsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<HasPendingMappingsResponse> hasPendingMappingsWithHttpInfo(
     Boolean getClusters
   ) throws ApiException {
@@ -2268,22 +2380,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Has pending mappings (asynchronously)
-     * Get the status of your clusters’ migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it’s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable. 
-     * @param getClusters  (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Has pending mappings (asynchronously) Get the status of your clusters’ migrations or user
+   * creations. Creating a large batch of users or migrating your multi-cluster may take quite some
+   * time. This method lets you retrieve the status of the migration, so you can know when it’s
+   * done. Upon success, the response is 200 OK. A successful response indicates that the operation
+   * has been taken into account, and the userIDs are directly usable.
+   *
+   * @param getClusters (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call hasPendingMappingsAsync(
     Boolean getClusters,
     final ApiCallback<HasPendingMappingsResponse> _callback
@@ -2299,20 +2415,21 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for listClusters
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for listClusters
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call listClustersCall(final ApiCallback _callback)
     throws ApiException {
     Object localVarPostBody = null;
@@ -2333,6 +2450,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -2361,40 +2479,44 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List clusters
-     * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters. 
-     * @return ListClustersResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List clusters List the clusters available in a multi-clusters setup for a single appID. Upon
+   * success, the response is 200 OK and contains the following clusters.
+   *
+   * @return ListClustersResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ListClustersResponse listClusters() throws ApiException {
     ApiResponse<ListClustersResponse> localVarResp = listClustersWithHttpInfo();
     return localVarResp.getData();
   }
 
   /**
-     * List clusters
-     * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters. 
-     * @return ApiResponse&lt;ListClustersResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List clusters List the clusters available in a multi-clusters setup for a single appID. Upon
+   * success, the response is 200 OK and contains the following clusters.
+   *
+   * @return ApiResponse&lt;ListClustersResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<ListClustersResponse> listClustersWithHttpInfo()
     throws ApiException {
     okhttp3.Call localVarCall = listClustersValidateBeforeCall(null);
@@ -2404,21 +2526,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List clusters (asynchronously)
-     * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters. 
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List clusters (asynchronously) List the clusters available in a multi-clusters setup for a
+   * single appID. Upon success, the response is 200 OK and contains the following clusters.
+   *
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call listClustersAsync(
     final ApiCallback<ListClustersResponse> _callback
   ) throws ApiException {
@@ -2430,21 +2553,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for listIndices
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for listIndices
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call listIndicesCall(
     Integer page,
     final ApiCallback _callback
@@ -2471,6 +2597,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -2500,21 +2627,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List existing indexes.
-     * List existing indexes from an application.
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @return ListIndicesResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List existing indexes. List existing indexes from an application.
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @return ListIndicesResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ListIndicesResponse listIndices(Integer page) throws ApiException {
     ApiResponse<ListIndicesResponse> localVarResp = listIndicesWithHttpInfo(
       page
@@ -2523,21 +2653,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List existing indexes.
-     * List existing indexes from an application.
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @return ApiResponse&lt;ListIndicesResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List existing indexes. List existing indexes from an application.
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @return ApiResponse&lt;ListIndicesResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<ListIndicesResponse> listIndicesWithHttpInfo(Integer page)
     throws ApiException {
     okhttp3.Call localVarCall = listIndicesValidateBeforeCall(page, null);
@@ -2546,22 +2679,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List existing indexes. (asynchronously)
-     * List existing indexes from an application.
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List existing indexes. (asynchronously) List existing indexes from an application.
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call listIndicesAsync(
     Integer page,
     final ApiCallback<ListIndicesResponse> _callback
@@ -2573,22 +2708,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for listUserIds
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for listUserIds
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call listUserIdsCall(
     Integer page,
     Integer hitsPerPage,
@@ -2622,6 +2760,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -2652,22 +2791,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List userIDs
-     * List the userIDs assigned to a multi-clusters appID. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userIDs data. 
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @return ListUserIdsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List userIDs List the userIDs assigned to a multi-clusters appID. The data returned will
+   * usually be a few seconds behind real time, because userID usage may take up to a few seconds to
+   * propagate to the different clusters. Upon success, the response is 200 OK and contains the
+   * following userIDs data.
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @return ListUserIdsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ListUserIdsResponse listUserIds(Integer page, Integer hitsPerPage)
     throws ApiException {
     ApiResponse<ListUserIdsResponse> localVarResp = listUserIdsWithHttpInfo(
@@ -2678,22 +2823,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List userIDs
-     * List the userIDs assigned to a multi-clusters appID. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userIDs data. 
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @return ApiResponse&lt;ListUserIdsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List userIDs List the userIDs assigned to a multi-clusters appID. The data returned will
+   * usually be a few seconds behind real time, because userID usage may take up to a few seconds to
+   * propagate to the different clusters. Upon success, the response is 200 OK and contains the
+   * following userIDs data.
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @return ApiResponse&lt;ListUserIdsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<ListUserIdsResponse> listUserIdsWithHttpInfo(
     Integer page,
     Integer hitsPerPage
@@ -2708,23 +2859,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * List userIDs (asynchronously)
-     * List the userIDs assigned to a multi-clusters appID. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userIDs data. 
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * List userIDs (asynchronously) List the userIDs assigned to a multi-clusters appID. The data
+   * returned will usually be a few seconds behind real time, because userID usage may take up to a
+   * few seconds to propagate to the different clusters. Upon success, the response is 200 OK and
+   * contains the following userIDs data.
+   *
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call listUserIdsAsync(
     Integer page,
     Integer hitsPerPage,
@@ -2741,21 +2897,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for multipleQueries
-     * @param multipleQueriesObject  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for multipleQueries
+   *
+   * @param multipleQueriesObject (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call multipleQueriesCall(
     MultipleQueriesObject multipleQueriesObject,
     final ApiCallback _callback
@@ -2805,7 +2962,8 @@ public class SearchApi extends ApiClient {
     // verify the required parameter 'multipleQueriesObject' is set
     if (multipleQueriesObject == null) {
       throw new ApiException(
-        "Missing the required parameter 'multipleQueriesObject' when calling multipleQueries(Async)"
+        "Missing the required parameter 'multipleQueriesObject' when calling" +
+        " multipleQueries(Async)"
       );
     }
 
@@ -2817,21 +2975,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Get search results for the given requests.
-     * @param multipleQueriesObject  (required)
-     * @return MultipleQueriesResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get search results for the given requests.
+   *
+   * @param multipleQueriesObject (required)
+   * @return MultipleQueriesResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public MultipleQueriesResponse multipleQueries(
     MultipleQueriesObject multipleQueriesObject
   ) throws ApiException {
@@ -2842,21 +3001,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Get search results for the given requests.
-     * @param multipleQueriesObject  (required)
-     * @return ApiResponse&lt;MultipleQueriesResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get search results for the given requests.
+   *
+   * @param multipleQueriesObject (required)
+   * @return ApiResponse&lt;MultipleQueriesResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<MultipleQueriesResponse> multipleQueriesWithHttpInfo(
     MultipleQueriesObject multipleQueriesObject
   ) throws ApiException {
@@ -2870,22 +3030,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Get search results for the given requests.
-     * @param multipleQueriesObject  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Get search results for the given requests.
+   *
+   * @param multipleQueriesObject (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call multipleQueriesAsync(
     MultipleQueriesObject multipleQueriesObject,
     final ApiCallback<MultipleQueriesResponse> _callback
@@ -2901,22 +3061,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for operationIndex
-     * @param indexName The index in which to perform the request. (required)
-     * @param operationIndexObject  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for operationIndex
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param operationIndexObject (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call operationIndexCall(
     String indexName,
     OperationIndexObject operationIndexObject,
@@ -2979,7 +3140,8 @@ public class SearchApi extends ApiClient {
     // verify the required parameter 'operationIndexObject' is set
     if (operationIndexObject == null) {
       throw new ApiException(
-        "Missing the required parameter 'operationIndexObject' when calling operationIndex(Async)"
+        "Missing the required parameter 'operationIndexObject' when calling" +
+        " operationIndex(Async)"
       );
     }
 
@@ -2992,22 +3154,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Copy/move index.
-     * Peforms a copy or a move operation on a index.
-     * @param indexName The index in which to perform the request. (required)
-     * @param operationIndexObject  (required)
-     * @return OperationIndexResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Copy/move index. Peforms a copy or a move operation on a index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param operationIndexObject (required)
+   * @return OperationIndexResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public OperationIndexResponse operationIndex(
     String indexName,
     OperationIndexObject operationIndexObject
@@ -3020,22 +3183,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Copy/move index.
-     * Peforms a copy or a move operation on a index.
-     * @param indexName The index in which to perform the request. (required)
-     * @param operationIndexObject  (required)
-     * @return ApiResponse&lt;OperationIndexResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Copy/move index. Peforms a copy or a move operation on a index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param operationIndexObject (required)
+   * @return ApiResponse&lt;OperationIndexResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<OperationIndexResponse> operationIndexWithHttpInfo(
     String indexName,
     OperationIndexObject operationIndexObject
@@ -3051,23 +3215,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Copy/move index. (asynchronously)
-     * Peforms a copy or a move operation on a index.
-     * @param indexName The index in which to perform the request. (required)
-     * @param operationIndexObject  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Copy/move index. (asynchronously) Peforms a copy or a move operation on a index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param operationIndexObject (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call operationIndexAsync(
     String indexName,
     OperationIndexObject operationIndexObject,
@@ -3085,21 +3249,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for removeUserId
-     * @param userID userID to assign. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for removeUserId
+   *
+   * @param userID userID to assign. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call removeUserIdCall(
     Object userID,
     final ApiCallback _callback
@@ -3126,6 +3291,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -3162,21 +3328,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Remove userID
-     * Remove a userID and its associated data from the multi-clusters. Upon success, the response is 200 OK and a task is created to remove the userID data and mapping. 
-     * @param userID userID to assign. (required)
-     * @return RemoveUserIdResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Remove userID Remove a userID and its associated data from the multi-clusters. Upon success,
+   * the response is 200 OK and a task is created to remove the userID data and mapping.
+   *
+   * @param userID userID to assign. (required)
+   * @return RemoveUserIdResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public RemoveUserIdResponse removeUserId(Object userID) throws ApiException {
     ApiResponse<RemoveUserIdResponse> localVarResp = removeUserIdWithHttpInfo(
       userID
@@ -3185,21 +3353,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Remove userID
-     * Remove a userID and its associated data from the multi-clusters. Upon success, the response is 200 OK and a task is created to remove the userID data and mapping. 
-     * @param userID userID to assign. (required)
-     * @return ApiResponse&lt;RemoveUserIdResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Remove userID Remove a userID and its associated data from the multi-clusters. Upon success,
+   * the response is 200 OK and a task is created to remove the userID data and mapping.
+   *
+   * @param userID userID to assign. (required)
+   * @return ApiResponse&lt;RemoveUserIdResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<RemoveUserIdResponse> removeUserIdWithHttpInfo(
     Object userID
   ) throws ApiException {
@@ -3210,22 +3380,24 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Remove userID (asynchronously)
-     * Remove a userID and its associated data from the multi-clusters. Upon success, the response is 200 OK and a task is created to remove the userID data and mapping. 
-     * @param userID userID to assign. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Remove userID (asynchronously) Remove a userID and its associated data from the multi-clusters.
+   * Upon success, the response is 200 OK and a task is created to remove the userID data and
+   * mapping.
+   *
+   * @param userID userID to assign. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call removeUserIdAsync(
     Object userID,
     final ApiCallback<RemoveUserIdResponse> _callback
@@ -3241,22 +3413,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for saveObject
-     * @param indexName The index in which to perform the request. (required)
-     * @param requestBody The Algolia object. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for saveObject
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param requestBody The Algolia object. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call saveObjectCall(
     String indexName,
     Map<String, Object> requestBody,
@@ -3332,22 +3505,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Add an object to the index, automatically assigning it an object ID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param requestBody The Algolia object. (required)
-     * @return SaveObjectResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Add an object to the index, automatically assigning it an object ID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param requestBody The Algolia object. (required)
+   * @return SaveObjectResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SaveObjectResponse saveObject(
     String indexName,
     Map<String, Object> requestBody
@@ -3360,22 +3534,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Add an object to the index, automatically assigning it an object ID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param requestBody The Algolia object. (required)
-     * @return ApiResponse&lt;SaveObjectResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Add an object to the index, automatically assigning it an object ID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param requestBody The Algolia object. (required)
+   * @return ApiResponse&lt;SaveObjectResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SaveObjectResponse> saveObjectWithHttpInfo(
     String indexName,
     Map<String, Object> requestBody
@@ -3390,23 +3565,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Add an object to the index, automatically assigning it an object ID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param requestBody The Algolia object. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Add an object to the index, automatically assigning it an object ID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param requestBody The Algolia object. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call saveObjectAsync(
     String indexName,
     Map<String, Object> requestBody,
@@ -3423,24 +3598,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for saveSynonym
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for saveSynonym
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call saveSynonymCall(
     String indexName,
     String objectID,
@@ -3539,24 +3716,27 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Save synonym.
-     * Create a new synonym object or update the existing synonym object with the given object ID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return SaveSynonymResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Save synonym. Create a new synonym object or update the existing synonym object with the given
+   * object ID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return SaveSynonymResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SaveSynonymResponse saveSynonym(
     String indexName,
     String objectID,
@@ -3573,24 +3753,27 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Save synonym.
-     * Create a new synonym object or update the existing synonym object with the given object ID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return ApiResponse&lt;SaveSynonymResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Save synonym. Create a new synonym object or update the existing synonym object with the given
+   * object ID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return ApiResponse&lt;SaveSynonymResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SaveSynonymResponse> saveSynonymWithHttpInfo(
     String indexName,
     String objectID,
@@ -3609,25 +3792,27 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Save synonym. (asynchronously)
-     * Create a new synonym object or update the existing synonym object with the given object ID.
-     * @param indexName The index in which to perform the request. (required)
-     * @param objectID Unique identifier of an object. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Save synonym. (asynchronously) Create a new synonym object or update the existing synonym
+   * object with the given object ID.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param objectID Unique identifier of an object. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call saveSynonymAsync(
     String indexName,
     String objectID,
@@ -3648,24 +3833,27 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for saveSynonyms
-     * @param indexName The index in which to perform the request. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for saveSynonyms
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this
+   *     request. (optional)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call saveSynonymsCall(
     String indexName,
     List<SynonymHit> synonymHit,
@@ -3759,24 +3947,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Save a batch of synonyms.
-     * Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
-     * @param indexName The index in which to perform the request. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
-     * @return SaveSynonymsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Save a batch of synonyms. Create/update multiple synonym objects at once, potentially replacing
+   * the entire list of synonyms if replaceExistingSynonyms is true.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this
+   *     request. (optional)
+   * @return SaveSynonymsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SaveSynonymsResponse saveSynonyms(
     String indexName,
     List<SynonymHit> synonymHit,
@@ -3793,24 +3985,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Save a batch of synonyms.
-     * Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
-     * @param indexName The index in which to perform the request. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
-     * @return ApiResponse&lt;SaveSynonymsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Save a batch of synonyms. Create/update multiple synonym objects at once, potentially replacing
+   * the entire list of synonyms if replaceExistingSynonyms is true.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this
+   *     request. (optional)
+   * @return ApiResponse&lt;SaveSynonymsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SaveSynonymsResponse> saveSynonymsWithHttpInfo(
     String indexName,
     List<SynonymHit> synonymHit,
@@ -3830,25 +4026,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Save a batch of synonyms. (asynchronously)
-     * Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
-     * @param indexName The index in which to perform the request. (required)
-     * @param synonymHit  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Save a batch of synonyms. (asynchronously) Create/update multiple synonym objects at once,
+   * potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param synonymHit (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this
+   *     request. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call saveSynonymsAsync(
     String indexName,
     List<SynonymHit> synonymHit,
@@ -3870,22 +4069,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for search
-     * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for search
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param searchParams (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call searchCall(
     String indexName,
     SearchParams searchParams,
@@ -3957,22 +4157,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Get search results.
-     * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
-     * @return SearchResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get search results.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param searchParams (required)
+   * @return SearchResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SearchResponse search(String indexName, SearchParams searchParams)
     throws ApiException {
     ApiResponse<SearchResponse> localVarResp = searchWithHttpInfo(
@@ -3983,22 +4184,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Get search results.
-     * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
-     * @return ApiResponse&lt;SearchResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get search results.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param searchParams (required)
+   * @return ApiResponse&lt;SearchResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SearchResponse> searchWithHttpInfo(
     String indexName,
     SearchParams searchParams
@@ -4013,23 +4215,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Get search results.
-     * @param indexName The index in which to perform the request. (required)
-     * @param searchParams  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Get search results.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param searchParams (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call searchAsync(
     String indexName,
     SearchParams searchParams,
@@ -4046,25 +4248,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for searchSynonyms
-     * @param indexName The index in which to perform the request. (required)
-     * @param query Search for specific synonyms matching this string. (optional, default to )
-     * @param type Only search for specific types of synonyms. (optional)
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for searchSynonyms
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param query Search for specific synonyms matching this string. (optional, default to )
+   * @param type Only search for specific types of synonyms. (optional)
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional, default to 0)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call searchSynonymsCall(
     String indexName,
     String query,
@@ -4113,6 +4318,7 @@ public class SearchApi extends ApiClient {
     }
 
     final String[] localVarContentTypes = {};
+
     final String localVarContentType =
       this.selectHeaderContentType(localVarContentTypes);
     localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -4160,25 +4366,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get all synonyms that match a query.
-     * Search or browse all synonyms, optionally filtering them by type.
-     * @param indexName The index in which to perform the request. (required)
-     * @param query Search for specific synonyms matching this string. (optional, default to )
-     * @param type Only search for specific types of synonyms. (optional)
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @return SearchSynonymsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get all synonyms that match a query. Search or browse all synonyms, optionally filtering them
+   * by type.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param query Search for specific synonyms matching this string. (optional, default to )
+   * @param type Only search for specific types of synonyms. (optional)
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional, default to 0)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @return SearchSynonymsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SearchSynonymsResponse searchSynonyms(
     String indexName,
     String query,
@@ -4197,25 +4407,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get all synonyms that match a query.
-     * Search or browse all synonyms, optionally filtering them by type.
-     * @param indexName The index in which to perform the request. (required)
-     * @param query Search for specific synonyms matching this string. (optional, default to )
-     * @param type Only search for specific types of synonyms. (optional)
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @return ApiResponse&lt;SearchSynonymsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get all synonyms that match a query. Search or browse all synonyms, optionally filtering them
+   * by type.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param query Search for specific synonyms matching this string. (optional, default to )
+   * @param type Only search for specific types of synonyms. (optional)
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional, default to 0)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @return ApiResponse&lt;SearchSynonymsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SearchSynonymsResponse> searchSynonymsWithHttpInfo(
     String indexName,
     String query,
@@ -4237,26 +4451,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Get all synonyms that match a query. (asynchronously)
-     * Search or browse all synonyms, optionally filtering them by type.
-     * @param indexName The index in which to perform the request. (required)
-     * @param query Search for specific synonyms matching this string. (optional, default to )
-     * @param type Only search for specific types of synonyms. (optional)
-     * @param page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
-     * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Get all synonyms that match a query. (asynchronously) Search or browse all synonyms, optionally
+   * filtering them by type.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param query Search for specific synonyms matching this string. (optional, default to )
+   * @param type Only search for specific types of synonyms. (optional)
+   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
+   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   *     (optional, default to 0)
+   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call searchSynonymsAsync(
     String indexName,
     String query,
@@ -4280,21 +4497,22 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for searchUserIds
-     * @param searchUserIdsObject  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for searchUserIds
+   *
+   * @param searchUserIdsObject (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call searchUserIdsCall(
     SearchUserIdsObject searchUserIdsObject,
     final ApiCallback _callback
@@ -4356,21 +4574,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Search userID
-     * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn&#39;t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data. 
-     * @param searchUserIdsObject  (required)
-     * @return SearchUserIdsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Search userID Search for userIDs. The data returned will usually be a few seconds behind real
+   * time, because userID usage may take up to a few seconds propagate to the different clusters. To
+   * keep updates moving quickly, the index of userIDs isn&#39;t built synchronously with the
+   * mapping. Instead, the index is built once every 12h, at the same time as the update of userID
+   * usage. For example, when you perform a modification like adding or moving a userID, the search
+   * will report an outdated value until the next rebuild of the mapping, which takes place every
+   * 12h. Upon success, the response is 200 OK and contains the following userIDs data.
+   *
+   * @param searchUserIdsObject (required)
+   * @return SearchUserIdsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SearchUserIdsResponse searchUserIds(
     SearchUserIdsObject searchUserIdsObject
   ) throws ApiException {
@@ -4381,21 +4606,28 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Search userID
-     * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn&#39;t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data. 
-     * @param searchUserIdsObject  (required)
-     * @return ApiResponse&lt;SearchUserIdsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Search userID Search for userIDs. The data returned will usually be a few seconds behind real
+   * time, because userID usage may take up to a few seconds propagate to the different clusters. To
+   * keep updates moving quickly, the index of userIDs isn&#39;t built synchronously with the
+   * mapping. Instead, the index is built once every 12h, at the same time as the update of userID
+   * usage. For example, when you perform a modification like adding or moving a userID, the search
+   * will report an outdated value until the next rebuild of the mapping, which takes place every
+   * 12h. Upon success, the response is 200 OK and contains the following userIDs data.
+   *
+   * @param searchUserIdsObject (required)
+   * @return ApiResponse&lt;SearchUserIdsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SearchUserIdsResponse> searchUserIdsWithHttpInfo(
     SearchUserIdsObject searchUserIdsObject
   ) throws ApiException {
@@ -4409,22 +4641,29 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Search userID (asynchronously)
-     * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn&#39;t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data. 
-     * @param searchUserIdsObject  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Search userID (asynchronously) Search for userIDs. The data returned will usually be a few
+   * seconds behind real time, because userID usage may take up to a few seconds propagate to the
+   * different clusters. To keep updates moving quickly, the index of userIDs isn&#39;t built
+   * synchronously with the mapping. Instead, the index is built once every 12h, at the same time as
+   * the update of userID usage. For example, when you perform a modification like adding or moving
+   * a userID, the search will report an outdated value until the next rebuild of the mapping, which
+   * takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs
+   * data.
+   *
+   * @param searchUserIdsObject (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call searchUserIdsAsync(
     SearchUserIdsObject searchUserIdsObject,
     final ApiCallback<SearchUserIdsResponse> _callback
@@ -4440,23 +4679,25 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * Build call for setSettings
-     * @param indexName The index in which to perform the request. (required)
-     * @param indexSettings  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Build call for setSettings
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param indexSettings (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call setSettingsCall(
     String indexName,
     IndexSettings indexSettings,
@@ -4541,23 +4782,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
-     * @param indexName The index in which to perform the request. (required)
-     * @param indexSettings  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return SetSettingsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Update settings of a given indexName. Only specified settings are overridden; unspecified
+   * settings are left unchanged. Specifying null for a setting resets it to its default value.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param indexSettings (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return SetSettingsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public SetSettingsResponse setSettings(
     String indexName,
     IndexSettings indexSettings,
@@ -4572,23 +4816,26 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     * 
-     * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
-     * @param indexName The index in which to perform the request. (required)
-     * @param indexSettings  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @return ApiResponse&lt;SetSettingsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * Update settings of a given indexName. Only specified settings are overridden; unspecified
+   * settings are left unchanged. Specifying null for a setting resets it to its default value.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param indexSettings (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @return ApiResponse&lt;SetSettingsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public ApiResponse<SetSettingsResponse> setSettingsWithHttpInfo(
     String indexName,
     IndexSettings indexSettings,
@@ -4605,24 +4852,27 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-     *  (asynchronously)
-     * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
-     * @param indexName The index in which to perform the request. (required)
-     * @param indexSettings  (required)
-     * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-        <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-     </table>
-     */
+   * (asynchronously) Update settings of a given indexName. Only specified settings are overridden;
+   * unspecified settings are left unchanged. Specifying null for a setting resets it to its default
+   * value.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param indexSettings (required)
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
+   *     indexName. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
   public okhttp3.Call setSettingsAsync(
     String indexName,
     IndexSettings indexSettings,
