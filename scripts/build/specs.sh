@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ ! $CI ]] && [[ ! $DOCKER ]]; then
+    echo "You should run scripts via the docker container, see README.md"
+
+    exit 1
+fi
+
 # Break on non-zero code
 set -e
 

@@ -2,6 +2,8 @@ ARG NODE_VERSION=16.13.0
 
 FROM node:$NODE_VERSION-alpine
 
+ENV DOCKER=true
+
 RUN apk add openjdk11 maven jq bash yamllint perl curl
 
 WORKDIR /app
