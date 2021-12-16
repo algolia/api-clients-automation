@@ -1,19 +1,11 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * OK
- */
+/** OK */
 @ApiModel(description = "OK")
 public class SearchUserIdsObject {
 
@@ -43,13 +35,16 @@ public class SearchUserIdsObject {
   }
 
   /**
-   * Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
+   * Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve
+   * all users.
+   *
    * @return query
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
-    value = "Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users."
+    value = "Query to search. The search is a prefix search with typoTolerance. Use empty query to" +
+    " retrieve all users."
   )
   public String getQuery() {
     return query;
@@ -66,8 +61,9 @@ public class SearchUserIdsObject {
 
   /**
    * Name of the cluster.
+   *
    * @return clusterName
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(example = "c11-test", value = "Name of the cluster.")
   public String getClusterName() {
@@ -85,8 +81,9 @@ public class SearchUserIdsObject {
 
   /**
    * Specify the page to retrieve.
+   *
    * @return page
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specify the page to retrieve.")
   public Integer getPage() {
@@ -104,8 +101,9 @@ public class SearchUserIdsObject {
 
   /**
    * Set the number of hits per page.
+   *
    * @return hitsPerPage
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Set the number of hits per page.")
   public Integer getHitsPerPage() {
@@ -157,8 +155,7 @@ public class SearchUserIdsObject {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

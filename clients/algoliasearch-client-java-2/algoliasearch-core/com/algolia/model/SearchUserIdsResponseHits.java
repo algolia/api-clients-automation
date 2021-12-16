@@ -1,22 +1,10 @@
 package com.algolia.model;
 
-import com.algolia.model.SearchUserIdsResponseHighlightResult;
-import com.algolia.model.UserId;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * SearchUserIdsResponseHits
- */
-
+/** SearchUserIdsResponseHits */
 public class SearchUserIdsResponseHits {
 
   public static final String SERIALIZED_NAME_USER_I_D = "userID";
@@ -57,8 +45,9 @@ public class SearchUserIdsResponseHits {
 
   /**
    * Get userID
+   *
    * @return userID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public UserId getUserID() {
@@ -76,8 +65,9 @@ public class SearchUserIdsResponseHits {
 
   /**
    * Name of the cluster.
+   *
    * @return clusterName
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(example = "c11-test", value = "Name of the cluster.")
   public String getClusterName() {
@@ -95,8 +85,9 @@ public class SearchUserIdsResponseHits {
 
   /**
    * Number of records in the cluster.
+   *
    * @return nbRecords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(example = "3", value = "Number of records in the cluster.")
   public Integer getNbRecords() {
@@ -114,8 +105,9 @@ public class SearchUserIdsResponseHits {
 
   /**
    * Data size taken by all the users assigned to the cluster.
+   *
    * @return dataSize
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "481",
@@ -136,8 +128,9 @@ public class SearchUserIdsResponseHits {
 
   /**
    * userID of the requested user. Same as userID.
+   *
    * @return objectID
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "userID of the requested user. Same as userID.")
   public String getObjectID() {
@@ -157,8 +150,9 @@ public class SearchUserIdsResponseHits {
 
   /**
    * Get highlightResult
+   *
    * @return highlightResult
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public SearchUserIdsResponseHighlightResult getHighlightResult() {
@@ -229,8 +223,7 @@ public class SearchUserIdsResponseHits {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

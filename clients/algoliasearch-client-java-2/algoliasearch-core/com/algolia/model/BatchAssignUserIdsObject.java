@@ -1,21 +1,13 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Assign userID object.
- */
+/** Assign userID object. */
 @ApiModel(description = "Assign userID object.")
 public class BatchAssignUserIdsObject {
 
@@ -36,8 +28,9 @@ public class BatchAssignUserIdsObject {
 
   /**
    * Name of the cluster.
+   *
    * @return cluster
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "c11-test",
@@ -64,8 +57,9 @@ public class BatchAssignUserIdsObject {
 
   /**
    * userIDs to assign. Note you cannot move users with this method.
+   *
    * @return users
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -110,8 +104,7 @@ public class BatchAssignUserIdsObject {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

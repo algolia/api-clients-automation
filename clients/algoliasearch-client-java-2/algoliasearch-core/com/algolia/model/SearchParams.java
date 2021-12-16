@@ -1,14 +1,10 @@
 package com.algolia.model;
 
-import com.algolia.model.BaseSearchParams;
-import com.algolia.model.IndexSettingsAsSearchParams;
-import com.algolia.model.OneOfintegerstring;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -18,10 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-/**
- * SearchParams
- */
-
+/** SearchParams */
 public class SearchParams {
 
   public static final String SERIALIZED_NAME_QUERY = "query";
@@ -302,9 +295,7 @@ public class SearchParams {
   @SerializedName(SERIALIZED_NAME_MIN_WORD_SIZEFOR2_TYPOS)
   private Integer minWordSizefor2Typos = 8;
 
-  /**
-   * Controls whether typo tolerance is enabled and how it is applied.
-   */
+  /** Controls whether typo tolerance is enabled and how it is applied. */
   @JsonAdapter(TypoToleranceEnum.Adapter.class)
   public enum TypoToleranceEnum {
     TRUE("true"),
@@ -420,9 +411,7 @@ public class SearchParams {
   @SerializedName(SERIALIZED_NAME_ENABLE_PERSONALIZATION)
   private Boolean enablePersonalization = false;
 
-  /**
-   * Controls if and how query words are interpreted as prefixes.
-   */
+  /** Controls if and how query words are interpreted as prefixes. */
   @JsonAdapter(QueryTypeEnum.Adapter.class)
   public enum QueryTypeEnum {
     PREFIXLAST("prefixLast"),
@@ -479,9 +468,7 @@ public class SearchParams {
   @SerializedName(SERIALIZED_NAME_QUERY_TYPE)
   private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
 
-  /**
-   * Selects a strategy to remove words from the query when it doesn’t match any hits.
-   */
+  /** Selects a strategy to remove words from the query when it doesn’t match any hits. */
   @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
@@ -559,9 +546,7 @@ public class SearchParams {
   @SerializedName(SERIALIZED_NAME_DISABLE_EXACT_ON_ATTRIBUTES)
   private List<String> disableExactOnAttributes = null;
 
-  /**
-   * Controls how the exact ranking criterion is computed when the query contains only one word.
-   */
+  /** Controls how the exact ranking criterion is computed when the query contains only one word. */
   @JsonAdapter(ExactOnSingleWordQueryEnum.Adapter.class)
   public enum ExactOnSingleWordQueryEnum {
     ATTRIBUTE("attribute"),
@@ -621,9 +606,7 @@ public class SearchParams {
   private ExactOnSingleWordQueryEnum exactOnSingleWordQuery =
     ExactOnSingleWordQueryEnum.ATTRIBUTE;
 
-  /**
-   * Gets or Sets alternativesAsExact
-   */
+  /** Gets or Sets alternativesAsExact */
   @JsonAdapter(AlternativesAsExactEnum.Adapter.class)
   public enum AlternativesAsExactEnum {
     IGNOREPLURALS("ignorePlurals"),
@@ -681,9 +664,7 @@ public class SearchParams {
   @SerializedName(SERIALIZED_NAME_ALTERNATIVES_AS_EXACT)
   private List<AlternativesAsExactEnum> alternativesAsExact = null;
 
-  /**
-   * Gets or Sets advancedSyntaxFeatures
-   */
+  /** Gets or Sets advancedSyntaxFeatures */
   @JsonAdapter(AdvancedSyntaxFeaturesEnum.Adapter.class)
   public enum AdvancedSyntaxFeaturesEnum {
     EXACTPHRASE("exactPhrase"),
@@ -790,8 +771,9 @@ public class SearchParams {
 
   /**
    * The text to search in the index.
+   *
    * @return query
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "The text to search in the index.")
   public String getQuery() {
@@ -808,12 +790,15 @@ public class SearchParams {
   }
 
   /**
-   * Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results.
+   * Overrides the query parameter and performs a more generic search that can be used to find
+   * \"similar\" results.
+   *
    * @return similarQuery
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results."
+    value = "Overrides the query parameter and performs a more generic search that can be used to" +
+    " find \"similar\" results."
   )
   public String getSimilarQuery() {
     return similarQuery;
@@ -830,8 +815,9 @@ public class SearchParams {
 
   /**
    * Filter the query with numeric, facet and/or tag filters.
+   *
    * @return filters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Filter the query with numeric, facet and/or tag filters."
@@ -859,8 +845,9 @@ public class SearchParams {
 
   /**
    * Filter hits by facet value.
+   *
    * @return facetFilters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Filter hits by facet value.")
   public List<String> getFacetFilters() {
@@ -885,12 +872,15 @@ public class SearchParams {
   }
 
   /**
-   * Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
+   * Create filters for ranking purposes, where records that match the filter are ranked higher, or
+   * lower in the case of a negative optional filter.
+   *
    * @return optionalFilters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter."
+    value = "Create filters for ranking purposes, where records that match the filter are ranked" +
+    " higher, or lower in the case of a negative optional filter."
   )
   public List<String> getOptionalFilters() {
     return optionalFilters;
@@ -915,8 +905,9 @@ public class SearchParams {
 
   /**
    * Filter on numeric attributes.
+   *
    * @return numericFilters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Filter on numeric attributes.")
   public List<String> getNumericFilters() {
@@ -942,8 +933,9 @@ public class SearchParams {
 
   /**
    * Filter hits by tags.
+   *
    * @return tagFilters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Filter hits by tags.")
   public List<String> getTagFilters() {
@@ -961,8 +953,9 @@ public class SearchParams {
 
   /**
    * Determines how to calculate the total score for filtering.
+   *
    * @return sumOrFiltersScores
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Determines how to calculate the total score for filtering."
@@ -990,8 +983,9 @@ public class SearchParams {
 
   /**
    * Retrieve facets and their facet values.
+   *
    * @return facets
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Retrieve facets and their facet values.")
   public List<String> getFacets() {
@@ -1009,8 +1003,9 @@ public class SearchParams {
 
   /**
    * Maximum number of facet values to return for each facet during a regular search.
+   *
    * @return maxValuesPerFacet
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Maximum number of facet values to return for each facet during a regular search."
@@ -1030,8 +1025,9 @@ public class SearchParams {
 
   /**
    * Force faceting to be applied after de-duplication (via the Distinct setting).
+   *
    * @return facetingAfterDistinct
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Force faceting to be applied after de-duplication (via the Distinct setting)."
@@ -1051,8 +1047,9 @@ public class SearchParams {
 
   /**
    * Controls how facet values are fetched.
+   *
    * @return sortFacetValuesBy
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Controls how facet values are fetched.")
   public String getSortFacetValuesBy() {
@@ -1070,8 +1067,9 @@ public class SearchParams {
 
   /**
    * Specify the page to retrieve.
+   *
    * @return page
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specify the page to retrieve.")
   public Integer getPage() {
@@ -1089,8 +1087,9 @@ public class SearchParams {
 
   /**
    * Specify the offset of the first hit to return.
+   *
    * @return offset
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specify the offset of the first hit to return.")
   public Integer getOffset() {
@@ -1107,11 +1106,10 @@ public class SearchParams {
   }
 
   /**
-   * Set the number of hits to retrieve (used only with offset).
-   * minimum: 1
-   * maximum: 1000
+   * Set the number of hits to retrieve (used only with offset). minimum: 1 maximum: 1000
+   *
    * @return length
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Set the number of hits to retrieve (used only with offset)."
@@ -1131,11 +1129,13 @@ public class SearchParams {
 
   /**
    * Search for entries around a central geolocation, enabling a geo search within a circular area.
+   *
    * @return aroundLatLng
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Search for entries around a central geolocation, enabling a geo search within a circular area."
+    value = "Search for entries around a central geolocation, enabling a geo search within a circular" +
+    " area."
   )
   public String getAroundLatLng() {
     return aroundLatLng;
@@ -1151,12 +1151,15 @@ public class SearchParams {
   }
 
   /**
-   * Search for entries around a given location automatically computed from the requester’s IP address.
+   * Search for entries around a given location automatically computed from the requester’s IP
+   * address.
+   *
    * @return aroundLatLngViaIP
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Search for entries around a given location automatically computed from the requester’s IP address."
+    value = "Search for entries around a given location automatically computed from the requester’s" +
+    " IP address."
   )
   public Boolean getAroundLatLngViaIP() {
     return aroundLatLngViaIP;
@@ -1173,8 +1176,9 @@ public class SearchParams {
 
   /**
    * Define the maximum radius for a geo search (in meters).
+   *
    * @return aroundRadius
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Define the maximum radius for a geo search (in meters)."
@@ -1194,11 +1198,13 @@ public class SearchParams {
 
   /**
    * Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
+   *
    * @return aroundPrecision
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Precision of geo search (in meters), to add grouping by geo location to the ranking formula."
+    value = "Precision of geo search (in meters), to add grouping by geo location to the ranking" +
+    " formula."
   )
   public Integer getAroundPrecision() {
     return aroundPrecision;
@@ -1214,10 +1220,10 @@ public class SearchParams {
   }
 
   /**
-   * Minimum radius (in meters) used for a geo search when aroundRadius is not set.
-   * minimum: 1
+   * Minimum radius (in meters) used for a geo search when aroundRadius is not set. minimum: 1
+   *
    * @return minimumAroundRadius
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Minimum radius (in meters) used for a geo search when aroundRadius is not set."
@@ -1247,8 +1253,9 @@ public class SearchParams {
 
   /**
    * Search inside a rectangular area (in geo coordinates).
+   *
    * @return insideBoundingBox
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Search inside a rectangular area (in geo coordinates)."
@@ -1276,8 +1283,9 @@ public class SearchParams {
 
   /**
    * Search inside a polygon (in geo coordinates).
+   *
    * @return insidePolygon
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Search inside a polygon (in geo coordinates).")
   public List<BigDecimal> getInsidePolygon() {
@@ -1302,12 +1310,21 @@ public class SearchParams {
   }
 
   /**
-   * This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
+   * This parameter changes the default values of certain parameters and settings that work best for
+   * a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults,
+   * analyticsTags and ruleContexts. These parameters and settings work well together when the query
+   * is formatted in natural language instead of keywords, for example when your user performs a
+   * voice search.
+   *
    * @return naturalLanguages
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search."
+    value = "This parameter changes the default values of certain parameters and settings that work" +
+    " best for a natural language query, such as ignorePlurals, removeStopWords," +
+    " removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and" +
+    " settings work well together when the query is formatted in natural language" +
+    " instead of keywords, for example when your user performs a voice search."
   )
   public List<String> getNaturalLanguages() {
     return naturalLanguages;
@@ -1332,8 +1349,9 @@ public class SearchParams {
 
   /**
    * Enables contextual rules.
+   *
    * @return ruleContexts
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables contextual rules.")
   public List<String> getRuleContexts() {
@@ -1351,8 +1369,9 @@ public class SearchParams {
 
   /**
    * Define the impact of the Personalization feature.
+   *
    * @return personalizationImpact
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Define the impact of the Personalization feature.")
   public Integer getPersonalizationImpact() {
@@ -1370,8 +1389,9 @@ public class SearchParams {
 
   /**
    * Associates a certain user token with the current search.
+   *
    * @return userToken
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Associates a certain user token with the current search."
@@ -1391,8 +1411,9 @@ public class SearchParams {
 
   /**
    * Retrieve detailed ranking information.
+   *
    * @return getRankingInfo
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Retrieve detailed ranking information.")
   public Boolean getGetRankingInfo() {
@@ -1410,8 +1431,9 @@ public class SearchParams {
 
   /**
    * Enable the Click Analytics feature.
+   *
    * @return clickAnalytics
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enable the Click Analytics feature.")
   public Boolean getClickAnalytics() {
@@ -1429,8 +1451,9 @@ public class SearchParams {
 
   /**
    * Whether the current query will be taken into account in the Analytics.
+   *
    * @return analytics
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether the current query will be taken into account in the Analytics."
@@ -1458,8 +1481,9 @@ public class SearchParams {
 
   /**
    * List of tags to apply to the query for analytics purposes.
+   *
    * @return analyticsTags
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of tags to apply to the query for analytics purposes."
@@ -1479,8 +1503,9 @@ public class SearchParams {
 
   /**
    * Whether to include or exclude a query from the processing-time percentile computation.
+   *
    * @return percentileComputation
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether to include or exclude a query from the processing-time percentile computation."
@@ -1500,8 +1525,9 @@ public class SearchParams {
 
   /**
    * Whether this search should participate in running AB tests.
+   *
    * @return enableABTest
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether this search should participate in running AB tests."
@@ -1521,8 +1547,9 @@ public class SearchParams {
 
   /**
    * Whether this search should use AI Re-Ranking.
+   *
    * @return enableReRanking
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Whether this search should use AI Re-Ranking.")
   public Boolean getEnableReRanking() {
@@ -1550,8 +1577,9 @@ public class SearchParams {
 
   /**
    * The complete list of attributes used for searching.
+   *
    * @return searchableAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "The complete list of attributes used for searching."
@@ -1583,8 +1611,9 @@ public class SearchParams {
 
   /**
    * The complete list of attributes that will be used for faceting.
+   *
    * @return attributesForFaceting
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "The complete list of attributes that will be used for faceting."
@@ -1616,8 +1645,9 @@ public class SearchParams {
 
   /**
    * List of attributes that can’t be retrieved at query time.
+   *
    * @return unretrievableAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes that can’t be retrieved at query time."
@@ -1647,8 +1677,9 @@ public class SearchParams {
 
   /**
    * This parameter controls which attributes to retrieve and which not to retrieve.
+   *
    * @return attributesToRetrieve
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "This parameter controls which attributes to retrieve and which not to retrieve."
@@ -1680,8 +1711,9 @@ public class SearchParams {
 
   /**
    * Restricts a given query to look in only a subset of your searchable attributes.
+   *
    * @return restrictSearchableAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Restricts a given query to look in only a subset of your searchable attributes."
@@ -1711,8 +1743,9 @@ public class SearchParams {
 
   /**
    * Controls how Algolia should sort your results.
+   *
    * @return ranking
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Controls how Algolia should sort your results.")
   public List<String> getRanking() {
@@ -1738,8 +1771,9 @@ public class SearchParams {
 
   /**
    * Specifies the custom ranking criterion.
+   *
    * @return customRanking
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Specifies the custom ranking criterion.")
   public List<String> getCustomRanking() {
@@ -1756,12 +1790,15 @@ public class SearchParams {
   }
 
   /**
-   * Controls the relevancy threshold below which less relevant results aren’t included in the results.
+   * Controls the relevancy threshold below which less relevant results aren’t included in the
+   * results.
+   *
    * @return relevancyStrictness
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Controls the relevancy threshold below which less relevant results aren’t included in the results."
+    value = "Controls the relevancy threshold below which less relevant results aren’t included in" +
+    " the results."
   )
   public Integer getRelevancyStrictness() {
     return relevancyStrictness;
@@ -1790,8 +1827,9 @@ public class SearchParams {
 
   /**
    * List of attributes to highlight.
+   *
    * @return attributesToHighlight
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of attributes to highlight.")
   public List<String> getAttributesToHighlight() {
@@ -1819,8 +1857,9 @@ public class SearchParams {
 
   /**
    * List of attributes to snippet, with an optional maximum number of words to snippet.
+   *
    * @return attributesToSnippet
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes to snippet, with an optional maximum number of words to snippet."
@@ -1840,11 +1879,13 @@ public class SearchParams {
 
   /**
    * The HTML string to insert before the highlighted parts in all highlight and snippet results.
+   *
    * @return highlightPreTag
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "The HTML string to insert before the highlighted parts in all highlight and snippet results."
+    value = "The HTML string to insert before the highlighted parts in all highlight and snippet" +
+    " results."
   )
   public String getHighlightPreTag() {
     return highlightPreTag;
@@ -1861,11 +1902,13 @@ public class SearchParams {
 
   /**
    * The HTML string to insert after the highlighted parts in all highlight and snippet results.
+   *
    * @return highlightPostTag
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "The HTML string to insert after the highlighted parts in all highlight and snippet results."
+    value = "The HTML string to insert after the highlighted parts in all highlight and snippet" +
+    " results."
   )
   public String getHighlightPostTag() {
     return highlightPostTag;
@@ -1882,8 +1925,9 @@ public class SearchParams {
 
   /**
    * String used as an ellipsis indicator when a snippet is truncated.
+   *
    * @return snippetEllipsisText
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "String used as an ellipsis indicator when a snippet is truncated."
@@ -1905,8 +1949,9 @@ public class SearchParams {
 
   /**
    * Restrict highlighting and snippeting to items that matched the query.
+   *
    * @return restrictHighlightAndSnippetArrays
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Restrict highlighting and snippeting to items that matched the query."
@@ -1928,8 +1973,9 @@ public class SearchParams {
 
   /**
    * Set the number of hits per page.
+   *
    * @return hitsPerPage
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Set the number of hits per page.")
   public Integer getHitsPerPage() {
@@ -1946,12 +1992,15 @@ public class SearchParams {
   }
 
   /**
-   * Minimum number of characters a word in the query string must contain to accept matches with 1 typo.
+   * Minimum number of characters a word in the query string must contain to accept matches with 1
+   * typo.
+   *
    * @return minWordSizefor1Typo
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Minimum number of characters a word in the query string must contain to accept matches with 1 typo."
+    value = "Minimum number of characters a word in the query string must contain to accept matches" +
+    " with 1 typo."
   )
   public Integer getMinWordSizefor1Typo() {
     return minWordSizefor1Typo;
@@ -1967,12 +2016,15 @@ public class SearchParams {
   }
 
   /**
-   * Minimum number of characters a word in the query string must contain to accept matches with 2 typos.
+   * Minimum number of characters a word in the query string must contain to accept matches with 2
+   * typos.
+   *
    * @return minWordSizefor2Typos
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Minimum number of characters a word in the query string must contain to accept matches with 2 typos."
+    value = "Minimum number of characters a word in the query string must contain to accept matches" +
+    " with 2 typos."
   )
   public Integer getMinWordSizefor2Typos() {
     return minWordSizefor2Typos;
@@ -1989,8 +2041,9 @@ public class SearchParams {
 
   /**
    * Controls whether typo tolerance is enabled and how it is applied.
+   *
    * @return typoTolerance
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Controls whether typo tolerance is enabled and how it is applied."
@@ -2012,8 +2065,9 @@ public class SearchParams {
 
   /**
    * Whether to allow typos on numbers (“numeric tokens”) in the query string.
+   *
    * @return allowTyposOnNumericTokens
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether to allow typos on numbers (“numeric tokens”) in the query string."
@@ -2047,8 +2101,9 @@ public class SearchParams {
 
   /**
    * List of attributes on which you want to disable typo tolerance.
+   *
    * @return disableTypoToleranceOnAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which you want to disable typo tolerance."
@@ -2070,8 +2125,9 @@ public class SearchParams {
 
   /**
    * Control which separators are indexed.
+   *
    * @return separatorsToIndex
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Control which separators are indexed.")
   public String getSeparatorsToIndex() {
@@ -2089,8 +2145,9 @@ public class SearchParams {
 
   /**
    * Treats singular, plurals, and other forms of declensions as matching terms.
+   *
    * @return ignorePlurals
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Treats singular, plurals, and other forms of declensions as matching terms."
@@ -2110,8 +2167,9 @@ public class SearchParams {
 
   /**
    * Removes stop (common) words from the query before executing it.
+   *
    * @return removeStopWords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Removes stop (common) words from the query before executing it."
@@ -2133,8 +2191,9 @@ public class SearchParams {
 
   /**
    * List of characters that the engine shouldn’t automatically normalize.
+   *
    * @return keepDiacriticsOnCharacters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of characters that the engine shouldn’t automatically normalize."
@@ -2161,12 +2220,15 @@ public class SearchParams {
   }
 
   /**
-   * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
+   * Sets the languages to be used by language-specific settings and functionalities such as
+   * ignorePlurals, removeStopWords, and CJK word-detection.
+   *
    * @return queryLanguages
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection."
+    value = "Sets the languages to be used by language-specific settings and functionalities such as" +
+    " ignorePlurals, removeStopWords, and CJK word-detection."
   )
   public List<String> getQueryLanguages() {
     return queryLanguages;
@@ -2183,8 +2245,9 @@ public class SearchParams {
 
   /**
    * Splits compound words into their composing atoms in the query.
+   *
    * @return decompoundQuery
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Splits compound words into their composing atoms in the query."
@@ -2204,8 +2267,9 @@ public class SearchParams {
 
   /**
    * Whether Rules should be globally enabled.
+   *
    * @return enableRules
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Whether Rules should be globally enabled.")
   public Boolean getEnableRules() {
@@ -2223,8 +2287,9 @@ public class SearchParams {
 
   /**
    * Enable the Personalization feature.
+   *
    * @return enablePersonalization
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enable the Personalization feature.")
   public Boolean getEnablePersonalization() {
@@ -2242,8 +2307,9 @@ public class SearchParams {
 
   /**
    * Controls if and how query words are interpreted as prefixes.
+   *
    * @return queryType
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Controls if and how query words are interpreted as prefixes."
@@ -2265,8 +2331,9 @@ public class SearchParams {
 
   /**
    * Selects a strategy to remove words from the query when it doesn’t match any hits.
+   *
    * @return removeWordsIfNoResults
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Selects a strategy to remove words from the query when it doesn’t match any hits."
@@ -2288,8 +2355,9 @@ public class SearchParams {
 
   /**
    * Enables the advanced query syntax.
+   *
    * @return advancedSyntax
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables the advanced query syntax.")
   public Boolean getAdvancedSyntax() {
@@ -2315,8 +2383,9 @@ public class SearchParams {
 
   /**
    * A list of words that should be considered as optional when found in the query.
+   *
    * @return optionalWords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "A list of words that should be considered as optional when found in the query."
@@ -2348,8 +2417,9 @@ public class SearchParams {
 
   /**
    * List of attributes on which you want to disable the exact ranking criterion.
+   *
    * @return disableExactOnAttributes
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which you want to disable the exact ranking criterion."
@@ -2373,11 +2443,13 @@ public class SearchParams {
 
   /**
    * Controls how the exact ranking criterion is computed when the query contains only one word.
+   *
    * @return exactOnSingleWordQuery
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Controls how the exact ranking criterion is computed when the query contains only one word."
+    value = "Controls how the exact ranking criterion is computed when the query contains only one" +
+    " word."
   )
   public ExactOnSingleWordQueryEnum getExactOnSingleWordQuery() {
     return exactOnSingleWordQuery;
@@ -2408,11 +2480,13 @@ public class SearchParams {
 
   /**
    * List of alternatives that should be considered an exact match by the exact ranking criterion.
+   *
    * @return alternativesAsExact
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "List of alternatives that should be considered an exact match by the exact ranking criterion."
+    value = "List of alternatives that should be considered an exact match by the exact ranking" +
+    " criterion."
   )
   public List<AlternativesAsExactEnum> getAlternativesAsExact() {
     return alternativesAsExact;
@@ -2442,12 +2516,15 @@ public class SearchParams {
   }
 
   /**
-   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
+   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is
+   * enabled.
+   *
    * @return advancedSyntaxFeatures
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled."
+    value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is" +
+    " enabled."
   )
   public List<AdvancedSyntaxFeaturesEnum> getAdvancedSyntaxFeatures() {
     return advancedSyntaxFeatures;
@@ -2465,11 +2542,10 @@ public class SearchParams {
   }
 
   /**
-   * Enables de-duplication or grouping of results.
-   * minimum: 0
-   * maximum: 4
+   * Enables de-duplication or grouping of results. minimum: 0 maximum: 4
+   *
    * @return distinct
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables de-duplication or grouping of results.")
   public Integer getDistinct() {
@@ -2487,8 +2563,9 @@ public class SearchParams {
 
   /**
    * Whether to take into account an index’s synonyms for a particular search.
+   *
    * @return synonyms
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether to take into account an index’s synonyms for a particular search."
@@ -2509,12 +2586,15 @@ public class SearchParams {
   }
 
   /**
-   * Whether to highlight and snippet the original word that matches the synonym or the synonym itself.
+   * Whether to highlight and snippet the original word that matches the synonym or the synonym
+   * itself.
+   *
    * @return replaceSynonymsInHighlight
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Whether to highlight and snippet the original word that matches the synonym or the synonym itself."
+    value = "Whether to highlight and snippet the original word that matches the synonym or the" +
+    " synonym itself."
   )
   public Boolean getReplaceSynonymsInHighlight() {
     return replaceSynonymsInHighlight;
@@ -2532,11 +2612,10 @@ public class SearchParams {
   }
 
   /**
-   * Precision of the proximity ranking criterion.
-   * minimum: 1
-   * maximum: 7
+   * Precision of the proximity ranking criterion. minimum: 1 maximum: 7
+   *
    * @return minProximity
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Precision of the proximity ranking criterion.")
   public Integer getMinProximity() {
@@ -2561,12 +2640,15 @@ public class SearchParams {
   }
 
   /**
-   * Choose which fields to return in the API response. This parameters applies to search and browse queries.
+   * Choose which fields to return in the API response. This parameters applies to search and browse
+   * queries.
+   *
    * @return responseFields
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Choose which fields to return in the API response. This parameters applies to search and browse queries."
+    value = "Choose which fields to return in the API response. This parameters applies to search and" +
+    " browse queries."
   )
   public List<String> getResponseFields() {
     return responseFields;
@@ -2583,8 +2665,9 @@ public class SearchParams {
 
   /**
    * Maximum number of facet hits to return during a search for facet values.
+   *
    * @return maxFacetHits
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Maximum number of facet hits to return during a search for facet values."
@@ -2606,12 +2689,15 @@ public class SearchParams {
   }
 
   /**
-   * When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
+   * When attribute is ranked above proximity in your ranking formula, proximity is used to select
+   * which searchable attribute is matched in the attribute ranking stage.
+   *
    * @return attributeCriteriaComputedByMinProximity
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage."
+    value = "When attribute is ranked above proximity in your ranking formula, proximity is used to" +
+    " select which searchable attribute is matched in the attribute ranking stage."
   )
   public Boolean getAttributeCriteriaComputedByMinProximity() {
     return attributeCriteriaComputedByMinProximity;
@@ -2630,12 +2716,15 @@ public class SearchParams {
   }
 
   /**
-   * Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
+   * Content defining how the search interface should be rendered. Can be set via the settings for a
+   * default value and can be overridden via rules.
+   *
    * @return renderingContent
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules."
+    value = "Content defining how the search interface should be rendered. Can be set via the" +
+    " settings for a default value and can be overridden via rules."
   )
   public Object getRenderingContent() {
     return renderingContent;
@@ -3215,8 +3304,7 @@ public class SearchParams {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

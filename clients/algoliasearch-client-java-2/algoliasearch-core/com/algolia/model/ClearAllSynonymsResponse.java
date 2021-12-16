@@ -1,21 +1,11 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * ClearAllSynonymsResponse
- */
-
+/** ClearAllSynonymsResponse */
 public class ClearAllSynonymsResponse {
 
   public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
@@ -35,8 +25,9 @@ public class ClearAllSynonymsResponse {
 
   /**
    * taskID of the indexing task to wait for.
+   *
    * @return taskID
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -57,8 +48,9 @@ public class ClearAllSynonymsResponse {
 
   /**
    * Date of last update (ISO-8601 format).
+   *
    * @return updatedAt
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -106,8 +98,7 @@ public class ClearAllSynonymsResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {
