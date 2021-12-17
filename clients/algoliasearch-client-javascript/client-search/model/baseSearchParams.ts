@@ -1,6 +1,6 @@
 export type BaseSearchParams = {
   /**
-   * Full text query.
+   * The text to search in the index.
    */
   query: string;
   /**

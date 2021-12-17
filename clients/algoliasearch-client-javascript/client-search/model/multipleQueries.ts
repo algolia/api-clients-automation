@@ -4,7 +4,7 @@ export type MultipleQueries = {
    */
   indexName: string;
   /**
-   * Full text query.
+   * The text to search in the index.
    */
   query?: string;
   /**

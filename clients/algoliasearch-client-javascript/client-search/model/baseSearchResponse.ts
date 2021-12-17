@@ -38,7 +38,7 @@ export type BaseSearchResponse = {
    */
   facets_stats?: { [key: string]: BaseSearchResponseFacetsStats };
   /**
-   * Maximum number of hits in a page. Minimum is 1, maximum is 1000.
+   * Set the number of hits per page.
    */
   hitsPerPage: number;
   /**
@@ -82,7 +82,7 @@ export type BaseSearchResponse = {
    */
   processingTimeMS: number;
   /**
-   * Full text query.
+   * The text to search in the index.
    */
   query: string;
   /**
