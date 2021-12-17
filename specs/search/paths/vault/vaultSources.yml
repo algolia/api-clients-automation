@@ -18,7 +18,7 @@ put:
   description: Replace all allowed sources.
   requestBody:
     required: true
-    description: The sources to allow
+    description: The sources to allow.
     content:
       application/json:
         schema:
