@@ -1,12 +1,22 @@
 package com.algolia.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/** BatchResponse */
+/**
+ * BatchResponse
+ */
+
 public class BatchResponse {
 
   public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
@@ -26,9 +36,8 @@ public class BatchResponse {
 
   /**
    * taskID of the indexing task to wait for.
-   *
    * @return taskID
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
   public Integer getTaskID() {
@@ -54,9 +63,8 @@ public class BatchResponse {
 
   /**
    * List of objectID.
-   *
    * @return objectIDs
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of objectID.")
   public List<String> getObjectIDs() {
@@ -101,7 +109,8 @@ public class BatchResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

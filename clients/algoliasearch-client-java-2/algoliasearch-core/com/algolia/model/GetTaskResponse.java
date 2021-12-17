@@ -5,14 +5,21 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** GetTaskResponse */
+/**
+ * GetTaskResponse
+ */
+
 public class GetTaskResponse {
 
-  /** Gets or Sets status */
+  /**
+   * Gets or Sets status
+   */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
     PUBLISHED("published"),
@@ -73,9 +80,8 @@ public class GetTaskResponse {
 
   /**
    * Get status
-   *
    * @return status
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
   public StatusEnum getStatus() {
@@ -113,7 +119,8 @@ public class GetTaskResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

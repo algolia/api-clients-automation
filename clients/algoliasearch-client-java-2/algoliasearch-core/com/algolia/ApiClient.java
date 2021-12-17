@@ -5,26 +5,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URI;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.net.ssl.*;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
 import okhttp3.internal.tls.OkHostnameVerifier;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
+import okio.BufferedSink;
+import okio.Okio;
 
 public class ApiClient {
 
@@ -114,9 +123,9 @@ public class ApiClient {
   }
 
   /**
-   * Configure whether to verify certificate and hostname when making https requests. Default to
-   * true. NOTE: Do NOT set to false in production code, otherwise you would face multiple types of
-   * cryptographic attacks.
+   * Configure whether to verify certificate and hostname when making https requests.
+   * Default to true.
+   * NOTE: Do NOT set to false in production code, otherwise you would face multiple types of cryptographic attacks.
    *
    * @param verifyingSsl True to verify TLS/SSL connection
    * @return ApiClient
@@ -137,8 +146,8 @@ public class ApiClient {
   }
 
   /**
-   * Configure the CA certificate to be trusted when making https requests. Use null to reset to
-   * default.
+   * Configure the CA certificate to be trusted when making https requests.
+   * Use null to reset to default.
    *
    * @param sslCaCert input stream for SSL CA cert
    * @return ApiClient
@@ -154,7 +163,8 @@ public class ApiClient {
   }
 
   /**
-   * Configure client keys to use for authorization in an SSL session. Use null to reset to default.
+   * Configure client keys to use for authorization in an SSL session.
+   * Use null to reset to default.
    *
    * @param managers The KeyManagers to use
    * @return ApiClient
@@ -262,8 +272,9 @@ public class ApiClient {
   }
 
   /**
-   * Sets the connect timeout (in milliseconds). A value of 0 means no timeout, otherwise values
-   * must be between 1 and {@link Integer#MAX_VALUE}.
+   * Sets the connect timeout (in milliseconds).
+   * A value of 0 means no timeout, otherwise values must be between 1 and
+   * {@link Integer#MAX_VALUE}.
    *
    * @param connectionTimeout connection timeout in milliseconds
    * @return Api client
@@ -287,8 +298,9 @@ public class ApiClient {
   }
 
   /**
-   * Sets the read timeout (in milliseconds). A value of 0 means no timeout, otherwise values must
-   * be between 1 and {@link Integer#MAX_VALUE}.
+   * Sets the read timeout (in milliseconds).
+   * A value of 0 means no timeout, otherwise values must be between 1 and
+   * {@link Integer#MAX_VALUE}.
    *
    * @param readTimeout read timeout in milliseconds
    * @return Api client
@@ -312,8 +324,9 @@ public class ApiClient {
   }
 
   /**
-   * Sets the write timeout (in milliseconds). A value of 0 means no timeout, otherwise values must
-   * be between 1 and {@link Integer#MAX_VALUE}.
+   * Sets the write timeout (in milliseconds).
+   * A value of 0 means no timeout, otherwise values must be between 1 and
+   * {@link Integer#MAX_VALUE}.
    *
    * @param writeTimeout connection timeout in milliseconds
    * @return Api client
@@ -341,7 +354,7 @@ public class ApiClient {
       param instanceof OffsetDateTime ||
       param instanceof LocalDate
     ) {
-      // Serialize to json string and remove the " enclosing characters
+      //Serialize to json string and remove the " enclosing characters
       String jsonStr = json.serialize(param);
       return jsonStr.substring(1, jsonStr.length() - 1);
     } else if (param instanceof Collection) {
@@ -361,7 +374,7 @@ public class ApiClient {
   /**
    * Formats the specified query parameter to a list containing a single {@code Pair} object.
    *
-   * <p>Note that {@code value} must not be a collection.
+   * Note that {@code value} must not be a collection.
    *
    * @param name The name of the parameter.
    * @param value The value of the parameter.
@@ -387,7 +400,7 @@ public class ApiClient {
   /**
    * Formats the specified collection query parameters to a list of {@code Pair} objects.
    *
-   * <p>Note that the values of each of the returned Pair objects are percent-encoded.
+   * Note that the values of each of the returned Pair objects are percent-encoded.
    *
    * @param collectionFormat The collection format of the parameter.
    * @param name The name of the parameter.
@@ -476,7 +489,8 @@ public class ApiClient {
   }
 
   /**
-   * Sanitize filename by removing path. e.g. ../../sun.gif becomes sun.gif
+   * Sanitize filename by removing path.
+   * e.g. ../../sun.gif becomes sun.gif
    *
    * @param filename The filename to be sanitized
    * @return The sanitized filename
@@ -486,9 +500,13 @@ public class ApiClient {
   }
 
   /**
-   * Check if the given MIME is a JSON MIME. JSON MIME examples: application/json application/json;
-   * charset=UTF8 APPLICATION/JSON application/vnd.company+json "* / *" is also default to JSON
-   *
+   * Check if the given MIME is a JSON MIME.
+   * JSON MIME examples:
+   *   application/json
+   *   application/json; charset=UTF8
+   *   APPLICATION/JSON
+   *   application/vnd.company+json
+   * "* / *" is also default to JSON
    * @param mime MIME (Multipurpose Internet Mail Extensions)
    * @return True if the given MIME is JSON, false otherwise.
    */
@@ -499,12 +517,13 @@ public class ApiClient {
   }
 
   /**
-   * Select the Accept header's value from the given accepts array: if JSON exists in the given
-   * array, use it; otherwise use all of them (joining into a string)
+   * Select the Accept header's value from the given accepts array:
+   *   if JSON exists in the given array, use it;
+   *   otherwise use all of them (joining into a string)
    *
    * @param accepts The accepts array to select from
-   * @return The Accept header to use. If the given array is empty, null will be returned (not to
-   *     set the Accept header explicitly).
+   * @return The Accept header to use. If the given array is empty,
+   *   null will be returned (not to set the Accept header explicitly).
    */
   public String selectHeaderAccept(String[] accepts) {
     if (accepts.length == 0) {
@@ -519,12 +538,13 @@ public class ApiClient {
   }
 
   /**
-   * Select the Content-Type header's value from the given array: if JSON exists in the given array,
-   * use it; otherwise use the first one of the array.
+   * Select the Content-Type header's value from the given array:
+   *   if JSON exists in the given array, use it;
+   *   otherwise use the first one of the array.
    *
    * @param contentTypes The Content-Type array to select from
-   * @return The Content-Type header to use. If the given array is empty, or matches "any", JSON
-   *     will be used.
+   * @return The Content-Type header to use. If the given array is empty,
+   *   or matches "any", JSON will be used.
    */
   public String selectHeaderContentType(String[] contentTypes) {
     if (contentTypes.length == 0 || contentTypes[0].equals("*/*")) {
@@ -553,15 +573,15 @@ public class ApiClient {
   }
 
   /**
-   * Deserialize response body to Java object, according to the return type and the Content-Type
-   * response header.
+   * Deserialize response body to Java object, according to the return type and
+   * the Content-Type response header.
    *
    * @param <T> Type
    * @param response HTTP response
    * @param returnType The type of the Java object
    * @return The deserialized Java object
-   * @throws ApiException If fail to deserialize response body, i.e. cannot read response body or
-   *     the Content-Type of the response is not supported.
+   * @throws ApiException If fail to deserialize response body, i.e. cannot read response body
+   *   or the Content-Type of the response is not supported.
    */
   @SuppressWarnings("unchecked")
   public <T> T deserialize(Response response, Type returnType)
@@ -615,8 +635,8 @@ public class ApiClient {
   }
 
   /**
-   * Serialize the given Java object into request body according to the object's class and the
-   * request Content-Type.
+   * Serialize the given Java object into request body according to the object's
+   * class and the request Content-Type.
    *
    * @param obj The Java object
    * @param contentType The request Content-Type
@@ -664,8 +684,9 @@ public class ApiClient {
    * @param returnType The return type used to deserialize HTTP response body
    * @param <T> The return type corresponding to (same with) returnType
    * @param call Call
-   * @return ApiResponse object containing response status, headers and data, which is a Java object
-   *     deserialized from response body and would be null when returnType is null.
+   * @return ApiResponse object containing response status, headers and
+   *   data, which is a Java object deserialized from response body and would be null
+   *   when returnType is null.
    * @throws ApiException If fail to execute the call
    */
   public <T> ApiResponse<T> execute(Call call, Type returnType)
@@ -754,8 +775,8 @@ public class ApiClient {
    * @param response Response
    * @param returnType Return type
    * @return Type
-   * @throws ApiException If the response has an unsuccessful status code or fail to deserialize the
-   *     response body
+   * @throws ApiException If the response has an unsuccessful status code or
+   *                      fail to deserialize the response body
    */
   public <T> T handleResponse(Response response, Type returnType)
     throws ApiException {
@@ -806,8 +827,7 @@ public class ApiClient {
    * Build HTTP call with the given options.
    *
    * @param path The sub-path of the HTTP URL
-   * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and
-   *     "DELETE"
+   * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
    * @param queryParams The query parameters
    * @param collectionQueryParams The collection query parameters
    * @param body The request body object
@@ -851,8 +871,7 @@ public class ApiClient {
    * Build an HTTP request with the given options.
    *
    * @param path The sub-path of the HTTP URL
-   * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and
-   *     "DELETE"
+   * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
    * @param queryParams The query parameters
    * @param collectionQueryParams The collection query parameters
    * @param body The request body object
@@ -1067,8 +1086,8 @@ public class ApiClient {
   }
 
   /**
-   * Build a multipart (file uploading) request body with the given form parameters, which could
-   * contain text fields and file fields.
+   * Build a multipart (file uploading) request body with the given form parameters,
+   * which could contain text fields and file fields.
    *
    * @param formParams Form parameters in the form of Map
    * @return RequestBody
@@ -1119,8 +1138,8 @@ public class ApiClient {
   }
 
   /**
-   * Get network interceptor to add it to the httpClient to track download progress for async
-   * requests.
+   * Get network interceptor to add it to the httpClient to track download progress for
+   * async requests.
    */
   private Interceptor getProgressInterceptor() {
     return new Interceptor() {
@@ -1141,8 +1160,8 @@ public class ApiClient {
   }
 
   /**
-   * Apply SSL related settings to httpClient according to the current values of verifyingSsl and
-   * sslCaCert.
+   * Apply SSL related settings to httpClient according to the current values of
+   * verifyingSsl and sslCaCert.
    */
   private void applySslSettings() {
     try {

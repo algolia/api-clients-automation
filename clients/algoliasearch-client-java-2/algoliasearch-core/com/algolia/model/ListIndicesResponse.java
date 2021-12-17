@@ -1,12 +1,23 @@
 package com.algolia.model;
 
+import com.algolia.model.Index;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/** ListIndicesResponse */
+/**
+ * ListIndicesResponse
+ */
+
 public class ListIndicesResponse {
 
   public static final String SERIALIZED_NAME_ITEMS = "items";
@@ -34,9 +45,8 @@ public class ListIndicesResponse {
 
   /**
    * List of the fetched indices.
-   *
    * @return items
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of the fetched indices.")
   public List<Index> getItems() {
@@ -54,9 +64,8 @@ public class ListIndicesResponse {
 
   /**
    * Number of pages.
-   *
    * @return nbPages
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(example = "100", value = "Number of pages.")
   public Integer getNbPages() {
@@ -98,7 +107,8 @@ public class ListIndicesResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

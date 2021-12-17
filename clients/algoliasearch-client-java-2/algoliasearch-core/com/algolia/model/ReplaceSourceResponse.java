@@ -13,41 +13,17 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * SetSettingsResponse
+ * ReplaceSourceResponse
  */
 
-public class SetSettingsResponse {
-
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
-  private Integer taskID;
+public class ReplaceSourceResponse {
 
   public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
 
   @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private OffsetDateTime updatedAt;
 
-  public SetSettingsResponse taskID(Integer taskID) {
-    this.taskID = taskID;
-    return this;
-  }
-
-  /**
-   * taskID of the indexing task to wait for.
-   * @return taskID
-   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "taskID of the indexing task to wait for.")
-  public Integer getTaskID() {
-    return taskID;
-  }
-
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public SetSettingsResponse updatedAt(OffsetDateTime updatedAt) {
+  public ReplaceSourceResponse updatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -56,8 +32,11 @@ public class SetSettingsResponse {
    * Date of last update (ISO-8601 format).
    * @return updatedAt
    **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Date of last update (ISO-8601 format).")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(
+    required = true,
+    value = "Date of last update (ISO-8601 format)."
+  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -74,23 +53,19 @@ public class SetSettingsResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SetSettingsResponse setSettingsResponse = (SetSettingsResponse) o;
-    return (
-      Objects.equals(this.taskID, setSettingsResponse.taskID) &&
-      Objects.equals(this.updatedAt, setSettingsResponse.updatedAt)
-    );
+    ReplaceSourceResponse replaceSourceResponse = (ReplaceSourceResponse) o;
+    return Objects.equals(this.updatedAt, replaceSourceResponse.updatedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskID, updatedAt);
+    return Objects.hash(updatedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SetSettingsResponse {\n");
-    sb.append("    taskID: ").append(toIndentedString(taskID)).append("\n");
+    sb.append("class ReplaceSourceResponse {\n");
     sb
       .append("    updatedAt: ")
       .append(toIndentedString(updatedAt))

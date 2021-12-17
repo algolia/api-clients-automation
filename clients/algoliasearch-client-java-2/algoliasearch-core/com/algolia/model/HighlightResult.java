@@ -9,10 +9,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/** Highlighted attributes. */
+/**
+ * Highlighted attributes.
+ */
 @ApiModel(description = "Highlighted attributes.")
 public class HighlightResult {
 
@@ -21,7 +24,9 @@ public class HighlightResult {
   @SerializedName(SERIALIZED_NAME_VALUE)
   private String value;
 
-  /** Indicates how well the attribute matched the search query. */
+  /**
+   * Indicates how well the attribute matched the search query.
+   */
   @JsonAdapter(MatchLevelEnum.Adapter.class)
   public enum MatchLevelEnum {
     NONE("none"),
@@ -96,9 +101,8 @@ public class HighlightResult {
 
   /**
    * Markup text with occurrences highlighted.
-   *
    * @return value
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "<em>George</em> <em>Clo</em>oney",
@@ -119,9 +123,8 @@ public class HighlightResult {
 
   /**
    * Indicates how well the attribute matched the search query.
-   *
    * @return matchLevel
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Indicates how well the attribute matched the search query."
@@ -149,9 +152,8 @@ public class HighlightResult {
 
   /**
    * List of words from the query that matched the object.
-   *
    * @return matchedWords
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of words from the query that matched the object."
@@ -171,9 +173,8 @@ public class HighlightResult {
 
   /**
    * Whether the entire attribute value is highlighted.
-   *
    * @return fullyHighlighted
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Whether the entire attribute value is highlighted."
@@ -230,7 +231,8 @@ public class HighlightResult {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

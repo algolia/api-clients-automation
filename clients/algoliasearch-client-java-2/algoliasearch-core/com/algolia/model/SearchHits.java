@@ -1,12 +1,23 @@
 package com.algolia.model;
 
+import com.algolia.model.Record;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/** SearchHits */
+/**
+ * SearchHits
+ */
+
 public class SearchHits {
 
   public static final String SERIALIZED_NAME_HITS = "hits";
@@ -29,9 +40,8 @@ public class SearchHits {
 
   /**
    * Get hits
-   *
    * @return hits
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public List<Record> getHits() {
@@ -69,7 +79,8 @@ public class SearchHits {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

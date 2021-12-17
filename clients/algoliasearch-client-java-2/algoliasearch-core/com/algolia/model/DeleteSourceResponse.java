@@ -8,41 +8,41 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Assign userID object.
+ * DeleteSourceResponse
  */
-@ApiModel(description = "Assign userID object.")
-public class AssignUserIdObject {
 
-  public static final String SERIALIZED_NAME_CLUSTER = "cluster";
+public class DeleteSourceResponse {
 
-  @SerializedName(SERIALIZED_NAME_CLUSTER)
-  private String cluster;
+  public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
 
-  public AssignUserIdObject cluster(String cluster) {
-    this.cluster = cluster;
+  @SerializedName(SERIALIZED_NAME_DELETED_AT)
+  private OffsetDateTime deletedAt;
+
+  public DeleteSourceResponse deletedAt(OffsetDateTime deletedAt) {
+    this.deletedAt = deletedAt;
     return this;
   }
 
   /**
-   * Name of the cluster.
-   * @return cluster
+   * Date of deletion (ISO-8601 format).
+   * @return deletedAt
    **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
-    example = "c11-test",
     required = true,
-    value = "Name of the cluster."
+    value = "Date of deletion (ISO-8601 format)."
   )
-  public String getCluster() {
-    return cluster;
+  public OffsetDateTime getDeletedAt() {
+    return deletedAt;
   }
 
-  public void setCluster(String cluster) {
-    this.cluster = cluster;
+  public void setDeletedAt(OffsetDateTime deletedAt) {
+    this.deletedAt = deletedAt;
   }
 
   @Override
@@ -53,20 +53,23 @@ public class AssignUserIdObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AssignUserIdObject assignUserIdObject = (AssignUserIdObject) o;
-    return Objects.equals(this.cluster, assignUserIdObject.cluster);
+    DeleteSourceResponse deleteSourceResponse = (DeleteSourceResponse) o;
+    return Objects.equals(this.deletedAt, deleteSourceResponse.deletedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cluster);
+    return Objects.hash(deletedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AssignUserIdObject {\n");
-    sb.append("    cluster: ").append(toIndentedString(cluster)).append("\n");
+    sb.append("class DeleteSourceResponse {\n");
+    sb
+      .append("    deletedAt: ")
+      .append(toIndentedString(deletedAt))
+      .append("\n");
     sb.append("}");
     return sb.toString();
   }

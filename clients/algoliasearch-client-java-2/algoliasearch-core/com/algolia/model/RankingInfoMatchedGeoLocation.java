@@ -1,10 +1,20 @@
 package com.algolia.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** RankingInfoMatchedGeoLocation */
+/**
+ * RankingInfoMatchedGeoLocation
+ */
+
 public class RankingInfoMatchedGeoLocation {
 
   public static final String SERIALIZED_NAME_LAT = "lat";
@@ -29,9 +39,8 @@ public class RankingInfoMatchedGeoLocation {
 
   /**
    * Latitude of the matched location.
-   *
    * @return lat
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Latitude of the matched location.")
   public Double getLat() {
@@ -49,9 +58,8 @@ public class RankingInfoMatchedGeoLocation {
 
   /**
    * Longitude of the matched location.
-   *
    * @return lng
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Longitude of the matched location.")
   public Double getLng() {
@@ -69,9 +77,8 @@ public class RankingInfoMatchedGeoLocation {
 
   /**
    * Distance between the matched location and the search location (in meters).
-   *
    * @return distance
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Distance between the matched location and the search location (in meters)."
@@ -117,7 +124,8 @@ public class RankingInfoMatchedGeoLocation {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

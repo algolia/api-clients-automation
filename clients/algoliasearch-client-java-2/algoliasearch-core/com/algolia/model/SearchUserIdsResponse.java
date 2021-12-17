@@ -1,14 +1,23 @@
 package com.algolia.model;
 
+import com.algolia.model.SearchUserIdsResponseHits;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/** userIDs data. */
+/**
+ * userIDs data.
+ */
 @ApiModel(description = "userIDs data.")
 public class SearchUserIdsResponse {
 
@@ -49,9 +58,8 @@ public class SearchUserIdsResponse {
 
   /**
    * List of user object matching the query.
-   *
    * @return hits
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -72,9 +80,8 @@ public class SearchUserIdsResponse {
 
   /**
    * Get nbHits
-   *
    * @return nbHits
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
   public Object getNbHits() {
@@ -92,9 +99,8 @@ public class SearchUserIdsResponse {
 
   /**
    * Specify the page to retrieve.
-   *
    * @return page
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Specify the page to retrieve.")
   public Integer getPage() {
@@ -112,9 +118,8 @@ public class SearchUserIdsResponse {
 
   /**
    * Set the number of hits per page.
-   *
    * @return hitsPerPage
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Set the number of hits per page.")
   public Integer getHitsPerPage() {
@@ -132,9 +137,8 @@ public class SearchUserIdsResponse {
 
   /**
    * Date of last update (ISO-8601 format).
-   *
    * @return updatedAt
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -191,7 +195,8 @@ public class SearchUserIdsResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

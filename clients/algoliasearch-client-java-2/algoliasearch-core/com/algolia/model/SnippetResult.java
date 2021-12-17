@@ -5,11 +5,16 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** SnippetResult */
+/**
+ * SnippetResult
+ */
+
 public class SnippetResult {
 
   public static final String SERIALIZED_NAME_VALUE = "value";
@@ -17,7 +22,9 @@ public class SnippetResult {
   @SerializedName(SERIALIZED_NAME_VALUE)
   private String value;
 
-  /** Indicates how well the attribute matched the search query. */
+  /**
+   * Indicates how well the attribute matched the search query.
+   */
   @JsonAdapter(MatchLevelEnum.Adapter.class)
   public enum MatchLevelEnum {
     NONE("none"),
@@ -81,9 +88,8 @@ public class SnippetResult {
 
   /**
    * Markup text with occurrences highlighted.
-   *
    * @return value
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "<em>George</em> <em>Clo</em>oney...",
@@ -104,9 +110,8 @@ public class SnippetResult {
 
   /**
    * Indicates how well the attribute matched the search query.
-   *
    * @return matchLevel
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Indicates how well the attribute matched the search query."
@@ -153,7 +158,8 @@ public class SnippetResult {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

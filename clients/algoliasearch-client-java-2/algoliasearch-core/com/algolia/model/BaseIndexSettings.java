@@ -1,14 +1,24 @@
 package com.algolia.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/** BaseIndexSettings */
+/**
+ * BaseIndexSettings
+ */
+
 public class BaseIndexSettings {
 
   public static final String SERIALIZED_NAME_REPLICAS = "replicas";
@@ -94,9 +104,8 @@ public class BaseIndexSettings {
 
   /**
    * Creates replicas, exact copies of an index.
-   *
    * @return replicas
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Creates replicas, exact copies of an index.")
   public List<String> getReplicas() {
@@ -114,9 +123,8 @@ public class BaseIndexSettings {
 
   /**
    * Set the maximum number of hits accessible via pagination.
-   *
    * @return paginationLimitedTo
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Set the maximum number of hits accessible via pagination."
@@ -148,9 +156,8 @@ public class BaseIndexSettings {
 
   /**
    * A list of words for which you want to turn off typo tolerance.
-   *
    * @return disableTypoToleranceOnWords
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "A list of words for which you want to turn off typo tolerance."
@@ -184,9 +191,8 @@ public class BaseIndexSettings {
 
   /**
    * Specify on which attributes to apply transliteration.
-   *
    * @return attributesToTransliterate
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Specify on which attributes to apply transliteration."
@@ -220,9 +226,8 @@ public class BaseIndexSettings {
 
   /**
    * List of attributes on which to do a decomposition of camel case words.
-   *
    * @return camelCaseAttributes
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which to do a decomposition of camel case words."
@@ -254,15 +259,12 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Specify on which attributes in your index Algolia should apply word segmentation, also known as
-   * decompounding.
-   *
+   * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
    * @return decompoundedAttributes
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Specify on which attributes in your index Algolia should apply word segmentation, also" +
-    " known as decompounding."
+    value = "Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding."
   )
   public Map<String, Object> getDecompoundedAttributes() {
     return decompoundedAttributes;
@@ -288,15 +290,12 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Sets the languages at the index level for language-specific processing such as tokenization and
-   * normalization.
-   *
+   * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
    * @return indexLanguages
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Sets the languages at the index level for language-specific processing such as" +
-    " tokenization and normalization."
+    value = "Sets the languages at the index level for language-specific processing such as tokenization and normalization."
   )
   public List<String> getIndexLanguages() {
     return indexLanguages;
@@ -312,15 +311,12 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Whether promoted results should match the filters of the current search, except for geographic
-   * filters.
-   *
+   * Whether promoted results should match the filters of the current search, except for geographic filters.
    * @return filterPromotes
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Whether promoted results should match the filters of the current search, except for" +
-    " geographic filters."
+    value = "Whether promoted results should match the filters of the current search, except for geographic filters."
   )
   public Boolean getFilterPromotes() {
     return filterPromotes;
@@ -349,9 +345,8 @@ public class BaseIndexSettings {
 
   /**
    * List of attributes on which you want to disable prefix matching.
-   *
    * @return disablePrefixOnAttributes
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of attributes on which you want to disable prefix matching."
@@ -375,9 +370,8 @@ public class BaseIndexSettings {
 
   /**
    * Enables compression of large integer arrays.
-   *
    * @return allowCompressionOfIntegerArray
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Enables compression of large integer arrays.")
   public Boolean getAllowCompressionOfIntegerArray() {
@@ -409,9 +403,8 @@ public class BaseIndexSettings {
 
   /**
    * List of numeric attributes that can be used as numerical filters.
-   *
    * @return numericAttributesForFiltering
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "List of numeric attributes that can be used as numerical filters."
@@ -441,9 +434,8 @@ public class BaseIndexSettings {
 
   /**
    * Lets you store custom data in your indices.
-   *
    * @return userData
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Lets you store custom data in your indices.")
   public Map<String, Object> getUserData() {
@@ -572,7 +564,8 @@ public class BaseIndexSettings {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

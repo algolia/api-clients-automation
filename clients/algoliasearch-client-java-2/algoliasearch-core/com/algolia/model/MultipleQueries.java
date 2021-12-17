@@ -5,11 +5,16 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** MultipleQueries */
+/**
+ * MultipleQueries
+ */
+
 public class MultipleQueries {
 
   public static final String SERIALIZED_NAME_INDEX_NAME = "indexName";
@@ -22,7 +27,9 @@ public class MultipleQueries {
   @SerializedName(SERIALIZED_NAME_QUERY)
   private String query = "";
 
-  /** Perform a search query with `default`, will search for facet values if `facet` is given. */
+  /**
+   * Perform a search query with `default`, will search for facet values if `facet` is given.
+   */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
     DEFAULT("default"),
@@ -93,9 +100,8 @@ public class MultipleQueries {
 
   /**
    * The Algolia index name.
-   *
    * @return indexName
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "products",
@@ -117,9 +123,8 @@ public class MultipleQueries {
 
   /**
    * The text to search in the index.
-   *
    * @return query
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The text to search in the index.")
   public String getQuery() {
@@ -137,13 +142,11 @@ public class MultipleQueries {
 
   /**
    * Perform a search query with `default`, will search for facet values if `facet` is given.
-   *
    * @return type
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Perform a search query with `default`, will search for facet values if `facet` is" +
-    " given."
+    value = "Perform a search query with `default`, will search for facet values if `facet` is given."
   )
   public TypeEnum getType() {
     return type;
@@ -160,9 +163,8 @@ public class MultipleQueries {
 
   /**
    * The `facet` name.
-   *
    * @return facet
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The `facet` name.")
   public String getFacet() {
@@ -180,9 +182,8 @@ public class MultipleQueries {
 
   /**
    * A query string of search parameters.
-   *
    * @return params
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "A query string of search parameters.")
   public String getParams() {
@@ -233,7 +234,8 @@ public class MultipleQueries {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

@@ -1,21 +1,30 @@
 package com.algolia.model;
 
+import com.algolia.model.ApiKey;
+import com.algolia.model.CreatedAtObject;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/** KeyObject */
+/**
+ * KeyObject
+ */
+
 public class KeyObject {
 
-  /** Gets or Sets acl */
+  /**
+   * Gets or Sets acl
+   */
   @JsonAdapter(AclEnum.Adapter.class)
   public enum AclEnum {
     ADDOBJECT("addObject"),
@@ -146,9 +155,8 @@ public class KeyObject {
 
   /**
    * Set of permissions associated with the key.
-   *
    * @return acl
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -168,15 +176,12 @@ public class KeyObject {
   }
 
   /**
-   * A comment used to identify a key more easily in the dashboard. It is not interpreted by the
-   * API.
-   *
+   * A comment used to identify a key more easily in the dashboard. It is not interpreted by the API.
    * @return description
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "A comment used to identify a key more easily in the dashboard. It is not interpreted by" +
-    " the API."
+    value = "A comment used to identify a key more easily in the dashboard. It is not interpreted by the API."
   )
   public String getDescription() {
     return description;
@@ -200,15 +205,12 @@ public class KeyObject {
   }
 
   /**
-   * Restrict this new API key to a list of indices or index patterns. If the list is empty, all
-   * indices are allowed.
-   *
+   * Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
    * @return indexes
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Restrict this new API key to a list of indices or index patterns. If the list is empty," +
-    " all indices are allowed."
+    value = "Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed."
   )
   public List<String> getIndexes() {
     return indexes;
@@ -225,13 +227,11 @@ public class KeyObject {
 
   /**
    * Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced.
-   *
    * @return maxHitsPerQuery
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Maximum number of hits this API key can retrieve in one query. If zero, no limit is" +
-    " enforced."
+    value = "Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced."
   )
   public Integer getMaxHitsPerQuery() {
     return maxHitsPerQuery;
@@ -248,9 +248,8 @@ public class KeyObject {
 
   /**
    * Maximum number of API calls per hour allowed from a given IP address or a user token.
-   *
    * @return maxQueriesPerIPPerHour
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Maximum number of API calls per hour allowed from a given IP address or a user token."
@@ -269,15 +268,12 @@ public class KeyObject {
   }
 
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with
-   * this API key.
-   *
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @return queryParameters
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "URL-encoded query string. Force some query parameters to be applied for each query made" +
-    " with this API key."
+    value = "URL-encoded query string. Force some query parameters to be applied for each query made with this API key."
   )
   public String getQueryParameters() {
     return queryParameters;
@@ -302,13 +298,11 @@ public class KeyObject {
 
   /**
    * Restrict this new API key to specific referers. If empty or blank, defaults to all referers.
-   *
    * @return referers
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Restrict this new API key to specific referers. If empty or blank, defaults to all" +
-    " referers."
+    value = "Restrict this new API key to specific referers. If empty or blank, defaults to all referers."
   )
   public List<String> getReferers() {
     return referers;
@@ -324,15 +318,12 @@ public class KeyObject {
   }
 
   /**
-   * Validity limit for this key in seconds. The key will automatically be removed after this period
-   * of time.
-   *
+   * Validity limit for this key in seconds. The key will automatically be removed after this period of time.
    * @return validity
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Validity limit for this key in seconds. The key will automatically be removed after this" +
-    " period of time."
+    value = "Validity limit for this key in seconds. The key will automatically be removed after this period of time."
   )
   public Integer getValidity() {
     return validity;
@@ -349,9 +340,8 @@ public class KeyObject {
 
   /**
    * Date of creation (ISO-8601 format).
-   *
    * @return createdAt
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -438,7 +428,8 @@ public class KeyObject {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

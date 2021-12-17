@@ -1,11 +1,21 @@
 package com.algolia.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** AssignUserIdResponse */
+/**
+ * AssignUserIdResponse
+ */
+
 public class AssignUserIdResponse {
 
   public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
@@ -20,9 +30,8 @@ public class AssignUserIdResponse {
 
   /**
    * Date of creation (ISO-8601 format).
-   *
    * @return createdAt
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -66,7 +75,8 @@ public class AssignUserIdResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

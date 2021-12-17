@@ -1,11 +1,21 @@
 package com.algolia.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** UpdateApiKeyResponse */
+/**
+ * UpdateApiKeyResponse
+ */
+
 public class UpdateApiKeyResponse {
 
   public static final String SERIALIZED_NAME_KEY = "key";
@@ -25,9 +35,8 @@ public class UpdateApiKeyResponse {
 
   /**
    * Key string.
-   *
    * @return key
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Key string.")
   public String getKey() {
@@ -45,9 +54,8 @@ public class UpdateApiKeyResponse {
 
   /**
    * Date of last update (ISO-8601 format).
-   *
    * @return updatedAt
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -95,7 +103,8 @@ public class UpdateApiKeyResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

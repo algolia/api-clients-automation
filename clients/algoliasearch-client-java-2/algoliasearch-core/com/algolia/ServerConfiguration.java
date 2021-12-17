@@ -2,7 +2,9 @@ package com.algolia;
 
 import java.util.Map;
 
-/** Representing a Server configuration. */
+/**
+ * Representing a Server configuration.
+ */
 public class ServerConfiguration {
 
   public String URL;
@@ -12,8 +14,7 @@ public class ServerConfiguration {
   /**
    * @param URL A URL to the target host.
    * @param description A description of the host designated by the URL.
-   * @param variables A map between a variable name and its value. The value is used for
-   *     substitution in the server's URL template.
+   * @param variables A map between a variable name and its value. The value is used for substitution in the server's URL template.
    */
   public ServerConfiguration(
     String URL,

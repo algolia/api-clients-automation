@@ -1,10 +1,20 @@
 package com.algolia.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** SaveObjectResponse */
+/**
+ * SaveObjectResponse
+ */
+
 public class SaveObjectResponse {
 
   public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
@@ -29,9 +39,8 @@ public class SaveObjectResponse {
 
   /**
    * Get createdAt
-   *
    * @return createdAt
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public String getCreatedAt() {
@@ -49,9 +58,8 @@ public class SaveObjectResponse {
 
   /**
    * taskID of the indexing task to wait for.
-   *
    * @return taskID
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "taskID of the indexing task to wait for.")
   public Integer getTaskID() {
@@ -69,9 +77,8 @@ public class SaveObjectResponse {
 
   /**
    * Unique identifier of the object.
-   *
    * @return objectID
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Unique identifier of the object.")
   public String getObjectID() {
@@ -118,7 +125,8 @@ public class SaveObjectResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

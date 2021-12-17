@@ -1,13 +1,25 @@
 package com.algolia.model;
 
+import com.algolia.model.SynonymHit;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-/** SearchSynonymsResponse */
+/**
+ * SearchSynonymsResponse
+ */
+
 public class SearchSynonymsResponse extends HashMap<String, Object> {
 
   public static final String SERIALIZED_NAME_HITS = "hits";
@@ -32,9 +44,8 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
 
   /**
    * Array of synonym objects.
-   *
    * @return hits
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Array of synonym objects.")
   public List<SynonymHit> getHits() {
@@ -52,9 +63,8 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
 
   /**
    * Number of hits that the search query matched.
-   *
    * @return nbHits
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "20",
@@ -102,7 +112,8 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

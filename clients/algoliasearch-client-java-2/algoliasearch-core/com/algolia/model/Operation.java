@@ -5,16 +5,24 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/** Operation */
+/**
+ * Operation
+ */
+
 public class Operation {
 
-  /** type of operation. */
+  /**
+   * type of operation.
+   */
   @JsonAdapter(ActionEnum.Adapter.class)
   public enum ActionEnum {
     ADDOBJECT("addObject"),
@@ -90,9 +98,8 @@ public class Operation {
 
   /**
    * type of operation.
-   *
    * @return action
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "type of operation.")
   public ActionEnum getAction() {
@@ -118,9 +125,8 @@ public class Operation {
 
   /**
    * arguments to the operation (depends on the type of the operation).
-   *
    * @return body
-   */
+   **/
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "arguments to the operation (depends on the type of the operation)."
@@ -164,7 +170,8 @@ public class Operation {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

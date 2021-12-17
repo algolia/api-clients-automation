@@ -1,11 +1,19 @@
 package com.algolia.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
-/** A userID. */
+/**
+ * A userID.
+ */
 @ApiModel(description = "A userID.")
 public class UserId {
 
@@ -36,9 +44,8 @@ public class UserId {
 
   /**
    * userID of the user.
-   *
    * @return userID
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "user1",
@@ -60,9 +67,8 @@ public class UserId {
 
   /**
    * Cluster on which the user is assigned.
-   *
    * @return clusterName
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "c1-test",
@@ -84,9 +90,8 @@ public class UserId {
 
   /**
    * Number of records belonging to the user.
-   *
    * @return nbRecords
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "42",
@@ -108,9 +113,8 @@ public class UserId {
 
   /**
    * Data size used by the user.
-   *
    * @return dataSize
-   */
+   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "0",
@@ -166,7 +170,8 @@ public class UserId {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {
