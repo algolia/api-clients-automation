@@ -532,7 +532,6 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-
    * Delete the Rule with the specified objectID.
    *
    * @summary Delete a rule.
@@ -567,7 +566,19 @@ export class SearchApi {
       queryParameters.forwardToReplicas = forwardToReplicas.toString();
     }
 
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
 
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Remove a single source from the list of allowed sources.
    *
    * @param source - The IP range of the source.
@@ -585,7 +596,6 @@ export class SearchApi {
         'Required parameter source was null or undefined when calling deleteSource.'
       );
     }
-
 
     const request: Request = {
       method: 'DELETE',
