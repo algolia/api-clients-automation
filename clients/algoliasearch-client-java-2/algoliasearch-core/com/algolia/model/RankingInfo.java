@@ -1,24 +1,12 @@
 package com.algolia.model;
 
-import com.algolia.model.RankingInfoMatchedGeoLocation;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * RankingInfo
- */
-
+/** RankingInfo */
 public class RankingInfo {
 
   public static final String SERIALIZED_NAME_FILTERS = "filters";
@@ -86,8 +74,9 @@ public class RankingInfo {
 
   /**
    * This field is reserved for advanced usage.
+   *
    * @return filters
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "This field is reserved for advanced usage.")
   public Integer getFilters() {
@@ -105,8 +94,9 @@ public class RankingInfo {
 
   /**
    * Position of the most important matched attribute in the attributes to index list.
+   *
    * @return firstMatchedWord
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Position of the most important matched attribute in the attributes to index list."
@@ -125,12 +115,15 @@ public class RankingInfo {
   }
 
   /**
-   * Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).
+   * Distance between the geo location in the search query and the best matching geo location in the
+   * record, divided by the geo precision (in meters).
+   *
    * @return geoDistance
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters)."
+    value = "Distance between the geo location in the search query and the best matching geo location" +
+    " in the record, divided by the geo precision (in meters)."
   )
   public Integer getGeoDistance() {
     return geoDistance;
@@ -147,8 +140,9 @@ public class RankingInfo {
 
   /**
    * Precision used when computing the geo distance, in meters.
+   *
    * @return geoPrecision
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Precision used when computing the geo distance, in meters."
@@ -181,8 +175,9 @@ public class RankingInfo {
 
   /**
    * Get matchedGeoLocation
+   *
    * @return matchedGeoLocation
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
   public Map<String, RankingInfoMatchedGeoLocation> getMatchedGeoLocation() {
@@ -202,8 +197,9 @@ public class RankingInfo {
 
   /**
    * Number of exactly matched words.
+   *
    * @return nbExactWords
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Number of exactly matched words.")
   public Integer getNbExactWords() {
@@ -221,8 +217,9 @@ public class RankingInfo {
 
   /**
    * Number of typos encountered when matching the record.
+   *
    * @return nbTypos
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Number of typos encountered when matching the record."
@@ -242,8 +239,9 @@ public class RankingInfo {
 
   /**
    * Present and set to true if a Rule promoted the hit.
+   *
    * @return promoted
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Present and set to true if a Rule promoted the hit."
@@ -262,12 +260,15 @@ public class RankingInfo {
   }
 
   /**
-   * When the query contains more than one word, the sum of the distances between matched words (in meters).
+   * When the query contains more than one word, the sum of the distances between matched words (in
+   * meters).
+   *
    * @return proximityDistance
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "When the query contains more than one word, the sum of the distances between matched words (in meters)."
+    value = "When the query contains more than one word, the sum of the distances between matched" +
+    " words (in meters)."
   )
   public Integer getProximityDistance() {
     return proximityDistance;
@@ -284,8 +285,9 @@ public class RankingInfo {
 
   /**
    * Custom ranking for the object, expressed as a single integer value.
+   *
    * @return userScore
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Custom ranking for the object, expressed as a single integer value."
@@ -305,8 +307,9 @@ public class RankingInfo {
 
   /**
    * Number of matched words, including prefixes and typos.
+   *
    * @return word
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Number of matched words, including prefixes and typos."
@@ -401,8 +404,7 @@ public class RankingInfo {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

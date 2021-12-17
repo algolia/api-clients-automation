@@ -1,23 +1,12 @@
 package com.algolia.model;
 
-import com.algolia.model.GetLogsResponseInnerQueries;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * GetLogsResponseLogs
- */
-
+/** GetLogsResponseLogs */
 public class GetLogsResponseLogs {
 
   public static final String SERIALIZED_NAME_TIMESTAMP = "timestamp";
@@ -103,8 +92,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Timestamp in ISO-8601 format.
+   *
    * @return timestamp
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Timestamp in ISO-8601 format.")
   public String getTimestamp() {
@@ -122,8 +112,9 @@ public class GetLogsResponseLogs {
 
   /**
    * HTTP method of the perfomed request.
+   *
    * @return method
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -144,8 +135,9 @@ public class GetLogsResponseLogs {
 
   /**
    * HTTP response code.
+   *
    * @return answerCode
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "HTTP response code.")
   public String getAnswerCode() {
@@ -163,8 +155,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Request body. Truncated after 1000 characters.
+   *
    * @return queryBody
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -185,8 +178,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Answer body. Truncated after 1000 characters.
+   *
    * @return answer
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -207,8 +201,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Request URL.
+   *
    * @return url
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Request URL.")
   public String getUrl() {
@@ -226,8 +221,9 @@ public class GetLogsResponseLogs {
 
   /**
    * IP of the client which perfomed the request.
+   *
    * @return ip
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -248,8 +244,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Request Headers (API Key is obfuscated).
+   *
    * @return queryHeaders
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -270,8 +267,9 @@ public class GetLogsResponseLogs {
 
   /**
    * SHA1 signature of the log entry.
+   *
    * @return sha1
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "SHA1 signature of the log entry.")
   public String getSha1() {
@@ -289,8 +287,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Number of API calls.
+   *
    * @return nbApiCalls
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Number of API calls.")
   public String getNbApiCalls() {
@@ -308,8 +307,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Processing time for the query. It doesn't include network time.
+   *
    * @return processingTimeMs
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -330,8 +330,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Index targeted by the query.
+   *
    * @return index
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Index targeted by the query.")
   public String getIndex() {
@@ -349,8 +350,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Query parameters sent with the request.
+   *
    * @return queryParams
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Query parameters sent with the request.")
   public String getQueryParams() {
@@ -368,8 +370,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Number of hits returned for the query.
+   *
    * @return queryNbHits
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Number of hits returned for the query.")
   public String getQueryNbHits() {
@@ -399,8 +402,9 @@ public class GetLogsResponseLogs {
 
   /**
    * Array of all performed queries for the given request.
+   *
    * @return innerQueries
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
     value = "Array of all performed queries for the given request."
@@ -516,8 +520,7 @@ public class GetLogsResponseLogs {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

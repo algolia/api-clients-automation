@@ -1,19 +1,11 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * The source.
- */
+/** The source. */
 @ApiModel(description = "The source.")
 public class Source {
 
@@ -34,8 +26,9 @@ public class Source {
 
   /**
    * The IP range of the source.
+   *
    * @return source
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "10.0.0.1/32",
@@ -57,8 +50,9 @@ public class Source {
 
   /**
    * The description of the source.
+   *
    * @return description
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The description of the source.")
   public String getDescription() {
@@ -103,8 +97,7 @@ public class Source {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

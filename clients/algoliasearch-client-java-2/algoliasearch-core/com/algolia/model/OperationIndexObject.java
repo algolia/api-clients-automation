@@ -5,23 +5,16 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * OperationIndexObject
- */
-
+/** OperationIndexObject */
 public class OperationIndexObject {
 
-  /**
-   * Type of operation to perform (move or copy).
-   */
+  /** Type of operation to perform (move or copy). */
   @JsonAdapter(OperationEnum.Adapter.class)
   public enum OperationEnum {
     MOVE("move"),
@@ -81,9 +74,7 @@ public class OperationIndexObject {
   @SerializedName(SERIALIZED_NAME_DESTINATION)
   private String destination;
 
-  /**
-   * Gets or Sets scope
-   */
+  /** Gets or Sets scope */
   @JsonAdapter(ScopeEnum.Adapter.class)
   public enum ScopeEnum {
     SETTINGS("settings"),
@@ -146,8 +137,9 @@ public class OperationIndexObject {
 
   /**
    * Type of operation to perform (move or copy).
+   *
    * @return operation
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
@@ -168,8 +160,9 @@ public class OperationIndexObject {
 
   /**
    * The Algolia index name.
+   *
    * @return destination
-   **/
+   */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     example = "products",
@@ -198,12 +191,15 @@ public class OperationIndexObject {
   }
 
   /**
-   * Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
+   * Scope of the data to copy. When absent, a full copy is performed. When present, only the
+   * selected scopes are copied.
+   *
    * @return scope
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied."
+    value = "Scope of the data to copy. When absent, a full copy is performed. When present, only the" +
+    " selected scopes are copied."
   )
   public List<ScopeEnum> getScope() {
     return scope;
@@ -252,8 +248,7 @@ public class OperationIndexObject {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

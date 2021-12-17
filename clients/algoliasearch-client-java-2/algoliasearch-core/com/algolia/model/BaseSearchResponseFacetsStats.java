@@ -1,20 +1,10 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * BaseSearchResponseFacetsStats
- */
-
+/** BaseSearchResponseFacetsStats */
 public class BaseSearchResponseFacetsStats {
 
   public static final String SERIALIZED_NAME_MIN = "min";
@@ -44,8 +34,9 @@ public class BaseSearchResponseFacetsStats {
 
   /**
    * The minimum value in the result set.
+   *
    * @return min
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The minimum value in the result set.")
   public Integer getMin() {
@@ -63,8 +54,9 @@ public class BaseSearchResponseFacetsStats {
 
   /**
    * The maximum value in the result set.
+   *
    * @return max
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The maximum value in the result set.")
   public Integer getMax() {
@@ -82,8 +74,9 @@ public class BaseSearchResponseFacetsStats {
 
   /**
    * The average facet value in the result set.
+   *
    * @return avg
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The average facet value in the result set.")
   public Integer getAvg() {
@@ -101,8 +94,9 @@ public class BaseSearchResponseFacetsStats {
 
   /**
    * The sum of all values in the result set.
+   *
    * @return sum
-   **/
+   */
   @javax.annotation.Nullable
   @ApiModelProperty(value = "The sum of all values in the result set.")
   public Integer getSum() {
@@ -148,8 +142,7 @@ public class BaseSearchResponseFacetsStats {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {
