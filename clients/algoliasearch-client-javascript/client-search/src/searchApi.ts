@@ -171,7 +171,7 @@ export class SearchApi {
   /**
    * Add a single source to the list of allowed sources.
    *
-   * @param source - The sources to allow.
+   * @param source - The source to add.
    */
   appendSource(source: Source): Promise<AppendSourceResponse> {
     const path = '/1/security/sources/append';

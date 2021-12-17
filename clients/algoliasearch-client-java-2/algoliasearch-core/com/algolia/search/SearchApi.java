@@ -210,7 +210,7 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for appendSource
    *
-   * @param source The sources to allow (required)
+   * @param source The source to add. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -280,7 +280,7 @@ public class SearchApi extends ApiClient {
   /**
    * Add a single source to the list of allowed sources.
    *
-   * @param source The sources to allow (required)
+   * @param source The source to add. (required)
    * @return AppendSourceResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -300,7 +300,7 @@ public class SearchApi extends ApiClient {
   /**
    * Add a single source to the list of allowed sources.
    *
-   * @param source The sources to allow (required)
+   * @param source The source to add. (required)
    * @return ApiResponse&lt;AppendSourceResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -322,7 +322,7 @@ public class SearchApi extends ApiClient {
   /**
    * (asynchronously) Add a single source to the list of allowed sources.
    *
-   * @param source The sources to allow (required)
+   * @param source The source to add. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4409,7 +4409,7 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for replaceSources
    *
-   * @param source The sources to allow (required)
+   * @param source The sources to allow. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4479,7 +4479,7 @@ public class SearchApi extends ApiClient {
   /**
    * Replace all allowed sources.
    *
-   * @param source The sources to allow (required)
+   * @param source The sources to allow. (required)
    * @return ReplaceSourceResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -4500,7 +4500,7 @@ public class SearchApi extends ApiClient {
   /**
    * Replace all allowed sources.
    *
-   * @param source The sources to allow (required)
+   * @param source The sources to allow. (required)
    * @return ApiResponse&lt;ReplaceSourceResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -4522,7 +4522,7 @@ public class SearchApi extends ApiClient {
   /**
    * (asynchronously) Replace all allowed sources.
    *
-   * @param source The sources to allow (required)
+   * @param source The sources to allow. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object

@@ -5,7 +5,7 @@ post:
   description: Add a single source to the list of allowed sources.
   requestBody:
     required: true
-    description: The sources to allow.
+    description: The source to add.
     content:
       application/json:
         schema:
