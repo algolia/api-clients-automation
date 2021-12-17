@@ -1,6 +1,6 @@
 post:
   tags:
-    - vault
+    - search
   operationId: appendSource
   description: Add a single source to the list of allowed sources.
   requestBody:
@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: './common/schemas.yml#/sourceObject'
+          $ref: 'common/schemas.yml#/source'
   responses:
     '200':
       description: OK
@@ -19,6 +19,8 @@ post:
             title: appendSourceResponse
             type: object
             additionalProperties: false
+            required:
+              - createdAt
             properties:
               createdAt:
-                $ref: '../../../common/parameters.yml#/updatedAt'
+                $ref: '../../../common/parameters.yml#/createdAt'

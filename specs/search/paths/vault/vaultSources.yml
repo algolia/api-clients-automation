@@ -1,6 +1,6 @@
 get:
   tags:
-    - vault
+    - search
   operationId: getSources
   description: List all allowed sources.
   responses:
@@ -9,14 +9,11 @@ get:
       content:
         application/json:
           schema:
-            title: listSourceResponse
-            type: array
-            items:
-              $ref: './common/schemas.yml#/sourceObject'
+            $ref: './common/schemas.yml#/sources'
 
 put:
   tags:
-    - vault
+    - search
   operationId: replaceSources
   description: Replace all allowed sources.
   requestBody:
@@ -25,10 +22,7 @@ put:
     content:
       application/json:
         schema:
-          title: sourceObjectList
-          type: array
-          items:
-            $ref: './common/schemas.yml#/sourceObject'
+          $ref: './common/schemas.yml#/sources'
   responses:
     '200':
       description: OK
@@ -38,6 +32,8 @@ put:
             title: replaceSourceResponse
             type: object
             additionalProperties: false
+            required:
+              - updatedAt
             properties:
               updatedAt:
                 $ref: '../../../common/parameters.yml#/updatedAt'
