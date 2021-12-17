@@ -2,6 +2,10 @@ name: Checks
 
 on: [push]
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   setup:
     runs-on: ubuntu-20.04
@@ -28,6 +32,9 @@ jobs:
 
       - name: Checking personalization specs
         run: yarn specs personalization
+
+      - name: Checking analytics specs
+        run: yarn specs analytics
 
       - name: Lint
         run: yamllint specs
@@ -59,12 +66,33 @@ jobs:
       - name: Build personalization client
         run: yarn client:build-js:personalization
 
+      - name: Generate analytics client
+        run: yarn generate javascript analytics
+
+      - name: Build analytics client
+        run: yarn client:build-js:analytics
+
       - name: Lint
         run: yarn lint
 
+  client_java:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Generate search client
+        run: yarn generate java search
+
+      - name: Build search client
+        run: yarn client:build-java
+
   cts:
     runs-on: ubuntu-20.04
-    needs: [setup, specs, client_javascript]
+    needs: [setup, specs, client_javascript, client_java]
     steps:
       - uses: actions/checkout@v2
 

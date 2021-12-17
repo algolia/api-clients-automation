@@ -18,6 +18,30 @@ ObjectID:
     example: '123'
 
 # query
+Index:
+  in: query
+  name: index
+  description: The index name to target.
+  required: true
+  schema:
+    type: string
+
+StartDate:
+  in: query
+  name: startDate
+  description: The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+  schema:
+    type: string
+    format: date-time
+
+EndDate:
+  in: query
+  name: endDate
+  description: The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+  schema:
+    type: string
+    format: date-time
+
 ForwardToReplicas:
   in: query
   name: forwardToReplicas
@@ -83,12 +107,17 @@ abTestVariantID:
   type: integer
   description: If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used.
 
+createdAt:
+  type: string
+  format: date-time
+  description: Date of creation (ISO-8601 format).
+
 updatedAt:
   type: string
   format: date-time
   description: Date of last update (ISO-8601 format).
 
-deleteAt:
+deletedAt:
   type: string
   format: date-time
   description: Date of deletion (ISO-8601 format).
