@@ -158,9 +158,7 @@ indexSettingsAsSearchParams:
       description: Restrict highlighting and snippeting to items that matched the query.
       default: false
     hitsPerPage:
-      type: integer
-      description: Set the number of hits per page.
-      default: 20
+      $ref: '../../../common/parameters.yml#/hitsPerPage'
     minWordSizefor1Typo:
       type: integer
       description: Minimum number of characters a word in the query string must contain to accept matches with 1 typo.

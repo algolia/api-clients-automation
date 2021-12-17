@@ -10,9 +10,7 @@ baseSearchParams:
     - query
   properties:
     query:
-      type: string
-      description: The text to search in the index.
-      default: ''
+      $ref: '../../../common/parameters.yml#/query'
     similarQuery:
       type: string
       description: Overrides the query parameter and performs a more generic search that can be used to find "similar" results.

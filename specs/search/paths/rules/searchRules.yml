@@ -17,18 +17,14 @@ post:
           additionalProperties: false
           properties:
             query:
-              type: string
-              default: ''
-              description: Full text query.
+              $ref: '../../../common/parameters.yml#/query'
             anchoring:
               $ref: './common/schemas.yml#/anchoring'
             context:
               type: string
               description: Restricts matches to contextual rules with a specific context (exact match).
             page:
-              type: integer
-              default: 0
-              description: Requested page (zero-based).
+              $ref: '../../../common/parameters.yml#/page'
             hitsPerPage:
               $ref: '../../../common/parameters.yml#/hitsPerPage'
             enabled:

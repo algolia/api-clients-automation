@@ -499,7 +499,7 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Delete the Rule with the specified objectID..
+   * Delete the Rule with the specified objectID.
    *
    * @summary Delete a rule.
    * @param indexName - The index in which to perform the request.

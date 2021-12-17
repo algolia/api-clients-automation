@@ -82,7 +82,7 @@ baseSearchResponse:
             type: integer
             description: The sum of all values in the result set.
     hitsPerPage:
-      $ref: 'IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+      $ref: '../../../common/parameters.yml#/hitsPerPage'
     index:
       type: string
       example: indexName
