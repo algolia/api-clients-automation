@@ -1,1 +1,58 @@
+get:
+  tags:
+    - search
+  operationId: getDictionaryEntries
+  description: Search the dictionary entries with the GET method.
+  summary: Search the dictionary entries.
+  parameters:
+    - $ref: 'common/parameters.yml#/DictionaryName'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: './common/schemas/searchDictionaryEntries.yml#/searchDictionaryEntries'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './common/schemas/DictionaryEntriesResponse.yml#/dictionaryEntriesResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
 post:
+  tags:
+    - search
+  operationId: searchDictionaryEntries
+  description: Search the dictionary entries with the POST method.
+  summary: Search the dictionary entries.
+  parameters:
+    - $ref: 'common/parameters.yml#/DictionaryName'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: './common/schemas/searchDictionaryEntries.yml#/searchDictionaryEntries'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './common/schemas/DictionaryEntriesResponse.yml#/dictionaryEntriesResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
