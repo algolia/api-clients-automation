@@ -6,21 +6,21 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-/** The dictionary entry reponse. */
-@ApiModel(description = "The dictionary entry reponse.")
-public class DictionaryEntriesResponse {
+/** The response with a taskID and a deletedAt timestamp. */
+@ApiModel(description = "The response with a taskID and a deletedAt timestamp.")
+public class DeletedAtResponse {
 
   public static final String SERIALIZED_NAME_TASK_ID = "taskId";
 
   @SerializedName(SERIALIZED_NAME_TASK_ID)
   private Integer taskId;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
+  public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
 
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
-  private OffsetDateTime updatedAt;
+  @SerializedName(SERIALIZED_NAME_DELETED_AT)
+  private OffsetDateTime deletedAt;
 
-  public DictionaryEntriesResponse taskId(Integer taskId) {
+  public DeletedAtResponse taskId(Integer taskId) {
     this.taskId = taskId;
     return this;
   }
@@ -43,27 +43,27 @@ public class DictionaryEntriesResponse {
     this.taskId = taskId;
   }
 
-  public DictionaryEntriesResponse updatedAt(OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+  public DeletedAtResponse deletedAt(OffsetDateTime deletedAt) {
+    this.deletedAt = deletedAt;
     return this;
   }
 
   /**
-   * Date of last update (ISO-8601 format).
+   * Date of deletion (ISO-8601 format).
    *
-   * @return updatedAt
+   * @return deletedAt
    */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
-    value = "Date of last update (ISO-8601 format)."
+    value = "Date of deletion (ISO-8601 format)."
   )
-  public OffsetDateTime getUpdatedAt() {
-    return updatedAt;
+  public OffsetDateTime getDeletedAt() {
+    return deletedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setDeletedAt(OffsetDateTime deletedAt) {
+    this.deletedAt = deletedAt;
   }
 
   @Override
@@ -74,26 +74,26 @@ public class DictionaryEntriesResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DictionaryEntriesResponse dictionaryEntriesResponse = (DictionaryEntriesResponse) o;
+    DeletedAtResponse deletedAtResponse = (DeletedAtResponse) o;
     return (
-      Objects.equals(this.taskId, dictionaryEntriesResponse.taskId) &&
-      Objects.equals(this.updatedAt, dictionaryEntriesResponse.updatedAt)
+      Objects.equals(this.taskId, deletedAtResponse.taskId) &&
+      Objects.equals(this.deletedAt, deletedAtResponse.deletedAt)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskId, updatedAt);
+    return Objects.hash(taskId, deletedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DictionaryEntriesResponse {\n");
+    sb.append("class DeletedAtResponse {\n");
     sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
     sb
-      .append("    updatedAt: ")
-      .append(toIndentedString(updatedAt))
+      .append("    deletedAt: ")
+      .append(toIndentedString(deletedAt))
       .append("\n");
     sb.append("}");
     return sb.toString();

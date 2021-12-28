@@ -1,44 +1,51 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-/** OperationIndexResponse */
-public class OperationIndexResponse {
+/** The response with a taskID and an updatedAt timestamp. */
+@ApiModel(
+  description = "The response with a taskID and an updatedAt timestamp."
+)
+public class UpdatedAtResponse {
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
+  public static final String SERIALIZED_NAME_TASK_ID = "taskId";
 
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
-  private Integer taskID;
+  @SerializedName(SERIALIZED_NAME_TASK_ID)
+  private Integer taskId;
 
   public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
 
   @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private OffsetDateTime updatedAt;
 
-  public OperationIndexResponse taskID(Integer taskID) {
-    this.taskID = taskID;
+  public UpdatedAtResponse taskId(Integer taskId) {
+    this.taskId = taskId;
     return this;
   }
 
   /**
    * taskID of the indexing task to wait for.
    *
-   * @return taskID
+   * @return taskId
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "taskID of the indexing task to wait for.")
-  public Integer getTaskID() {
-    return taskID;
+  @javax.annotation.Nonnull
+  @ApiModelProperty(
+    required = true,
+    value = "taskID of the indexing task to wait for."
+  )
+  public Integer getTaskId() {
+    return taskId;
   }
 
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
+  public void setTaskId(Integer taskId) {
+    this.taskId = taskId;
   }
 
-  public OperationIndexResponse updatedAt(OffsetDateTime updatedAt) {
+  public UpdatedAtResponse updatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -48,8 +55,11 @@ public class OperationIndexResponse {
    *
    * @return updatedAt
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Date of last update (ISO-8601 format).")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(
+    required = true,
+    value = "Date of last update (ISO-8601 format)."
+  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -66,23 +76,23 @@ public class OperationIndexResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OperationIndexResponse operationIndexResponse = (OperationIndexResponse) o;
+    UpdatedAtResponse updatedAtResponse = (UpdatedAtResponse) o;
     return (
-      Objects.equals(this.taskID, operationIndexResponse.taskID) &&
-      Objects.equals(this.updatedAt, operationIndexResponse.updatedAt)
+      Objects.equals(this.taskId, updatedAtResponse.taskId) &&
+      Objects.equals(this.updatedAt, updatedAtResponse.updatedAt)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskID, updatedAt);
+    return Objects.hash(taskId, updatedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OperationIndexResponse {\n");
-    sb.append("    taskID: ").append(toIndentedString(taskID)).append("\n");
+    sb.append("class UpdatedAtResponse {\n");
+    sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
     sb
       .append("    updatedAt: ")
       .append(toIndentedString(updatedAt))

@@ -6,7 +6,7 @@ IndexName:
   required: true
   schema:
     type: string
-    example: 'myIndexName'
+    example: myIndexName
 
 ObjectID:
   name: objectID
@@ -29,7 +29,7 @@ Index:
 StartDate:
   in: query
   name: startDate
-  description: The lower bound timestamp (a date, a string like "2006-01-02") of the period to analyze.
+  description: The lower bound timestamp (a date, a string like ''2006-01-02'') of the period to analyze.
   schema:
     type: string
     format: date-time
