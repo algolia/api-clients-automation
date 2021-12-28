@@ -2,16 +2,16 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
+import SwaggerParser from '@apidevtools/swagger-parser';
 import Mustache from 'mustache';
 import type { OpenAPIV3 } from 'openapi-types';
-import SwaggerParser from 'swagger-parser';
 
 import openapitools from '../openapitools.json';
 
 const availableLanguages = ['javascript'] as const;
 type Language = typeof availableLanguages[number];
 
-type CTSBlock = {
+type Tests = {
   testName?: string;
   method: string;
   parameters: any[];
@@ -20,6 +20,11 @@ type CTSBlock = {
     method: string;
     data?: string;
   };
+};
+
+type CTSBlock = {
+  blockName: string;
+  tests: Tests[];
 };
 
 // Array of test per client
@@ -68,6 +73,10 @@ function capitalize(str: string): string {
 async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
   // load the list of operations from the spec
   const spec = await SwaggerParser.validate(`../specs/${client}/spec.yml`);
+  if (!spec.paths) {
+    throw new Error(`No paths found for spec ${client}/spec.yml`);
+  }
+
   const operations = Object.values(spec.paths)
     .flatMap<OpenAPIV3.OperationObject>((p) => Object.values(p))
     .map((obj) => obj.operationId);
@@ -87,7 +96,7 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       );
     }
 
-    const tests: CTSBlock[] = JSON.parse(fileContent);
+    const tests: Tests[] = JSON.parse(fileContent);
 
     // check test validity against spec
     if (!operations.includes(operationId)) {
@@ -116,8 +125,13 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       // stringify request.data too
       test.request.data = JSON.stringify(test.request.data);
     }
-    ctsClient.push(...tests);
+
+    ctsClient.push({
+      blockName: operationId,
+      tests,
+    });
   }
+
   return ctsClient;
 }
 
@@ -142,7 +156,7 @@ async function generateCode(language: Language): Promise<void> {
     const code = Mustache.render(template, {
       import: packageNames[language][client],
       client: `${capitalize(client)}Api`,
-      tests: cts[client],
+      blocks: cts[client],
     });
     await fsp.writeFile(
       `output/${language}/${client}${extensionForLanguage[language]}`,
