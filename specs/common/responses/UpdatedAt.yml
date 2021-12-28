@@ -7,10 +7,10 @@ content:
       additionalProperties: false
       type: object
       required:
-        - taskId
+        - taskID
         - updatedAt
       properties:
-        taskId:
+        taskID:
           $ref: '../parameters.yml#/taskID'
         updatedAt:
           $ref: '../parameters.yml#/updatedAt'

@@ -5,7 +5,7 @@ export type DeletedAtResponse = {
   /**
    * TaskID of the indexing task to wait for.
    */
-  taskId: number;
+  taskID: number;
   /**
    * Date of deletion (ISO-8601 format).
    */
