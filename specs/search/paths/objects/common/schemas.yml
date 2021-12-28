@@ -1,0 +1,17 @@
+action:
+  type: string
+  enum:
+    - 'addObject'
+    - 'updateObject'
+    - 'partialUpdateObject'
+    - 'partialUpdateObjectNoCreate'
+    - 'deleteObject'
+    - 'delete'
+    - 'clear'
+  description: type of operation.
+
+body:
+  type: object
+  # this could be a long oneOf with every possibilities
+  additionalProperties: true
+  description: arguments to the operation (depends on the type of the operation).
