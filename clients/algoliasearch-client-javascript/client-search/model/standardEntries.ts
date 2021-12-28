@@ -5,13 +5,13 @@ export type StandardEntries = {
   /**
    * Language ISO code.
    */
-  plurals?: { [key: string]: boolean };
+  plurals?: { [key: string]: boolean } | null;
   /**
    * Language ISO code.
    */
-  stopwords?: { [key: string]: boolean };
+  stopwords?: { [key: string]: boolean } | null;
   /**
    * Language ISO code.
    */
-  compounds?: { [key: string]: boolean };
+  compounds?: { [key: string]: boolean } | null;
 };

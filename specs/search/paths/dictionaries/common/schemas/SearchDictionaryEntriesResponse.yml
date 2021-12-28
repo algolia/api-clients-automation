@@ -6,7 +6,7 @@ searchDictionaryEntriesResponse:
       type: array
       description: The dictionary entries returned by the search.
       items:
-        $ref: '#/dictionnaryEntry'
+        $ref: '#/dictionaryEntry'
     page:
       $ref: '../../../../../common/parameters.yml#/page'
     nbHits:
@@ -14,7 +14,7 @@ searchDictionaryEntriesResponse:
     nbPages:
       $ref: '../../../../common/schemas/SearchResponse.yml#/nbPages'
 
-dictionnaryEntry:
+dictionaryEntry:
   type: object
   description: A dictionary entry.
   additionalProperties: true
@@ -44,3 +44,4 @@ dictionnaryEntry:
       description: The state of the dictionary entry.
       type: string
       enum: ['enabled', 'disabled']
+      default: enabled

@@ -741,52 +741,6 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Search the dictionary entries with the GET method.
-   *
-   * @summary Search the dictionary entries.
-   * @param dictionaryName - The dictionary to search in.
-   * @param searchDictionaryEntries - The searchDictionaryEntries.
-   */
-  getDictionaryEntries(
-    dictionaryName: 'compounds' | 'plurals' | 'stopwords',
-    searchDictionaryEntries: SearchDictionaryEntries
-  ): Promise<DictionaryEntriesResponse> {
-    const path = '/1/dictionaries/{dictionaryName}/search'.replace(
-      '{dictionaryName}',
-      encodeURIComponent(String(dictionaryName))
-    );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
-
-    if (dictionaryName === null || dictionaryName === undefined) {
-      throw new Error(
-        'Required parameter dictionaryName was null or undefined when calling getDictionaryEntries.'
-      );
-    }
-
-    if (
-      searchDictionaryEntries === null ||
-      searchDictionaryEntries === undefined
-    ) {
-      throw new Error(
-        'Required parameter searchDictionaryEntries was null or undefined when calling getDictionaryEntries.'
-      );
-    }
-
-    const request: Request = {
-      method: 'GET',
-      path,
-      data: searchDictionaryEntries,
-    };
-
-    const requestOptions: RequestOptions = {
-      headers,
-      queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
-  }
-  /**
    * List dictionaries supported per language.
    *
    * @summary List dictionaries supported per language.
@@ -1652,7 +1606,7 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Search the dictionary entries with the POST method.
+   * Search the dictionary entries.
    *
    * @summary Search the dictionary entries.
    * @param dictionaryName - The dictionary to search in.

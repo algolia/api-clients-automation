@@ -28,5 +28,6 @@ standardEntries:
 standardEntry:
   description: Language ISO code.
   type: object
+  nullable: true
   additionalProperties:
     type: boolean

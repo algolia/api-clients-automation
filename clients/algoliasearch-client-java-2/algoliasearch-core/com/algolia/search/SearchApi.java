@@ -2772,196 +2772,6 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Build call for getDictionaryEntries
-   *
-   * @param dictionaryName The dictionary to search in. (required)
-   * @param searchDictionaryEntries (required)
-   * @param _callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
-   * @http.response.details
-   *     <table summary="Response Details" border="1">
-   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-   * </table>
-   */
-  public okhttp3.Call getDictionaryEntriesCall(
-    String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries,
-    final ApiCallback _callback
-  ) throws ApiException {
-    Object localVarPostBody = searchDictionaryEntries;
-
-    // create path and map variables
-    String localVarPath =
-      "/1/dictionaries/{dictionaryName}/search".replaceAll(
-          "\\{" + "dictionaryName" + "\\}",
-          this.escapeString(dictionaryName.toString())
-        );
-
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, String> localVarCookieParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    final String[] localVarAccepts = { "application/json" };
-    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
-    if (localVarAccept != null) {
-      localVarHeaderParams.put("Accept", localVarAccept);
-    }
-
-    final String[] localVarContentTypes = { "application/json" };
-    final String localVarContentType =
-      this.selectHeaderContentType(localVarContentTypes);
-    localVarHeaderParams.put("Content-Type", localVarContentType);
-
-    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
-    return this.buildCall(
-        localVarPath,
-        "GET",
-        localVarQueryParams,
-        localVarCollectionQueryParams,
-        localVarPostBody,
-        localVarHeaderParams,
-        localVarCookieParams,
-        localVarFormParams,
-        localVarAuthNames,
-        _callback
-      );
-  }
-
-  @SuppressWarnings("rawtypes")
-  private okhttp3.Call getDictionaryEntriesValidateBeforeCall(
-    String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries,
-    final ApiCallback _callback
-  ) throws ApiException {
-    // verify the required parameter 'dictionaryName' is set
-    if (dictionaryName == null) {
-      throw new ApiException(
-        "Missing the required parameter 'dictionaryName' when calling" +
-        " getDictionaryEntries(Async)"
-      );
-    }
-
-    // verify the required parameter 'searchDictionaryEntries' is set
-    if (searchDictionaryEntries == null) {
-      throw new ApiException(
-        "Missing the required parameter 'searchDictionaryEntries' when calling" +
-        " getDictionaryEntries(Async)"
-      );
-    }
-
-    okhttp3.Call localVarCall = getDictionaryEntriesCall(
-      dictionaryName,
-      searchDictionaryEntries,
-      _callback
-    );
-    return localVarCall;
-  }
-
-  /**
-   * Search the dictionary entries. Search the dictionary entries with the GET method.
-   *
-   * @param dictionaryName The dictionary to search in. (required)
-   * @param searchDictionaryEntries (required)
-   * @return DictionaryEntriesResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
-   * @http.response.details
-   *     <table summary="Response Details" border="1">
-   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-   * </table>
-   */
-  public DictionaryEntriesResponse getDictionaryEntries(
-    String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries
-  ) throws ApiException {
-    ApiResponse<DictionaryEntriesResponse> localVarResp = getDictionaryEntriesWithHttpInfo(
-      dictionaryName,
-      searchDictionaryEntries
-    );
-    return localVarResp.getData();
-  }
-
-  /**
-   * Search the dictionary entries. Search the dictionary entries with the GET method.
-   *
-   * @param dictionaryName The dictionary to search in. (required)
-   * @param searchDictionaryEntries (required)
-   * @return ApiResponse&lt;DictionaryEntriesResponse&gt;
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
-   * @http.response.details
-   *     <table summary="Response Details" border="1">
-   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-   * </table>
-   */
-  public ApiResponse<DictionaryEntriesResponse> getDictionaryEntriesWithHttpInfo(
-    String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries
-  ) throws ApiException {
-    okhttp3.Call localVarCall = getDictionaryEntriesValidateBeforeCall(
-      dictionaryName,
-      searchDictionaryEntries,
-      null
-    );
-    Type localVarReturnType = new TypeToken<DictionaryEntriesResponse>() {}
-      .getType();
-    return this.execute(localVarCall, localVarReturnType);
-  }
-
-  /**
-   * Search the dictionary entries. (asynchronously) Search the dictionary entries with the GET
-   * method.
-   *
-   * @param dictionaryName The dictionary to search in. (required)
-   * @param searchDictionaryEntries (required)
-   * @param _callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   * @http.response.details
-   *     <table summary="Response Details" border="1">
-   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
-   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
-   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
-   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
-   * </table>
-   */
-  public okhttp3.Call getDictionaryEntriesAsync(
-    String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries,
-    final ApiCallback<DictionaryEntriesResponse> _callback
-  ) throws ApiException {
-    okhttp3.Call localVarCall = getDictionaryEntriesValidateBeforeCall(
-      dictionaryName,
-      searchDictionaryEntries,
-      _callback
-    );
-    Type localVarReturnType = new TypeToken<DictionaryEntriesResponse>() {}
-      .getType();
-    this.executeAsync(localVarCall, localVarReturnType, _callback);
-    return localVarCall;
-  }
-
-  /**
    * Build call for getDictionaryLanguages
    *
    * @param _callback Callback for upload/download progress
@@ -7351,7 +7161,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search the dictionary entries. Search the dictionary entries with the POST method.
+   * Search the dictionary entries. Search the dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
    * @param searchDictionaryEntries (required)
@@ -7380,7 +7190,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search the dictionary entries. Search the dictionary entries with the POST method.
+   * Search the dictionary entries. Search the dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
    * @param searchDictionaryEntries (required)
@@ -7412,8 +7222,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search the dictionary entries. (asynchronously) Search the dictionary entries with the POST
-   * method.
+   * Search the dictionary entries. (asynchronously) Search the dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
    * @param searchDictionaryEntries (required)

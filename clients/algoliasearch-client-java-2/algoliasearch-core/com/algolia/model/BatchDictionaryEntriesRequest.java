@@ -69,7 +69,7 @@ public class BatchDictionaryEntriesRequest {
   public static final String SERIALIZED_NAME_BODY = "body";
 
   @SerializedName(SERIALIZED_NAME_BODY)
-  private DictionnaryEntry body;
+  private DictionaryEntry body;
 
   public BatchDictionaryEntriesRequest action(ActionEnum action) {
     this.action = action;
@@ -91,7 +91,7 @@ public class BatchDictionaryEntriesRequest {
     this.action = action;
   }
 
-  public BatchDictionaryEntriesRequest body(DictionnaryEntry body) {
+  public BatchDictionaryEntriesRequest body(DictionaryEntry body) {
     this.body = body;
     return this;
   }
@@ -103,11 +103,11 @@ public class BatchDictionaryEntriesRequest {
    */
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
-  public DictionnaryEntry getBody() {
+  public DictionaryEntry getBody() {
     return body;
   }
 
-  public void setBody(DictionnaryEntry body) {
+  public void setBody(DictionaryEntry body) {
     this.body = body;
   }
 

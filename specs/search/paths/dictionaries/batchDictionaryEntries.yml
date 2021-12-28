@@ -38,7 +38,7 @@ post:
                     type: string
                     enum: ['addEntry', 'deleteEntry']
                   body:
-                    $ref: './common/schemas/SearchDictionaryEntriesResponse.yml#/dictionnaryEntry'
+                    $ref: './common/schemas/SearchDictionaryEntriesResponse.yml#/dictionaryEntry'
   responses:
     '200':
       description: OK

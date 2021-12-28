@@ -1,11 +1,11 @@
-import type { DictionnaryEntry } from './dictionnaryEntry';
+import type { DictionaryEntry } from './dictionaryEntry';
 
 export type BatchDictionaryEntriesRequest = {
   /**
    * Actions to perform.
    */
   action: BatchDictionaryEntriesRequest.ActionEnum;
-  body: DictionnaryEntry;
+  body: DictionaryEntry;
 };
 
 export namespace BatchDictionaryEntriesRequest {

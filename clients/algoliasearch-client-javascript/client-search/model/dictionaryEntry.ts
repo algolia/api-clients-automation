@@ -1,7 +1,7 @@
 /**
  * A dictionary entry.
  */
-export type DictionnaryEntry = {
+export type DictionaryEntry = {
   /**
    * Unique identifier of the object.
    */
@@ -25,10 +25,10 @@ export type DictionnaryEntry = {
   /**
    * The state of the dictionary entry.
    */
-  state?: DictionnaryEntry.StateEnum;
+  state?: DictionaryEntry.StateEnum;
 };
 
-export namespace DictionnaryEntry {
+export namespace DictionaryEntry {
   export enum StateEnum {
     Enabled = 'enabled',
     Disabled = 'disabled',

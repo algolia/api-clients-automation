@@ -15,7 +15,7 @@ import java.util.Objects;
 
 /** A dictionary entry. */
 @ApiModel(description = "A dictionary entry.")
-public class DictionnaryEntry extends HashMap<String, Object> {
+public class DictionaryEntry extends HashMap<String, Object> {
 
   public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
 
@@ -94,9 +94,9 @@ public class DictionnaryEntry extends HashMap<String, Object> {
   public static final String SERIALIZED_NAME_STATE = "state";
 
   @SerializedName(SERIALIZED_NAME_STATE)
-  private StateEnum state;
+  private StateEnum state = StateEnum.ENABLED;
 
-  public DictionnaryEntry objectID(String objectID) {
+  public DictionaryEntry objectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -116,7 +116,7 @@ public class DictionnaryEntry extends HashMap<String, Object> {
     this.objectID = objectID;
   }
 
-  public DictionnaryEntry language(String language) {
+  public DictionaryEntry language(String language) {
     this.language = language;
     return this;
   }
@@ -139,7 +139,7 @@ public class DictionnaryEntry extends HashMap<String, Object> {
     this.language = language;
   }
 
-  public DictionnaryEntry word(String word) {
+  public DictionaryEntry word(String word) {
     this.word = word;
     return this;
   }
@@ -159,12 +159,12 @@ public class DictionnaryEntry extends HashMap<String, Object> {
     this.word = word;
   }
 
-  public DictionnaryEntry words(List<String> words) {
+  public DictionaryEntry words(List<String> words) {
     this.words = words;
     return this;
   }
 
-  public DictionnaryEntry addWordsItem(String wordsItem) {
+  public DictionaryEntry addWordsItem(String wordsItem) {
     if (this.words == null) {
       this.words = new ArrayList<>();
     }
@@ -187,12 +187,12 @@ public class DictionnaryEntry extends HashMap<String, Object> {
     this.words = words;
   }
 
-  public DictionnaryEntry decomposition(List<String> decomposition) {
+  public DictionaryEntry decomposition(List<String> decomposition) {
     this.decomposition = decomposition;
     return this;
   }
 
-  public DictionnaryEntry addDecompositionItem(String decompositionItem) {
+  public DictionaryEntry addDecompositionItem(String decompositionItem) {
     if (this.decomposition == null) {
       this.decomposition = new ArrayList<>();
     }
@@ -217,7 +217,7 @@ public class DictionnaryEntry extends HashMap<String, Object> {
     this.decomposition = decomposition;
   }
 
-  public DictionnaryEntry state(StateEnum state) {
+  public DictionaryEntry state(StateEnum state) {
     this.state = state;
     return this;
   }
@@ -245,14 +245,14 @@ public class DictionnaryEntry extends HashMap<String, Object> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DictionnaryEntry dictionnaryEntry = (DictionnaryEntry) o;
+    DictionaryEntry dictionaryEntry = (DictionaryEntry) o;
     return (
-      Objects.equals(this.objectID, dictionnaryEntry.objectID) &&
-      Objects.equals(this.language, dictionnaryEntry.language) &&
-      Objects.equals(this.word, dictionnaryEntry.word) &&
-      Objects.equals(this.words, dictionnaryEntry.words) &&
-      Objects.equals(this.decomposition, dictionnaryEntry.decomposition) &&
-      Objects.equals(this.state, dictionnaryEntry.state) &&
+      Objects.equals(this.objectID, dictionaryEntry.objectID) &&
+      Objects.equals(this.language, dictionaryEntry.language) &&
+      Objects.equals(this.word, dictionaryEntry.word) &&
+      Objects.equals(this.words, dictionaryEntry.words) &&
+      Objects.equals(this.decomposition, dictionaryEntry.decomposition) &&
+      Objects.equals(this.state, dictionaryEntry.state) &&
       super.equals(o)
     );
   }
@@ -273,7 +273,7 @@ public class DictionnaryEntry extends HashMap<String, Object> {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DictionnaryEntry {\n");
+    sb.append("class DictionaryEntry {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
     sb.append("    language: ").append(toIndentedString(language)).append("\n");
