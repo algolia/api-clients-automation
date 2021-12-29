@@ -16,8 +16,11 @@ import com.algolia.model.BatchResponse;
 import com.algolia.model.BatchWriteObject;
 import com.algolia.model.BrowseRequest;
 import com.algolia.model.BrowseResponse;
+import com.algolia.model.ClearObjectsResponse;
 import com.algolia.model.CreatedAtResponse;
 import com.algolia.model.DeleteApiKeyResponse;
+import com.algolia.model.DeleteByResponse;
+import com.algolia.model.DeleteObjectResponse;
 import com.algolia.model.DeleteSourceResponse;
 import com.algolia.model.DeletedAtResponse;
 import com.algolia.model.DictionarySettingsRequest;
@@ -38,6 +41,7 @@ import com.algolia.model.MultipleBatchResponse;
 import com.algolia.model.MultipleQueriesObject;
 import com.algolia.model.MultipleQueriesResponse;
 import com.algolia.model.OperationIndexObject;
+import com.algolia.model.PartialUpdateObjectResponse;
 import com.algolia.model.RemoveUserIdResponse;
 import com.algolia.model.ReplaceSourceResponse;
 import com.algolia.model.Rule;
@@ -2028,9 +2032,7 @@ public class SearchApi extends ApiClient {
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @return UpdatedAtResponse
+   * @return ClearObjectsResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2043,13 +2045,10 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public UpdatedAtResponse clearRules(
-    String indexName,
-    Boolean forwardToReplicas
-  ) throws ApiException {
-    ApiResponse<UpdatedAtResponse> localVarResp = clearRulesWithHttpInfo(
-      indexName,
-      forwardToReplicas
+  public ClearObjectsResponse clearObjects(String indexName)
+    throws ApiException {
+    ApiResponse<ClearObjectsResponse> localVarResp = clearObjectsWithHttpInfo(
+      indexName
     );
     return localVarResp.getData();
   }
@@ -2059,9 +2058,7 @@ public class SearchApi extends ApiClient {
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @return ApiResponse&lt;UpdatedAtResponse&gt;
+   * @return ApiResponse&lt;ClearObjectsResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2074,16 +2071,12 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<UpdatedAtResponse> clearRulesWithHttpInfo(
-    String indexName,
-    Boolean forwardToReplicas
+  public ApiResponse<ClearObjectsResponse> clearObjectsWithHttpInfo(
+    String indexName
   ) throws ApiException {
-    okhttp3.Call localVarCall = clearRulesValidateBeforeCall(
-      indexName,
-      forwardToReplicas,
-      null
-    );
-    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+    okhttp3.Call localVarCall = clearObjectsValidateBeforeCall(indexName, null);
+    Type localVarReturnType = new TypeToken<ClearObjectsResponse>() {}
+      .getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2107,14 +2100,14 @@ public class SearchApi extends ApiClient {
    */
   public okhttp3.Call clearObjectsAsync(
     String indexName,
-    Boolean forwardToReplicas,
-    final ApiCallback<UpdatedAtResponse> _callback
+    final ApiCallback<ClearObjectsResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = clearObjectsValidateBeforeCall(
       indexName,
       _callback
     );
-    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<ClearObjectsResponse>() {}
+      .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2218,7 +2211,7 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
-   * @return UpdatedRuleResponseWithoutObjectID
+   * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2231,11 +2224,11 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public UpdatedRuleResponseWithoutObjectID clearRules(
+  public UpdatedAtResponse clearRules(
     String indexName,
     Boolean forwardToReplicas
   ) throws ApiException {
-    ApiResponse<UpdatedRuleResponseWithoutObjectID> localVarResp = clearRulesWithHttpInfo(
+    ApiResponse<UpdatedAtResponse> localVarResp = clearRulesWithHttpInfo(
       indexName,
       forwardToReplicas
     );
@@ -2248,7 +2241,7 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
-   * @return ApiResponse&lt;UpdatedRuleResponseWithoutObjectID&gt;
+   * @return ApiResponse&lt;UpdatedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2261,7 +2254,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<UpdatedRuleResponseWithoutObjectID> clearRulesWithHttpInfo(
+  public ApiResponse<UpdatedAtResponse> clearRulesWithHttpInfo(
     String indexName,
     Boolean forwardToReplicas
   ) throws ApiException {
@@ -2270,8 +2263,7 @@ public class SearchApi extends ApiClient {
       forwardToReplicas,
       null
     );
-    Type localVarReturnType = new TypeToken<UpdatedRuleResponseWithoutObjectID>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2297,15 +2289,14 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call clearRulesAsync(
     String indexName,
     Boolean forwardToReplicas,
-    final ApiCallback<UpdatedRuleResponseWithoutObjectID> _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = clearRulesValidateBeforeCall(
       indexName,
       forwardToReplicas,
       _callback
     );
-    Type localVarReturnType = new TypeToken<UpdatedRuleResponseWithoutObjectID>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2390,8 +2381,8 @@ public class SearchApi extends ApiClient {
   /**
    * Delete an API key. Delete an existing API Key.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @return DeletedAtResponse
+   * @param key API Key string. (required)
+   * @return DeleteApiKeyResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2404,9 +2395,9 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public DeletedAtResponse deleteIndex(String indexName) throws ApiException {
-    ApiResponse<DeletedAtResponse> localVarResp = deleteIndexWithHttpInfo(
-      indexName
+  public DeleteApiKeyResponse deleteApiKey(String key) throws ApiException {
+    ApiResponse<DeleteApiKeyResponse> localVarResp = deleteApiKeyWithHttpInfo(
+      key
     );
     return localVarResp.getData();
   }
@@ -2414,8 +2405,8 @@ public class SearchApi extends ApiClient {
   /**
    * Delete an API key. Delete an existing API Key.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @return ApiResponse&lt;DeletedAtResponse&gt;
+   * @param key API Key string. (required)
+   * @return ApiResponse&lt;DeleteApiKeyResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2428,11 +2419,11 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<DeletedAtResponse> deleteIndexWithHttpInfo(
-    String indexName
-  ) throws ApiException {
-    okhttp3.Call localVarCall = deleteIndexValidateBeforeCall(indexName, null);
-    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
+  public ApiResponse<DeleteApiKeyResponse> deleteApiKeyWithHttpInfo(String key)
+    throws ApiException {
+    okhttp3.Call localVarCall = deleteApiKeyValidateBeforeCall(key, null);
+    Type localVarReturnType = new TypeToken<DeleteApiKeyResponse>() {}
+      .getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2453,15 +2444,13 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public okhttp3.Call deleteIndexAsync(
-    String indexName,
-    final ApiCallback<DeletedAtResponse> _callback
+  public okhttp3.Call deleteApiKeyAsync(
+    String key,
+    final ApiCallback<DeleteApiKeyResponse> _callback
   ) throws ApiException {
-    okhttp3.Call localVarCall = deleteIndexValidateBeforeCall(
-      indexName,
-      _callback
-    );
-    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
+    okhttp3.Call localVarCall = deleteApiKeyValidateBeforeCall(key, _callback);
+    Type localVarReturnType = new TypeToken<DeleteApiKeyResponse>() {}
+      .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2564,10 +2553,8 @@ public class SearchApi extends ApiClient {
    * facet, tag or geo queries). It doesn’t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @return UpdatedAtResponse
+   * @param searchParams (required)
+   * @return DeleteByResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2580,12 +2567,9 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public UpdatedAtResponse deleteRule(
-    String indexName,
-    String objectID,
-    Boolean forwardToReplicas
-  ) throws ApiException {
-    ApiResponse<UpdatedAtResponse> localVarResp = deleteRuleWithHttpInfo(
+  public DeleteByResponse deleteBy(String indexName, SearchParams searchParams)
+    throws ApiException {
+    ApiResponse<DeleteByResponse> localVarResp = deleteByWithHttpInfo(
       indexName,
       searchParams
     );
@@ -2598,10 +2582,8 @@ public class SearchApi extends ApiClient {
    * facet, tag or geo queries). It doesn’t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @return ApiResponse&lt;UpdatedAtResponse&gt;
+   * @param searchParams (required)
+   * @return ApiResponse&lt;DeleteByResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2614,7 +2596,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<UpdatedAtResponse> deleteRuleWithHttpInfo(
+  public ApiResponse<DeleteByResponse> deleteByWithHttpInfo(
     String indexName,
     SearchParams searchParams
   ) throws ApiException {
@@ -2623,7 +2605,7 @@ public class SearchApi extends ApiClient {
       searchParams,
       null
     );
-    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeleteByResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2649,16 +2631,15 @@ public class SearchApi extends ApiClient {
    */
   public okhttp3.Call deleteByAsync(
     String indexName,
-    String objectID,
-    Boolean forwardToReplicas,
-    final ApiCallback<UpdatedAtResponse> _callback
+    SearchParams searchParams,
+    final ApiCallback<DeleteByResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteByValidateBeforeCall(
       indexName,
       searchParams,
       _callback
     );
-    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeleteByResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2746,7 +2727,7 @@ public class SearchApi extends ApiClient {
    * Delete index. Delete an existing index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @return DeleteIndexResponse
+   * @return DeletedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2759,8 +2740,8 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public DeleteIndexResponse deleteIndex(String indexName) throws ApiException {
-    ApiResponse<DeleteIndexResponse> localVarResp = deleteIndexWithHttpInfo(
+  public DeletedAtResponse deleteIndex(String indexName) throws ApiException {
+    ApiResponse<DeletedAtResponse> localVarResp = deleteIndexWithHttpInfo(
       indexName
     );
     return localVarResp.getData();
@@ -2770,7 +2751,7 @@ public class SearchApi extends ApiClient {
    * Delete index. Delete an existing index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @return ApiResponse&lt;DeleteIndexResponse&gt;
+   * @return ApiResponse&lt;DeletedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2783,11 +2764,11 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<DeleteIndexResponse> deleteIndexWithHttpInfo(
+  public ApiResponse<DeletedAtResponse> deleteIndexWithHttpInfo(
     String indexName
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteIndexValidateBeforeCall(indexName, null);
-    Type localVarReturnType = new TypeToken<DeleteIndexResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2810,13 +2791,13 @@ public class SearchApi extends ApiClient {
    */
   public okhttp3.Call deleteIndexAsync(
     String indexName,
-    final ApiCallback<DeleteIndexResponse> _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteIndexValidateBeforeCall(
       indexName,
       _callback
     );
-    Type localVarReturnType = new TypeToken<DeleteIndexResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2923,9 +2904,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @return DeletedAtResponse
+   * @return DeleteObjectResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2938,12 +2917,9 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public DeletedAtResponse deleteSynonym(
-    String indexName,
-    String objectID,
-    Boolean forwardToReplicas
-  ) throws ApiException {
-    ApiResponse<DeletedAtResponse> localVarResp = deleteSynonymWithHttpInfo(
+  public DeleteObjectResponse deleteObject(String indexName, String objectID)
+    throws ApiException {
+    ApiResponse<DeleteObjectResponse> localVarResp = deleteObjectWithHttpInfo(
       indexName,
       objectID
     );
@@ -2955,9 +2931,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @return ApiResponse&lt;DeletedAtResponse&gt;
+   * @return ApiResponse&lt;DeleteObjectResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2970,7 +2944,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<DeletedAtResponse> deleteSynonymWithHttpInfo(
+  public ApiResponse<DeleteObjectResponse> deleteObjectWithHttpInfo(
     String indexName,
     String objectID
   ) throws ApiException {
@@ -2979,7 +2953,8 @@ public class SearchApi extends ApiClient {
       objectID,
       null
     );
-    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeleteObjectResponse>() {}
+      .getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -3004,15 +2979,15 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call deleteObjectAsync(
     String indexName,
     String objectID,
-    Boolean forwardToReplicas,
-    final ApiCallback<DeletedAtResponse> _callback
+    final ApiCallback<DeleteObjectResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteObjectValidateBeforeCall(
       indexName,
       objectID,
       _callback
     );
-    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeleteObjectResponse>() {}
+      .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -3132,7 +3107,7 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
-   * @return UpdatedRuleResponseWithoutObjectID
+   * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -3145,12 +3120,12 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public UpdatedRuleResponseWithoutObjectID deleteRule(
+  public UpdatedAtResponse deleteRule(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
   ) throws ApiException {
-    ApiResponse<UpdatedRuleResponseWithoutObjectID> localVarResp = deleteRuleWithHttpInfo(
+    ApiResponse<UpdatedAtResponse> localVarResp = deleteRuleWithHttpInfo(
       indexName,
       objectID,
       forwardToReplicas
@@ -3165,7 +3140,7 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
-   * @return ApiResponse&lt;UpdatedRuleResponseWithoutObjectID&gt;
+   * @return ApiResponse&lt;UpdatedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -3178,7 +3153,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<UpdatedRuleResponseWithoutObjectID> deleteRuleWithHttpInfo(
+  public ApiResponse<UpdatedAtResponse> deleteRuleWithHttpInfo(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
@@ -3189,8 +3164,7 @@ public class SearchApi extends ApiClient {
       forwardToReplicas,
       null
     );
-    Type localVarReturnType = new TypeToken<UpdatedRuleResponseWithoutObjectID>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -3218,7 +3192,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
-    final ApiCallback<UpdatedRuleResponseWithoutObjectID> _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteRuleValidateBeforeCall(
       indexName,
@@ -3226,8 +3200,7 @@ public class SearchApi extends ApiClient {
       forwardToReplicas,
       _callback
     );
-    Type localVarReturnType = new TypeToken<UpdatedRuleResponseWithoutObjectID>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -3491,7 +3464,7 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
-   * @return DeleteSynonymResponse
+   * @return DeletedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -3504,12 +3477,12 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public DeleteSynonymResponse deleteSynonym(
+  public DeletedAtResponse deleteSynonym(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
   ) throws ApiException {
-    ApiResponse<DeleteSynonymResponse> localVarResp = deleteSynonymWithHttpInfo(
+    ApiResponse<DeletedAtResponse> localVarResp = deleteSynonymWithHttpInfo(
       indexName,
       objectID,
       forwardToReplicas
@@ -3524,7 +3497,7 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
-   * @return ApiResponse&lt;DeleteSynonymResponse&gt;
+   * @return ApiResponse&lt;DeletedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -3537,7 +3510,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<DeleteSynonymResponse> deleteSynonymWithHttpInfo(
+  public ApiResponse<DeletedAtResponse> deleteSynonymWithHttpInfo(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
@@ -3548,8 +3521,7 @@ public class SearchApi extends ApiClient {
       forwardToReplicas,
       null
     );
-    Type localVarReturnType = new TypeToken<DeleteSynonymResponse>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -3578,7 +3550,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
-    final ApiCallback<DeleteSynonymResponse> _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteSynonymValidateBeforeCall(
       indexName,
@@ -3586,8 +3558,7 @@ public class SearchApi extends ApiClient {
       forwardToReplicas,
       _callback
     );
-    Type localVarReturnType = new TypeToken<DeleteSynonymResponse>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
