@@ -8,18 +8,7 @@ post:
     - $ref: ../../../common/parameters.yml#/IndexName
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: clearObjectsResponse
-            type: object
-            additionalProperties: false
-            properties:
-              taskID:
-                $ref: ../../../common/parameters.yml#/taskID
-              updatedAt:
-                $ref: ../../../common/parameters.yml#/updatedAt
+      $ref: ../../../common/responses/UpdatedAt.yml
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

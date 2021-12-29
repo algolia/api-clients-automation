@@ -17,20 +17,7 @@ put:
           additionalProperties: true
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: addOrUpdateObjectResponse
-            type: object
-            additionalProperties: false
-            properties:
-              updatedAt:
-                $ref: ../../../common/parameters.yml#/updatedAt
-              taskID:
-                $ref: ../../../common/parameters.yml#/taskID
-              objectID:
-                $ref: ../../../common/parameters.yml#/objectID
+      $ref: ../../../common/responses/UpdatedAtWithObjectId.yml
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':
@@ -85,18 +72,7 @@ delete:
     - $ref: '../../../common/parameters.yml#/ObjectID'
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: deleteObjectResponse
-            type: object
-            additionalProperties: false
-            properties:
-              taskID:
-                $ref: ../../../common/parameters.yml#/taskID
-              deletedAt:
-                $ref: ../../../common/parameters.yml#/deletedAt
+      $ref: ../../../common/responses/DeletedAt.yml
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

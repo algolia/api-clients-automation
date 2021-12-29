@@ -1,5 +1,4 @@
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
-import type { AddOrUpdateObjectResponse } from '../model/addOrUpdateObjectResponse';
 import type { ApiKey } from '../model/apiKey';
 import type { AssignUserIdObject } from '../model/assignUserIdObject';
 import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
@@ -9,11 +8,8 @@ import type { BatchResponse } from '../model/batchResponse';
 import type { BatchWriteObject } from '../model/batchWriteObject';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
-import type { ClearObjectsResponse } from '../model/clearObjectsResponse';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
-import type { DeleteByResponse } from '../model/deleteByResponse';
-import type { DeleteObjectResponse } from '../model/deleteObjectResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
@@ -35,7 +31,6 @@ import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
-import type { PartialUpdateObjectResponse } from '../model/partialUpdateObjectResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
@@ -56,6 +51,7 @@ import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UpdatedAtResponse } from '../model/updatedAtResponse';
+import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObjectIdResponse';
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
@@ -195,7 +191,7 @@ export class SearchApi {
     indexName: string,
     objectID: string,
     requestBody: { [key: string]: Record<string, any> }
-  ): Promise<AddOrUpdateObjectResponse> {
+  ): Promise<UpdatedAtWithObjectIdResponse> {
     const path = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -579,7 +575,7 @@ export class SearchApi {
    * @summary Clear all objects from an index.
    * @param indexName - The index in which to perform the request.
    */
-  clearObjects(indexName: string): Promise<ClearObjectsResponse> {
+  clearObjects(indexName: string): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -687,7 +683,7 @@ export class SearchApi {
   deleteBy(
     indexName: string,
     searchParams: SearchParams
-  ): Promise<DeleteByResponse> {
+  ): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}/deleteByQuery'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -762,7 +758,7 @@ export class SearchApi {
   deleteObject(
     indexName: string,
     objectID: string
-  ): Promise<DeleteObjectResponse> {
+  ): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -1585,7 +1581,7 @@ export class SearchApi {
     objectID: string,
     requestBody: Array<{ [key: string]: Record<string, any> }>,
     createIfNotExists?: boolean
-  ): Promise<PartialUpdateObjectResponse> {
+  ): Promise<UpdatedAtWithObjectIdResponse> {
     const path = '/1/indexes/{indexName}/{objectID}/partial'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));

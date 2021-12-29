@@ -19,18 +19,7 @@ post:
           $ref: ../../common/schemas/SearchParams.yml#/searchParams
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: deleteByResponse
-            type: object
-            additionalProperties: false
-            properties:
-              taskID:
-                $ref: ../../../common/parameters.yml#/taskID
-              deletedAt:
-                $ref: ../../../common/parameters.yml#/deletedAt
+      $ref: ../../../common/responses/DeletedAt.yml
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

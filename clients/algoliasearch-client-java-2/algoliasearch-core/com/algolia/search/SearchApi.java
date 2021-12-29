@@ -6,7 +6,6 @@ import com.algolia.ApiException;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.model.AddApiKeyResponse;
-import com.algolia.model.AddOrUpdateObjectResponse;
 import com.algolia.model.ApiKey;
 import com.algolia.model.AssignUserIdObject;
 import com.algolia.model.BatchAssignUserIdsObject;
@@ -16,11 +15,8 @@ import com.algolia.model.BatchResponse;
 import com.algolia.model.BatchWriteObject;
 import com.algolia.model.BrowseRequest;
 import com.algolia.model.BrowseResponse;
-import com.algolia.model.ClearObjectsResponse;
 import com.algolia.model.CreatedAtResponse;
 import com.algolia.model.DeleteApiKeyResponse;
-import com.algolia.model.DeleteByResponse;
-import com.algolia.model.DeleteObjectResponse;
 import com.algolia.model.DeleteSourceResponse;
 import com.algolia.model.DeletedAtResponse;
 import com.algolia.model.DictionarySettingsRequest;
@@ -41,7 +37,6 @@ import com.algolia.model.MultipleBatchResponse;
 import com.algolia.model.MultipleQueriesObject;
 import com.algolia.model.MultipleQueriesResponse;
 import com.algolia.model.OperationIndexObject;
-import com.algolia.model.PartialUpdateObjectResponse;
 import com.algolia.model.RemoveUserIdResponse;
 import com.algolia.model.ReplaceSourceResponse;
 import com.algolia.model.Rule;
@@ -61,6 +56,7 @@ import com.algolia.model.Source;
 import com.algolia.model.SynonymHit;
 import com.algolia.model.UpdateApiKeyResponse;
 import com.algolia.model.UpdatedAtResponse;
+import com.algolia.model.UpdatedAtWithObjectIdResponse;
 import com.algolia.model.UpdatedRuleResponse;
 import com.algolia.model.UserId;
 import com.google.gson.reflect.TypeToken;
@@ -337,7 +333,7 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @param requestBody The Algolia object. (required)
-   * @return AddOrUpdateObjectResponse
+   * @return UpdatedAtWithObjectIdResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -350,12 +346,12 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public AddOrUpdateObjectResponse addOrUpdateObject(
+  public UpdatedAtWithObjectIdResponse addOrUpdateObject(
     String indexName,
     String objectID,
     Map<String, Object> requestBody
   ) throws ApiException {
-    ApiResponse<AddOrUpdateObjectResponse> localVarResp = addOrUpdateObjectWithHttpInfo(
+    ApiResponse<UpdatedAtWithObjectIdResponse> localVarResp = addOrUpdateObjectWithHttpInfo(
       indexName,
       objectID,
       requestBody
@@ -371,7 +367,7 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @param requestBody The Algolia object. (required)
-   * @return ApiResponse&lt;AddOrUpdateObjectResponse&gt;
+   * @return ApiResponse&lt;UpdatedAtWithObjectIdResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -384,7 +380,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<AddOrUpdateObjectResponse> addOrUpdateObjectWithHttpInfo(
+  public ApiResponse<UpdatedAtWithObjectIdResponse> addOrUpdateObjectWithHttpInfo(
     String indexName,
     String objectID,
     Map<String, Object> requestBody
@@ -395,7 +391,7 @@ public class SearchApi extends ApiClient {
       requestBody,
       null
     );
-    Type localVarReturnType = new TypeToken<AddOrUpdateObjectResponse>() {}
+    Type localVarReturnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
       .getType();
     return this.execute(localVarCall, localVarReturnType);
   }
@@ -425,7 +421,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     Map<String, Object> requestBody,
-    final ApiCallback<AddOrUpdateObjectResponse> _callback
+    final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = addOrUpdateObjectValidateBeforeCall(
       indexName,
@@ -433,7 +429,7 @@ public class SearchApi extends ApiClient {
       requestBody,
       _callback
     );
-    Type localVarReturnType = new TypeToken<AddOrUpdateObjectResponse>() {}
+    Type localVarReturnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
       .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
@@ -2032,7 +2028,7 @@ public class SearchApi extends ApiClient {
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @return ClearObjectsResponse
+   * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2045,9 +2041,8 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ClearObjectsResponse clearObjects(String indexName)
-    throws ApiException {
-    ApiResponse<ClearObjectsResponse> localVarResp = clearObjectsWithHttpInfo(
+  public UpdatedAtResponse clearObjects(String indexName) throws ApiException {
+    ApiResponse<UpdatedAtResponse> localVarResp = clearObjectsWithHttpInfo(
       indexName
     );
     return localVarResp.getData();
@@ -2058,7 +2053,7 @@ public class SearchApi extends ApiClient {
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @return ApiResponse&lt;ClearObjectsResponse&gt;
+   * @return ApiResponse&lt;UpdatedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2071,12 +2066,11 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<ClearObjectsResponse> clearObjectsWithHttpInfo(
+  public ApiResponse<UpdatedAtResponse> clearObjectsWithHttpInfo(
     String indexName
   ) throws ApiException {
     okhttp3.Call localVarCall = clearObjectsValidateBeforeCall(indexName, null);
-    Type localVarReturnType = new TypeToken<ClearObjectsResponse>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2100,14 +2094,13 @@ public class SearchApi extends ApiClient {
    */
   public okhttp3.Call clearObjectsAsync(
     String indexName,
-    final ApiCallback<ClearObjectsResponse> _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = clearObjectsValidateBeforeCall(
       indexName,
       _callback
     );
-    Type localVarReturnType = new TypeToken<ClearObjectsResponse>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2554,7 +2547,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
-   * @return DeleteByResponse
+   * @return DeletedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2567,9 +2560,11 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public DeleteByResponse deleteBy(String indexName, SearchParams searchParams)
-    throws ApiException {
-    ApiResponse<DeleteByResponse> localVarResp = deleteByWithHttpInfo(
+  public DeletedAtResponse deleteBy(
+    String indexName,
+    SearchParams searchParams
+  ) throws ApiException {
+    ApiResponse<DeletedAtResponse> localVarResp = deleteByWithHttpInfo(
       indexName,
       searchParams
     );
@@ -2583,7 +2578,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
-   * @return ApiResponse&lt;DeleteByResponse&gt;
+   * @return ApiResponse&lt;DeletedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2596,7 +2591,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<DeleteByResponse> deleteByWithHttpInfo(
+  public ApiResponse<DeletedAtResponse> deleteByWithHttpInfo(
     String indexName,
     SearchParams searchParams
   ) throws ApiException {
@@ -2605,7 +2600,7 @@ public class SearchApi extends ApiClient {
       searchParams,
       null
     );
-    Type localVarReturnType = new TypeToken<DeleteByResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2632,14 +2627,14 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call deleteByAsync(
     String indexName,
     SearchParams searchParams,
-    final ApiCallback<DeleteByResponse> _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteByValidateBeforeCall(
       indexName,
       searchParams,
       _callback
     );
-    Type localVarReturnType = new TypeToken<DeleteByResponse>() {}.getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -2904,7 +2899,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @return DeleteObjectResponse
+   * @return DeletedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2917,9 +2912,9 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public DeleteObjectResponse deleteObject(String indexName, String objectID)
+  public DeletedAtResponse deleteObject(String indexName, String objectID)
     throws ApiException {
-    ApiResponse<DeleteObjectResponse> localVarResp = deleteObjectWithHttpInfo(
+    ApiResponse<DeletedAtResponse> localVarResp = deleteObjectWithHttpInfo(
       indexName,
       objectID
     );
@@ -2931,7 +2926,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @return ApiResponse&lt;DeleteObjectResponse&gt;
+   * @return ApiResponse&lt;DeletedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -2944,7 +2939,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<DeleteObjectResponse> deleteObjectWithHttpInfo(
+  public ApiResponse<DeletedAtResponse> deleteObjectWithHttpInfo(
     String indexName,
     String objectID
   ) throws ApiException {
@@ -2953,8 +2948,7 @@ public class SearchApi extends ApiClient {
       objectID,
       null
     );
-    Type localVarReturnType = new TypeToken<DeleteObjectResponse>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -2979,15 +2973,14 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call deleteObjectAsync(
     String indexName,
     String objectID,
-    final ApiCallback<DeleteObjectResponse> _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteObjectValidateBeforeCall(
       indexName,
       objectID,
       _callback
     );
-    Type localVarReturnType = new TypeToken<DeleteObjectResponse>() {}
-      .getType();
+    Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -7140,7 +7133,7 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param requestBody The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional)
-   * @return PartialUpdateObjectResponse
+   * @return UpdatedAtWithObjectIdResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -7153,13 +7146,13 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public PartialUpdateObjectResponse partialUpdateObject(
+  public UpdatedAtWithObjectIdResponse partialUpdateObject(
     String indexName,
     String objectID,
     List<Map<String, Object>> requestBody,
     Boolean createIfNotExists
   ) throws ApiException {
-    ApiResponse<PartialUpdateObjectResponse> localVarResp = partialUpdateObjectWithHttpInfo(
+    ApiResponse<UpdatedAtWithObjectIdResponse> localVarResp = partialUpdateObjectWithHttpInfo(
       indexName,
       objectID,
       requestBody,
@@ -7178,7 +7171,7 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param requestBody The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional)
-   * @return ApiResponse&lt;PartialUpdateObjectResponse&gt;
+   * @return ApiResponse&lt;UpdatedAtWithObjectIdResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -7191,7 +7184,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<PartialUpdateObjectResponse> partialUpdateObjectWithHttpInfo(
+  public ApiResponse<UpdatedAtWithObjectIdResponse> partialUpdateObjectWithHttpInfo(
     String indexName,
     String objectID,
     List<Map<String, Object>> requestBody,
@@ -7204,7 +7197,7 @@ public class SearchApi extends ApiClient {
       createIfNotExists,
       null
     );
-    Type localVarReturnType = new TypeToken<PartialUpdateObjectResponse>() {}
+    Type localVarReturnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
       .getType();
     return this.execute(localVarCall, localVarReturnType);
   }
@@ -7238,7 +7231,7 @@ public class SearchApi extends ApiClient {
     String objectID,
     List<Map<String, Object>> requestBody,
     Boolean createIfNotExists,
-    final ApiCallback<PartialUpdateObjectResponse> _callback
+    final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = partialUpdateObjectValidateBeforeCall(
       indexName,
@@ -7247,7 +7240,7 @@ public class SearchApi extends ApiClient {
       createIfNotExists,
       _callback
     );
-    Type localVarReturnType = new TypeToken<PartialUpdateObjectResponse>() {}
+    Type localVarReturnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
       .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;

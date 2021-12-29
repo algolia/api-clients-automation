@@ -34,20 +34,7 @@ post:
             additionalProperties: true
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: partialUpdateObjectResponse
-            type: object
-            additionalProperties: false
-            properties:
-              updatedAt:
-                $ref: ../../../common/parameters.yml#/updatedAt
-              taskID:
-                $ref: ../../../common/parameters.yml#/taskID
-              objectID:
-                $ref: ../../../common/parameters.yml#/objectID
+      $ref: ../../../common/responses/UpdatedAtWithObjectId.yml
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':
