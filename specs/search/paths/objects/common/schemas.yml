@@ -1,13 +1,13 @@
 action:
   type: string
   enum:
-    - 'addObject'
-    - 'updateObject'
-    - 'partialUpdateObject'
-    - 'partialUpdateObjectNoCreate'
-    - 'deleteObject'
-    - 'delete'
-    - 'clear'
+    - addObject
+    - updateObject
+    - partialUpdateObject
+    - partialUpdateObjectNoCreate
+    - deleteObject
+    - delete
+    - clear
   description: type of operation.
 
 body:
