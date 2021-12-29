@@ -49,7 +49,7 @@ get:
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
-    - name: attributesToRetrieve 
+    - name: attributesToRetrieve
       in: query
       schema:
         type: array

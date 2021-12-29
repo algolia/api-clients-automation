@@ -18,7 +18,8 @@ post:
             requests:
               type: array
               items:
-                title: GetObject operation on an index.
+                description: GetObject operation on an index.
+                title: multipleGetObjectsObject
                 type: object
                 additionalProperties: false
                 required:

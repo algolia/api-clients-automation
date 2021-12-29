@@ -10,7 +10,7 @@ post:
     content:
       application/json:
         schema:
-          title: batchObject
+          title: batchWriteObject
           description: The `batch` requests.
           type: object
           additionalProperties: false

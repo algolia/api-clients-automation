@@ -3,7 +3,7 @@ post:
     - search
   operationId: deleteBy
   summary: Delete all records matching the query.
-  description: > 
+  description: >
     Remove all objects matching a filter (including geo filters).
 
     This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries).
