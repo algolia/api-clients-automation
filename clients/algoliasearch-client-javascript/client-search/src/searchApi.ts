@@ -1,26 +1,18 @@
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { AddOrUpdateObjectResponse } from '../model/addOrUpdateObjectResponse';
 import type { ApiKey } from '../model/apiKey';
-import type { AppendSourceResponse } from '../model/appendSourceResponse';
 import type { AssignUserIdObject } from '../model/assignUserIdObject';
-import type { AssignUserIdResponse } from '../model/assignUserIdResponse';
 import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
-import type { BatchAssignUserIdsResponse } from '../model/batchAssignUserIdsResponse';
 import type { BatchDictionaryEntries } from '../model/batchDictionaryEntries';
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { BatchWriteObject } from '../model/batchWriteObject';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
-import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
-import type { ClearObjectsResponse } from '../model/clearObjectsResponse';
+import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
-import type { DeleteByResponse } from '../model/deleteByResponse';
-import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
-import type { DeleteObjectResponse } from '../model/deleteObjectResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
-import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
-import type { DictionaryEntriesResponse } from '../model/dictionaryEntriesResponse';
+import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
@@ -28,7 +20,6 @@ import type { GetObjectsObject } from '../model/getObjectsObject';
 import type { GetObjectsResponse } from '../model/getObjectsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
-import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
 import type { IndexSettings } from '../model/indexSettings';
 import type { KeyObject } from '../model/keyObject';
 import type { Languages } from '../model/languages';
@@ -41,14 +32,11 @@ import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
-import type { OperationIndexResponse } from '../model/operationIndexResponse';
-import type { PartialUpdateObjectResponse } from '../model/partialUpdateObjectResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
-import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
 import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
@@ -60,12 +48,11 @@ import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
-import type { SetSettingsResponse } from '../model/setSettingsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
+import type { UpdatedAtResponse } from '../model/updatedAtResponse';
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
-import type { UpdatedRuleResponseWithoutObjectID } from '../model/updatedRuleResponseWithoutObjectID';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
@@ -247,7 +234,7 @@ export class SearchApi {
    *
    * @param source - The source to add.
    */
-  appendSource(source: Source): Promise<AppendSourceResponse> {
+  appendSource(source: Source): Promise<CreatedAtResponse> {
     const path = '/1/security/sources/append';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -281,7 +268,7 @@ export class SearchApi {
   assignUserId(
     xAlgoliaUserID: Record<string, any>,
     assignUserIdObject: AssignUserIdObject
-  ): Promise<AssignUserIdResponse> {
+  ): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -367,7 +354,7 @@ export class SearchApi {
   batchAssignUserIds(
     xAlgoliaUserID: Record<string, any>,
     batchAssignUserIdsObject: BatchAssignUserIdsObject
-  ): Promise<BatchAssignUserIdsResponse> {
+  ): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -414,7 +401,7 @@ export class SearchApi {
   batchDictionaryEntries(
     dictionaryName: 'compounds' | 'plurals' | 'stopwords',
     batchDictionaryEntries: BatchDictionaryEntries
-  ): Promise<DictionaryEntriesResponse> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/{dictionaryName}/batch'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
@@ -464,7 +451,7 @@ export class SearchApi {
     rule: Rule[],
     forwardToReplicas?: boolean,
     clearExistingRules?: boolean
-  ): Promise<UpdatedRuleResponseWithoutObjectID> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/rules/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -514,7 +501,7 @@ export class SearchApi {
    */
   browse(
     indexName: string,
-    browseRequest: BrowseRequest
+    browseRequest?: BrowseRequest
   ): Promise<BrowseResponse> {
     const path = '/1/indexes/{indexName}/browse'.replace(
       '{indexName}',
@@ -526,12 +513,6 @@ export class SearchApi {
     if (indexName === null || indexName === undefined) {
       throw new Error(
         'Required parameter indexName was null or undefined when calling browse.'
-      );
-    }
-
-    if (browseRequest === null || browseRequest === undefined) {
-      throw new Error(
-        'Required parameter browseRequest was null or undefined when calling browse.'
       );
     }
 
@@ -558,7 +539,7 @@ export class SearchApi {
   clearAllSynonyms(
     indexName: string,
     forwardToReplicas?: boolean
-  ): Promise<ClearAllSynonymsResponse> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/synonyms/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -630,7 +611,7 @@ export class SearchApi {
   clearRules(
     indexName: string,
     forwardToReplicas?: boolean
-  ): Promise<UpdatedRuleResponseWithoutObjectID> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/rules/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -741,7 +722,7 @@ export class SearchApi {
    * @summary Delete index.
    * @param indexName - The index in which to perform the request.
    */
-  deleteIndex(indexName: string): Promise<DeleteIndexResponse> {
+  deleteIndex(indexName: string): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -820,7 +801,7 @@ export class SearchApi {
     indexName: string,
     objectID: string,
     forwardToReplicas?: boolean
-  ): Promise<UpdatedRuleResponseWithoutObjectID> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -898,7 +879,7 @@ export class SearchApi {
     indexName: string,
     objectID: string,
     forwardToReplicas?: boolean
-  ): Promise<DeleteSynonymResponse> {
+  ): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -1356,9 +1337,7 @@ export class SearchApi {
    * @summary Has pending mappings.
    * @param getClusters - The getClusters.
    */
-  hasPendingMappings(
-    getClusters?: boolean
-  ): Promise<HasPendingMappingsResponse> {
+  hasPendingMappings(getClusters?: boolean): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping/pending';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1555,7 +1534,7 @@ export class SearchApi {
   operationIndex(
     indexName: string,
     operationIndexObject: OperationIndexObject
-  ): Promise<OperationIndexResponse> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/operation'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -1905,7 +1884,7 @@ export class SearchApi {
     synonymHit: SynonymHit[],
     forwardToReplicas?: boolean,
     replaceExistingSynonyms?: boolean
-  ): Promise<SaveSynonymsResponse> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/synonyms/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -2002,7 +1981,7 @@ export class SearchApi {
   searchDictionaryEntries(
     dictionaryName: 'compounds' | 'plurals' | 'stopwords',
     searchDictionaryEntries: SearchDictionaryEntries
-  ): Promise<DictionaryEntriesResponse> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/{dictionaryName}/search'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
@@ -2049,7 +2028,7 @@ export class SearchApi {
   searchForFacetValues(
     indexName: string,
     facetName: string,
-    searchForFacetValuesRequest: SearchForFacetValuesRequest
+    searchForFacetValuesRequest?: SearchForFacetValuesRequest
   ): Promise<SearchForFacetValuesResponse> {
     const path = '/1/indexes/{indexName}/facets/{facetName}/query'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
@@ -2066,15 +2045,6 @@ export class SearchApi {
     if (facetName === null || facetName === undefined) {
       throw new Error(
         'Required parameter facetName was null or undefined when calling searchForFacetValues.'
-      );
-    }
-
-    if (
-      searchForFacetValuesRequest === null ||
-      searchForFacetValuesRequest === undefined
-    ) {
-      throw new Error(
-        'Required parameter searchForFacetValuesRequest was null or undefined when calling searchForFacetValues.'
       );
     }
 
@@ -2237,7 +2207,7 @@ export class SearchApi {
    */
   setDictionarySettings(
     dictionarySettingsRequest: DictionarySettingsRequest
-  ): Promise<DictionaryEntriesResponse> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/*/settings';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -2275,7 +2245,7 @@ export class SearchApi {
     indexName: string,
     indexSettings: IndexSettings,
     forwardToReplicas?: boolean
-  ): Promise<SetSettingsResponse> {
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/settings'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
