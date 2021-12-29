@@ -697,11 +697,11 @@ export class SearchApi {
    *
    * @summary Delete all records matching the query.
    * @param indexName - The index in which to perform the request.
-   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
+   * @param searchParams - The searchParams.
    */
   deleteBy(
     indexName: string,
-    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
+    searchParams: SearchParams
   ): Promise<DeleteByResponse> {
     const path = '/1/indexes/{indexName}/deleteByQuery'.replace(
       '{indexName}',
@@ -716,19 +716,16 @@ export class SearchApi {
       );
     }
 
-    if (
-      searchParamsAsStringSearchParams === null ||
-      searchParamsAsStringSearchParams === undefined
-    ) {
+    if (searchParams === null || searchParams === undefined) {
       throw new Error(
-        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling deleteBy.'
+        'Required parameter searchParams was null or undefined when calling deleteBy.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParamsAsStringSearchParams,
+      data: searchParams,
     };
 
     const requestOptions: RequestOptions = {
