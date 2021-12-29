@@ -14,7 +14,9 @@ const client = new AnalyticsApi(appId, apiKey, 'de');
 
 async function testAnalytics() {
   try {
-    const res = await client.getSearchesNoResults({ index: analyticsIndex });
+    const res = await client.getSearchesNoResults({
+      index: analyticsIndex,
+    });
 
     console.log(`[OK]`, res);
   } catch (e) {

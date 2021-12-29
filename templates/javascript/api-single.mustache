@@ -16,6 +16,7 @@ import { ApiKeyAuth } from '../model/models';
 * {{&description}}
 */
 {{/description}}
+
 export enum {{classname}}Keys {
   {{#authMethods}}
   {{#isApiKey}}
@@ -132,39 +133,19 @@ export class {{classname}} {
   {{#summary}}
   * @summary {{&summary}}
   {{/summary}}
-  {{! We group parameters under an object if there are more than 5}}
-  {{^allParams.5}}
-    {{#allParams}}
-    * @param {{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
-    {{/allParams}}
-  {{/allParams.5}}
-  {{#allParams.5}}
-    * @param {{nickname}} - The {{nickname}} parameters.
-    {{#allParams}}
-    * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
-    {{/allParams}}
-  {{/allParams.5}}
+  * @param {{nickname}} - The {{nickname}} parameters.
+  {{#allParams}}
+  * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+  {{/allParams}}
   */
   public {{nickname}} (
-        {{! We group parameters under an object if there are more than 5}}
-        {{^allParams.5}}
+      {{#allParams.0}}
+        {
             {{#allParams}}
-              {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
+              {{paramName}},
             {{/allParams}}
-        {{/allParams.5}}
-
-        {{#allParams.5}}
-            {
-                {{#allParams}}
-                  {{paramName}},
-                {{/allParams}}
-            }:
-            {
-                {{#allParams}}
-                  {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
-                {{/allParams}}
-            }
-        {{/allParams.5}}
+        }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+      {{/allParams.0}}
       ) : Promise<{{{returnType}}}> {
     const path = '{{{path}}}'{{#pathParams}}.replace(
     {{=<% %>=}}
@@ -210,4 +191,16 @@ export class {{classname}} {
   }
   {{/operation}}
 }
+
+{{#operation}}
+{{#allParams.0}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+{{/allParams.0}}
+
+{{/operation}}
+
 {{/operations}}
