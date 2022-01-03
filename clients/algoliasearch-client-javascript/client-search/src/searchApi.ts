@@ -41,7 +41,6 @@ import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchParams } from '../model/searchParams';
-import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
@@ -616,7 +615,7 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Delete an index’s content, but leave settings and index-specific API keys untouched.
+   * Delete an index\'s content, but leave settings and index-specific API keys untouched.
    *
    * @summary Clear all objects from an index.
    * @param clearObjects - The clearObjects parameters.
@@ -723,16 +722,16 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Remove all objects matching a filter (including geo filters). This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   * Remove all objects matching a filter (including geo filters). This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries). It doesn\'t accept empty filters or a query.
    *
    * @summary Delete all records matching the query.
    * @param deleteBy - The deleteBy parameters.
    * @param deleteBy.indexName - The index in which to perform the request.
-   * @param deleteBy.searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
+   * @param deleteBy.searchParams - The searchParams.
    */
   deleteBy({
     indexName,
-    searchParamsAsStringSearchParams,
+    searchParams,
   }: DeleteByProps): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}/deleteByQuery'.replace(
       '{indexName}',
@@ -747,19 +746,16 @@ export class SearchApi {
       );
     }
 
-    if (
-      searchParamsAsStringSearchParams === null ||
-      searchParamsAsStringSearchParams === undefined
-    ) {
+    if (searchParams === null || searchParams === undefined) {
       throw new Error(
-        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling deleteBy.'
+        'Required parameter searchParams was null or undefined when calling deleteBy.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParamsAsStringSearchParams,
+      data: searchParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1680,7 +1676,7 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Update one or more attributes of an existing object. This method lets you update only a part of an existing object, either by adding new attributes or updating existing ones. You can partially update several objects in a single method call. If the index targeted by this operation doesn’t exist yet, it’s automatically created.
+   * Update one or more attributes of an existing object. This method lets you update only a part of an existing object, either by adding new attributes or updating existing ones. You can partially update several objects in a single method call. If the index targeted by this operation doesn\'t exist yet, it\'s automatically created.
    *
    * @summary Partially update an object.
    * @param partialUpdateObject - The partialUpdateObject parameters.
@@ -2571,7 +2567,7 @@ export type DeleteApiKeyProps = {
 
 export type DeleteByProps = {
   indexName: string;
-  searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString;
+  searchParams: SearchParams;
 };
 
 export type DeleteIndexProps = {

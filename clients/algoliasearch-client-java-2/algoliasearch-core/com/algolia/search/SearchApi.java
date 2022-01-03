@@ -2025,7 +2025,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. Delete an index’s content, but leave settings and
+   * clear all objects from an index. Delete an index&#39;s content, but leave settings and
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
@@ -2050,7 +2050,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. Delete an index’s content, but leave settings and
+   * clear all objects from an index. Delete an index&#39;s content, but leave settings and
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
@@ -2076,8 +2076,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. (asynchronously) Delete an index’s content, but leave settings
-   * and index-specific API keys untouched.
+   * clear all objects from an index. (asynchronously) Delete an index&#39;s content, but leave
+   * settings and index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -2544,7 +2544,7 @@ public class SearchApi extends ApiClient {
   /**
    * Delete all records matching the query. Remove all objects matching a filter (including geo
    * filters). This method enables you to delete one or more objects based on filters (numeric,
-   * facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   * facet, tag or geo queries). It doesn&#39;t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -2575,7 +2575,7 @@ public class SearchApi extends ApiClient {
   /**
    * Delete all records matching the query. Remove all objects matching a filter (including geo
    * filters). This method enables you to delete one or more objects based on filters (numeric,
-   * facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   * facet, tag or geo queries). It doesn&#39;t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -2608,7 +2608,7 @@ public class SearchApi extends ApiClient {
   /**
    * Delete all records matching the query. (asynchronously) Remove all objects matching a filter
    * (including geo filters). This method enables you to delete one or more objects based on filters
-   * (numeric, facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   * (numeric, facet, tag or geo queries). It doesn&#39;t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -7130,7 +7130,7 @@ public class SearchApi extends ApiClient {
    * Partially update an object. Update one or more attributes of an existing object. This method
    * lets you update only a part of an existing object, either by adding new attributes or updating
    * existing ones. You can partially update several objects in a single method call. If the index
-   * targeted by this operation doesn’t exist yet, it’s automatically created.
+   * targeted by this operation doesn&#39;t exist yet, it&#39;s automatically created.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -7169,7 +7169,7 @@ public class SearchApi extends ApiClient {
    * Partially update an object. Update one or more attributes of an existing object. This method
    * lets you update only a part of an existing object, either by adding new attributes or updating
    * existing ones. You can partially update several objects in a single method call. If the index
-   * targeted by this operation doesn’t exist yet, it’s automatically created.
+   * targeted by this operation doesn&#39;t exist yet, it&#39;s automatically created.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -7211,8 +7211,8 @@ public class SearchApi extends ApiClient {
    * Partially update an object. (asynchronously) Update one or more attributes of an existing
    * object. This method lets you update only a part of an existing object, either by adding new
    * attributes or updating existing ones. You can partially update several objects in a single
-   * method call. If the index targeted by this operation doesn’t exist yet, it’s automatically
-   * created.
+   * method call. If the index targeted by this operation doesn&#39;t exist yet, it&#39;s
+   * automatically created.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
