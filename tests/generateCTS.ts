@@ -23,7 +23,7 @@ type Tests = {
 };
 
 type CTSBlock = {
-  fileName: string;
+  operationId: string;
   tests: Tests[];
 };
 
@@ -123,7 +123,7 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
     }
 
     ctsClient.push({
-      fileName,
+      operationId: fileName,
       tests,
     });
   }
