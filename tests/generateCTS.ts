@@ -23,7 +23,7 @@ type Tests = {
 };
 
 type CTSBlock = {
-  blockName: string;
+  fileName: string;
   tests: Tests[];
 };
 
@@ -87,22 +87,18 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
     if (!file.name.endsWith('json')) {
       continue;
     }
-    const operationId = file.name.replace('.json', '');
+    const fileName = file.name.replace('.json', '');
     const fileContent = (await fsp.readFile(file.path)).toString();
 
     if (!fileContent) {
-      throw new Error(
-        `cannot read empty file for operationId ${operationId} - ${client} client`
-      );
+      throw new Error(`cannot read empty file ${fileName} - ${client} client`);
     }
 
     const tests: Tests[] = JSON.parse(fileContent);
 
     // check test validity against spec
-    if (!operations.includes(operationId)) {
-      throw new Error(
-        `cannot find operationId ${operationId} for the ${client} client`
-      );
+    if (!operations.includes(fileName)) {
+      throw new Error(`cannot find ${fileName} for the ${client} client`);
     }
 
     for (const test of tests) {
@@ -127,7 +123,7 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
     }
 
     ctsClient.push({
-      blockName: operationId,
+      fileName,
       tests,
     });
   }
