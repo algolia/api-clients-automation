@@ -16,7 +16,7 @@ async function testSearch() {
   try {
     const res = await client.search({
       indexName: searchIndex,
-      searchParamsAsStringSearchParams: { query: searchQuery },
+      searchParams: { query: searchQuery },
     });
 
     console.log(`[OK]`, res);
