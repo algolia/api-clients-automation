@@ -18,7 +18,7 @@ const client = new RecommendApi(appId, apiKey);
 
 async function testRecommend() {
   try {
-    const res = await client.getRecommendations({
+    const request = {
       getRecommendations: {
         requests: [
           {
@@ -29,7 +29,9 @@ async function testRecommend() {
           },
         ],
       },
-    });
+    };
+
+    const res = await client.getRecommendations(request);
 
     console.log(`[OK]`, res);
   } catch (e) {

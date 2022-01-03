@@ -1,4 +1,9 @@
 searchParams:
+  oneOf:
+    - $ref: '#/searchParamsAsString'
+    - $ref: '#/searchParamsObject'
+
+searchParamsObject:
   allOf:
     - $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams'
     - $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'

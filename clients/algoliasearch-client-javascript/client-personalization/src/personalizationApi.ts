@@ -197,6 +197,31 @@ export class PersonalizationApi {
       );
     }
 
+    if (
+      personalizationStrategyObject.eventScoring === null ||
+      personalizationStrategyObject.eventScoring === undefined
+    ) {
+      throw new Error(
+        'Required parameter personalizationStrategyObject.eventScoring was null or undefined when calling setPersonalizationStrategy.'
+      );
+    }
+    if (
+      personalizationStrategyObject.facetScoring === null ||
+      personalizationStrategyObject.facetScoring === undefined
+    ) {
+      throw new Error(
+        'Required parameter personalizationStrategyObject.facetScoring was null or undefined when calling setPersonalizationStrategy.'
+      );
+    }
+    if (
+      personalizationStrategyObject.personalizationImpact === null ||
+      personalizationStrategyObject.personalizationImpact === undefined
+    ) {
+      throw new Error(
+        'Required parameter personalizationStrategyObject.personalizationImpact was null or undefined when calling setPersonalizationStrategy.'
+      );
+    }
+
     const request: Request = {
       method: 'POST',
       path,

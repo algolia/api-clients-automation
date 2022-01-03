@@ -17,11 +17,11 @@ describe('Common Test Suite', () => {
   });
 
   test('searchSynonyms', async () => {
-    const req = await client.searchSynonyms(
-      'indexName',
-      'queryString',
-      'onewaysynonym'
-    );
+    const req = await client.searchSynonyms({
+      indexName: 'indexName',
+      query: 'queryString',
+      type: 'onewaysynonym',
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/search',
       method: 'POST',
@@ -29,9 +29,9 @@ describe('Common Test Suite', () => {
   });
 
   test('saveSynonyms', async () => {
-    const req = await client.saveSynonyms(
-      'indexName',
-      [
+    const req = await client.saveSynonyms({
+      indexName: 'indexName',
+      synonymHit: [
         {
           objectID: 'id1',
           type: 'synonym',
@@ -44,9 +44,9 @@ describe('Common Test Suite', () => {
           synonyms: ['ephone', 'aphone', 'yphone'],
         },
       ],
-      true,
-      false
-    );
+      forwardToReplicas: true,
+      replaceExistingSynonyms: false,
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/batch',
       method: 'POST',
@@ -67,7 +67,10 @@ describe('Common Test Suite', () => {
   });
 
   test('deleteRule', async () => {
-    const req = await client.deleteRule('indexName', 'id1');
+    const req = await client.deleteRule({
+      indexName: 'indexName',
+      objectID: 'id1',
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/id1',
       method: 'DELETE',
@@ -75,7 +78,10 @@ describe('Common Test Suite', () => {
   });
 
   test('get searchForFacetValues results with minimal parameters', async () => {
-    const req = await client.searchForFacetValues('indexName', 'facetName');
+    const req = await client.searchForFacetValues({
+      indexName: 'indexName',
+      facetName: 'facetName',
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/facets/facetName/query',
       method: 'POST',
@@ -83,10 +89,14 @@ describe('Common Test Suite', () => {
   });
 
   test('get searchForFacetValues results with all parameters', async () => {
-    const req = await client.searchForFacetValues('indexName', 'facetName', {
-      params: "query=foo&facetFilters=['bar']",
-      facetQuery: 'foo',
-      maxFacetHits: 42,
+    const req = await client.searchForFacetValues({
+      indexName: 'indexName',
+      facetName: 'facetName',
+      searchForFacetValuesRequest: {
+        params: "query=foo&facetFilters=['bar']",
+        facetQuery: 'foo',
+        maxFacetHits: 42,
+      },
     });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/facets/facetName/query',
@@ -100,7 +110,10 @@ describe('Common Test Suite', () => {
   });
 
   test('getSynonym', async () => {
-    const req = await client.getSynonym('indexName', 'id1');
+    const req = await client.getSynonym({
+      indexName: 'indexName',
+      objectID: 'id1',
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'GET',
@@ -108,7 +121,10 @@ describe('Common Test Suite', () => {
   });
 
   test('search', async () => {
-    const req = await client.search('indexName', { query: 'queryString' });
+    const req = await client.search({
+      indexName: 'indexName',
+      searchParams: { $objectName: 'Query', query: 'queryString' },
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/query',
       method: 'POST',
@@ -118,7 +134,9 @@ describe('Common Test Suite', () => {
 
   test('get setDictionarySettings results with minimal parameters', async () => {
     const req = await client.setDictionarySettings({
-      disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
+      dictionarySettingsRequest: {
+        disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
+      },
     });
     expect(req).toMatchObject({
       path: '/1/dictionaries/*/settings',
@@ -131,10 +149,12 @@ describe('Common Test Suite', () => {
 
   test('get setDictionarySettings results with all parameters', async () => {
     const req = await client.setDictionarySettings({
-      disableStandardEntries: {
-        plurals: { fr: false, en: false, ru: true },
-        stopwords: { fr: false },
-        compounds: { ru: true },
+      dictionarySettingsRequest: {
+        disableStandardEntries: {
+          plurals: { fr: false, en: false, ru: true },
+          stopwords: { fr: false },
+          compounds: { ru: true },
+        },
       },
     });
     expect(req).toMatchObject({
@@ -151,7 +171,10 @@ describe('Common Test Suite', () => {
   });
 
   test('getRule', async () => {
-    const req = await client.getRule('indexName', 'id1');
+    const req = await client.getRule({
+      indexName: 'indexName',
+      objectID: 'id1',
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/id1',
       method: 'GET',
@@ -159,8 +182,9 @@ describe('Common Test Suite', () => {
   });
 
   test('get searchDictionaryEntries results with minimal parameters', async () => {
-    const req = await client.searchDictionaryEntries('dictionaryName', {
-      query: 'foo',
+    const req = await client.searchDictionaryEntries({
+      dictionaryName: 'dictionaryName',
+      searchDictionaryEntries: { query: 'foo' },
     });
     expect(req).toMatchObject({
       path: '/1/dictionaries/dictionaryName/search',
@@ -170,11 +194,14 @@ describe('Common Test Suite', () => {
   });
 
   test('get searchDictionaryEntries results with all parameters', async () => {
-    const req = await client.searchDictionaryEntries('dictionaryName', {
-      query: 'foo',
-      page: 4,
-      hitsPerPage: 2,
-      language: 'fr',
+    const req = await client.searchDictionaryEntries({
+      dictionaryName: 'dictionaryName',
+      searchDictionaryEntries: {
+        query: 'foo',
+        page: 4,
+        hitsPerPage: 2,
+        language: 'fr',
+      },
     });
     expect(req).toMatchObject({
       path: '/1/dictionaries/dictionaryName/search',
@@ -184,9 +211,9 @@ describe('Common Test Suite', () => {
   });
 
   test('batchRules', async () => {
-    const req = await client.batchRules(
-      'indexName',
-      [
+    const req = await client.batchRules({
+      indexName: 'indexName',
+      rule: [
         {
           objectID: 'a-rule-id',
           conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
@@ -198,9 +225,9 @@ describe('Common Test Suite', () => {
           consequence: { params: { filters: 'brand:apple' } },
         },
       ],
-      true,
-      true
-    );
+      forwardToReplicas: true,
+      clearExistingRules: true,
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/batch',
       method: 'POST',
@@ -220,11 +247,14 @@ describe('Common Test Suite', () => {
   });
 
   test('updateApiKey', async () => {
-    const req = await client.updateApiKey('myApiKey', {
-      acl: ['search', 'addObject'],
-      validity: 300,
-      maxQueriesPerIPPerHour: 100,
-      maxHitsPerQuery: 20,
+    const req = await client.updateApiKey({
+      key: 'myApiKey',
+      apiKey: {
+        acl: ['search', 'addObject'],
+        validity: 300,
+        maxQueriesPerIPPerHour: 100,
+        maxHitsPerQuery: 20,
+      },
     });
     expect(req).toMatchObject({
       path: '/1/keys/myApiKey',
@@ -247,7 +277,7 @@ describe('Common Test Suite', () => {
   });
 
   test('deleteApiKey', async () => {
-    const req = await client.deleteApiKey('myTestApiKey');
+    const req = await client.deleteApiKey({ key: 'myTestApiKey' });
     expect(req).toMatchObject({
       path: '/1/keys/myTestApiKey',
       method: 'DELETE',
@@ -255,7 +285,10 @@ describe('Common Test Suite', () => {
   });
 
   test('searchRules', async () => {
-    const req = await client.searchRules('indexName', { query: 'something' });
+    const req = await client.searchRules({
+      indexName: 'indexName',
+      searchRulesParams: { query: 'something' },
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/search',
       method: 'POST',
@@ -264,7 +297,7 @@ describe('Common Test Suite', () => {
   });
 
   test('clearAllSynonyms', async () => {
-    const req = await client.clearAllSynonyms('indexName');
+    const req = await client.clearAllSynonyms({ indexName: 'indexName' });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/clear',
       method: 'POST',
@@ -272,16 +305,16 @@ describe('Common Test Suite', () => {
   });
 
   test('saveRule', async () => {
-    const req = await client.saveRule(
-      'indexName',
-      'id1',
-      {
+    const req = await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'id1',
+      rule: {
         objectID: 'id1',
         conditions: [{ pattern: 'apple', anchoring: 'contains' }],
         consequence: { params: { filters: 'brand:apple' } },
       },
-      true
-    );
+      forwardToReplicas: true,
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/id1',
       method: 'PUT',
@@ -295,11 +328,13 @@ describe('Common Test Suite', () => {
 
   test('addApiKey', async () => {
     const req = await client.addApiKey({
-      acl: ['search', 'addObject'],
-      description: 'my new api key',
-      validity: 300,
-      maxQueriesPerIPPerHour: 100,
-      maxHitsPerQuery: 20,
+      apiKey: {
+        acl: ['search', 'addObject'],
+        description: 'my new api key',
+        validity: 300,
+        maxQueriesPerIPPerHour: 100,
+        maxHitsPerQuery: 20,
+      },
     });
     expect(req).toMatchObject({
       path: '/1/keys',
@@ -315,7 +350,7 @@ describe('Common Test Suite', () => {
   });
 
   test('restoreApiKey', async () => {
-    const req = await client.restoreApiKey('myApiKey');
+    const req = await client.restoreApiKey({ key: 'myApiKey' });
     expect(req).toMatchObject({
       path: '/1/keys/myApiKey/restore',
       method: 'POST',
@@ -323,7 +358,7 @@ describe('Common Test Suite', () => {
   });
 
   test('getApiKey', async () => {
-    const req = await client.getApiKey('myTestApiKey');
+    const req = await client.getApiKey({ key: 'myTestApiKey' });
     expect(req).toMatchObject({
       path: '/1/keys/myTestApiKey',
       method: 'GET',
@@ -331,7 +366,7 @@ describe('Common Test Suite', () => {
   });
 
   test('get browse results with minimal parameters', async () => {
-    const req = await client.browse('indexName');
+    const req = await client.browse({ indexName: 'indexName' });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/browse',
       method: 'POST',
@@ -339,9 +374,12 @@ describe('Common Test Suite', () => {
   });
 
   test('get browse results with all parameters', async () => {
-    const req = await client.browse('indexName', {
-      params: "query=foo&facetFilters=['bar']",
-      cursor: 'cts',
+    const req = await client.browse({
+      indexName: 'indexName',
+      browseRequest: {
+        params: "query=foo&facetFilters=['bar']",
+        cursor: 'cts',
+      },
     });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/browse',
@@ -351,7 +389,10 @@ describe('Common Test Suite', () => {
   });
 
   test('deleteSynonym', async () => {
-    const req = await client.deleteSynonym('indexName', 'id1');
+    const req = await client.deleteSynonym({
+      indexName: 'indexName',
+      objectID: 'id1',
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'DELETE',
@@ -359,7 +400,7 @@ describe('Common Test Suite', () => {
   });
 
   test('clearRules', async () => {
-    const req = await client.clearRules('indexName');
+    const req = await client.clearRules({ indexName: 'indexName' });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/clear',
       method: 'POST',
@@ -367,11 +408,14 @@ describe('Common Test Suite', () => {
   });
 
   test('get batchDictionaryEntries results with minimal parameters', async () => {
-    const req = await client.batchDictionaryEntries('dictionaryName', {
-      requests: [
-        { action: 'addEntry', body: { objectID: '1', language: 'en' } },
-        { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
-      ],
+    const req = await client.batchDictionaryEntries({
+      dictionaryName: 'dictionaryName',
+      batchDictionaryEntries: {
+        requests: [
+          { action: 'addEntry', body: { objectID: '1', language: 'en' } },
+          { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
+        ],
+      },
     });
     expect(req).toMatchObject({
       path: '/1/dictionaries/dictionaryName/batch',
@@ -386,32 +430,35 @@ describe('Common Test Suite', () => {
   });
 
   test('get batchDictionaryEntries results with all parameters', async () => {
-    const req = await client.batchDictionaryEntries('dictionaryName', {
-      clearExistingDictionaryEntries: false,
-      requests: [
-        {
-          action: 'addEntry',
-          body: {
-            objectID: '1',
-            language: 'en',
-            word: 'yo',
-            words: ['yo', 'algolia'],
-            decomposition: ['yo', 'algolia'],
-            state: 'enabled',
+    const req = await client.batchDictionaryEntries({
+      dictionaryName: 'dictionaryName',
+      batchDictionaryEntries: {
+        clearExistingDictionaryEntries: false,
+        requests: [
+          {
+            action: 'addEntry',
+            body: {
+              objectID: '1',
+              language: 'en',
+              word: 'yo',
+              words: ['yo', 'algolia'],
+              decomposition: ['yo', 'algolia'],
+              state: 'enabled',
+            },
           },
-        },
-        {
-          action: 'deleteEntry',
-          body: {
-            objectID: '2',
-            language: 'fr',
-            word: 'salut',
-            words: ['salut', 'algolia'],
-            decomposition: ['salut', 'algolia'],
-            state: 'enabled',
+          {
+            action: 'deleteEntry',
+            body: {
+              objectID: '2',
+              language: 'fr',
+              word: 'salut',
+              words: ['salut', 'algolia'],
+              decomposition: ['salut', 'algolia'],
+              state: 'enabled',
+            },
           },
-        },
-      ],
+        ],
+      },
     });
     expect(req).toMatchObject({
       path: '/1/dictionaries/dictionaryName/batch',
@@ -455,16 +502,16 @@ describe('Common Test Suite', () => {
   });
 
   test('saveSynonym', async () => {
-    const req = await client.saveSynonym(
-      'indexName',
-      'id1',
-      {
+    const req = await client.saveSynonym({
+      indexName: 'indexName',
+      objectID: 'id1',
+      synonymHit: {
         objectID: 'id1',
         type: 'synonym',
         synonyms: ['car', 'vehicule', 'auto'],
       },
-      true
-    );
+      forwardToReplicas: true,
+    });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'PUT',

@@ -7,8 +7,10 @@ import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
+import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
+import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
@@ -34,7 +36,6 @@ import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchParams } from '../model/searchParams';
-import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
@@ -44,6 +45,7 @@ import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
+import type { UpdatedAtResponse } from '../model/updatedAtResponse';
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
@@ -159,6 +161,12 @@ export class SearchApi {
       );
     }
 
+    if (apiKey.acl === null || apiKey.acl === undefined) {
+      throw new Error(
+        'Required parameter apiKey.acl was null or undefined when calling addApiKey.'
+      );
+    }
+
     const request: Request = {
       method: 'POST',
       path,
@@ -178,7 +186,7 @@ export class SearchApi {
    * @param appendSource - The appendSource parameters.
    * @param appendSource.source - The source to add.
    */
-  appendSource({ source }: AppendSourceProps): Promise<AppendSourceResponse> {
+  appendSource({ source }: AppendSourceProps): Promise<CreatedAtResponse> {
     const path = '/1/security/sources/append';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -213,7 +221,7 @@ export class SearchApi {
   assignUserId({
     xAlgoliaUserID,
     assignUserIdObject,
-  }: AssignUserIdProps): Promise<AssignUserIdResponse> {
+  }: AssignUserIdProps): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -227,6 +235,15 @@ export class SearchApi {
     if (assignUserIdObject === null || assignUserIdObject === undefined) {
       throw new Error(
         'Required parameter assignUserIdObject was null or undefined when calling assignUserId.'
+      );
+    }
+
+    if (
+      assignUserIdObject.cluster === null ||
+      assignUserIdObject.cluster === undefined
+    ) {
+      throw new Error(
+        'Required parameter assignUserIdObject.cluster was null or undefined when calling assignUserId.'
       );
     }
 
@@ -298,7 +315,7 @@ export class SearchApi {
   batchAssignUserIds({
     xAlgoliaUserID,
     batchAssignUserIdsObject,
-  }: BatchAssignUserIdsProps): Promise<BatchAssignUserIdsResponse> {
+  }: BatchAssignUserIdsProps): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -315,6 +332,23 @@ export class SearchApi {
     ) {
       throw new Error(
         'Required parameter batchAssignUserIdsObject was null or undefined when calling batchAssignUserIds.'
+      );
+    }
+
+    if (
+      batchAssignUserIdsObject.cluster === null ||
+      batchAssignUserIdsObject.cluster === undefined
+    ) {
+      throw new Error(
+        'Required parameter batchAssignUserIdsObject.cluster was null or undefined when calling batchAssignUserIds.'
+      );
+    }
+    if (
+      batchAssignUserIdsObject.users === null ||
+      batchAssignUserIdsObject.users === undefined
+    ) {
+      throw new Error(
+        'Required parameter batchAssignUserIdsObject.users was null or undefined when calling batchAssignUserIds.'
       );
     }
 
@@ -346,7 +380,7 @@ export class SearchApi {
   batchDictionaryEntries({
     dictionaryName,
     batchDictionaryEntries,
-  }: BatchDictionaryEntriesProps): Promise<DictionaryEntriesResponse> {
+  }: BatchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/{dictionaryName}/batch'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
@@ -366,6 +400,15 @@ export class SearchApi {
     ) {
       throw new Error(
         'Required parameter batchDictionaryEntries was null or undefined when calling batchDictionaryEntries.'
+      );
+    }
+
+    if (
+      batchDictionaryEntries.requests === null ||
+      batchDictionaryEntries.requests === undefined
+    ) {
+      throw new Error(
+        'Required parameter batchDictionaryEntries.requests was null or undefined when calling batchDictionaryEntries.'
       );
     }
 
@@ -397,7 +440,7 @@ export class SearchApi {
     rule,
     forwardToReplicas,
     clearExistingRules,
-  }: BatchRulesProps): Promise<UpdatedRuleResponseWithoutObjectID> {
+  }: BatchRulesProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/rules/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -484,7 +527,7 @@ export class SearchApi {
   clearAllSynonyms({
     indexName,
     forwardToReplicas,
-  }: ClearAllSynonymsProps): Promise<ClearAllSynonymsResponse> {
+  }: ClearAllSynonymsProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/synonyms/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -525,7 +568,7 @@ export class SearchApi {
   clearRules({
     indexName,
     forwardToReplicas,
-  }: ClearRulesProps): Promise<UpdatedRuleResponseWithoutObjectID> {
+  }: ClearRulesProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/rules/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -595,7 +638,7 @@ export class SearchApi {
    * @param deleteIndex - The deleteIndex parameters.
    * @param deleteIndex.indexName - The index in which to perform the request.
    */
-  deleteIndex({ indexName }: DeleteIndexProps): Promise<DeleteIndexResponse> {
+  deleteIndex({ indexName }: DeleteIndexProps): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -634,7 +677,7 @@ export class SearchApi {
     indexName,
     objectID,
     forwardToReplicas,
-  }: DeleteRuleProps): Promise<UpdatedRuleResponseWithoutObjectID> {
+  }: DeleteRuleProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -714,7 +757,7 @@ export class SearchApi {
     indexName,
     objectID,
     forwardToReplicas,
-  }: DeleteSynonymProps): Promise<DeleteSynonymResponse> {
+  }: DeleteSynonymProps): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -1110,7 +1153,7 @@ export class SearchApi {
    */
   hasPendingMappings({
     getClusters,
-  }: HasPendingMappingsProps): Promise<HasPendingMappingsResponse> {
+  }: HasPendingMappingsProps): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping/pending';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1260,6 +1303,15 @@ export class SearchApi {
       );
     }
 
+    if (
+      multipleQueriesObject.requests === null ||
+      multipleQueriesObject.requests === undefined
+    ) {
+      throw new Error(
+        'Required parameter multipleQueriesObject.requests was null or undefined when calling multipleQueries.'
+      );
+    }
+
     const request: Request = {
       method: 'POST',
       path,
@@ -1284,7 +1336,7 @@ export class SearchApi {
   operationIndex({
     indexName,
     operationIndexObject,
-  }: OperationIndexProps): Promise<OperationIndexResponse> {
+  }: OperationIndexProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/operation'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -1301,6 +1353,23 @@ export class SearchApi {
     if (operationIndexObject === null || operationIndexObject === undefined) {
       throw new Error(
         'Required parameter operationIndexObject was null or undefined when calling operationIndex.'
+      );
+    }
+
+    if (
+      operationIndexObject.operation === null ||
+      operationIndexObject.operation === undefined
+    ) {
+      throw new Error(
+        'Required parameter operationIndexObject.operation was null or undefined when calling operationIndex.'
+      );
+    }
+    if (
+      operationIndexObject.destination === null ||
+      operationIndexObject.destination === undefined
+    ) {
+      throw new Error(
+        'Required parameter operationIndexObject.destination was null or undefined when calling operationIndex.'
       );
     }
 
@@ -1498,6 +1567,17 @@ export class SearchApi {
       );
     }
 
+    if (rule.objectID === null || rule.objectID === undefined) {
+      throw new Error(
+        'Required parameter rule.objectID was null or undefined when calling saveRule.'
+      );
+    }
+    if (rule.consequence === null || rule.consequence === undefined) {
+      throw new Error(
+        'Required parameter rule.consequence was null or undefined when calling saveRule.'
+      );
+    }
+
     if (forwardToReplicas !== undefined) {
       queryParameters.forwardToReplicas = forwardToReplicas.toString();
     }
@@ -1555,6 +1635,17 @@ export class SearchApi {
       );
     }
 
+    if (synonymHit.objectID === null || synonymHit.objectID === undefined) {
+      throw new Error(
+        'Required parameter synonymHit.objectID was null or undefined when calling saveSynonym.'
+      );
+    }
+    if (synonymHit.type === null || synonymHit.type === undefined) {
+      throw new Error(
+        'Required parameter synonymHit.type was null or undefined when calling saveSynonym.'
+      );
+    }
+
     if (forwardToReplicas !== undefined) {
       queryParameters.forwardToReplicas = forwardToReplicas.toString();
     }
@@ -1587,7 +1678,7 @@ export class SearchApi {
     synonymHit,
     forwardToReplicas,
     replaceExistingSynonyms,
-  }: SaveSynonymsProps): Promise<SaveSynonymsResponse> {
+  }: SaveSynonymsProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/synonyms/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -1634,12 +1725,9 @@ export class SearchApi {
    *
    * @param search - The search parameters.
    * @param search.indexName - The index in which to perform the request.
-   * @param search.searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
+   * @param search.searchParams - The searchParams.
    */
-  search({
-    indexName,
-    searchParamsAsStringSearchParams,
-  }: SearchProps): Promise<SearchResponse> {
+  search({ indexName, searchParams }: SearchProps): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -1653,19 +1741,16 @@ export class SearchApi {
       );
     }
 
-    if (
-      searchParamsAsStringSearchParams === null ||
-      searchParamsAsStringSearchParams === undefined
-    ) {
+    if (searchParams === null || searchParams === undefined) {
       throw new Error(
-        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling search.'
+        'Required parameter searchParams was null or undefined when calling search.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParamsAsStringSearchParams,
+      data: searchParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1686,7 +1771,7 @@ export class SearchApi {
   searchDictionaryEntries({
     dictionaryName,
     searchDictionaryEntries,
-  }: SearchDictionaryEntriesProps): Promise<DictionaryEntriesResponse> {
+  }: SearchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/{dictionaryName}/search'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
@@ -1706,6 +1791,15 @@ export class SearchApi {
     ) {
       throw new Error(
         'Required parameter searchDictionaryEntries was null or undefined when calling searchDictionaryEntries.'
+      );
+    }
+
+    if (
+      searchDictionaryEntries.query === null ||
+      searchDictionaryEntries.query === undefined
+    ) {
+      throw new Error(
+        'Required parameter searchDictionaryEntries.query was null or undefined when calling searchDictionaryEntries.'
       );
     }
 
@@ -1890,6 +1984,15 @@ export class SearchApi {
       );
     }
 
+    if (
+      searchUserIdsObject.query === null ||
+      searchUserIdsObject.query === undefined
+    ) {
+      throw new Error(
+        'Required parameter searchUserIdsObject.query was null or undefined when calling searchUserIds.'
+      );
+    }
+
     const request: Request = {
       method: 'POST',
       path,
@@ -1912,7 +2015,7 @@ export class SearchApi {
    */
   setDictionarySettings({
     dictionarySettingsRequest,
-  }: SetDictionarySettingsProps): Promise<DictionaryEntriesResponse> {
+  }: SetDictionarySettingsProps): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/*/settings';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1923,6 +2026,15 @@ export class SearchApi {
     ) {
       throw new Error(
         'Required parameter dictionarySettingsRequest was null or undefined when calling setDictionarySettings.'
+      );
+    }
+
+    if (
+      dictionarySettingsRequest.disableStandardEntries === null ||
+      dictionarySettingsRequest.disableStandardEntries === undefined
+    ) {
+      throw new Error(
+        'Required parameter dictionarySettingsRequest.disableStandardEntries was null or undefined when calling setDictionarySettings.'
       );
     }
 
@@ -1951,7 +2063,7 @@ export class SearchApi {
     indexName,
     indexSettings,
     forwardToReplicas,
-  }: SetSettingsProps): Promise<SetSettingsResponse> {
+  }: SetSettingsProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/settings'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -2019,6 +2131,12 @@ export class SearchApi {
       );
     }
 
+    if (apiKey.acl === null || apiKey.acl === undefined) {
+      throw new Error(
+        'Required parameter apiKey.acl was null or undefined when calling updateApiKey.'
+      );
+    }
+
     const request: Request = {
       method: 'PUT',
       path,
@@ -2071,7 +2189,7 @@ export type BatchRulesProps = {
 
 export type BrowseProps = {
   indexName: string;
-  browseRequest: BrowseRequest;
+  browseRequest?: BrowseRequest;
 };
 
 export type ClearAllSynonymsProps = {
@@ -2204,7 +2322,7 @@ export type SaveSynonymsProps = {
 
 export type SearchProps = {
   indexName: string;
-  searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString;
+  searchParams: SearchParams;
 };
 
 export type SearchDictionaryEntriesProps = {
@@ -2215,7 +2333,7 @@ export type SearchDictionaryEntriesProps = {
 export type SearchForFacetValuesProps = {
   indexName: string;
   facetName: string;
-  searchForFacetValuesRequest: SearchForFacetValuesRequest;
+  searchForFacetValuesRequest?: SearchForFacetValuesRequest;
 };
 
 export type SearchRulesProps = {

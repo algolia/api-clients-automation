@@ -115,6 +115,15 @@ export class RecommendApi {
       );
     }
 
+    if (
+      getRecommendations.requests === null ||
+      getRecommendations.requests === undefined
+    ) {
+      throw new Error(
+        'Required parameter getRecommendations.requests was null or undefined when calling getRecommendations.'
+      );
+    }
+
     const request: Request = {
       method: 'POST',
       path,
