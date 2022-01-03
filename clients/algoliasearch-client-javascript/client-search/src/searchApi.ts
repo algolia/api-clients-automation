@@ -5,8 +5,10 @@ import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject
 import type { BatchDictionaryEntries } from '../model/batchDictionaryEntries';
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
+import type { BatchWriteObject } from '../model/batchWriteObject';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
+import type { BuildInOperation } from '../model/buildInOperation';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
@@ -14,6 +16,8 @@ import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
+import type { GetObjectsObject } from '../model/getObjectsObject';
+import type { GetObjectsResponse } from '../model/getObjectsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { IndexSettings } from '../model/indexSettings';
@@ -24,6 +28,7 @@ import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
 import { ApiKeyAuth } from '../model/models';
+import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
@@ -36,6 +41,7 @@ import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchParams } from '../model/searchParams';
+import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
@@ -46,6 +52,7 @@ import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UpdatedAtResponse } from '../model/updatedAtResponse';
+import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObjectIdResponse';
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
@@ -181,6 +188,57 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Add or replace an object with a given object ID. If the object does not exist, it will be created. If it already exists, it will be replaced.
+   *
+   * @summary Add or replace an object with a given object ID.
+   * @param addOrUpdateObject - The addOrUpdateObject parameters.
+   * @param addOrUpdateObject.indexName - The index in which to perform the request.
+   * @param addOrUpdateObject.objectID - Unique identifier of an object.
+   * @param addOrUpdateObject.requestBody - The Algolia object.
+   */
+  addOrUpdateObject({
+    indexName,
+    objectID,
+    requestBody,
+  }: AddOrUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
+    const path = '/1/indexes/{indexName}/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling addOrUpdateObject.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling addOrUpdateObject.'
+      );
+    }
+
+    if (requestBody === null || requestBody === undefined) {
+      throw new Error(
+        'Required parameter requestBody was null or undefined when calling addOrUpdateObject.'
+      );
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path,
+      data: requestBody,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Add a single source to the list of allowed sources.
    *
    * @param appendSource - The appendSource parameters.
@@ -269,9 +327,9 @@ export class SearchApi {
    *
    * @param batch - The batch parameters.
    * @param batch.indexName - The index in which to perform the request.
-   * @param batch.batchObject - The batchObject.
+   * @param batch.batchWriteObject - The batchWriteObject.
    */
-  batch({ indexName, batchObject }: BatchProps): Promise<BatchResponse> {
+  batch({ indexName, batchWriteObject }: BatchProps): Promise<BatchResponse> {
     const path = '/1/indexes/{indexName}/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -285,16 +343,16 @@ export class SearchApi {
       );
     }
 
-    if (batchObject === null || batchObject === undefined) {
+    if (batchWriteObject === null || batchWriteObject === undefined) {
       throw new Error(
-        'Required parameter batchObject was null or undefined when calling batch.'
+        'Required parameter batchWriteObject was null or undefined when calling batch.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: batchObject,
+      data: batchWriteObject,
     };
 
     const requestOptions: RequestOptions = {
@@ -558,6 +616,39 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Delete an index’s content, but leave settings and index-specific API keys untouched.
+   *
+   * @summary Clear all objects from an index.
+   * @param clearObjects - The clearObjects parameters.
+   * @param clearObjects.indexName - The index in which to perform the request.
+   */
+  clearObjects({ indexName }: ClearObjectsProps): Promise<UpdatedAtResponse> {
+    const path = '/1/indexes/{indexName}/clear'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling clearObjects.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Delete all Rules in the index.
    *
    * @summary Clear Rules.
@@ -632,6 +723,53 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Remove all objects matching a filter (including geo filters). This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   *
+   * @summary Delete all records matching the query.
+   * @param deleteBy - The deleteBy parameters.
+   * @param deleteBy.indexName - The index in which to perform the request.
+   * @param deleteBy.searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
+   */
+  deleteBy({
+    indexName,
+    searchParamsAsStringSearchParams,
+  }: DeleteByProps): Promise<DeletedAtResponse> {
+    const path = '/1/indexes/{indexName}/deleteByQuery'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling deleteBy.'
+      );
+    }
+
+    if (
+      searchParamsAsStringSearchParams === null ||
+      searchParamsAsStringSearchParams === undefined
+    ) {
+      throw new Error(
+        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling deleteBy.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: searchParamsAsStringSearchParams,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Delete an existing index.
    *
    * @summary Delete index.
@@ -649,6 +787,48 @@ export class SearchApi {
     if (indexName === null || indexName === undefined) {
       throw new Error(
         'Required parameter indexName was null or undefined when calling deleteIndex.'
+      );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Delete an existing object.
+   *
+   * @summary Delete object.
+   * @param deleteObject - The deleteObject parameters.
+   * @param deleteObject.indexName - The index in which to perform the request.
+   * @param deleteObject.objectID - Unique identifier of an object.
+   */
+  deleteObject({
+    indexName,
+    objectID,
+  }: DeleteObjectProps): Promise<DeletedAtResponse> {
+    const path = '/1/indexes/{indexName}/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling deleteObject.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling deleteObject.'
       );
     }
 
@@ -909,6 +1089,87 @@ export class SearchApi {
     const request: Request = {
       method: 'GET',
       path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Retrieve one object from the index.
+   *
+   * @summary Retrieve one object from the index.
+   * @param getObject - The getObject parameters.
+   * @param getObject.indexName - The index in which to perform the request.
+   * @param getObject.objectID - Unique identifier of an object.
+   * @param getObject.attributesToRetrieve - The attributesToRetrieve.
+   */
+  getObject({
+    indexName,
+    objectID,
+    attributesToRetrieve,
+  }: GetObjectProps): Promise<{ [key: string]: string }> {
+    const path = '/1/indexes/{indexName}/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling getObject.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling getObject.'
+      );
+    }
+
+    if (attributesToRetrieve !== undefined) {
+      queryParameters.attributesToRetrieve = attributesToRetrieve.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Retrieve one or more objects, potentially from different indices, in a single API call.
+   *
+   * @summary Retrieve one or more objects.
+   * @param getObjects - The getObjects parameters.
+   * @param getObjects.getObjectsObject - The getObjectsObject.
+   */
+  getObjects({
+    getObjectsObject,
+  }: GetObjectsProps): Promise<GetObjectsResponse> {
+    const path = '/1/indexes/*/objects';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (getObjectsObject === null || getObjectsObject === undefined) {
+      throw new Error(
+        'Required parameter getObjectsObject was null or undefined when calling getObjects.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: getObjectsObject,
     };
 
     const requestOptions: RequestOptions = {
@@ -1285,6 +1546,38 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Perform multiple write operations, potentially targeting multiple indices, in a single API call.
+   *
+   * @param multipleBatch - The multipleBatch parameters.
+   * @param multipleBatch.batchObject - The batchObject.
+   */
+  multipleBatch({
+    batchObject,
+  }: MultipleBatchProps): Promise<MultipleBatchResponse> {
+    const path = '/1/indexes/*/batch';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (batchObject === null || batchObject === undefined) {
+      throw new Error(
+        'Required parameter batchObject was null or undefined when calling multipleBatch.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: batchObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Get search results for the given requests.
    *
    * @param multipleQueries - The multipleQueries parameters.
@@ -1377,6 +1670,66 @@ export class SearchApi {
       method: 'POST',
       path,
       data: operationIndexObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Update one or more attributes of an existing object. This method lets you update only a part of an existing object, either by adding new attributes or updating existing ones. You can partially update several objects in a single method call. If the index targeted by this operation doesn’t exist yet, it’s automatically created.
+   *
+   * @summary Partially update an object.
+   * @param partialUpdateObject - The partialUpdateObject parameters.
+   * @param partialUpdateObject.indexName - The index in which to perform the request.
+   * @param partialUpdateObject.objectID - Unique identifier of an object.
+   * @param partialUpdateObject.stringBuildInOperation - The Algolia object.
+   * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
+   */
+  partialUpdateObject({
+    indexName,
+    objectID,
+    stringBuildInOperation,
+    createIfNotExists,
+  }: PartialUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
+    const path = '/1/indexes/{indexName}/{objectID}/partial'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling partialUpdateObject.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling partialUpdateObject.'
+      );
+    }
+
+    if (
+      stringBuildInOperation === null ||
+      stringBuildInOperation === undefined
+    ) {
+      throw new Error(
+        'Required parameter stringBuildInOperation was null or undefined when calling partialUpdateObject.'
+      );
+    }
+
+    if (createIfNotExists !== undefined) {
+      queryParameters.createIfNotExists = createIfNotExists.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: stringBuildInOperation,
     };
 
     const requestOptions: RequestOptions = {
@@ -2156,6 +2509,12 @@ export type AddApiKeyProps = {
   apiKey: ApiKey;
 };
 
+export type AddOrUpdateObjectProps = {
+  indexName: string;
+  objectID: string;
+  requestBody: { [key: string]: Record<string, any> };
+};
+
 export type AppendSourceProps = {
   source: Source;
 };
@@ -2167,7 +2526,7 @@ export type AssignUserIdProps = {
 
 export type BatchProps = {
   indexName: string;
-  batchObject: BatchObject;
+  batchWriteObject: BatchWriteObject;
 };
 
 export type BatchAssignUserIdsProps = {
@@ -2197,6 +2556,10 @@ export type ClearAllSynonymsProps = {
   forwardToReplicas?: boolean;
 };
 
+export type ClearObjectsProps = {
+  indexName: string;
+};
+
 export type ClearRulesProps = {
   indexName: string;
   forwardToReplicas?: boolean;
@@ -2206,8 +2569,18 @@ export type DeleteApiKeyProps = {
   key: string;
 };
 
+export type DeleteByProps = {
+  indexName: string;
+  searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString;
+};
+
 export type DeleteIndexProps = {
   indexName: string;
+};
+
+export type DeleteObjectProps = {
+  indexName: string;
+  objectID: string;
 };
 
 export type DeleteRuleProps = {
@@ -2235,6 +2608,16 @@ export type GetLogsProps = {
   length?: number;
   indexName?: string;
   type?: 'all' | 'build' | 'error' | 'query';
+};
+
+export type GetObjectProps = {
+  indexName: string;
+  objectID: string;
+  attributesToRetrieve?: string[];
+};
+
+export type GetObjectsProps = {
+  getObjectsObject: GetObjectsObject;
 };
 
 export type GetRuleProps = {
@@ -2273,6 +2656,10 @@ export type ListUserIdsProps = {
   hitsPerPage?: number;
 };
 
+export type MultipleBatchProps = {
+  batchObject: BatchObject;
+};
+
 export type MultipleQueriesProps = {
   multipleQueriesObject: MultipleQueriesObject;
 };
@@ -2280,6 +2667,13 @@ export type MultipleQueriesProps = {
 export type OperationIndexProps = {
   indexName: string;
   operationIndexObject: OperationIndexObject;
+};
+
+export type PartialUpdateObjectProps = {
+  indexName: string;
+  objectID: string;
+  stringBuildInOperation: Array<{ [key: string]: BuildInOperation | string }>;
+  createIfNotExists?: boolean;
 };
 
 export type RemoveUserIdProps = {
