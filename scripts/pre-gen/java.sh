@@ -4,3 +4,4 @@
 
 # Remove the oneOf and only keep the last $ref
 perl -0777 -i.bak -pe "s/oneOf[\s\S]*- \$ref(?!.*- \$ref)//g" ./specs/search/paths/search/search.yml
+perl -0777 -i.bak -pe "s/oneOf[\s\S]*- \$ref(?!.*- \$ref)//g" ./specs/search/paths/objects/deleteBy.yml

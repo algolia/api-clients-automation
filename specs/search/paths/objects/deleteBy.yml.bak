@@ -1,10 +1,16 @@
 post:
   tags:
     - search
-  operationId: search
-  description: Get search results.
+  operationId: deleteBy
+  summary: Delete all records matching the query.
+  description: >
+    Remove all objects matching a filter (including geo filters).
+
+    This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries).
+
+    It doesn’t accept empty filters or a query.
   parameters:
-    - $ref: '../../../common/parameters.yml#/IndexName'
+    - $ref: ../../../common/parameters.yml#/IndexName
   requestBody:
     required: true
     content:
@@ -15,11 +21,7 @@ post:
             - $ref: '../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '../../common/schemas/SearchResponse.yml#/searchResponse'
+      $ref: ../../../common/responses/DeletedAt.yml
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

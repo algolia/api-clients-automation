@@ -679,11 +679,11 @@ export class SearchApi {
    *
    * @summary Delete all records matching the query.
    * @param indexName - The index in which to perform the request.
-   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
+   * @param searchParams - The searchParams.
    */
   deleteBy(
     indexName: string,
-    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
+    searchParams: SearchParams
   ): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}/deleteByQuery'.replace(
       '{indexName}',
@@ -698,19 +698,16 @@ export class SearchApi {
       );
     }
 
-    if (
-      searchParamsAsStringSearchParams === null ||
-      searchParamsAsStringSearchParams === undefined
-    ) {
+    if (searchParams === null || searchParams === undefined) {
       throw new Error(
-        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling deleteBy.'
+        'Required parameter searchParams was null or undefined when calling deleteBy.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParamsAsStringSearchParams,
+      data: searchParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1937,11 +1934,11 @@ export class SearchApi {
    * Get search results.
    *
    * @param indexName - The index in which to perform the request.
-   * @param searchParams - The searchParams.
+   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
    */
   search(
     indexName: string,
-    searchParams: SearchParams
+    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
   ): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
@@ -1956,16 +1953,19 @@ export class SearchApi {
       );
     }
 
-    if (searchParams === null || searchParams === undefined) {
+    if (
+      searchParamsAsStringSearchParams === null ||
+      searchParamsAsStringSearchParams === undefined
+    ) {
       throw new Error(
-        'Required parameter searchParams was null or undefined when calling search.'
+        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling search.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParams,
+      data: searchParamsAsStringSearchParams,
     };
 
     const requestOptions: RequestOptions = {

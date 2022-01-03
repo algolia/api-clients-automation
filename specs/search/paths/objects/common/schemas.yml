@@ -35,7 +35,6 @@ buildInOperation:
         - AddUnique
         - IncrementFrom
         - IncrementSet
-
       description: The operation to apply on the attribute.
     value:
       type: string

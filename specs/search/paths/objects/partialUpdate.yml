@@ -19,6 +19,7 @@ post:
       in: query
       schema:
         type: boolean
+        default: true
   requestBody:
     required: true
     description: The Algolia object.
