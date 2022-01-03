@@ -28,15 +28,14 @@ buildInOperation:
     _operation:
       type: string
       enum:
-        [
-          Increment,
-          Decrement,
-          Add,
-          Remove,
-          AddUnique,
-          IncrementFrom,
-          IncrementSet,
-        ]
+        - Increment
+        - Decrement
+        - Add
+        - Remove
+        - AddUnique
+        - IncrementFrom
+        - IncrementSet
+
       description: The operation to apply on the attribute.
     value:
       type: string
