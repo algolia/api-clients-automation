@@ -74,6 +74,7 @@ export * from './searchForFacetValuesResponse';
 export * from './searchForFacetValuesResponseFacetHits';
 export * from './searchHits';
 export * from './searchParams';
+export * from './searchParamsAsString';
 export * from './searchResponse';
 export * from './searchRulesParams';
 export * from './searchRulesResponse';

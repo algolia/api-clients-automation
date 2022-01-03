@@ -41,6 +41,7 @@ import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchParams } from '../model/searchParams';
+import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
@@ -678,11 +679,11 @@ export class SearchApi {
    *
    * @summary Delete all records matching the query.
    * @param indexName - The index in which to perform the request.
-   * @param searchParams - The searchParams.
+   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
    */
   deleteBy(
     indexName: string,
-    searchParams: SearchParams
+    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
   ): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}/deleteByQuery'.replace(
       '{indexName}',
@@ -697,16 +698,19 @@ export class SearchApi {
       );
     }
 
-    if (searchParams === null || searchParams === undefined) {
+    if (
+      searchParamsAsStringSearchParams === null ||
+      searchParamsAsStringSearchParams === undefined
+    ) {
       throw new Error(
-        'Required parameter searchParams was null or undefined when calling deleteBy.'
+        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling deleteBy.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParams,
+      data: searchParamsAsStringSearchParams,
     };
 
     const requestOptions: RequestOptions = {

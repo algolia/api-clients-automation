@@ -55,6 +55,7 @@ import com.algolia.model.SearchUserIdsObject;
 import com.algolia.model.SearchUserIdsResponse;
 import com.algolia.model.Source;
 import com.algolia.model.SynonymHit;
+import com.algolia.model.UNKNOWN_BASE_TYPE;
 import com.algolia.model.UpdateApiKeyResponse;
 import com.algolia.model.UpdatedAtResponse;
 import com.algolia.model.UpdatedAtWithObjectIdResponse;
@@ -2453,7 +2454,7 @@ public class SearchApi extends ApiClient {
    * Build call for deleteBy
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param searchParams (required)
+   * @param UNKNOWN_BASE_TYPE (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2469,10 +2470,10 @@ public class SearchApi extends ApiClient {
    */
   public okhttp3.Call deleteByCall(
     String indexName,
-    SearchParams searchParams,
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE,
     final ApiCallback _callback
   ) throws ApiException {
-    Object localVarPostBody = searchParams;
+    Object localVarPostBody = UNKNOWN_BASE_TYPE;
 
     // create path and map variables
     String localVarPath =
@@ -2516,7 +2517,7 @@ public class SearchApi extends ApiClient {
   @SuppressWarnings("rawtypes")
   private okhttp3.Call deleteByValidateBeforeCall(
     String indexName,
-    SearchParams searchParams,
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
@@ -2526,16 +2527,16 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'searchParams' is set
-    if (searchParams == null) {
+    // verify the required parameter 'UNKNOWN_BASE_TYPE' is set
+    if (UNKNOWN_BASE_TYPE == null) {
       throw new ApiException(
-        "Missing the required parameter 'searchParams' when calling deleteBy(Async)"
+        "Missing the required parameter 'UNKNOWN_BASE_TYPE' when calling deleteBy(Async)"
       );
     }
 
     okhttp3.Call localVarCall = deleteByCall(
       indexName,
-      searchParams,
+      UNKNOWN_BASE_TYPE,
       _callback
     );
     return localVarCall;
@@ -2547,7 +2548,7 @@ public class SearchApi extends ApiClient {
    * facet, tag or geo queries). It doesn’t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param searchParams (required)
+   * @param UNKNOWN_BASE_TYPE (required)
    * @return DeletedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -2563,11 +2564,11 @@ public class SearchApi extends ApiClient {
    */
   public DeletedAtResponse deleteBy(
     String indexName,
-    SearchParams searchParams
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE
   ) throws ApiException {
     ApiResponse<DeletedAtResponse> localVarResp = deleteByWithHttpInfo(
       indexName,
-      searchParams
+      UNKNOWN_BASE_TYPE
     );
     return localVarResp.getData();
   }
@@ -2578,7 +2579,7 @@ public class SearchApi extends ApiClient {
    * facet, tag or geo queries). It doesn’t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param searchParams (required)
+   * @param UNKNOWN_BASE_TYPE (required)
    * @return ApiResponse&lt;DeletedAtResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -2594,11 +2595,11 @@ public class SearchApi extends ApiClient {
    */
   public ApiResponse<DeletedAtResponse> deleteByWithHttpInfo(
     String indexName,
-    SearchParams searchParams
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteByValidateBeforeCall(
       indexName,
-      searchParams,
+      UNKNOWN_BASE_TYPE,
       null
     );
     Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
@@ -2611,7 +2612,7 @@ public class SearchApi extends ApiClient {
    * (numeric, facet, tag or geo queries). It doesn’t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param searchParams (required)
+   * @param UNKNOWN_BASE_TYPE (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2627,12 +2628,12 @@ public class SearchApi extends ApiClient {
    */
   public okhttp3.Call deleteByAsync(
     String indexName,
-    SearchParams searchParams,
+    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE,
     final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = deleteByValidateBeforeCall(
       indexName,
-      searchParams,
+      UNKNOWN_BASE_TYPE,
       _callback
     );
     Type localVarReturnType = new TypeToken<DeletedAtResponse>() {}.getType();
