@@ -1,27 +1,19 @@
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
-import type { AppendSourceResponse } from '../model/appendSourceResponse';
 import type { AssignUserIdObject } from '../model/assignUserIdObject';
-import type { AssignUserIdResponse } from '../model/assignUserIdResponse';
 import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
-import type { BatchAssignUserIdsResponse } from '../model/batchAssignUserIdsResponse';
 import type { BatchDictionaryEntries } from '../model/batchDictionaryEntries';
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
-import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
-import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
-import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
-import type { DictionaryEntriesResponse } from '../model/dictionaryEntriesResponse';
 import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
-import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
 import type { IndexSettings } from '../model/indexSettings';
 import type { KeyObject } from '../model/keyObject';
 import type { Languages } from '../model/languages';
@@ -33,13 +25,11 @@ import { ApiKeyAuth } from '../model/models';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
-import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
-import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
 import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
@@ -51,12 +41,10 @@ import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
-import type { SetSettingsResponse } from '../model/setSettingsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
-import type { UpdatedRuleResponseWithoutObjectID } from '../model/updatedRuleResponseWithoutObjectID';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
@@ -469,12 +457,6 @@ export class SearchApi {
     if (indexName === null || indexName === undefined) {
       throw new Error(
         'Required parameter indexName was null or undefined when calling browse.'
-      );
-    }
-
-    if (browseRequest === null || browseRequest === undefined) {
-      throw new Error(
-        'Required parameter browseRequest was null or undefined when calling browse.'
       );
     }
 
@@ -1769,15 +1751,6 @@ export class SearchApi {
     if (facetName === null || facetName === undefined) {
       throw new Error(
         'Required parameter facetName was null or undefined when calling searchForFacetValues.'
-      );
-    }
-
-    if (
-      searchForFacetValuesRequest === null ||
-      searchForFacetValuesRequest === undefined
-    ) {
-      throw new Error(
-        'Required parameter searchForFacetValuesRequest was null or undefined when calling searchForFacetValues.'
       );
     }
 
