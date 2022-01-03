@@ -36,6 +36,7 @@ import com.algolia.model.ListUserIdsResponse;
 import com.algolia.model.MultipleBatchResponse;
 import com.algolia.model.MultipleQueriesObject;
 import com.algolia.model.MultipleQueriesResponse;
+import com.algolia.model.OneOfstringbuildInOperation;
 import com.algolia.model.OperationIndexObject;
 import com.algolia.model.RemoveUserIdResponse;
 import com.algolia.model.ReplaceSourceResponse;
@@ -4328,7 +4329,7 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @param attributesToRetrieve (optional)
-   * @return Map&lt;String, Object&gt;
+   * @return Map&lt;String, String&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -4341,12 +4342,12 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public Map<String, Object> getObject(
+  public Map<String, String> getObject(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve
   ) throws ApiException {
-    ApiResponse<Map<String, Object>> localVarResp = getObjectWithHttpInfo(
+    ApiResponse<Map<String, String>> localVarResp = getObjectWithHttpInfo(
       indexName,
       objectID,
       attributesToRetrieve
@@ -4360,7 +4361,7 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @param attributesToRetrieve (optional)
-   * @return ApiResponse&lt;Map&lt;String, Object&gt;&gt;
+   * @return ApiResponse&lt;Map&lt;String, String&gt;&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -4373,7 +4374,7 @@ public class SearchApi extends ApiClient {
    * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<Map<String, Object>> getObjectWithHttpInfo(
+  public ApiResponse<Map<String, String>> getObjectWithHttpInfo(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve
@@ -4384,7 +4385,7 @@ public class SearchApi extends ApiClient {
       attributesToRetrieve,
       null
     );
-    Type localVarReturnType = new TypeToken<Map<String, Object>>() {}.getType();
+    Type localVarReturnType = new TypeToken<Map<String, String>>() {}.getType();
     return this.execute(localVarCall, localVarReturnType);
   }
 
@@ -4411,7 +4412,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     List<String> attributesToRetrieve,
-    final ApiCallback<Map<String, Object>> _callback
+    final ApiCallback<Map<String, String>> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = getObjectValidateBeforeCall(
       indexName,
@@ -4419,7 +4420,7 @@ public class SearchApi extends ApiClient {
       attributesToRetrieve,
       _callback
     );
-    Type localVarReturnType = new TypeToken<Map<String, Object>>() {}.getType();
+    Type localVarReturnType = new TypeToken<Map<String, String>>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -7011,7 +7012,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param oneOfstringbuildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
@@ -7029,11 +7030,11 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call partialUpdateObjectCall(
     String indexName,
     String objectID,
-    List<Map<String, Object>> requestBody,
+    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
-    Object localVarPostBody = requestBody;
+    Object localVarPostBody = oneOfstringbuildInOperation;
 
     // create path and map variables
     String localVarPath =
@@ -7088,7 +7089,7 @@ public class SearchApi extends ApiClient {
   private okhttp3.Call partialUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
-    List<Map<String, Object>> requestBody,
+    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
@@ -7106,17 +7107,18 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'requestBody' is set
-    if (requestBody == null) {
+    // verify the required parameter 'oneOfstringbuildInOperation' is set
+    if (oneOfstringbuildInOperation == null) {
       throw new ApiException(
-        "Missing the required parameter 'requestBody' when calling partialUpdateObject(Async)"
+        "Missing the required parameter 'oneOfstringbuildInOperation' when calling" +
+        " partialUpdateObject(Async)"
       );
     }
 
     okhttp3.Call localVarCall = partialUpdateObjectCall(
       indexName,
       objectID,
-      requestBody,
+      oneOfstringbuildInOperation,
       createIfNotExists,
       _callback
     );
@@ -7131,7 +7133,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param oneOfstringbuildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional)
    * @return UpdatedAtWithObjectIdResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -7149,13 +7151,13 @@ public class SearchApi extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     String indexName,
     String objectID,
-    List<Map<String, Object>> requestBody,
+    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
     ApiResponse<UpdatedAtWithObjectIdResponse> localVarResp = partialUpdateObjectWithHttpInfo(
       indexName,
       objectID,
-      requestBody,
+      oneOfstringbuildInOperation,
       createIfNotExists
     );
     return localVarResp.getData();
@@ -7169,7 +7171,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param oneOfstringbuildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional)
    * @return ApiResponse&lt;UpdatedAtWithObjectIdResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -7187,13 +7189,13 @@ public class SearchApi extends ApiClient {
   public ApiResponse<UpdatedAtWithObjectIdResponse> partialUpdateObjectWithHttpInfo(
     String indexName,
     String objectID,
-    List<Map<String, Object>> requestBody,
+    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
     okhttp3.Call localVarCall = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      requestBody,
+      oneOfstringbuildInOperation,
       createIfNotExists,
       null
     );
@@ -7211,7 +7213,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param oneOfstringbuildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -7229,14 +7231,14 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call partialUpdateObjectAsync(
     String indexName,
     String objectID,
-    List<Map<String, Object>> requestBody,
+    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      requestBody,
+      oneOfstringbuildInOperation,
       createIfNotExists,
       _callback
     );

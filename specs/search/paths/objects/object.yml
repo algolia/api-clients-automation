@@ -51,7 +51,8 @@ get:
             title: getObjectResponse
             type: object
             description: Fetched object.
-            additionalProperties: true
+            additionalProperties:
+              $ref: 'common/schemas.yml#/attribute'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

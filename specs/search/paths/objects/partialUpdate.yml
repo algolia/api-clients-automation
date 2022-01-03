@@ -31,7 +31,10 @@ post:
           items:
             type: object
             description: Attribute to update.
-            additionalProperties: true
+            additionalProperties:
+              oneOf:
+                - $ref: 'common/schemas.yml#/attribute'
+                - $ref: 'common/schemas.yml#/buildInOperation'
   responses:
     '200':
       $ref: ../../../common/responses/UpdatedAtWithObjectId.yml

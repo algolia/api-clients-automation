@@ -8,6 +8,7 @@ import type { BatchResponse } from '../model/batchResponse';
 import type { BatchWriteObject } from '../model/batchWriteObject';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
+import type { BuildInOperation } from '../model/buildInOperation';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
@@ -40,7 +41,6 @@ import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchParams } from '../model/searchParams';
-import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
@@ -1048,7 +1048,7 @@ export class SearchApi {
     indexName: string,
     objectID: string,
     attributesToRetrieve?: string[]
-  ): Promise<{ [key: string]: Record<string, any> }> {
+  ): Promise<{ [key: string]: string }> {
     const path = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -1573,13 +1573,13 @@ export class SearchApi {
    * @summary Partially update an object.
    * @param indexName - The index in which to perform the request.
    * @param objectID - Unique identifier of an object.
-   * @param requestBody - The Algolia object.
+   * @param stringBuildInOperation - The Algolia object.
    * @param createIfNotExists - Creates the record if it does not exist yet.
    */
   partialUpdateObject(
     indexName: string,
     objectID: string,
-    requestBody: Array<{ [key: string]: Record<string, any> }>,
+    stringBuildInOperation: Array<{ [key: string]: BuildInOperation | string }>,
     createIfNotExists?: boolean
   ): Promise<UpdatedAtWithObjectIdResponse> {
     const path = '/1/indexes/{indexName}/{objectID}/partial'
@@ -1600,9 +1600,12 @@ export class SearchApi {
       );
     }
 
-    if (requestBody === null || requestBody === undefined) {
+    if (
+      stringBuildInOperation === null ||
+      stringBuildInOperation === undefined
+    ) {
       throw new Error(
-        'Required parameter requestBody was null or undefined when calling partialUpdateObject.'
+        'Required parameter stringBuildInOperation was null or undefined when calling partialUpdateObject.'
       );
     }
 
@@ -1613,7 +1616,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: requestBody,
+      data: stringBuildInOperation,
     };
 
     const requestOptions: RequestOptions = {
@@ -1930,11 +1933,11 @@ export class SearchApi {
    * Get search results.
    *
    * @param indexName - The index in which to perform the request.
-   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
+   * @param searchParams - The searchParams.
    */
   search(
     indexName: string,
-    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
+    searchParams: SearchParams
   ): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
@@ -1949,19 +1952,16 @@ export class SearchApi {
       );
     }
 
-    if (
-      searchParamsAsStringSearchParams === null ||
-      searchParamsAsStringSearchParams === undefined
-    ) {
+    if (searchParams === null || searchParams === undefined) {
       throw new Error(
-        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling search.'
+        'Required parameter searchParams was null or undefined when calling search.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParamsAsStringSearchParams,
+      data: searchParams,
     };
 
     const requestOptions: RequestOptions = {
