@@ -15,6 +15,7 @@ import com.algolia.model.BatchResponse;
 import com.algolia.model.BatchWriteObject;
 import com.algolia.model.BrowseRequest;
 import com.algolia.model.BrowseResponse;
+import com.algolia.model.BuildInOperation;
 import com.algolia.model.CreatedAtResponse;
 import com.algolia.model.DeleteApiKeyResponse;
 import com.algolia.model.DeleteSourceResponse;
@@ -36,7 +37,6 @@ import com.algolia.model.ListUserIdsResponse;
 import com.algolia.model.MultipleBatchResponse;
 import com.algolia.model.MultipleQueriesObject;
 import com.algolia.model.MultipleQueriesResponse;
-import com.algolia.model.OneOfstringbuildInOperation;
 import com.algolia.model.OperationIndexObject;
 import com.algolia.model.RemoveUserIdResponse;
 import com.algolia.model.ReplaceSourceResponse;
@@ -7012,7 +7012,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuildInOperation The Algolia object. (required)
+   * @param buildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback Callback for upload/download progress
@@ -7031,11 +7031,11 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call partialUpdateObjectCall(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, BuildInOperation>> buildInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
-    Object localVarPostBody = oneOfstringbuildInOperation;
+    Object localVarPostBody = buildInOperation;
 
     // create path and map variables
     String localVarPath =
@@ -7090,7 +7090,7 @@ public class SearchApi extends ApiClient {
   private okhttp3.Call partialUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, BuildInOperation>> buildInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
@@ -7108,10 +7108,10 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'oneOfstringbuildInOperation' is set
-    if (oneOfstringbuildInOperation == null) {
+    // verify the required parameter 'buildInOperation' is set
+    if (buildInOperation == null) {
       throw new ApiException(
-        "Missing the required parameter 'oneOfstringbuildInOperation' when calling" +
+        "Missing the required parameter 'buildInOperation' when calling" +
         " partialUpdateObject(Async)"
       );
     }
@@ -7119,7 +7119,7 @@ public class SearchApi extends ApiClient {
     okhttp3.Call localVarCall = partialUpdateObjectCall(
       indexName,
       objectID,
-      oneOfstringbuildInOperation,
+      buildInOperation,
       createIfNotExists,
       _callback
     );
@@ -7134,7 +7134,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuildInOperation The Algolia object. (required)
+   * @param buildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @return UpdatedAtWithObjectIdResponse
@@ -7153,13 +7153,13 @@ public class SearchApi extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, BuildInOperation>> buildInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
     ApiResponse<UpdatedAtWithObjectIdResponse> localVarResp = partialUpdateObjectWithHttpInfo(
       indexName,
       objectID,
-      oneOfstringbuildInOperation,
+      buildInOperation,
       createIfNotExists
     );
     return localVarResp.getData();
@@ -7173,7 +7173,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuildInOperation The Algolia object. (required)
+   * @param buildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @return ApiResponse&lt;UpdatedAtWithObjectIdResponse&gt;
@@ -7192,13 +7192,13 @@ public class SearchApi extends ApiClient {
   public ApiResponse<UpdatedAtWithObjectIdResponse> partialUpdateObjectWithHttpInfo(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, BuildInOperation>> buildInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
     okhttp3.Call localVarCall = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      oneOfstringbuildInOperation,
+      buildInOperation,
       createIfNotExists,
       null
     );
@@ -7216,7 +7216,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuildInOperation The Algolia object. (required)
+   * @param buildInOperation The Algolia object. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback The callback to be executed when the API call finishes
@@ -7235,14 +7235,14 @@ public class SearchApi extends ApiClient {
   public okhttp3.Call partialUpdateObjectAsync(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, BuildInOperation>> buildInOperation,
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     okhttp3.Call localVarCall = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      oneOfstringbuildInOperation,
+      buildInOperation,
       createIfNotExists,
       _callback
     );
