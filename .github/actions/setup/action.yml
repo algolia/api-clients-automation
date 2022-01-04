@@ -5,24 +5,34 @@ description: Setup CI environment.
 runs:
   using: composite
   steps:
-    - name: Restore cache
-      uses: ./.github/actions/cache
+    # - name: Restore cache
+    #   uses: ./.github/actions/cache
 
-    - name: Update apt packages
-      shell: bash
-      run: sudo apt update
-
-    - name: Install Java
-      uses: actions/setup-java@v2
-      with:
-        distribution: zulu
-        java-version: 11.0.4
+    # - name: Install Java
+    #   uses: actions/setup-java@v2
+    #   with:
+    #     distribution: zulu
+    #     java-version: 11.0.4
 
     - name: Install Node
       uses: actions/setup-node@v2
       with:
         node-version-file: .nvmrc
 
-    - name: Install JavaScript Dependencies
+    # - name: Install JavaScript Dependencies
+    #   shell: bash
+    #   run: yarn install
+
+    - name: Setting global diff variables
       shell: bash
-      run: yarn install
+      run: |
+        export SPECS_CHANGED=$(git diff --exit-code main specs | echo $?)
+        export TEMPLATES_CHANGED=$(git diff --exit-code main templates | echo $?)
+        export TESTS_CHANGED=$(git diff --exit-code main tests | echo $?)
+        export SCRIPTS_CHANGED=$(git diff --exit-code main scripts | echo $?)
+
+    - name: Setting clients diff variables
+      shell: bash
+      run: |
+        export JS_CLIENT_CHANGED=$(git diff --exit-code main clients/algoliasearch-client-java-2 | echo $?)
+        export JAVA_CLIENT_CHANGED=$(git diff --exit-code main clients/algoliasearch-client-javascript | echo $?)
