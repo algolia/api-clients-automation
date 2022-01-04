@@ -11,12 +11,26 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-20.04
+    outputs:
+      TESTS_CHANGED: ${{ steps.setup.ouputs.TESTS_CHANGED }}
+      SPECS_CHANGED: ${{ steps.setup.ouputs.SPECS_CHANGED }}
+      SCRIPTS_CHANGED: ${{ steps.setup.ouputs.SCRIPTS_CHANGED }}
+      JS_CLIENT_CHANGED: ${{ steps.setup.ouputs.JS_CLIENT_CHANGED }}
+      JS_TEMPLATE_CHANGED: ${{ steps.setup.ouputs.JS_TEMPLATE_CHANGED }}
+      JAVA_CLIENT_CHANGED: ${{ steps.setup.ouputs.JAVA_CLIENT_CHANGED }}
+      JAVA_TEMPLATE_CHANGED: ${{ steps.setup.ouputs.JAVA_TEMPLATE_CHANGED }}
+      RUN_SPECS: ${{ steps.setup.ouputs.RUN_SPECS }}
+      RUN_CTS: ${{ steps.setup.ouputs.RUN_CTS }}
+      RUN_JS_CLIENT: ${{ steps.setup.ouputs.RUN_JS_CLIENT }}
+      RUN_JAVA_CLIENT: ${{ steps.setup.ouputs.RUN_JAVA_CLIENT }}
+      test: ${{ steps.setup.ouputs.test }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
       - name: Setup
+        id: setup
         uses: ./.github/actions/setup
 
   check:
