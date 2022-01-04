@@ -26,13 +26,13 @@ runs:
     - name: Setting global diff variables
       shell: bash
       run: |
-        export SPECS_CHANGED=$(git diff --exit-code main specs | echo $?)
-        export TEMPLATES_CHANGED=$(git diff --exit-code main templates | echo $?)
-        export TESTS_CHANGED=$(git diff --exit-code main tests | echo $?)
-        export SCRIPTS_CHANGED=$(git diff --exit-code main scripts | echo $?)
+        echo "SPECS_CHANGED=$(git diff --exit-code main specs | echo $?)" >> $GITHUB_ENV
+        echo "TEMPLATES_CHANGED=$(git diff --exit-code main templates | echo $?)" >> $GITHUB_ENV
+        echo "TESTS_CHANGED=$(git diff --exit-code main tests | echo $?)" >> $GITHUB_ENV
+        echo "SCRIPTS_CHANGED=$(git diff --exit-code main scripts | echo $?)" >> $GITHUB_ENV
 
     - name: Setting clients diff variables
       shell: bash
       run: |
-        export JS_CLIENT_CHANGED=$(git diff --exit-code main clients/algoliasearch-client-java-2 | echo $?)
-        export JAVA_CLIENT_CHANGED=$(git diff --exit-code main clients/algoliasearch-client-javascript | echo $?)
+        echo "JS_CLIENT_CHANGED=$(git diff --exit-code main clients/algoliasearch-client-java-2 | echo $?)" >> $GITHUB_ENV
+        echo "JAVA_CLIENT_CHANGED=$(git diff --exit-code main clients/algoliasearch-client-javascript | echo $?)" >> $GITHUB_ENV
