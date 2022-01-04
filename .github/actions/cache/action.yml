@@ -4,7 +4,7 @@ description: Restore cached dependencies.
 
 inputs:
   language:
-    description: 'The language used in the job that calls this composite'
+    description: 'The language used for the dependencies when calling this composite'
     required: true
     default: 'all'
 

@@ -94,8 +94,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          language: java
 
       - name: Generate search client
         run: yarn generate java search

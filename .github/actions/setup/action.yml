@@ -18,30 +18,8 @@ runs:
         node-version-file: .nvmrc
         cache: 'yarn'
 
-    - name: Get yarn cache directory path
-      shell: bash
-      id: yarn-cache-dir
-      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-    - name: Cache Yarn
-      uses: actions/cache@v2
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir || '/home/runner/work/api-clients-automation/api-clients-automation/.yarn/cache' }}
-        key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-
-    - name: Cache Maven
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2/repository
-        key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-
-    - name: Install JavaScript dependencies
-      shell: bash
-      run: yarn install
-
-    - name: Install Maven dependencies
-      shell: bash
-      run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
+    - name: Restore cache
+      uses: ./.github/actions/cache
 
     - name: Setting diff outputs variables
       id: diff
