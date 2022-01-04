@@ -35,7 +35,7 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          language: javascript
+          job: js
 
       - name: Checking search specs
         run: yarn build:specs search
@@ -59,7 +59,7 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          language: javascript
+          job: js
 
       - name: Generate search client
         run: yarn generate javascript search
@@ -93,7 +93,7 @@ jobs:
       - name: Cache built clients
         uses: actions/cache@v2
         with:
-          path: ./clients/algoliasearch-client-javascript
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript
           key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
 
   client_java:
@@ -105,6 +105,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          job: java
 
       - name: Generate search client
         run: yarn generate java search
@@ -115,7 +117,7 @@ jobs:
       - name: Cache built clients
         uses: actions/cache@v2
         with:
-          path: ./clients/algoliasearch-client-java-2
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2
           key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
 
   cts:
@@ -127,8 +129,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          language: javascript
 
       - name: Generate clients
         run: yarn generate
