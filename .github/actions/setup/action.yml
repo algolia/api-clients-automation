@@ -26,13 +26,13 @@ runs:
     - name: Setting global diff variables
       shell: bash
       run: |
-        echo "SPECS_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${{ github.ref_name }} -- specs | wc -l)" >> $GITHUB_ENV
-        echo "TEMPLATES_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${{ github.ref_name }} -- templates | wc -l)" >> $GITHUB_ENV
-        echo "TESTS_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${{ github.ref_name }} -- tests | wc -l)" >> $GITHUB_ENV
-        echo "SCRIPTS_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${{ github.ref_name }} -- scripts | wc -l)" >> $GITHUB_ENV
+        echo "SPECS_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${ GITHUB_HEAD_REF } -- specs | wc -l)" >> $GITHUB_ENV
+        echo "TEMPLATES_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${ GITHUB_HEAD_REF } -- templates | wc -l)" >> $GITHUB_ENV
+        echo "TESTS_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${ GITHUB_HEAD_REF } -- tests | wc -l)" >> $GITHUB_ENV
+        echo "SCRIPTS_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${ GITHUB_HEAD_REF } -- scripts | wc -l)" >> $GITHUB_ENV
 
     - name: Setting clients diff variables
       shell: bash
       run: |
-        echo "JS_CLIENT_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${{ github.ref_name }} -- clients/algoliasearch-client-java-2 | wc -l)" >> $GITHUB_ENV
-        echo "JAVA_CLIENT_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${{ github.ref_name }} -- clients/algoliasearch-client-javascript | wc -l)" >> $GITHUB_ENV
+        echo "JS_CLIENT_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${ GITHUB_HEAD_REF } -- clients/algoliasearch-client-java-2 | wc -l)" >> $GITHUB_ENV
+        echo "JAVA_CLIENT_CHANGED=$(git diff --shortstat ${{ github.base_ref }}..${ GITHUB_HEAD_REF } -- clients/algoliasearch-client-javascript | wc -l)" >> $GITHUB_ENV
