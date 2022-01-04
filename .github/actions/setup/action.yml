@@ -10,6 +10,7 @@ runs:
       with:
         distribution: zulu
         java-version: 11.0.4
+        cache: 'maven'
 
     - name: Install Node
       uses: actions/setup-node@v2
@@ -20,6 +21,18 @@ runs:
     - name: Install JavaScript dependencies
       shell: bash
       run: yarn install
+
+    - name: Cache Yarn
+      uses: actions/cache@v2
+      with:
+        path: ~/.yarn/cache
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+
+    - name: Cache Maven
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
     - name: Setting diff outputs variables
       id: diff
