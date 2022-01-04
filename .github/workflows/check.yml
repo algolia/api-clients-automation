@@ -118,7 +118,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2
-          key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
 
   cts:
     runs-on: ubuntu-20.04
