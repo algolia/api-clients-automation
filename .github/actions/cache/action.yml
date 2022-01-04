@@ -6,51 +6,51 @@ inputs:
   job:
     description: 'The job that requires this composite'
     required: true
-    default: 'all'
+    default: 'setup'
 
 runs:
   using: composite
   steps:
     - name: Restore built JavaScript client
-      if: ${{ inputs.job == 'all' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript
         key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built Java client
-      if: ${{ inputs.job == 'all' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2
         key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
 
     - name: Get yarn cache directory path
-      if: ${{ inputs.job == 'all' || inputs.job == 'java' || inputs.job == 'js' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
       shell: bash
       id: yarn-cache-dir
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
     - name: Restore Yarn
-      if: ${{ inputs.job == 'all' || inputs.job == 'java' || inputs.job == 'js' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir || '/home/runner/work/api-clients-automation/api-clients-automation/.yarn/cache' }}
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
-      if: ${{ inputs.job == 'all' || inputs.job == 'java' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' }}
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
         key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
     - name: Install JavaScript dependencies
-      if: ${{ inputs.job == 'all' || inputs.job == 'java' || inputs.job == 'js' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
       shell: bash
       run: yarn install
 
     - name: Install Maven dependencies
-      if: ${{ inputs.job == 'all' || inputs.job == 'java' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' }}
       shell: bash
       run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml

@@ -129,6 +129,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          job: cts
 
       - name: Generate clients
         run: yarn generate
