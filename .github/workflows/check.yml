@@ -12,13 +12,6 @@ jobs:
   setup:
     runs-on: ubuntu-20.04
     outputs:
-      TESTS_CHANGED: ${{ steps.setup.outputs.TESTS_CHANGED }}
-      SPECS_CHANGED: ${{ steps.setup.outputs.SPECS_CHANGED }}
-      SCRIPTS_CHANGED: ${{ steps.setup.outputs.SCRIPTS_CHANGED }}
-      JS_CLIENT_CHANGED: ${{ steps.setup.outputs.JS_CLIENT_CHANGED }}
-      JS_TEMPLATE_CHANGED: ${{ steps.setup.outputs.JS_TEMPLATE_CHANGED }}
-      JAVA_CLIENT_CHANGED: ${{ steps.setup.outputs.JAVA_CLIENT_CHANGED }}
-      JAVA_TEMPLATE_CHANGED: ${{ steps.setup.outputs.JAVA_TEMPLATE_CHANGED }}
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
       RUN_JS_CLIENT: ${{ steps.setup.outputs.RUN_JS_CLIENT }}
