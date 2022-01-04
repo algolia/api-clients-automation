@@ -10,16 +10,22 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Get yarn cache directory path
+      if: ${{ inputs.language == 'javascript' }}
+      shell: bash
+      id: yarn-cache-dir
+      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
     - name: Restore Yarn
       if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v2.1.7
+      uses: actions/cache@v2
       with:
-        path: ~/.yarn/cache
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
       if: ${{ inputs.language == 'java' }}
-      uses: actions/cache@v2.1.7
+      uses: actions/cache@v2
       with:
         path: ~/.m2/repository
         key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
