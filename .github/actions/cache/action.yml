@@ -2,25 +2,34 @@ name: Cache
 
 description: Restore cached dependencies.
 
+inputs:
+  language:
+    description: 'The language used in the job that calls this composite'
+    required: true
+
 runs:
   using: composite
   steps:
     - name: Restore Yarn
+      if: ${{ inputs.language == 'javascript' }}
       uses: actions/cache@v2
       with:
         path: ~/.yarn/cache
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
+      if: ${{ inputs.language == 'java' }}
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
         key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
     - name: Install JavaScript dependencies
+      if: ${{ inputs.language == 'javascript' }}
       shell: bash
       run: yarn install
 
     - name: Install Maven dependencies
+      if: ${{ inputs.language == 'java' }}
       shell: bash
       run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml

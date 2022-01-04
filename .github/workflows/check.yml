@@ -34,6 +34,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          language: javascript
 
       - name: Checking search specs
         run: yarn build:specs search
@@ -56,6 +58,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          language: javascript
 
       - name: Generate search client
         run: yarn generate javascript search
@@ -90,6 +94,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          language: java
 
       - name: Generate search client
         run: yarn generate java search
@@ -106,6 +112,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          language: javascript
 
       - name: Generate clients
         run: yarn generate
