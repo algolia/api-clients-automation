@@ -23,7 +23,6 @@ jobs:
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
       RUN_JS_CLIENT: ${{ steps.setup.outputs.RUN_JS_CLIENT }}
       RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
-      test: ${{ steps.setup.outputs.test }}
     steps:
       - uses: actions/checkout@v2
         with:
