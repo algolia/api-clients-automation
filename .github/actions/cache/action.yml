@@ -8,11 +8,6 @@ inputs:
     required: true
     default: 'setup'
 
-outputs:
-  CLIENTS_CACHED:
-    description: 'Determine if the clients have been restored'
-    value: ${{ steps.js_client.outputs.RESTORED == 'true' && steps.java_client.outputs.RESTORED == 'true' }}
-
 runs:
   using: composite
   steps:
@@ -23,16 +18,13 @@ runs:
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/**
         key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
-      run: echo "::set-output name=RESTORED::'true')"
 
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}
-      id: java_client
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/**
         key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
-      run: echo "::set-output name=RESTORED::'true')"
 
     - name: Get yarn cache directory path
       if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}

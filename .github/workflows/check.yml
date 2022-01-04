@@ -192,14 +192,6 @@ jobs:
         with:
           job: cts
 
-      - name: Generate clients
-        if: ${{ steps.restore.outputs.CLIENTS_CACHED != 'true' }}
-        run: yarn generate
-
-      - name: Build client
-        if: ${{ steps.restore.outputs.CLIENTS_CACHED != 'true' }}
-        run: yarn build:clients
-
       - name: Generate CTS
         run: yarn cts:generate
 
