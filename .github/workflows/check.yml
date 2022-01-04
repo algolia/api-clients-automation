@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Installing dependencies
-        uses: yarn install
+        run: yarn install
 
       - name: Checking search specs
         run: yarn build:specs search
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Installing dependencies
-        uses: yarn install
+        run: yarn install
 
       - name: Generate search client
         run: yarn generate javascript search
@@ -89,7 +89,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Installing dependencies
-        uses: yarn install
+        run: yarn install
 
       - name: Generate search client
         run: yarn generate java search
@@ -105,7 +105,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Installing dependencies
-        uses: yarn install
+        run: yarn install
 
       - name: Generate clients
         run: yarn generate

@@ -17,6 +17,10 @@ runs:
         node-version-file: .nvmrc
         cache: 'yarn'
 
+    - name: Install JavaScript dependencies
+      shell: bash
+      run: yarn install
+
     - name: Setting diff outputs variables
       id: diff
       shell: bash
