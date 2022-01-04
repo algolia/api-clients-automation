@@ -15,7 +15,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Checking env var
+      - name: Checking
         run: env
 
   # specs:
