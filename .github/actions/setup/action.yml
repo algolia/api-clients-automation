@@ -15,9 +15,7 @@ runs:
       uses: actions/setup-node@v2
       with:
         node-version-file: .nvmrc
-
-    - name: Set cache
-      uses: ./.github/actions/cache
+        cache: 'yarn'
 
     - name: Setting diff outputs variables
       id: diff

@@ -32,8 +32,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Restore cache
-        uses: ./.github/actions/cache
+      - name: Installing dependencies
+        uses: yarn install
 
       - name: Checking search specs
         run: yarn build:specs search
@@ -54,8 +54,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Restore cache
-        uses: ./.github/actions/cache
+      - name: Installing dependencies
+        uses: yarn install
 
       - name: Generate search client
         run: yarn generate javascript search
@@ -88,8 +88,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Restore cache
-        uses: ./.github/actions/cache
+      - name: Installing dependencies
+        uses: yarn install
 
       - name: Generate search client
         run: yarn generate java search
@@ -104,8 +104,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Restore cache
-        uses: ./.github/actions/cache
+      - name: Installing dependencies
+        uses: yarn install
 
       - name: Generate clients
         run: yarn generate
