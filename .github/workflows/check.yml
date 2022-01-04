@@ -32,8 +32,7 @@ jobs:
 
       - name: Checking
         run: |
-          echo ${{ needs.setup.outputs }}
-          echo ${{ needs.setup.outputs.SPECS_CHANGED }}
+          echo ${{ needs.setup.outputs }} | jq
 
   specs:
     runs-on: ubuntu-20.04
