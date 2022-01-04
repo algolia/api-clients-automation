@@ -22,98 +22,102 @@ jobs:
       - name: Checking
         run: env
 
-  # specs:
-  #   runs-on: ubuntu-20.04
-  #   needs: setup
-  #   steps:
-  #     - uses: actions/checkout@v2
+  specs:
+    runs-on: ubuntu-20.04
+    needs: setup
+    if: ${{ env.SPECS_CHANGED }}
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Restore cache
-  #       uses: ./.github/actions/cache
+      - name: Restore cache
+        uses: ./.github/actions/cache
 
-  #     - name: Checking search specs
-  #       run: yarn build:specs search
+      - name: Checking search specs
+        run: yarn build:specs search
 
-  #     - name: Checking recommend specs
-  #       run: yarn build:specs recommend
+      - name: Checking recommend specs
+        run: yarn build:specs recommend
 
-  #     - name: Checking personalization specs
-  #       run: yarn build:specs personalization
+      - name: Checking personalization specs
+        run: yarn build:specs personalization
 
-  #     - name: Checking analytics specs
-  #       run: yarn build:specs analytics
+      - name: Checking analytics specs
+        run: yarn build:specs analytics
 
-  #     - name: Lint
-  #       run: yarn specs:lint
+      - name: Lint
+        run: yarn specs:lint
 
-  # client_javascript:
-  #   runs-on: ubuntu-20.04
-  #   needs: [setup, specs]
-  #   steps:
-  #     - uses: actions/checkout@v2
+  client_javascript:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs]
+    if: ${{ env.JS_CLIENT_CHANGED || env.JS_TEMPLATE_CHANGED }}
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Restore cache
-  #       uses: ./.github/actions/cache
+      - name: Restore cache
+        uses: ./.github/actions/cache
 
-  #     - name: Generate search client
-  #       run: yarn generate javascript search
+      - name: Generate search client
+        run: yarn generate javascript search
 
-  #     - name: Build search client
-  #       run: yarn build:clients javascript search
+      - name: Build search client
+        run: yarn build:clients javascript search
 
-  #     - name: Generate recommend client
-  #       run: yarn generate javascript recommend
+      - name: Generate recommend client
+        run: yarn generate javascript recommend
 
-  #     - name: Build recommend client
-  #       run: yarn build:clients javascript recommend
+      - name: Build recommend client
+        run: yarn build:clients javascript recommend
 
-  #     - name: Generate personalization client
-  #       run: yarn generate javascript personalization
+      - name: Generate personalization client
+        run: yarn generate javascript personalization
 
-  #     - name: Build personalization client
-  #       run: yarn build:clients javascript personalization
+      - name: Build personalization client
+        run: yarn build:clients javascript personalization
 
-  #     - name: Generate analytics client
-  #       run: yarn generate javascript analytics
+      - name: Generate analytics client
+        run: yarn generate javascript analytics
 
-  #     - name: Build analytics client
-  #       run: yarn build:clients javascript analytics
+      - name: Build analytics client
+        run: yarn build:clients javascript analytics
 
-  #     - name: Lint
-  #       run: yarn lint
+      - name: Lint
+        run: yarn lint
 
-  # client_java:
-  #   runs-on: ubuntu-20.04
-  #   needs: [setup, specs]
-  #   steps:
-  #     - uses: actions/checkout@v2
+  client_java:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs]
+    if: ${{ env.JAVA_CLIENT_CHANGED || env.JAVA_TEMPLATE_CHANGED }}
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Restore cache
-  #       uses: ./.github/actions/cache
+      - name: Restore cache
+        uses: ./.github/actions/cache
 
-  #     - name: Generate search client
-  #       run: yarn generate java search
+      - name: Generate search client
+        run: yarn generate java search
 
-  #     - name: Build search client
-  #       run: yarn build:clients java search
+      - name: Build search client
+        run: yarn build:clients java search
 
-  # cts:
-  #   runs-on: ubuntu-20.04
-  #   needs: [setup, specs, client_javascript, client_java]
-  #   steps:
-  #     - uses: actions/checkout@v2
+  cts:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs, client_javascript, client_java]
+    if: ${{ env.CTS_CHANGED }}
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Restore cache
-  #       uses: ./.github/actions/cache
+      - name: Restore cache
+        uses: ./.github/actions/cache
 
-  #     - name: Generate clients
-  #       run: yarn generate
+      - name: Generate clients
+        run: yarn generate
 
-  #     - name: Build client
-  #       run: yarn build:clients
+      - name: Build client
+        run: yarn build:clients
 
-  #     - name: Generate CTS
-  #       run: yarn cts:generate
+      - name: Generate CTS
+        run: yarn cts:generate
 
-  #     - name: Run CTS
-  #       run: yarn cts:test
+      - name: Run CTS
+        run: yarn cts:test
