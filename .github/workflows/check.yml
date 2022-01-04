@@ -67,6 +67,11 @@ jobs:
       - name: Build search client
         run: yarn build:clients javascript search
 
+      - name: Check path
+        run: |
+          ls
+          pwd
+
       - name: Generate recommend client
         run: yarn generate javascript recommend
 
@@ -85,6 +90,12 @@ jobs:
       - name: Build analytics client
         run: yarn build:clients javascript analytics
 
+      - name: Cache built clients
+        uses: actions/cache@v2
+        with:
+          path: ./clients/algoliasearch-client-javascript
+          key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
+
   client_java:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
@@ -100,6 +111,12 @@ jobs:
 
       - name: Build search client
         run: yarn build:clients java search
+
+      - name: Cache built clients
+        uses: actions/cache@v2
+        with:
+          path: ./clients/algoliasearch-client-java-2
+          key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
 
   cts:
     runs-on: ubuntu-20.04
