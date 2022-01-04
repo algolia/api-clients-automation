@@ -12,14 +12,14 @@ runs:
   steps:
     - name: Restore Yarn
       if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v2
+      uses: actions/cache@v2.1
       with:
         path: ~/.yarn/cache
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
       if: ${{ inputs.language == 'java' }}
-      uses: actions/cache@v2
+      uses: actions/cache@v2.1
       with:
         path: ~/.m2/repository
         key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
