@@ -25,7 +25,7 @@ jobs:
       RUN_JS_CLIENT: ${{ steps.setup.outputs.RUN_JS_CLIENT }}
       RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
 
-  specs:
+  specs_search:
     runs-on: ubuntu-20.04
     needs: setup
     if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
@@ -40,18 +40,61 @@ jobs:
       - name: Checking search specs
         run: yarn build:specs search
 
+  specs_recommend:
+    runs-on: ubuntu-20.04
+    needs: setup
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: js
+
       - name: Checking recommend specs
         run: yarn build:specs recommend
 
+  specs_personalization:
+    runs-on: ubuntu-20.04
+    needs: setup
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: js
+
       - name: Checking personalization specs
         run: yarn build:specs personalization
+
+  specs_analytics:
+    runs-on: ubuntu-20.04
+    needs: setup
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: js
 
       - name: Checking analytics specs
         run: yarn build:specs analytics
 
   client_javascript:
     runs-on: ubuntu-20.04
-    needs: [setup, specs]
+    needs:
+      [
+        setup,
+        specs_search,
+        specs_recommend,
+        specs_personalization,
+        specs_analytics,
+      ]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -98,7 +141,14 @@ jobs:
 
   client_java:
     runs-on: ubuntu-20.04
-    needs: [setup, specs]
+    needs:
+      [
+        setup,
+        specs_search,
+        specs_recommend,
+        specs_personalization,
+        specs_analytics,
+      ]
     if: ${{ always() && needs.setup.outputs.RUN_JAVA_CLIENT == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -122,7 +172,16 @@ jobs:
 
   cts:
     runs-on: ubuntu-20.04
-    needs: [setup, specs, client_javascript, client_java]
+    needs:
+      [
+        setup,
+        specs_search,
+        specs_recommend,
+        specs_personalization,
+        specs_analytics,
+        client_javascript,
+        client_java,
+      ]
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -131,12 +190,6 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
-
-      - name: Generate clients
-        run: yarn generate
-
-      - name: Build client
-        run: yarn build:clients
 
       - name: Generate CTS
         run: yarn cts:generate

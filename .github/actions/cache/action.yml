@@ -39,7 +39,7 @@ runs:
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
-      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' }}
+      if: ${{ inputs.job == 'setup' || inputs.job == 'java' }}
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
@@ -51,6 +51,6 @@ runs:
       run: yarn install
 
     - name: Install Maven dependencies
-      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' }}
+      if: ${{ inputs.job == 'setup' || inputs.job == 'java' }}
       shell: bash
       run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
