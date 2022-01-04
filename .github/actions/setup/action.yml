@@ -24,9 +24,18 @@ outputs:
   JAVA_TEMPLATE_CHANGED:
     description: 'Determine if the `templates/java` folder is different on the `main` branch.'
     value: ${{ steps.diff-variables.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+  test:
+    description: 'Test hein'
+    value: 'true'
   RUN_CTS:
-    description: 'Determine if the CTS job should run'
-    value: 'oui'
+    description: 'Determine if the `cts` job should run'
+    value: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.CTS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
+  RUN_JS_CLIENT:
+    description: 'Determine if the `client_javascript` job should run'
+    value: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.CTS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
+  RUN_JAVA_CLIENT:
+    description: 'Determine if the `client_java` job should run'
+    value: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
 
 runs:
   using: composite
