@@ -27,6 +27,8 @@ jobs:
 
       - name: Checking
         run: |
+          echo ${{ needs.setup.outputs }}
+          echo ${{ needs.setup.outputs.RUN_CTS }}
           echo ${{ toJSON(needs.setup.outputs) }}
 
   specs:

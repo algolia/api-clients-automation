@@ -24,6 +24,9 @@ outputs:
   JAVA_TEMPLATE_CHANGED:
     description: 'Determine if the `templates/java` folder is different on the `main` branch.'
     value: ${{ steps.diff-variables.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+  RUN_CTS:
+    description: 'Determine if the CTS job should run'
+    value: 'oui'
 
 runs:
   using: composite
