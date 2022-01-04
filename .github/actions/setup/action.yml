@@ -5,31 +5,31 @@ description: Setup CI environment.
 outputs:
   TESTS_CHANGED:
     description: 'Determine if the `tests` folder is different on the `main` branch.'
-    value: ${{ steps.diff-variables.outputs.TESTS_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.TESTS_CHANGED > 0 }}
   SPECS_CHANGED:
     description: 'Determine if the `specs` folder is different on the `main` branch.'
-    value: ${{ steps.diff-variables.outputs.SPECS_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.SPECS_CHANGED > 0 }}
   SCRIPTS_CHANGED:
     description: 'Determine if the `scripts` folder is different on the `main` branch.'
-    value: ${{ steps.diff-variables.outputs.SCRIPTS_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.SCRIPTS_CHANGED > 0 }}
   JS_CLIENT_CHANGED:
     description: 'Determine if the `clients/algoliasearch-client-javascript` folder is different on the `main` branch.'
-    value: ${{ steps.diff-variables.outputs.JS_CLIENT_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.JS_CLIENT_CHANGED > 0 }}
   JS_TEMPLATE_CHANGED:
     description: 'Determine if the `templates/javascript` folder is different on the `main` branch.'
-    value: ${{ steps.diff-variables.outputs.JS_TEMPLATE_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.JS_TEMPLATE_CHANGED > 0 }}
   JAVA_CLIENT_CHANGED:
     description: 'Determine if the `clients/algoliasearch-client-java-2` folder is different on the `main` branch.'
-    value: ${{ steps.diff-variables.outputs.JAVA_CLIENT_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.JAVA_CLIENT_CHANGED > 0 }}
   JAVA_TEMPLATE_CHANGED:
     description: 'Determine if the `templates/java` folder is different on the `main` branch.'
-    value: ${{ steps.diff-variables.outputs.JAVA_TEMPLATE_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
 runs:
   using: composite
   steps:
-    # - name: Restore cache
-    #   uses: ./.github/actions/cache
+    - name: Restore cache
+      uses: ./.github/actions/cache
 
     # - name: Install Java
     #   uses: actions/setup-java@v2
