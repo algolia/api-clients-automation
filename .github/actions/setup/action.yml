@@ -46,20 +46,20 @@ runs:
     - name: Restore cache
       uses: ./.github/actions/cache
 
-    # - name: Install Java
-    #   uses: actions/setup-java@v2
-    #   with:
-    #     distribution: zulu
-    #     java-version: 11.0.4
+    - name: Install Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: zulu
+        java-version: 11.0.4
 
     - name: Install Node
       uses: actions/setup-node@v2
       with:
         node-version-file: .nvmrc
 
-    # - name: Install JavaScript Dependencies
-    #   shell: bash
-    #   run: yarn install
+    - name: Install JavaScript Dependencies
+      shell: bash
+      run: yarn install
 
     - name: Setting diff outputs variables
       id: diff
