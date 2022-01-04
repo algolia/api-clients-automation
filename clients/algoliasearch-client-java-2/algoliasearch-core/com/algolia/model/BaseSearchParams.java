@@ -3,10 +3,8 @@ package com.algolia.model;
 import com.google.gson.annotations.SerializedName;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 /** BaseSearchParams */
 public class BaseSearchParams {
@@ -904,22 +902,6 @@ public class BaseSearchParams {
     );
   }
 
-  private static <T> boolean equalsNullable(
-    JsonNullable<T> a,
-    JsonNullable<T> b
-  ) {
-    return (
-      a == b ||
-      (
-        a != null &&
-        b != null &&
-        a.isPresent() &&
-        b.isPresent() &&
-        Objects.deepEquals(a.get(), b.get())
-      )
-    );
-  }
-
   @Override
   public int hashCode() {
     return Objects.hash(
@@ -957,13 +939,6 @@ public class BaseSearchParams {
       enableABTest,
       enableReRanking
     );
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[] { a.get() }) : 31;
   }
 
   @Override
