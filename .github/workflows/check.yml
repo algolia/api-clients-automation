@@ -28,7 +28,7 @@ jobs:
   specs:
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_SPECS == 'true' }}
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
@@ -50,7 +50,7 @@ jobs:
   client_javascript:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ needs.setup.outputs.RUN_JS_CLIENT == 'true' }}
+    if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
@@ -87,7 +87,7 @@ jobs:
   client_java:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ needs.setup.outputs.RUN_JAVA_CLIENT == 'true' }}
+    if: ${{ always() && needs.setup.outputs.RUN_JAVA_CLIENT == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
@@ -103,7 +103,7 @@ jobs:
   cts:
     runs-on: ubuntu-20.04
     needs: [setup, specs, client_javascript, client_java]
-    if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
+    if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
