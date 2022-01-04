@@ -5,9 +5,6 @@ description: Setup CI environment.
 runs:
   using: composite
   steps:
-    - name: Restore cache
-      uses: ./.github/actions/cache
-
     - name: Install Java
       uses: actions/setup-java@v2
       with:

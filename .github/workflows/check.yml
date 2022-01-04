@@ -32,9 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Restore cache
-        uses: ./.github/actions/cache
-
       - name: Checking search specs
         run: yarn build:specs search
 
@@ -53,9 +50,6 @@ jobs:
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT == 'true' }}
     steps:
       - uses: actions/checkout@v2
-
-      - name: Restore cache
-        uses: ./.github/actions/cache
 
       - name: Generate search client
         run: yarn generate javascript search
@@ -91,9 +85,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Restore cache
-        uses: ./.github/actions/cache
-
       - name: Generate search client
         run: yarn generate java search
 
@@ -106,9 +97,6 @@ jobs:
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
-
-      - name: Restore cache
-        uses: ./.github/actions/cache
 
       - name: Generate clients
         run: yarn generate
