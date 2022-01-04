@@ -27,6 +27,7 @@ runs:
       id: diff
       shell: bash
       run: |
+        echo "::set-output name=GITHUB_ACTIONS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- .github/actions .github/workflows | wc -l)"
         echo "::set-output name=SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs | wc -l)"
         echo "::set-output name=TESTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- tests | wc -l)"
         echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- scripts | wc -l)"
@@ -38,13 +39,13 @@ runs:
 outputs:
   RUN_SPECS:
     description: 'Determine if the `specs` job should run'
-    value: ${{ steps.diff.outputs.SPECS_CHANGED > 0 }}
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 }}
   RUN_JS_CLIENT:
     description: 'Determine if the `client_javascript` job should run'
-    value: ${{ steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
   RUN_JAVA_CLIENT:
     description: 'Determine if the `client_java` job should run'
-    value: ${{ steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
   RUN_CTS:
     description: 'Determine if the `cts` job should run'
-    value: ${{ steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.CTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.CTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}

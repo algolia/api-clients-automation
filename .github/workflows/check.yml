@@ -11,11 +11,6 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-20.04
-    outputs:
-      RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
-      RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
-      RUN_JS_CLIENT: ${{ steps.setup.outputs.RUN_JS_CLIENT }}
-      RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -24,6 +19,11 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
+    outputs:
+      RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
+      RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
+      RUN_JS_CLIENT: ${{ steps.setup.outputs.RUN_JS_CLIENT }}
+      RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
 
   specs:
     runs-on: ubuntu-20.04
