@@ -26,7 +26,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Checking
-        run: echo ${{ steps.foo.outputs }}
+        run: |
+          echo ${{ needs.setup.outputs }}
+          echo ${{ needs.setup.outputs.SPECS_CHANGED }}
 
   # specs:
   #   runs-on: ubuntu-20.04
