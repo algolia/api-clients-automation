@@ -19,11 +19,6 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Checking
-        run: |
-          echo ${{ needs.setup.outputs }}
-          echo ${{ needs.setup.outputs.SPECS_CHANGED }}
-
   check:
     runs-on: ubuntu-20.04
     needs: setup
@@ -32,12 +27,12 @@ jobs:
 
       - name: Checking
         run: |
-          echo ${{ fromJSON(needs.setup.outputs) }}
+          echo ${{ toJSON(needs.setup.outputs) }}
 
   specs:
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ needs.setup.outputs.SPECS_CHANGED }}
+    if: ${{ always() && needs.setup.outputs.SPECS_CHANGED }}
     steps:
       - uses: actions/checkout@v2
 
@@ -62,7 +57,7 @@ jobs:
   client_javascript:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JS_CLIENT_CHANGED || needs.setup.outputs.JS_TEMPLATE_CHANGED }}
+    if: ${{ always() && (needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JS_CLIENT_CHANGED || needs.setup.outputs.JS_TEMPLATE_CHANGED) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -99,7 +94,7 @@ jobs:
   client_java:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
+    if: ${{ always() && (needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -115,7 +110,7 @@ jobs:
   cts:
     runs-on: ubuntu-20.04
     needs: [setup, specs, client_javascript, client_java]
-    if: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.CTS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
+    if: ${{ always() && (needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.CTS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED) }}
     steps:
       - uses: actions/checkout@v2
 
