@@ -41,7 +41,7 @@ outputs:
     value: ${{ steps.diff.outputs.SPECS_CHANGED > 0 }}
   RUN_JS_CLIENT:
     description: 'Determine if the `client_javascript` job should run'
-    value: |
+    value: >
       ${{
         steps.diff.outputs.SPECS_CHANGED > 0 ||
         steps.diff.outputs.JS_CLIENT_CHANGED > 0 ||
@@ -49,7 +49,7 @@ outputs:
       }}
   RUN_JAVA_CLIENT:
     description: 'Determine if the `client_java` job should run'
-    value: |
+    value: >
       ${{
         steps.diff.outputs.SPECS_CHANGED > 0 ||
         steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 ||
@@ -57,7 +57,7 @@ outputs:
       }}
   RUN_CTS:
     description: 'Determine if the `cts` job should run'
-    value: |
+    value: >
       ${{
         steps.diff.outputs.SPECS_CHANGED > 0 ||
         steps.diff.outputs.CTS_CHANGED > 0 ||
