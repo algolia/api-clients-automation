@@ -1,6 +1,6 @@
 post:
   tags:
-    - searchOIJOIJ
+    - search
   operationId: search
   description: Get search results.
   parameters:
