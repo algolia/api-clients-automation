@@ -46,7 +46,7 @@ runs:
     #   shell: bash
     #   run: yarn install
 
-    - name: Setting diff output variables
+    - name: Setting diff outputs variables
       id: diff-variables
       shell: bash
       run: |
