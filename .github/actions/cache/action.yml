@@ -20,7 +20,7 @@ runs:
       if: ${{ inputs.language == 'javascript' }}
       uses: actions/cache@v2
       with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        path: ${{ steps.yarn-cache-dir.outputs.dir }}
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
