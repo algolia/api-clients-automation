@@ -26,13 +26,13 @@ runs:
     - name: Setting global diff variables
       shell: bash
       run: |
-        echo "SPECS_CHANGED=$(git diff --exit-code ${{ github.ref }} -- specs | echo $?)" >> $GITHUB_ENV
-        echo "TEMPLATES_CHANGED=$(git diff --exit-code ${{ github.ref }} -- templates | echo $?)" >> $GITHUB_ENV
-        echo "TESTS_CHANGED=$(git diff --exit-code ${{ github.ref }} -- tests | echo $?)" >> $GITHUB_ENV
-        echo "SCRIPTS_CHANGED=$(git diff --exit-code ${{ github.ref }} -- scripts | echo $?)" >> $GITHUB_ENV
+        echo "SPECS_CHANGED=$(git diff --exit-code ${{ github.base_ref }} -- specs | echo $?)" >> $GITHUB_ENV
+        echo "TEMPLATES_CHANGED=$(git diff --exit-code ${{ github.base_ref }} -- templates | echo $?)" >> $GITHUB_ENV
+        echo "TESTS_CHANGED=$(git diff --exit-code ${{ github.base_ref }} -- tests | echo $?)" >> $GITHUB_ENV
+        echo "SCRIPTS_CHANGED=$(git diff --exit-code ${{ github.base_ref }} -- scripts | echo $?)" >> $GITHUB_ENV
 
     - name: Setting clients diff variables
       shell: bash
       run: |
-        echo "JS_CLIENT_CHANGED=$(git diff --exit-code ${{ github.ref }} -- clients/algoliasearch-client-java-2 | echo $?)" >> $GITHUB_ENV
-        echo "JAVA_CLIENT_CHANGED=$(git diff --exit-code ${{ github.ref }} -- clients/algoliasearch-client-javascript | echo $?)" >> $GITHUB_ENV
+        echo "JS_CLIENT_CHANGED=$(git diff --exit-code ${{ github.base_ref }} -- clients/algoliasearch-client-java-2 | echo $?)" >> $GITHUB_ENV
+        echo "JAVA_CLIENT_CHANGED=$(git diff --exit-code ${{ github.base_ref }} -- clients/algoliasearch-client-javascript | echo $?)" >> $GITHUB_ENV
