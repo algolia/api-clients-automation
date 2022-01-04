@@ -27,15 +27,18 @@ outputs:
   test:
     description: 'Test hein'
     value: 'true'
+  RUN_SPECS:
+    description: 'Determine if the `specs` job should run'
+    value: ${{ steps.diff-variables.outputs.SPECS_CHANGED }}
   RUN_CTS:
     description: 'Determine if the `cts` job should run'
-    value: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.CTS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.SPECS_CHANGED || steps.diff-variables.outputs.CTS_CHANGED || steps.diff-variables.outputs.JAVA_CLIENT_CHANGED || steps.diff-variables.outputs.JAVA_TEMPLATE_CHANGED }}
   RUN_JS_CLIENT:
     description: 'Determine if the `client_javascript` job should run'
-    value: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.CTS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.SPECS_CHANGED || steps.diff-variables.outputs.JS_CLIENT_CHANGED || steps.diff-variables.outputs.JS_TEMPLATE_CHANGED }}
   RUN_JAVA_CLIENT:
     description: 'Determine if the `client_java` job should run'
-    value: ${{ needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED }}
+    value: ${{ steps.diff-variables.outputs.SPECS_CHANGED || steps.diff-variables.outputs.JAVA_CLIENT_CHANGED || steps.diff-variables.outputs.JAVA_TEMPLATE_CHANGED }}
 
 runs:
   using: composite

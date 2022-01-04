@@ -34,7 +34,7 @@ jobs:
   specs:
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ always() && needs.setup.outputs.SPECS_CHANGED }}
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS }}
     steps:
       - uses: actions/checkout@v2
 
@@ -59,7 +59,7 @@ jobs:
   client_javascript:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ always() && (needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JS_CLIENT_CHANGED || needs.setup.outputs.JS_TEMPLATE_CHANGED) }}
+    if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT }}
     steps:
       - uses: actions/checkout@v2
 
@@ -96,7 +96,7 @@ jobs:
   client_java:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ always() && (needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED) }}
+    if: ${{ always() && needs.setup.outputs.RUN_JAVA_CLIENT }}
     steps:
       - uses: actions/checkout@v2
 
@@ -112,7 +112,7 @@ jobs:
   cts:
     runs-on: ubuntu-20.04
     needs: [setup, specs, client_javascript, client_java]
-    if: ${{ always() && (needs.setup.outputs.SPECS_CHANGED || needs.setup.outputs.CTS_CHANGED || needs.setup.outputs.JAVA_CLIENT_CHANGED || needs.setup.outputs.JAVA_TEMPLATE_CHANGED) }}
+    if: ${{ always() && needs.setup.outputs.RUN_CTS }}
     steps:
       - uses: actions/checkout@v2
 
