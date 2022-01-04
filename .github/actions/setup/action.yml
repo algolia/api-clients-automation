@@ -5,6 +5,8 @@ description: Setup CI environment.
 runs:
   using: composite
   steps:
+    - uses: actions/checkout@v2
+
     # - name: Restore cache
     #   uses: ./.github/actions/cache
 

@@ -12,10 +12,6 @@ jobs:
   setup:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 100
-
       - name: Setup
         uses: ./.github/actions/setup
 
