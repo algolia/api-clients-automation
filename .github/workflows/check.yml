@@ -136,7 +136,7 @@ jobs:
       - name: Cache built clients
         uses: actions/cache@v2
         with:
-          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/**
           key: ${{ runner.os }}-js-client-${{ hashFiles('yarn.lock') }}
 
   client_java:
@@ -167,7 +167,7 @@ jobs:
       - name: Cache built clients
         uses: actions/cache@v2
         with:
-          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/**
           key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
 
   cts:
@@ -187,9 +187,18 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Restore cache
+        id: restore
         uses: ./.github/actions/cache
         with:
           job: cts
+
+      - name: Generate clients
+        if: ${{ steps.restore.outputs.CLIENTS_CACHED != 'true' }}
+        run: yarn generate
+
+      - name: Build client
+        if: ${{ steps.restore.outputs.CLIENTS_CACHED != 'true' }}
+        run: yarn build:clients
 
       - name: Generate CTS
         run: yarn cts:generate
