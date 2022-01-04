@@ -8,6 +8,15 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  JAVA_TEMPLATE_CHANGED: false
+  JAVA_CLIENT_CHANGED: false
+  JS_TEMPLATE_CHANGED: false
+  JS_CLIENT_CHANGED: false
+  TESTS_CHANGED: false
+  SCRIPTS_CHANGED: false
+  SPECS_CHANGED: false
+
 jobs:
   setup:
     runs-on: ubuntu-20.04
@@ -25,7 +34,7 @@ jobs:
   specs:
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ SPECS_CHANGED }}
+    if: ${{ $SPECS_CHANGED }}
     steps:
       - uses: actions/checkout@v2
 
