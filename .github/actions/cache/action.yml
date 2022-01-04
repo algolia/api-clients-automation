@@ -9,7 +9,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/.yarn/cache
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
       uses: actions/cache@v2

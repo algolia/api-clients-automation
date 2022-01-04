@@ -22,11 +22,15 @@ runs:
       shell: bash
       run: yarn install
 
+    - name: Install Maven dependencies
+      shell: bash
+      run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
+
     - name: Cache Yarn
       uses: actions/cache@v2
       with:
         path: ~/.yarn/cache
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Cache Maven
       uses: actions/cache@v2
