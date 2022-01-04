@@ -25,7 +25,7 @@ jobs:
   specs:
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ env.SPECS_CHANGED }}
+    if: ${{ SPECS_CHANGED }}
     steps:
       - uses: actions/checkout@v2
 
@@ -50,7 +50,7 @@ jobs:
   client_javascript:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ env.JS_CLIENT_CHANGED || env.JS_TEMPLATE_CHANGED }}
+    if: ${{ JS_CLIENT_CHANGED || JS_TEMPLATE_CHANGED }}
     steps:
       - uses: actions/checkout@v2
 
@@ -87,7 +87,7 @@ jobs:
   client_java:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ env.JAVA_CLIENT_CHANGED || env.JAVA_TEMPLATE_CHANGED }}
+    if: ${{ JAVA_CLIENT_CHANGED || JAVA_TEMPLATE_CHANGED }}
     steps:
       - uses: actions/checkout@v2
 
@@ -103,7 +103,7 @@ jobs:
   cts:
     runs-on: ubuntu-20.04
     needs: [setup, specs, client_javascript, client_java]
-    if: ${{ env.CTS_CHANGED }}
+    if: ${{ CTS_CHANGED || JAVA_CLIENT_CHANGED || JAVA_TEMPLATE_CHANGED }}
     steps:
       - uses: actions/checkout@v2
 
