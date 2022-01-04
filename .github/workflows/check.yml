@@ -25,21 +25,10 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
 
-  check:
-    runs-on: ubuntu-20.04
-    needs: setup
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Checking
-        run: |
-          echo ${{ needs.setup.outputs }}
-          echo ${{ toJSON(needs.setup.outputs) }}
-
   specs:
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ always() && needs.setup.outputs.RUN_SPECS }}
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS == true }}
     steps:
       - uses: actions/checkout@v2
 
@@ -58,13 +47,10 @@ jobs:
       - name: Checking analytics specs
         run: yarn build:specs analytics
 
-      - name: Lint
-        run: yarn specs:lint
-
   client_javascript:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT }}
+    if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT == true }}
     steps:
       - uses: actions/checkout@v2
 
@@ -101,7 +87,7 @@ jobs:
   client_java:
     runs-on: ubuntu-20.04
     needs: [setup, specs]
-    if: ${{ always() && needs.setup.outputs.RUN_JAVA_CLIENT }}
+    if: ${{ always() && needs.setup.outputs.RUN_JAVA_CLIENT == true }}
     steps:
       - uses: actions/checkout@v2
 
@@ -117,7 +103,7 @@ jobs:
   cts:
     runs-on: ubuntu-20.04
     needs: [setup, specs, client_javascript, client_java]
-    if: ${{ always() && needs.setup.outputs.RUN_CTS }}
+    if: ${{ always() && needs.setup.outputs.RUN_CTS == true }}
     steps:
       - uses: actions/checkout@v2
 
