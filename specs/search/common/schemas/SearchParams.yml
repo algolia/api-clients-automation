@@ -1,6 +1,6 @@
 searchParams:
   oneOf:
-    - $ref: '#/searchParamsAsString'
+    - $ref: '#/searchParamsString'
     - $ref: '#/searchParamsObject'
 
 searchParamsObject:
@@ -164,7 +164,7 @@ baseSearchParams:
       description: Whether this search should use AI Re-Ranking.
       default: true
 
-searchParamsAsString:
+searchParamsString:
   type: object
   additionalProperties: false
   properties:
