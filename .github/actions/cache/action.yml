@@ -15,4 +15,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+    - name: Install JavaScript dependencies
+      shell: bash
+      run: yarn install
+
+    - name: Install Maven dependencies
+      shell: bash
+      run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
