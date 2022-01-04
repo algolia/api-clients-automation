@@ -32,7 +32,7 @@ jobs:
 
       - name: Checking
         run: |
-          echo ${{ toJSON(needs.setup.outputs) }}
+          echo ${{ fromJSON(needs.setup.outputs) }}
 
   specs:
     runs-on: ubuntu-20.04
