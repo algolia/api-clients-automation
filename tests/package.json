@@ -8,8 +8,8 @@
     "start": "yarn build && node dist/tests/generateCTS.js ${0:-all} && yarn lint:fix"
   },
   "devDependencies": {
+    "@algolia/client-insights": "5.0.0",
     "@algolia/client-search": "5.0.0",
-    "@algolia/client-insights" : "5.0.0",
     "@algolia/recommend": "5.0.0",
     "@apidevtools/swagger-parser": "10.0.3",
     "@types/jest": "27.0.3",
