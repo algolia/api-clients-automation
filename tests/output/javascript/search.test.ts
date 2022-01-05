@@ -1,11 +1,9 @@
-// @ts-nocheck
 import { SearchApi, EchoRequester } from '@algolia/client-search';
 
-const client = new SearchApi(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_SEARCH_KEY,
-  { requester: new EchoRequester() }
-);
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
+
+const client = new SearchApi(appId, apiKey, { requester: new EchoRequester() });
 
 describe('getDictionarySettings', () => {
   test('get getDictionarySettings results', async () => {
@@ -135,12 +133,12 @@ describe('search', () => {
   test('search', async () => {
     const req = await client.search({
       indexName: 'indexName',
-      searchParams: { $objectName: 'Query', query: 'queryString' },
+      searchParams: { query: 'myQuery' },
     });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/query',
       method: 'POST',
-      data: { query: 'queryString' },
+      data: { query: 'myQuery' },
     });
   });
 });
@@ -201,11 +199,11 @@ describe('getRule', () => {
 describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with minimal parameters', async () => {
     const req = await client.searchDictionaryEntries({
-      dictionaryName: 'dictionaryName',
+      dictionaryName: 'compounds',
       searchDictionaryEntries: { query: 'foo' },
     });
     expect(req).toMatchObject({
-      path: '/1/dictionaries/dictionaryName/search',
+      path: '/1/dictionaries/compounds/search',
       method: 'POST',
       data: { query: 'foo' },
     });
@@ -213,7 +211,7 @@ describe('searchDictionaryEntries', () => {
 
   test('get searchDictionaryEntries results with all parameters', async () => {
     const req = await client.searchDictionaryEntries({
-      dictionaryName: 'dictionaryName',
+      dictionaryName: 'compounds',
       searchDictionaryEntries: {
         query: 'foo',
         page: 4,
@@ -222,7 +220,7 @@ describe('searchDictionaryEntries', () => {
       },
     });
     expect(req).toMatchObject({
-      path: '/1/dictionaries/dictionaryName/search',
+      path: '/1/dictionaries/compounds/search',
       method: 'POST',
       data: { query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' },
     });
@@ -455,7 +453,7 @@ describe('clearRules', () => {
 describe('batchDictionaryEntries', () => {
   test('get batchDictionaryEntries results with minimal parameters', async () => {
     const req = await client.batchDictionaryEntries({
-      dictionaryName: 'dictionaryName',
+      dictionaryName: 'compounds',
       batchDictionaryEntries: {
         requests: [
           { action: 'addEntry', body: { objectID: '1', language: 'en' } },
@@ -464,7 +462,7 @@ describe('batchDictionaryEntries', () => {
       },
     });
     expect(req).toMatchObject({
-      path: '/1/dictionaries/dictionaryName/batch',
+      path: '/1/dictionaries/compounds/batch',
       method: 'POST',
       data: {
         requests: [
@@ -477,7 +475,7 @@ describe('batchDictionaryEntries', () => {
 
   test('get batchDictionaryEntries results with all parameters', async () => {
     const req = await client.batchDictionaryEntries({
-      dictionaryName: 'dictionaryName',
+      dictionaryName: 'compounds',
       batchDictionaryEntries: {
         clearExistingDictionaryEntries: false,
         requests: [
@@ -507,7 +505,7 @@ describe('batchDictionaryEntries', () => {
       },
     });
     expect(req).toMatchObject({
-      path: '/1/dictionaries/dictionaryName/batch',
+      path: '/1/dictionaries/compounds/batch',
       method: 'POST',
       data: {
         clearExistingDictionaryEntries: false,

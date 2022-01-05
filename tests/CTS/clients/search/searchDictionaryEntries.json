@@ -4,14 +4,14 @@
     "testName": "get searchDictionaryEntries results with minimal parameters",
     "parameters": [
       {
-        "dictionaryName": "dictionaryName",
+        "dictionaryName": "compounds",
         "searchDictionaryEntries": {
           "query": "foo"
         }
       }
     ],
     "request": {
-      "path": "/1/dictionaries/dictionaryName/search",
+      "path": "/1/dictionaries/compounds/search",
       "method": "POST",
       "data": {
         "query": "foo"
@@ -23,7 +23,7 @@
     "testName": "get searchDictionaryEntries results with all parameters",
     "parameters": [
       {
-        "dictionaryName": "dictionaryName",
+        "dictionaryName": "compounds",
         "searchDictionaryEntries": {
           "query": "foo",
           "page": 4,
@@ -33,7 +33,7 @@
       }
     ],
     "request": {
-      "path": "/1/dictionaries/dictionaryName/search",
+      "path": "/1/dictionaries/compounds/search",
       "method": "POST",
       "data": {
         "query": "foo",

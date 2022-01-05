@@ -5,8 +5,7 @@
       {
         "indexName": "indexName",
         "searchParams": {
-          "$objectName": "Query",
-          "query": "queryString"
+          "query": "myQuery"
         }
       }
     ],
@@ -14,7 +13,7 @@
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "data": {
-        "query": "queryString"
+        "query": "myQuery"
       }
     }
   }
