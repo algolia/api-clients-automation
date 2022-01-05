@@ -53,12 +53,14 @@ runs:
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
     - name: Restore Yarn
+      id: yarn-cache
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '/home/runner/work/api-clients-automation/api-clients-automation/.yarn/cache' }}
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Install JavaScript dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       shell: bash
       run: yarn install
 
