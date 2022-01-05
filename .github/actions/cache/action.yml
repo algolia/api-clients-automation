@@ -15,48 +15,42 @@ runs:
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search
+        path: env.JS_CACHE_PATH/client-search
         key: ${{ runner.os }}-js-client-search-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built JavaScript recommend client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend
+        path: env.JS_CACHE_PATH/recommend
         key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built JavaScript personalization client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization
+        path: env.JS_CACHE_PATH/client-personalization
         key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built JavaScript analytics client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics
+        path: env.JS_CACHE_PATH/client-analytics
         key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/**
+        path: env.JAVA_CACHE_PATH
         key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
-
-    - name: Get yarn cache directory path
-      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
-      shell: bash
-      id: yarn-cache-dir
-      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
     - name: Restore Yarn
       if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
       uses: actions/cache@v2
       with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir || '/home/runner/work/api-clients-automation/api-clients-automation/.yarn/cache' }}
+        path: ${{ env.YARN_CACHE_PATH }}
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Restore Maven
