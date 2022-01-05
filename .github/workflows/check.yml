@@ -2,7 +2,10 @@ name: Checks
 
 on:
   pull_request:
-    types: [opened, synchronize, closed]
+    types: [opened, synchronize]
+  push:
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.ref }}
@@ -46,8 +49,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Checking search specs
         run: yarn build:specs search
@@ -61,8 +62,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Checking recommend specs
         run: yarn build:specs recommend
@@ -76,8 +75,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Checking personalization specs
         run: yarn build:specs personalization
@@ -91,8 +88,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Checking analytics specs
         run: yarn build:specs analytics
@@ -106,8 +101,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Generate search client
         run: yarn generate javascript search
@@ -130,8 +123,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Generate recommend client
         run: yarn generate javascript recommend
@@ -154,8 +145,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Generate personalization client
         run: yarn generate javascript personalization
@@ -178,8 +167,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: js
 
       - name: Generate analytics client
         run: yarn generate javascript analytics
@@ -234,8 +221,6 @@ jobs:
       - name: Restore cache
         id: restore
         uses: ./.github/actions/cache
-        with:
-          job: cts
 
       - name: Generate CTS
         run: yarn cts:generate

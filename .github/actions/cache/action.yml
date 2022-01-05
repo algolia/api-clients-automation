@@ -6,7 +6,7 @@ inputs:
   job:
     description: 'The job that requires this composite'
     required: true
-    default: 'setup'
+    default: 'cts'
 
 runs:
   using: composite
@@ -49,32 +49,29 @@ runs:
 
     # setup yarn
     - name: Get yarn cache directory path
-      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
       shell: bash
       id: yarn-cache-dir
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
     - name: Restore Yarn
-      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '/home/runner/work/api-clients-automation/api-clients-automation/.yarn/cache' }}
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
     - name: Install JavaScript dependencies
-      if: ${{ inputs.job == 'cts' || inputs.job == 'setup' || inputs.job == 'java' || inputs.job == 'js' }}
       shell: bash
       run: yarn install
 
     # setup maven
     - name: Restore Maven
-      if: ${{ inputs.job == 'setup' || inputs.job == 'java' }}
+      if: ${{ inputs.job == 'java' }}
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
         key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
     - name: Install Maven dependencies
-      if: ${{ inputs.job == 'setup' || inputs.job == 'java' }}
+      if: ${{ inputs.job == 'java' }}
       shell: bash
       run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
