@@ -149,7 +149,9 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
     });
   }
 
-  return ctsClient;
+  return ctsClient.sort((t1, t2) =>
+    t1.operationId.localeCompare(t2.operationId)
+  );
 }
 
 async function loadCTS(): Promise<void> {
