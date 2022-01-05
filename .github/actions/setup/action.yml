@@ -17,6 +17,10 @@ runs:
       with:
         node-version-file: .nvmrc
 
+    - name: cache path
+      shell: bash
+      run: yarn config -v
+
     - name: Restore cache
       uses: ./.github/actions/cache
 
