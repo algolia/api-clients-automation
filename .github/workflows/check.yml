@@ -75,6 +75,9 @@ jobs:
       - name: Build analytics client
         run: yarn build:clients javascript analytics
 
+      - name: Generate insights client
+        run: yarn generate javascript insights
+
       - name: Build insights client
         run: yarn build:clients javascript insights
 
