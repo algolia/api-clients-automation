@@ -36,6 +36,9 @@ jobs:
       - name: Checking analytics specs
         run: yarn build:specs analytics
 
+      - name: Checking insights specs
+        run: yarn build:specs insights
+
       - name: Lint
         run: yarn specs:lint
 
@@ -71,6 +74,9 @@ jobs:
 
       - name: Build analytics client
         run: yarn build:clients javascript analytics
+
+      - name: Build insights client
+        run: yarn build:clients javascript insights
 
       - name: Lint
         run: yarn lint
