@@ -6,7 +6,6 @@ inputs:
   job:
     description: 'The job that requires this composite'
     required: true
-    default: 'cts'
 
 runs:
   using: composite

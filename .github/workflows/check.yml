@@ -221,6 +221,8 @@ jobs:
       - name: Restore cache
         id: restore
         uses: ./.github/actions/cache
+        with:
+          job: cts
 
       - name: Generate CTS
         run: yarn cts:generate
