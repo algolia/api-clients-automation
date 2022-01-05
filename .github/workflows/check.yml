@@ -20,7 +20,6 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
     outputs:
-      RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       RUN_SPECS_SEARCH: ${{ steps.setup.outputs.RUN_SPECS_SEARCH }}
       RUN_SPECS_RECOMMEND: ${{ steps.setup.outputs.RUN_SPECS_RECOMMEND }}
       RUN_SPECS_QS: ${{ steps.setup.outputs.RUN_SPECS_QS }}
@@ -29,7 +28,6 @@ jobs:
       RUN_SPECS_ANALYTICS: ${{ steps.setup.outputs.RUN_SPECS_ANALYTICS }}
       RUN_SPECS_AB: ${{ steps.setup.outputs.RUN_SPECS_AB }}
 
-      RUN_JS_CLIENT: ${{ steps.setup.outputs.RUN_JS_CLIENT }}
       RUN_JS_CLIENT_SEARCH: ${{ steps.setup.outputs.RUN_JS_CLIENT_SEARCH }}
       RUN_JS_CLIENT_RECOMMEND: ${{ steps.setup.outputs.RUN_JS_CLIENT_RECOMMEND }}
       RUN_JS_CLIENT_PERSO: ${{ steps.setup.outputs.RUN_JS_CLIENT_PERSO }}
