@@ -16,7 +16,6 @@ runs:
       uses: actions/setup-node@v2
       with:
         node-version-file: .nvmrc
-        cache: 'yarn'
 
     - name: Restore cache
       uses: ./.github/actions/cache
