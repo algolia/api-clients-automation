@@ -95,7 +95,7 @@ outputs:
 
   # java client variables
   RUN_JAVA_CLIENT:
-    description: 'Determine if the `client_java_*` job should run'
+    description: Determine if the `client_java_*` job should run
     value: ${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
   # cts variables
