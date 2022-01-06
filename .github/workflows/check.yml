@@ -112,7 +112,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/dist
-          key: ${{ runner.os }}-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/dist/**') }}
+          key: ${{ runner.os }}-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/**') }}
 
   client_javascript_recommend:
     runs-on: ubuntu-20.04
@@ -134,7 +134,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
-          key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/dist/**') }}
+          key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}
 
   client_javascript_perso:
     runs-on: ubuntu-20.04
@@ -156,7 +156,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/dist
-          key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/dist/**') }}
+          key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/**') }}
 
   client_javascript_analytics:
     runs-on: ubuntu-20.04
@@ -178,7 +178,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
-          key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/dist/**') }}
+          key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}
 
   client_java_search:
     runs-on: ubuntu-20.04
@@ -202,7 +202,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
-          key: ${{ runner.os }}-java-client-${{ hashFiles('clients/algoliasearch-client-javascript/algoliasearch-client-java-2/target/**') }}
+          key: ${{ runner.os }}-java-client-${{ hashFiles('clients/algoliasearch-client-javascript/algoliasearch-client-java-2/**') }}
 
   cts:
     runs-on: ubuntu-20.04
