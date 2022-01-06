@@ -108,17 +108,20 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
+      - name: Cache search client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/dist
+          key: ${{ runner.os }}-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/**') }}
+
       - name: Generate search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript search
 
       - name: Build search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript search
-
-      - name: Cache search client
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/**
-          key: ${{ runner.os }}-js-client-search-${{ hashFiles('yarn.lock') }}
 
   client_javascript_recommend:
     runs-on: ubuntu-20.04
@@ -130,17 +133,20 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
+      - name: Cache recommend client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
+          key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}
+
       - name: Generate recommend client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript recommend
 
       - name: Build recommend client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript recommend
-
-      - name: Cache recommend client
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/**
-          key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('yarn.lock') }}
 
   client_javascript_perso:
     runs-on: ubuntu-20.04
@@ -152,17 +158,20 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
+      - name: Cache personalization client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/dist
+          key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/**') }}
+
       - name: Generate personalization client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript personalization
 
       - name: Build personalization client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript personalization
-
-      - name: Cache personalization client
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/**
-          key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('yarn.lock') }}
 
   client_javascript_analytics:
     runs-on: ubuntu-20.04
@@ -174,26 +183,45 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
+      - name: Cache analytics client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
+          key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}
+
       - name: Generate analytics client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript analytics
 
       - name: Build analytics client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript analytics
 
+  client_javascript_insights:
+    runs-on: ubuntu-20.04
+    needs: [specs_insights]
+    if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_INSIGHTS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Cache insights client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-insights/dist
+          key: ${{ runner.os }}-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/client-insights/**') }}
+
       - name: Generate insights client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript insights
 
       - name: Build insights client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript insights
-
-      - name: Lint
-        run: yarn lint
-        
-      - name: Cache analytics client
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics//**
-          key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('yarn.lock') }}
 
   client_java_search:
     runs-on: ubuntu-20.04
@@ -207,17 +235,20 @@ jobs:
         with:
           job: java
 
+      - name: Cache built clients
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
+          key: ${{ runner.os }}-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}
+
       - name: Generate search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate java search
 
       - name: Build search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients java search
-
-      - name: Cache built clients
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/**
-          key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
 
   cts:
     runs-on: ubuntu-20.04
@@ -236,6 +267,8 @@ jobs:
       - name: Restore cache
         id: restore
         uses: ./.github/actions/cache
+        with:
+          job: cts
 
       - name: Generate CTS
         run: yarn cts:generate
