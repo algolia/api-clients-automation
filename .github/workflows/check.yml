@@ -92,11 +92,18 @@ jobs:
       - name: Checking analytics specs
         run: yarn build:specs analytics
 
+  specs_insights:
+    runs-on: ubuntu-20.04
+    needs: setup
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS_INSIGHTS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
       - name: Checking insights specs
         run: yarn build:specs insights
-
-      - name: Lint
-        run: yarn specs:lint
 
   client_javascript_search:
     runs-on: ubuntu-20.04
@@ -258,6 +265,7 @@ jobs:
         client_javascript_recommend,
         client_javascript_perso,
         client_javascript_analytics,
+        client_javascript_insights,
         client_java_search,
       ]
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
