@@ -261,14 +261,13 @@ jobs:
   cts:
     runs-on: ubuntu-20.04
     needs:
-      [
-        client_javascript_search,
-        client_javascript_recommend,
-        client_javascript_perso,
-        client_javascript_analytics,
-        client_javascript_insights,
-        client_java_search,
-      ]
+      - client_javascript_search
+      - client_javascript_recommend
+      - client_javascript_perso
+      - client_javascript_analytics
+      - client_javascript_insights
+      - client_java_search
+
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2

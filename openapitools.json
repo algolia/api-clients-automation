@@ -21,7 +21,6 @@
           "npmVersion": "5.0.0",
 
           "packageName": "@algolia/client-search",
-          "useAppIdInHost": true,
           "isSearchHost": true
         }
       },
@@ -43,7 +42,6 @@
           "npmVersion": "5.0.0",
 
           "packageName": "@algolia/recommend",
-          "useAppIdInHost": true,
           "isSearchHost": true
         }
       },

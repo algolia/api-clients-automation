@@ -2,8 +2,8 @@ post:
   tags:
     - insights
   operationId: pushEvents
-  description: This command pushes an array of events to the Insights API.
-  summary: This command pushes an array of events to the Insights API.
+  description: This command pushes an array of events.
+  summary: Pushes an array of events.
   requestBody:
     required: true
     content:
@@ -11,14 +11,14 @@ post:
         schema:
           title: InsightEvents
           type: object
-          description: Object containing the events sent to the Insights API.
+          description: Object containing the events sent.
           additionalProperties: false
           required:
             - events
           properties:
             events:
               type: array
-              description: Array of events sent to the Insights API.
+              description: Array of events sent.
               items:
                 title: InsightEvent
                 type: object

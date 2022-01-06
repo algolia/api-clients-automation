@@ -75,9 +75,9 @@ export class InsightsApi {
   }
 
   /**
-   * This command pushes an array of events to the Insights API.
+   * This command pushes an array of events.
    *
-   * @summary This command pushes an array of events to the Insights API.
+   * @summary Pushes an array of events.
    * @param pushEvents - The pushEvents parameters.
    * @param pushEvents.insightEvents - The insightEvents.
    */

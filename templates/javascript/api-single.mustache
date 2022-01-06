@@ -68,7 +68,7 @@ export class {{classname}} {
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(
-        {{#useAppIdInHost}}appId{{/useAppIdInHost}}
+        {{#isSearchHost}}appId{{/isSearchHost}}
         {{#hasRegionalHost}}region{{/hasRegionalHost}}
     ),
       baseHeaders: {
