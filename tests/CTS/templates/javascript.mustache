@@ -9,7 +9,7 @@ const client = new {{client}}(appId, apiKey, { requester: new EchoRequester() })
 describe('{{operationId}}', () => {
     {{#tests}}
     test('{{testName}}', async () => {
-        const req = await client.{{method}}({{#parameters}}{{{value}}}{{^-last}}, {{/-last}}{{/parameters}});
+        const req = await client.{{method}}({{{parameters}}});
         expect(req).toMatchObject({
         path: '{{{request.path}}}',
         method: '{{{request.method}}}',

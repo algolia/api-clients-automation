@@ -2,14 +2,12 @@
   {
     "method": "searchDictionaryEntries",
     "testName": "get searchDictionaryEntries results with minimal parameters",
-    "parameters": [
-      {
-        "dictionaryName": "compounds",
-        "searchDictionaryEntries": {
-          "query": "foo"
-        }
+    "parameters": {
+      "dictionaryName": "compounds",
+      "searchDictionaryEntries": {
+        "query": "foo"
       }
-    ],
+    },
     "request": {
       "path": "/1/dictionaries/compounds/search",
       "method": "POST",
@@ -21,17 +19,15 @@
   {
     "method": "searchDictionaryEntries",
     "testName": "get searchDictionaryEntries results with all parameters",
-    "parameters": [
-      {
-        "dictionaryName": "compounds",
-        "searchDictionaryEntries": {
-          "query": "foo",
-          "page": 4,
-          "hitsPerPage": 2,
-          "language": "fr"
-        }
+    "parameters": {
+      "dictionaryName": "compounds",
+      "searchDictionaryEntries": {
+        "query": "foo",
+        "page": 4,
+        "hitsPerPage": 2,
+        "language": "fr"
       }
-    ],
+    },
     "request": {
       "path": "/1/dictionaries/compounds/search",
       "method": "POST",

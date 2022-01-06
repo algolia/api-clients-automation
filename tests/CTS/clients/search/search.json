@@ -1,14 +1,12 @@
 [
   {
     "method": "search",
-    "parameters": [
-      {
-        "indexName": "indexName",
-        "searchParams": {
-          "query": "myQuery"
-        }
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "myQuery"
       }
-    ],
+    },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
