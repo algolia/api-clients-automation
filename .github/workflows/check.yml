@@ -35,6 +35,7 @@ jobs:
       RUN_JS_CLIENT_RECOMMEND: ${{ steps.setup.outputs.RUN_JS_CLIENT_RECOMMEND }}
       RUN_JS_CLIENT_PERSO: ${{ steps.setup.outputs.RUN_JS_CLIENT_PERSO }}
       RUN_JS_CLIENT_ANALYTICS: ${{ steps.setup.outputs.RUN_JS_CLIENT_ANALYTICS }}
+      RUN_JS_CLIENT_INSIGHTS: ${{ steps.setup.outputs.RUN_JS_CLIENT_INSIGHTS }}
 
       RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
 
