@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Lint GitHub actions
-        run: eslint --ext=yml .github/actions .github/workflows
+        run: yarn eslint --ext=yml .github/actions .github/workflows
     outputs:
       RUN_SPECS_SEARCH: ${{ steps.setup.outputs.RUN_SPECS_SEARCH }}
       RUN_SPECS_RECOMMEND: ${{ steps.setup.outputs.RUN_SPECS_RECOMMEND }}
@@ -57,7 +57,7 @@ jobs:
         run: yarn build:specs search
 
       - name: Lint search specs
-        run: eslint --ext=yml specs/search
+        run: yarn eslint --ext=yml specs/search
 
   specs_recommend:
     runs-on: ubuntu-20.04
@@ -73,7 +73,7 @@ jobs:
         run: yarn build:specs recommend
 
       - name: Lint recommend specs
-        run: eslint --ext=yml specs/recommend
+        run: yarn eslint --ext=yml specs/recommend
 
   specs_perso:
     runs-on: ubuntu-20.04
@@ -89,7 +89,7 @@ jobs:
         run: yarn build:specs personalization
 
       - name: Lint personalization specs
-        run: eslint --ext=yml specs/personalization
+        run: yarn eslint --ext=yml specs/personalization
 
   specs_analytics:
     runs-on: ubuntu-20.04
@@ -105,7 +105,7 @@ jobs:
         run: yarn build:specs analytics
 
       - name: Lint analytics specs
-        run: eslint --ext=yml specs/analytics
+        run: yarn eslint --ext=yml specs/analytics
 
   client_javascript_search:
     runs-on: ubuntu-20.04
