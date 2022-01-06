@@ -44,7 +44,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
-        key: ${{ runner.os }}-java-client-${{ hashFiles('clients/algoliasearch-client-javascript/algoliasearch-client-java-2/**') }}
+        key: ${{ runner.os }}-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}
 
     # setup yarn
     - name: Get yarn cache directory path
