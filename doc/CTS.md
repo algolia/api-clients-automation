@@ -61,7 +61,7 @@ When writing your template, here is a list of variables accessible from `mustach
       "method": "the method to call on the API Client",
       "parameters": {
         // Object of all parameters with their name, tobe used for languages that require the parameter name
-        "parameter name": "value",
+        "parameterName": "value",
         ...
       },
       "parametersArray": [
