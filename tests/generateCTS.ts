@@ -72,7 +72,7 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function removeObjectName(obj: any): void {
+function removeObjectName(obj: Record<string, any>): void {
   for (const prop in obj) {
     if (prop === '$objectName') {
       // eslint-disable-next-line no-param-reassign

@@ -28,7 +28,7 @@ The test generation script requires a JSON file name from the `operationId` (e.g
     "parameters": {
       "indexName": "testIndex",
       "searchParam": {
-        "$objectName": "the name of the object for strongly type language",
+        "$objectName": "the name of the object for strongly type language, should be on every 'object' type",
         "query": "the string to search"
       }
     },
@@ -45,8 +45,40 @@ And that's it! If the name of the file matches a real `operationId` in the spec,
 
 ## How to add a new language
 
-- Create a template in `test/CTS/templates/<your language>.mustache` that parse a array of test into your test framework of choice
 - Add the language in the array `languages` in `tests/generateCTS.ts`.
+- Create a template in `test/CTS/templates/<your language>.mustache` that parse a array of test into your test framework of choice
+
+When writing your template, here is a list of variables accessible from `mustache`:
+```js
+{
+  "import": "the name of the package or library to import",
+  "client": "the name of the API Client object to instanciate and import",
+  "blocks": [{
+    // The list of test to implement
+    "operationID": "the name of the endpoint and the cts file to test",
+    "tests": [{
+      "testName": "the descriptive name test (default to `method`)"
+      "method": "the method to call on the API Client",
+      "parameters": {
+        // Object of all parameters with their name, tobe used for languages that require the parameter name
+        "parameter name": "value",
+        ...
+      },
+      "parametersArray": [
+        // The same paremeters but passed as an array for other languages
+        // It includes the `-last` properties used to join the parameters
+      ],
+      "request": {
+        "path": "the expected path of the request",
+        "method": "the expected method: GET, POST, PUT, DELETE or PATCH",
+        "data": {
+          // The expected body of the request
+        }
+      }
+    }]
+  }]
+}
+```
 
 ## Get the list of remaining CTS to implement
 
