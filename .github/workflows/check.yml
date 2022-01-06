@@ -103,15 +103,18 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Cache search client
+        id: cache
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/dist
           key: ${{ runner.os }}-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/**') }}
 
       - name: Generate search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript search
 
       - name: Build search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript search
 
   client_javascript_recommend:
@@ -125,15 +128,18 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Cache recommend client
+        id: cache
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
           key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}
 
       - name: Generate recommend client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript recommend
 
       - name: Build recommend client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript recommend
 
   client_javascript_perso:
@@ -147,15 +153,18 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Cache personalization client
+        id: cache
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/dist
           key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/**') }}
 
       - name: Generate personalization client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript personalization
 
       - name: Build personalization client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript personalization
 
   client_javascript_analytics:
@@ -169,15 +178,18 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Cache analytics client
+        id: cache
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
           key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}
 
       - name: Generate analytics client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript analytics
 
       - name: Build analytics client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript analytics
 
   client_java_search:
@@ -193,15 +205,18 @@ jobs:
           job: java
 
       - name: Cache built clients
+        id: cache
         uses: actions/cache@v2
         with:
           path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
           key: ${{ runner.os }}-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}
 
       - name: Generate search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate java search
 
       - name: Build search client
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients java search
 
   cts:
