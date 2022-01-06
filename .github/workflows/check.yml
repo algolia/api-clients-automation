@@ -22,8 +22,10 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
+
+      - name: Lint GitHub actions
+        run: eslint --ext=yml .github/actions .github/workflows
     outputs:
-      RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       RUN_SPECS_SEARCH: ${{ steps.setup.outputs.RUN_SPECS_SEARCH }}
       RUN_SPECS_RECOMMEND: ${{ steps.setup.outputs.RUN_SPECS_RECOMMEND }}
       RUN_SPECS_QS: ${{ steps.setup.outputs.RUN_SPECS_QS }}
@@ -54,6 +56,9 @@ jobs:
       - name: Checking search specs
         run: yarn build:specs search
 
+      - name: Lint search specs
+        run: eslint --ext=yml specs/search
+
   specs_recommend:
     runs-on: ubuntu-20.04
     needs: setup
@@ -66,6 +71,9 @@ jobs:
 
       - name: Checking recommend specs
         run: yarn build:specs recommend
+
+      - name: Lint recommend specs
+        run: eslint --ext=yml specs/recommend
 
   specs_perso:
     runs-on: ubuntu-20.04
@@ -80,6 +88,9 @@ jobs:
       - name: Checking personalization specs
         run: yarn build:specs personalization
 
+      - name: Lint personalization specs
+        run: eslint --ext=yml specs/personalization
+
   specs_analytics:
     runs-on: ubuntu-20.04
     needs: setup
@@ -93,22 +104,12 @@ jobs:
       - name: Checking analytics specs
         run: yarn build:specs analytics
 
-  specs_lint:
-    runs-on: ubuntu-20.04
-    needs: [setup, specs_search, specs_recommend, specs_perso, specs_analytics]
-    if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Restore cache
-        uses: ./.github/actions/cache
-
-      - name: Checking analytics specs
-        run: yarn specs:lint
+      - name: Lint analytics specs
+        run: eslint --ext=yml specs/analytics
 
   client_javascript_search:
     runs-on: ubuntu-20.04
-    needs: [specs_lint]
+    needs: [specs_search]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_SEARCH == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -133,7 +134,7 @@ jobs:
 
   client_javascript_recommend:
     runs-on: ubuntu-20.04
-    needs: [specs_lint]
+    needs: [specs_recommend]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_RECOMMEND == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -158,7 +159,7 @@ jobs:
 
   client_javascript_perso:
     runs-on: ubuntu-20.04
-    needs: [specs_lint]
+    needs: [specs_perso]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_PERSO == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -183,7 +184,7 @@ jobs:
 
   client_javascript_analytics:
     runs-on: ubuntu-20.04
-    needs: [specs_lint]
+    needs: [specs_analytics]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_ANALYTICS == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -208,7 +209,7 @@ jobs:
 
   client_java_search:
     runs-on: ubuntu-20.04
-    needs: [specs_lint]
+    needs: [specs_search]
     if: ${{ always() && needs.setup.outputs.RUN_JAVA_CLIENT == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -236,13 +237,12 @@ jobs:
   cts:
     runs-on: ubuntu-20.04
     needs:
-      [
-        client_javascript_search,
-        client_javascript_recommend,
-        client_javascript_perso,
-        client_javascript_analytics,
-        client_java_search,
-      ]
+      - client_javascript_search
+      - client_javascript_recommend
+      - client_javascript_perso
+      - client_javascript_analytics
+      - client_java_search
+
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
