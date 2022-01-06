@@ -53,6 +53,9 @@ runs:
 
 outputs:
   # specs variables
+  RUN_SPECS:
+    description: 'Determine if the `specs_lint` job should run'
+    value: ${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 }}
   RUN_SPECS_SEARCH:
     description: 'Determine if the `specs_search` job should run'
     value: ${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0 }}

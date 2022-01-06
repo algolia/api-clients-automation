@@ -23,6 +23,7 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
     outputs:
+      RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       RUN_SPECS_SEARCH: ${{ steps.setup.outputs.RUN_SPECS_SEARCH }}
       RUN_SPECS_RECOMMEND: ${{ steps.setup.outputs.RUN_SPECS_RECOMMEND }}
       RUN_SPECS_QS: ${{ steps.setup.outputs.RUN_SPECS_QS }}
@@ -92,9 +93,22 @@ jobs:
       - name: Checking analytics specs
         run: yarn build:specs analytics
 
+  specs_lint:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs_search, specs_recommend, specs_perso, specs_analytics]
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Checking analytics specs
+        run: yarn specs:lint
+
   client_javascript_search:
     runs-on: ubuntu-20.04
-    needs: [specs_search]
+    needs: [specs_lint]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_SEARCH == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -119,7 +133,7 @@ jobs:
 
   client_javascript_recommend:
     runs-on: ubuntu-20.04
-    needs: [specs_recommend]
+    needs: [specs_lint]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_RECOMMEND == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -144,7 +158,7 @@ jobs:
 
   client_javascript_perso:
     runs-on: ubuntu-20.04
-    needs: [specs_perso]
+    needs: [specs_lint]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_PERSO == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -169,7 +183,7 @@ jobs:
 
   client_javascript_analytics:
     runs-on: ubuntu-20.04
-    needs: [specs_analytics]
+    needs: [specs_lint]
     if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_ANALYTICS == 'true' }}
     steps:
       - uses: actions/checkout@v2
@@ -194,7 +208,7 @@ jobs:
 
   client_java_search:
     runs-on: ubuntu-20.04
-    needs: [specs_search]
+    needs: [specs_lint]
     if: ${{ always() && needs.setup.outputs.RUN_JAVA_CLIENT == 'true' }}
     steps:
       - uses: actions/checkout@v2
