@@ -24,22 +24,20 @@
       "path": "/1/strategies/personalization",
       "method": "POST",
       "data": {
-        "personalizationStrategyObject": {
-          "eventScoring": [
-            {
-              "score": 42,
-              "eventName": "Algolia",
-              "eventType": "Event"
-            }
-          ],
-          "facetScoring": [
-            {
-              "score": 42,
-              "facetName": "Event"
-            }
-          ],
-          "personalizationImpact": 42
-        }
+        "eventScoring": [
+          {
+            "score": 42,
+            "eventName": "Algolia",
+            "eventType": "Event"
+          }
+        ],
+        "facetScoring": [
+          {
+            "score": 42,
+            "facetName": "Event"
+          }
+        ],
+        "personalizationImpact": 42
       }
     }
   }

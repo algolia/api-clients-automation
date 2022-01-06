@@ -1,14 +1,14 @@
-// @ts-nocheck
 import {
   PersonalizationApi,
   EchoRequester,
 } from '@algolia/client-personalization';
 
-const client = new PersonalizationApi(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_SEARCH_KEY,
-  { requester: new EchoRequester() }
-);
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
+
+const client = new PersonalizationApi(appId, apiKey, 'eu', {
+  requester: new EchoRequester(),
+});
 
 describe('deleteUserProfile', () => {
   test('delete deleteUserProfile', async () => {
@@ -52,6 +52,11 @@ describe('setPersonalizationStrategy', () => {
     expect(req).toMatchObject({
       path: '/1/strategies/personalization',
       method: 'POST',
+      data: {
+        eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
+        facetScoring: [{ score: 42, facetName: 'Event' }],
+        personalizationImpact: 42,
+      },
     });
   });
 });
