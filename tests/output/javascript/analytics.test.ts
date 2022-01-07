@@ -13,10 +13,12 @@ describe('getAverageClickPosition', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/averageClickPosition',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/clicks/averageClickPosition',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getAverageClickPosition with all parameters', async () => {
@@ -27,10 +29,12 @@ describe('getAverageClickPosition', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/averageClickPosition',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/clicks/averageClickPosition',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -40,10 +44,12 @@ describe('getClickPositions', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/positions',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/clicks/positions',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getClickPositions with all parameters', async () => {
@@ -54,10 +60,12 @@ describe('getClickPositions', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/positions',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/clicks/positions',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -67,10 +75,12 @@ describe('getClickThroughRate', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/clickThroughRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/clicks/clickThroughRate',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getClickThroughRate with all parameters', async () => {
@@ -81,10 +91,12 @@ describe('getClickThroughRate', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/clickThroughRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/clicks/clickThroughRate',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -94,10 +106,12 @@ describe('getConversationRate', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/conversions/conversionRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/conversions/conversionRate',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getConversationRate with all parameters', async () => {
@@ -108,10 +122,12 @@ describe('getConversationRate', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/conversions/conversionRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/conversions/conversionRate',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -121,10 +137,12 @@ describe('getNoClickRate', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClickRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noClickRate',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getNoClickRate with all parameters', async () => {
@@ -135,10 +153,12 @@ describe('getNoClickRate', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClickRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noClickRate',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -148,10 +168,12 @@ describe('getNoResultsRate', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResultRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noResultRate',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getNoResultsRate with all parameters', async () => {
@@ -162,10 +184,12 @@ describe('getNoResultsRate', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResultRate',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noResultRate',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -175,10 +199,12 @@ describe('getSearchesCount', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/count',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/count',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getSearchesCount with all parameters', async () => {
@@ -189,10 +215,12 @@ describe('getSearchesCount', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/count',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/count',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -202,10 +230,12 @@ describe('getSearchesNoClicks', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClicks',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noClicks',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getSearchesNoClicks with all parameters', async () => {
@@ -218,10 +248,12 @@ describe('getSearchesNoClicks', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClicks',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noClicks',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -231,10 +263,12 @@ describe('getSearchesNoResults', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResults',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noResults',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getSearchesNoResults with all parameters', async () => {
@@ -247,10 +281,12 @@ describe('getSearchesNoResults', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResults',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches/noResults',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -260,10 +296,12 @@ describe('getStatus', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/status',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/status',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -273,10 +311,12 @@ describe('getTopCountries', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/countries',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/countries',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopCountries with all parameters', async () => {
@@ -289,10 +329,12 @@ describe('getTopCountries', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/countries',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/countries',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -302,10 +344,12 @@ describe('getTopFilterAttributes', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFilterAttributes with all parameters', async () => {
@@ -318,10 +362,12 @@ describe('getTopFilterAttributes', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -332,10 +378,12 @@ describe('getTopFilterAttributesForSearch', () => {
       search: 'mySearch',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFilterAttributesForSearch with all parameters', async () => {
@@ -349,10 +397,12 @@ describe('getTopFilterAttributesForSearch', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -363,10 +413,12 @@ describe('getTopFilterForAttribute', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFilterForAttribute with minimal parameters and multiple attributes', async () => {
@@ -375,10 +427,12 @@ describe('getTopFilterForAttribute', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute1%2CmyAttribute2',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFilterForAttribute with all parameters', async () => {
@@ -392,10 +446,12 @@ describe('getTopFilterForAttribute', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFilterForAttribute with all parameters and multiple attributes', async () => {
@@ -409,10 +465,12 @@ describe('getTopFilterForAttribute', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute1%2CmyAttribute2',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -424,10 +482,12 @@ describe('getTopFiltersForAttributesSearch', () => {
       search: 'mySearch',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFiltersForAttributesSearch with minimal parameters and multiple attributes', async () => {
@@ -437,10 +497,12 @@ describe('getTopFiltersForAttributesSearch', () => {
       search: 'mySearch',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFiltersForAttributesSearch with all parameters', async () => {
@@ -455,10 +517,12 @@ describe('getTopFiltersForAttributesSearch', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFiltersForAttributesSearch with all parameters and multiple attributes', async () => {
@@ -473,10 +537,12 @@ describe('getTopFiltersForAttributesSearch', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -486,10 +552,12 @@ describe('getTopFiltersNoResults', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/noResults',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFiltersNoResults with all parameters', async () => {
@@ -502,10 +570,12 @@ describe('getTopFiltersNoResults', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/noResults',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -516,10 +586,12 @@ describe('getTopFiltersNoResultsForSearch', () => {
       search: 'mySearch',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/noResults?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopFiltersNoResultsForSearch with all parameters', async () => {
@@ -533,10 +605,12 @@ describe('getTopFiltersNoResultsForSearch', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/filters/noResults?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -546,10 +620,12 @@ describe('getTopHits', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/hits',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/hits',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopHits with all parameters', async () => {
@@ -563,10 +639,12 @@ describe('getTopHits', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/hits',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/hits',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -577,10 +655,12 @@ describe('getTopHitsForSearch', () => {
       search: 'mySearch',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/hits?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/hits?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopHitsForSearch with all parameters', async () => {
@@ -595,10 +675,12 @@ describe('getTopHitsForSearch', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/hits?search=mySearch',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/hits?search=mySearch',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -608,10 +690,12 @@ describe('getTopSearches', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getTopSearches with all parameters', async () => {
@@ -627,10 +711,12 @@ describe('getTopSearches', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/searches',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -640,10 +726,12 @@ describe('getUsersCount', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/users/count',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/users/count',
+        method: 'GET',
+      })
+    );
   });
 
   test('get getUsersCount with all parameters', async () => {
@@ -654,9 +742,13 @@ describe('getUsersCount', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/users/count',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/2/users/count',
+        method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+      })
+    );
   });
 });

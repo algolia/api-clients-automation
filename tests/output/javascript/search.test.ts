@@ -17,17 +17,19 @@ describe('addApiKey', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/keys',
-      method: 'POST',
-      data: {
-        acl: ['search', 'addObject'],
-        description: 'my new api key',
-        validity: 300,
-        maxQueriesPerIPPerHour: 100,
-        maxHitsPerQuery: 20,
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/keys',
+        method: 'POST',
+        data: {
+          acl: ['search', 'addObject'],
+          description: 'my new api key',
+          validity: 300,
+          maxQueriesPerIPPerHour: 100,
+          maxHitsPerQuery: 20,
+        },
+      })
+    );
   });
 });
 
@@ -43,16 +45,18 @@ describe('batchDictionaryEntries', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/compounds/batch',
-      method: 'POST',
-      data: {
-        requests: [
-          { action: 'addEntry', body: { objectID: '1', language: 'en' } },
-          { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
-        ],
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/compounds/batch',
+        method: 'POST',
+        data: {
+          requests: [
+            { action: 'addEntry', body: { objectID: '1', language: 'en' } },
+            { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
+          ],
+        },
+      })
+    );
   });
 
   test('get batchDictionaryEntries results with all parameters', async () => {
@@ -87,37 +91,39 @@ describe('batchDictionaryEntries', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/compounds/batch',
-      method: 'POST',
-      data: {
-        clearExistingDictionaryEntries: false,
-        requests: [
-          {
-            action: 'addEntry',
-            body: {
-              objectID: '1',
-              language: 'en',
-              word: 'yo',
-              words: ['yo', 'algolia'],
-              decomposition: ['yo', 'algolia'],
-              state: 'enabled',
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/compounds/batch',
+        method: 'POST',
+        data: {
+          clearExistingDictionaryEntries: false,
+          requests: [
+            {
+              action: 'addEntry',
+              body: {
+                objectID: '1',
+                language: 'en',
+                word: 'yo',
+                words: ['yo', 'algolia'],
+                decomposition: ['yo', 'algolia'],
+                state: 'enabled',
+              },
             },
-          },
-          {
-            action: 'deleteEntry',
-            body: {
-              objectID: '2',
-              language: 'fr',
-              word: 'salut',
-              words: ['salut', 'algolia'],
-              decomposition: ['salut', 'algolia'],
-              state: 'enabled',
+            {
+              action: 'deleteEntry',
+              body: {
+                objectID: '2',
+                language: 'fr',
+                word: 'salut',
+                words: ['salut', 'algolia'],
+                decomposition: ['salut', 'algolia'],
+                state: 'enabled',
+              },
             },
-          },
-        ],
-      },
-    });
+          ],
+        },
+      })
+    );
   });
 });
 
@@ -141,22 +147,24 @@ describe('batchRules', () => {
       clearExistingRules: true,
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/rules/batch',
-      method: 'POST',
-      data: [
-        {
-          objectID: 'a-rule-id',
-          conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
-          consequence: { params: { filters: 'category:smartphone' } },
-        },
-        {
-          objectID: 'a-second-rule-id',
-          conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-          consequence: { params: { filters: 'brand:apple' } },
-        },
-      ],
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/rules/batch',
+        method: 'POST',
+        data: [
+          {
+            objectID: 'a-rule-id',
+            conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+            consequence: { params: { filters: 'category:smartphone' } },
+          },
+          {
+            objectID: 'a-second-rule-id',
+            conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+            consequence: { params: { filters: 'brand:apple' } },
+          },
+        ],
+      })
+    );
   });
 });
 
@@ -166,10 +174,12 @@ describe('browse', () => {
       indexName: 'indexName',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/browse',
-      method: 'POST',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/browse',
+        method: 'POST',
+      })
+    );
   });
 
   test('get browse results with all parameters', async () => {
@@ -181,11 +191,13 @@ describe('browse', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/browse',
-      method: 'POST',
-      data: { params: "query=foo&facetFilters=['bar']", cursor: 'cts' },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/browse',
+        method: 'POST',
+        data: { params: "query=foo&facetFilters=['bar']", cursor: 'cts' },
+      })
+    );
   });
 });
 
@@ -195,10 +207,12 @@ describe('clearAllSynonyms', () => {
       indexName: 'indexName',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/synonyms/clear',
-      method: 'POST',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/synonyms/clear',
+        method: 'POST',
+      })
+    );
   });
 });
 
@@ -208,10 +222,12 @@ describe('clearRules', () => {
       indexName: 'indexName',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/rules/clear',
-      method: 'POST',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/rules/clear',
+        method: 'POST',
+      })
+    );
   });
 });
 
@@ -221,10 +237,12 @@ describe('deleteApiKey', () => {
       key: 'myTestApiKey',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/keys/myTestApiKey',
-      method: 'DELETE',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/keys/myTestApiKey',
+        method: 'DELETE',
+      })
+    );
   });
 });
 
@@ -235,10 +253,12 @@ describe('deleteRule', () => {
       objectID: 'id1',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/rules/id1',
-      method: 'DELETE',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/rules/id1',
+        method: 'DELETE',
+      })
+    );
   });
 });
 
@@ -249,10 +269,12 @@ describe('deleteSynonym', () => {
       objectID: 'id1',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/synonyms/id1',
-      method: 'DELETE',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/synonyms/id1',
+        method: 'DELETE',
+      })
+    );
   });
 });
 
@@ -262,10 +284,12 @@ describe('getApiKey', () => {
       key: 'myTestApiKey',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/keys/myTestApiKey',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/keys/myTestApiKey',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -273,10 +297,12 @@ describe('getDictionaryLanguages', () => {
   test('get getDictionaryLanguages', async () => {
     const req = await client.getDictionaryLanguages();
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/*/languages',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/*/languages',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -284,10 +310,12 @@ describe('getDictionarySettings', () => {
   test('get getDictionarySettings results', async () => {
     const req = await client.getDictionarySettings();
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/*/settings',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/*/settings',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -298,10 +326,12 @@ describe('getRule', () => {
       objectID: 'id1',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/rules/id1',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/rules/id1',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -312,10 +342,12 @@ describe('getSynonym', () => {
       objectID: 'id1',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/synonyms/id1',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/synonyms/id1',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -323,10 +355,12 @@ describe('listApiKeys', () => {
   test('listApiKeys', async () => {
     const req = await client.listApiKeys();
 
-    expect(req).toMatchObject({
-      path: '/1/keys',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/keys',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -336,10 +370,12 @@ describe('restoreApiKey', () => {
       key: 'myApiKey',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/keys/myApiKey/restore',
-      method: 'POST',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/keys/myApiKey/restore',
+        method: 'POST',
+      })
+    );
   });
 });
 
@@ -356,15 +392,17 @@ describe('saveRule', () => {
       forwardToReplicas: true,
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/rules/id1',
-      method: 'PUT',
-      data: {
-        objectID: 'id1',
-        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-        consequence: { params: { filters: 'brand:apple' } },
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/rules/id1',
+        method: 'PUT',
+        data: {
+          objectID: 'id1',
+          conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+          consequence: { params: { filters: 'brand:apple' } },
+        },
+      })
+    );
   });
 });
 
@@ -381,15 +419,17 @@ describe('saveSynonym', () => {
       forwardToReplicas: true,
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/synonyms/id1',
-      method: 'PUT',
-      data: {
-        objectID: 'id1',
-        type: 'synonym',
-        synonyms: ['car', 'vehicule', 'auto'],
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/synonyms/id1',
+        method: 'PUT',
+        data: {
+          objectID: 'id1',
+          type: 'synonym',
+          synonyms: ['car', 'vehicule', 'auto'],
+        },
+      })
+    );
   });
 });
 
@@ -414,23 +454,25 @@ describe('saveSynonyms', () => {
       replaceExistingSynonyms: false,
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/synonyms/batch',
-      method: 'POST',
-      data: [
-        {
-          objectID: 'id1',
-          type: 'synonym',
-          synonyms: ['car', 'vehicule', 'auto'],
-        },
-        {
-          objectID: 'id2',
-          type: 'onewaysynonym',
-          input: 'iphone',
-          synonyms: ['ephone', 'aphone', 'yphone'],
-        },
-      ],
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/synonyms/batch',
+        method: 'POST',
+        data: [
+          {
+            objectID: 'id1',
+            type: 'synonym',
+            synonyms: ['car', 'vehicule', 'auto'],
+          },
+          {
+            objectID: 'id2',
+            type: 'onewaysynonym',
+            input: 'iphone',
+            synonyms: ['ephone', 'aphone', 'yphone'],
+          },
+        ],
+      })
+    );
   });
 });
 
@@ -441,11 +483,13 @@ describe('search', () => {
       searchParams: { query: 'myQuery' },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/query',
-      method: 'POST',
-      data: { query: 'myQuery' },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/query',
+        method: 'POST',
+        data: { query: 'myQuery' },
+      })
+    );
   });
 });
 
@@ -456,11 +500,13 @@ describe('searchDictionaryEntries', () => {
       searchDictionaryEntries: { query: 'foo' },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/compounds/search',
-      method: 'POST',
-      data: { query: 'foo' },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/compounds/search',
+        method: 'POST',
+        data: { query: 'foo' },
+      })
+    );
   });
 
   test('get searchDictionaryEntries results with all parameters', async () => {
@@ -474,11 +520,13 @@ describe('searchDictionaryEntries', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/compounds/search',
-      method: 'POST',
-      data: { query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/compounds/search',
+        method: 'POST',
+        data: { query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' },
+      })
+    );
   });
 });
 
@@ -489,10 +537,12 @@ describe('searchForFacetValues', () => {
       facetName: 'facetName',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/facets/facetName/query',
-      method: 'POST',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/facets/facetName/query',
+        method: 'POST',
+      })
+    );
   });
 
   test('get searchForFacetValues results with all parameters', async () => {
@@ -506,15 +556,17 @@ describe('searchForFacetValues', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/facets/facetName/query',
-      method: 'POST',
-      data: {
-        params: "query=foo&facetFilters=['bar']",
-        facetQuery: 'foo',
-        maxFacetHits: 42,
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/facets/facetName/query',
+        method: 'POST',
+        data: {
+          params: "query=foo&facetFilters=['bar']",
+          facetQuery: 'foo',
+          maxFacetHits: 42,
+        },
+      })
+    );
   });
 });
 
@@ -525,11 +577,13 @@ describe('searchRules', () => {
       searchRulesParams: { query: 'something' },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/rules/search',
-      method: 'POST',
-      data: { query: 'something' },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/rules/search',
+        method: 'POST',
+        data: { query: 'something' },
+      })
+    );
   });
 });
 
@@ -541,10 +595,12 @@ describe('searchSynonyms', () => {
       type: 'onewaysynonym',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/indexName/synonyms/search',
-      method: 'POST',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/indexes/indexName/synonyms/search',
+        method: 'POST',
+      })
+    );
   });
 });
 
@@ -556,13 +612,17 @@ describe('setDictionarySettings', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/*/settings',
-      method: 'PUT',
-      data: {
-        disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/*/settings',
+        method: 'PUT',
+        data: {
+          disableStandardEntries: {
+            plurals: { fr: false, en: false, ru: true },
+          },
+        },
+      })
+    );
   });
 
   test('get setDictionarySettings results with all parameters', async () => {
@@ -576,17 +636,19 @@ describe('setDictionarySettings', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/dictionaries/*/settings',
-      method: 'PUT',
-      data: {
-        disableStandardEntries: {
-          plurals: { fr: false, en: false, ru: true },
-          stopwords: { fr: false },
-          compounds: { ru: true },
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/dictionaries/*/settings',
+        method: 'PUT',
+        data: {
+          disableStandardEntries: {
+            plurals: { fr: false, en: false, ru: true },
+            stopwords: { fr: false },
+            compounds: { ru: true },
+          },
         },
-      },
-    });
+      })
+    );
   });
 });
 
@@ -602,15 +664,17 @@ describe('updateApiKey', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/keys/myApiKey',
-      method: 'PUT',
-      data: {
-        acl: ['search', 'addObject'],
-        validity: 300,
-        maxQueriesPerIPPerHour: 100,
-        maxHitsPerQuery: 20,
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/keys/myApiKey',
+        method: 'PUT',
+        data: {
+          acl: ['search', 'addObject'],
+          validity: 300,
+          maxQueriesPerIPPerHour: 100,
+          maxHitsPerQuery: 20,
+        },
+      })
+    );
   });
 });

@@ -17,11 +17,11 @@ describe('{{operationId}}', () => {
             }{{/hasParameters}}
         );
 
-        expect(req).toMatchObject({
+        expect(req).toEqual(expect.objectContaining({
         path: '{{{request.path}}}',
         method: '{{{request.method}}}',
-        {{#request.data}}data: {{{.}}},{{/request.data}}
-        })
+        {{#request.data}}data: {{{.}}},{{/request.data}}{{#request.searchParams}}searchParams: {{{.}}},{{/request.searchParams}}
+        }))
     });
 
     {{/tests}}

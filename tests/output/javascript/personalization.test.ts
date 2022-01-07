@@ -16,10 +16,12 @@ describe('deleteUserProfile', () => {
       userToken: 'UserToken',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/profiles/UserToken',
-      method: 'DELETE',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/profiles/UserToken',
+        method: 'DELETE',
+      })
+    );
   });
 });
 
@@ -27,10 +29,12 @@ describe('getPersonalizationStrategy', () => {
   test('get getPersonalizationStrategy', async () => {
     const req = await client.getPersonalizationStrategy();
 
-    expect(req).toMatchObject({
-      path: '/1/strategies/personalization',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/strategies/personalization',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -40,10 +44,12 @@ describe('getUserTokenProfile', () => {
       userToken: 'UserToken',
     });
 
-    expect(req).toMatchObject({
-      path: '/1/profiles/personalization/UserToken',
-      method: 'GET',
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/profiles/personalization/UserToken',
+        method: 'GET',
+      })
+    );
   });
 });
 
@@ -57,14 +63,18 @@ describe('setPersonalizationStrategy', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/strategies/personalization',
-      method: 'POST',
-      data: {
-        eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
-        facetScoring: [{ score: 42, facetName: 'Event' }],
-        personalizationImpact: 42,
-      },
-    });
+    expect(req).toEqual(
+      expect.objectContaining({
+        path: '/1/strategies/personalization',
+        method: 'POST',
+        data: {
+          eventScoring: [
+            { score: 42, eventName: 'Algolia', eventType: 'Event' },
+          ],
+          facetScoring: [{ score: 42, facetName: 'Event' }],
+          personalizationImpact: 42,
+        },
+      })
+    );
   });
 });
