@@ -7,6 +7,14 @@ Attribute:
   schema:
     type: string
 
+Search:
+  in: path
+  name: search
+  description: The query term. Must match the exact user input.
+  required: true
+  schema:
+    type: string
+
 # query
 OrderBy:
   in: query
@@ -42,15 +50,7 @@ Limit:
     type: integer
     default: 10
 
-Search:
-  in: path
-  name: search
-  description: The query term. Must match the exact user input.
-  required: true
-  schema:
-    type: string
-
-SearchInPath:
+SearchInQuery:
   in: path
   name: search
   description: The query term. Must match the exact user input.

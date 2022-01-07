@@ -131,6 +131,7 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       if (test.testName === undefined) {
         test.testName = test.method;
       }
+
       // stringify request.data too
       test.request.data = JSON.stringify(test.request.data);
       test.request.headers = JSON.stringify(test.request.headers);

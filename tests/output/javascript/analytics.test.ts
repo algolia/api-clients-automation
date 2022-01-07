@@ -24,8 +24,8 @@ describe('getAverageClickPosition', () => {
   test('get getAverageClickPosition with all parameters', async () => {
     const req = await client.getAverageClickPosition({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -33,8 +33,12 @@ describe('getAverageClickPosition', () => {
       expect.objectContaining({
         path: '/2/clicks/averageClickPosition',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -57,8 +61,8 @@ describe('getClickPositions', () => {
   test('get getClickPositions with all parameters', async () => {
     const req = await client.getClickPositions({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -66,8 +70,12 @@ describe('getClickPositions', () => {
       expect.objectContaining({
         path: '/2/clicks/positions',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -90,8 +98,8 @@ describe('getClickThroughRate', () => {
   test('get getClickThroughRate with all parameters', async () => {
     const req = await client.getClickThroughRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -99,8 +107,12 @@ describe('getClickThroughRate', () => {
       expect.objectContaining({
         path: '/2/clicks/clickThroughRate',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -123,8 +135,8 @@ describe('getConversationRate', () => {
   test('get getConversationRate with all parameters', async () => {
     const req = await client.getConversationRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -132,8 +144,12 @@ describe('getConversationRate', () => {
       expect.objectContaining({
         path: '/2/conversions/conversionRate',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -156,8 +172,8 @@ describe('getNoClickRate', () => {
   test('get getNoClickRate with all parameters', async () => {
     const req = await client.getNoClickRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -165,8 +181,12 @@ describe('getNoClickRate', () => {
       expect.objectContaining({
         path: '/2/searches/noClickRate',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -189,8 +209,8 @@ describe('getNoResultsRate', () => {
   test('get getNoResultsRate with all parameters', async () => {
     const req = await client.getNoResultsRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -198,8 +218,12 @@ describe('getNoResultsRate', () => {
       expect.objectContaining({
         path: '/2/searches/noResultRate',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -222,8 +246,8 @@ describe('getSearchesCount', () => {
   test('get getSearchesCount with all parameters', async () => {
     const req = await client.getSearchesCount({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -231,8 +255,12 @@ describe('getSearchesCount', () => {
       expect.objectContaining({
         path: '/2/searches/count',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -255,8 +283,8 @@ describe('getSearchesNoClicks', () => {
   test('get getSearchesNoClicks with all parameters', async () => {
     const req = await client.getSearchesNoClicks({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -266,8 +294,14 @@ describe('getSearchesNoClicks', () => {
       expect.objectContaining({
         path: '/2/searches/noClicks',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -290,8 +324,8 @@ describe('getSearchesNoResults', () => {
   test('get getSearchesNoResults with all parameters', async () => {
     const req = await client.getSearchesNoResults({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -301,8 +335,14 @@ describe('getSearchesNoResults', () => {
       expect.objectContaining({
         path: '/2/searches/noResults',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -340,8 +380,8 @@ describe('getTopCountries', () => {
   test('get getTopCountries with all parameters', async () => {
     const req = await client.getTopCountries({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -351,8 +391,14 @@ describe('getTopCountries', () => {
       expect.objectContaining({
         path: '/2/countries',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -375,8 +421,8 @@ describe('getTopFilterAttributes', () => {
   test('get getTopFilterAttributes with all parameters', async () => {
     const req = await client.getTopFilterAttributes({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -386,8 +432,14 @@ describe('getTopFilterAttributes', () => {
       expect.objectContaining({
         path: '/2/filters',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -412,8 +464,8 @@ describe('getTopFilterAttributesForSearch', () => {
     const req = await client.getTopFilterAttributesForSearch({
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -423,8 +475,15 @@ describe('getTopFilterAttributesForSearch', () => {
       expect.objectContaining({
         path: '/2/filters?search=mySearch',
         method: 'GET',
-        searchParams:
-          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          search: 'mySearch',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -463,8 +522,8 @@ describe('getTopFilterForAttribute', () => {
     const req = await client.getTopFilterForAttribute({
       attribute: 'myAttribute',
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -474,8 +533,15 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          attribute: 'myAttribute',
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -484,8 +550,8 @@ describe('getTopFilterForAttribute', () => {
     const req = await client.getTopFilterForAttribute({
       attribute: 'myAttribute1,myAttribute2',
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -495,8 +561,15 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute1%2CmyAttribute2',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          attribute: 'myAttribute1,myAttribute2',
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -538,8 +611,8 @@ describe('getTopFiltersForAttributesSearch', () => {
       attributes: 'myAttribute',
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -549,8 +622,9 @@ describe('getTopFiltersForAttributesSearch', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute?search=mySearch',
         method: 'GET',
-        searchParams:
-          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining(
+          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag'
+        ),
       })
     );
   });
@@ -560,8 +634,8 @@ describe('getTopFiltersForAttributesSearch', () => {
       attributes: 'myAttribute1,myAttribute2',
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -571,8 +645,15 @@ describe('getTopFiltersForAttributesSearch', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
         method: 'GET',
-        searchParams:
-          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          search: 'mySearch',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -595,8 +676,8 @@ describe('getTopFiltersNoResults', () => {
   test('get getTopFiltersNoResults with all parameters', async () => {
     const req = await client.getTopFiltersNoResults({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -606,8 +687,14 @@ describe('getTopFiltersNoResults', () => {
       expect.objectContaining({
         path: '/2/filters/noResults',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -632,8 +719,8 @@ describe('getTopFiltersNoResultsForSearch', () => {
     const req = await client.getTopFiltersNoResultsForSearch({
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -643,8 +730,15 @@ describe('getTopFiltersNoResultsForSearch', () => {
       expect.objectContaining({
         path: '/2/filters/noResults?search=mySearch',
         method: 'GET',
-        searchParams:
-          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          search: 'mySearch',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -668,8 +762,8 @@ describe('getTopHits', () => {
     const req = await client.getTopHits({
       index: 'index',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -679,8 +773,15 @@ describe('getTopHits', () => {
       expect.objectContaining({
         path: '/2/hits',
         method: 'GET',
-        searchParams:
-          '?index=index&clickAnalytics=true&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          clickAnalytics: 'true',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -706,8 +807,8 @@ describe('getTopHitsForSearch', () => {
       index: 'index',
       search: 'mySearch',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       limit: 21,
       offset: 42,
       tags: 'tag',
@@ -717,8 +818,16 @@ describe('getTopHitsForSearch', () => {
       expect.objectContaining({
         path: '/2/hits?search=mySearch',
         method: 'GET',
-        searchParams:
-          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&clickAnalytics=true&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          search: 'mySearch',
+          clickAnalytics: 'true',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -742,8 +851,8 @@ describe('getTopSearches', () => {
     const req = await client.getTopSearches({
       index: 'index',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       orderBy: 'searchCount',
       direction: 'asc',
       limit: 21,
@@ -755,8 +864,17 @@ describe('getTopSearches', () => {
       expect.objectContaining({
         path: '/2/searches',
         method: 'GET',
-        searchParams:
-          '?index=index&clickAnalytics=true&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&orderBy=searchCount&direction=asc&limit=21&offset=42&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          clickAnalytics: 'true',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          orderBy: 'searchCount',
+          direction: 'asc',
+          limit: '21',
+          offset: '42',
+          tags: 'tag',
+        }),
       })
     );
   });
@@ -779,8 +897,8 @@ describe('getUsersCount', () => {
   test('get getUsersCount with all parameters', async () => {
     const req = await client.getUsersCount({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19' as unknown as Date,
+      endDate: '2001-01-01' as unknown as Date,
       tags: 'tag',
     });
 
@@ -788,8 +906,12 @@ describe('getUsersCount', () => {
       expect.objectContaining({
         path: '/2/users/count',
         method: 'GET',
-        searchParams:
-          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
+        searchParams: expect.objectContaining({
+          index: 'index',
+          startDate: '1999-09-19',
+          endDate: '2001-01-01',
+          tags: 'tag',
+        }),
       })
     );
   });

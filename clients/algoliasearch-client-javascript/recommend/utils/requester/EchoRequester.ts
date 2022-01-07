@@ -4,28 +4,24 @@ import { Requester } from './Requester';
 
 type AdditionalContent = {
   headers: Record<string, string>;
-  searchParams: string | undefined;
-  userAgent: string | undefined;
   connectTimeout: number;
   responseTimeout: number;
+  userAgent: string | undefined;
+  searchParams: Record<string, any>;
 };
 
-function searchParamsWithoutUA(params: URLSearchParams): string | undefined {
-  let searchParams = '?';
+function searchParamsWithoutUA(params: URLSearchParams): Record<string, any> {
+  const searchParams = {};
 
   for (const [k, v] of params) {
     if (k === 'x-algolia-agent') {
       continue;
     }
 
-    searchParams += encodeURI(`${k}=${v}&`);
+    searchParams[k] = v;
   }
 
-  if (searchParams === '?') {
-    return undefined;
-  }
-
-  return searchParams.replace(/&$/, '');
+  return searchParams;
 }
 
 export class EchoRequester extends Requester {
@@ -39,12 +35,13 @@ export class EchoRequester extends Requester {
   ): Promise<Response> {
     const urlSearchParams = new URL(url).searchParams;
     const userAgent = urlSearchParams.get('x-algolia-agent') || undefined;
+    const searchParams = searchParamsWithoutUA(urlSearchParams);
     const additionalContent: AdditionalContent = {
       headers,
       connectTimeout,
       responseTimeout,
       userAgent: userAgent ? encodeURI(userAgent) : undefined,
-      searchParams: searchParamsWithoutUA(urlSearchParams),
+      searchParams,
     };
 
     return Promise.resolve({

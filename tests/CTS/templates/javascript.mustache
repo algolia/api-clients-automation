@@ -12,7 +12,7 @@ describe('{{operationId}}', () => {
         const req = await client.{{method}}(
             {{#hasParameters}}{
                 {{#parametersWithDataType}}
-                    {{#isDate}}{{{key}}}:new Date({{{value}}}),{{/isDate}}{{^isDate}}{{{key}}}:{{{value}}},{{/isDate}}
+                    {{#isDate}}{{{key}}}:{{{value}}} as unknown as Date,{{/isDate}}{{^isDate}}{{{key}}}:{{{value}}},{{/isDate}}
                 {{/parametersWithDataType}}
             }{{/hasParameters}}
         );
@@ -20,7 +20,7 @@ describe('{{operationId}}', () => {
         expect(req).toEqual(expect.objectContaining({
         path: '{{{request.path}}}',
         method: '{{{request.method}}}',
-        {{#request.data}}data: {{{.}}},{{/request.data}}{{#request.searchParams}}searchParams: {{{.}}},{{/request.searchParams}}
+        {{#request.data}}data: {{{.}}},{{/request.data}}{{#request.searchParams}}searchParams: expect.objectContaining({{{.}}}),{{/request.searchParams}}
         }))
     });
 
