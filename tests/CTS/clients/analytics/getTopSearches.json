@@ -16,7 +16,7 @@
     "parameters": {
       "index": "index",
       "clickAnalytics": true,
-      "startDate": "1999-19-09",
+      "startDate": "1999-09-19",
       "endDate": "2001-01-01",
       "orderBy": "searchCount",
       "direction": "asc",

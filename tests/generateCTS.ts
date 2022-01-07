@@ -156,13 +156,14 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       test.parametersWithDataType = Object.entries(test.parameters).map(
         ([key, value], i, arr) => {
           const isDate = key === 'startDate' || key === 'endDate';
+          const isArray = Array.isArray(value);
 
           return {
             key,
             value: JSON.stringify(value),
             isString: typeof value === 'string' && isDate === false,
-            isObject: typeof value === 'object',
-            isArray: Array.isArray(value),
+            isObject: typeof value === 'object' && isArray === false,
+            isArray,
             isDate,
             '-last': i === arr.length - 1,
           };

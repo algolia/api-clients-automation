@@ -19,7 +19,7 @@
       "index": "index"
     },
     "request": {
-      "path": "/2/filters/myAttribute1,myAttribute2",
+      "path": "/2/filters/myAttribute1%2CmyAttribute2",
       "method": "GET"
     }
   },
@@ -29,7 +29,7 @@
     "parameters": {
       "attribute": "myAttribute",
       "index": "index",
-      "startDate": "1999-19-09",
+      "startDate": "1999-09-19",
       "endDate": "2001-01-01",
       "limit": 21,
       "offset": 42,
@@ -46,14 +46,14 @@
     "parameters": {
       "attribute": "myAttribute1,myAttribute2",
       "index": "index",
-      "startDate": "1999-19-09",
+      "startDate": "1999-09-19",
       "endDate": "2001-01-01",
       "limit": 21,
       "offset": 42,
       "tags": "tag"
     },
     "request": {
-      "path": "/2/filters/myAttribute1,myAttribute2",
+      "path": "/2/filters/myAttribute1%2CmyAttribute2",
       "method": "GET"
     }
   }
