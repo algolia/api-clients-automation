@@ -1,0 +1,18 @@
+[
+  {
+    "method": "assignUserId",
+    "parameters": {
+      "xAlgoliaUserID": "indexName",
+      "assignUserIdObject": {
+        "cluster": "theCluster"
+      }
+    },
+    "request": {
+      "path": "/1/clusters/mapping",
+      "method": "POST",
+      "data": {
+        "cluster": "theCluster"
+      }
+    }
+  }
+]
