@@ -23,7 +23,7 @@ post:
                   action:
                     $ref: 'common/schemas.yml#/action'
                   body:
-                    $ref: 'common/schemas.yml#/body'
+                    type: object
                   indexName:
                     type: string
                     description: Index to target for this operation.
@@ -40,7 +40,6 @@ post:
               taskID:
                 type: object
                 description: List of tasksIDs per index.
-                additionalProperties: true
               objectIDs:
                 $ref: ../../../common/parameters.yml#/objectIDs
     '400':
