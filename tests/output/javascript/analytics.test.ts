@@ -33,6 +33,8 @@ describe('getAverageClickPosition', () => {
       expect.objectContaining({
         path: '/2/clicks/averageClickPosition',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
       })
     );
   });
@@ -64,6 +66,8 @@ describe('getClickPositions', () => {
       expect.objectContaining({
         path: '/2/clicks/positions',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
       })
     );
   });
@@ -95,6 +99,8 @@ describe('getClickThroughRate', () => {
       expect.objectContaining({
         path: '/2/clicks/clickThroughRate',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
       })
     );
   });
@@ -126,6 +132,8 @@ describe('getConversationRate', () => {
       expect.objectContaining({
         path: '/2/conversions/conversionRate',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
       })
     );
   });
@@ -157,6 +165,8 @@ describe('getNoClickRate', () => {
       expect.objectContaining({
         path: '/2/searches/noClickRate',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
       })
     );
   });
@@ -188,6 +198,8 @@ describe('getNoResultsRate', () => {
       expect.objectContaining({
         path: '/2/searches/noResultRate',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
       })
     );
   });
@@ -219,6 +231,8 @@ describe('getSearchesCount', () => {
       expect.objectContaining({
         path: '/2/searches/count',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&tags=tag',
       })
     );
   });
@@ -252,6 +266,8 @@ describe('getSearchesNoClicks', () => {
       expect.objectContaining({
         path: '/2/searches/noClicks',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -285,6 +301,8 @@ describe('getSearchesNoResults', () => {
       expect.objectContaining({
         path: '/2/searches/noResults',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -333,6 +351,8 @@ describe('getTopCountries', () => {
       expect.objectContaining({
         path: '/2/countries',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -366,6 +386,8 @@ describe('getTopFilterAttributes', () => {
       expect.objectContaining({
         path: '/2/filters',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -401,6 +423,8 @@ describe('getTopFilterAttributesForSearch', () => {
       expect.objectContaining({
         path: '/2/filters?search=mySearch',
         method: 'GET',
+        searchParams:
+          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -450,6 +474,8 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -469,6 +495,8 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute1%2CmyAttribute2',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -521,6 +549,8 @@ describe('getTopFiltersForAttributesSearch', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute?search=mySearch',
         method: 'GET',
+        searchParams:
+          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -541,6 +571,8 @@ describe('getTopFiltersForAttributesSearch', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
         method: 'GET',
+        searchParams:
+          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -574,6 +606,8 @@ describe('getTopFiltersNoResults', () => {
       expect.objectContaining({
         path: '/2/filters/noResults',
         method: 'GET',
+        searchParams:
+          '?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -609,6 +643,8 @@ describe('getTopFiltersNoResultsForSearch', () => {
       expect.objectContaining({
         path: '/2/filters/noResults?search=mySearch',
         method: 'GET',
+        searchParams:
+          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -643,6 +679,8 @@ describe('getTopHits', () => {
       expect.objectContaining({
         path: '/2/hits',
         method: 'GET',
+        searchParams:
+          '?index=index&clickAnalytics=true&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -679,6 +717,8 @@ describe('getTopHitsForSearch', () => {
       expect.objectContaining({
         path: '/2/hits?search=mySearch',
         method: 'GET',
+        searchParams:
+          '?search=mySearch?x-algolia-agent=Algolia%20for%20Javascript&index=index&clickAnalytics=true&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag',
       })
     );
   });
@@ -715,6 +755,8 @@ describe('getTopSearches', () => {
       expect.objectContaining({
         path: '/2/searches',
         method: 'GET',
+        searchParams:
+          '?index=index&clickAnalytics=true&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&orderBy=searchCount&direction=asc&limit=21&offset=42&tags=tag',
       })
     );
   });

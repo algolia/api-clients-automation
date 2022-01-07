@@ -23,7 +23,8 @@
     },
     "request": {
       "path": "/2/searches/noClicks",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": "?index=index&startDate=Sun%20Sep%2019%201999%2002:00:00%20GMT%200200%20(Central%20European%20Summer%20Time)&endDate=Mon%20Jan%2001%202001%2001:00:00%20GMT%200100%20(Central%20European%20Standard%20Time)&limit=21&offset=42&tags=tag"
     }
   }
 ]
