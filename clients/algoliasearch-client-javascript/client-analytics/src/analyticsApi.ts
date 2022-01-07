@@ -1943,11 +1943,15 @@ export type GetTopSearchesProps = {
   /**
    * Reorder the results.
    */
-  orderBy?: Record<string, any>;
+  orderBy?:
+    | 'averageClickPosition'
+    | 'clickThroughRate'
+    | 'conversionRate'
+    | 'searchCount';
   /**
    * The sorting of the result.
    */
-  direction?: Record<string, any>;
+  direction?: 'asc' | 'desc';
   /**
    * How many items to fetch.
    */
