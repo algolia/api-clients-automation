@@ -15,7 +15,11 @@
     "testName": "get getSearchesCount with all parameters",
     "parameters": {
       "index": "index",
+<<<<<<< HEAD
       "startDate": "1999-09-19",
+=======
+      "startDate": "1999-19-09",
+>>>>>>> b51ff01... feat(cts): add tests for `analytics`
       "endDate": "2001-01-01",
       "tags": "tag"
     },

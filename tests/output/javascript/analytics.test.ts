@@ -22,7 +22,7 @@ describe('getAverageClickPosition', () => {
   test('get getAverageClickPosition with all parameters', async () => {
     const req = await client.getAverageClickPosition({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
@@ -49,7 +49,7 @@ describe('getClickPositions', () => {
   test('get getClickPositions with all parameters', async () => {
     const req = await client.getClickPositions({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
@@ -76,7 +76,7 @@ describe('getClickThroughRate', () => {
   test('get getClickThroughRate with all parameters', async () => {
     const req = await client.getClickThroughRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
@@ -103,7 +103,7 @@ describe('getConversationRate', () => {
   test('get getConversationRate with all parameters', async () => {
     const req = await client.getConversationRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
@@ -130,7 +130,7 @@ describe('getNoClickRate', () => {
   test('get getNoClickRate with all parameters', async () => {
     const req = await client.getNoClickRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
@@ -157,7 +157,7 @@ describe('getNoResultsRate', () => {
   test('get getNoResultsRate with all parameters', async () => {
     const req = await client.getNoResultsRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
@@ -184,7 +184,7 @@ describe('getSearchesCount', () => {
   test('get getSearchesCount with all parameters', async () => {
     const req = await client.getSearchesCount({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
@@ -211,7 +211,7 @@ describe('getSearchesNoClicks', () => {
   test('get getSearchesNoClicks with all parameters', async () => {
     const req = await client.getSearchesNoClicks({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -240,7 +240,7 @@ describe('getSearchesNoResults', () => {
   test('get getSearchesNoResults with all parameters', async () => {
     const req = await client.getSearchesNoResults({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -282,7 +282,7 @@ describe('getTopCountries', () => {
   test('get getTopCountries with all parameters', async () => {
     const req = await client.getTopCountries({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -311,7 +311,7 @@ describe('getTopFilterAttributes', () => {
   test('get getTopFilterAttributes with all parameters', async () => {
     const req = await client.getTopFilterAttributes({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -342,7 +342,7 @@ describe('getTopFilterAttributesForSearch', () => {
     const req = await client.getTopFilterAttributesForSearch({
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -376,7 +376,7 @@ describe('getTopFilterForAttribute', () => {
     });
 
     expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2',
+      path: '/2/filters/myAttribute1,myAttribute2',
       method: 'GET',
     });
   });
@@ -385,7 +385,7 @@ describe('getTopFilterForAttribute', () => {
     const req = await client.getTopFilterForAttribute({
       attribute: 'myAttribute',
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -402,7 +402,7 @@ describe('getTopFilterForAttribute', () => {
     const req = await client.getTopFilterForAttribute({
       attribute: 'myAttribute1,myAttribute2',
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -410,7 +410,7 @@ describe('getTopFilterForAttribute', () => {
     });
 
     expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2',
+      path: '/2/filters/myAttribute1,myAttribute2',
       method: 'GET',
     });
   });
@@ -438,7 +438,7 @@ describe('getTopFiltersForAttributesSearch', () => {
     });
 
     expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
+      path: '/2/filters/myAttribute1,myAttribute2?search=mySearch',
       method: 'GET',
     });
   });
@@ -448,7 +448,7 @@ describe('getTopFiltersForAttributesSearch', () => {
       attributes: 'myAttribute',
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -466,7 +466,7 @@ describe('getTopFiltersForAttributesSearch', () => {
       attributes: 'myAttribute1,myAttribute2',
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -474,7 +474,7 @@ describe('getTopFiltersForAttributesSearch', () => {
     });
 
     expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
+      path: '/2/filters/myAttribute1,myAttribute2?search=mySearch',
       method: 'GET',
     });
   });
@@ -495,7 +495,7 @@ describe('getTopFiltersNoResults', () => {
   test('get getTopFiltersNoResults with all parameters', async () => {
     const req = await client.getTopFiltersNoResults({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -526,7 +526,7 @@ describe('getTopFiltersNoResultsForSearch', () => {
     const req = await client.getTopFiltersNoResultsForSearch({
       index: 'index',
       search: 'mySearch',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -556,7 +556,7 @@ describe('getTopHits', () => {
     const req = await client.getTopHits({
       index: 'index',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -588,7 +588,7 @@ describe('getTopHitsForSearch', () => {
       index: 'index',
       search: 'mySearch',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       limit: 21,
       offset: 42,
@@ -618,7 +618,7 @@ describe('getTopSearches', () => {
     const req = await client.getTopSearches({
       index: 'index',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       orderBy: 'searchCount',
       direction: 'asc',
@@ -649,7 +649,7 @@ describe('getUsersCount', () => {
   test('get getUsersCount with all parameters', async () => {
     const req = await client.getUsersCount({
       index: 'index',
-      startDate: new Date('1999-09-19'),
+      startDate: new Date('1999-19-09'),
       endDate: new Date('2001-01-01'),
       tags: 'tag',
     });
