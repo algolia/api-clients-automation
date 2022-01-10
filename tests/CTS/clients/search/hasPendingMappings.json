@@ -6,7 +6,10 @@
     },
     "request": {
       "path": "/1/clusters/mapping/pending",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "getClusters": "true"
+      }
     }
   }
 ]

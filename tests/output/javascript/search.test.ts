@@ -64,14 +64,16 @@ describe('appendSource', () => {
 describe('assignUserId', () => {
   test('assignUserId', async () => {
     const req = await client.assignUserId({
-      xAlgoliaUserID: 'indexName',
+      xAlgoliaUserID: 'userID',
       assignUserIdObject: { cluster: 'theCluster' },
     });
 
     expect((req as any).path).toEqual('/1/clusters/mapping');
     expect((req as any).method).toEqual('POST');
     expect((req as any).data).toEqual({ cluster: 'theCluster' });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      'X-Algolia-User-ID': 'userID',
+    });
   });
 });
 
@@ -121,7 +123,9 @@ describe('batchAssignUserIds', () => {
       cluster: 'theCluster',
       users: ['user1', 'user2'],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      'X-Algolia-User-ID': 'userID',
+    });
   });
 });
 
@@ -450,7 +454,12 @@ describe('getLogs', () => {
     expect((req as any).path).toEqual('/1/logs');
     expect((req as any).method).toEqual('GET');
     expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      offset: '5',
+      length: '10',
+      indexName: 'theIndexName',
+      type: 'all',
+    });
   });
 });
 
@@ -465,7 +474,9 @@ describe('getObject', () => {
     expect((req as any).path).toEqual('/1/indexes/theIndexName/uniqueID');
     expect((req as any).method).toEqual('GET');
     expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      attributesToRetrieve: 'attr1,attr2',
+    });
   });
 });
 
@@ -591,7 +602,7 @@ describe('hasPendingMappings', () => {
     expect((req as any).path).toEqual('/1/clusters/mapping/pending');
     expect((req as any).method).toEqual('GET');
     expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ getClusters: 'true' });
   });
 });
 
@@ -624,7 +635,7 @@ describe('listIndices', () => {
     expect((req as any).path).toEqual('/1/indexes');
     expect((req as any).method).toEqual('GET');
     expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ page: '8' });
   });
 });
 
@@ -635,7 +646,10 @@ describe('listUserIds', () => {
     expect((req as any).path).toEqual('/1/clusters/mapping');
     expect((req as any).method).toEqual('GET');
     expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      page: '8',
+      hitsPerPage: '100',
+    });
   });
 });
 
@@ -743,7 +757,7 @@ describe('partialUpdateObject', () => {
     expect((req as any).data).toEqual([
       { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
     ]);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ createIfNotExists: 'true' });
   });
 });
 
@@ -1084,7 +1098,7 @@ describe('setSettings', () => {
     expect((req as any).path).toEqual('/1/indexes/theIndexName/settings');
     expect((req as any).method).toEqual('PUT');
     expect((req as any).data).toEqual({ paginationLimitedTo: 10 });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ forwardToReplicas: 'true' });
   });
 });
 

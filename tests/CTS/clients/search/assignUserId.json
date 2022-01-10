@@ -2,7 +2,7 @@
   {
     "method": "assignUserId",
     "parameters": {
-      "xAlgoliaUserID": "indexName",
+      "xAlgoliaUserID": "userID",
       "assignUserIdObject": {
         "cluster": "theCluster"
       }
@@ -12,6 +12,9 @@
       "method": "POST",
       "data": {
         "cluster": "theCluster"
+      },
+      "searchParams": {
+        "X-Algolia-User-ID": "userID"
       }
     }
   }

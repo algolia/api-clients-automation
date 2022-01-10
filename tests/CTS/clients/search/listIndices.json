@@ -6,7 +6,10 @@
     },
     "request": {
       "path": "/1/indexes",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "page": "8"
+      }
     }
   }
 ]

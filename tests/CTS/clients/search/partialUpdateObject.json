@@ -26,7 +26,10 @@
             "value": "test2"
           }
         }
-      ]
+      ],
+      "searchParams": {
+        "createIfNotExists": "true"
+      }
     }
   }
 ]

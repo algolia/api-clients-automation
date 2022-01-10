@@ -13,6 +13,9 @@
       "method": "PUT",
       "data": {
         "paginationLimitedTo": 10
+      },
+      "searchParams": {
+        "forwardToReplicas": "true"
       }
     }
   }

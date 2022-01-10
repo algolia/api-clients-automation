@@ -1490,7 +1490,7 @@ export class SearchApi {
     const queryParameters: Record<string, string> = {};
 
     if (page !== undefined) {
-      queryParameters.Page = page.toString();
+      queryParameters.page = page.toString();
     }
 
     const request: Request = {
@@ -1522,7 +1522,7 @@ export class SearchApi {
     const queryParameters: Record<string, string> = {};
 
     if (page !== undefined) {
-      queryParameters.Page = page.toString();
+      queryParameters.page = page.toString();
     }
 
     if (hitsPerPage !== undefined) {
@@ -2294,7 +2294,7 @@ export class SearchApi {
     }
 
     if (page !== undefined) {
-      queryParameters.Page = page.toString();
+      queryParameters.page = page.toString();
     }
 
     if (hitsPerPage !== undefined) {

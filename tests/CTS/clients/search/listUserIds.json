@@ -7,7 +7,11 @@
     },
     "request": {
       "path": "/1/clusters/mapping",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "page": "8",
+        "hitsPerPage": "100"
+      }
     }
   }
 ]

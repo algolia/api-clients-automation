@@ -3537,7 +3537,7 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (page != null) {
-      queryParams.addAll(this.parameterToPair("Page", page));
+      queryParams.addAll(this.parameterToPair("page", page));
     }
 
     headers.put("Accept", "application/json");
@@ -3623,7 +3623,7 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (page != null) {
-      queryParams.addAll(this.parameterToPair("Page", page));
+      queryParams.addAll(this.parameterToPair("page", page));
     }
 
     if (hitsPerPage != null) {
@@ -5455,7 +5455,7 @@ public class SearchApi extends ApiClient {
     }
 
     if (page != null) {
-      queryParams.addAll(this.parameterToPair("Page", page));
+      queryParams.addAll(this.parameterToPair("page", page));
     }
 
     if (hitsPerPage != null) {

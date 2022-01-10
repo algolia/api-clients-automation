@@ -20,6 +20,9 @@
           "user1",
           "user2"
         ]
+      },
+      "searchParams": {
+        "X-Algolia-User-ID": "userID"
       }
     }
   }
