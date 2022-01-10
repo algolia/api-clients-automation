@@ -55,7 +55,7 @@ runs:
     - name: matrix
       id: set-matrix
       shell: bash
-      run: echo "::set-output name=specs_matrix::{\"client\": ["search", "recommend"]}"
+      run: echo "::set-output name=specs_matrix::{\"client\": [\"search\", \"recommend\"]}"
 
 outputs:
   # specs variables
