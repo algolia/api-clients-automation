@@ -144,173 +144,6 @@ use {{invokerPackage}}\ObjectSerializer;
      */
     public function {{operationId}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^required}} = {{{defaultValue}}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}})
     {
-        {{#returnType}}list($response) = {{/returnType}}$this->{{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});{{#returnType}}
-        return $response;{{/returnType}}
-    }
-
-    /**
-     * Operation {{{operationId}}}WithHttpInfo
-{{#summary}}
-     *
-     * {{.}}
-{{/summary}}
-     *
-{{#description}}
-     * {{.}}
-     *
-{{/description}}
-{{#vendorExtensions.x-group-parameters}}
-     * Note: the input parameter is an associative array with the keys listed as the parameter name below
-     *
-{{/vendorExtensions.x-group-parameters}}
-{{#servers}}
-{{#-first}}
-     * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-{{/-first}}
-     * URL: {{{url}}}
-{{#-last}}
-     *
-{{/-last}}
-{{/servers}}
-{{#allParams}}
-     * @param  {{{dataType}}} ${{paramName}}{{#description}} {{.}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
-{{/allParams}}
-     *
-     * @throws \{{invokerPackage}}\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of {{#returnType}}{{#responses}}{{#dataType}}{{^-first}}|{{/-first}}{{/dataType}}{{{dataType}}}{{/responses}}{{/returnType}}{{^returnType}}null{{/returnType}}, HTTP status code, HTTP response headers (array of strings)
-    {{#isDeprecated}}
-     * @deprecated
-    {{/isDeprecated}}
-     */
-    public function {{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^required}} = {{{defaultValue}}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}})
-    {
-        $request = $this->{{operationId}}Request({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-            {{#returnType}}
-            {{#responses}}
-            {{#-first}}
-
-            switch($statusCode) {
-            {{/-first}}
-            {{#dataType}}
-                {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
-                    if ('{{{dataType}}}' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '{{{dataType}}}', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            {{/dataType}}
-            {{#-last}}
-            }
-            {{/-last}}
-            {{/responses}}
-
-            $returnType = '{{{returnType}}}';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-            {{/returnType}}
-            {{^returnType}}
-
-            return [null, $statusCode, $response->getHeaders()];
-            {{/returnType}}
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-        {{#responses}}
-            {{#dataType}}
-                {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '{{{dataType}}}',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            {{/dataType}}
-        {{/responses}}
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Create request for operation '{{{operationId}}}'
-     *
-{{#vendorExtensions.x-group-parameters}}
-     * Note: the input parameter is an associative array with the keys listed as the parameter name below
-     *
-{{/vendorExtensions.x-group-parameters}}
-{{#servers}}
-{{#-first}}
-     * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-{{/-first}}
-     * URL: {{{url}}}
-{{#-last}}
-     *
-{{/-last}}
-{{/servers}}
-{{#allParams}}
-     * @param  {{{dataType}}} ${{paramName}}{{#description}} {{.}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
-{{/allParams}}
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-    {{#isDeprecated}}
-     * @deprecated
-    {{/isDeprecated}}
-     */
-    public function {{operationId}}Request({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^required}} = {{{defaultValue}}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}})
-    {
         {{#vendorExtensions.x-group-parameters}}
         // unbox the parameters from the associative array
         {{#allParams}}
@@ -368,12 +201,9 @@ use {{invokerPackage}}\ObjectSerializer;
         {{/allParams}}
 
         $resourcePath = '{{{path}}}';
-        $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
-        $multipart = false;
-
         {{#queryParams}}
         // query params
         {{#isExplode}}
@@ -402,7 +232,6 @@ use {{invokerPackage}}\ObjectSerializer;
         }
         {{/isExplode}}
         {{/queryParams}}
-
         {{#headerParams}}
         // header params
         {{#collectionFormat}}
@@ -414,7 +243,6 @@ use {{invokerPackage}}\ObjectSerializer;
             $headerParams['{{baseName}}'] = ObjectSerializer::toHeaderValue(${{paramName}});
         }
         {{/headerParams}}
-
         {{#pathParams}}
         // path params
         {{#collectionFormat}}
@@ -430,74 +258,15 @@ use {{invokerPackage}}\ObjectSerializer;
             );
         }
         {{/pathParams}}
-
-        {{#formParams}}
-        // form params
-        if (${{paramName}} !== null) {
-            {{#isFile}}
-            $multipart = true;
-            $formParams['{{baseName}}'] = [];
-            $paramFiles = is_array(${{paramName}}) ? ${{paramName}} : [${{paramName}}];
-            foreach ($paramFiles as $paramFile) {
-                $formParams['{{baseName}}'][] = \GuzzleHttp\Psr7\Utils::tryFopen(
-                    ObjectSerializer::toFormValue($paramFile),
-                    'rb'
-                );
-            }
-            {{/isFile}}
-            {{^isFile}}
-            $formParams['{{baseName}}'] = ObjectSerializer::toFormValue(${{paramName}});
-            {{/isFile}}
-        }
-        {{/formParams}}
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                [{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}]
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}],
-                [{{#consumes}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}]
-            );
-        }
-
-        // for model (json/xml)
+        $headers = $this->headerSelector->selectHeaders(
+            [{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}],
+            [{{#consumes}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}]
+        );
         {{#bodyParams}}
-        if (isset(${{paramName}})) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization(${{paramName}}));
-            } else {
-                $httpBody = ${{paramName}};
-            }
-        } elseif (count($formParams) > 0) {
+        if (isset(${{paramName}})) { 
+            $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization(${{paramName}}));
+        } 
         {{/bodyParams}}
-        {{^bodyParams}}
-        if (count($formParams) > 0) {
-        {{/bodyParams}}
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
-            }
-        }
-
         {{#authMethods}}
         {{#isApiKey}}
         // this endpoint requires API key authentication
@@ -548,14 +317,23 @@ use {{invokerPackage}}\ObjectSerializer;
 
         {{/servers.0}}
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        return new Request(
+        $request = new Request(
             '{{httpMethod}}',
             {{^servers.0}}$this->config->getHost(){{/servers.0}}{{#servers.0}}$operationHost{{/servers.0}} . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
-    }
+        
+        $expectedResponse = null;
+        {{#responses.0}}
+        $expectedResponse = '{{responses.0.dataType}}';
+        {{/responses.0}}
+        {{#returnType}}list($response) = {{/returnType}}$this->sendRequest($request, $expectedResponse);
 
+        {{#returnType}}
+        return $response;
+        {{/returnType}}
+    }
     {{/operation}}
     /**
      * Create http client option
@@ -574,6 +352,173 @@ use {{invokerPackage}}\ObjectSerializer;
         }
 
         return $options;
+    }
+
+    /**
+     * Send the request and handle the response
+     *
+     * @throws \RuntimeException on file opening failure
+     * @return array 
+     */
+    protected function sendRequest($request, $expectedResponse)
+    {
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+                case 200:
+                    if (expectedResponse === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, expectedResponse, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 400:
+                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 402:
+                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 403:
+                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 404:
+                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+
+            }
+
+            $returnType = $expectedResponse;
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        expectedResponse,
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
     }
 }
 {{/operations}}
