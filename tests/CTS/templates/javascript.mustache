@@ -16,7 +16,7 @@ describe('{{operationId}}', () => {
         expect(req).toEqual(expect.objectContaining({
         path: '{{{request.path}}}',
         method: '{{{request.method}}}',
-        {{#request.data}}data: {{{.}}},{{/request.data}}{{#request.searchParams}}searchParams: expect.objectContaining({{{.}}}),{{/request.searchParams}}
+        {{#request.data}}data: {{{.}}},{{/request.data}}{{#request.searchParams}}searchParams: {{{.}}},{{/request.searchParams}}
         }))
     });
 

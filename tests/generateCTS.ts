@@ -30,8 +30,6 @@ type Tests = {
   request: {
     path: string;
     method: string;
-    headers: string;
-    userAgent: string;
     data?: string;
     searchParams?: string;
   };
@@ -134,9 +132,7 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
 
       // stringify request.data too
       test.request.data = JSON.stringify(test.request.data);
-      test.request.headers = JSON.stringify(test.request.headers);
       test.request.searchParams = JSON.stringify(test.request.searchParams);
-      test.request.userAgent = JSON.stringify(test.request.userAgent);
 
       if (Object.keys(test.parameters).length === 0) {
         test.parameters = undefined;

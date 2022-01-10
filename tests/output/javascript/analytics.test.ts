@@ -31,12 +31,12 @@ describe('getAverageClickPosition', () => {
       expect.objectContaining({
         path: '/2/clicks/averageClickPosition',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -66,12 +66,12 @@ describe('getClickPositions', () => {
       expect.objectContaining({
         path: '/2/clicks/positions',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -101,12 +101,12 @@ describe('getClickThroughRate', () => {
       expect.objectContaining({
         path: '/2/clicks/clickThroughRate',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -136,12 +136,12 @@ describe('getConversationRate', () => {
       expect.objectContaining({
         path: '/2/conversions/conversionRate',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -171,12 +171,12 @@ describe('getNoClickRate', () => {
       expect.objectContaining({
         path: '/2/searches/noClickRate',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -206,12 +206,12 @@ describe('getNoResultsRate', () => {
       expect.objectContaining({
         path: '/2/searches/noResultRate',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -241,12 +241,12 @@ describe('getSearchesCount', () => {
       expect.objectContaining({
         path: '/2/searches/count',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -278,14 +278,14 @@ describe('getSearchesNoClicks', () => {
       expect.objectContaining({
         path: '/2/searches/noClicks',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -317,14 +317,14 @@ describe('getSearchesNoResults', () => {
       expect.objectContaining({
         path: '/2/searches/noResults',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -369,14 +369,14 @@ describe('getTopCountries', () => {
       expect.objectContaining({
         path: '/2/countries',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -409,7 +409,7 @@ describe('getTopFilterAttributes', () => {
       expect.objectContaining({
         path: '/2/filters',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           search: 'mySearch',
           startDate: '1999-09-19',
@@ -417,7 +417,7 @@ describe('getTopFilterAttributes', () => {
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -434,7 +434,7 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute',
         method: 'GET',
-        searchParams: expect.objectContaining({ index: 'index' }),
+        searchParams: { index: 'index' },
       })
     );
   });
@@ -449,7 +449,7 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute1%2CmyAttribute2',
         method: 'GET',
-        searchParams: expect.objectContaining({ index: 'index' }),
+        searchParams: { index: 'index' },
       })
     );
   });
@@ -470,7 +470,7 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           search: 'mySearch',
           startDate: '1999-09-19',
@@ -478,7 +478,7 @@ describe('getTopFilterForAttribute', () => {
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -499,7 +499,7 @@ describe('getTopFilterForAttribute', () => {
       expect.objectContaining({
         path: '/2/filters/myAttribute1%2CmyAttribute2',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           search: 'mySearch',
           startDate: '1999-09-19',
@@ -507,7 +507,7 @@ describe('getTopFilterForAttribute', () => {
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -521,7 +521,7 @@ describe('getTopFiltersNoResults', () => {
       expect.objectContaining({
         path: '/2/filters/noResults',
         method: 'GET',
-        searchParams: expect.objectContaining({ index: 'index' }),
+        searchParams: { index: 'index' },
       })
     );
   });
@@ -541,7 +541,7 @@ describe('getTopFiltersNoResults', () => {
       expect.objectContaining({
         path: '/2/filters/noResults',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           search: 'mySearch',
           startDate: '1999-09-19',
@@ -549,7 +549,7 @@ describe('getTopFiltersNoResults', () => {
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -583,7 +583,7 @@ describe('getTopHits', () => {
       expect.objectContaining({
         path: '/2/hits',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           search: 'mySearch',
           clickAnalytics: 'true',
@@ -592,7 +592,7 @@ describe('getTopHits', () => {
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -627,7 +627,7 @@ describe('getTopSearches', () => {
       expect.objectContaining({
         path: '/2/searches',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           clickAnalytics: 'true',
           startDate: '1999-09-19',
@@ -637,7 +637,7 @@ describe('getTopSearches', () => {
           limit: '21',
           offset: '42',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
@@ -667,12 +667,12 @@ describe('getUsersCount', () => {
       expect.objectContaining({
         path: '/2/users/count',
         method: 'GET',
-        searchParams: expect.objectContaining({
+        searchParams: {
           index: 'index',
           startDate: '1999-09-19',
           endDate: '2001-01-01',
           tags: 'tag',
-        }),
+        },
       })
     );
   });
