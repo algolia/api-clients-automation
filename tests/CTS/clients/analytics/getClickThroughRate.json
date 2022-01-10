@@ -7,7 +7,10 @@
     },
     "request": {
       "path": "/2/clicks/clickThroughRate",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index"
+      }
     }
   },
   {

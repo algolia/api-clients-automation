@@ -7,7 +7,10 @@
     },
     "request": {
       "path": "/2/users/count",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index"
+      }
     }
   },
   {

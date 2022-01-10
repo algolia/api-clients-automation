@@ -7,10 +7,12 @@ type AdditionalContent = {
   connectTimeout: number;
   responseTimeout: number;
   userAgent: string | undefined;
-  searchParams: Record<string, any>;
+  searchParams: Record<string, any> | undefined;
 };
 
-function searchParamsWithoutUA(params: URLSearchParams): Record<string, any> {
+function searchParamsWithoutUA(
+  params: URLSearchParams
+): Record<string, any> | undefined {
   const searchParams = {};
 
   for (const [k, v] of params) {
@@ -21,7 +23,7 @@ function searchParamsWithoutUA(params: URLSearchParams): Record<string, any> {
     searchParams[k] = v;
   }
 
-  return searchParams;
+  return Object.entries(searchParams).length === 0 ? undefined : searchParams;
 }
 
 export class EchoRequester extends Requester {
@@ -31,7 +33,7 @@ export class EchoRequester extends Requester {
 
   send(
     { headers, url, connectTimeout, responseTimeout }: EndRequest,
-    originalRequest: Request
+    { data, ...originalRequest }: Request
   ): Promise<Response> {
     const urlSearchParams = new URL(url).searchParams;
     const userAgent = urlSearchParams.get('x-algolia-agent') || undefined;
@@ -43,9 +45,15 @@ export class EchoRequester extends Requester {
       userAgent: userAgent ? encodeURI(userAgent) : undefined,
       searchParams,
     };
+    const originalData =
+      data && Object.entries(data).length > 0 ? data : undefined;
 
     return Promise.resolve({
-      content: JSON.stringify({ ...originalRequest, ...additionalContent }),
+      content: JSON.stringify({
+        ...originalRequest,
+        ...additionalContent,
+        data: originalData,
+      }),
       isTimedOut: false,
       status: this.status,
     });
