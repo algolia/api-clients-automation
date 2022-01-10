@@ -1,0 +1,34 @@
+get:
+  tags:
+    - query-suggestions
+  operationId: getConfigStatus
+  description: >
+    Get the status of a Query Suggestion's index.
+
+    The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
+  parameters:
+    - $ref: ../../common/parameters.yml#/IndexName
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            required:
+              - indexName
+              - isRunning
+              - lastBuiltAt
+            properties:
+              indexName:
+                type: string
+              isRunning:
+                type: boolean
+              lastBuiltAt:
+                type: string
+                format: data-time
+    '401':
+      $ref: ../../common/responses/Unauthorized.yml
+    '500':
+      $ref: ../../common/responses/InternalError.yml

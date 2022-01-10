@@ -54,7 +54,9 @@ const packageNames: Record<string, Record<Language, string>> = Object.entries(
   openapitools['generator-cli'].generators
 ).reduce((prev, [clientName, clientConfig]) => {
   const obj = prev;
-  const [lang, client] = clientName.split('-') as [Language, string];
+  const parts = clientName.split('-');
+  const lang = parts[0] as Language;
+  const client = parts.slice(1).join('-');
 
   if (!(lang in prev)) {
     obj[lang] = {};

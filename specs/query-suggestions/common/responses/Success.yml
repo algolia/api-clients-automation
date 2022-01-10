@@ -1,0 +1,16 @@
+description: Success
+content:
+  application/json:
+    schema:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: Success

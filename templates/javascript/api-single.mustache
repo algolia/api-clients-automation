@@ -119,6 +119,12 @@ export class {{classname}} {
   }
   {{/isInsightsHost}}
 
+  {{#isQuerySuggestionsHost}}
+  public getDefaultHosts(region: string = 'us'): Host[] {
+    return [{ url: `query-suggestions.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
+  }
+  {{/isQuerySuggestionsHost}}
+
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);
   }

@@ -1,0 +1,78 @@
+SourceIndex:
+  type: object
+  additionalProperties: false
+  required:
+    - indexName
+  properties:
+    indexName:
+      type: string
+      description: Source index name.
+    analyticsTags:
+      type: array
+      items:
+        type: string
+      default: []
+      description: List of analytics tags to filter the popular searches per tag.
+    facets:
+      type: array
+      items:
+        type: object
+      default: []
+      description: List of facets to define as categories for the query suggestions.
+    minHits:
+      type: number
+      description: Minimum number of hits (e.g., matching records in the source index) to generate a suggestions.
+    minLetters:
+      type: number
+      description: Minimum number of required letters for a suggestion to remain.
+    generate:
+      type: array
+      items:
+        type: array
+        items:
+          type: string
+      default: []
+      description: List of facet attributes used to generate Query Suggestions. The resulting suggestions are every combination of the facets in the nested list (e.g., (facetA and facetB) and facetC).
+      example: [['facetA', 'facetB'], ['facetC']]
+    external:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - query
+          - count
+        properties:
+          query:
+            type: string
+          count:
+            type: number
+
+SourceIndices:
+  type: array
+  items:
+    $ref: '#/SourceIndex'
+  description: List of source indices used to generate a Query Suggestions index.
+
+QuerySuggestionIndexParam:
+  type: object
+  additionalProperties: false
+  required:
+    - indexName
+    - sourceIndices
+  properties:
+    indexName:
+      type: string
+      description: Index name to target.
+    sourceIndices:
+      $ref: ../common/parameters.yml#/SourceIndex
+    languages:
+      type: array
+      items:
+        type: string
+      description: De-duplicate singular and plural suggestions. For example, let's say your index contains English content, and that two suggestions “shoe” and “shoes” end up in your Query Suggestions index. If the English language is configured, only the most popular of those two suggestions would remain.
+    exclude:
+      type: array
+      items:
+        type: string
+      description: List of words and patterns to exclude from the Query Suggestions index.
