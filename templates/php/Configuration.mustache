@@ -56,18 +56,18 @@ class Configuration
     protected $accessToken = '';
 
     /**
-     * Username for HTTP basic authentication
+     * Algolia Application ID
      *
      * @var string
      */
-    protected $username = '';
+    protected $appId = '';
 
     /**
-     * Password for HTTP basic authentication
+     * Algolia API Key
      *
      * @var string
      */
-    protected $password = '';
+    protected $algoliaApiKey = '';
 
     /**
      * The host
@@ -107,9 +107,15 @@ class Configuration
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(string $appId = null, string $algoliaApiKe = null)
     {
         $this->tempFolderPath = sys_get_temp_dir();
+
+        $this->setAlgoliaApiKey($algoliaApiKey);
+        $this->setApiKey('X-Algolia-API-Key', $algoliaApiKey);
+
+        $this->setAppId($appId);
+        $this->setApiKey('X-Algolia-Application-Id', $appId);
     }
 
     /**
@@ -188,49 +194,47 @@ class Configuration
     }
 
     /**
-     * Sets the username for HTTP basic authentication
+     * Sets the Algolia Application ID
      *
-     * @param string $username Username for HTTP basic authentication
-     *
-     * @return $this
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-        return $this;
-    }
-
-    /**
-     * Gets the username for HTTP basic authentication
-     *
-     * @return string Username for HTTP basic authentication
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Sets the password for HTTP basic authentication
-     *
-     * @param string $password Password for HTTP basic authentication
+     * @param string $appId Application ID
      *
      * @return $this
      */
-    public function setPassword($password)
+    public function setAppId($appId = '')
     {
-        $this->password = $password;
-        return $this;
+        $this->appId = $appId;
     }
 
     /**
-     * Gets the password for HTTP basic authentication
+     * Gets the Algolia application ID
      *
-     * @return string Password for HTTP basic authentication
+     * @return string 
      */
-    public function getPassword()
+    public function getAppId()
     {
-        return $this->password;
+        return $this->appId;
+    }
+
+    /**
+     * Sets the Algolia API Key
+     *
+     * @param string $algoliaApiKey Algolia API Key
+     *
+     * @return $this
+     */
+    public function setAlgoliaApiKey($algoliaApiKey = '')
+    {
+        $this->algoliaApiKey = $algoliaApiKey;
+    }
+
+    /**
+     * Gets the Algolia API Key
+     *
+     * @return string 
+     */
+    public function getAlgoliaApiKey()
+    {
+        return $this->algoliaApiKey;
     }
 
     /**

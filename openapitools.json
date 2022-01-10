@@ -135,11 +135,12 @@
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
-        "apiPackage": "src",
+        "apiPackage": "",
         "glob": "specs/search/spec.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
         }
       }
