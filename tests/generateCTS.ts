@@ -85,6 +85,13 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function createClientName(client: string): string {
+  return `${client
+    .split('-')
+    .map((part) => capitalize(part))
+    .join('')}Api`;
+}
+
 function removeObjectName(obj: Record<string, any>): void {
   for (const prop in obj) {
     if (prop === '$objectName') {
@@ -213,9 +220,13 @@ async function generateCode(language: Language): Promise<void> {
 
     const code = Mustache.render(template, {
       import: packageNames[language][client],
-      client: `${capitalize(client)}Api`,
+      client: createClientName(client),
       blocks: cts[client],
-      hasRegionalHost: ['personalization', 'analytics'].includes(client),
+      hasRegionalHost: [
+        'personalization',
+        'analytics',
+        'query-suggestions',
+      ].includes(client),
     });
     await fsp.writeFile(
       `output/${language}/${client}${extensionForLanguage[language]}`,
