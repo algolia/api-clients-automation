@@ -2,13 +2,17 @@
 import type { RequestOptions } from '../utils/types';
 
 export * from './errorBase';
-export * from './inlineResponse200';
-export * from './inlineResponse2001';
-export * from './inlineResponse2002';
-export * from './querySuggestionIndexParam';
+export * from './logFile';
 export * from './querySuggestionsIndex';
+export * from './querySuggestionsIndexParam';
+export * from './querySuggestionsIndexWithIndexParam';
+export * from './querySuggestionsIndexWithIndexParamAllOf';
 export * from './sourceIndex';
 export * from './sourceIndexExternal';
+export * from './sourceIndexWithReplicas';
+export * from './sourceIndexWithReplicasExternal';
+export * from './status';
+export * from './sucessResponse';
 
 export interface Authentication {
   /**

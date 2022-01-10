@@ -1,4 +1,4 @@
-export type InlineResponse2001 = {
+export type Status = {
   indexName: string;
   isRunning: boolean;
   lastBuiltAt: string;

@@ -60,6 +60,9 @@ export class {{classname}} {
         {{#isAnalyticsHost}}
             region: 'de' | 'us',
         {{/isAnalyticsHost}}
+        {{#isQuerySuggestionsHost}}
+            region: 'eu' | 'us',
+        {{/isQuerySuggestionsHost}}
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {

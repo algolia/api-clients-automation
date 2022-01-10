@@ -8,7 +8,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../common/parameters.yml#/QuerySuggestionIndexParam
+          $ref: ../common/parameters.yml#/QuerySuggestionsIndexWithIndexParam
   responses:
     '200':
       $ref: ../common/responses/Success.yml

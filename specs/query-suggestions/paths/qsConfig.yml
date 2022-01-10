@@ -3,12 +3,14 @@ put:
     - query-suggestions
   operationId: updateConfig
   description: Update the configuration of a Query Suggestions index.
+  parameters:
+    - $ref: ../../common/parameters.yml#/IndexName
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: ../common/parameters.yml#/QuerySuggestionIndexParam
+          $ref: ../common/parameters.yml#/QuerySuggestionsIndexParam
   responses:
     '200':
       $ref: ../common/responses/Success.yml

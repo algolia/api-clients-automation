@@ -47,6 +47,7 @@ SourceIndex:
             type: string
           count:
             type: number
+      description: List of external indices to use to generate custom Query Suggestions.
 
 SourceIndices:
   type: array
@@ -54,18 +55,14 @@ SourceIndices:
     $ref: '#/SourceIndex'
   description: List of source indices used to generate a Query Suggestions index.
 
-QuerySuggestionIndexParam:
+QuerySuggestionsIndexParam:
   type: object
   additionalProperties: false
   required:
-    - indexName
     - sourceIndices
   properties:
-    indexName:
-      type: string
-      description: Index name to target.
     sourceIndices:
-      $ref: ../common/parameters.yml#/SourceIndex
+      $ref: ../common/parameters.yml#/SourceIndices
     languages:
       type: array
       items:
@@ -76,3 +73,15 @@ QuerySuggestionIndexParam:
       items:
         type: string
       description: List of words and patterns to exclude from the Query Suggestions index.
+
+QuerySuggestionsIndexWithIndexParam:
+  allOf:
+    - $ref: '#/QuerySuggestionsIndexParam'
+    - type: object
+      additionalProperties: false
+      required:
+        - indexName
+      properties:
+        indexName:
+          type: string
+          description: Index name to target.

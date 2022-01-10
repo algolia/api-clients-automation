@@ -1,4 +1,4 @@
-export type InlineResponse2002 = {
+export type LogFile = {
   /**
    * Date and time of creation of the record.
    */
@@ -6,7 +6,7 @@ export type InlineResponse2002 = {
   /**
    * Type of the record, can be one of three values (INFO, SKIP or ERROR).
    */
-  level: InlineResponse2002Level;
+  level: LogFileLevel;
   /**
    * Detailed description of what happened.
    */
@@ -17,4 +17,4 @@ export type InlineResponse2002 = {
   contextLevel: number;
 };
 
-export type InlineResponse2002Level = 'ERROR' | 'INFO' | 'SKIP';
+export type LogFileLevel = 'ERROR' | 'INFO' | 'SKIP';

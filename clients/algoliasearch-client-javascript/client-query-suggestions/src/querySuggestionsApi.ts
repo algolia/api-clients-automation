@@ -1,9 +1,10 @@
-import type { InlineResponse200 } from '../model/inlineResponse200';
-import type { InlineResponse2001 } from '../model/inlineResponse2001';
-import type { InlineResponse2002 } from '../model/inlineResponse2002';
+import type { LogFile } from '../model/logFile';
 import { ApiKeyAuth } from '../model/models';
-import type { QuerySuggestionIndexParam } from '../model/querySuggestionIndexParam';
 import type { QuerySuggestionsIndex } from '../model/querySuggestionsIndex';
+import type { QuerySuggestionsIndexParam } from '../model/querySuggestionsIndexParam';
+import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggestionsIndexWithIndexParam';
+import type { Status } from '../model/status';
+import type { SucessResponse } from '../model/sucessResponse';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
@@ -39,6 +40,7 @@ export class QuerySuggestionsApi {
   constructor(
     appId: string,
     apiKey: string,
+    region: 'eu' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     this.setApiKey(QuerySuggestionsApiKeys.appId, appId);
@@ -85,45 +87,28 @@ export class QuerySuggestionsApi {
    * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
    *
    * @param createConfig - The createConfig parameters.
-   * @param createConfig.querySuggestionIndexParam - The querySuggestionIndexParam.
+   * @param createConfig.querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam.
    */
   createConfig({
-    querySuggestionIndexParam,
-  }: CreateConfigProps): Promise<InlineResponse200> {
+    querySuggestionsIndexWithIndexParam,
+  }: CreateConfigProps): Promise<SucessResponse> {
     const path = '/1/configs';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     if (
-      querySuggestionIndexParam === null ||
-      querySuggestionIndexParam === undefined
+      querySuggestionsIndexWithIndexParam === null ||
+      querySuggestionsIndexWithIndexParam === undefined
     ) {
       throw new Error(
-        'Required parameter querySuggestionIndexParam was null or undefined when calling createConfig.'
-      );
-    }
-
-    if (
-      querySuggestionIndexParam.indexName === null ||
-      querySuggestionIndexParam.indexName === undefined
-    ) {
-      throw new Error(
-        'Required parameter querySuggestionIndexParam.indexName was null or undefined when calling createConfig.'
-      );
-    }
-    if (
-      querySuggestionIndexParam.sourceIndices === null ||
-      querySuggestionIndexParam.sourceIndices === undefined
-    ) {
-      throw new Error(
-        'Required parameter querySuggestionIndexParam.sourceIndices was null or undefined when calling createConfig.'
+        'Required parameter querySuggestionsIndexWithIndexParam was null or undefined when calling createConfig.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: querySuggestionIndexParam,
+      data: querySuggestionsIndexWithIndexParam,
     };
 
     const requestOptions: RequestOptions = {
@@ -139,7 +124,7 @@ export class QuerySuggestionsApi {
    * @param deleteConfig - The deleteConfig parameters.
    * @param deleteConfig.indexName - The index in which to perform the request.
    */
-  deleteConfig({ indexName }: DeleteConfigProps): Promise<InlineResponse200> {
+  deleteConfig({ indexName }: DeleteConfigProps): Promise<SucessResponse> {
     const path = '/1/configs/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -225,9 +210,7 @@ export class QuerySuggestionsApi {
    * @param getConfigStatus - The getConfigStatus parameters.
    * @param getConfigStatus.indexName - The index in which to perform the request.
    */
-  getConfigStatus({
-    indexName,
-  }: GetConfigStatusProps): Promise<InlineResponse2001> {
+  getConfigStatus({ indexName }: GetConfigStatusProps): Promise<Status> {
     const path = '/1/configs/{indexName}/status'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -259,7 +242,7 @@ export class QuerySuggestionsApi {
    * @param getLogFile - The getLogFile parameters.
    * @param getLogFile.indexName - The index in which to perform the request.
    */
-  getLogFile({ indexName }: GetLogFileProps): Promise<InlineResponse2002[]> {
+  getLogFile({ indexName }: GetLogFileProps): Promise<LogFile[]> {
     const path = '/1/logs/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -289,45 +272,48 @@ export class QuerySuggestionsApi {
    * Update the configuration of a Query Suggestions index.
    *
    * @param updateConfig - The updateConfig parameters.
-   * @param updateConfig.querySuggestionIndexParam - The querySuggestionIndexParam.
+   * @param updateConfig.indexName - The index in which to perform the request.
+   * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam.
    */
   updateConfig({
-    querySuggestionIndexParam,
-  }: UpdateConfigProps): Promise<InlineResponse200> {
-    const path = '/1/configs/{indexName}';
+    indexName,
+    querySuggestionsIndexParam,
+  }: UpdateConfigProps): Promise<SucessResponse> {
+    const path = '/1/configs/{indexName}'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (
-      querySuggestionIndexParam === null ||
-      querySuggestionIndexParam === undefined
-    ) {
+    if (indexName === null || indexName === undefined) {
       throw new Error(
-        'Required parameter querySuggestionIndexParam was null or undefined when calling updateConfig.'
+        'Required parameter indexName was null or undefined when calling updateConfig.'
       );
     }
 
     if (
-      querySuggestionIndexParam.indexName === null ||
-      querySuggestionIndexParam.indexName === undefined
+      querySuggestionsIndexParam === null ||
+      querySuggestionsIndexParam === undefined
     ) {
       throw new Error(
-        'Required parameter querySuggestionIndexParam.indexName was null or undefined when calling updateConfig.'
+        'Required parameter querySuggestionsIndexParam was null or undefined when calling updateConfig.'
       );
     }
+
     if (
-      querySuggestionIndexParam.sourceIndices === null ||
-      querySuggestionIndexParam.sourceIndices === undefined
+      querySuggestionsIndexParam.sourceIndices === null ||
+      querySuggestionsIndexParam.sourceIndices === undefined
     ) {
       throw new Error(
-        'Required parameter querySuggestionIndexParam.sourceIndices was null or undefined when calling updateConfig.'
+        'Required parameter querySuggestionsIndexParam.sourceIndices was null or undefined when calling updateConfig.'
       );
     }
 
     const request: Request = {
       method: 'PUT',
       path,
-      data: querySuggestionIndexParam,
+      data: querySuggestionsIndexParam,
     };
 
     const requestOptions: RequestOptions = {
@@ -341,9 +327,9 @@ export class QuerySuggestionsApi {
 
 export type CreateConfigProps = {
   /**
-   * The querySuggestionIndexParam.
+   * The querySuggestionsIndexWithIndexParam.
    */
-  querySuggestionIndexParam: QuerySuggestionIndexParam;
+  querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam;
 };
 
 export type DeleteConfigProps = {
@@ -376,7 +362,11 @@ export type GetLogFileProps = {
 
 export type UpdateConfigProps = {
   /**
-   * The querySuggestionIndexParam.
+   * The index in which to perform the request.
    */
-  querySuggestionIndexParam: QuerySuggestionIndexParam;
+  indexName: string;
+  /**
+   * The querySuggestionsIndexParam.
+   */
+  querySuggestionsIndexParam: QuerySuggestionsIndexParam;
 };

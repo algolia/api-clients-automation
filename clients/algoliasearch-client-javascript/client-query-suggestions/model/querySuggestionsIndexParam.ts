@@ -1,11 +1,10 @@
 import type { SourceIndex } from './sourceIndex';
 
-export type QuerySuggestionIndexParam = {
+export type QuerySuggestionsIndexParam = {
   /**
-   * Index name to target.
+   * List of source indices used to generate a Query Suggestions index.
    */
-  indexName: string;
-  sourceIndices: SourceIndex;
+  sourceIndices: SourceIndex[];
   /**
    * De-duplicate singular and plural suggestions. For example, let\'s say your index contains English content, and that two suggestions “shoe” and “shoes” end up in your Query Suggestions index. If the English language is configured, only the most popular of those two suggestions would remain.
    */
