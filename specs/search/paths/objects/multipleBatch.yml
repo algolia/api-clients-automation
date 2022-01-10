@@ -24,6 +24,7 @@ post:
                     $ref: 'common/schemas.yml#/action'
                   body:
                     type: object
+                    description: arguments to the operation (depends on the type of the operation).
                   indexName:
                     type: string
                     description: Index to target for this operation.

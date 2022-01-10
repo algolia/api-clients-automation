@@ -40,7 +40,7 @@ public class Operation {
   }
 
   /**
-   * Get body
+   * arguments to the operation (depends on the type of the operation).
    *
    * @return body
    */
