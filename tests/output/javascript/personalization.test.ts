@@ -12,9 +12,7 @@ const client = new PersonalizationApi(appId, apiKey, 'de', {
 
 describe('deleteUserProfile', () => {
   test('delete deleteUserProfile', async () => {
-    const req = await client.deleteUserProfile({
-      userToken: 'UserToken',
-    });
+    const req = await client.deleteUserProfile({ userToken: 'UserToken' });
 
     expect(req).toEqual(
       expect.objectContaining({
@@ -40,9 +38,7 @@ describe('getPersonalizationStrategy', () => {
 
 describe('getUserTokenProfile', () => {
   test('get getUserTokenProfile', async () => {
-    const req = await client.getUserTokenProfile({
-      userToken: 'UserToken',
-    });
+    const req = await client.getUserTokenProfile({ userToken: 'UserToken' });
 
     expect(req).toEqual(
       expect.objectContaining({

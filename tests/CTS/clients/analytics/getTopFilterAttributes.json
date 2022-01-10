@@ -15,6 +15,7 @@
     "testName": "get getTopFilterAttributes with all parameters",
     "parameters": {
       "index": "index",
+      "search": "mySearch",
       "startDate": "1999-09-19",
       "endDate": "2001-01-01",
       "limit": 21,
@@ -26,6 +27,7 @@
       "method": "GET",
       "searchParams": {
         "index": "index",
+        "search": "mySearch",
         "startDate": "1999-09-19",
         "endDate": "2001-01-01",
         "limit": "21",

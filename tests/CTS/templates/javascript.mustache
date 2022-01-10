@@ -10,11 +10,7 @@ describe('{{operationId}}', () => {
     {{#tests}}
     test('{{testName}}', async () => {
         const req = await client.{{method}}(
-            {{#hasParameters}}{
-                {{#parametersWithDataType}}
-                    {{#isDate}}{{{key}}}:{{{value}}} as unknown as Date,{{/isDate}}{{^isDate}}{{{key}}}:{{{value}}},{{/isDate}}
-                {{/parametersWithDataType}}
-            }{{/hasParameters}}
+          {{#hasParameters}}{{{parameters}}}{{/hasParameters}}
         );
 
         expect(req).toEqual(expect.objectContaining({
