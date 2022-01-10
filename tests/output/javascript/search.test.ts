@@ -170,9 +170,7 @@ describe('batchRules', () => {
 
 describe('browse', () => {
   test('get browse results with minimal parameters', async () => {
-    const req = await client.browse({
-      indexName: 'indexName',
-    });
+    const req = await client.browse({ indexName: 'indexName' });
 
     expect(req).toEqual(
       expect.objectContaining({
@@ -203,9 +201,7 @@ describe('browse', () => {
 
 describe('clearAllSynonyms', () => {
   test('clearAllSynonyms', async () => {
-    const req = await client.clearAllSynonyms({
-      indexName: 'indexName',
-    });
+    const req = await client.clearAllSynonyms({ indexName: 'indexName' });
 
     expect(req).toEqual(
       expect.objectContaining({
@@ -218,9 +214,7 @@ describe('clearAllSynonyms', () => {
 
 describe('clearRules', () => {
   test('clearRules', async () => {
-    const req = await client.clearRules({
-      indexName: 'indexName',
-    });
+    const req = await client.clearRules({ indexName: 'indexName' });
 
     expect(req).toEqual(
       expect.objectContaining({
@@ -233,9 +227,7 @@ describe('clearRules', () => {
 
 describe('deleteApiKey', () => {
   test('deleteApiKey', async () => {
-    const req = await client.deleteApiKey({
-      key: 'myTestApiKey',
-    });
+    const req = await client.deleteApiKey({ key: 'myTestApiKey' });
 
     expect(req).toEqual(
       expect.objectContaining({
@@ -280,9 +272,7 @@ describe('deleteSynonym', () => {
 
 describe('getApiKey', () => {
   test('getApiKey', async () => {
-    const req = await client.getApiKey({
-      key: 'myTestApiKey',
-    });
+    const req = await client.getApiKey({ key: 'myTestApiKey' });
 
     expect(req).toEqual(
       expect.objectContaining({
@@ -366,9 +356,7 @@ describe('listApiKeys', () => {
 
 describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
-    const req = await client.restoreApiKey({
-      key: 'myApiKey',
-    });
+    const req = await client.restoreApiKey({ key: 'myApiKey' });
 
     expect(req).toEqual(
       expect.objectContaining({
