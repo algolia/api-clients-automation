@@ -6,13 +6,13 @@ type AdditionalContent = {
   headers: Record<string, string>;
   connectTimeout: number;
   responseTimeout: number;
-  userAgent: string | undefined;
-  searchParams: Record<string, any> | undefined;
+  userAgent?: string;
+  searchParams?: Record<string, any>;
 };
 
 function searchParamsWithoutUA(
   params: URLSearchParams
-): Record<string, any> | undefined {
+): AdditionalContent['searchParams'] {
   const searchParams = {};
 
   for (const [k, v] of params) {
