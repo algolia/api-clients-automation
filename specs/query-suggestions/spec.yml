@@ -16,8 +16,8 @@ paths:
   /1/configs:
     $ref: paths/qsConfigs.yml
   /1/configs/{indexName}:
-    $ref: 'paths/qsConfig.yml'
+    $ref: paths/qsConfig.yml
   /1/configs/{indexName}/status:
-    $ref: 'paths/getConfigurationStatus.yml'
+    $ref: paths/getConfigurationStatus.yml
   /1/logs/{indexName}:
-    $ref: 'paths/getLogFile.yml'
+    $ref: paths/getLogFile.yml

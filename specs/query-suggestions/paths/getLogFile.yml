@@ -28,7 +28,7 @@ get:
                   description: date and time of creation of the record.
                 level:
                   type: string
-                  enum: ['INFO', 'SKIP', 'ERROR']
+                  enum: [INFO, SKIP, ERROR]
                   description: type of the record, can be one of three values (INFO, SKIP or ERROR).
                 message:
                   type: string
