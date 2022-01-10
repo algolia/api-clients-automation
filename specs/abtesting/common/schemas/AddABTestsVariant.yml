@@ -1,0 +1,29 @@
+AddABTestsVariant:
+  oneOf:
+    - $ref: '#/baseABTestsVariant'
+    - $ref: '#/searchParamABTestsVariant'
+
+baseABTestsVariant:
+  type: object
+  additionalProperties: false
+  properties:
+    index:
+      $ref: ../parameters.yml#/index
+    trafficPercentage:
+      $ref: ../parameters.yml#/trafficPercentage
+    description:
+      $ref: ../parameters.yml#/description
+  required:
+    - index
+    - trafficPercentage
+
+searchParamABTestsVariant:
+  allOf:
+    - $ref: '#/baseABTestsVariant'
+    - type: object
+      additionalProperties: false
+      properties:
+        customSearchParameters:
+          type: object
+      required:
+        - customSearchParameters

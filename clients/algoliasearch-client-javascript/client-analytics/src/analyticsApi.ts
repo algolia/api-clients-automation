@@ -482,8 +482,8 @@ export class AnalyticsApi {
    * @param getSearchesNoClicks.index - The index name to target.
    * @param getSearchesNoClicks.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getSearchesNoClicks.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getSearchesNoClicks.limit - How many items to fetch.
-   * @param getSearchesNoClicks.offset - From which position to start retrieving results.
+   * @param getSearchesNoClicks.limit - Number of records to return. Limit is the size of the page.
+   * @param getSearchesNoClicks.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getSearchesNoClicks.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getSearchesNoClicks({
@@ -548,8 +548,8 @@ export class AnalyticsApi {
    * @param getSearchesNoResults.index - The index name to target.
    * @param getSearchesNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getSearchesNoResults.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getSearchesNoResults.limit - How many items to fetch.
-   * @param getSearchesNoResults.offset - From which position to start retrieving results.
+   * @param getSearchesNoResults.limit - Number of records to return. Limit is the size of the page.
+   * @param getSearchesNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getSearchesNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getSearchesNoResults({
@@ -648,8 +648,8 @@ export class AnalyticsApi {
    * @param getTopCountries.index - The index name to target.
    * @param getTopCountries.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopCountries.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopCountries.limit - How many items to fetch.
-   * @param getTopCountries.offset - From which position to start retrieving results.
+   * @param getTopCountries.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopCountries.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopCountries.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopCountries({
@@ -715,8 +715,8 @@ export class AnalyticsApi {
    * @param getTopFilterAttributes.search - The query term to search for. Must match the exact user input.
    * @param getTopFilterAttributes.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterAttributes.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFilterAttributes.limit - How many items to fetch.
-   * @param getTopFilterAttributes.offset - From which position to start retrieving results.
+   * @param getTopFilterAttributes.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopFilterAttributes.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFilterAttributes.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopFilterAttributes({
@@ -788,8 +788,8 @@ export class AnalyticsApi {
    * @param getTopFilterForAttribute.search - The query term to search for. Must match the exact user input.
    * @param getTopFilterForAttribute.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterForAttribute.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFilterForAttribute.limit - How many items to fetch.
-   * @param getTopFilterForAttribute.offset - From which position to start retrieving results.
+   * @param getTopFilterForAttribute.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopFilterForAttribute.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFilterForAttribute.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopFilterForAttribute({
@@ -870,8 +870,8 @@ export class AnalyticsApi {
    * @param getTopFiltersNoResults.search - The query term to search for. Must match the exact user input.
    * @param getTopFiltersNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFiltersNoResults.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFiltersNoResults.limit - How many items to fetch.
-   * @param getTopFiltersNoResults.offset - From which position to start retrieving results.
+   * @param getTopFiltersNoResults.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopFiltersNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFiltersNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopFiltersNoResults({
@@ -943,8 +943,8 @@ export class AnalyticsApi {
    * @param getTopHits.clickAnalytics - Whether to include the click-through and conversion rates for a search.
    * @param getTopHits.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopHits.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopHits.limit - How many items to fetch.
-   * @param getTopHits.offset - From which position to start retrieving results.
+   * @param getTopHits.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopHits.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopHits.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopHits({
@@ -1024,8 +1024,8 @@ export class AnalyticsApi {
    * @param getTopSearches.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopSearches.orderBy - Reorder the results.
    * @param getTopSearches.direction - The sorting of the result.
-   * @param getTopSearches.limit - How many items to fetch.
-   * @param getTopSearches.offset - From which position to start retrieving results.
+   * @param getTopSearches.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopSearches.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopSearches.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopSearches({
@@ -1302,11 +1302,11 @@ export type GetSearchesNoClicksProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1329,11 +1329,11 @@ export type GetSearchesNoResultsProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1363,11 +1363,11 @@ export type GetTopCountriesProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1394,11 +1394,11 @@ export type GetTopFilterAttributesProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1429,11 +1429,11 @@ export type GetTopFilterForAttributeProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1460,11 +1460,11 @@ export type GetTopFiltersNoResultsProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1495,11 +1495,11 @@ export type GetTopHitsProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1538,11 +1538,11 @@ export type GetTopSearchesProps = {
    */
   direction?: 'asc' | 'desc';
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**

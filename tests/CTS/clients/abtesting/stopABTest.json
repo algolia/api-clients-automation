@@ -1,0 +1,15 @@
+[
+  {
+    "method": "stopABTest",
+    "testName": "stopABTest",
+    "parameters": {
+      "stopABTestRequest": {
+        "id": 42
+      }
+    },
+    "request": {
+      "path": "/2/abtests/42/stop",
+      "method": "POST"
+    }
+  }
+]

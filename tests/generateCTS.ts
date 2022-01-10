@@ -157,7 +157,7 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       // include the `-last` param to join with comma in mustache
       test.parametersWithDataType = Object.entries(test.parameters).map(
         ([key, value], i, arr) => {
-          const isDate = key === 'startDate' || key === 'endDate';
+          const isDate = key === 'endAt';
           const isArray = Array.isArray(value);
 
           return {
@@ -213,7 +213,9 @@ async function generateCode(language: Language): Promise<void> {
       import: packageNames[language][client],
       client: `${capitalize(client)}Api`,
       blocks: cts[client],
-      hasRegionalHost: ['personalization', 'analytics'].includes(client),
+      hasRegionalHost: ['personalization', 'analytics', 'abtesting'].includes(
+        client
+      ),
     });
     await fsp.writeFile(
       `output/${language}/${client}${extensionForLanguage[language]}`,

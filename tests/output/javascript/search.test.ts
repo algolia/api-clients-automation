@@ -161,7 +161,9 @@ describe('batchRules', () => {
 
 describe('browse', () => {
   test('get browse results with minimal parameters', async () => {
-    const req = await client.browse({ indexName: 'indexName' });
+    const req = await client.browse({
+      indexName: 'indexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/browse');
     expect((req as any).method).toEqual('POST');
@@ -190,7 +192,9 @@ describe('browse', () => {
 
 describe('clearAllSynonyms', () => {
   test('clearAllSynonyms', async () => {
-    const req = await client.clearAllSynonyms({ indexName: 'indexName' });
+    const req = await client.clearAllSynonyms({
+      indexName: 'indexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/synonyms/clear');
     expect((req as any).method).toEqual('POST');
@@ -201,7 +205,9 @@ describe('clearAllSynonyms', () => {
 
 describe('clearRules', () => {
   test('clearRules', async () => {
-    const req = await client.clearRules({ indexName: 'indexName' });
+    const req = await client.clearRules({
+      indexName: 'indexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/rules/clear');
     expect((req as any).method).toEqual('POST');
@@ -212,7 +218,9 @@ describe('clearRules', () => {
 
 describe('deleteApiKey', () => {
   test('deleteApiKey', async () => {
-    const req = await client.deleteApiKey({ key: 'myTestApiKey' });
+    const req = await client.deleteApiKey({
+      key: 'myTestApiKey',
+    });
 
     expect((req as any).path).toEqual('/1/keys/myTestApiKey');
     expect((req as any).method).toEqual('DELETE');
@@ -251,7 +259,9 @@ describe('deleteSynonym', () => {
 
 describe('getApiKey', () => {
   test('getApiKey', async () => {
-    const req = await client.getApiKey({ key: 'myTestApiKey' });
+    const req = await client.getApiKey({
+      key: 'myTestApiKey',
+    });
 
     expect((req as any).path).toEqual('/1/keys/myTestApiKey');
     expect((req as any).method).toEqual('GET');
@@ -323,7 +333,9 @@ describe('listApiKeys', () => {
 
 describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
-    const req = await client.restoreApiKey({ key: 'myApiKey' });
+    const req = await client.restoreApiKey({
+      key: 'myApiKey',
+    });
 
     expect((req as any).path).toEqual('/1/keys/myApiKey/restore');
     expect((req as any).method).toEqual('POST');
