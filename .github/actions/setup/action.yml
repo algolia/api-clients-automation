@@ -52,11 +52,17 @@ runs:
         echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
         echo "::set-output name=JAVA_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/java | wc -l)"
 
+    - name: Set temporary variables
+      id: tmpvar
+      shell: bash
+      run: |
+        echo ::set-output name=BASE_SPEC::${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 }}
+
     - name: matrix
       id: set-matrix
       shell: bash
       run: |
-        echo ::set-output name=specs_matrix::'{"client": ["search", "recommend"]}'
+        echo ::set-output name=specs_matrix::'{"client": [${{ (steps.tmpvar.output.BASE_SPEC > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0) && "search" }}, "recommend"]}'
 
 outputs:
   # specs variables
@@ -111,4 +117,4 @@ outputs:
 
   specs_matrix:
     description: Generate the matrix for specs
-    value: '{"client": [${{ COMMON_CHANGE=$(github.ref == "refs/heads/main" || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0) && echo $COMMON_CHANGE }}]}'
+    value: ${{ steps.set-matrix.output.specs_matrix }}
