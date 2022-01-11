@@ -1755,9 +1755,13 @@ export class SearchApi {
   /**
    * Replace all allowed sources.
    *
+   * @param replaceSources - The replaceSources parameters.
+   * @param replaceSources.source - The sources to allow.
    * @param source - The sources to allow.
    */
-  replaceSources(source: Source[]): Promise<ReplaceSourceResponse> {
+  replaceSources({
+    source,
+  }: ReplaceSourcesProps): Promise<ReplaceSourceResponse> {
     const path = '/1/security/sources';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -2819,6 +2823,13 @@ export type RemoveUserIdProps = {
    * UserID to assign.
    */
   userID: string;
+};
+
+export type ReplaceSourcesProps = {
+  /**
+   * The sources to allow.
+   */
+  source: Source[];
 };
 
 export type RestoreApiKeyProps = {

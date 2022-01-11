@@ -149,6 +149,14 @@ export class {{classname}} {
     {{#bodyParams.0}}
       {{^queryParams.0}}
         {{^pathParams.0}}
+          {{#bodyParams.0.isArray}}
+            {{^bodyParams.1}}
+              * @param {{nickname}} - The {{nickname}} parameters.
+                {{#allParams}}
+                  * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+                {{/allParams}}
+            {{/bodyParams.1}}
+          {{/bodyParams.0.isArray}}
           {{#bodyParams}}
             * @param {{paramName}} {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
           {{/bodyParams}}
@@ -181,9 +189,20 @@ export class {{classname}} {
       {{#bodyParams.0}}
         {{^queryParams.0}}
           {{^pathParams.0}}
-            {{#bodyParams}}
-              {{paramName}}: {{{dataType}}},
-            {{/bodyParams}}
+            {{#bodyParams.0.isArray}}
+              {{^bodyParams.1}}
+              {
+                {{#allParams}}
+                  {{paramName}},
+                {{/allParams}}
+              }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+              {{/bodyParams.1}}
+            {{/bodyParams.0.isArray}}
+            {{^bodyParams.0.isArray}}
+              {{#bodyParams}}
+                {{paramName}}: {{{dataType}}},
+              {{/bodyParams}}
+            {{/bodyParams.0.isArray}}
           {{/pathParams.0}}
           {{#pathParams.0}}
             {
@@ -270,6 +289,20 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{/bodyParams.0}}
   {{#bodyParams.0}}
     {{^queryParams.0}}
+      {{^pathParams.0}}
+        {{#bodyParams.0.isArray}}
+          {{^bodyParams.1}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    /**
+    * {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+    */
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+          {{/bodyParams.1}}
+        {{/bodyParams.0.isArray}}
+      {{/pathParams.0}}
       {{#pathParams.0}}
 export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{#allParams}}
