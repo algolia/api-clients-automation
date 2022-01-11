@@ -55,7 +55,7 @@ jobs:
 
   client_javascript:
     runs-on: ubuntu-20.04
-    needs: [specs]
+    needs: specs
     if: ${{ always() && needs.setup.outputs.RUN_JS == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
@@ -65,23 +65,17 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
-      - name: Get client folder
-        id: folder
-        shell: bash
-        run: |
-          echo ::set-output name=CLIENT_FOLDER::$($(cat openapitools.json | jq '."generator-cli".generators."javascript-${{ matrix.client }}".output' | sed 's/#{cwd}\///g'))
-
-      - name: Cache ${{ matrix.client }} client
+      - name: Cache ${{ matrix.client.client }} client
         id: cache
         uses: actions/cache@v2
         with:
-          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ steps.folder.outputs.CLIENT_FOLDER }}/dist'
-          key: ${{ runner.os }}-js-client-${{ matrix.client }}-${{ hashFiles(format('{0}/**', steps.folder.outputs.CLIENT_FOLDER)) }}
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
+          key: ${{ runner.os }}-js-client-${{ matrix.client.client }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
-      - name: Generate ${{ matrix.client }} client
+      - name: Generate ${{ matrix.client.client }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn generate javascript ${{ matrix.client }}
+        run: yarn generate javascript ${{ matrix.client.client }}
 
-      - name: Build ${{ matrix.client }} client
+      - name: Build ${{ matrix.client.client }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn build:clients javascript ${{ matrix.client }}
+        run: yarn build:clients javascript ${{ matrix.client.client }}

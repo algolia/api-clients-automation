@@ -75,7 +75,7 @@ runs:
         echo ::set-output name=SPECS_MATRIX::$specs_matrix
         echo ::set-output name=RUN_SPECS::$run_specs
 
-    - name: Compute JS client build matrix
+    - name: Compute the JS client build matrix
       id: js-matrix
       shell: bash
       run: |
@@ -84,28 +84,24 @@ runs:
 
         base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
 
-        to_test=""
+        to_test='{"client": []}'
         for pair in "${clients[@]}"; do
           client=$(echo $pair | jq '.client')
           folder=$(echo $pair | jq '.folder')
           spec_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
           client_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- $folder | wc -l)
           if [[ $base_changed || $spec_changed > 0 || $client_changed > 0 ]]; then
-            to_test="$to_test $client"
+            to_test=$(echo $to_test | jq '.client |= .+ ['$pair']')
           fi
         done
 
         # Convert the array to json for the matrix
-        if [[ $to_test == "" ]]; then
+        if [[ $(echo $to_test | jq '.client | length') == 0 ]]; then
           # client cannot be empty or the matrix will fail
           js_matrix='{"client":["no-run"]}'
           run_js="false"
         else
-          js_matrix=$((
-            echo '{ "client" : ['
-            echo $to_test | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
-            echo " ]}"
-          ) | jq -c .)
+          js_matrix=$to_test
           run_js="true"
         fi
         echo $js_matrix
