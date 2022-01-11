@@ -41,6 +41,7 @@ SourceIndexWithReplicas:
       description: Source index name.
     replicas:
       type: boolean
+      description: true if the Query Suggestions index is a replicas.
     analyticsTags:
       type: array
       items:
@@ -54,10 +55,10 @@ SourceIndexWithReplicas:
       default: []
       description: List of facets to define as categories for the query suggestions.
     minHits:
-      type: number
+      type: integer
       description: Minimum number of hits (e.g., matching records in the source index) to generate a suggestions.
     minLetters:
-      type: number
+      type: integer
       description: Minimum number of required letters for a suggestion to remain.
     generate:
       type: array
@@ -80,8 +81,8 @@ SourceIndexWithReplicas:
           query:
             type: string
           count:
-            type: number
-        description: List of external indices to use to generate custom Query Suggestions.
+            type: integer
+      description: List of external indices to use to generate custom Query Suggestions.
 
 SourceIndicesWithReplicas:
   type: array

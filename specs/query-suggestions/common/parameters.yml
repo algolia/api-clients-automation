@@ -20,10 +20,10 @@ SourceIndex:
       default: []
       description: List of facets to define as categories for the query suggestions.
     minHits:
-      type: number
+      type: integer
       description: Minimum number of hits (e.g., matching records in the source index) to generate a suggestions.
     minLetters:
-      type: number
+      type: integer
       description: Minimum number of required letters for a suggestion to remain.
     generate:
       type: array
@@ -45,8 +45,10 @@ SourceIndex:
         properties:
           query:
             type: string
+            description: The suggestion you would like to add
           count:
-            type: number
+            type: integer
+            description: The measure of the suggestion relative popularity
       description: List of external indices to use to generate custom Query Suggestions.
 
 SourceIndices:
@@ -78,6 +80,7 @@ QuerySuggestionsIndexWithIndexParam:
   allOf:
     - $ref: '#/QuerySuggestionsIndexParam'
     - type: object
+      title: IndexName
       additionalProperties: false
       required:
         - indexName

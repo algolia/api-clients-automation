@@ -5,6 +5,9 @@ export type SourceIndexWithReplicas = {
    * Source index name.
    */
   indexName: string;
+  /**
+   * True if the Query Suggestions index is a replicas.
+   */
   replicas: boolean;
   /**
    * List of analytics tags to filter the popular searches per tag.
@@ -26,5 +29,8 @@ export type SourceIndexWithReplicas = {
    * List of facet attributes used to generate Query Suggestions. The resulting suggestions are every combination of the facets in the nested list (e.g., (facetA and facetB) and facetC).
    */
   generate: string[][];
+  /**
+   * List of external indices to use to generate custom Query Suggestions.
+   */
   external: SourceIndexWithReplicasExternal[];
 };

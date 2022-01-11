@@ -17,7 +17,7 @@ post:
     '401':
       $ref: ../../common/responses/Unauthorized.yml
     '403':
-      $ref: ../common/responses/StatusForbidden.yml
+      $ref: ../../common/responses/MethodNotAllowed.yml
     '422':
       $ref: ../common/responses/StatusUnprocessableEntity.yml
     '500':
@@ -42,6 +42,8 @@ get:
               $ref: ../common/schemas/QuerySuggestionsIndex.yml#/QuerySuggestionsIndex
     '401':
       $ref: ../../common/responses/Unauthorized.yml
+    '403':
+      $ref: ../../common/responses/MethodNotAllowed.yml
     '422':
       $ref: ../common/responses/StatusUnprocessableEntity.yml
     '500':

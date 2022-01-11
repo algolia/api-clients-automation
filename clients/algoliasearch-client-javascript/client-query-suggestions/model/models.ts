@@ -2,11 +2,11 @@
 import type { RequestOptions } from '../utils/types';
 
 export * from './errorBase';
+export * from './indexName';
 export * from './logFile';
 export * from './querySuggestionsIndex';
 export * from './querySuggestionsIndexParam';
 export * from './querySuggestionsIndexWithIndexParam';
-export * from './querySuggestionsIndexWithIndexParamAllOf';
 export * from './sourceIndex';
 export * from './sourceIndexExternal';
 export * from './sourceIndexWithReplicas';

@@ -1,5 +1,5 @@
+import type { IndexName } from './indexName';
 import type { QuerySuggestionsIndexParam } from './querySuggestionsIndexParam';
-import type { QuerySuggestionsIndexWithIndexParamAllOf } from './querySuggestionsIndexWithIndexParamAllOf';
 
-export type QuerySuggestionsIndexWithIndexParam = QuerySuggestionsIndexParam &
-  QuerySuggestionsIndexWithIndexParamAllOf;
+export type QuerySuggestionsIndexWithIndexParam = IndexName &
+  QuerySuggestionsIndexParam;

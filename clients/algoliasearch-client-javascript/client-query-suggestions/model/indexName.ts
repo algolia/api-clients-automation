@@ -1,4 +1,4 @@
-export type QuerySuggestionsIndexWithIndexParamAllOf = {
+export type IndexName = {
   /**
    * Index name to target.
    */

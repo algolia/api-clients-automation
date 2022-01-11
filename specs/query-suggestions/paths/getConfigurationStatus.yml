@@ -24,12 +24,17 @@ get:
             properties:
               indexName:
                 type: string
+                description: The targeted index name.
               isRunning:
                 type: boolean
+                description: true if the Query Suggestions index is running.
               lastBuiltAt:
                 type: string
                 format: data-time
+                description: Date and time of the last build.
     '401':
       $ref: ../../common/responses/Unauthorized.yml
+    '403':
+      $ref: ../../common/responses/MethodNotAllowed.yml
     '500':
       $ref: ../../common/responses/InternalError.yml

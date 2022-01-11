@@ -34,10 +34,12 @@ get:
                   type: string
                   description: detailed description of what happened.
                 contextLevel:
-                  type: number
+                  type: integer
                   description: indicates the hierarchy of the records. For example, a record with contextLevel=1 belongs to a preceding record with contextLevel=0.
     '401':
       $ref: ../../common/responses/Unauthorized.yml
+    '403':
+      $ref: ../../common/responses/MethodNotAllowed.yml
     '404':
       $ref: ../../common/responses/IndexNotFound.yml
     '500':

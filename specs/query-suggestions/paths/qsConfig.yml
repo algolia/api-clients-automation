@@ -36,6 +36,8 @@ delete:
       $ref: ../common/responses/Success.yml
     '401':
       $ref: ../../common/responses/Unauthorized.yml
+    '403':
+      $ref: ../../common/responses/MethodNotAllowed.yml
     '500':
       $ref: ../../common/responses/InternalError.yml
 
@@ -57,6 +59,8 @@ get:
       $ref: ../../common/responses/BadRequest.yml
     '401':
       $ref: ../../common/responses/Unauthorized.yml
+    '403':
+      $ref: ../../common/responses/MethodNotAllowed.yml
     '404':
       $ref: ../../common/responses/IndexNotFound.yml
     '500':
