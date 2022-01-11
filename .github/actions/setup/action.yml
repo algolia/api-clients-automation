@@ -86,6 +86,7 @@ runs:
 
         to_test='{"client": []}'
         for pair in "${clients[@]}"; do
+          echo $pair
           client=$(echo $pair | jq '.client')
           folder=$(echo $pair | jq '.folder')
           spec_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
