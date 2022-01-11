@@ -104,7 +104,7 @@ runs:
           js_matrix=$(echo $to_test | jq tostring)
           run_js="true"
         fi
-        js_matrix="{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
+        js_matrix="{\"client\":[{\"client\":\"foo\",\"config\":\"Debug\"},{\"client\":\"bar\",\"config\":\"Release\"}]}"
         echo $js_matrix | jq
         echo "Run JS: $run_js"
         echo ::set-output name=JS_MATRIX::$js_matrix
