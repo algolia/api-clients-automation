@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           echo "Hello world !"
-          echo ${{ steps.setup.outputs.specs_matrix}}
+          echo ${{ steps.setup.outputs.SPECS_MATRIX}}
 
       - name: Lint GitHub actions
         run: yarn eslint --ext=yml .github/actions .github/workflows
@@ -50,13 +50,13 @@ jobs:
       RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
 
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
-      specs_matrix: ${{ steps.setup.outputs.specs_matrix }}
+      SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
   specs:
     runs-on: ubuntu-20.04
     needs: setup
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.specs_matrix)}}
+      matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX)}}
     steps:
       - uses: actions/checkout@v2
 

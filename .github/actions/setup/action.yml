@@ -62,7 +62,7 @@ runs:
       id: set-matrix
       shell: bash
       run: |
-        echo ::set-output name=specs_matrix::$(jq -n -c -M --arg s "${{ steps.tmpvar.outputs.BASE_SPEC > 0 && 'search ' }}${{ (steps.tmpvar.outputs.BASE_SPEC > 0 || steps.diff.outputs.RECOMMEND_SPECS_CHANGED > 0) && 'recommend ' || ' '}}" '{client: ($s|split(" "))}')
+        echo ::set-output name=SPECS_MATRIX::$(jq -n -c -M --arg s "${{ steps.tmpvar.outputs.BASE_SPEC > 0 && 'search ' }}${{ (steps.tmpvar.outputs.BASE_SPEC > 0 || steps.diff.outputs.RECOMMEND_SPECS_CHANGED > 0) && 'recommend ' || ' '}}" '{client: ($s|split(" "))}')
 
 outputs:
   # specs variables
@@ -115,6 +115,6 @@ outputs:
     description: Determine if the `cts` job should run
     value: ${{ github.ref_name == 'main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.TESTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
-  specs_matrix:
+  SPECS_MATRIX:
     description: Generate the matrix for specs
-    value: ${{ steps.set-matrix.output.specs_matrix }}
+    value: ${{ steps.set-matrix.outputs.SPECS_MATRIX }}
