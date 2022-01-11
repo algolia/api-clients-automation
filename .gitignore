@@ -15,3 +15,5 @@ yarn-error.log
 
 target
 **/.DS_Store
+
+playground/php/vendor

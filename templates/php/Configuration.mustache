@@ -107,7 +107,7 @@ class Configuration
     /**
      * Constructor
      */
-    public function __construct(string $appId = null, string $algoliaApiKe = null)
+    public function __construct(string $appId, string $algoliaApiKey = null)
     {
         $this->tempFolderPath = sys_get_temp_dir();
 
@@ -116,6 +116,8 @@ class Configuration
 
         $this->setAppId($appId);
         $this->setApiKey('X-Algolia-Application-Id', $appId);
+
+        $this->setHost("https://{$appId}-1.algolianet.com");
     }
 
     /**

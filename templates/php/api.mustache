@@ -61,21 +61,15 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $hostIndex;
 
     /**
-     * @param ClientInterface $client
-     * @param Configuration   $config
-     * @param HeaderSelector  $selector
-     * @param int             $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
+     * @param Configuration $config
      */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null,
-        $hostIndex = 0
-    ) {
-        $this->client = $client ?: new Client();
+    public function __construct(Configuration $config = null) 
+    {
         $this->config = $config ?: new Configuration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->hostIndex = $hostIndex;
+
+        $this->client = new Client();
+        $this->headerSelector = new HeaderSelector();
+        $this->hostIndex = 0;
     }
 
     /**
@@ -399,14 +393,14 @@ use {{invokerPackage}}\ObjectSerializer;
 
             switch($statusCode) {
                 case 200:
-                    if (expectedResponse === '\SplFileObject') {
+                    if ($expectedResponse === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, expectedResponse, []),
+                        ObjectSerializer::deserialize($content, $expectedResponse, []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -479,7 +473,7 @@ use {{invokerPackage}}\ObjectSerializer;
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        expectedResponse,
+                        $expectedResponse,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);

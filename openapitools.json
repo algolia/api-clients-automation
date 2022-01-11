@@ -142,6 +142,7 @@
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
+          "variableNamingConvention": "camelCase"
         }
       }
     }
