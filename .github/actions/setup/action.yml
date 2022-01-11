@@ -101,10 +101,9 @@ runs:
           js_matrix='{"client":["no-run"]}'
           run_js="false"
         else
-          js_matrix=$(echo $to_test | jq tostring)
+          js_matrix=$(echo $to_test | jq tostring | sed -e 's/^"//' -e 's/"$//')
           run_js="true"
         fi
-        js_matrix="{\"client\":[{\"client\":\"foo\",\"config\":\"Debug\"},{\"client\":\"bar\",\"config\":\"Release\"}]}"
         echo $js_matrix | jq
         echo "Run JS: $run_js"
         echo ::set-output name=JS_MATRIX::$js_matrix
