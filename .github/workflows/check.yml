@@ -27,30 +27,17 @@ jobs:
         run: yarn eslint --ext=yml .github/actions .github/workflows
 
     outputs:
-      RUN_SPECS_SEARCH: ${{ steps.setup.outputs.RUN_SPECS_SEARCH }}
-      RUN_SPECS_RECOMMEND: ${{ steps.setup.outputs.RUN_SPECS_RECOMMEND }}
-      RUN_SPECS_QS: ${{ steps.setup.outputs.RUN_SPECS_QS }}
-      RUN_SPECS_PERSO: ${{ steps.setup.outputs.RUN_SPECS_PERSO }}
-      RUN_SPECS_INSIGHTS: ${{ steps.setup.outputs.RUN_SPECS_INSIGHTS }}
-      RUN_SPECS_ANALYTICS: ${{ steps.setup.outputs.RUN_SPECS_ANALYTICS }}
-      RUN_SPECS_AB: ${{ steps.setup.outputs.RUN_SPECS_AB }}
-
-      RUN_JS_CLIENT_SEARCH: ${{ steps.setup.outputs.RUN_JS_CLIENT_SEARCH }}
-      RUN_JS_CLIENT_RECOMMEND: ${{ steps.setup.outputs.RUN_JS_CLIENT_RECOMMEND }}
-      RUN_JS_CLIENT_PERSO: ${{ steps.setup.outputs.RUN_JS_CLIENT_PERSO }}
-      RUN_JS_CLIENT_ANALYTICS: ${{ steps.setup.outputs.RUN_JS_CLIENT_ANALYTICS }}
-      RUN_JS_CLIENT_INSIGHTS: ${{ steps.setup.outputs.RUN_JS_CLIENT_INSIGHTS }}
-
-      RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
-
+      RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
+
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
   specs:
     runs-on: ubuntu-20.04
     needs: setup
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS }}
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX)}}
+      matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
 
