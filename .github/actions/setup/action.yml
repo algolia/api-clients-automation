@@ -62,7 +62,7 @@ runs:
       id: set-matrix
       shell: bash
       run: |
-        echo ::set-output name=specs_matrix::'{"client": [${{ (steps.tmpvar.output.BASE_SPEC > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0) && "search" }}, "recommend"]}'
+        echo ::set-output name=specs_matrix::'{"client": ["${{ (steps.tmpvar.output.BASE_SPEC > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0) && 'search' }}", "recommend"]}'
 
 outputs:
   # specs variables
