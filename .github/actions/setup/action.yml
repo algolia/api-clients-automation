@@ -91,7 +91,7 @@ runs:
           spec_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
           client_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- $folder | wc -l)
           if [[ $base_changed || $spec_changed > 0 || $client_changed > 0 ]]; then
-            to_test=$(echo $to_test | jq '.client |= .+ ['$pair']')
+            to_test=$(echo $to_test | jq --argjson pair $pair '.client |= .+ [$pair]')
           fi
         done
 
