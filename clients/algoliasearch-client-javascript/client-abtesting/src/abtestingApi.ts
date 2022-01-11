@@ -3,7 +3,6 @@ import type { AddABTestsRequest } from '../model/addABTestsRequest';
 import type { AddABTestsResponse } from '../model/addABTestsResponse';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
 import { ApiKeyAuth } from '../model/models';
-import type { StopABTestRequest } from '../model/stopABTestRequest';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
@@ -86,12 +85,11 @@ export class AbtestingApi {
    * Creates a new A/B test with provided configuration. You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
    *
    * @summary Creates a new A/B test with provided configuration.
-   * @param addABTests - The addABTests parameters.
-   * @param addABTests.addABTestsRequest - The addABTestsRequest.
+   * @param addABTestsRequest - The addABTestsRequest parameter.
    */
-  addABTests({
-    addABTestsRequest,
-  }: AddABTestsProps): Promise<AddABTestsResponse> {
+  addABTests(
+    addABTestsRequest: AddABTestsRequest
+  ): Promise<AddABTestsResponse> {
     const path = '/2/abtests';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -247,31 +245,25 @@ export class AbtestingApi {
    *
    * @summary Marks the A/B test as stopped.
    * @param stopABTest - The stopABTest parameters.
-   * @param stopABTest.stopABTestRequest - The stopABTestRequest.
+   * @param stopABTest.id - The A/B test ID.
    */
-  stopABTest({
-    stopABTestRequest,
-  }: StopABTestProps): Promise<Record<string, any>> {
-    const path = '/2/abtests/{id}/stop';
+  stopABTest({ id }: StopABTestProps): Promise<Record<string, any>> {
+    const path = '/2/abtests/{id}/stop'.replace(
+      '{id}',
+      encodeURIComponent(String(id))
+    );
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (stopABTestRequest === null || stopABTestRequest === undefined) {
+    if (id === null || id === undefined) {
       throw new Error(
-        'Required parameter stopABTestRequest was null or undefined when calling stopABTest.'
-      );
-    }
-
-    if (stopABTestRequest.id === null || stopABTestRequest.id === undefined) {
-      throw new Error(
-        'Required parameter stopABTestRequest.id was null or undefined when calling stopABTest.'
+        'Required parameter id was null or undefined when calling stopABTest.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: stopABTestRequest,
     };
 
     const requestOptions: RequestOptions = {
@@ -282,13 +274,6 @@ export class AbtestingApi {
     return this.sendRequest(request, requestOptions);
   }
 }
-
-export type AddABTestsProps = {
-  /**
-   * The addABTestsRequest.
-   */
-  addABTestsRequest: AddABTestsRequest;
-};
 
 export type DeleteABTestProps = {
   /**
@@ -317,7 +302,7 @@ export type ListABTestsProps = {
 
 export type StopABTestProps = {
   /**
-   * The stopABTestRequest.
+   * The A/B test ID.
    */
-  stopABTestRequest: StopABTestRequest;
+  id: number;
 };

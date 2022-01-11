@@ -153,10 +153,9 @@ export class SearchApi {
    * Add a new API Key with specific permissions/restrictions.
    *
    * @summary Create a new API key.
-   * @param addApiKey - The addApiKey parameters.
-   * @param addApiKey.apiKey - The apiKey.
+   * @param apiKey - The apiKey parameter.
    */
-  addApiKey({ apiKey }: AddApiKeyProps): Promise<AddApiKeyResponse> {
+  addApiKey(apiKey: ApiKey): Promise<AddApiKeyResponse> {
     const path = '/1/keys';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -240,10 +239,9 @@ export class SearchApi {
   /**
    * Add a single source to the list of allowed sources.
    *
-   * @param appendSource - The appendSource parameters.
-   * @param appendSource.source - The source to add.
+   * @param source - The source to add.
    */
-  appendSource({ source }: AppendSourceProps): Promise<CreatedAtResponse> {
+  appendSource(source: Source): Promise<CreatedAtResponse> {
     const path = '/1/security/sources/append';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -273,7 +271,7 @@ export class SearchApi {
    * @summary Assign or Move userID.
    * @param assignUserId - The assignUserId parameters.
    * @param assignUserId.xAlgoliaUserID - UserID to assign.
-   * @param assignUserId.assignUserIdObject - The assignUserIdObject.
+   * @param assignUserId.assignUserIdObject - The assignUserIdObject parameter.
    */
   assignUserId({
     xAlgoliaUserID,
@@ -326,7 +324,7 @@ export class SearchApi {
    *
    * @param batch - The batch parameters.
    * @param batch.indexName - The index in which to perform the request.
-   * @param batch.batchWriteObject - The batchWriteObject.
+   * @param batch.batchWriteObject - The batchWriteObject parameter.
    */
   batch({ indexName, batchWriteObject }: BatchProps): Promise<BatchResponse> {
     const path = '/1/indexes/{indexName}/batch'.replace(
@@ -367,7 +365,7 @@ export class SearchApi {
    * @summary Batch assign userIDs.
    * @param batchAssignUserIds - The batchAssignUserIds parameters.
    * @param batchAssignUserIds.xAlgoliaUserID - UserID to assign.
-   * @param batchAssignUserIds.batchAssignUserIdsObject - The batchAssignUserIdsObject.
+   * @param batchAssignUserIds.batchAssignUserIdsObject - The batchAssignUserIdsObject parameter.
    */
   batchAssignUserIds({
     xAlgoliaUserID,
@@ -432,7 +430,7 @@ export class SearchApi {
    * @summary Send a batch of dictionary entries.
    * @param batchDictionaryEntries - The batchDictionaryEntries parameters.
    * @param batchDictionaryEntries.dictionaryName - The dictionary to search in.
-   * @param batchDictionaryEntries.batchDictionaryEntries - The batchDictionaryEntries.
+   * @param batchDictionaryEntries.batchDictionaryEntries - The batchDictionaryEntries parameter.
    */
   batchDictionaryEntries({
     dictionaryName,
@@ -488,7 +486,7 @@ export class SearchApi {
    * @summary Batch Rules.
    * @param batchRules - The batchRules parameters.
    * @param batchRules.indexName - The index in which to perform the request.
-   * @param batchRules.rule - The rule.
+   * @param batchRules.rule - The rule parameter.
    * @param batchRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    * @param batchRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
    */
@@ -544,7 +542,7 @@ export class SearchApi {
    * @summary Retrieve all index content.
    * @param browse - The browse parameters.
    * @param browse.indexName - The index in which to perform the request.
-   * @param browse.browseRequest - The browseRequest.
+   * @param browse.browseRequest - The browseRequest parameter.
    */
   browse({ indexName, browseRequest }: BrowseProps): Promise<BrowseResponse> {
     const path = '/1/indexes/{indexName}/browse'.replace(
@@ -727,7 +725,7 @@ export class SearchApi {
    * @summary Delete all records matching the query.
    * @param deleteBy - The deleteBy parameters.
    * @param deleteBy.indexName - The index in which to perform the request.
-   * @param deleteBy.searchParams - The searchParams.
+   * @param deleteBy.searchParams - The searchParams parameter.
    */
   deleteBy({
     indexName,
@@ -1005,7 +1003,6 @@ export class SearchApi {
    * List dictionaries supported per language.
    *
    * @summary List dictionaries supported per language.
-   * @param getDictionaryLanguages - The getDictionaryLanguages parameters.
    */
   getDictionaryLanguages(): Promise<{ [key: string]: Languages }> {
     const path = '/1/dictionaries/*/languages';
@@ -1028,7 +1025,6 @@ export class SearchApi {
    * Retrieve dictionaries settings.
    *
    * @summary Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
-   * @param getDictionarySettings - The getDictionarySettings parameters.
    */
   getDictionarySettings(): Promise<GetDictionarySettingsResponse> {
     const path = '/1/dictionaries/*/settings';
@@ -1101,7 +1097,7 @@ export class SearchApi {
    * @param getObject - The getObject parameters.
    * @param getObject.indexName - The index in which to perform the request.
    * @param getObject.objectID - Unique identifier of an object.
-   * @param getObject.attributesToRetrieve - The attributesToRetrieve.
+   * @param getObject.attributesToRetrieve - The attributesToRetrieve parameter.
    */
   getObject({
     indexName,
@@ -1146,12 +1142,9 @@ export class SearchApi {
    * Retrieve one or more objects, potentially from different indices, in a single API call.
    *
    * @summary Retrieve one or more objects.
-   * @param getObjects - The getObjects parameters.
-   * @param getObjects.getObjectsObject - The getObjectsObject.
+   * @param getObjectsObject - The getObjectsObject parameter.
    */
-  getObjects({
-    getObjectsObject,
-  }: GetObjectsProps): Promise<GetObjectsResponse> {
+  getObjects(getObjectsObject: GetObjectsObject): Promise<GetObjectsResponse> {
     const path = '/1/indexes/*/objects';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1248,8 +1241,6 @@ export class SearchApi {
   }
   /**
    * List all allowed sources.
-   *
-   * @param getSources - The getSources parameters.
    */
   getSources(): Promise<Source[]> {
     const path = '/1/security/sources';
@@ -1349,7 +1340,6 @@ export class SearchApi {
    * Get the top 10 userIDs with the highest number of records per cluster. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following array of userIDs and clusters.
    *
    * @summary Get top userID.
-   * @param getTopUserIds - The getTopUserIds parameters.
    */
   getTopUserIds(): Promise<GetTopUserIdsResponse> {
     const path = '/1/clusters/mapping/top';
@@ -1406,7 +1396,7 @@ export class SearchApi {
    *
    * @summary Has pending mappings.
    * @param hasPendingMappings - The hasPendingMappings parameters.
-   * @param hasPendingMappings.getClusters - The getClusters.
+   * @param hasPendingMappings.getClusters - The getClusters parameter.
    */
   hasPendingMappings({
     getClusters,
@@ -1435,7 +1425,6 @@ export class SearchApi {
    * List API keys, along with their associated rights.
    *
    * @summary Get the full list of API Keys.
-   * @param listApiKeys - The listApiKeys parameters.
    */
   listApiKeys(): Promise<ListApiKeysResponse> {
     const path = '/1/keys';
@@ -1458,7 +1447,6 @@ export class SearchApi {
    * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters.
    *
    * @summary List clusters.
-   * @param listClusters - The listClusters parameters.
    */
   listClusters(): Promise<ListClustersResponse> {
     const path = '/1/clusters';
@@ -1544,12 +1532,9 @@ export class SearchApi {
   /**
    * Perform multiple write operations, potentially targeting multiple indices, in a single API call.
    *
-   * @param multipleBatch - The multipleBatch parameters.
-   * @param multipleBatch.batchObject - The batchObject.
+   * @param batchObject - The batchObject parameter.
    */
-  multipleBatch({
-    batchObject,
-  }: MultipleBatchProps): Promise<MultipleBatchResponse> {
+  multipleBatch(batchObject: BatchObject): Promise<MultipleBatchResponse> {
     const path = '/1/indexes/*/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1576,12 +1561,11 @@ export class SearchApi {
   /**
    * Get search results for the given requests.
    *
-   * @param multipleQueries - The multipleQueries parameters.
-   * @param multipleQueries.multipleQueriesObject - The multipleQueriesObject.
+   * @param multipleQueriesObject - The multipleQueriesObject parameter.
    */
-  multipleQueries({
-    multipleQueriesObject,
-  }: MultipleQueriesProps): Promise<MultipleQueriesResponse> {
+  multipleQueries(
+    multipleQueriesObject: MultipleQueriesObject
+  ): Promise<MultipleQueriesResponse> {
     const path = '/1/indexes/*/queries';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1620,7 +1604,7 @@ export class SearchApi {
    * @summary Copy/move index.
    * @param operationIndex - The operationIndex parameters.
    * @param operationIndex.indexName - The index in which to perform the request.
-   * @param operationIndex.operationIndexObject - The operationIndexObject.
+   * @param operationIndex.operationIndexObject - The operationIndexObject parameter.
    */
   operationIndex({
     indexName,
@@ -1771,12 +1755,9 @@ export class SearchApi {
   /**
    * Replace all allowed sources.
    *
-   * @param replaceSources - The replaceSources parameters.
-   * @param replaceSources.source - The sources to allow.
+   * @param source - The sources to allow.
    */
-  replaceSources({
-    source,
-  }: ReplaceSourcesProps): Promise<ReplaceSourceResponse> {
+  replaceSources(source: Source[]): Promise<ReplaceSourceResponse> {
     const path = '/1/security/sources';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1883,7 +1864,7 @@ export class SearchApi {
    * @param saveRule - The saveRule parameters.
    * @param saveRule.indexName - The index in which to perform the request.
    * @param saveRule.objectID - Unique identifier of an object.
-   * @param saveRule.rule - The rule.
+   * @param saveRule.rule - The rule parameter.
    * @param saveRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
   saveRule({
@@ -1951,7 +1932,7 @@ export class SearchApi {
    * @param saveSynonym - The saveSynonym parameters.
    * @param saveSynonym.indexName - The index in which to perform the request.
    * @param saveSynonym.objectID - Unique identifier of an object.
-   * @param saveSynonym.synonymHit - The synonymHit.
+   * @param saveSynonym.synonymHit - The synonymHit parameter.
    * @param saveSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
   saveSynonym({
@@ -2018,7 +1999,7 @@ export class SearchApi {
    * @summary Save a batch of synonyms.
    * @param saveSynonyms - The saveSynonyms parameters.
    * @param saveSynonyms.indexName - The index in which to perform the request.
-   * @param saveSynonyms.synonymHit - The synonymHit.
+   * @param saveSynonyms.synonymHit - The synonymHit parameter.
    * @param saveSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    * @param saveSynonyms.replaceExistingSynonyms - Replace all synonyms of the index with the ones sent with this request.
    */
@@ -2074,7 +2055,7 @@ export class SearchApi {
    *
    * @param search - The search parameters.
    * @param search.indexName - The index in which to perform the request.
-   * @param search.searchParams - The searchParams.
+   * @param search.searchParams - The searchParams parameter.
    */
   search({ indexName, searchParams }: SearchProps): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
@@ -2115,7 +2096,7 @@ export class SearchApi {
    * @summary Search the dictionary entries.
    * @param searchDictionaryEntries - The searchDictionaryEntries parameters.
    * @param searchDictionaryEntries.dictionaryName - The dictionary to search in.
-   * @param searchDictionaryEntries.searchDictionaryEntries - The searchDictionaryEntries.
+   * @param searchDictionaryEntries.searchDictionaryEntries - The searchDictionaryEntries parameter.
    */
   searchDictionaryEntries({
     dictionaryName,
@@ -2172,7 +2153,7 @@ export class SearchApi {
    * @param searchForFacetValues - The searchForFacetValues parameters.
    * @param searchForFacetValues.indexName - The index in which to perform the request.
    * @param searchForFacetValues.facetName - The facet name.
-   * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest.
+   * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest parameter.
    */
   searchForFacetValues({
     indexName,
@@ -2216,7 +2197,7 @@ export class SearchApi {
    * @summary Search for rules.
    * @param searchRules - The searchRules parameters.
    * @param searchRules.indexName - The index in which to perform the request.
-   * @param searchRules.searchRulesParams - The searchRulesParams.
+   * @param searchRules.searchRulesParams - The searchRulesParams parameter.
    */
   searchRules({
     indexName,
@@ -2317,12 +2298,11 @@ export class SearchApi {
    * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn\'t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
    *
    * @summary Search userID.
-   * @param searchUserIds - The searchUserIds parameters.
-   * @param searchUserIds.searchUserIdsObject - The searchUserIdsObject.
+   * @param searchUserIdsObject - The searchUserIdsObject parameter.
    */
-  searchUserIds({
-    searchUserIdsObject,
-  }: SearchUserIdsProps): Promise<SearchUserIdsResponse> {
+  searchUserIds(
+    searchUserIdsObject: SearchUserIdsObject
+  ): Promise<SearchUserIdsResponse> {
     const path = '/1/clusters/mapping/search';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -2359,12 +2339,11 @@ export class SearchApi {
    * Set dictionary settings.
    *
    * @summary Set dictionary settings.
-   * @param setDictionarySettings - The setDictionarySettings parameters.
-   * @param setDictionarySettings.dictionarySettingsRequest - The dictionarySettingsRequest.
+   * @param dictionarySettingsRequest - The dictionarySettingsRequest parameter.
    */
-  setDictionarySettings({
-    dictionarySettingsRequest,
-  }: SetDictionarySettingsProps): Promise<UpdatedAtResponse> {
+  setDictionarySettings(
+    dictionarySettingsRequest: DictionarySettingsRequest
+  ): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/*/settings';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -2405,7 +2384,7 @@ export class SearchApi {
    *
    * @param setSettings - The setSettings parameters.
    * @param setSettings.indexName - The index in which to perform the request.
-   * @param setSettings.indexSettings - The indexSettings.
+   * @param setSettings.indexSettings - The indexSettings parameter.
    * @param setSettings.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
   setSettings({
@@ -2455,7 +2434,7 @@ export class SearchApi {
    * @summary Update an API key.
    * @param updateApiKey - The updateApiKey parameters.
    * @param updateApiKey.key - API Key string.
-   * @param updateApiKey.apiKey - The apiKey.
+   * @param updateApiKey.apiKey - The apiKey parameter.
    */
   updateApiKey({
     key,
@@ -2501,13 +2480,6 @@ export class SearchApi {
   }
 }
 
-export type AddApiKeyProps = {
-  /**
-   * The apiKey.
-   */
-  apiKey: ApiKey;
-};
-
 export type AddOrUpdateObjectProps = {
   /**
    * The index in which to perform the request.
@@ -2523,20 +2495,13 @@ export type AddOrUpdateObjectProps = {
   body: Record<string, any>;
 };
 
-export type AppendSourceProps = {
-  /**
-   * The source to add.
-   */
-  source: Source;
-};
-
 export type AssignUserIdProps = {
   /**
    * UserID to assign.
    */
   xAlgoliaUserID: string;
   /**
-   * The assignUserIdObject.
+   * The assignUserIdObject parameter.
    */
   assignUserIdObject: AssignUserIdObject;
 };
@@ -2547,7 +2512,7 @@ export type BatchProps = {
    */
   indexName: string;
   /**
-   * The batchWriteObject.
+   * The batchWriteObject parameter.
    */
   batchWriteObject: BatchWriteObject;
 };
@@ -2558,7 +2523,7 @@ export type BatchAssignUserIdsProps = {
    */
   xAlgoliaUserID: string;
   /**
-   * The batchAssignUserIdsObject.
+   * The batchAssignUserIdsObject parameter.
    */
   batchAssignUserIdsObject: BatchAssignUserIdsObject;
 };
@@ -2569,7 +2534,7 @@ export type BatchDictionaryEntriesProps = {
    */
   dictionaryName: 'compounds' | 'plurals' | 'stopwords';
   /**
-   * The batchDictionaryEntries.
+   * The batchDictionaryEntries parameter.
    */
   batchDictionaryEntries: BatchDictionaryEntries;
 };
@@ -2580,7 +2545,7 @@ export type BatchRulesProps = {
    */
   indexName: string;
   /**
-   * The rule.
+   * The rule parameter.
    */
   rule: Rule[];
   /**
@@ -2599,7 +2564,7 @@ export type BrowseProps = {
    */
   indexName: string;
   /**
-   * The browseRequest.
+   * The browseRequest parameter.
    */
   browseRequest?: BrowseRequest;
 };
@@ -2646,7 +2611,7 @@ export type DeleteByProps = {
    */
   indexName: string;
   /**
-   * The searchParams.
+   * The searchParams parameter.
    */
   searchParams: SearchParams;
 };
@@ -2742,16 +2707,9 @@ export type GetObjectProps = {
    */
   objectID: string;
   /**
-   * The attributesToRetrieve.
+   * The attributesToRetrieve parameter.
    */
   attributesToRetrieve?: string[];
-};
-
-export type GetObjectsProps = {
-  /**
-   * The getObjectsObject.
-   */
-  getObjectsObject: GetObjectsObject;
 };
 
 export type GetRuleProps = {
@@ -2803,7 +2761,7 @@ export type GetUserIdProps = {
 
 export type HasPendingMappingsProps = {
   /**
-   * The getClusters.
+   * The getClusters parameter.
    */
   getClusters?: boolean;
 };
@@ -2826,27 +2784,13 @@ export type ListUserIdsProps = {
   hitsPerPage?: number;
 };
 
-export type MultipleBatchProps = {
-  /**
-   * The batchObject.
-   */
-  batchObject: BatchObject;
-};
-
-export type MultipleQueriesProps = {
-  /**
-   * The multipleQueriesObject.
-   */
-  multipleQueriesObject: MultipleQueriesObject;
-};
-
 export type OperationIndexProps = {
   /**
    * The index in which to perform the request.
    */
   indexName: string;
   /**
-   * The operationIndexObject.
+   * The operationIndexObject parameter.
    */
   operationIndexObject: OperationIndexObject;
 };
@@ -2877,13 +2821,6 @@ export type RemoveUserIdProps = {
   userID: string;
 };
 
-export type ReplaceSourcesProps = {
-  /**
-   * The sources to allow.
-   */
-  source: Source[];
-};
-
 export type RestoreApiKeyProps = {
   /**
    * API Key string.
@@ -2912,7 +2849,7 @@ export type SaveRuleProps = {
    */
   objectID: string;
   /**
-   * The rule.
+   * The rule parameter.
    */
   rule: Rule;
   /**
@@ -2931,7 +2868,7 @@ export type SaveSynonymProps = {
    */
   objectID: string;
   /**
-   * The synonymHit.
+   * The synonymHit parameter.
    */
   synonymHit: SynonymHit;
   /**
@@ -2946,7 +2883,7 @@ export type SaveSynonymsProps = {
    */
   indexName: string;
   /**
-   * The synonymHit.
+   * The synonymHit parameter.
    */
   synonymHit: SynonymHit[];
   /**
@@ -2965,7 +2902,7 @@ export type SearchProps = {
    */
   indexName: string;
   /**
-   * The searchParams.
+   * The searchParams parameter.
    */
   searchParams: SearchParams;
 };
@@ -2976,7 +2913,7 @@ export type SearchDictionaryEntriesProps = {
    */
   dictionaryName: 'compounds' | 'plurals' | 'stopwords';
   /**
-   * The searchDictionaryEntries.
+   * The searchDictionaryEntries parameter.
    */
   searchDictionaryEntries: SearchDictionaryEntries;
 };
@@ -2991,7 +2928,7 @@ export type SearchForFacetValuesProps = {
    */
   facetName: string;
   /**
-   * The searchForFacetValuesRequest.
+   * The searchForFacetValuesRequest parameter.
    */
   searchForFacetValuesRequest?: SearchForFacetValuesRequest;
 };
@@ -3002,7 +2939,7 @@ export type SearchRulesProps = {
    */
   indexName: string;
   /**
-   * The searchRulesParams.
+   * The searchRulesParams parameter.
    */
   searchRulesParams: SearchRulesParams;
 };
@@ -3035,27 +2972,13 @@ export type SearchSynonymsProps = {
   hitsPerPage?: number;
 };
 
-export type SearchUserIdsProps = {
-  /**
-   * The searchUserIdsObject.
-   */
-  searchUserIdsObject: SearchUserIdsObject;
-};
-
-export type SetDictionarySettingsProps = {
-  /**
-   * The dictionarySettingsRequest.
-   */
-  dictionarySettingsRequest: DictionarySettingsRequest;
-};
-
 export type SetSettingsProps = {
   /**
    * The index in which to perform the request.
    */
   indexName: string;
   /**
-   * The indexSettings.
+   * The indexSettings parameter.
    */
   indexSettings: IndexSettings;
   /**
@@ -3070,7 +2993,7 @@ export type UpdateApiKeyProps = {
    */
   key: string;
   /**
-   * The apiKey.
+   * The apiKey parameter.
    */
   apiKey: ApiKey;
 };

@@ -8,7 +8,7 @@
     },
     "request": {
       "path": "/2/abtests",
-      "method": "POST",
+      "method": "GET",
       "searchParams": {
         "offset": "42",
         "limit": "21"

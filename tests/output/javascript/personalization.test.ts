@@ -50,11 +50,9 @@ describe('getUserTokenProfile', () => {
 describe('setPersonalizationStrategy', () => {
   test('set setPersonalizationStrategy', async () => {
     const req = await client.setPersonalizationStrategy({
-      personalizationStrategyObject: {
-        eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
-        facetScoring: [{ score: 42, facetName: 'Event' }],
-        personalizationImpact: 42,
-      },
+      eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
+      facetScoring: [{ score: 42, facetName: 'Event' }],
+      personalizationImpact: 42,
     });
 
     expect((req as any).path).toEqual('/1/strategies/personalization');

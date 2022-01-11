@@ -10,7 +10,6 @@ export * from './errorBase';
 export * from './listABTestsResponse';
 export * from './searchParamABTestsVariant';
 export * from './searchParamABTestsVariantAllOf';
-export * from './stopABTestRequest';
 export * from './variant';
 
 export interface Authentication {

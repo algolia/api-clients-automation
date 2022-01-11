@@ -139,19 +139,69 @@ export class {{classname}} {
   {{#summary}}
   * @summary {{&summary}}
   {{/summary}}
-  * @param {{nickname}} - The {{nickname}} parameters.
-  {{#allParams}}
-  * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
-  {{/allParams}}
+  {{#allParams.0}}
+    {{^bodyParams.0}}
+      * @param {{nickname}} - The {{nickname}} parameters.
+        {{#allParams}}
+          * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+        {{/allParams}}
+    {{/bodyParams.0}}
+    {{#bodyParams.0}}
+      {{^queryParams.0}}
+        {{^pathParams.0}}
+          {{#bodyParams}}
+            * @param {{paramName}} {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+          {{/bodyParams}}
+        {{/pathParams.0}}
+        {{#pathParams.0}}
+          * @param {{nickname}} - The {{nickname}} parameters.
+            {{#allParams}}
+              * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+            {{/allParams}}
+        {{/pathParams.0}}
+      {{/queryParams.0}}
+      {{#queryParams.0}}
+        * @param {{nickname}} - The {{nickname}} parameters.
+          {{#allParams}}
+            * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+          {{/allParams}}
+      {{/queryParams.0}}
+    {{/bodyParams.0}}
+  {{/allParams.0}}
   */
   public {{nickname}} (
-      {{#allParams.0}}
+    {{#allParams.0}}
+      {{^bodyParams.0}}
         {
           {{#allParams}}
             {{paramName}},
           {{/allParams}}
         }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
-      {{/allParams.0}}
+      {{/bodyParams.0}}
+      {{#bodyParams.0}}
+        {{^queryParams.0}}
+          {{^pathParams.0}}
+            {{#bodyParams}}
+              {{paramName}}: {{{dataType}}},
+            {{/bodyParams}}
+          {{/pathParams.0}}
+          {{#pathParams.0}}
+            {
+              {{#allParams}}
+                {{paramName}},
+              {{/allParams}}
+            }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+          {{/pathParams.0}}
+        {{/queryParams.0}}
+        {{#queryParams.0}}
+          {
+            {{#allParams}}
+              {{paramName}},
+            {{/allParams}}
+          }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+        {{/queryParams.0}}
+      {{/bodyParams.0}}
+    {{/allParams.0}}
       ) : Promise<{{{returnType}}}> {
     const path = '{{{path}}}'{{#pathParams}}.replace(
     {{=<% %>=}}
@@ -208,14 +258,40 @@ export class {{classname}} {
 
 {{#operation}}
 {{#allParams.0}}
+  {{^bodyParams.0}}
 export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{#allParams}}
     /**
-    * {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+    * {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
     */
     {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
   {{/allParams}}
 }
+  {{/bodyParams.0}}
+  {{#bodyParams.0}}
+    {{^queryParams.0}}
+      {{#pathParams.0}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    /**
+    * {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+    */
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+      {{/pathParams.0}}
+    {{/queryParams.0}}
+    {{#queryParams.0}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    /**
+    * {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
+    */
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+    {{/queryParams.0}}
+  {{/bodyParams.0}}
 {{/allParams.0}}
 
 {{/operation}}

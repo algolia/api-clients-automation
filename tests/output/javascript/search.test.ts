@@ -8,13 +8,11 @@ const client = new SearchApi(appId, apiKey, { requester: new EchoRequester() });
 describe('addApiKey', () => {
   test('addApiKey', async () => {
     const req = await client.addApiKey({
-      apiKey: {
-        acl: ['search', 'addObject'],
-        description: 'my new api key',
-        validity: 300,
-        maxQueriesPerIPPerHour: 100,
-        maxHitsPerQuery: 20,
-      },
+      acl: ['search', 'addObject'],
+      description: 'my new api key',
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
     });
 
     expect((req as any).path).toEqual('/1/keys');
@@ -1062,9 +1060,7 @@ describe('searchUserIds', () => {
 describe('setDictionarySettings', () => {
   test('get setDictionarySettings results with minimal parameters', async () => {
     const req = await client.setDictionarySettings({
-      dictionarySettingsRequest: {
-        disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
-      },
+      disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
     });
 
     expect((req as any).path).toEqual('/1/dictionaries/*/settings');
@@ -1077,12 +1073,10 @@ describe('setDictionarySettings', () => {
 
   test('get setDictionarySettings results with all parameters', async () => {
     const req = await client.setDictionarySettings({
-      dictionarySettingsRequest: {
-        disableStandardEntries: {
-          plurals: { fr: false, en: false, ru: true },
-          stopwords: { fr: false },
-          compounds: { ru: true },
-        },
+      disableStandardEntries: {
+        plurals: { fr: false, en: false, ru: true },
+        stopwords: { fr: false },
+        compounds: { ru: true },
       },
     });
 

@@ -120,7 +120,6 @@ export class PersonalizationApi {
    * The strategy contains information on the events and facets that impact user profiles and personalized search results.
    *
    * @summary Get the current personalization strategy.
-   * @param getPersonalizationStrategy - The getPersonalizationStrategy parameters.
    */
   getPersonalizationStrategy(): Promise<PersonalizationStrategyObject> {
     const path = '/1/strategies/personalization';
@@ -178,12 +177,11 @@ export class PersonalizationApi {
    * A strategy defines the events and facets that impact user profiles and personalized search results.
    *
    * @summary Set a new personalization strategy.
-   * @param setPersonalizationStrategy - The setPersonalizationStrategy parameters.
-   * @param setPersonalizationStrategy.personalizationStrategyObject - The personalizationStrategyObject.
+   * @param personalizationStrategyObject - The personalizationStrategyObject parameter.
    */
-  setPersonalizationStrategy({
-    personalizationStrategyObject,
-  }: SetPersonalizationStrategyProps): Promise<SetPersonalizationStrategyResponse> {
+  setPersonalizationStrategy(
+    personalizationStrategyObject: PersonalizationStrategyObject
+  ): Promise<SetPersonalizationStrategyResponse> {
     const path = '/1/strategies/personalization';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -249,11 +247,4 @@ export type GetUserTokenProfileProps = {
    * UserToken representing the user for which to fetch the Personalization profile.
    */
   userToken: string;
-};
-
-export type SetPersonalizationStrategyProps = {
-  /**
-   * The personalizationStrategyObject.
-   */
-  personalizationStrategyObject: PersonalizationStrategyObject;
 };
