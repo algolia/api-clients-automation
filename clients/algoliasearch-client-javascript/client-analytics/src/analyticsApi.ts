@@ -712,6 +712,7 @@ export class AnalyticsApi {
    * @summary Returns top filter attributes.
    * @param getTopFilterAttributes - The getTopFilterAttributes parameters.
    * @param getTopFilterAttributes.index - The index name to target.
+   * @param getTopFilterAttributes.search - The query term to search for. Must match the exact user input.
    * @param getTopFilterAttributes.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterAttributes.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterAttributes.limit - How many items to fetch.
@@ -720,6 +721,7 @@ export class AnalyticsApi {
    */
   getTopFilterAttributes({
     index,
+    search,
     startDate,
     endDate,
     limit,
@@ -740,81 +742,8 @@ export class AnalyticsApi {
       queryParameters.index = index.toString();
     }
 
-    if (startDate !== undefined) {
-      queryParameters.startDate = startDate.toString();
-    }
-
-    if (endDate !== undefined) {
-      queryParameters.endDate = endDate.toString();
-    }
-
-    if (limit !== undefined) {
-      queryParameters.limit = limit.toString();
-    }
-
-    if (offset !== undefined) {
-      queryParameters.offset = offset.toString();
-    }
-
-    if (tags !== undefined) {
-      queryParameters.tags = tags.toString();
-    }
-
-    const request: Request = {
-      method: 'GET',
-      path,
-    };
-
-    const requestOptions: RequestOptions = {
-      headers,
-      queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
-  }
-  /**
-   * Returns top filter attributes for a given search. Limited to the 1000 most used filters.
-   *
-   * @summary Returns top filter attributes for a given search.
-   * @param getTopFilterAttributesForSearch - The getTopFilterAttributesForSearch parameters.
-   * @param getTopFilterAttributesForSearch.index - The index name to target.
-   * @param getTopFilterAttributesForSearch.search - The query term. Must match the exact user input.
-   * @param getTopFilterAttributesForSearch.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFilterAttributesForSearch.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFilterAttributesForSearch.limit - How many items to fetch.
-   * @param getTopFilterAttributesForSearch.offset - From which position to start retrieving results.
-   * @param getTopFilterAttributesForSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
-   */
-  getTopFilterAttributesForSearch({
-    index,
-    search,
-    startDate,
-    endDate,
-    limit,
-    offset,
-    tags,
-  }: GetTopFilterAttributesForSearchProps): Promise<GetTopFilterAttributesResponse> {
-    const path = '/2/filters?search={search}'.replace(
-      '{search}',
-      encodeURIComponent(String(search))
-    );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
-
-    if (index === null || index === undefined) {
-      throw new Error(
-        'Required parameter index was null or undefined when calling getTopFilterAttributesForSearch.'
-      );
-    }
-
-    if (search === null || search === undefined) {
-      throw new Error(
-        'Required parameter search was null or undefined when calling getTopFilterAttributesForSearch.'
-      );
-    }
-
-    if (index !== undefined) {
-      queryParameters.index = index.toString();
+    if (search !== undefined) {
+      queryParameters.search = search.toString();
     }
 
     if (startDate !== undefined) {
@@ -856,6 +785,7 @@ export class AnalyticsApi {
    * @param getTopFilterForAttribute - The getTopFilterForAttribute parameters.
    * @param getTopFilterForAttribute.attribute - The exact name of the attribute.
    * @param getTopFilterForAttribute.index - The index name to target.
+   * @param getTopFilterForAttribute.search - The query term to search for. Must match the exact user input.
    * @param getTopFilterForAttribute.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterForAttribute.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterForAttribute.limit - How many items to fetch.
@@ -865,6 +795,7 @@ export class AnalyticsApi {
   getTopFilterForAttribute({
     attribute,
     index,
+    search,
     startDate,
     endDate,
     limit,
@@ -894,88 +825,8 @@ export class AnalyticsApi {
       queryParameters.index = index.toString();
     }
 
-    if (startDate !== undefined) {
-      queryParameters.startDate = startDate.toString();
-    }
-
-    if (endDate !== undefined) {
-      queryParameters.endDate = endDate.toString();
-    }
-
-    if (limit !== undefined) {
-      queryParameters.limit = limit.toString();
-    }
-
-    if (offset !== undefined) {
-      queryParameters.offset = offset.toString();
-    }
-
-    if (tags !== undefined) {
-      queryParameters.tags = tags.toString();
-    }
-
-    const request: Request = {
-      method: 'GET',
-      path,
-    };
-
-    const requestOptions: RequestOptions = {
-      headers,
-      queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
-  }
-  /**
-   * Returns top filters for the given attributes and search. Several attributes can be given by separating them with a comma. Several attributes can be given by separating them with a comma.
-   *
-   * @summary Returns top filters for the given attributes and search.
-   * @param getTopFiltersForAttributesSearch - The getTopFiltersForAttributesSearch parameters.
-   * @param getTopFiltersForAttributesSearch.attributes - The exact names of the attributes, separated by commas.
-   * @param getTopFiltersForAttributesSearch.index - The index name to target.
-   * @param getTopFiltersForAttributesSearch.search - The query term. Must match the exact user input.
-   * @param getTopFiltersForAttributesSearch.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFiltersForAttributesSearch.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFiltersForAttributesSearch.limit - How many items to fetch.
-   * @param getTopFiltersForAttributesSearch.offset - From which position to start retrieving results.
-   * @param getTopFiltersForAttributesSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
-   */
-  getTopFiltersForAttributesSearch({
-    attributes,
-    index,
-    search,
-    startDate,
-    endDate,
-    limit,
-    offset,
-    tags,
-  }: GetTopFiltersForAttributesSearchProps): Promise<GetTopFilterForAttributeResponse> {
-    const path = '/2/filters/{attributes}?search={search}'
-      .replace('{attributes}', encodeURIComponent(String(attributes)))
-      .replace('{search}', encodeURIComponent(String(search)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
-
-    if (attributes === null || attributes === undefined) {
-      throw new Error(
-        'Required parameter attributes was null or undefined when calling getTopFiltersForAttributesSearch.'
-      );
-    }
-
-    if (index === null || index === undefined) {
-      throw new Error(
-        'Required parameter index was null or undefined when calling getTopFiltersForAttributesSearch.'
-      );
-    }
-
-    if (search === null || search === undefined) {
-      throw new Error(
-        'Required parameter search was null or undefined when calling getTopFiltersForAttributesSearch.'
-      );
-    }
-
-    if (index !== undefined) {
-      queryParameters.index = index.toString();
+    if (search !== undefined) {
+      queryParameters.search = search.toString();
     }
 
     if (startDate !== undefined) {
@@ -1016,6 +867,7 @@ export class AnalyticsApi {
    * @summary Returns top filters with no results.
    * @param getTopFiltersNoResults - The getTopFiltersNoResults parameters.
    * @param getTopFiltersNoResults.index - The index name to target.
+   * @param getTopFiltersNoResults.search - The query term to search for. Must match the exact user input.
    * @param getTopFiltersNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFiltersNoResults.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFiltersNoResults.limit - How many items to fetch.
@@ -1024,6 +876,7 @@ export class AnalyticsApi {
    */
   getTopFiltersNoResults({
     index,
+    search,
     startDate,
     endDate,
     limit,
@@ -1044,81 +897,8 @@ export class AnalyticsApi {
       queryParameters.index = index.toString();
     }
 
-    if (startDate !== undefined) {
-      queryParameters.startDate = startDate.toString();
-    }
-
-    if (endDate !== undefined) {
-      queryParameters.endDate = endDate.toString();
-    }
-
-    if (limit !== undefined) {
-      queryParameters.limit = limit.toString();
-    }
-
-    if (offset !== undefined) {
-      queryParameters.offset = offset.toString();
-    }
-
-    if (tags !== undefined) {
-      queryParameters.tags = tags.toString();
-    }
-
-    const request: Request = {
-      method: 'GET',
-      path,
-    };
-
-    const requestOptions: RequestOptions = {
-      headers,
-      queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
-  }
-  /**
-   * Returns top filters for the given no result search. Limited to the 1000 most used filters.
-   *
-   * @summary Returns top filters for the given no result search.
-   * @param getTopFiltersNoResultsForSearch - The getTopFiltersNoResultsForSearch parameters.
-   * @param getTopFiltersNoResultsForSearch.index - The index name to target.
-   * @param getTopFiltersNoResultsForSearch.search - The query term. Must match the exact user input.
-   * @param getTopFiltersNoResultsForSearch.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFiltersNoResultsForSearch.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFiltersNoResultsForSearch.limit - How many items to fetch.
-   * @param getTopFiltersNoResultsForSearch.offset - From which position to start retrieving results.
-   * @param getTopFiltersNoResultsForSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
-   */
-  getTopFiltersNoResultsForSearch({
-    index,
-    search,
-    startDate,
-    endDate,
-    limit,
-    offset,
-    tags,
-  }: GetTopFiltersNoResultsForSearchProps): Promise<GetTopFiltersNoResultsResponse> {
-    const path = '/2/filters/noResults?search={search}'.replace(
-      '{search}',
-      encodeURIComponent(String(search))
-    );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
-
-    if (index === null || index === undefined) {
-      throw new Error(
-        'Required parameter index was null or undefined when calling getTopFiltersNoResultsForSearch.'
-      );
-    }
-
-    if (search === null || search === undefined) {
-      throw new Error(
-        'Required parameter search was null or undefined when calling getTopFiltersNoResultsForSearch.'
-      );
-    }
-
-    if (index !== undefined) {
-      queryParameters.index = index.toString();
+    if (search !== undefined) {
+      queryParameters.search = search.toString();
     }
 
     if (startDate !== undefined) {
@@ -1159,6 +939,7 @@ export class AnalyticsApi {
    * @summary Returns top hits.
    * @param getTopHits - The getTopHits parameters.
    * @param getTopHits.index - The index name to target.
+   * @param getTopHits.search - The query term to search for. Must match the exact user input.
    * @param getTopHits.clickAnalytics - Whether to include the click-through and conversion rates for a search.
    * @param getTopHits.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopHits.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -1168,6 +949,7 @@ export class AnalyticsApi {
    */
   getTopHits({
     index,
+    search,
     clickAnalytics,
     startDate,
     endDate,
@@ -1191,89 +973,8 @@ export class AnalyticsApi {
       queryParameters.index = index.toString();
     }
 
-    if (clickAnalytics !== undefined) {
-      queryParameters.clickAnalytics = clickAnalytics.toString();
-    }
-
-    if (startDate !== undefined) {
-      queryParameters.startDate = startDate.toString();
-    }
-
-    if (endDate !== undefined) {
-      queryParameters.endDate = endDate.toString();
-    }
-
-    if (limit !== undefined) {
-      queryParameters.limit = limit.toString();
-    }
-
-    if (offset !== undefined) {
-      queryParameters.offset = offset.toString();
-    }
-
-    if (tags !== undefined) {
-      queryParameters.tags = tags.toString();
-    }
-
-    const request: Request = {
-      method: 'GET',
-      path,
-    };
-
-    const requestOptions: RequestOptions = {
-      headers,
-      queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
-  }
-  /**
-   * Returns top hits for the given search. Limited to the 1000 most frequent ones.
-   *
-   * @summary Returns top hits for the given search.
-   * @param getTopHitsForSearch - The getTopHitsForSearch parameters.
-   * @param getTopHitsForSearch.index - The index name to target.
-   * @param getTopHitsForSearch.search - The query term. Must match the exact user input.
-   * @param getTopHitsForSearch.clickAnalytics - Whether to include the click-through and conversion rates for a search.
-   * @param getTopHitsForSearch.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopHitsForSearch.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopHitsForSearch.limit - How many items to fetch.
-   * @param getTopHitsForSearch.offset - From which position to start retrieving results.
-   * @param getTopHitsForSearch.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
-   */
-  getTopHitsForSearch({
-    index,
-    search,
-    clickAnalytics,
-    startDate,
-    endDate,
-    limit,
-    offset,
-    tags,
-  }: GetTopHitsForSearchProps): Promise<
-    GetTopHitsResponse | GetTopHitsResponseWithAnalytics
-  > {
-    const path = '/2/hits?search={search}'.replace(
-      '{search}',
-      encodeURIComponent(String(search))
-    );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
-
-    if (index === null || index === undefined) {
-      throw new Error(
-        'Required parameter index was null or undefined when calling getTopHitsForSearch.'
-      );
-    }
-
-    if (search === null || search === undefined) {
-      throw new Error(
-        'Required parameter search was null or undefined when calling getTopHitsForSearch.'
-      );
-    }
-
-    if (index !== undefined) {
-      queryParameters.index = index.toString();
+    if (search !== undefined) {
+      queryParameters.search = search.toString();
     }
 
     if (clickAnalytics !== undefined) {
@@ -1455,180 +1156,416 @@ export class AnalyticsApi {
 }
 
 export type GetAverageClickPositionProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetClickPositionsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetClickThroughRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetConversationRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetNoClickRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetNoResultsRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetSearchesCountProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetSearchesNoClicksProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetSearchesNoResultsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetStatusProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
 };
 
 export type GetTopCountriesProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFilterAttributesProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The query term to search for. Must match the exact user input.
+   */
+  search?: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
-  tags?: string;
-};
-
-export type GetTopFilterAttributesForSearchProps = {
-  index: string;
-  search: string;
-  startDate?: Date;
-  endDate?: Date;
-  limit?: number;
-  offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFilterForAttributeProps = {
+  /**
+   * The exact name of the attribute.
+   */
   attribute: string;
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The query term to search for. Must match the exact user input.
+   */
+  search?: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
-  tags?: string;
-};
-
-export type GetTopFiltersForAttributesSearchProps = {
-  attributes: string;
-  index: string;
-  search: string;
-  startDate?: Date;
-  endDate?: Date;
-  limit?: number;
-  offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFiltersNoResultsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The query term to search for. Must match the exact user input.
+   */
+  search?: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
-  tags?: string;
-};
-
-export type GetTopFiltersNoResultsForSearchProps = {
-  index: string;
-  search: string;
-  startDate?: Date;
-  endDate?: Date;
-  limit?: number;
-  offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopHitsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The query term to search for. Must match the exact user input.
+   */
+  search?: string;
+  /**
+   * Whether to include the click-through and conversion rates for a search.
+   */
   clickAnalytics?: boolean;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
-  tags?: string;
-};
-
-export type GetTopHitsForSearchProps = {
-  index: string;
-  search: string;
-  clickAnalytics?: boolean;
-  startDate?: Date;
-  endDate?: Date;
-  limit?: number;
-  offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopSearchesProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * Whether to include the click-through and conversion rates for a search.
+   */
   clickAnalytics?: boolean;
-  startDate?: Date;
-  endDate?: Date;
-  orderBy?: Record<string, any>;
-  direction?: Record<string, any>;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Reorder the results.
+   */
+  orderBy?:
+    | 'averageClickPosition'
+    | 'clickThroughRate'
+    | 'conversionRate'
+    | 'searchCount';
+  /**
+   * The sorting of the result.
+   */
+  direction?: 'asc' | 'desc';
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetUsersCountProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
-  startDate?: Date;
-  endDate?: Date;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
