@@ -35,7 +35,7 @@ jobs:
   specs:
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ always() && needs.setup.outputs.RUN_SPECS }}
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS > 0 }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX) }}
     steps:

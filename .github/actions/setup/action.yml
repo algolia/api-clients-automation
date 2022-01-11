@@ -60,7 +60,7 @@ runs:
 
         # Convert the array to json for the matrix
         if [[ $specs == "" ]]; then
-          specs_matrix='{"client":[]}'
+          specs_matrix='{"client":["no-run"]}'
           echo ::set-output name=RUN_SPECS::1
         else
           specs_matrix=$((
