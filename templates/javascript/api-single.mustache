@@ -157,9 +157,9 @@ export class {{classname}} {
                 {{/allParams}}
             {{/bodyParams.1}}
           {{/bodyParams.0.isArray}}
-          {{#bodyParams}}
+          {{^bodyParams.0.isArray}}
             * @param {{paramName}} {{^description}}The {{paramName}} parameter.{{/description}}{{#description}}{{{description}}}{{/description}}
-          {{/bodyParams}}
+          {{/bodyParams.0.isArray}}
         {{/pathParams.0}}
         {{#pathParams.0}}
           * @param {{nickname}} - The {{nickname}} parameters.

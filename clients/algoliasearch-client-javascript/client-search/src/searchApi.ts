@@ -1757,7 +1757,6 @@ export class SearchApi {
    *
    * @param replaceSources - The replaceSources parameters.
    * @param replaceSources.source - The sources to allow.
-   * @param source - The sources to allow.
    */
   replaceSources({
     source,
