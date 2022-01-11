@@ -23,6 +23,12 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
 
+      - name: Log outputs
+        shell: bash
+        run: |
+          echo "Hello world !"
+          echo ${{ steps.setup.outputs.specs_matrix}}
+
       - name: Lint GitHub actions
         run: yarn eslint --ext=yml .github/actions .github/workflows
 
