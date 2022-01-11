@@ -23,6 +23,15 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
 
+      - name: Check matrices
+        shell: bash
+        run: |
+          sudo npm install -g json2yaml
+          matrix='${{ steps.setup.outputs.JS_MATRIX }}'
+          echo $matrix
+          echo $matrix | jq .
+          echo $matrix | json2yaml
+
       - name: Lint GitHub actions
         run: yarn eslint --ext=yml .github/actions .github/workflows
 
