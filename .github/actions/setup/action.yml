@@ -77,13 +77,16 @@ runs:
         done
 
         # Convert the array to json for the matrix
-        specs_matrix=$((
-          echo '{ "client" : ['
-          echo $specs | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
-          echo " ]}"
-        ) | jq -c .)
+        if [[ $specs == "" ]]; then
+          specs_matrix='{"client":[]}'
+        else
+          specs_matrix=$((
+            echo '{ "client" : ['
+            echo $specs | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
+            echo " ]}"
+          ) | jq -c .)
+        fi
         echo $specs_matrix
-        echo $specs_matrix | jq .
         echo "::set-output name=SPECS_MATRIX::$specs_matrix"
 
 outputs:
