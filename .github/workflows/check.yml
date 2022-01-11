@@ -53,9 +53,17 @@ jobs:
       - name: Lint ${{ matrix.client }} specs
         run: yarn eslint --ext=yml specs/${{ matrix.client }}
 
+      - name: Log
+        shell: bash
+        run: |
+          echo ${{ needs.setup.outputs.JS_MATRIX }}
+          echo ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
+
   client_javascript:
     runs-on: ubuntu-20.04
-    needs: specs
+    needs:
+      - setup
+      - specs
     if: ${{ always() && needs.setup.outputs.RUN_JS == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
@@ -82,7 +90,9 @@ jobs:
 
   cts:
     runs-on: ubuntu-20.04
-    needs: client_javascript
+    needs:
+      - setup
+      - client_javascript
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
