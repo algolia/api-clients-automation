@@ -70,7 +70,7 @@ runs:
           client=${generator#*-}
             if [[ ! ${specs[*]} =~ $client ]]; then
               changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
-              if [[ $changed > 0 ]]: then
+              if [[ $changed > 0 ]]; then
                 specs="$specs $client"
               fi
             fi
