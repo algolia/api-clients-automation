@@ -111,4 +111,4 @@ outputs:
 
   specs_matrix:
     description: Generate the matrix for specs
-    value: ${{ steps.set-matrix.outputs.specs_matrix }}
+    value: '{"client": [${{ COMMON_CHANGE=$(github.ref == "refs/heads/main" || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0) && echo $COMMON_CHANGE }}]}'
