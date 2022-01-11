@@ -80,7 +80,7 @@ runs:
       shell: bash
       run: |
         # Read from openapitools.json to get the clients and folders (not pretty jq)
-        clients=$(cat openapitools.json | jq '."generator-cli".generators | with_entries(if (.key | test("javascript-.*")) then ({key:.key,value:.value}) else empty end) | to_entries | map({client:.key | sub("javascript-";""),folder:.value.output | sub("#{cwd}/";"")}) | .[]')
+        clients=$(cat openapitools.json | jq -c '."generator-cli".generators | with_entries(if (.key | test("javascript-.*")) then ({key:.key,value:.value}) else empty end) | to_entries | map({client:.key | sub("javascript-";""),folder:.value.output | sub("#{cwd}/";"")}) | .[]')
 
         base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
 
