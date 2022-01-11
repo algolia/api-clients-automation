@@ -34,25 +34,21 @@ runs:
 
         echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- scripts | wc -l)"
 
-    - name: Set temporary variables
-      id: tmpvar
-      shell: bash
-      run: |
-        echo ::set-output name=BASE_SPEC::${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 }}
-
-    - name: matrix
-      id: set-matrix
+    - name: Compute specs matrix
+      id: spec-matrix
       shell: bash
       run: |
         # Read from openapitools.json and put each client in the specs array
         specs=""
         generators=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
 
+        base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 }}
+
         for generator in "${generators[@]}"; do
           client=${generator#*-}
             if [[ ! ${specs[*]} =~ $client ]]; then
               changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
-              if [[ $changed > 0 ]]; then
+              if [[ $base_changed || $changed > 0 ]]; then
                 specs="$specs $client"
               fi
             fi
@@ -60,6 +56,7 @@ runs:
 
         # Convert the array to json for the matrix
         if [[ $specs == "" ]]; then
+          # client cannot be empty or the matrix will fail
           specs_matrix='{"client":["no-run"]}'
           run_specs=0
         else
@@ -78,12 +75,12 @@ runs:
 outputs:
   RUN_SPECS:
     description: Whether to run specs or not
-    value: ${{ steps.set-matrix.outputs.RUN_SPECS }}
+    value: ${{ steps.spec-matrix.outputs.RUN_SPECS }}
+
+  SPECS_MATRIX:
+    description: Generate the matrix for specs
+    value: ${{ steps.spec-matrix.outputs.SPECS_MATRIX }}
 
   RUN_CTS:
     description: Determine if the `cts` job should run
     value: ${{ github.ref_name == 'main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.TESTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
-
-  SPECS_MATRIX:
-    description: Generate the matrix for specs
-    value: ${{ steps.set-matrix.outputs.SPECS_MATRIX }}

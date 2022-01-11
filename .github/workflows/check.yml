@@ -28,9 +28,9 @@ jobs:
 
     outputs:
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
-      RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
-
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
+
+      RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
 
   specs:
     runs-on: ubuntu-20.04
