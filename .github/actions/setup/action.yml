@@ -62,18 +62,25 @@ runs:
       id: set-matrix
       shell: bash
       run: |
+        # Read from openapitools.json and put each client in the specs array
         specs=""
-        specs_openapi=( $(cat openapitools.json | jq -r '."generator-cli".generators[] | .glob') )
+        generators=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
 
-        for spec in "${specs_openapi[@]}"; do
-            if [[ ! ${specs[*]} =~ $spec ]]; then
-                specs="$specs $spec"
+        for generator in "${generators[@]}"; do
+          client=${generator#*-}
+            if [[ ! ${specs[*]} =~ $client ]]; then
+              changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
+              if [[ $changed > 0 ]]: then
+                specs="$specs $client"
+              fi
             fi
         done
+
+        # Convert the array to json for the matrix
         specs_matrix=$((
-            echo '{ "client" : ['
-            echo $specs | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
-            echo " ]}"
+          echo '{ "client" : ['
+          echo $specs | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
+          echo " ]}"
         ) | jq -c .)
         echo $specs_matrix
         echo $specs_matrix | jq .
