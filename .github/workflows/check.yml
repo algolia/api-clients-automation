@@ -79,3 +79,22 @@ jobs:
       - name: Build ${{ matrix.client.client }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript ${{ matrix.client.client }}
+
+  cts:
+    runs-on: ubuntu-20.04
+    needs: client_javascript
+    if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        id: restore
+        uses: ./.github/actions/cache
+        with:
+          job: cts
+
+      - name: Generate CTS
+        run: yarn cts:generate
+
+      - name: Run CTS
+        run: yarn cts:test

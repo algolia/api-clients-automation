@@ -101,7 +101,7 @@ runs:
           js_matrix='{"client":["no-run"]}'
           run_js="false"
         else
-          js_matrix=$(echo $to_test | jq -c .)
+          js_matrix=$(echo $to_test | jq tostring)
           run_js="true"
         fi
         echo $js_matrix
