@@ -60,18 +60,20 @@ runs:
 
         # Convert the array to json for the matrix
         if [[ $specs == "" ]]; then
-          specs_matrix='{"client":[]}'
-          echo ::set-output name=RUN_SPECS::0
+          specs_matrix='{"client":["no-run"]}'
+          run_specs=0
         else
           specs_matrix=$((
             echo '{ "client" : ['
             echo $specs | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
             echo " ]}"
           ) | jq -c .)
-          echo ::set-output name=RUN_SPECS::1
+          run_specs=1
         fi
         echo $specs_matrix
+        echo "Run specs: $run_specs"
         echo ::set-output name=SPECS_MATRIX::$specs_matrix
+        echo ::set-output name=RUN_SPECS::$run_specs
 
 outputs:
   RUN_SPECS:
