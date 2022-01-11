@@ -37,6 +37,9 @@ runs:
         echo "::set-output name=JS_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript | wc -l)"
         echo "::set-output name=JS_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/javascript | wc -l)"
 
+        echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
+        echo "::set-output name=JAVA_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/java | wc -l)"
+
     - name: Compute specs matrix
       id: spec-matrix
       shell: bash
@@ -72,8 +75,8 @@ runs:
         fi
         echo $specs_matrix
         echo "Run specs: $run_specs"
-        echo ::set-output name=SPECS_MATRIX::$specs_matrix
-        echo ::set-output name=RUN_SPECS::$run_specs
+        echo "::set-output name=SPECS_MATRIX::$specs_matrix"
+        echo "::set-output name=RUN_SPECS::$run_specs"
 
     - name: Compute the JS client build matrix
       id: js-matrix
@@ -107,7 +110,41 @@ runs:
         echo $js_matrix | jq
         echo "Run JS: $run_js"
         echo "::set-output name=JS_MATRIX::$js_matrix"
-        echo ::set-output name=RUN_JS::$run_js
+        echo "::set-output name=RUN_JS::$run_js"
+
+    - name: Compute the Java client build matrix
+      id: java-matrix
+      shell: bash
+      run: |
+        # Read from openapitools.json to get the clients and folders (not pretty jq)
+        clients=$(cat openapitools.json | jq -c '."generator-cli".generators | with_entries(if (.key | test("java-.*")) then ({key:.key,value:.value}) else empty end) | to_entries | map({client:.key | sub("javascript-";""),folder:.value.output | sub("#{cwd}/";"")}) | .[]')
+
+        base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+
+        to_test='{"client": []}'
+        for pair in $clients; do
+          client=$(echo $pair | jq '.client')
+          folder=$(echo $pair | jq '.folder')
+          spec_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
+          client_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- $folder | wc -l)
+          if [[ $base_changed || $spec_changed > 0 || $client_changed > 0 ]]; then
+            to_test=$(echo $to_test | jq --argjson pair $pair '.client |= .+ [$pair]')
+          fi
+        done
+
+        # Convert the array to json for the matrix
+        if [[ $(echo $to_test | jq '.client | length') == 0 ]]; then
+          # client cannot be empty or the matrix will fail
+          java_matrix='{"client":["no-run"]}'
+          run_java="false"
+        else
+          java_matrix=$(echo $to_test | jq -c)
+          run_java="true"
+        fi
+        echo $java_matrix | jq
+        echo "Run Java: $run_java"
+        echo "::set-output name=JAVA_MATRIX::$java_matrix"
+        echo "::set-output name=RUN_JAVA::$run_java"
 
 outputs:
   RUN_SPECS:
@@ -119,12 +156,20 @@ outputs:
     value: ${{ steps.spec-matrix.outputs.SPECS_MATRIX }}
 
   RUN_JS:
-    description: Whether to run specs or not
+    description: Whether to run js client or not
     value: ${{ steps.js-matrix.outputs.RUN_JS }}
 
   JS_MATRIX:
     description: Generate the matrix for javascript client build
     value: ${{ steps.js-matrix.outputs.JS_MATRIX }}
+
+  RUN_JAVA:
+    description: Whether to run java client or not
+    value: ${{ steps.js-matrix.outputs.RUN_JAVA }}
+
+  JAVA_MATRIX:
+    description: Generate the matrix for javascript client build
+    value: ${{ steps.js-matrix.outputs.JAVA_MATRIX }}
 
   RUN_CTS:
     description: Determine if the `cts` job should run
