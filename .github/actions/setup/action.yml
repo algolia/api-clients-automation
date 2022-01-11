@@ -62,7 +62,22 @@ runs:
       id: set-matrix
       shell: bash
       run: |
-        echo ::set-output name=SPECS_MATRIX::${{ toJSON(join([(steps.tmpvar.outputs.BASE_SPEC || steps.diff.outputs.SEARCH_SPECS_CHANGED) && 'search', (steps.tmpvar.outputs.BASE_SPEC || steps.diff.outputs.RECOMMENT_SPECS_CHANGED) && 'recommend'])) }}
+        specs=""
+        specs_openapi=( $(cat openapitools.json | jq -r '."generator-cli".generators[] | .glob') )
+
+        for spec in "${specs_openapi[@]}"; do
+            if [[ ! ${specs[*]} =~ $spec ]]; then
+                specs="$specs $spec"
+            fi
+        done
+        specs_matrix=$((
+            echo '{ "client" : ['
+            echo $specs | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
+            echo " ]}"
+        ) | jq -c .)
+        echo $specs_matrix
+        echo $specs_matrix | jq .
+        echo "::set-output name=SPECS_MATRIX::$specs_matrix"
 
 outputs:
   # specs variables
