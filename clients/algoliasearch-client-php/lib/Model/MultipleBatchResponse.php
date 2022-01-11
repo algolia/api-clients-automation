@@ -59,7 +59,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       * @var string[]
       */
     protected static $openAPITypes = [
-        'taskID' => 'array<string,object>',
+        'taskID' => 'object',
         'objectIDs' => 'string[]'
     ];
 
@@ -214,7 +214,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets taskID
      *
-     * @return array<string,object>|null
+     * @return object|null
      */
     public function getTaskID()
     {
@@ -224,7 +224,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets taskID
      *
-     * @param array<string,object>|null $taskID List of tasksIDs per index.
+     * @param object|null $taskID List of tasksIDs per index.
      *
      * @return self
      */

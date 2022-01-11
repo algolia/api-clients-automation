@@ -82,7 +82,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'query' => 'string',
         'queryAfterRemoval' => 'string',
         'serverUsed' => 'string',
-        'userData' => 'array<string,object>',
+        'userData' => 'object',
         'hits' => '\Algolia\AlgoliaSearch\Model\Record[]',
         'cursor' => 'string'
     ];
@@ -952,7 +952,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets userData
      *
-     * @return array<string,object>|null
+     * @return object|null
      */
     public function getUserData()
     {
@@ -962,7 +962,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets userData
      *
-     * @param array<string,object>|null $userData Lets you store custom data in your indices.
+     * @param object|null $userData Lets you store custom data in your indices.
      *
      * @return self
      */

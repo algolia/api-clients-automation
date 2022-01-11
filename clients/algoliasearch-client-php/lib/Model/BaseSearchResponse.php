@@ -82,7 +82,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'query' => 'string',
         'queryAfterRemoval' => 'string',
         'serverUsed' => 'string',
-        'userData' => 'array<string,object>'
+        'userData' => 'object'
     ];
 
     /**
@@ -934,7 +934,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets userData
      *
-     * @return array<string,object>|null
+     * @return object|null
      */
     public function getUserData()
     {
@@ -944,7 +944,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets userData
      *
-     * @param array<string,object>|null $userData Lets you store custom data in your indices.
+     * @param object|null $userData Lets you store custom data in your indices.
      *
      * @return self
      */

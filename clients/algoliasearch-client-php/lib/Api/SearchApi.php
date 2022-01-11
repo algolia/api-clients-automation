@@ -183,13 +183,13 @@ class SearchApi
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  string $objectID Unique identifier of an object. (required)
-     * @param  array<string,object> $requestBody The Algolia object. (required)
+     * @param  object $body The Algolia object. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function addOrUpdateObject($indexName, $objectID, $requestBody)
+    public function addOrUpdateObject($indexName, $objectID, $body)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -203,10 +203,10 @@ class SearchApi
                 'Missing the required parameter $objectID when calling addOrUpdateObject'
             );
         }
-        // verify the required parameter 'requestBody' is set
-        if ($requestBody === null || (is_array($requestBody) && count($requestBody) === 0)) {
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $requestBody when calling addOrUpdateObject'
+                'Missing the required parameter $body when calling addOrUpdateObject'
             );
         }
 
@@ -234,8 +234,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($requestBody)) { 
-            $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($requestBody));
+        if (isset($body)) { 
+            $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($body));
         } 
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
@@ -343,7 +343,7 @@ class SearchApi
      *
      * Assign or Move userID
      *
-     * @param  object $xAlgoliaUserID userID to assign. (required)
+     * @param  string $xAlgoliaUserID userID to assign. (required)
      * @param  \Algolia\AlgoliaSearch\Model\AssignUserIdObject $assignUserIdObject assignUserIdObject (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -358,6 +358,10 @@ class SearchApi
                 'Missing the required parameter $xAlgoliaUserID when calling assignUserId'
             );
         }
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $xAlgoliaUserID)) {
+            throw new \InvalidArgumentException("invalid value for \"xAlgoliaUserID\" when calling SearchApi.assignUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
+        }
+
         // verify the required parameter 'assignUserIdObject' is set
         if ($assignUserIdObject === null || (is_array($assignUserIdObject) && count($assignUserIdObject) === 0)) {
             throw new \InvalidArgumentException(
@@ -504,7 +508,7 @@ class SearchApi
      *
      * Batch assign userIDs
      *
-     * @param  object $xAlgoliaUserID userID to assign. (required)
+     * @param  string $xAlgoliaUserID userID to assign. (required)
      * @param  \Algolia\AlgoliaSearch\Model\BatchAssignUserIdsObject $batchAssignUserIdsObject batchAssignUserIdsObject (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -519,6 +523,10 @@ class SearchApi
                 'Missing the required parameter $xAlgoliaUserID when calling batchAssignUserIds'
             );
         }
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $xAlgoliaUserID)) {
+            throw new \InvalidArgumentException("invalid value for \"xAlgoliaUserID\" when calling SearchApi.batchAssignUserIds, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
+        }
+
         // verify the required parameter 'batchAssignUserIdsObject' is set
         if ($batchAssignUserIdsObject === null || (is_array($batchAssignUserIdsObject) && count($batchAssignUserIdsObject) === 0)) {
             throw new \InvalidArgumentException(
@@ -2526,7 +2534,7 @@ class SearchApi
      *
      * Get userID
      *
-     * @param  object $userID userID to assign. (required)
+     * @param  string $userID userID to assign. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2540,6 +2548,10 @@ class SearchApi
                 'Missing the required parameter $userID when calling getUserId'
             );
         }
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $userID)) {
+            throw new \InvalidArgumentException("invalid value for \"userID\" when calling SearchApi.getUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
+        }
+
 
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
@@ -2795,7 +2807,7 @@ class SearchApi
             $page = ObjectSerializer::serializeCollection($page, '', true);
         }
         if ($page !== null) {
-            $queryParams['Page'] = $page;
+            $queryParams['page'] = $page;
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -2861,7 +2873,7 @@ class SearchApi
             $page = ObjectSerializer::serializeCollection($page, '', true);
         }
         if ($page !== null) {
-            $queryParams['Page'] = $page;
+            $queryParams['page'] = $page;
         }
         // query params
         if (is_array($hitsPerPage)) {
@@ -3232,7 +3244,7 @@ class SearchApi
      *
      * Remove userID
      *
-     * @param  object $userID userID to assign. (required)
+     * @param  string $userID userID to assign. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3246,6 +3258,10 @@ class SearchApi
                 'Missing the required parameter $userID when calling removeUserId'
             );
         }
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $userID)) {
+            throw new \InvalidArgumentException("invalid value for \"userID\" when calling SearchApi.removeUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
+        }
+
 
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
@@ -3440,13 +3456,13 @@ class SearchApi
      * Operation saveObject
      *
      * @param  string $indexName The index in which to perform the request. (required)
-     * @param  array<string,object> $requestBody The Algolia object. (required)
+     * @param  object $body The Algolia object. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Algolia\AlgoliaSearch\Model\SaveObjectResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function saveObject($indexName, $requestBody)
+    public function saveObject($indexName, $body)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -3454,10 +3470,10 @@ class SearchApi
                 'Missing the required parameter $indexName when calling saveObject'
             );
         }
-        // verify the required parameter 'requestBody' is set
-        if ($requestBody === null || (is_array($requestBody) && count($requestBody) === 0)) {
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $requestBody when calling saveObject'
+                'Missing the required parameter $body when calling saveObject'
             );
         }
 
@@ -3477,8 +3493,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($requestBody)) { 
-            $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($requestBody));
+        if (isset($body)) { 
+            $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($body));
         } 
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
@@ -4206,7 +4222,7 @@ class SearchApi
             $page = ObjectSerializer::serializeCollection($page, '', true);
         }
         if ($page !== null) {
-            $queryParams['Page'] = $page;
+            $queryParams['page'] = $page;
         }
         // query params
         if (is_array($hitsPerPage)) {

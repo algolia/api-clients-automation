@@ -60,7 +60,7 @@ class Operation implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'action' => '\Algolia\AlgoliaSearch\Model\Action',
-        'body' => 'array<string,object>',
+        'body' => 'object',
         'indexName' => 'string'
     ];
 
@@ -244,7 +244,7 @@ class Operation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets body
      *
-     * @return array<string,object>|null
+     * @return object|null
      */
     public function getBody()
     {
@@ -254,7 +254,7 @@ class Operation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets body
      *
-     * @param array<string,object>|null $body arguments to the operation (depends on the type of the operation).
+     * @param object|null $body arguments to the operation (depends on the type of the operation).
      *
      * @return self
      */

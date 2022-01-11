@@ -64,13 +64,13 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         'disableTypoToleranceOnWords' => 'string[]',
         'attributesToTransliterate' => 'string[]',
         'camelCaseAttributes' => 'string[]',
-        'decompoundedAttributes' => 'array<string,object>',
+        'decompoundedAttributes' => 'object',
         'indexLanguages' => 'string[]',
         'filterPromotes' => 'bool',
         'disablePrefixOnAttributes' => 'string[]',
         'allowCompressionOfIntegerArray' => 'bool',
         'numericAttributesForFiltering' => 'string[]',
-        'userData' => 'array<string,object>'
+        'userData' => 'object'
     ];
 
     /**
@@ -394,7 +394,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets decompoundedAttributes
      *
-     * @return array<string,object>|null
+     * @return object|null
      */
     public function getDecompoundedAttributes()
     {
@@ -404,7 +404,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets decompoundedAttributes
      *
-     * @param array<string,object>|null $decompoundedAttributes Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+     * @param object|null $decompoundedAttributes Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
      *
      * @return self
      */
@@ -538,7 +538,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets userData
      *
-     * @return array<string,object>|null
+     * @return object|null
      */
     public function getUserData()
     {
@@ -548,7 +548,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets userData
      *
-     * @param array<string,object>|null $userData Lets you store custom data in your indices.
+     * @param object|null $userData Lets you store custom data in your indices.
      *
      * @return self
      */

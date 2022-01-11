@@ -64,7 +64,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         'promote' => '\Algolia\AlgoliaSearch\Model\Promote[]',
         'filterPromotes' => 'bool',
         'hide' => '\Algolia\AlgoliaSearch\Model\ConsequenceHide[]',
-        'userData' => 'array<string,object>'
+        'userData' => 'object'
     ];
 
     /**
@@ -329,7 +329,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets userData
      *
-     * @return array<string,object>|null
+     * @return object|null
      */
     public function getUserData()
     {
@@ -339,7 +339,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets userData
      *
-     * @param array<string,object>|null $userData Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
+     * @param object|null $userData Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
      *
      * @return self
      */

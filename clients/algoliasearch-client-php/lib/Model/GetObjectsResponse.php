@@ -59,7 +59,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
       * @var string[]
       */
     protected static $openAPITypes = [
-        'results' => 'array<string,object>[]'
+        'results' => 'object[]'
     ];
 
     /**
@@ -208,7 +208,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets results
      *
-     * @return array<string,object>[]|null
+     * @return object[]|null
      */
     public function getResults()
     {
@@ -218,7 +218,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets results
      *
-     * @param array<string,object>[]|null $results List of results fetched.
+     * @param object[]|null $results List of results fetched.
      *
      * @return self
      */

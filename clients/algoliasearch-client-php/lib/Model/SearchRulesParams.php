@@ -66,7 +66,7 @@ class SearchRulesParams implements ModelInterface, ArrayAccess, \JsonSerializabl
         'page' => 'int',
         'hitsPerPage' => 'int',
         'enabled' => 'bool',
-        'requestOptions' => 'array<string,object>[]'
+        'requestOptions' => 'object[]'
     ];
 
     /**
@@ -389,7 +389,7 @@ class SearchRulesParams implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets requestOptions
      *
-     * @return array<string,object>[]|null
+     * @return object[]|null
      */
     public function getRequestOptions()
     {
@@ -399,7 +399,7 @@ class SearchRulesParams implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets requestOptions
      *
-     * @param array<string,object>[]|null $requestOptions A mapping of requestOptions to send along with the request.
+     * @param object[]|null $requestOptions A mapping of requestOptions to send along with the request.
      *
      * @return self
      */
