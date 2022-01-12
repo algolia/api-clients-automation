@@ -1,3 +1,3 @@
-export type SearchParamABTestsVariantAllOf = {
+export type SearchParamsABTestsVariant = {
   customSearchParameters: Record<string, any>;
 };

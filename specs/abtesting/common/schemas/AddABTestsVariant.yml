@@ -20,10 +20,13 @@ baseABTestsVariant:
 searchParamABTestsVariant:
   allOf:
     - $ref: '#/baseABTestsVariant'
-    - type: object
-      additionalProperties: false
-      properties:
-        customSearchParameters:
-          type: object
-      required:
-        - customSearchParameters
+    - $ref: '#/searchParamsABTestsVariant'
+
+searchParamsABTestsVariant:
+  type: object
+  additionalProperties: false
+  properties:
+    customSearchParameters:
+      type: object
+  required:
+    - customSearchParameters
