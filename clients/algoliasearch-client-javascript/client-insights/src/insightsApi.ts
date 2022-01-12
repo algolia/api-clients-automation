@@ -78,7 +78,7 @@ export class InsightsApi {
    * This command pushes an array of events.
    *
    * @summary Pushes an array of events.
-   * @param insightEvents - The insightEvents parameter.
+   * @param insightEvents - The insightEvents object.
    */
   pushEvents(insightEvents: InsightEvents): Promise<PushEventsResponse> {
     const path = '/1/events';

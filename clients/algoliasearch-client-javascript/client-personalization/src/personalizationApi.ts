@@ -85,7 +85,7 @@ export class PersonalizationApi {
    * Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means that if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile. It might take a couple hours before for the deletion request to be fully processed.
    *
    * @summary Delete the user profile and all its associated data.
-   * @param deleteUserProfile - The deleteUserProfile parameters.
+   * @param deleteUserProfile - The deleteUserProfile object.
    * @param deleteUserProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
   deleteUserProfile({
@@ -142,7 +142,7 @@ export class PersonalizationApi {
    * The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
    *
    * @summary Get the user profile built from Personalization strategy.
-   * @param getUserTokenProfile - The getUserTokenProfile parameters.
+   * @param getUserTokenProfile - The getUserTokenProfile object.
    * @param getUserTokenProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
   getUserTokenProfile({
@@ -177,7 +177,7 @@ export class PersonalizationApi {
    * A strategy defines the events and facets that impact user profiles and personalized search results.
    *
    * @summary Set a new personalization strategy.
-   * @param personalizationStrategyObject - The personalizationStrategyObject parameter.
+   * @param personalizationStrategyObject - The personalizationStrategyObject object.
    */
   setPersonalizationStrategy(
     personalizationStrategyObject: PersonalizationStrategyObject
