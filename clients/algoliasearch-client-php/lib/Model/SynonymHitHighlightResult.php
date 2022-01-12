@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SynonymHitHighlightResult Class Doc Comment
  *
  * @category Class
  * @description Highlighted results
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -34,7 +33,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
       */
     protected static $openAPITypes = [
         'type' => '\Algolia\AlgoliaSearch\Model\HighlightResult',
-        'synonyms' => '\Algolia\AlgoliaSearch\Model\HighlightResult[]',
+        'synonyms' => '\Algolia\AlgoliaSearch\Model\HighlightResult[]'
     ];
 
     /**
@@ -46,7 +45,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
       */
     protected static $openAPIFormats = [
         'type' => null,
-        'synonyms' => null,
+        'synonyms' => null
     ];
 
     /**
@@ -77,7 +76,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $attributeMap = [
         'type' => 'type',
-        'synonyms' => 'synonyms',
+        'synonyms' => 'synonyms'
     ];
 
     /**
@@ -87,7 +86,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $setters = [
         'type' => 'setType',
-        'synonyms' => 'setSynonyms',
+        'synonyms' => 'setSynonyms'
     ];
 
     /**
@@ -97,7 +96,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $getters = [
         'type' => 'getType',
-        'synonyms' => 'getSynonyms',
+        'synonyms' => 'getSynonyms'
     ];
 
     /**
@@ -141,6 +140,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -182,6 +182,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
     {
         return count($this->listInvalidProperties()) === 0;
     }
+
 
     /**
      * Gets type
@@ -233,9 +234,9 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -245,7 +246,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -274,7 +275,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -285,11 +286,10 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -319,4 +319,5 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

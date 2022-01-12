@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * Promote Class Doc Comment
  *
  * @category Class
  * @description Object to promote as hits.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -35,7 +34,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'objectID' => 'string',
         'objectIDs' => 'string[]',
-        'position' => 'int',
+        'position' => 'int'
     ];
 
     /**
@@ -48,7 +47,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPIFormats = [
         'objectID' => null,
         'objectIDs' => null,
-        'position' => null,
+        'position' => null
     ];
 
     /**
@@ -80,7 +79,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $attributeMap = [
         'objectID' => 'objectID',
         'objectIDs' => 'objectIDs',
-        'position' => 'position',
+        'position' => 'position'
     ];
 
     /**
@@ -91,7 +90,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $setters = [
         'objectID' => 'setObjectID',
         'objectIDs' => 'setObjectIDs',
-        'position' => 'setPosition',
+        'position' => 'setPosition'
     ];
 
     /**
@@ -102,7 +101,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $getters = [
         'objectID' => 'getObjectID',
         'objectIDs' => 'getObjectIDs',
-        'position' => 'getPosition',
+        'position' => 'getPosition'
     ];
 
     /**
@@ -146,6 +145,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -178,7 +178,6 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['position'] === null) {
             $invalidProperties[] = "'position' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -193,6 +192,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets objectID
      *
@@ -206,7 +206,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets objectID
      *
-     * @param string|null $objectID unique identifier of the object to promote
+     * @param string|null $objectID Unique identifier of the object to promote.
      *
      * @return self
      */
@@ -230,7 +230,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets objectIDs
      *
-     * @param string[]|null $objectIDs array of unique identifiers of the objects to promote
+     * @param string[]|null $objectIDs Array of unique identifiers of the objects to promote.
      *
      * @return self
      */
@@ -267,9 +267,9 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -279,7 +279,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -308,7 +308,7 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -319,11 +319,10 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -353,4 +352,5 @@ class Promote implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

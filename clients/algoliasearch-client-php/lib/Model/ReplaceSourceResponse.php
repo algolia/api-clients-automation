@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * ReplaceSourceResponse Class Doc Comment
@@ -31,7 +31,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       * @var string[]
       */
     protected static $openAPITypes = [
-        'updatedAt' => '\DateTime',
+        'updatedAt' => '\DateTime'
     ];
 
     /**
@@ -42,7 +42,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'updatedAt' => 'date-time',
+        'updatedAt' => 'date-time'
     ];
 
     /**
@@ -72,7 +72,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $attributeMap = [
-        'updatedAt' => 'updatedAt',
+        'updatedAt' => 'updatedAt'
     ];
 
     /**
@@ -81,7 +81,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $setters = [
-        'updatedAt' => 'setUpdatedAt',
+        'updatedAt' => 'setUpdatedAt'
     ];
 
     /**
@@ -90,7 +90,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $getters = [
-        'updatedAt' => 'getUpdatedAt',
+        'updatedAt' => 'getUpdatedAt'
     ];
 
     /**
@@ -134,6 +134,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -164,7 +165,6 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         if ($this->container['updatedAt'] === null) {
             $invalidProperties[] = "'updatedAt' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -179,6 +179,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets updatedAt
      *
@@ -192,7 +193,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param \DateTime $updatedAt Date of last update (ISO-8601 format).
      *
      * @return self
      */
@@ -205,9 +206,9 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -217,7 +218,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -246,7 +247,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -257,11 +258,10 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -291,4 +291,5 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

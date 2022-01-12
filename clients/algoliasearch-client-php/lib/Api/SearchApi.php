@@ -2,16 +2,17 @@
 
 namespace Algolia\AlgoliaSearch\Api;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use Algolia\AlgoliaSearch\ApiException;
 use Algolia\AlgoliaSearch\Configuration;
 use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 
 /**
  * SearchApi Class Doc Comment
@@ -90,7 +91,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\AddApiKeyResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function addApiKey($apiKey)
@@ -142,7 +142,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\AddApiKeyResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -160,7 +160,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function addOrUpdateObject($indexName, $objectID, $body)
@@ -240,7 +239,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -254,7 +253,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse
      */
     public function appendSource($source)
@@ -306,7 +304,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -323,7 +321,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function assignUserId($xAlgoliaUserID, $assignUserIdObject)
@@ -334,8 +331,8 @@ class SearchApi
                 'Missing the required parameter $xAlgoliaUserID when calling assignUserId'
             );
         }
-        if (!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $xAlgoliaUserID)) {
-            throw new \InvalidArgumentException('invalid value for "xAlgoliaUserID" when calling SearchApi.assignUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.');
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $xAlgoliaUserID)) {
+            throw new \InvalidArgumentException("invalid value for \"xAlgoliaUserID\" when calling SearchApi.assignUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
         }
 
         // verify the required parameter 'assignUserIdObject' is set
@@ -392,7 +389,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -407,7 +404,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\BatchResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function batch($indexName, $batchWriteObject)
@@ -473,7 +469,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\BatchResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -490,7 +486,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function batchAssignUserIds($xAlgoliaUserID, $batchAssignUserIdsObject)
@@ -501,8 +496,8 @@ class SearchApi
                 'Missing the required parameter $xAlgoliaUserID when calling batchAssignUserIds'
             );
         }
-        if (!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $xAlgoliaUserID)) {
-            throw new \InvalidArgumentException('invalid value for "xAlgoliaUserID" when calling SearchApi.batchAssignUserIds, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.');
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $xAlgoliaUserID)) {
+            throw new \InvalidArgumentException("invalid value for \"xAlgoliaUserID\" when calling SearchApi.batchAssignUserIds, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
         }
 
         // verify the required parameter 'batchAssignUserIdsObject' is set
@@ -559,7 +554,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -576,7 +571,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function batchDictionaryEntries($dictionaryName, $batchDictionaryEntries)
@@ -642,7 +636,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -661,7 +655,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function batchRules($indexName, $rule, $forwardToReplicas = null, $clearExistingRules = null)
@@ -741,7 +734,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -758,7 +751,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\BrowseResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function browse($indexName, $browseRequest = null)
@@ -818,7 +810,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\BrowseResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -835,7 +827,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function clearAllSynonyms($indexName, $forwardToReplicas = null)
@@ -899,7 +890,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -915,7 +906,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function clearObjects($indexName)
@@ -972,7 +962,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -989,7 +979,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function clearRules($indexName, $forwardToReplicas = null)
@@ -1053,7 +1042,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1069,7 +1058,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\DeleteApiKeyResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function deleteApiKey($key)
@@ -1126,7 +1114,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeleteApiKeyResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1143,7 +1131,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function deleteBy($indexName, $searchParams)
@@ -1209,7 +1196,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1225,7 +1212,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function deleteIndex($indexName)
@@ -1282,7 +1268,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1299,7 +1285,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function deleteObject($indexName, $objectID)
@@ -1370,7 +1355,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1388,7 +1373,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function deleteRule($indexName, $objectID, $forwardToReplicas = null)
@@ -1466,7 +1450,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1480,7 +1464,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\DeleteSourceResponse
      */
     public function deleteSource($source)
@@ -1537,7 +1520,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeleteSourceResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1555,7 +1538,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function deleteSynonym($indexName, $objectID, $forwardToReplicas = null)
@@ -1633,7 +1615,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1649,7 +1631,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\KeyObject|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getApiKey($key)
@@ -1706,7 +1687,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\KeyObject';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1721,7 +1702,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return array<string,\Algolia\AlgoliaSearch\Model\Languages>|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getDictionaryLanguages()
@@ -1764,7 +1744,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = 'array&lt;string,\Algolia\AlgoliaSearch\Model\Languages&gt;';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1779,7 +1759,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\GetDictionarySettingsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getDictionarySettings()
@@ -1822,7 +1801,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetDictionarySettingsResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1839,7 +1818,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\GetLogsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getLogs($offset = 0, $length = 10, $indexName = null, $type = 'all')
@@ -1847,6 +1825,7 @@ class SearchApi
         if ($length !== null && $length > 1000) {
             throw new \InvalidArgumentException('invalid value for "$length" when calling SearchApi.getLogs, must be smaller than or equal to 1000.');
         }
+
 
         $resourcePath = '/1/logs';
         $queryParams = [];
@@ -1913,7 +1892,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetLogsResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -1931,7 +1910,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return array<string,string>|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getObject($indexName, $objectID, $attributesToRetrieve = null)
@@ -2009,7 +1987,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = 'array&lt;string,string&gt;';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2025,7 +2003,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\GetObjectsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getObjects($getObjectsObject)
@@ -2077,7 +2054,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetObjectsResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2094,7 +2071,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\Rule|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getRule($indexName, $objectID)
@@ -2165,7 +2141,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\Rule';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2179,7 +2155,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\IndexSettings|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getSettings($indexName)
@@ -2236,7 +2211,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\IndexSettings';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2249,7 +2224,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\Source[]
      */
     public function getSources()
@@ -2292,7 +2266,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\Source[]';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2309,7 +2283,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SynonymHit|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getSynonym($indexName, $objectID)
@@ -2380,7 +2353,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SynonymHit';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2395,7 +2368,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\GetTaskResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getTask($indexName, $taskID)
@@ -2466,7 +2438,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetTaskResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2481,7 +2453,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\GetTopUserIdsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getTopUserIds()
@@ -2524,7 +2495,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetTopUserIdsResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2540,7 +2511,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UserId|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getUserId($userID)
@@ -2551,9 +2521,10 @@ class SearchApi
                 'Missing the required parameter $userID when calling getUserId'
             );
         }
-        if (!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $userID)) {
-            throw new \InvalidArgumentException('invalid value for "userID" when calling SearchApi.getUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.');
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $userID)) {
+            throw new \InvalidArgumentException("invalid value for \"userID\" when calling SearchApi.getUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
         }
+
 
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
@@ -2600,7 +2571,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UserId';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2616,7 +2587,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function hasPendingMappings($getClusters = null)
@@ -2666,7 +2636,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2681,7 +2651,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\ListApiKeysResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function listApiKeys()
@@ -2724,7 +2693,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListApiKeysResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2739,7 +2708,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\ListClustersResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function listClusters()
@@ -2782,7 +2750,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListClustersResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2798,7 +2766,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\ListIndicesResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function listIndices($page = null)
@@ -2848,7 +2815,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListIndicesResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2865,7 +2832,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\ListUserIdsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function listUserIds($page = null, $hitsPerPage = 100)
@@ -2922,7 +2888,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListUserIdsResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -2936,7 +2902,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\MultipleBatchResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function multipleBatch($batchObject)
@@ -2988,7 +2953,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\MultipleBatchResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3002,7 +2967,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\MultipleQueriesResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function multipleQueries($multipleQueriesObject)
@@ -3054,7 +3018,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\MultipleQueriesResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3071,7 +3035,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function operationIndex($indexName, $operationIndexObject)
@@ -3137,7 +3100,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3156,7 +3119,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function partialUpdateObject($indexName, $objectID, $oneOfStringBuildInOperation, $createIfNotExists = true)
@@ -3243,7 +3205,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3259,7 +3221,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\RemoveUserIdResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function removeUserId($userID)
@@ -3270,9 +3231,10 @@ class SearchApi
                 'Missing the required parameter $userID when calling removeUserId'
             );
         }
-        if (!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $userID)) {
-            throw new \InvalidArgumentException('invalid value for "userID" when calling SearchApi.removeUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.');
+        if (!preg_match("/^[a-zA-Z0-9 \\-*.]+$/", $userID)) {
+            throw new \InvalidArgumentException("invalid value for \"userID\" when calling SearchApi.removeUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
         }
+
 
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
@@ -3319,7 +3281,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\RemoveUserIdResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3333,7 +3295,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\ReplaceSourceResponse
      */
     public function replaceSources($source)
@@ -3385,7 +3346,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\ReplaceSourceResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3401,7 +3362,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\AddApiKeyResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function restoreApiKey($key)
@@ -3458,7 +3418,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\AddApiKeyResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3473,7 +3433,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SaveObjectResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function saveObject($indexName, $body)
@@ -3539,7 +3498,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SaveObjectResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3558,7 +3517,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedRuleResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function saveRule($indexName, $objectID, $rule, $forwardToReplicas = null)
@@ -3645,7 +3603,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedRuleResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3664,7 +3622,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SaveSynonymResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function saveSynonym($indexName, $objectID, $synonymHit, $forwardToReplicas = null)
@@ -3751,7 +3708,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SaveSynonymResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3770,7 +3727,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function saveSynonyms($indexName, $synonymHit, $forwardToReplicas = null, $replaceExistingSynonyms = null)
@@ -3850,7 +3806,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3865,7 +3821,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SearchResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function search($indexName, $searchParams)
@@ -3931,7 +3886,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -3948,7 +3903,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function searchDictionaryEntries($dictionaryName, $searchDictionaryEntries)
@@ -4014,7 +3968,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4032,7 +3986,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SearchForFacetValuesResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function searchForFacetValues($indexName, $facetName, $searchForFacetValuesRequest = null)
@@ -4106,7 +4059,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchForFacetValuesResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4123,7 +4076,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SearchRulesResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function searchRules($indexName, $searchRulesParams)
@@ -4189,7 +4141,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchRulesResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4209,7 +4161,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SearchSynonymsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function searchSynonyms($indexName, $query = '', $type = null, $page = 0, $hitsPerPage = 100)
@@ -4294,7 +4245,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchSynonymsResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4310,7 +4261,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\SearchUserIdsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function searchUserIds($searchUserIdsObject)
@@ -4362,7 +4312,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchUserIdsResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4378,7 +4328,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function setDictionarySettings($dictionarySettingsRequest)
@@ -4430,7 +4379,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4446,7 +4395,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function setSettings($indexName, $indexSettings, $forwardToReplicas = null)
@@ -4519,7 +4467,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4536,7 +4484,6 @@ class SearchApi
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     *
      * @return \Algolia\AlgoliaSearch\Model\UpdateApiKeyResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function updateApiKey($key, $apiKey)
@@ -4602,7 +4549,7 @@ class SearchApi
             $headers,
             $httpBody
         );
-
+        
         $expectedResponse = null;
         $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdateApiKeyResponse';
         list($response) = $this->sendRequest($request, $expectedResponse);
@@ -4613,7 +4560,6 @@ class SearchApi
      * Create http client option
      *
      * @throws \RuntimeException on file opening failure
-     *
      * @return array of http client options
      */
     protected function createHttpClientOption()
@@ -4633,14 +4579,12 @@ class SearchApi
      * Send the request and handle the response
      *
      * @throws \RuntimeException on file opening failure
-     *
      * @return array 
      */
     protected function sendRequest($request, $expectedResponse)
     {
         try {
             $options = $this->createHttpClientOption();
-
             try {
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
@@ -4685,7 +4629,7 @@ class SearchApi
                     return [
                         ObjectSerializer::deserialize($content, $expectedResponse, []),
                         $response->getStatusCode(),
-                        $response->getHeaders(),
+                        $response->getHeaders()
                     ];
                 case 400:
                     if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
@@ -4697,7 +4641,7 @@ class SearchApi
                     return [
                         ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
                         $response->getStatusCode(),
-                        $response->getHeaders(),
+                        $response->getHeaders()
                     ];
                 case 402:
                     if ('\Algolia\AlgoliaSearch\Model\ErrorBase' === '\SplFileObject') {
@@ -4709,7 +4653,7 @@ class SearchApi
                     return [
                         ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
                         $response->getStatusCode(),
-                        $response->getHeaders(),
+                        $response->getHeaders()
                     ];
                 case 403:
                     if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
@@ -4721,7 +4665,7 @@ class SearchApi
                     return [
                         ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
                         $response->getStatusCode(),
-                        $response->getHeaders(),
+                        $response->getHeaders()
                     ];
                 case 404:
                     if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
@@ -4733,7 +4677,7 @@ class SearchApi
                     return [
                         ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
                         $response->getStatusCode(),
-                        $response->getHeaders(),
+                        $response->getHeaders()
                     ];
 
             }
@@ -4748,7 +4692,7 @@ class SearchApi
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
-                $response->getHeaders(),
+                $response->getHeaders()
             ];
 
         } catch (ApiException $e) {
@@ -4760,7 +4704,6 @@ class SearchApi
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
-
                     break;
                 case 400:
                     $data = ObjectSerializer::deserialize(
@@ -4769,7 +4712,6 @@ class SearchApi
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
-
                     break;
                 case 402:
                     $data = ObjectSerializer::deserialize(
@@ -4778,7 +4720,6 @@ class SearchApi
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
-
                     break;
                 case 403:
                     $data = ObjectSerializer::deserialize(
@@ -4787,7 +4728,6 @@ class SearchApi
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
-
                     break;
                 case 404:
                     $data = ObjectSerializer::deserialize(
@@ -4796,10 +4736,8 @@ class SearchApi
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
-
                     break;
             }
-
             throw $e;
         }
     }

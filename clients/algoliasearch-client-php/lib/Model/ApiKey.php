@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * ApiKey Class Doc Comment
  *
  * @category Class
  * @description Api Key object.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -40,7 +39,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         'maxQueriesPerIPPerHour' => 'int',
         'queryParameters' => 'string',
         'referers' => 'string[]',
-        'validity' => 'int',
+        'validity' => 'int'
     ];
 
     /**
@@ -58,7 +57,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         'maxQueriesPerIPPerHour' => null,
         'queryParameters' => null,
         'referers' => null,
-        'validity' => null,
+        'validity' => null
     ];
 
     /**
@@ -95,7 +94,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         'maxQueriesPerIPPerHour' => 'maxQueriesPerIPPerHour',
         'queryParameters' => 'queryParameters',
         'referers' => 'referers',
-        'validity' => 'validity',
+        'validity' => 'validity'
     ];
 
     /**
@@ -111,7 +110,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         'maxQueriesPerIPPerHour' => 'setMaxQueriesPerIPPerHour',
         'queryParameters' => 'setQueryParameters',
         'referers' => 'setReferers',
-        'validity' => 'setValidity',
+        'validity' => 'setValidity'
     ];
 
     /**
@@ -127,7 +126,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         'maxQueriesPerIPPerHour' => 'getMaxQueriesPerIPPerHour',
         'queryParameters' => 'getQueryParameters',
         'referers' => 'getReferers',
-        'validity' => 'getValidity',
+        'validity' => 'getValidity'
     ];
 
     /**
@@ -248,7 +247,6 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['acl'] === null) {
             $invalidProperties[] = "'acl' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -263,6 +261,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets acl
      *
@@ -276,7 +275,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets acl
      *
-     * @param string[] $acl set of permissions associated with the key
+     * @param string[] $acl Set of permissions associated with the key.
      *
      * @return self
      */
@@ -381,7 +380,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets maxQueriesPerIPPerHour
      *
-     * @param int|null $maxQueriesPerIPPerHour maximum number of API calls per hour allowed from a given IP address or a user token
+     * @param int|null $maxQueriesPerIPPerHour Maximum number of API calls per hour allowed from a given IP address or a user token.
      *
      * @return self
      */
@@ -466,9 +465,9 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -478,7 +477,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -507,7 +506,7 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -518,11 +517,10 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -552,4 +550,5 @@ class ApiKey implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

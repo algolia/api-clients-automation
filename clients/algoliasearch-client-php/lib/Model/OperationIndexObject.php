@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * OperationIndexObject Class Doc Comment
@@ -33,7 +33,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $openAPITypes = [
         'operation' => 'string',
         'destination' => 'string',
-        'scope' => 'string[]',
+        'scope' => 'string[]'
     ];
 
     /**
@@ -46,7 +46,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $openAPIFormats = [
         'operation' => null,
         'destination' => null,
-        'scope' => null,
+        'scope' => null
     ];
 
     /**
@@ -78,7 +78,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $attributeMap = [
         'operation' => 'operation',
         'destination' => 'destination',
-        'scope' => 'scope',
+        'scope' => 'scope'
     ];
 
     /**
@@ -89,7 +89,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $setters = [
         'operation' => 'setOperation',
         'destination' => 'setDestination',
-        'scope' => 'setScope',
+        'scope' => 'setScope'
     ];
 
     /**
@@ -100,7 +100,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $getters = [
         'operation' => 'getOperation',
         'destination' => 'getDestination',
-        'scope' => 'getScope',
+        'scope' => 'getScope'
     ];
 
     /**
@@ -221,7 +221,6 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
         if ($this->container['destination'] === null) {
             $invalidProperties[] = "'destination' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -236,6 +235,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets operation
      *
@@ -249,7 +249,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets operation
      *
-     * @param string $operation type of operation to perform (move or copy)
+     * @param string $operation Type of operation to perform (move or copy).
      *
      * @return self
      */
@@ -283,7 +283,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets destination
      *
-     * @param string $destination the Algolia index name
+     * @param string $destination The Algolia index name.
      *
      * @return self
      */
@@ -329,9 +329,9 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -341,7 +341,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -370,7 +370,7 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -381,11 +381,10 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -415,4 +414,5 @@ class OperationIndexObject implements ModelInterface, ArrayAccess, \JsonSerializ
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * BrowseRequest Class Doc Comment
@@ -32,7 +32,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'params' => 'string',
-        'cursor' => 'string',
+        'cursor' => 'string'
     ];
 
     /**
@@ -44,7 +44,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'params' => null,
-        'cursor' => null,
+        'cursor' => null
     ];
 
     /**
@@ -75,7 +75,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'params' => 'params',
-        'cursor' => 'cursor',
+        'cursor' => 'cursor'
     ];
 
     /**
@@ -85,7 +85,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'params' => 'setParams',
-        'cursor' => 'setCursor',
+        'cursor' => 'setCursor'
     ];
 
     /**
@@ -95,7 +95,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'params' => 'getParams',
-        'cursor' => 'getCursor',
+        'cursor' => 'getCursor'
     ];
 
     /**
@@ -139,6 +139,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -181,6 +182,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets params
      *
@@ -194,7 +196,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets params
      *
-     * @param string|null $params search parameters as URL-encoded query string
+     * @param string|null $params Search parameters as URL-encoded query string.
      *
      * @return self
      */
@@ -231,9 +233,9 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -243,7 +245,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -272,7 +274,7 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -283,11 +285,10 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -317,4 +318,5 @@ class BrowseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

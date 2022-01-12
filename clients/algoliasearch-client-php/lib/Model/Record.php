@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * Record Class Doc Comment
  *
  * @category Class
  * @description A single record.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -37,7 +36,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         'highlightResult' => '\Algolia\AlgoliaSearch\Model\HighlightResult',
         'snippetResult' => '\Algolia\AlgoliaSearch\Model\SnippetResult',
         'rankingInfo' => '\Algolia\AlgoliaSearch\Model\RankingInfo',
-        'distinctSeqID' => 'int',
+        'distinctSeqID' => 'int'
     ];
 
     /**
@@ -52,7 +51,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         'highlightResult' => null,
         'snippetResult' => null,
         'rankingInfo' => null,
-        'distinctSeqID' => null,
+        'distinctSeqID' => null
     ];
 
     /**
@@ -86,7 +85,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         'highlightResult' => '_highlightResult',
         'snippetResult' => '_snippetResult',
         'rankingInfo' => '_rankingInfo',
-        'distinctSeqID' => '_distinctSeqID',
+        'distinctSeqID' => '_distinctSeqID'
     ];
 
     /**
@@ -99,7 +98,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         'highlightResult' => 'setHighlightResult',
         'snippetResult' => 'setSnippetResult',
         'rankingInfo' => 'setRankingInfo',
-        'distinctSeqID' => 'setDistinctSeqID',
+        'distinctSeqID' => 'setDistinctSeqID'
     ];
 
     /**
@@ -112,7 +111,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         'highlightResult' => 'getHighlightResult',
         'snippetResult' => 'getSnippetResult',
         'rankingInfo' => 'getRankingInfo',
-        'distinctSeqID' => 'getDistinctSeqID',
+        'distinctSeqID' => 'getDistinctSeqID'
     ];
 
     /**
@@ -156,6 +155,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -190,7 +190,6 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['objectID'] === null) {
             $invalidProperties[] = "'objectID' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -205,6 +204,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets objectID
      *
@@ -218,7 +218,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets objectID
      *
-     * @param string $objectID unique identifier of the object
+     * @param string $objectID Unique identifier of the object.
      *
      * @return self
      */
@@ -327,9 +327,9 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -339,7 +339,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -368,7 +368,7 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -379,11 +379,10 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -413,4 +412,5 @@ class Record implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

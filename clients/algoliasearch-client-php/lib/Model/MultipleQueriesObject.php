@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * MultipleQueriesObject Class Doc Comment
@@ -32,7 +32,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
       */
     protected static $openAPITypes = [
         'requests' => '\Algolia\AlgoliaSearch\Model\MultipleQueries[]',
-        'strategy' => 'string',
+        'strategy' => 'string'
     ];
 
     /**
@@ -44,7 +44,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
       */
     protected static $openAPIFormats = [
         'requests' => null,
-        'strategy' => null,
+        'strategy' => null
     ];
 
     /**
@@ -75,7 +75,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     protected static $attributeMap = [
         'requests' => 'requests',
-        'strategy' => 'strategy',
+        'strategy' => 'strategy'
     ];
 
     /**
@@ -85,7 +85,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     protected static $setters = [
         'requests' => 'setRequests',
-        'strategy' => 'setStrategy',
+        'strategy' => 'setStrategy'
     ];
 
     /**
@@ -95,7 +95,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     protected static $getters = [
         'requests' => 'getRequests',
-        'strategy' => 'getStrategy',
+        'strategy' => 'getStrategy'
     ];
 
     /**
@@ -209,6 +209,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets requests
      *
@@ -269,9 +270,9 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -281,7 +282,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -310,7 +311,7 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -321,11 +322,10 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -355,4 +355,5 @@ class MultipleQueriesObject implements ModelInterface, ArrayAccess, \JsonSeriali
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

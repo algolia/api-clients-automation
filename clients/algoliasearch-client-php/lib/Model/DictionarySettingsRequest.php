@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * DictionarySettingsRequest Class Doc Comment
  *
  * @category Class
  * @description Disable the builtin Algolia entries for a type of dictionary per language.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -33,7 +32,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
       * @var string[]
       */
     protected static $openAPITypes = [
-        'disableStandardEntries' => '\Algolia\AlgoliaSearch\Model\StandardEntries',
+        'disableStandardEntries' => '\Algolia\AlgoliaSearch\Model\StandardEntries'
     ];
 
     /**
@@ -44,7 +43,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'disableStandardEntries' => null,
+        'disableStandardEntries' => null
     ];
 
     /**
@@ -74,7 +73,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $attributeMap = [
-        'disableStandardEntries' => 'disableStandardEntries',
+        'disableStandardEntries' => 'disableStandardEntries'
     ];
 
     /**
@@ -83,7 +82,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $setters = [
-        'disableStandardEntries' => 'setDisableStandardEntries',
+        'disableStandardEntries' => 'setDisableStandardEntries'
     ];
 
     /**
@@ -92,7 +91,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $getters = [
-        'disableStandardEntries' => 'getDisableStandardEntries',
+        'disableStandardEntries' => 'getDisableStandardEntries'
     ];
 
     /**
@@ -136,6 +135,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -166,7 +166,6 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
         if ($this->container['disableStandardEntries'] === null) {
             $invalidProperties[] = "'disableStandardEntries' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -180,6 +179,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
     {
         return count($this->listInvalidProperties()) === 0;
     }
+
 
     /**
      * Gets disableStandardEntries
@@ -207,9 +207,9 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -219,7 +219,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -248,7 +248,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -259,11 +259,10 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -293,4 +292,5 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

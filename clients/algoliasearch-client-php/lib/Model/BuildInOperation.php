@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * BuildInOperation Class Doc Comment
  *
  * @category Class
  * @description To update an attribute without pushing the entire record, you can use these built-in operations.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -34,7 +33,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'operation' => 'string',
-        'value' => 'string',
+        'value' => 'string'
     ];
 
     /**
@@ -46,7 +45,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'operation' => null,
-        'value' => null,
+        'value' => null
     ];
 
     /**
@@ -77,7 +76,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'operation' => '_operation',
-        'value' => 'value',
+        'value' => 'value'
     ];
 
     /**
@@ -87,7 +86,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'operation' => 'setOperation',
-        'value' => 'setValue',
+        'value' => 'setValue'
     ];
 
     /**
@@ -97,7 +96,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'operation' => 'getOperation',
-        'value' => 'getValue',
+        'value' => 'getValue'
     ];
 
     /**
@@ -210,7 +209,6 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['value'] === null) {
             $invalidProperties[] = "'value' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -225,6 +223,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets operation
      *
@@ -238,7 +237,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets operation
      *
-     * @param string $operation the operation to apply on the attribute
+     * @param string $operation The operation to apply on the attribute.
      *
      * @return self
      */
@@ -272,7 +271,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets value
      *
-     * @param string $value the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove
+     * @param string $value the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
      *
      * @return self
      */
@@ -285,9 +284,9 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -297,7 +296,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -326,7 +325,7 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -337,11 +336,10 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -371,4 +369,5 @@ class BuildInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * UserId Class Doc Comment
  *
  * @category Class
  * @description A userID.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -36,7 +35,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         'userID' => 'string',
         'clusterName' => 'string',
         'nbRecords' => 'int',
-        'dataSize' => 'int',
+        'dataSize' => 'int'
     ];
 
     /**
@@ -50,7 +49,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         'userID' => null,
         'clusterName' => null,
         'nbRecords' => null,
-        'dataSize' => null,
+        'dataSize' => null
     ];
 
     /**
@@ -83,7 +82,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         'userID' => 'userID',
         'clusterName' => 'clusterName',
         'nbRecords' => 'nbRecords',
-        'dataSize' => 'dataSize',
+        'dataSize' => 'dataSize'
     ];
 
     /**
@@ -95,7 +94,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         'userID' => 'setUserID',
         'clusterName' => 'setClusterName',
         'nbRecords' => 'setNbRecords',
-        'dataSize' => 'setDataSize',
+        'dataSize' => 'setDataSize'
     ];
 
     /**
@@ -107,7 +106,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         'userID' => 'getUserID',
         'clusterName' => 'getClusterName',
         'nbRecords' => 'getNbRecords',
-        'dataSize' => 'getDataSize',
+        'dataSize' => 'getDataSize'
     ];
 
     /**
@@ -151,6 +150,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -193,7 +193,6 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['dataSize'] === null) {
             $invalidProperties[] = "'dataSize' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -208,6 +207,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets userID
      *
@@ -221,7 +221,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets userID
      *
-     * @param string $userID userID of the user
+     * @param string $userID userID of the user.
      *
      * @return self
      */
@@ -245,7 +245,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets clusterName
      *
-     * @param string $clusterName cluster on which the user is assigned
+     * @param string $clusterName Cluster on which the user is assigned.
      *
      * @return self
      */
@@ -269,7 +269,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets nbRecords
      *
-     * @param int $nbRecords number of records belonging to the user
+     * @param int $nbRecords Number of records belonging to the user.
      *
      * @return self
      */
@@ -293,7 +293,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets dataSize
      *
-     * @param int $dataSize data size used by the user
+     * @param int $dataSize Data size used by the user.
      *
      * @return self
      */
@@ -306,9 +306,9 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -318,7 +318,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -347,7 +347,7 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -358,11 +358,10 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -392,4 +391,5 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

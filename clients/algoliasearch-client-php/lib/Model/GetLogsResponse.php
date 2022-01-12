@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * GetLogsResponse Class Doc Comment
@@ -31,7 +31,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'logs' => '\Algolia\AlgoliaSearch\Model\GetLogsResponseLogs[]',
+        'logs' => '\Algolia\AlgoliaSearch\Model\GetLogsResponseLogs[]'
     ];
 
     /**
@@ -42,7 +42,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'logs' => null,
+        'logs' => null
     ];
 
     /**
@@ -72,7 +72,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'logs' => 'logs',
+        'logs' => 'logs'
     ];
 
     /**
@@ -81,7 +81,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'logs' => 'setLogs',
+        'logs' => 'setLogs'
     ];
 
     /**
@@ -90,7 +90,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'logs' => 'getLogs',
+        'logs' => 'getLogs'
     ];
 
     /**
@@ -134,6 +134,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -164,7 +165,6 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['logs'] === null) {
             $invalidProperties[] = "'logs' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -178,6 +178,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return count($this->listInvalidProperties()) === 0;
     }
+
 
     /**
      * Gets logs
@@ -205,9 +206,9 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -217,7 +218,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -246,7 +247,7 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -257,11 +258,10 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -291,4 +291,5 @@ class GetLogsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

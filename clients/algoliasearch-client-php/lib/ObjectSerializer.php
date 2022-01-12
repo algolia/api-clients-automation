@@ -48,7 +48,6 @@ class ObjectSerializer
             foreach ($data as $property => $value) {
                 $data[$property] = self::sanitizeForSerialization($value);
             }
-
             return $data;
         }
 
@@ -66,7 +65,6 @@ class ObjectSerializer
                             $allowedEnumTypes = $callable();
                             if (!in_array($value, $allowedEnumTypes, true)) {
                                 $imploded = implode("', '", $allowedEnumTypes);
-
                                 throw new \InvalidArgumentException("Invalid value for enum '$openAPIType', must be one of: '$imploded'");
                             }
                         }
@@ -80,12 +78,10 @@ class ObjectSerializer
                     $values[$property] = self::sanitizeForSerialization($value);
                 }
             }
-
-            return (object) $values;
+            return (object)$values;
+        } else {
+            return (string)$data;
         }
-
-            return (string) $data;
-
     }
 
     /**
@@ -100,10 +96,9 @@ class ObjectSerializer
     {
         if (preg_match("/.*[\/\\\\](.*)$/", $filename, $match)) {
             return $match[1];
-        }
-
+        } else {
             return $filename;
-
+        }
     }
 
     /**
@@ -133,10 +128,9 @@ class ObjectSerializer
     {
         if (is_array($object)) {
             return implode(',', $object);
-        }
-
+        } else {
             return self::toString($object);
-
+        }
     }
 
     /**
@@ -171,10 +165,9 @@ class ObjectSerializer
     {
         if ($value instanceof \SplFileObject) {
             return $value->getRealPath();
-        }
-
+        } else {
             return self::toString($value);
-
+        }
     }
 
     /**
@@ -193,10 +186,9 @@ class ObjectSerializer
             return $value->format(self::$dateTimeFormat);
         } elseif (is_bool($value)) {
             return $value ? 'true' : 'false';
-        }
-
+        } else {
             return $value;
-
+        }
     }
 
     /**
@@ -252,45 +244,41 @@ class ObjectSerializer
             return null;
         }
 
-        if (strcasecmp(mb_substr($class, -2), '[]') === 0) {
+        if (strcasecmp(substr($class, -2), '[]') === 0) {
             $data = is_string($data) ? json_decode($data) : $data;
 
             if (!is_array($data)) {
                 throw new \InvalidArgumentException("Invalid array '$class'");
             }
 
-            $subClass = mb_substr($class, 0, -2);
+            $subClass = substr($class, 0, -2);
             $values = [];
             foreach ($data as $key => $value) {
                 $values[] = self::deserialize($value, $subClass, null);
             }
-
             return $values;
         }
 
         if (preg_match('/^(array<|map\[)/', $class)) { // for associative array e.g. array<string,int>
             $data = is_string($data) ? json_decode($data) : $data;
             settype($data, 'array');
-            $inner = mb_substr($class, 4, -1);
+            $inner = substr($class, 4, -1);
             $deserialized = [];
-            if (mb_strrpos($inner, ',') !== false) {
+            if (strrpos($inner, ",") !== false) {
                 $subClass_array = explode(',', $inner, 2);
                 $subClass = $subClass_array[1];
                 foreach ($data as $key => $value) {
                     $deserialized[$key] = self::deserialize($value, $subClass, null);
                 }
             }
-
             return $deserialized;
         }
 
         if ($class === 'object') {
             settype($data, 'array');
-
             return $data;
-        } elseif ($class === 'mixed') {
+        } else if ($class === 'mixed') {
             settype($data, gettype($data));
-
             return $data;
         }
 
@@ -319,7 +307,6 @@ class ObjectSerializer
         /** @psalm-suppress ParadoxicalCondition */
         if (in_array($class, ['\DateTime', '\SplFileObject', 'array', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
             settype($data, $class);
-
             return $data;
         }
 
@@ -344,12 +331,10 @@ class ObjectSerializer
         } elseif (method_exists($class, 'getAllowableEnumValues')) {
             if (!in_array($data, $class::getAllowableEnumValues(), true)) {
                 $imploded = implode("', '", $class::getAllowableEnumValues());
-
                 throw new \InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
             }
-
             return $data;
-        }  
+        } else {
             $data = is_string($data) ? json_decode($data) : $data;
             // If a discriminator is defined and points to a valid subclass, use it.
             $discriminator = $class::DISCRIMINATOR;
@@ -374,8 +359,7 @@ class ObjectSerializer
                     $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
                 }
             }
-
             return $instance;
-
+        }
     }
 }

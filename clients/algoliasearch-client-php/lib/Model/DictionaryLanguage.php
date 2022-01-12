@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * DictionaryLanguage Class Doc Comment
  *
  * @category Class
  * @description Custom entries for a dictionary
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -33,7 +32,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
       * @var string[]
       */
     protected static $openAPITypes = [
-        'nbCustomEntires' => 'int',
+        'nbCustomEntires' => 'int'
     ];
 
     /**
@@ -44,7 +43,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'nbCustomEntires' => null,
+        'nbCustomEntires' => null
     ];
 
     /**
@@ -74,7 +73,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $attributeMap = [
-        'nbCustomEntires' => 'nbCustomEntires',
+        'nbCustomEntires' => 'nbCustomEntires'
     ];
 
     /**
@@ -83,7 +82,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $setters = [
-        'nbCustomEntires' => 'setNbCustomEntires',
+        'nbCustomEntires' => 'setNbCustomEntires'
     ];
 
     /**
@@ -92,7 +91,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $getters = [
-        'nbCustomEntires' => 'getNbCustomEntires',
+        'nbCustomEntires' => 'getNbCustomEntires'
     ];
 
     /**
@@ -136,6 +135,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -177,6 +177,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets nbCustomEntires
      *
@@ -203,9 +204,9 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -215,7 +216,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -244,7 +245,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -255,11 +256,10 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -289,4 +289,5 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

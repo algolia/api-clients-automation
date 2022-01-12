@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SearchParamsString Class Doc Comment
@@ -31,7 +31,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
       * @var string[]
       */
     protected static $openAPITypes = [
-        'params' => 'string',
+        'params' => 'string'
     ];
 
     /**
@@ -42,7 +42,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'params' => null,
+        'params' => null
     ];
 
     /**
@@ -72,7 +72,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $attributeMap = [
-        'params' => 'params',
+        'params' => 'params'
     ];
 
     /**
@@ -81,7 +81,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $setters = [
-        'params' => 'setParams',
+        'params' => 'setParams'
     ];
 
     /**
@@ -90,7 +90,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $getters = [
-        'params' => 'getParams',
+        'params' => 'getParams'
     ];
 
     /**
@@ -134,6 +134,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -175,6 +176,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets params
      *
@@ -188,7 +190,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets params
      *
-     * @param string|null $params search parameters as URL-encoded query string
+     * @param string|null $params Search parameters as URL-encoded query string.
      *
      * @return self
      */
@@ -201,9 +203,9 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -213,7 +215,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -242,7 +244,7 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -253,11 +255,10 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -287,4 +288,5 @@ class SearchParamsString implements ModelInterface, ArrayAccess, \JsonSerializab
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

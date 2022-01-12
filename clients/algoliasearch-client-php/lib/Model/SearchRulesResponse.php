@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SearchRulesResponse Class Doc Comment
@@ -34,7 +34,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         'hits' => '\Algolia\AlgoliaSearch\Model\Rule[]',
         'nbHits' => 'int',
         'page' => 'int',
-        'nbPages' => 'int',
+        'nbPages' => 'int'
     ];
 
     /**
@@ -48,7 +48,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         'hits' => null,
         'nbHits' => null,
         'page' => null,
-        'nbPages' => null,
+        'nbPages' => null
     ];
 
     /**
@@ -81,7 +81,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         'hits' => 'hits',
         'nbHits' => 'nbHits',
         'page' => 'page',
-        'nbPages' => 'nbPages',
+        'nbPages' => 'nbPages'
     ];
 
     /**
@@ -93,7 +93,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         'hits' => 'setHits',
         'nbHits' => 'setNbHits',
         'page' => 'setPage',
-        'nbPages' => 'setNbPages',
+        'nbPages' => 'setNbPages'
     ];
 
     /**
@@ -105,7 +105,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         'hits' => 'getHits',
         'nbHits' => 'getNbHits',
         'page' => 'getPage',
-        'nbPages' => 'getNbPages',
+        'nbPages' => 'getNbPages'
     ];
 
     /**
@@ -149,6 +149,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -191,7 +192,6 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         if ($this->container['nbPages'] === null) {
             $invalidProperties[] = "'nbPages' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -206,6 +206,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets hits
      *
@@ -219,7 +220,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\Rule[] $hits fetched rules
+     * @param \Algolia\AlgoliaSearch\Model\Rule[] $hits Fetched rules.
      *
      * @return self
      */
@@ -243,7 +244,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets nbHits
      *
-     * @param int $nbHits number of fetched rules
+     * @param int $nbHits Number of fetched rules.
      *
      * @return self
      */
@@ -267,7 +268,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets page
      *
-     * @param int $page current page
+     * @param int $page Current page.
      *
      * @return self
      */
@@ -291,7 +292,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets nbPages
      *
-     * @param int $nbPages number of pages
+     * @param int $nbPages Number of pages.
      *
      * @return self
      */
@@ -304,9 +305,9 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -316,7 +317,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -345,7 +346,7 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -356,11 +357,10 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -390,4 +390,5 @@ class SearchRulesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

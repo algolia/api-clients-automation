@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SearchDictionaryEntries Class Doc Comment
  *
  * @category Class
  * @description The &#x60;searchDictionaryEntries&#x60; request.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -36,7 +35,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         'query' => 'string',
         'page' => 'int',
         'hitsPerPage' => 'int',
-        'language' => 'string',
+        'language' => 'string'
     ];
 
     /**
@@ -50,7 +49,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         'query' => null,
         'page' => null,
         'hitsPerPage' => null,
-        'language' => null,
+        'language' => null
     ];
 
     /**
@@ -83,7 +82,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         'query' => 'query',
         'page' => 'page',
         'hitsPerPage' => 'hitsPerPage',
-        'language' => 'language',
+        'language' => 'language'
     ];
 
     /**
@@ -95,7 +94,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         'query' => 'setQuery',
         'page' => 'setPage',
         'hitsPerPage' => 'setHitsPerPage',
-        'language' => 'setLanguage',
+        'language' => 'setLanguage'
     ];
 
     /**
@@ -107,7 +106,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         'query' => 'getQuery',
         'page' => 'getPage',
         'hitsPerPage' => 'getHitsPerPage',
-        'language' => 'getLanguage',
+        'language' => 'getLanguage'
     ];
 
     /**
@@ -151,6 +150,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -184,7 +184,6 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         if ($this->container['query'] === null) {
             $invalidProperties[] = "'query' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -199,6 +198,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets query
      *
@@ -212,7 +212,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets query
      *
-     * @param string $query the text to search in the index
+     * @param string $query The text to search in the index.
      *
      * @return self
      */
@@ -236,7 +236,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets page
      *
-     * @param int|null $page specify the page to retrieve
+     * @param int|null $page Specify the page to retrieve.
      *
      * @return self
      */
@@ -260,7 +260,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets hitsPerPage
      *
-     * @param int|null $hitsPerPage set the number of hits per page
+     * @param int|null $hitsPerPage Set the number of hits per page.
      *
      * @return self
      */
@@ -297,9 +297,9 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -309,7 +309,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -338,7 +338,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -349,11 +349,10 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -383,4 +382,5 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

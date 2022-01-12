@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SaveSynonymResponse Class Doc Comment
@@ -33,7 +33,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPITypes = [
         'taskID' => 'int',
         'updatedAt' => '\DateTime',
-        'id' => 'string',
+        'id' => 'string'
     ];
 
     /**
@@ -46,7 +46,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPIFormats = [
         'taskID' => null,
         'updatedAt' => 'date-time',
-        'id' => null,
+        'id' => null
     ];
 
     /**
@@ -78,7 +78,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $attributeMap = [
         'taskID' => 'taskID',
         'updatedAt' => 'updatedAt',
-        'id' => 'id',
+        'id' => 'id'
     ];
 
     /**
@@ -89,7 +89,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $setters = [
         'taskID' => 'setTaskID',
         'updatedAt' => 'setUpdatedAt',
-        'id' => 'setId',
+        'id' => 'setId'
     ];
 
     /**
@@ -100,7 +100,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $getters = [
         'taskID' => 'getTaskID',
         'updatedAt' => 'getUpdatedAt',
-        'id' => 'getId',
+        'id' => 'getId'
     ];
 
     /**
@@ -144,6 +144,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -182,7 +183,6 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         if ($this->container['id'] === null) {
             $invalidProperties[] = "'id' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -197,6 +197,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets taskID
      *
@@ -210,7 +211,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets taskID
      *
-     * @param int $taskID taskID of the indexing task to wait for
+     * @param int $taskID taskID of the indexing task to wait for.
      *
      * @return self
      */
@@ -234,7 +235,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param \DateTime $updatedAt Date of last update (ISO-8601 format).
      *
      * @return self
      */
@@ -258,7 +259,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets id
      *
-     * @param string $id objectID of the inserted object
+     * @param string $id objectID of the inserted object.
      *
      * @return self
      */
@@ -271,9 +272,9 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -283,7 +284,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -312,7 +313,7 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -323,11 +324,10 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -357,4 +357,5 @@ class SaveSynonymResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

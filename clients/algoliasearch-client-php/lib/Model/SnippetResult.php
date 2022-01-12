@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SnippetResult Class Doc Comment
@@ -32,7 +32,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'value' => 'string',
-        'matchLevel' => 'string',
+        'matchLevel' => 'string'
     ];
 
     /**
@@ -44,7 +44,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'value' => null,
-        'matchLevel' => null,
+        'matchLevel' => null
     ];
 
     /**
@@ -75,7 +75,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'value' => 'value',
-        'matchLevel' => 'matchLevel',
+        'matchLevel' => 'matchLevel'
     ];
 
     /**
@@ -85,7 +85,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'value' => 'setValue',
-        'matchLevel' => 'setMatchLevel',
+        'matchLevel' => 'setMatchLevel'
     ];
 
     /**
@@ -95,7 +95,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'value' => 'getValue',
-        'matchLevel' => 'getMatchLevel',
+        'matchLevel' => 'getMatchLevel'
     ];
 
     /**
@@ -208,6 +208,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets value
      *
@@ -221,7 +222,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets value
      *
-     * @param string|null $value markup text with occurrences highlighted
+     * @param string|null $value Markup text with occurrences highlighted.
      *
      * @return self
      */
@@ -245,7 +246,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets matchLevel
      *
-     * @param string|null $matchLevel indicates how well the attribute matched the search query
+     * @param string|null $matchLevel Indicates how well the attribute matched the search query.
      *
      * @return self
      */
@@ -268,9 +269,9 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -280,7 +281,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -309,7 +310,7 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -320,11 +321,10 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -354,4 +354,5 @@ class SnippetResult implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

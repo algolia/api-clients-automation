@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * DeleteSourceResponse Class Doc Comment
@@ -31,7 +31,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
       * @var string[]
       */
     protected static $openAPITypes = [
-        'deletedAt' => '\DateTime',
+        'deletedAt' => '\DateTime'
     ];
 
     /**
@@ -42,7 +42,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'deletedAt' => 'date-time',
+        'deletedAt' => 'date-time'
     ];
 
     /**
@@ -72,7 +72,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
      * @var string[]
      */
     protected static $attributeMap = [
-        'deletedAt' => 'deletedAt',
+        'deletedAt' => 'deletedAt'
     ];
 
     /**
@@ -81,7 +81,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
      * @var string[]
      */
     protected static $setters = [
-        'deletedAt' => 'setDeletedAt',
+        'deletedAt' => 'setDeletedAt'
     ];
 
     /**
@@ -90,7 +90,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
      * @var string[]
      */
     protected static $getters = [
-        'deletedAt' => 'getDeletedAt',
+        'deletedAt' => 'getDeletedAt'
     ];
 
     /**
@@ -134,6 +134,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -164,7 +165,6 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
         if ($this->container['deletedAt'] === null) {
             $invalidProperties[] = "'deletedAt' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -179,6 +179,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets deletedAt
      *
@@ -192,7 +193,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets deletedAt
      *
-     * @param \DateTime $deletedAt date of deletion (ISO-8601 format)
+     * @param \DateTime $deletedAt Date of deletion (ISO-8601 format).
      *
      * @return self
      */
@@ -205,9 +206,9 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -217,7 +218,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -246,7 +247,7 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -257,11 +258,10 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -291,4 +291,5 @@ class DeleteSourceResponse implements ModelInterface, ArrayAccess, \JsonSerializ
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

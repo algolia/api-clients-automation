@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * BatchDictionaryEntries Class Doc Comment
  *
  * @category Class
  * @description The &#x60;batchDictionaryEntries&#x60; requests.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -34,7 +33,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
       */
     protected static $openAPITypes = [
         'clearExistingDictionaryEntries' => 'bool',
-        'requests' => '\Algolia\AlgoliaSearch\Model\BatchDictionaryEntriesRequest[]',
+        'requests' => '\Algolia\AlgoliaSearch\Model\BatchDictionaryEntriesRequest[]'
     ];
 
     /**
@@ -46,7 +45,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
       */
     protected static $openAPIFormats = [
         'clearExistingDictionaryEntries' => null,
-        'requests' => null,
+        'requests' => null
     ];
 
     /**
@@ -77,7 +76,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $attributeMap = [
         'clearExistingDictionaryEntries' => 'clearExistingDictionaryEntries',
-        'requests' => 'requests',
+        'requests' => 'requests'
     ];
 
     /**
@@ -87,7 +86,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $setters = [
         'clearExistingDictionaryEntries' => 'setClearExistingDictionaryEntries',
-        'requests' => 'setRequests',
+        'requests' => 'setRequests'
     ];
 
     /**
@@ -97,7 +96,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $getters = [
         'clearExistingDictionaryEntries' => 'getClearExistingDictionaryEntries',
-        'requests' => 'getRequests',
+        'requests' => 'getRequests'
     ];
 
     /**
@@ -141,6 +140,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -172,7 +172,6 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
         if ($this->container['requests'] === null) {
             $invalidProperties[] = "'requests' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -187,6 +186,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets clearExistingDictionaryEntries
      *
@@ -200,7 +200,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets clearExistingDictionaryEntries
      *
-     * @param bool|null $clearExistingDictionaryEntries when `true`, start the batch by removing all the custom entries from the dictionary
+     * @param bool|null $clearExistingDictionaryEntries When `true`, start the batch by removing all the custom entries from the dictionary.
      *
      * @return self
      */
@@ -237,9 +237,9 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -249,7 +249,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -278,7 +278,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -289,11 +289,10 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -323,4 +322,5 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

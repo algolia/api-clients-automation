@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * UpdatedAtWithObjectIdResponse Class Doc Comment
  *
  * @category Class
  * @description The response with a taskID, an objectID and an updatedAt timestamp.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -35,7 +34,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     protected static $openAPITypes = [
         'taskID' => 'int',
         'updatedAt' => '\DateTime',
-        'objectID' => 'string',
+        'objectID' => 'string'
     ];
 
     /**
@@ -48,7 +47,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     protected static $openAPIFormats = [
         'taskID' => null,
         'updatedAt' => 'date-time',
-        'objectID' => null,
+        'objectID' => null
     ];
 
     /**
@@ -80,7 +79,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     protected static $attributeMap = [
         'taskID' => 'taskID',
         'updatedAt' => 'updatedAt',
-        'objectID' => 'objectID',
+        'objectID' => 'objectID'
     ];
 
     /**
@@ -91,7 +90,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     protected static $setters = [
         'taskID' => 'setTaskID',
         'updatedAt' => 'setUpdatedAt',
-        'objectID' => 'setObjectID',
+        'objectID' => 'setObjectID'
     ];
 
     /**
@@ -102,7 +101,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     protected static $getters = [
         'taskID' => 'getTaskID',
         'updatedAt' => 'getUpdatedAt',
-        'objectID' => 'getObjectID',
+        'objectID' => 'getObjectID'
     ];
 
     /**
@@ -145,6 +144,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     {
         return self::$openAPIModelName;
     }
+
 
     /**
      * Associative array for storing property values
@@ -189,6 +189,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets taskID
      *
@@ -202,7 +203,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets taskID
      *
-     * @param int|null $taskID taskID of the indexing task to wait for
+     * @param int|null $taskID taskID of the indexing task to wait for.
      *
      * @return self
      */
@@ -226,7 +227,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets updatedAt
      *
-     * @param \DateTime|null $updatedAt date of last update (ISO-8601 format)
+     * @param \DateTime|null $updatedAt Date of last update (ISO-8601 format).
      *
      * @return self
      */
@@ -250,7 +251,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets objectID
      *
-     * @param string|null $objectID unique identifier of the object
+     * @param string|null $objectID Unique identifier of the object.
      *
      * @return self
      */
@@ -263,9 +264,9 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -275,7 +276,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -304,7 +305,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -315,11 +316,10 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -349,4 +349,5 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

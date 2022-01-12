@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SearchForFacetValuesResponseFacetHits Class Doc Comment
@@ -33,7 +33,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     protected static $openAPITypes = [
         'value' => 'string',
         'highlighted' => 'string',
-        'count' => 'int',
+        'count' => 'int'
     ];
 
     /**
@@ -46,7 +46,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     protected static $openAPIFormats = [
         'value' => null,
         'highlighted' => null,
-        'count' => null,
+        'count' => null
     ];
 
     /**
@@ -78,7 +78,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     protected static $attributeMap = [
         'value' => 'value',
         'highlighted' => 'highlighted',
-        'count' => 'count',
+        'count' => 'count'
     ];
 
     /**
@@ -89,7 +89,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     protected static $setters = [
         'value' => 'setValue',
         'highlighted' => 'setHighlighted',
-        'count' => 'setCount',
+        'count' => 'setCount'
     ];
 
     /**
@@ -100,7 +100,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     protected static $getters = [
         'value' => 'getValue',
         'highlighted' => 'getHighlighted',
-        'count' => 'getCount',
+        'count' => 'getCount'
     ];
 
     /**
@@ -144,6 +144,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -182,7 +183,6 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
         if ($this->container['count'] === null) {
             $invalidProperties[] = "'count' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -197,6 +197,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets value
      *
@@ -210,7 +211,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     /**
      * Sets value
      *
-     * @param string $value raw value of the facet
+     * @param string $value Raw value of the facet.
      *
      * @return self
      */
@@ -234,7 +235,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     /**
      * Sets highlighted
      *
-     * @param string $highlighted markup text with occurrences highlighted
+     * @param string $highlighted Markup text with occurrences highlighted.
      *
      * @return self
      */
@@ -271,9 +272,9 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -283,7 +284,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -312,7 +313,7 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -323,11 +324,10 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -357,4 +357,5 @@ class SearchForFacetValuesResponseFacetHits implements ModelInterface, ArrayAcce
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SearchUserIdsResponse Class Doc Comment
  *
  * @category Class
  * @description userIDs data.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -37,7 +36,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         'nbHits' => 'int',
         'page' => 'int',
         'hitsPerPage' => 'int',
-        'updatedAt' => '\DateTime',
+        'updatedAt' => '\DateTime'
     ];
 
     /**
@@ -52,7 +51,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         'nbHits' => null,
         'page' => null,
         'hitsPerPage' => null,
-        'updatedAt' => 'date-time',
+        'updatedAt' => 'date-time'
     ];
 
     /**
@@ -86,7 +85,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         'nbHits' => 'nbHits',
         'page' => 'page',
         'hitsPerPage' => 'hitsPerPage',
-        'updatedAt' => 'updatedAt',
+        'updatedAt' => 'updatedAt'
     ];
 
     /**
@@ -99,7 +98,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         'nbHits' => 'setNbHits',
         'page' => 'setPage',
         'hitsPerPage' => 'setHitsPerPage',
-        'updatedAt' => 'setUpdatedAt',
+        'updatedAt' => 'setUpdatedAt'
     ];
 
     /**
@@ -112,7 +111,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         'nbHits' => 'getNbHits',
         'page' => 'getPage',
         'hitsPerPage' => 'getHitsPerPage',
-        'updatedAt' => 'getUpdatedAt',
+        'updatedAt' => 'getUpdatedAt'
     ];
 
     /**
@@ -155,6 +154,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     {
         return self::$openAPIModelName;
     }
+
 
     /**
      * Associative array for storing property values
@@ -202,7 +202,6 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         if ($this->container['updatedAt'] === null) {
             $invalidProperties[] = "'updatedAt' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -217,6 +216,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets hits
      *
@@ -230,7 +230,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\SearchUserIdsResponseHits[] $hits list of user object matching the query
+     * @param \Algolia\AlgoliaSearch\Model\SearchUserIdsResponseHits[] $hits List of user object matching the query.
      *
      * @return self
      */
@@ -254,7 +254,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets nbHits
      *
-     * @param int $nbHits number of hits that the search query matched
+     * @param int $nbHits Number of hits that the search query matched.
      *
      * @return self
      */
@@ -278,7 +278,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets page
      *
-     * @param int $page specify the page to retrieve
+     * @param int $page Specify the page to retrieve.
      *
      * @return self
      */
@@ -326,7 +326,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param \DateTime $updatedAt Date of last update (ISO-8601 format).
      *
      * @return self
      */
@@ -339,9 +339,9 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -351,7 +351,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -380,7 +380,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -391,11 +391,10 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -425,4 +424,5 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * MultipleQueriesResponse Class Doc Comment
@@ -31,7 +31,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
       * @var string[]
       */
     protected static $openAPITypes = [
-        'results' => '\Algolia\AlgoliaSearch\Model\SearchResponse[]',
+        'results' => '\Algolia\AlgoliaSearch\Model\SearchResponse[]'
     ];
 
     /**
@@ -42,7 +42,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'results' => null,
+        'results' => null
     ];
 
     /**
@@ -72,7 +72,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $attributeMap = [
-        'results' => 'results',
+        'results' => 'results'
     ];
 
     /**
@@ -81,7 +81,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $setters = [
-        'results' => 'setResults',
+        'results' => 'setResults'
     ];
 
     /**
@@ -90,7 +90,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $getters = [
-        'results' => 'getResults',
+        'results' => 'getResults'
     ];
 
     /**
@@ -134,6 +134,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -175,6 +176,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets results
      *
@@ -201,9 +203,9 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -213,7 +215,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -242,7 +244,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -253,11 +255,10 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -287,4 +288,5 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

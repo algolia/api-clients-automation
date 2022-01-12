@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SearchUserIdsObject Class Doc Comment
  *
  * @category Class
  * @description OK
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -36,7 +35,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         'query' => 'string',
         'clusterName' => 'string',
         'page' => 'int',
-        'hitsPerPage' => 'int',
+        'hitsPerPage' => 'int'
     ];
 
     /**
@@ -50,7 +49,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         'query' => null,
         'clusterName' => null,
         'page' => null,
-        'hitsPerPage' => null,
+        'hitsPerPage' => null
     ];
 
     /**
@@ -83,7 +82,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         'query' => 'query',
         'clusterName' => 'clusterName',
         'page' => 'page',
-        'hitsPerPage' => 'hitsPerPage',
+        'hitsPerPage' => 'hitsPerPage'
     ];
 
     /**
@@ -95,7 +94,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         'query' => 'setQuery',
         'clusterName' => 'setClusterName',
         'page' => 'setPage',
-        'hitsPerPage' => 'setHitsPerPage',
+        'hitsPerPage' => 'setHitsPerPage'
     ];
 
     /**
@@ -107,7 +106,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         'query' => 'getQuery',
         'clusterName' => 'getClusterName',
         'page' => 'getPage',
-        'hitsPerPage' => 'getHitsPerPage',
+        'hitsPerPage' => 'getHitsPerPage'
     ];
 
     /**
@@ -151,6 +150,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -184,7 +184,6 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         if ($this->container['query'] === null) {
             $invalidProperties[] = "'query' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -198,6 +197,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         return count($this->listInvalidProperties()) === 0;
     }
+
 
     /**
      * Gets query
@@ -236,7 +236,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets clusterName
      *
-     * @param string|null $clusterName name of the cluster
+     * @param string|null $clusterName Name of the cluster.
      *
      * @return self
      */
@@ -260,7 +260,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets page
      *
-     * @param int|null $page specify the page to retrieve
+     * @param int|null $page Specify the page to retrieve.
      *
      * @return self
      */
@@ -284,7 +284,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets hitsPerPage
      *
-     * @param int|null $hitsPerPage set the number of hits per page
+     * @param int|null $hitsPerPage Set the number of hits per page.
      *
      * @return self
      */
@@ -297,9 +297,9 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -309,7 +309,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -338,7 +338,7 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -349,11 +349,10 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -383,4 +382,5 @@ class SearchUserIdsObject implements ModelInterface, ArrayAccess, \JsonSerializa
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

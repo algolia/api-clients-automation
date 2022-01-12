@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * StandardEntries Class Doc Comment
  *
  * @category Class
  * @description Map of language ISO code supported by the dictionary (e.g., \&quot;en\&quot; for English) to a boolean value.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -35,7 +34,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'plurals' => 'array<string,bool>',
         'stopwords' => 'array<string,bool>',
-        'compounds' => 'array<string,bool>',
+        'compounds' => 'array<string,bool>'
     ];
 
     /**
@@ -48,7 +47,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPIFormats = [
         'plurals' => null,
         'stopwords' => null,
-        'compounds' => null,
+        'compounds' => null
     ];
 
     /**
@@ -80,7 +79,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $attributeMap = [
         'plurals' => 'plurals',
         'stopwords' => 'stopwords',
-        'compounds' => 'compounds',
+        'compounds' => 'compounds'
     ];
 
     /**
@@ -91,7 +90,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $setters = [
         'plurals' => 'setPlurals',
         'stopwords' => 'setStopwords',
-        'compounds' => 'setCompounds',
+        'compounds' => 'setCompounds'
     ];
 
     /**
@@ -102,7 +101,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $getters = [
         'plurals' => 'getPlurals',
         'stopwords' => 'getStopwords',
-        'compounds' => 'getCompounds',
+        'compounds' => 'getCompounds'
     ];
 
     /**
@@ -145,6 +144,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIModelName;
     }
+
 
     /**
      * Associative array for storing property values
@@ -189,6 +189,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets plurals
      *
@@ -202,7 +203,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets plurals
      *
-     * @param array<string,bool>|null $plurals language ISO code
+     * @param array<string,bool>|null $plurals Language ISO code.
      *
      * @return self
      */
@@ -226,7 +227,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets stopwords
      *
-     * @param array<string,bool>|null $stopwords language ISO code
+     * @param array<string,bool>|null $stopwords Language ISO code.
      *
      * @return self
      */
@@ -250,7 +251,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets compounds
      *
-     * @param array<string,bool>|null $compounds language ISO code
+     * @param array<string,bool>|null $compounds Language ISO code.
      *
      * @return self
      */
@@ -263,9 +264,9 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -275,7 +276,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -304,7 +305,7 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -315,11 +316,10 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -349,4 +349,5 @@ class StandardEntries implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

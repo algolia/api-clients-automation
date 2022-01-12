@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * MultipleGetObjectsObject Class Doc Comment
  *
  * @category Class
  * @description GetObject operation on an index.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -35,7 +34,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     protected static $openAPITypes = [
         'attributesToRetrieve' => 'string[]',
         'objectID' => 'string',
-        'indexName' => 'string',
+        'indexName' => 'string'
     ];
 
     /**
@@ -48,7 +47,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     protected static $openAPIFormats = [
         'attributesToRetrieve' => null,
         'objectID' => null,
-        'indexName' => null,
+        'indexName' => null
     ];
 
     /**
@@ -80,7 +79,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     protected static $attributeMap = [
         'attributesToRetrieve' => 'attributesToRetrieve',
         'objectID' => 'objectID',
-        'indexName' => 'indexName',
+        'indexName' => 'indexName'
     ];
 
     /**
@@ -91,7 +90,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     protected static $setters = [
         'attributesToRetrieve' => 'setAttributesToRetrieve',
         'objectID' => 'setObjectID',
-        'indexName' => 'setIndexName',
+        'indexName' => 'setIndexName'
     ];
 
     /**
@@ -102,7 +101,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     protected static $getters = [
         'attributesToRetrieve' => 'getAttributesToRetrieve',
         'objectID' => 'getObjectID',
-        'indexName' => 'getIndexName',
+        'indexName' => 'getIndexName'
     ];
 
     /**
@@ -146,6 +145,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -181,7 +181,6 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
         if ($this->container['indexName'] === null) {
             $invalidProperties[] = "'indexName' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -195,6 +194,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     {
         return count($this->listInvalidProperties()) === 0;
     }
+
 
     /**
      * Gets attributesToRetrieve
@@ -233,7 +233,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets objectID
      *
-     * @param string $objectID ID of the object within that index
+     * @param string $objectID ID of the object within that index.
      *
      * @return self
      */
@@ -257,7 +257,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets indexName
      *
-     * @param string $indexName name of the index containing the object
+     * @param string $indexName name of the index containing the object.
      *
      * @return self
      */
@@ -270,9 +270,9 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -282,7 +282,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -311,7 +311,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -322,11 +322,10 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -356,4 +355,5 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * GetObjectsResponse Class Doc Comment
@@ -31,7 +31,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
       * @var string[]
       */
     protected static $openAPITypes = [
-        'results' => 'object[]',
+        'results' => 'object[]'
     ];
 
     /**
@@ -42,7 +42,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'results' => null,
+        'results' => null
     ];
 
     /**
@@ -72,7 +72,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $attributeMap = [
-        'results' => 'results',
+        'results' => 'results'
     ];
 
     /**
@@ -81,7 +81,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $setters = [
-        'results' => 'setResults',
+        'results' => 'setResults'
     ];
 
     /**
@@ -90,7 +90,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $getters = [
-        'results' => 'getResults',
+        'results' => 'getResults'
     ];
 
     /**
@@ -134,6 +134,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -175,6 +176,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets results
      *
@@ -188,7 +190,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets results
      *
-     * @param object[]|null $results list of results fetched
+     * @param object[]|null $results List of results fetched.
      *
      * @return self
      */
@@ -201,9 +203,9 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -213,7 +215,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -242,7 +244,7 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -253,11 +255,10 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -287,4 +288,5 @@ class GetObjectsResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

@@ -2,15 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * Rule Class Doc Comment
  *
  * @category Class
  * @description Rule object.
- *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -38,7 +37,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         'consequence' => '\Algolia\AlgoliaSearch\Model\Consequence',
         'description' => 'string',
         'enabled' => 'bool',
-        'validity' => '\Algolia\AlgoliaSearch\Model\TimeRange[]',
+        'validity' => '\Algolia\AlgoliaSearch\Model\TimeRange[]'
     ];
 
     /**
@@ -54,7 +53,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         'consequence' => null,
         'description' => null,
         'enabled' => null,
-        'validity' => null,
+        'validity' => null
     ];
 
     /**
@@ -89,7 +88,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         'consequence' => 'consequence',
         'description' => 'description',
         'enabled' => 'enabled',
-        'validity' => 'validity',
+        'validity' => 'validity'
     ];
 
     /**
@@ -103,7 +102,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         'consequence' => 'setConsequence',
         'description' => 'setDescription',
         'enabled' => 'setEnabled',
-        'validity' => 'setValidity',
+        'validity' => 'setValidity'
     ];
 
     /**
@@ -117,7 +116,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         'consequence' => 'getConsequence',
         'description' => 'getDescription',
         'enabled' => 'getEnabled',
-        'validity' => 'getValidity',
+        'validity' => 'getValidity'
     ];
 
     /**
@@ -161,6 +160,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -199,7 +199,6 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['consequence'] === null) {
             $invalidProperties[] = "'consequence' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -214,6 +213,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets objectID
      *
@@ -227,7 +227,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets objectID
      *
-     * @param string $objectID unique identifier of the object
+     * @param string $objectID Unique identifier of the object.
      *
      * @return self
      */
@@ -360,9 +360,9 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -372,7 +372,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -401,7 +401,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -412,11 +412,10 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -446,4 +445,5 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

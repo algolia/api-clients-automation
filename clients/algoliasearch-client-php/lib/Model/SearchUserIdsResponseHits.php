@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * SearchUserIdsResponseHits Class Doc Comment
@@ -36,7 +36,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
         'nbRecords' => 'int',
         'dataSize' => 'int',
         'objectID' => 'string',
-        'highlightResult' => '\Algolia\AlgoliaSearch\Model\SearchUserIdsResponseHighlightResult',
+        'highlightResult' => '\Algolia\AlgoliaSearch\Model\SearchUserIdsResponseHighlightResult'
     ];
 
     /**
@@ -52,7 +52,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
         'nbRecords' => null,
         'dataSize' => null,
         'objectID' => null,
-        'highlightResult' => null,
+        'highlightResult' => null
     ];
 
     /**
@@ -87,7 +87,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
         'nbRecords' => 'nbRecords',
         'dataSize' => 'dataSize',
         'objectID' => 'objectID',
-        'highlightResult' => '_highlightResult',
+        'highlightResult' => '_highlightResult'
     ];
 
     /**
@@ -101,7 +101,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
         'nbRecords' => 'setNbRecords',
         'dataSize' => 'setDataSize',
         'objectID' => 'setObjectID',
-        'highlightResult' => 'setHighlightResult',
+        'highlightResult' => 'setHighlightResult'
     ];
 
     /**
@@ -115,7 +115,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
         'nbRecords' => 'getNbRecords',
         'dataSize' => 'getDataSize',
         'objectID' => 'getObjectID',
-        'highlightResult' => 'getHighlightResult',
+        'highlightResult' => 'getHighlightResult'
     ];
 
     /**
@@ -158,6 +158,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     {
         return self::$openAPIModelName;
     }
+
 
     /**
      * Associative array for storing property values
@@ -209,7 +210,6 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
         if ($this->container['highlightResult'] === null) {
             $invalidProperties[] = "'highlightResult' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -223,6 +223,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     {
         return count($this->listInvalidProperties()) === 0;
     }
+
 
     /**
      * Gets userID
@@ -261,7 +262,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets clusterName
      *
-     * @param string $clusterName name of the cluster
+     * @param string $clusterName Name of the cluster.
      *
      * @return self
      */
@@ -285,7 +286,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets nbRecords
      *
-     * @param int $nbRecords number of records in the cluster
+     * @param int $nbRecords Number of records in the cluster.
      *
      * @return self
      */
@@ -309,7 +310,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets dataSize
      *
-     * @param int $dataSize data size taken by all the users assigned to the cluster
+     * @param int $dataSize Data size taken by all the users assigned to the cluster.
      *
      * @return self
      */
@@ -370,9 +371,9 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -382,7 +383,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -411,7 +412,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -422,11 +423,10 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -456,4 +456,5 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

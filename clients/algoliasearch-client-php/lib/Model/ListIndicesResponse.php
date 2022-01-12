@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * ListIndicesResponse Class Doc Comment
@@ -32,7 +32,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       */
     protected static $openAPITypes = [
         'items' => '\Algolia\AlgoliaSearch\Model\Index[]',
-        'nbPages' => 'int',
+        'nbPages' => 'int'
     ];
 
     /**
@@ -44,7 +44,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       */
     protected static $openAPIFormats = [
         'items' => null,
-        'nbPages' => null,
+        'nbPages' => null
     ];
 
     /**
@@ -75,7 +75,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $attributeMap = [
         'items' => 'items',
-        'nbPages' => 'nbPages',
+        'nbPages' => 'nbPages'
     ];
 
     /**
@@ -85,7 +85,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $setters = [
         'items' => 'setItems',
-        'nbPages' => 'setNbPages',
+        'nbPages' => 'setNbPages'
     ];
 
     /**
@@ -95,7 +95,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $getters = [
         'items' => 'getItems',
-        'nbPages' => 'getNbPages',
+        'nbPages' => 'getNbPages'
     ];
 
     /**
@@ -139,6 +139,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -181,6 +182,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets items
      *
@@ -194,7 +196,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets items
      *
-     * @param \Algolia\AlgoliaSearch\Model\Index[]|null $items list of the fetched indices
+     * @param \Algolia\AlgoliaSearch\Model\Index[]|null $items List of the fetched indices.
      *
      * @return self
      */
@@ -218,7 +220,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets nbPages
      *
-     * @param int|null $nbPages number of pages
+     * @param int|null $nbPages Number of pages.
      *
      * @return self
      */
@@ -231,9 +233,9 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -243,7 +245,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -272,7 +274,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -283,11 +285,10 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -317,4 +318,5 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

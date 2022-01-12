@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * MultipleQueries Class Doc Comment
@@ -35,7 +35,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         'query' => 'string',
         'type' => 'string',
         'facet' => 'string',
-        'params' => 'string',
+        'params' => 'string'
     ];
 
     /**
@@ -50,7 +50,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         'query' => null,
         'type' => null,
         'facet' => null,
-        'params' => null,
+        'params' => null
     ];
 
     /**
@@ -84,7 +84,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         'query' => 'query',
         'type' => 'type',
         'facet' => 'facet',
-        'params' => 'params',
+        'params' => 'params'
     ];
 
     /**
@@ -97,7 +97,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         'query' => 'setQuery',
         'type' => 'setType',
         'facet' => 'setFacet',
-        'params' => 'setParams',
+        'params' => 'setParams'
     ];
 
     /**
@@ -110,7 +110,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         'query' => 'getQuery',
         'type' => 'getType',
         'facet' => 'getFacet',
-        'params' => 'getParams',
+        'params' => 'getParams'
     ];
 
     /**
@@ -227,6 +227,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets indexName
      *
@@ -240,7 +241,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets indexName
      *
-     * @param string $indexName the Algolia index name
+     * @param string $indexName The Algolia index name.
      *
      * @return self
      */
@@ -264,7 +265,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets query
      *
-     * @param string|null $query the text to search in the index
+     * @param string|null $query The text to search in the index.
      *
      * @return self
      */
@@ -288,7 +289,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets type
      *
-     * @param string|null $type perform a search query with `default`, will search for facet values if `facet` is given
+     * @param string|null $type Perform a search query with `default`, will search for facet values if `facet` is given.
      *
      * @return self
      */
@@ -322,7 +323,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets facet
      *
-     * @param string|null $facet the `facet` name
+     * @param string|null $facet The `facet` name.
      *
      * @return self
      */
@@ -346,7 +347,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets params
      *
-     * @param string|null $params a query string of search parameters
+     * @param string|null $params A query string of search parameters.
      *
      * @return self
      */
@@ -359,9 +360,9 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -371,7 +372,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -400,7 +401,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -411,11 +412,10 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -445,4 +445,5 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

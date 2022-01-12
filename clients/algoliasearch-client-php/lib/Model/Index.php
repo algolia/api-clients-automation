@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
+use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * Index Class Doc Comment
@@ -41,7 +41,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         'numberOfPendingTask' => 'int',
         'pendingTask' => 'bool',
         'primary' => 'string',
-        'replicas' => 'string[]',
+        'replicas' => 'string[]'
     ];
 
     /**
@@ -62,7 +62,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         'numberOfPendingTask' => null,
         'pendingTask' => null,
         'primary' => null,
-        'replicas' => null,
+        'replicas' => null
     ];
 
     /**
@@ -102,7 +102,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         'numberOfPendingTask' => 'numberOfPendingTask',
         'pendingTask' => 'pendingTask',
         'primary' => 'primary',
-        'replicas' => 'replicas',
+        'replicas' => 'replicas'
     ];
 
     /**
@@ -121,7 +121,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         'numberOfPendingTask' => 'setNumberOfPendingTask',
         'pendingTask' => 'setPendingTask',
         'primary' => 'setPrimary',
-        'replicas' => 'setReplicas',
+        'replicas' => 'setReplicas'
     ];
 
     /**
@@ -140,7 +140,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         'numberOfPendingTask' => 'getNumberOfPendingTask',
         'pendingTask' => 'getPendingTask',
         'primary' => 'getPrimary',
-        'replicas' => 'getReplicas',
+        'replicas' => 'getReplicas'
     ];
 
     /**
@@ -183,6 +183,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIModelName;
     }
+
 
     /**
      * Associative array for storing property values
@@ -245,7 +246,6 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['pendingTask'] === null) {
             $invalidProperties[] = "'pendingTask' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -260,6 +260,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets name
      *
@@ -273,7 +274,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets name
      *
-     * @param string $name index name
+     * @param string $name Index name.
      *
      * @return self
      */
@@ -321,7 +322,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param \DateTime $updatedAt Date of last update (ISO-8601 format).
      *
      * @return self
      */
@@ -345,7 +346,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets entries
      *
-     * @param int $entries number of records contained in the index
+     * @param int $entries Number of records contained in the index.
      *
      * @return self
      */
@@ -369,7 +370,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets dataSize
      *
-     * @param int $dataSize number of bytes of the index in minified format
+     * @param int $dataSize Number of bytes of the index in minified format.
      *
      * @return self
      */
@@ -393,7 +394,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets fileSize
      *
-     * @param int $fileSize number of bytes of the index binary file
+     * @param int $fileSize Number of bytes of the index binary file.
      *
      * @return self
      */
@@ -526,9 +527,9 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
-     * @return bool
+     * @return boolean
      */
     public function offsetExists($offset)
     {
@@ -538,7 +539,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return mixed|null
      */
@@ -567,7 +568,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param int $offset Offset
+     * @param integer $offset Offset
      *
      * @return void
      */
@@ -578,11 +579,10 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource.
      */
     public function jsonSerialize()
     {
@@ -612,4 +612,5 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 
