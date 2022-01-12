@@ -1,5 +1,6 @@
 ABTests:
   type: array
+  description: List of A/B tests.
   items:
     $ref: '#/ABTest'
 

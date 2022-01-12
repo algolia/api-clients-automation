@@ -74,7 +74,7 @@ export class AnalyticsApi {
     });
   }
 
-  getDefaultHosts(region: 'de' | 'us'): Host[] {
+  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
     return [
       {
         url: `analytics.${region}.algolia.com`,

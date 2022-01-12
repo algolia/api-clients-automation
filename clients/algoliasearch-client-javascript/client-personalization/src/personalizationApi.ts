@@ -38,7 +38,7 @@ export class PersonalizationApi {
   constructor(
     appId: string,
     apiKey: string,
-    region?: string,
+    region: 'eu' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     this.setApiKey(PersonalizationApiKeys.appId, appId);
@@ -59,7 +59,7 @@ export class PersonalizationApi {
     });
   }
 
-  getDefaultHosts(region: string = 'us'): Host[] {
+  getDefaultHosts(region: 'eu' | 'us' = 'us'): Host[] {
     return [
       {
         url: `personalization.${region}.algolia.com`,

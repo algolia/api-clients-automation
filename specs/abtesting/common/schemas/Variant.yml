@@ -1,5 +1,6 @@
 variants:
   type: array
+  description: List of A/B test variant.
   items:
     $ref: '#/variant'
 

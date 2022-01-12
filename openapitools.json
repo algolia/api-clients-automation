@@ -63,7 +63,8 @@
 
           "packageName": "@algolia/client-personalization",
           "hasRegionalHost": true,
-          "isPersonalizationHost": true
+          "isEuHost": true,
+          "host": "personalization"
         }
       },
       "javascript-analytics": {
@@ -84,7 +85,8 @@
 
           "packageName": "@algolia/client-analytics",
           "hasRegionalHost": true,
-          "isAnalyticsHost": true
+          "isDeHost": true,
+          "host": "analytics"
         }
       },
       "javascript-insights": {
@@ -104,7 +106,7 @@
           "npmVersion": "5.0.0",
 
           "packageName": "@algolia/client-insights",
-          "isInsightsHost": true
+          "host": "insights"
         }
       },
       "javascript-abtesting": {
@@ -125,7 +127,8 @@
 
           "packageName": "@algolia/client-abtesting",
           "hasRegionalHost": true,
-          "isAnalyticsHost": true
+          "isDeHost": true,
+          "host": "analytics"
         }
       },
       "javascript-query-suggestions": {
@@ -146,7 +149,8 @@
 
           "packageName": "@algolia/client-query-suggestions",
           "hasRegionalHost": true,
-          "isQuerySuggestionsHost": true
+          "isEuHost": true,
+          "host": "query-suggestions"
         }
       },
       "java-search": {

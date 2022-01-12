@@ -58,7 +58,7 @@ export class InsightsApi {
 
   getDefaultHosts(): Host[] {
     return [
-      { url: `insights.algolia.io`, accept: 'readWrite', protocol: 'https' },
+      { url: 'insights.algolia.io', accept: 'readWrite', protocol: 'https' },
     ];
   }
 

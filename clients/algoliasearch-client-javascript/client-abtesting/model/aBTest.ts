@@ -29,5 +29,8 @@ export type ABTest = {
    * Status of the A/B test.
    */
   status: string;
+  /**
+   * List of A/B test variant.
+   */
   variants: Variant[];
 };

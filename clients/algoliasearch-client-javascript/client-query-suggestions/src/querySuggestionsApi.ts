@@ -61,7 +61,7 @@ export class QuerySuggestionsApi {
     });
   }
 
-  getDefaultHosts(region: string = 'us'): Host[] {
+  getDefaultHosts(region: 'eu' | 'us' = 'us'): Host[] {
     return [
       {
         url: `query-suggestions.${region}.algolia.com`,

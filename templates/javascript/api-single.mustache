@@ -54,15 +54,7 @@ export class {{classname}} {
       appId: string,
       apiKey: string,
       {{#hasRegionalHost}}
-        {{#isPersonalizationHost}}
-            region?: string,
-        {{/isPersonalizationHost}}
-        {{#isAnalyticsHost}}
-            region: 'de' | 'us',
-        {{/isAnalyticsHost}}
-        {{#isQuerySuggestionsHost}}
-            region: 'eu' | 'us',
-        {{/isQuerySuggestionsHost}}
+        region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us',
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
@@ -104,29 +96,19 @@ export class {{classname}} {
   }
   {{/isSearchHost}}
 
-  {{#isPersonalizationHost}}
-  public getDefaultHosts(region: string = 'us'): Host[] {
-    return [{ url: `personalization.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isPersonalizationHost}}
+  {{^isSearchHost}}
+    {{#hasRegionalHost}}
+    public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us' = 'us'): Host[] {
+      return [{ url: `{{{host}}}.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
+    }
+    {{/hasRegionalHost}}
 
-  {{#isAnalyticsHost}}
-  public getDefaultHosts(region: 'de' | 'us'): Host[] {
-    return [{ url: `analytics.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isAnalyticsHost}}
-
-  {{#isInsightsHost}}
-  public getDefaultHosts(): Host[] {
-    return [{ url: `insights.algolia.io`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isInsightsHost}}
-
-  {{#isQuerySuggestionsHost}}
-  public getDefaultHosts(region: string = 'us'): Host[] {
-    return [{ url: `query-suggestions.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isQuerySuggestionsHost}}
+    {{^hasRegionalHost}}
+    public getDefaultHosts(): Host[] {
+      return [{ url: '{{{host}}}.algolia.io', accept: 'readWrite', protocol: 'https' }];
+    }
+    {{/hasRegionalHost}}
+  {{/isSearchHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);
