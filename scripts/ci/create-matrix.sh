@@ -32,11 +32,11 @@ done
 if [[ $(echo $to_test | jq '.client | length') == 0 ]]; then
     # client cannot be empty or the matrix will fail
     matrix='{"client":["no-run"]}'
-    run="false"
+    run=0
 else
     matrix=$(echo $to_test | jq -c)
-    run="true"
+    run=1
 fi
 
 echo $matrix
-echo $run
+exit $run
