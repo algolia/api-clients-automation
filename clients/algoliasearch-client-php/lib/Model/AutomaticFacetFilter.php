@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * AutomaticFacetFilter Class Doc Comment
  *
  * @category Class
  * @description Automatic facet Filter.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -34,7 +35,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $openAPITypes = [
         'facet' => 'string',
         'score' => 'int',
-        'disjunctive' => 'bool'
+        'disjunctive' => 'bool',
     ];
 
     /**
@@ -47,7 +48,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $openAPIFormats = [
         'facet' => null,
         'score' => null,
-        'disjunctive' => null
+        'disjunctive' => null,
     ];
 
     /**
@@ -79,7 +80,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $attributeMap = [
         'facet' => 'facet',
         'score' => 'score',
-        'disjunctive' => 'disjunctive'
+        'disjunctive' => 'disjunctive',
     ];
 
     /**
@@ -90,7 +91,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $setters = [
         'facet' => 'setFacet',
         'score' => 'setScore',
-        'disjunctive' => 'setDisjunctive'
+        'disjunctive' => 'setDisjunctive',
     ];
 
     /**
@@ -101,7 +102,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     protected static $getters = [
         'facet' => 'getFacet',
         'score' => 'getScore',
-        'disjunctive' => 'getDisjunctive'
+        'disjunctive' => 'getDisjunctive',
     ];
 
     /**
@@ -145,7 +146,6 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -178,6 +178,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
         if ($this->container['facet'] === null) {
             $invalidProperties[] = "'facet' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -191,7 +192,6 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     {
         return count($this->listInvalidProperties()) === 0;
     }
-
 
     /**
      * Gets facet
@@ -254,7 +254,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets disjunctive
      *
-     * @param bool|null $disjunctive Whether the filter is disjunctive (true) or conjunctive (false).
+     * @param bool|null $disjunctive whether the filter is disjunctive (true) or conjunctive (false)
      *
      * @return self
      */
@@ -267,9 +267,9 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -279,7 +279,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -308,7 +308,7 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -319,10 +319,11 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -352,5 +353,4 @@ class AutomaticFacetFilter implements ModelInterface, ArrayAccess, \JsonSerializ
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

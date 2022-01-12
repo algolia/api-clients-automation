@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * GetLogsResponseLogs Class Doc Comment
@@ -45,7 +45,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         'index' => 'string',
         'queryParams' => 'string',
         'queryNbHits' => 'string',
-        'innerQueries' => '\Algolia\AlgoliaSearch\Model\GetLogsResponseInnerQueries[]'
+        'innerQueries' => '\Algolia\AlgoliaSearch\Model\GetLogsResponseInnerQueries[]',
     ];
 
     /**
@@ -70,7 +70,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         'index' => null,
         'queryParams' => null,
         'queryNbHits' => null,
-        'innerQueries' => null
+        'innerQueries' => null,
     ];
 
     /**
@@ -114,7 +114,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         'index' => 'index',
         'queryParams' => 'query_params',
         'queryNbHits' => 'query_nb_hits',
-        'innerQueries' => 'inner_queries'
+        'innerQueries' => 'inner_queries',
     ];
 
     /**
@@ -137,7 +137,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         'index' => 'setIndex',
         'queryParams' => 'setQueryParams',
         'queryNbHits' => 'setQueryNbHits',
-        'innerQueries' => 'setInnerQueries'
+        'innerQueries' => 'setInnerQueries',
     ];
 
     /**
@@ -160,7 +160,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         'index' => 'getIndex',
         'queryParams' => 'getQueryParams',
         'queryNbHits' => 'getQueryNbHits',
-        'innerQueries' => 'getInnerQueries'
+        'innerQueries' => 'getInnerQueries',
     ];
 
     /**
@@ -203,7 +203,6 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -279,6 +278,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         if ($this->container['processingTimeMs'] === null) {
             $invalidProperties[] = "'processingTimeMs' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -293,7 +293,6 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets timestamp
      *
@@ -307,7 +306,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets timestamp
      *
-     * @param string $timestamp Timestamp in ISO-8601 format.
+     * @param string $timestamp timestamp in ISO-8601 format
      *
      * @return self
      */
@@ -331,7 +330,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets method
      *
-     * @param string $method HTTP method of the perfomed request.
+     * @param string $method HTTP method of the perfomed request
      *
      * @return self
      */
@@ -355,7 +354,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets answerCode
      *
-     * @param string $answerCode HTTP response code.
+     * @param string $answerCode HTTP response code
      *
      * @return self
      */
@@ -427,7 +426,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets url
      *
-     * @param string $url Request URL.
+     * @param string $url request URL
      *
      * @return self
      */
@@ -451,7 +450,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets ip
      *
-     * @param string $ip IP of the client which perfomed the request.
+     * @param string $ip IP of the client which perfomed the request
      *
      * @return self
      */
@@ -475,7 +474,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets queryHeaders
      *
-     * @param string $queryHeaders Request Headers (API Key is obfuscated).
+     * @param string $queryHeaders request Headers (API Key is obfuscated)
      *
      * @return self
      */
@@ -499,7 +498,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets sha1
      *
-     * @param string $sha1 SHA1 signature of the log entry.
+     * @param string $sha1 SHA1 signature of the log entry
      *
      * @return self
      */
@@ -523,7 +522,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets nbApiCalls
      *
-     * @param string $nbApiCalls Number of API calls.
+     * @param string $nbApiCalls number of API calls
      *
      * @return self
      */
@@ -571,7 +570,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets index
      *
-     * @param string|null $index Index targeted by the query.
+     * @param string|null $index index targeted by the query
      *
      * @return self
      */
@@ -595,7 +594,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets queryParams
      *
-     * @param string|null $queryParams Query parameters sent with the request.
+     * @param string|null $queryParams query parameters sent with the request
      *
      * @return self
      */
@@ -619,7 +618,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets queryNbHits
      *
-     * @param string|null $queryNbHits Number of hits returned for the query.
+     * @param string|null $queryNbHits number of hits returned for the query
      *
      * @return self
      */
@@ -643,7 +642,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets innerQueries
      *
-     * @param \Algolia\AlgoliaSearch\Model\GetLogsResponseInnerQueries[]|null $innerQueries Array of all performed queries for the given request.
+     * @param \Algolia\AlgoliaSearch\Model\GetLogsResponseInnerQueries[]|null $innerQueries array of all performed queries for the given request
      *
      * @return self
      */
@@ -656,9 +655,9 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -668,7 +667,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -697,7 +696,7 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -708,10 +707,11 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -741,5 +741,4 @@ class GetLogsResponseLogs implements ModelInterface, ArrayAccess, \JsonSerializa
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

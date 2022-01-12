@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * BatchResponse Class Doc Comment
@@ -32,7 +32,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'taskID' => 'int',
-        'objectIDs' => 'string[]'
+        'objectIDs' => 'string[]',
     ];
 
     /**
@@ -44,7 +44,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'taskID' => null,
-        'objectIDs' => null
+        'objectIDs' => null,
     ];
 
     /**
@@ -75,7 +75,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'taskID' => 'taskID',
-        'objectIDs' => 'objectIDs'
+        'objectIDs' => 'objectIDs',
     ];
 
     /**
@@ -85,7 +85,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'taskID' => 'setTaskID',
-        'objectIDs' => 'setObjectIDs'
+        'objectIDs' => 'setObjectIDs',
     ];
 
     /**
@@ -95,7 +95,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'taskID' => 'getTaskID',
-        'objectIDs' => 'getObjectIDs'
+        'objectIDs' => 'getObjectIDs',
     ];
 
     /**
@@ -139,7 +139,6 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -182,7 +181,6 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets taskID
      *
@@ -196,7 +194,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets taskID
      *
-     * @param int|null $taskID taskID of the indexing task to wait for.
+     * @param int|null $taskID taskID of the indexing task to wait for
      *
      * @return self
      */
@@ -220,7 +218,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets objectIDs
      *
-     * @param string[]|null $objectIDs List of objectID.
+     * @param string[]|null $objectIDs list of objectID
      *
      * @return self
      */
@@ -233,9 +231,9 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -245,7 +243,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -274,7 +272,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -285,10 +283,11 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -318,5 +317,4 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * HighlightResult Class Doc Comment
  *
  * @category Class
  * @description Highlighted attributes.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -35,7 +36,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'value' => 'string',
         'matchLevel' => 'string',
         'matchedWords' => 'string[]',
-        'fullyHighlighted' => 'bool'
+        'fullyHighlighted' => 'bool',
     ];
 
     /**
@@ -49,7 +50,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'value' => null,
         'matchLevel' => null,
         'matchedWords' => null,
-        'fullyHighlighted' => null
+        'fullyHighlighted' => null,
     ];
 
     /**
@@ -82,7 +83,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'value' => 'value',
         'matchLevel' => 'matchLevel',
         'matchedWords' => 'matchedWords',
-        'fullyHighlighted' => 'fullyHighlighted'
+        'fullyHighlighted' => 'fullyHighlighted',
     ];
 
     /**
@@ -94,7 +95,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'value' => 'setValue',
         'matchLevel' => 'setMatchLevel',
         'matchedWords' => 'setMatchedWords',
-        'fullyHighlighted' => 'setFullyHighlighted'
+        'fullyHighlighted' => 'setFullyHighlighted',
     ];
 
     /**
@@ -106,7 +107,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'value' => 'getValue',
         'matchLevel' => 'getMatchLevel',
         'matchedWords' => 'getMatchedWords',
-        'fullyHighlighted' => 'getFullyHighlighted'
+        'fullyHighlighted' => 'getFullyHighlighted',
     ];
 
     /**
@@ -221,7 +222,6 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets value
      *
@@ -235,7 +235,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets value
      *
-     * @param string|null $value Markup text with occurrences highlighted.
+     * @param string|null $value markup text with occurrences highlighted
      *
      * @return self
      */
@@ -259,7 +259,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets matchLevel
      *
-     * @param string|null $matchLevel Indicates how well the attribute matched the search query.
+     * @param string|null $matchLevel indicates how well the attribute matched the search query
      *
      * @return self
      */
@@ -293,7 +293,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets matchedWords
      *
-     * @param string[]|null $matchedWords List of words from the query that matched the object.
+     * @param string[]|null $matchedWords list of words from the query that matched the object
      *
      * @return self
      */
@@ -317,7 +317,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets fullyHighlighted
      *
-     * @param bool|null $fullyHighlighted Whether the entire attribute value is highlighted.
+     * @param bool|null $fullyHighlighted whether the entire attribute value is highlighted
      *
      * @return self
      */
@@ -330,9 +330,9 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -342,7 +342,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -371,7 +371,7 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -382,10 +382,11 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -415,5 +416,4 @@ class HighlightResult implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

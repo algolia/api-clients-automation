@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * TimeRange Class Doc Comment
@@ -32,7 +32,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'from' => 'int',
-        'until' => 'int'
+        'until' => 'int',
     ];
 
     /**
@@ -44,7 +44,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'from' => null,
-        'until' => null
+        'until' => null,
     ];
 
     /**
@@ -75,7 +75,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'from' => 'from',
-        'until' => 'until'
+        'until' => 'until',
     ];
 
     /**
@@ -85,7 +85,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'from' => 'setFrom',
-        'until' => 'setUntil'
+        'until' => 'setUntil',
     ];
 
     /**
@@ -95,7 +95,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'from' => 'getFrom',
-        'until' => 'getUntil'
+        'until' => 'getUntil',
     ];
 
     /**
@@ -139,7 +139,6 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -174,6 +173,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['until'] === null) {
             $invalidProperties[] = "'until' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -188,7 +188,6 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets from
      *
@@ -202,7 +201,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets from
      *
-     * @param int $from Lower bound of the time range (Unix timestamp).
+     * @param int $from lower bound of the time range (Unix timestamp)
      *
      * @return self
      */
@@ -226,7 +225,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets until
      *
-     * @param int $until Upper bound of the time range (Unix timestamp).
+     * @param int $until upper bound of the time range (Unix timestamp)
      *
      * @return self
      */
@@ -239,9 +238,9 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -251,7 +250,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -280,7 +279,7 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -291,10 +290,11 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -324,5 +324,4 @@ class TimeRange implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

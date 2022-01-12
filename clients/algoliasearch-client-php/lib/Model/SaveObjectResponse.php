@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * SaveObjectResponse Class Doc Comment
@@ -33,7 +33,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $openAPITypes = [
         'createdAt' => 'string',
         'taskID' => 'int',
-        'objectID' => 'string'
+        'objectID' => 'string',
     ];
 
     /**
@@ -46,7 +46,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $openAPIFormats = [
         'createdAt' => null,
         'taskID' => null,
-        'objectID' => null
+        'objectID' => null,
     ];
 
     /**
@@ -78,7 +78,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $attributeMap = [
         'createdAt' => 'createdAt',
         'taskID' => 'taskID',
-        'objectID' => 'objectID'
+        'objectID' => 'objectID',
     ];
 
     /**
@@ -89,7 +89,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $setters = [
         'createdAt' => 'setCreatedAt',
         'taskID' => 'setTaskID',
-        'objectID' => 'setObjectID'
+        'objectID' => 'setObjectID',
     ];
 
     /**
@@ -100,7 +100,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $getters = [
         'createdAt' => 'getCreatedAt',
         'taskID' => 'getTaskID',
-        'objectID' => 'getObjectID'
+        'objectID' => 'getObjectID',
     ];
 
     /**
@@ -143,7 +143,6 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -188,7 +187,6 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets createdAt
      *
@@ -226,7 +224,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets taskID
      *
-     * @param int|null $taskID taskID of the indexing task to wait for.
+     * @param int|null $taskID taskID of the indexing task to wait for
      *
      * @return self
      */
@@ -250,7 +248,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets objectID
      *
-     * @param string|null $objectID Unique identifier of the object.
+     * @param string|null $objectID unique identifier of the object
      *
      * @return self
      */
@@ -263,9 +261,9 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -275,7 +273,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -304,7 +302,7 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -315,10 +313,11 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -348,5 +347,4 @@ class SaveObjectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

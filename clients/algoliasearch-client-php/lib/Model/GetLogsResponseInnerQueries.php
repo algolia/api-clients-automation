@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * GetLogsResponseInnerQueries Class Doc Comment
@@ -33,7 +33,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     protected static $openAPITypes = [
         'indexName' => 'string',
         'userToken' => 'string',
-        'queryId' => 'string'
+        'queryId' => 'string',
     ];
 
     /**
@@ -46,7 +46,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     protected static $openAPIFormats = [
         'indexName' => null,
         'userToken' => null,
-        'queryId' => null
+        'queryId' => null,
     ];
 
     /**
@@ -78,7 +78,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     protected static $attributeMap = [
         'indexName' => 'index_name',
         'userToken' => 'user_token',
-        'queryId' => 'query_id'
+        'queryId' => 'query_id',
     ];
 
     /**
@@ -89,7 +89,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     protected static $setters = [
         'indexName' => 'setIndexName',
         'userToken' => 'setUserToken',
-        'queryId' => 'setQueryId'
+        'queryId' => 'setQueryId',
     ];
 
     /**
@@ -100,7 +100,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     protected static $getters = [
         'indexName' => 'getIndexName',
         'userToken' => 'getUserToken',
-        'queryId' => 'getQueryId'
+        'queryId' => 'getQueryId',
     ];
 
     /**
@@ -143,7 +143,6 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -188,7 +187,6 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets indexName
      *
@@ -202,7 +200,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets indexName
      *
-     * @param string|null $indexName Index targeted by the query.
+     * @param string|null $indexName index targeted by the query
      *
      * @return self
      */
@@ -226,7 +224,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets userToken
      *
-     * @param string|null $userToken User identifier.
+     * @param string|null $userToken user identifier
      *
      * @return self
      */
@@ -250,7 +248,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets queryId
      *
-     * @param string|null $queryId QueryID for the given query.
+     * @param string|null $queryId queryID for the given query
      *
      * @return self
      */
@@ -263,9 +261,9 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -275,7 +273,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -304,7 +302,7 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -315,10 +313,11 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -348,5 +347,4 @@ class GetLogsResponseInnerQueries implements ModelInterface, ArrayAccess, \JsonS
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

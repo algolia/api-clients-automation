@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * Params Class Doc Comment
  *
  * @category Class
  * @description Additional search parameters. Any valid search parameter is allowed.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -34,7 +35,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'query' => 'string',
         'automaticFacetFilters' => '\Algolia\AlgoliaSearch\Model\AutomaticFacetFilter[]',
-        'automaticOptionalFacetFilters' => '\Algolia\AlgoliaSearch\Model\AutomaticFacetFilter[]'
+        'automaticOptionalFacetFilters' => '\Algolia\AlgoliaSearch\Model\AutomaticFacetFilter[]',
     ];
 
     /**
@@ -47,7 +48,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPIFormats = [
         'query' => null,
         'automaticFacetFilters' => null,
-        'automaticOptionalFacetFilters' => null
+        'automaticOptionalFacetFilters' => null,
     ];
 
     /**
@@ -79,7 +80,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $attributeMap = [
         'query' => 'query',
         'automaticFacetFilters' => 'automaticFacetFilters',
-        'automaticOptionalFacetFilters' => 'automaticOptionalFacetFilters'
+        'automaticOptionalFacetFilters' => 'automaticOptionalFacetFilters',
     ];
 
     /**
@@ -90,7 +91,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $setters = [
         'query' => 'setQuery',
         'automaticFacetFilters' => 'setAutomaticFacetFilters',
-        'automaticOptionalFacetFilters' => 'setAutomaticOptionalFacetFilters'
+        'automaticOptionalFacetFilters' => 'setAutomaticOptionalFacetFilters',
     ];
 
     /**
@@ -101,7 +102,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $getters = [
         'query' => 'getQuery',
         'automaticFacetFilters' => 'getAutomaticFacetFilters',
-        'automaticOptionalFacetFilters' => 'getAutomaticOptionalFacetFilters'
+        'automaticOptionalFacetFilters' => 'getAutomaticOptionalFacetFilters',
     ];
 
     /**
@@ -144,7 +145,6 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -189,7 +189,6 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets query
      *
@@ -203,7 +202,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets query
      *
-     * @param string|null $query Query string.
+     * @param string|null $query query string
      *
      * @return self
      */
@@ -227,7 +226,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets automaticFacetFilters
      *
-     * @param \Algolia\AlgoliaSearch\Model\AutomaticFacetFilter[]|null $automaticFacetFilters Names of facets to which automatic filtering must be applied; they must match the facet name of a facet value placeholder in the query pattern.
+     * @param \Algolia\AlgoliaSearch\Model\AutomaticFacetFilter[]|null $automaticFacetFilters names of facets to which automatic filtering must be applied; they must match the facet name of a facet value placeholder in the query pattern
      *
      * @return self
      */
@@ -251,7 +250,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets automaticOptionalFacetFilters
      *
-     * @param \Algolia\AlgoliaSearch\Model\AutomaticFacetFilter[]|null $automaticOptionalFacetFilters Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
+     * @param \Algolia\AlgoliaSearch\Model\AutomaticFacetFilter[]|null $automaticOptionalFacetFilters same syntax as automaticFacetFilters, but the engine treats the filters as optional
      *
      * @return self
      */
@@ -264,9 +263,9 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -276,7 +275,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -305,7 +304,7 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -316,10 +315,11 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -349,5 +349,4 @@ class Params implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

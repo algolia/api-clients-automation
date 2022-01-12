@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * AssignUserIdObject Class Doc Comment
  *
  * @category Class
  * @description Assign userID object.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -32,7 +33,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
       * @var string[]
       */
     protected static $openAPITypes = [
-        'cluster' => 'string'
+        'cluster' => 'string',
     ];
 
     /**
@@ -43,7 +44,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'cluster' => null
+        'cluster' => null,
     ];
 
     /**
@@ -73,7 +74,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $attributeMap = [
-        'cluster' => 'cluster'
+        'cluster' => 'cluster',
     ];
 
     /**
@@ -82,7 +83,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $setters = [
-        'cluster' => 'setCluster'
+        'cluster' => 'setCluster',
     ];
 
     /**
@@ -91,7 +92,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $getters = [
-        'cluster' => 'getCluster'
+        'cluster' => 'getCluster',
     ];
 
     /**
@@ -135,7 +136,6 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -166,6 +166,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
         if ($this->container['cluster'] === null) {
             $invalidProperties[] = "'cluster' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -180,7 +181,6 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets cluster
      *
@@ -194,7 +194,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets cluster
      *
-     * @param string $cluster Name of the cluster.
+     * @param string $cluster name of the cluster
      *
      * @return self
      */
@@ -207,9 +207,9 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -219,7 +219,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -248,7 +248,7 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -259,10 +259,11 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -292,5 +293,4 @@ class AssignUserIdObject implements ModelInterface, ArrayAccess, \JsonSerializab
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

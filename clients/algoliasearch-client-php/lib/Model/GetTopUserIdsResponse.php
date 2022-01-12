@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * GetTopUserIdsResponse Class Doc Comment
  *
  * @category Class
  * @description Array of userIDs and clusters.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -32,7 +33,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       * @var string[]
       */
     protected static $openAPITypes = [
-        'topUsers' => 'array<string,\Algolia\AlgoliaSearch\Model\UserId[]>[]'
+        'topUsers' => 'array<string,\Algolia\AlgoliaSearch\Model\UserId[]>[]',
     ];
 
     /**
@@ -43,7 +44,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'topUsers' => null
+        'topUsers' => null,
     ];
 
     /**
@@ -73,7 +74,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $attributeMap = [
-        'topUsers' => 'topUsers'
+        'topUsers' => 'topUsers',
     ];
 
     /**
@@ -82,7 +83,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $setters = [
-        'topUsers' => 'setTopUsers'
+        'topUsers' => 'setTopUsers',
     ];
 
     /**
@@ -91,7 +92,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $getters = [
-        'topUsers' => 'getTopUsers'
+        'topUsers' => 'getTopUsers',
     ];
 
     /**
@@ -135,7 +136,6 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -166,6 +166,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         if ($this->container['topUsers'] === null) {
             $invalidProperties[] = "'topUsers' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -180,7 +181,6 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets topUsers
      *
@@ -194,7 +194,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets topUsers
      *
-     * @param array<string,\Algolia\AlgoliaSearch\Model\UserId[]>[] $topUsers Mapping of cluster names to top users.
+     * @param array<string,\Algolia\AlgoliaSearch\Model\UserId[]>[] $topUsers Mapping of cluster names to top users
      *
      * @return self
      */
@@ -207,9 +207,9 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -219,7 +219,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -248,7 +248,7 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -259,10 +259,11 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -292,5 +293,4 @@ class GetTopUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

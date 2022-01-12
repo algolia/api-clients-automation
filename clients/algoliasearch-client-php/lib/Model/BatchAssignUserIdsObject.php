@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * BatchAssignUserIdsObject Class Doc Comment
  *
  * @category Class
  * @description Assign userID object.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -33,7 +34,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static $openAPITypes = [
         'cluster' => 'string',
-        'users' => 'string[]'
+        'users' => 'string[]',
     ];
 
     /**
@@ -45,7 +46,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static $openAPIFormats = [
         'cluster' => null,
-        'users' => null
+        'users' => null,
     ];
 
     /**
@@ -76,7 +77,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $attributeMap = [
         'cluster' => 'cluster',
-        'users' => 'users'
+        'users' => 'users',
     ];
 
     /**
@@ -86,7 +87,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $setters = [
         'cluster' => 'setCluster',
-        'users' => 'setUsers'
+        'users' => 'setUsers',
     ];
 
     /**
@@ -96,7 +97,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $getters = [
         'cluster' => 'getCluster',
-        'users' => 'getUsers'
+        'users' => 'getUsers',
     ];
 
     /**
@@ -140,7 +141,6 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -175,6 +175,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
         if ($this->container['users'] === null) {
             $invalidProperties[] = "'users' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -189,7 +190,6 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets cluster
      *
@@ -203,7 +203,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets cluster
      *
-     * @param string $cluster Name of the cluster.
+     * @param string $cluster name of the cluster
      *
      * @return self
      */
@@ -240,9 +240,9 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -252,7 +252,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -281,7 +281,7 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -292,10 +292,11 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -325,5 +326,4 @@ class BatchAssignUserIdsObject implements ModelInterface, ArrayAccess, \JsonSeri
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

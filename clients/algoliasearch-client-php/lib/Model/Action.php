@@ -1,13 +1,13 @@
 <?php
 
 namespace Algolia\AlgoliaSearch\Model;
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * Action Class Doc Comment
  *
  * @category Class
  * @description type of operation.
+ *
  * @package  Algolia\AlgoliaSearch
  */
 class Action
@@ -31,6 +31,7 @@ class Action
 
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public static function getAllowableEnumValues()
@@ -42,9 +43,8 @@ class Action
             self::PARTIAL_UPDATE_OBJECT_NO_CREATE,
             self::DELETE_OBJECT,
             self::DELETE,
-            self::CLEAR
+            self::CLEAR,
         ];
     }
 }
-
 

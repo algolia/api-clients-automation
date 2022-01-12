@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * SearchSynonymsResponse Class Doc Comment
@@ -32,7 +32,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
       */
     protected static $openAPITypes = [
         'hits' => '\Algolia\AlgoliaSearch\Model\SynonymHit[]',
-        'nbHits' => 'int'
+        'nbHits' => 'int',
     ];
 
     /**
@@ -44,7 +44,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
       */
     protected static $openAPIFormats = [
         'hits' => null,
-        'nbHits' => null
+        'nbHits' => null,
     ];
 
     /**
@@ -75,7 +75,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $attributeMap = [
         'hits' => 'hits',
-        'nbHits' => 'nbHits'
+        'nbHits' => 'nbHits',
     ];
 
     /**
@@ -85,7 +85,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $setters = [
         'hits' => 'setHits',
-        'nbHits' => 'setNbHits'
+        'nbHits' => 'setNbHits',
     ];
 
     /**
@@ -95,7 +95,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $getters = [
         'hits' => 'getHits',
-        'nbHits' => 'getNbHits'
+        'nbHits' => 'getNbHits',
     ];
 
     /**
@@ -139,7 +139,6 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -174,6 +173,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
         if ($this->container['nbHits'] === null) {
             $invalidProperties[] = "'nbHits' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -188,7 +188,6 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets hits
      *
@@ -202,7 +201,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\SynonymHit[] $hits Array of synonym objects.
+     * @param \Algolia\AlgoliaSearch\Model\SynonymHit[] $hits array of synonym objects
      *
      * @return self
      */
@@ -226,7 +225,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets nbHits
      *
-     * @param int $nbHits Number of hits that the search query matched.
+     * @param int $nbHits number of hits that the search query matched
      *
      * @return self
      */
@@ -239,9 +238,9 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -251,7 +250,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -280,7 +279,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -291,10 +290,11 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -324,5 +324,4 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 
