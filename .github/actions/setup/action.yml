@@ -86,17 +86,11 @@ runs:
 
         matrix=$(./scripts/ci/create-matrix.sh javascript $base_changed ${{ github.base_ref }})
 
-        echo $matrix
-
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
         else
           run="true"
         fi
-
-        echo $matrix
-        echo $matrix | jq
-        echo $run
 
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN::$run"
