@@ -1,4 +1,4 @@
-export type BaseABTestsVariant = {
+export type AbTestsVariant = {
   /**
    * The index performing the A/B test.
    */

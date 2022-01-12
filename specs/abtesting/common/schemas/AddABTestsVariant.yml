@@ -1,9 +1,14 @@
 AddABTestsVariant:
   oneOf:
-    - $ref: '#/baseABTestsVariant'
-    - $ref: '#/searchParamABTestsVariant'
+    - $ref: '#/abTestsVariant'
+    - $ref: '#/abTestsVariantSearchParams'
 
-baseABTestsVariant:
+abTestsVariantSearchParams:
+  allOf:
+    - $ref: '#/abTestsVariant'
+    - $ref: '#/customSearchParams'
+
+abTestsVariant:
   type: object
   additionalProperties: false
   properties:
@@ -17,12 +22,7 @@ baseABTestsVariant:
     - index
     - trafficPercentage
 
-searchParamABTestsVariant:
-  allOf:
-    - $ref: '#/baseABTestsVariant'
-    - $ref: '#/searchParamsABTestsVariant'
-
-searchParamsABTestsVariant:
+customSearchParams:
   type: object
   additionalProperties: false
   properties:

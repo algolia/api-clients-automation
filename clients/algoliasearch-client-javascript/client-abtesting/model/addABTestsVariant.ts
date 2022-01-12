@@ -1,4 +1,4 @@
-import type { BaseABTestsVariant } from './baseABTestsVariant';
-import type { SearchParamABTestsVariant } from './searchParamABTestsVariant';
+import type { AbTestsVariant } from './abTestsVariant';
+import type { AbTestsVariantSearchParams } from './abTestsVariantSearchParams';
 
-export type AddABTestsVariant = BaseABTestsVariant | SearchParamABTestsVariant;
+export type AddABTestsVariant = AbTestsVariant | AbTestsVariantSearchParams;

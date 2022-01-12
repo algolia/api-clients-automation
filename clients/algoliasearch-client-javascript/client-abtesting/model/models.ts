@@ -2,14 +2,14 @@
 import type { RequestOptions } from '../utils/types';
 
 export * from './aBTest';
+export * from './abTestsVariant';
+export * from './abTestsVariantSearchParams';
 export * from './addABTestsRequest';
 export * from './addABTestsResponse';
 export * from './addABTestsVariant';
-export * from './baseABTestsVariant';
+export * from './customSearchParams';
 export * from './errorBase';
 export * from './listABTestsResponse';
-export * from './searchParamABTestsVariant';
-export * from './searchParamsABTestsVariant';
 export * from './variant';
 
 export interface Authentication {
