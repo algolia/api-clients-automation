@@ -58,7 +58,9 @@ jobs:
 
   client_javascript:
     runs-on: ubuntu-20.04
-    needs: specs
+    needs:
+      - setup
+      - specs
     if: ${{ always() && needs.setup.outputs.RUN_JS == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
@@ -85,7 +87,9 @@ jobs:
 
   client_java:
     runs-on: ubuntu-20.04
-    needs: specs
+    needs:
+      - setup
+      - specs
     if: ${{ always() && needs.setup.outputs.RUN_JAVA == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
