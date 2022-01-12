@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * RankingInfo Class Doc Comment
@@ -41,7 +41,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
         'promoted' => 'bool',
         'proximityDistance' => 'int',
         'userScore' => 'int',
-        'word' => 'int'
+        'word' => 'int',
     ];
 
     /**
@@ -62,7 +62,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
         'promoted' => null,
         'proximityDistance' => null,
         'userScore' => null,
-        'word' => null
+        'word' => null,
     ];
 
     /**
@@ -102,7 +102,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
         'promoted' => 'promoted',
         'proximityDistance' => 'proximityDistance',
         'userScore' => 'userScore',
-        'word' => 'word'
+        'word' => 'word',
     ];
 
     /**
@@ -121,7 +121,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
         'promoted' => 'setPromoted',
         'proximityDistance' => 'setProximityDistance',
         'userScore' => 'setUserScore',
-        'word' => 'setWord'
+        'word' => 'setWord',
     ];
 
     /**
@@ -140,7 +140,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
         'promoted' => 'getPromoted',
         'proximityDistance' => 'getProximityDistance',
         'userScore' => 'getUserScore',
-        'word' => 'getWord'
+        'word' => 'getWord',
     ];
 
     /**
@@ -183,7 +183,6 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -236,7 +235,6 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets filters
      *
@@ -250,7 +248,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets filters
      *
-     * @param int|null $filters This field is reserved for advanced usage.
+     * @param int|null $filters this field is reserved for advanced usage
      *
      * @return self
      */
@@ -274,7 +272,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets firstMatchedWord
      *
-     * @param int|null $firstMatchedWord Position of the most important matched attribute in the attributes to index list.
+     * @param int|null $firstMatchedWord position of the most important matched attribute in the attributes to index list
      *
      * @return self
      */
@@ -298,7 +296,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets geoDistance
      *
-     * @param int|null $geoDistance Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).
+     * @param int|null $geoDistance distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters)
      *
      * @return self
      */
@@ -322,7 +320,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets geoPrecision
      *
-     * @param int|null $geoPrecision Precision used when computing the geo distance, in meters.
+     * @param int|null $geoPrecision precision used when computing the geo distance, in meters
      *
      * @return self
      */
@@ -370,7 +368,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets nbExactWords
      *
-     * @param int|null $nbExactWords Number of exactly matched words.
+     * @param int|null $nbExactWords number of exactly matched words
      *
      * @return self
      */
@@ -394,7 +392,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets nbTypos
      *
-     * @param int|null $nbTypos Number of typos encountered when matching the record.
+     * @param int|null $nbTypos number of typos encountered when matching the record
      *
      * @return self
      */
@@ -418,7 +416,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets promoted
      *
-     * @param bool|null $promoted Present and set to true if a Rule promoted the hit.
+     * @param bool|null $promoted present and set to true if a Rule promoted the hit
      *
      * @return self
      */
@@ -442,7 +440,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets proximityDistance
      *
-     * @param int|null $proximityDistance When the query contains more than one word, the sum of the distances between matched words (in meters).
+     * @param int|null $proximityDistance when the query contains more than one word, the sum of the distances between matched words (in meters)
      *
      * @return self
      */
@@ -466,7 +464,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets userScore
      *
-     * @param int|null $userScore Custom ranking for the object, expressed as a single integer value.
+     * @param int|null $userScore custom ranking for the object, expressed as a single integer value
      *
      * @return self
      */
@@ -490,7 +488,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets word
      *
-     * @param int|null $word Number of matched words, including prefixes and typos.
+     * @param int|null $word number of matched words, including prefixes and typos
      *
      * @return self
      */
@@ -503,9 +501,9 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -515,7 +513,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -544,7 +542,7 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -555,10 +553,11 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -588,5 +587,4 @@ class RankingInfo implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

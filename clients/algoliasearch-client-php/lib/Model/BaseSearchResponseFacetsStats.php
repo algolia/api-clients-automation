@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * BaseSearchResponseFacetsStats Class Doc Comment
@@ -34,7 +34,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
         'min' => 'int',
         'max' => 'int',
         'avg' => 'int',
-        'sum' => 'int'
+        'sum' => 'int',
     ];
 
     /**
@@ -48,7 +48,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
         'min' => null,
         'max' => null,
         'avg' => null,
-        'sum' => null
+        'sum' => null,
     ];
 
     /**
@@ -81,7 +81,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
         'min' => 'min',
         'max' => 'max',
         'avg' => 'avg',
-        'sum' => 'sum'
+        'sum' => 'sum',
     ];
 
     /**
@@ -93,7 +93,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
         'min' => 'setMin',
         'max' => 'setMax',
         'avg' => 'setAvg',
-        'sum' => 'setSum'
+        'sum' => 'setSum',
     ];
 
     /**
@@ -105,7 +105,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
         'min' => 'getMin',
         'max' => 'getMax',
         'avg' => 'getAvg',
-        'sum' => 'getSum'
+        'sum' => 'getSum',
     ];
 
     /**
@@ -148,7 +148,6 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -194,7 +193,6 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets min
      *
@@ -208,7 +206,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets min
      *
-     * @param int|null $min The minimum value in the result set.
+     * @param int|null $min the minimum value in the result set
      *
      * @return self
      */
@@ -232,7 +230,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets max
      *
-     * @param int|null $max The maximum value in the result set.
+     * @param int|null $max the maximum value in the result set
      *
      * @return self
      */
@@ -256,7 +254,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets avg
      *
-     * @param int|null $avg The average facet value in the result set.
+     * @param int|null $avg the average facet value in the result set
      *
      * @return self
      */
@@ -280,7 +278,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets sum
      *
-     * @param int|null $sum The sum of all values in the result set.
+     * @param int|null $sum the sum of all values in the result set
      *
      * @return self
      */
@@ -293,9 +291,9 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -305,7 +303,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -334,7 +332,7 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -345,10 +343,11 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -378,5 +377,4 @@ class BaseSearchResponseFacetsStats implements ModelInterface, ArrayAccess, \Jso
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

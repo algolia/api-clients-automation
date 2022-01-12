@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * BaseIndexSettings Class Doc Comment
@@ -42,7 +42,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         'disablePrefixOnAttributes' => 'string[]',
         'allowCompressionOfIntegerArray' => 'bool',
         'numericAttributesForFiltering' => 'string[]',
-        'userData' => 'object'
+        'userData' => 'object',
     ];
 
     /**
@@ -64,7 +64,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         'disablePrefixOnAttributes' => null,
         'allowCompressionOfIntegerArray' => null,
         'numericAttributesForFiltering' => null,
-        'userData' => null
+        'userData' => null,
     ];
 
     /**
@@ -105,7 +105,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         'disablePrefixOnAttributes' => 'disablePrefixOnAttributes',
         'allowCompressionOfIntegerArray' => 'allowCompressionOfIntegerArray',
         'numericAttributesForFiltering' => 'numericAttributesForFiltering',
-        'userData' => 'userData'
+        'userData' => 'userData',
     ];
 
     /**
@@ -125,7 +125,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         'disablePrefixOnAttributes' => 'setDisablePrefixOnAttributes',
         'allowCompressionOfIntegerArray' => 'setAllowCompressionOfIntegerArray',
         'numericAttributesForFiltering' => 'setNumericAttributesForFiltering',
-        'userData' => 'setUserData'
+        'userData' => 'setUserData',
     ];
 
     /**
@@ -145,7 +145,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         'disablePrefixOnAttributes' => 'getDisablePrefixOnAttributes',
         'allowCompressionOfIntegerArray' => 'getAllowCompressionOfIntegerArray',
         'numericAttributesForFiltering' => 'getNumericAttributesForFiltering',
-        'userData' => 'getUserData'
+        'userData' => 'getUserData',
     ];
 
     /**
@@ -188,7 +188,6 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -242,7 +241,6 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets replicas
      *
@@ -256,7 +254,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets replicas
      *
-     * @param string[]|null $replicas Creates replicas, exact copies of an index.
+     * @param string[]|null $replicas creates replicas, exact copies of an index
      *
      * @return self
      */
@@ -280,7 +278,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets paginationLimitedTo
      *
-     * @param int|null $paginationLimitedTo Set the maximum number of hits accessible via pagination.
+     * @param int|null $paginationLimitedTo set the maximum number of hits accessible via pagination
      *
      * @return self
      */
@@ -304,7 +302,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets disableTypoToleranceOnWords
      *
-     * @param string[]|null $disableTypoToleranceOnWords A list of words for which you want to turn off typo tolerance.
+     * @param string[]|null $disableTypoToleranceOnWords a list of words for which you want to turn off typo tolerance
      *
      * @return self
      */
@@ -328,7 +326,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets attributesToTransliterate
      *
-     * @param string[]|null $attributesToTransliterate Specify on which attributes to apply transliteration.
+     * @param string[]|null $attributesToTransliterate specify on which attributes to apply transliteration
      *
      * @return self
      */
@@ -352,7 +350,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets camelCaseAttributes
      *
-     * @param string[]|null $camelCaseAttributes List of attributes on which to do a decomposition of camel case words.
+     * @param string[]|null $camelCaseAttributes list of attributes on which to do a decomposition of camel case words
      *
      * @return self
      */
@@ -376,7 +374,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets decompoundedAttributes
      *
-     * @param object|null $decompoundedAttributes Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+     * @param object|null $decompoundedAttributes specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding
      *
      * @return self
      */
@@ -400,7 +398,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets indexLanguages
      *
-     * @param string[]|null $indexLanguages Sets the languages at the index level for language-specific processing such as tokenization and normalization.
+     * @param string[]|null $indexLanguages sets the languages at the index level for language-specific processing such as tokenization and normalization
      *
      * @return self
      */
@@ -424,7 +422,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets filterPromotes
      *
-     * @param bool|null $filterPromotes Whether promoted results should match the filters of the current search, except for geographic filters.
+     * @param bool|null $filterPromotes whether promoted results should match the filters of the current search, except for geographic filters
      *
      * @return self
      */
@@ -448,7 +446,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets disablePrefixOnAttributes
      *
-     * @param string[]|null $disablePrefixOnAttributes List of attributes on which you want to disable prefix matching.
+     * @param string[]|null $disablePrefixOnAttributes list of attributes on which you want to disable prefix matching
      *
      * @return self
      */
@@ -472,7 +470,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets allowCompressionOfIntegerArray
      *
-     * @param bool|null $allowCompressionOfIntegerArray Enables compression of large integer arrays.
+     * @param bool|null $allowCompressionOfIntegerArray enables compression of large integer arrays
      *
      * @return self
      */
@@ -496,7 +494,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets numericAttributesForFiltering
      *
-     * @param string[]|null $numericAttributesForFiltering List of numeric attributes that can be used as numerical filters.
+     * @param string[]|null $numericAttributesForFiltering list of numeric attributes that can be used as numerical filters
      *
      * @return self
      */
@@ -520,7 +518,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets userData
      *
-     * @param object|null $userData Lets you store custom data in your indices.
+     * @param object|null $userData lets you store custom data in your indices
      *
      * @return self
      */
@@ -533,9 +531,9 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -545,7 +543,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -574,7 +572,7 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -585,10 +583,11 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -618,5 +617,4 @@ class BaseIndexSettings implements ModelInterface, ArrayAccess, \JsonSerializabl
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

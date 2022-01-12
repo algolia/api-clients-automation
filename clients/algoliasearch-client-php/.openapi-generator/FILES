@@ -1,4 +1,5 @@
 .gitignore
+.php_cs
 composer.json
 lib/Api/SearchApi.php
 lib/ApiException.php

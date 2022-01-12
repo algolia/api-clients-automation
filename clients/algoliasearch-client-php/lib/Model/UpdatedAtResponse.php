@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * UpdatedAtResponse Class Doc Comment
  *
  * @category Class
  * @description The response with a taskID and an updatedAt timestamp.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -33,7 +34,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPITypes = [
         'taskID' => 'int',
-        'updatedAt' => '\DateTime'
+        'updatedAt' => '\DateTime',
     ];
 
     /**
@@ -45,7 +46,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPIFormats = [
         'taskID' => null,
-        'updatedAt' => 'date-time'
+        'updatedAt' => 'date-time',
     ];
 
     /**
@@ -76,7 +77,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $attributeMap = [
         'taskID' => 'taskID',
-        'updatedAt' => 'updatedAt'
+        'updatedAt' => 'updatedAt',
     ];
 
     /**
@@ -86,7 +87,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $setters = [
         'taskID' => 'setTaskID',
-        'updatedAt' => 'setUpdatedAt'
+        'updatedAt' => 'setUpdatedAt',
     ];
 
     /**
@@ -96,7 +97,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $getters = [
         'taskID' => 'getTaskID',
-        'updatedAt' => 'getUpdatedAt'
+        'updatedAt' => 'getUpdatedAt',
     ];
 
     /**
@@ -140,7 +141,6 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -175,6 +175,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
         if ($this->container['updatedAt'] === null) {
             $invalidProperties[] = "'updatedAt' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -189,7 +190,6 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets taskID
      *
@@ -203,7 +203,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets taskID
      *
-     * @param int $taskID taskID of the indexing task to wait for.
+     * @param int $taskID taskID of the indexing task to wait for
      *
      * @return self
      */
@@ -227,7 +227,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt Date of last update (ISO-8601 format).
+     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */
@@ -240,9 +240,9 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -252,7 +252,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -281,7 +281,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -292,10 +292,11 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -325,5 +326,4 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

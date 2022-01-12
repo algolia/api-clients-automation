@@ -10,3 +10,4 @@ composer.phar
 .phpunit.result.cache
 
 .openapi-generator/
+composer.lock

@@ -2,8 +2,6 @@
 
 namespace Algolia\AlgoliaSearch;
 
-use \Exception;
-
 /**
  * ApiException Class Doc Comment
  *
@@ -12,10 +10,10 @@ use \Exception;
  */
 class HeaderSelector
 {
-
     /**
      * @param string[] $accept
      * @param string[] $contentTypes
+     *
      * @return array
      */
     public function selectHeaders($accept, $contentTypes)
@@ -28,11 +26,13 @@ class HeaderSelector
         }
 
         $headers['Content-Type'] = $this->selectContentTypeHeader($contentTypes);
+
         return $headers;
     }
 
     /**
      * @param string[] $accept
+     *
      * @return array
      */
     public function selectHeadersForMultipart($accept)
@@ -40,6 +40,7 @@ class HeaderSelector
         $headers = $this->selectHeaders($accept, []);
 
         unset($headers['Content-Type']);
+
         return $headers;
     }
 
@@ -56,9 +57,10 @@ class HeaderSelector
             return null;
         } elseif ($jsonAccept = preg_grep('~(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$~', $accept)) {
             return implode(',', $jsonAccept);
-        } else {
-            return implode(',', $accept);
         }
+
+            return implode(',', $accept);
+
     }
 
     /**
@@ -74,8 +76,9 @@ class HeaderSelector
             return 'application/json';
         } elseif (preg_grep("/application\/json/i", $contentType)) {
             return 'application/json';
-        } else {
-            return implode(',', $contentType);
         }
+
+            return implode(',', $contentType);
+
     }
 }

@@ -8,7 +8,6 @@ docs/**
 test/**
 
 .travis.yml
-.php_cs
 phpunit.xml.dist
 README.md
 git_push.sh

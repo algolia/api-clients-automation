@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * UpdatedRuleResponse Class Doc Comment
@@ -33,7 +33,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPITypes = [
         'objectID' => 'string',
         'updatedAt' => '\DateTime',
-        'taskID' => 'int'
+        'taskID' => 'int',
     ];
 
     /**
@@ -46,7 +46,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPIFormats = [
         'objectID' => null,
         'updatedAt' => 'date-time',
-        'taskID' => null
+        'taskID' => null,
     ];
 
     /**
@@ -78,7 +78,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $attributeMap = [
         'objectID' => 'objectID',
         'updatedAt' => 'updatedAt',
-        'taskID' => 'taskID'
+        'taskID' => 'taskID',
     ];
 
     /**
@@ -89,7 +89,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $setters = [
         'objectID' => 'setObjectID',
         'updatedAt' => 'setUpdatedAt',
-        'taskID' => 'setTaskID'
+        'taskID' => 'setTaskID',
     ];
 
     /**
@@ -100,7 +100,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $getters = [
         'objectID' => 'getObjectID',
         'updatedAt' => 'getUpdatedAt',
-        'taskID' => 'getTaskID'
+        'taskID' => 'getTaskID',
     ];
 
     /**
@@ -144,7 +144,6 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -183,6 +182,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         if ($this->container['taskID'] === null) {
             $invalidProperties[] = "'taskID' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -197,7 +197,6 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets objectID
      *
@@ -211,7 +210,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets objectID
      *
-     * @param string $objectID Unique identifier of the object.
+     * @param string $objectID unique identifier of the object
      *
      * @return self
      */
@@ -235,7 +234,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt Date of last update (ISO-8601 format).
+     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */
@@ -259,7 +258,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets taskID
      *
-     * @param int $taskID taskID of the indexing task to wait for.
+     * @param int $taskID taskID of the indexing task to wait for
      *
      * @return self
      */
@@ -272,9 +271,9 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -284,7 +283,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -313,7 +312,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -324,10 +323,11 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -357,5 +357,4 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 
