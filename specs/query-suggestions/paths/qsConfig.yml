@@ -13,7 +13,7 @@ put:
           $ref: ../common/parameters.yml#/QuerySuggestionsIndexParam
   responses:
     '200':
-      $ref: ../common/responses/Success.yml
+      $ref: ../../common/responses/Success.yml
     '401':
       $ref: ../../common/responses/Unauthorized.yml
     '500':
@@ -33,7 +33,7 @@ delete:
     - $ref: ../../common/parameters.yml#/IndexName
   responses:
     '200':
-      $ref: ../common/responses/Success.yml
+      $ref: ../../common/responses/Success.yml
     '401':
       $ref: ../../common/responses/Unauthorized.yml
     '403':

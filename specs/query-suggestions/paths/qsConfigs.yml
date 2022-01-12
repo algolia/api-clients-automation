@@ -11,7 +11,7 @@ post:
           $ref: ../common/parameters.yml#/QuerySuggestionsIndexWithIndexParam
   responses:
     '200':
-      $ref: ../common/responses/Success.yml
+      $ref: ../../common/responses/Success.yml
     '400':
       $ref: ../../common/responses/BadRequest.yml
     '401':
@@ -19,7 +19,7 @@ post:
     '403':
       $ref: ../../common/responses/MethodNotAllowed.yml
     '422':
-      $ref: ../common/responses/StatusUnprocessableEntity.yml
+      $ref: ../../common/responses/StatusUnprocessableEntity.yml
     '500':
       $ref: ../../common/responses/InternalError.yml
 
@@ -45,6 +45,6 @@ get:
     '403':
       $ref: ../../common/responses/MethodNotAllowed.yml
     '422':
-      $ref: ../common/responses/StatusUnprocessableEntity.yml
+      $ref: ../../common/responses/StatusUnprocessableEntity.yml
     '500':
       $ref: ../../common/responses/InternalError.yml

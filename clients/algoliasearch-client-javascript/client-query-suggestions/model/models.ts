@@ -10,7 +10,6 @@ export * from './querySuggestionsIndexWithIndexParam';
 export * from './sourceIndex';
 export * from './sourceIndexExternal';
 export * from './sourceIndexWithReplicas';
-export * from './sourceIndexWithReplicasExternal';
 export * from './status';
 export * from './sucessResponse';
 

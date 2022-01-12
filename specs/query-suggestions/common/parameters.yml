@@ -37,19 +37,22 @@ SourceIndex:
     external:
       type: array
       items:
-        type: object
-        additionalProperties: false
-        required:
-          - query
-          - count
-        properties:
-          query:
-            type: string
-            description: The suggestion you would like to add
-          count:
-            type: integer
-            description: The measure of the suggestion relative popularity
+        $ref: '#/SourceIndexExternal'
       description: List of external indices to use to generate custom Query Suggestions.
+
+SourceIndexExternal:
+  type: object
+  additionalProperties: false
+  required:
+    - query
+    - count
+  properties:
+    query:
+      type: string
+      description: The suggestion you would like to add
+    count:
+      type: integer
+      description: The measure of the suggestion relative popularity
 
 SourceIndices:
   type: array

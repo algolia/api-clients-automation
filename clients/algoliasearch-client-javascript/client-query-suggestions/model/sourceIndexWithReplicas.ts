@@ -1,4 +1,4 @@
-import type { SourceIndexWithReplicasExternal } from './sourceIndexWithReplicasExternal';
+import type { SourceIndexExternal } from './sourceIndexExternal';
 
 export type SourceIndexWithReplicas = {
   /**
@@ -32,5 +32,5 @@ export type SourceIndexWithReplicas = {
   /**
    * List of external indices to use to generate custom Query Suggestions.
    */
-  external: SourceIndexWithReplicasExternal[];
+  external: SourceIndexExternal[];
 };

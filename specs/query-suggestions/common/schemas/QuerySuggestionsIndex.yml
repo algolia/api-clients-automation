@@ -37,52 +37,22 @@ SourceIndexWithReplicas:
     - external
   properties:
     indexName:
-      type: string
-      description: Source index name.
+      $ref: ../parameters.yml#/SourceIndex/properties/indexName
     replicas:
       type: boolean
       description: true if the Query Suggestions index is a replicas.
     analyticsTags:
-      type: array
-      items:
-        type: string
-      default: []
-      description: List of analytics tags to filter the popular searches per tag.
+      $ref: ../parameters.yml#/SourceIndex/properties/analyticsTags
     facets:
-      type: array
-      items:
-        type: object
-      default: []
-      description: List of facets to define as categories for the query suggestions.
+      $ref: ../parameters.yml#/SourceIndex/properties/facets
     minHits:
-      type: integer
-      description: Minimum number of hits (e.g., matching records in the source index) to generate a suggestions.
+      $ref: ../parameters.yml#/SourceIndex/properties/minHits
     minLetters:
-      type: integer
-      description: Minimum number of required letters for a suggestion to remain.
+      $ref: ../parameters.yml#/SourceIndex/properties/minLetters
     generate:
-      type: array
-      items:
-        type: array
-        items:
-          type: string
-      default: []
-      description: List of facet attributes used to generate Query Suggestions. The resulting suggestions are every combination of the facets in the nested list (e.g., (facetA and facetB) and facetC).
-      example: [[facetA, facetB], [facetC]]
+      $ref: ../parameters.yml#/SourceIndex/properties/generate
     external:
-      type: array
-      items:
-        type: object
-        additionalProperties: false
-        required:
-          - query
-          - count
-        properties:
-          query:
-            type: string
-          count:
-            type: integer
-      description: List of external indices to use to generate custom Query Suggestions.
+      $ref: ../parameters.yml#/SourceIndex/properties/external
 
 SourceIndicesWithReplicas:
   type: array
