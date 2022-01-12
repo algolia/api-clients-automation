@@ -1666,7 +1666,7 @@ export class SearchApi {
    * @param partialUpdateObject - The partialUpdateObject object.
    * @param partialUpdateObject.indexName - The index in which to perform the request.
    * @param partialUpdateObject.objectID - Unique identifier of an object.
-   * @param partialUpdateObject.stringBuildInOperation - The Algolia object.
+   * @param partialUpdateObject.stringBuildInOperation - List of attributes to update.
    * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
    */
   partialUpdateObject({
@@ -2784,7 +2784,7 @@ export type PartialUpdateObjectProps = {
    */
   objectID: string;
   /**
-   * The Algolia object.
+   * List of attributes to update.
    */
   stringBuildInOperation: Array<{ [key: string]: BuildInOperation | string }>;
   /**
