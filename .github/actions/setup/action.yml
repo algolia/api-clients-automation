@@ -44,39 +44,18 @@ runs:
       id: spec-matrix
       shell: bash
       run: |
-        # Read from openapitools.json and put each client in the specs array
-        specs=""
-        generators=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
-
         base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 }}
 
-        for generator in "${generators[@]}"; do
-          client=${generator#*-}
-            if [[ ! ${specs[*]} =~ $client ]]; then
-              changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
-              if [[ $base_changed || $changed > 0 ]]; then
-                specs="$specs $client"
-              fi
-            fi
-        done
+        matrix=$(./scripts/ci/create-spec-matrix.sh $base_changed ${{ github.base_ref }})
 
-        # Convert the array to json for the matrix
-        if [[ $specs == "" ]]; then
-          # client cannot be empty or the matrix will fail
-          specs_matrix='{"client":["no-run"]}'
-          run_specs="false"
+        if [[ $matrix == '{"client":["no-run"]}' ]]; then
+          run="false"
         else
-          specs_matrix=$((
-            echo '{ "client" : ['
-            echo $specs | xargs | sed 's/ /, /g' | xargs -n 1 echo | sed -r 's/^([^,]*)(,?)$/"\1"\2/'
-            echo " ]}"
-          ) | jq -c .)
-          run_specs="true"
+          run="true"
         fi
-        echo $specs_matrix
-        echo "Run specs: $run_specs"
-        echo "::set-output name=SPECS_MATRIX::$specs_matrix"
-        echo "::set-output name=RUN_SPECS::$run_specs"
+
+        echo "::set-output name=MATRIX::$matrix"
+        echo "::set-output name=RUN_SPECS::$run"
 
     - name: Compute the JS client build matrix
       id: js-matrix
@@ -84,7 +63,7 @@ runs:
       run: |
         base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-matrix.sh javascript $base_changed ${{ github.base_ref }})
+        matrix=$(./scripts/ci/create-client-matrix.sh javascript $base_changed ${{ github.base_ref }})
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
@@ -93,7 +72,7 @@ runs:
         fi
 
         echo "::set-output name=MATRIX::$matrix"
-        echo "::set-output name=RUN::$run"
+        echo "::set-output name=RUN_CLIENT::$run"
 
     - name: Compute the Java client build matrix
       id: java-matrix
@@ -101,7 +80,7 @@ runs:
       run: |
         base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-matrix.sh java $base_changed ${{ github.base_ref }})
+        matrix=$(./scripts/ci/create-client-matrix.sh java $base_changed ${{ github.base_ref }})
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
@@ -110,7 +89,7 @@ runs:
         fi
 
         echo "::set-output name=MATRIX::$matrix"
-        echo "::set-output name=RUN::$run"
+        echo "::set-output name=RUN_CLIENT::$run"
 
 outputs:
   RUN_SPECS:
@@ -119,11 +98,11 @@ outputs:
 
   SPECS_MATRIX:
     description: Generate the matrix for specs
-    value: ${{ steps.spec-matrix.outputs.SPECS_MATRIX }}
+    value: ${{ steps.spec-matrix.outputs.MATRIX }}
 
   RUN_JS:
     description: Whether to run js client or not
-    value: ${{ steps.js-matrix.outputs.RUN }}
+    value: ${{ steps.js-matrix.outputs.RUN_CLIENT }}
 
   JS_MATRIX:
     description: Generate the matrix for javascript client build
@@ -131,7 +110,7 @@ outputs:
 
   RUN_JAVA:
     description: Whether to run java client or not
-    value: ${{ steps.java-matrix.outputs.RUN }}
+    value: ${{ steps.java-matrix.outputs.RUN_CLIENT }}
 
   JAVA_MATRIX:
     description: Generate the matrix for javascript client build

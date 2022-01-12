@@ -14,16 +14,16 @@ clients=$(cat openapitools.json | jq --arg lang $LANGUAGE -c '."generator-cli".g
                                 ) 
                                 | to_entries 
                                 | map({
-                                    client:.key | sub($lang + "-";""),
+                                    name:.key | sub($lang + "-";""),
                                     folder:.value.output | sub("#{cwd}/";"")
                                 }) 
                                 | .[]')
 
 to_test='{"client": []}'
 for pair in $clients; do
-    client=$(echo $pair | jq '.client')
+    name=$(echo $pair | jq '.name')
     folder=$(echo $pair | jq '.folder')
-    spec_changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- specs/$client | wc -l)
+    spec_changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- specs/$name | wc -l)
     client_changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- $folder | wc -l)
     if [[ $BASE_CHANGED || $spec_changed > 0 || $client_changed > 0 ]]; then
         to_test=$(echo $to_test | jq --argjson pair $pair '.client |= .+ [$pair]')

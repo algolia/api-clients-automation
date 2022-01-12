@@ -70,20 +70,20 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
-      - name: Cache ${{ matrix.client.client }} client
+      - name: Cache ${{ matrix.client.name }} client
         id: cache
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
-          key: ${{ runner.os }}-js-client-${{ matrix.client.client }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          key: ${{ runner.os }}-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
-      - name: Generate ${{ matrix.client.client }} client
+      - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn generate javascript ${{ matrix.client.client }}
+        run: yarn generate javascript ${{ matrix.client.name }}
 
-      - name: Build ${{ matrix.client.client }} client
+      - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn build:clients javascript ${{ matrix.client.client }}
+        run: yarn build:clients javascript ${{ matrix.client.name }}
 
   client_java:
     runs-on: ubuntu-20.04
@@ -101,20 +101,20 @@ jobs:
         with:
           job: java
 
-      - name: Cache ${{ matrix.client.client }} client
+      - name: Cache ${{ matrix.client.name }} client
         id: cache
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
-          key: ${{ runner.os }}-java-client-${{ matrix.client.client }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          key: ${{ runner.os }}-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
-      - name: Generate ${{ matrix.client.client }} client
+      - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn generate java ${{ matrix.client.client }}
+        run: yarn generate java ${{ matrix.client.name }}
 
-      - name: Build ${{ matrix.client.client }} client
+      - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn build:clients java ${{ matrix.client.client }}
+        run: yarn build:clients java ${{ matrix.client.name }}
 
   cts:
     runs-on: ubuntu-20.04
