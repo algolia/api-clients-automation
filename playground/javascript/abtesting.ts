@@ -13,20 +13,18 @@ const client = new AbtestingApi(appId, apiKey, 'de');
 async function testABTesting() {
   try {
     const res = await client.addABTests({
-      addABTestsRequest: {
-        endAt: new Date('2022-02-01'),
-        name: 'testing',
-        variant: [
-          {
-            index: 'test1',
-            trafficPercentage: 30,
-          },
-          {
-            index: 'test2',
-            trafficPercentage: 50,
-          },
-        ],
-      },
+      endAt: new Date('2022-02-01'),
+      name: 'testing',
+      variant: [
+        {
+          index: 'test1',
+          trafficPercentage: 30,
+        },
+        {
+          index: 'test2',
+          trafficPercentage: 50,
+        },
+      ],
     });
 
     console.log(`[OK]`, res);

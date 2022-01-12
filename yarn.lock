@@ -3644,6 +3644,7 @@ fsevents@^2.3.2:
     "@algolia/client-abtesting": 5.0.0
     "@algolia/client-analytics": 5.0.0
     "@algolia/client-personalization": 5.0.0
+    "@algolia/client-query-suggestions": 5.0.0
     "@algolia/client-search": 5.0.0
     "@algolia/recommend": 5.0.0
     dotenv: 10.0.0
