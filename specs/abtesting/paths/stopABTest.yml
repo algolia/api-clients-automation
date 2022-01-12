@@ -9,19 +9,8 @@ post:
     As a result, your application is back to normal: index A will perform as usual, receiving 100% of all search requests.
     Associated metadata and metrics are still stored.
   summary: Marks the A/B test as stopped.
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          title: stopABTestRequest
-          type: object
-          additionalProperties: false
-          properties:
-            id:
-              $ref: ../common/parameters.yml#/abTestID
-          required:
-            - id
+  parameters:
+    - $ref: ../common/parameters.yml#/ID
   responses:
     '200':
       description: OK
