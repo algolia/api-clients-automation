@@ -86,6 +86,12 @@ runs:
 
         ./scripts/ci/create-matrix.sh javascript $base_changed ${{ github.base_ref }}
 
+        echo "can it split ?"
+
+        read -d "\n" v1 v2 <<< "test1\ntest2"
+        echo $v1
+        echo $v2
+
         read -d "\n" matrix run <<< $(./scripts/ci/create-matrix.sh javascript $base_changed ${{ github.base_ref }})
 
         echo $matrix
