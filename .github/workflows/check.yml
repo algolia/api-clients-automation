@@ -43,6 +43,8 @@ jobs:
 
       RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
 
+      RUN_PHP_CLIENT: ${{ steps.setup.outputs.RUN_PHP_CLIENT }}
+
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
 
   specs_search:
@@ -318,6 +320,33 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients java search
 
+  client_php_search:
+    runs-on: ubuntu-20.04
+    needs: [specs_search]
+    if: ${{ always() && needs.setup.outputs.RUN_PHP_CLIENT == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: php
+
+      - name: Cache built clients
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-php/dist
+          key: ${{ runner.os }}-php-client-${{ hashFiles('clients/algoliasearch-client-php/**') }}
+
+      - name: Generate search client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn generate php search
+
+      - name: Build search client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn build:clients php search
+
   cts:
     runs-on: ubuntu-20.04
     needs:
@@ -328,6 +357,7 @@ jobs:
       - client_javascript_analytics
       - client_javascript_insights
       - client_java_search
+      - client_php_search
 
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
