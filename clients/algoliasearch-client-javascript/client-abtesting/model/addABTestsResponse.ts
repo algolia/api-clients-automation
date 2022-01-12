@@ -10,5 +10,5 @@ export type AddABTestsResponse = {
   /**
    * TaskID of the task to wait for.
    */
-  taskID?: number;
+  taskID: number;
 };

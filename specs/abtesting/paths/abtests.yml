@@ -50,7 +50,7 @@ post:
             required:
               - abTestID
               - index
-              - taskId
+              - taskID
     '400':
       $ref: ../../common/responses/BadRequest.yml
     '402':
