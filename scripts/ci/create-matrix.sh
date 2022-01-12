@@ -1,3 +1,5 @@
+#!/bin/bash
+
 LANGUAGE=$1
 BASE_CHANGED=$2
 BASE_BRANCH=$3
@@ -32,11 +34,8 @@ done
 if [[ $(echo $to_test | jq '.client | length') == 0 ]]; then
     # client cannot be empty or the matrix will fail
     matrix='{"client":["no-run"]}'
-    run=0
 else
     matrix=$(echo $to_test | jq -c)
-    run=1
 fi
 
 echo $matrix
-exit $run
