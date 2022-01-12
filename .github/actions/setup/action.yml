@@ -99,35 +99,18 @@ runs:
       id: java-matrix
       shell: bash
       run: |
-        # Read from openapitools.json to get the clients and folders (not pretty jq)
-        clients=$(cat openapitools.json | jq -c '."generator-cli".generators | with_entries(if (.key | test("java-.*")) then ({key:.key,value:.value}) else empty end) | to_entries | map({client:.key | sub("java-";""),folder:.value.output | sub("#{cwd}/";"")}) | .[]')
-
         base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
-        to_test='{"client": []}'
-        for pair in $clients; do
-          client=$(echo $pair | jq '.client')
-          folder=$(echo $pair | jq '.folder')
-          spec_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/$client | wc -l)
-          client_changed=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- $folder | wc -l)
-          if [[ $base_changed || $spec_changed > 0 || $client_changed > 0 ]]; then
-            to_test=$(echo $to_test | jq --argjson pair $pair '.client |= .+ [$pair]')
-          fi
-        done
+        matrix=$(./scripts/ci/create-matrix.sh java $base_changed ${{ github.base_ref }})
 
-        # Convert the array to json for the matrix
-        if [[ $(echo $to_test | jq '.client | length') == 0 ]]; then
-          # client cannot be empty or the matrix will fail
-          java_matrix='{"client":["no-run"]}'
-          run_java="false"
+        if [[ $matrix == '{"client":["no-run"]}' ]]; then
+          run="false"
         else
-          java_matrix=$(echo $to_test | jq -c)
-          run_java="true"
+          run="true"
         fi
-        echo $java_matrix | jq
-        echo "Run Java: $run_java"
-        echo "::set-output name=JAVA_MATRIX::$java_matrix"
-        echo "::set-output name=RUN_JAVA::$run_java"
+
+        echo "::set-output name=MATRIX::$matrix"
+        echo "::set-output name=RUN::$run"
 
 outputs:
   RUN_SPECS:
@@ -148,11 +131,11 @@ outputs:
 
   RUN_JAVA:
     description: Whether to run java client or not
-    value: ${{ steps.java-matrix.outputs.RUN_JAVA }}
+    value: ${{ steps.java-matrix.outputs.RUN }}
 
   JAVA_MATRIX:
     description: Generate the matrix for javascript client build
-    value: ${{ steps.java-matrix.outputs.JAVA_MATRIX }}
+    value: ${{ steps.java-matrix.outputs.MATRIX }}
 
   RUN_CTS:
     description: Determine if the `cts` job should run
