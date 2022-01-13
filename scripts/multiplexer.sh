@@ -15,9 +15,9 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
 cd ${DIR}/..
 
-CMD=${@:1:$#-2}
-LANGUAGE=${@: -2:1}
-CLIENT=${@: -1}
+CMD=${@:1:$#-2} # all arguments but the last 2
+LANGUAGE=${@: -2:1} # before last argument
+CLIENT=${@: -1} # last argument
 
 if [[ $CMD == "./scripts/playground.sh" ]] && ([[ $LANGUAGE == "all" ]] || [[ $CLIENT == "all" ]]); then
     echo "You cannot use 'all' when running the playground, please specify the language and client"
