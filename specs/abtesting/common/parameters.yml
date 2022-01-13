@@ -21,12 +21,10 @@ abTestID:
 
 endAt:
   type: string
-  format: date-time
   description: End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
 
 createdAt:
   type: string
-  format: date-time
   description: End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
 
 name:
