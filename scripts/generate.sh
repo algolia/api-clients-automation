@@ -23,7 +23,7 @@ run_pre_gen() {
 
 generate_client() {
     echo "> Generating code for $generator..."
-    CMD='yarn openapi-generator-cli generate --generator-key "$generator"'
+    CMD="yarn openapi-generator-cli generate --generator-key $generator"
     if [[ $VERBOSE == "true" ]]; then
         $CMD
     else
