@@ -7,7 +7,7 @@ ABTestResponse:
     abTestID:
       $ref: ../parameters.yml#/abTestID
     taskID:
-      $ref: ../parameters.yml#/taskID
+      $ref: ../../../common/parameters.yml#/taskID
   required:
     - abTestID
     - index

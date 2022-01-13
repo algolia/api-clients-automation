@@ -12,9 +12,6 @@ index:
   type: string
   description: The index performing the A/B test.
 
-taskID:
-  $ref: ../../common/parameters.yml#/taskID
-
 abTestID:
   type: integer
   description: The A/B test ID.
