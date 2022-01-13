@@ -57,7 +57,7 @@ And that's it! If the name of the file matches a real `operationId` in the spec,
 
 ## How to add a new language
 
-- Create a template in `test/CTS/templates/<your language>/requests.mustache` that parse a array of test into your test framework of choice
+- Create a template in `test/CTS/templates/<your language>/requests.mustache` that parses an array of tests into the test framework of choice
 
 When writing your template, here is a list of variables accessible from `mustache`:
 

@@ -1,7 +1,6 @@
 type ParametersWithDataType = {
   key: string;
   value: string;
-  isDate: boolean;
   isArray: boolean;
   isObject: boolean;
   isString: boolean;

@@ -19,13 +19,13 @@ __metadata:
     eslint-plugin-algolia: 2.0.0
     eslint-plugin-eslint-comments: 3.2.0
     eslint-plugin-import: 2.25.4
-    eslint-plugin-jsdoc: 37.6.1
+    eslint-plugin-jsdoc: 37.5.1
     eslint-plugin-prettier: 4.0.0
     eslint-plugin-unused-imports: 2.0.0
     eslint-plugin-yml: 0.12.0
     json: 11.0.0
     prettier: 2.5.1
-    prettier-plugin-java: 1.6.1
+    prettier-plugin-java: 1.6.0
     swagger-cli: 4.0.4
     typescript: 4.5.4
   languageName: unknown
@@ -536,14 +536,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@es-joy/jsdoccomment@npm:~0.17.0":
-  version: 0.17.0
-  resolution: "@es-joy/jsdoccomment@npm:0.17.0"
+"@es-joy/jsdoccomment@npm:0.14.2":
+  version: 0.14.2
+  resolution: "@es-joy/jsdoccomment@npm:0.14.2"
   dependencies:
     comment-parser: 1.3.0
     esquery: ^1.4.0
-    jsdoc-type-pratt-parser: ~2.2.1
-  checksum: 8fc1fc2d01fdf18c033a70939ce61c4fa5cb648bd42987ffe6025b78e1ebbceda6f44f9868d26d51112fc9f743d1e66d0830436697fd60de327fcc9d7ae8c2e9
+    jsdoc-type-pratt-parser: 2.0.2
+  checksum: babc7f975782a0b07c90d7823dbfeaa06ba7cbe779708cc2e997d049a4e7b592ae59226abf05caffc08fc84001683bfbddfd7a1943dca5f7c38afc706a8cafaf
   languageName: node
   linkType: hard
 
@@ -2213,6 +2213,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:10.0.0":
+  version: 10.0.0
+  resolution: "dotenv@npm:10.0.0"
+  checksum: f412c5fe8c24fbe313d302d2500e247ba8a1946492db405a4de4d30dd0eb186a88a43f13c958c5a7de303938949c4231c56994f97d05c4bc1f22478d631b4005
+  languageName: node
+  linkType: hard
+
 "dotenv@npm:11.0.0":
   version: 11.0.0
   resolution: "dotenv@npm:11.0.0"
@@ -2454,21 +2461,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:37.6.1":
-  version: 37.6.1
-  resolution: "eslint-plugin-jsdoc@npm:37.6.1"
+"eslint-plugin-jsdoc@npm:37.5.1":
+  version: 37.5.1
+  resolution: "eslint-plugin-jsdoc@npm:37.5.1"
   dependencies:
-    "@es-joy/jsdoccomment": ~0.17.0
+    "@es-joy/jsdoccomment": 0.14.2
     comment-parser: 1.3.0
     debug: ^4.3.3
     escape-string-regexp: ^4.0.0
     esquery: ^1.4.0
+    jsdoc-type-pratt-parser: ^2.0.2
     regextras: ^0.8.0
     semver: ^7.3.5
     spdx-expression-parse: ^3.0.1
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
-  checksum: 646bb7cd52221cd4764bdcfe545fbcbf0087e18a3c85ea62e7009a2bba66dcc605f6eb9a3c15dc1be56674465d7883fdc234c70f34b769b4afd5dc5ec205136b
+  checksum: 8f5c3edbd3685df3b4d22c6896c4a4c75d96e3e641f45fef717c61cc8a1be17012cadd8fa90caf7aa2c8330dd35aae6aaed7b6806d97e9326ea96e307b6a3b39
   languageName: node
   linkType: hard
 
@@ -3590,13 +3598,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"java-parser@npm:2.0.1":
-  version: 2.0.1
-  resolution: "java-parser@npm:2.0.1"
+"java-parser@npm:2.0.0":
+  version: 2.0.0
+  resolution: "java-parser@npm:2.0.0"
   dependencies:
     chevrotain: 6.5.0
     lodash: 4.17.21
-  checksum: e9d708e5a3d285c977a4de9ae154389dc658857bb6eedf9aebc740fab20ec5e43e8f19a74208c222ca10bcdcbba19862c86bd3770af9501b245f83d652916a47
+  checksum: ac2ccd448d0b5d9232927f514279edd1557cd898455d6528190ae2568303d73f53214c2977f6988d1c5c351719c69dd82c65850ba53d77d0cf0449e5b42cbe81
   languageName: node
   linkType: hard
 
@@ -3610,7 +3618,7 @@ __metadata:
     "@algolia/client-query-suggestions": 5.0.0
     "@algolia/client-search": 5.0.0
     "@algolia/recommend": 5.0.0
-    dotenv: 11.0.0
+    dotenv: 10.0.0
     typescript: 4.5.4
   languageName: unknown
   linkType: soft
@@ -4159,7 +4167,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdoc-type-pratt-parser@npm:~2.2.1":
+"jsdoc-type-pratt-parser@npm:2.0.2":
+  version: 2.0.2
+  resolution: "jsdoc-type-pratt-parser@npm:2.0.2"
+  checksum: c04e0aec3eab6983956d2a23e778581eb90e69b5123e0da12a8fc9ecda967092443a67b12a878f280eed056a4a7d9b0bb3b35d04f1affb8eb5b003ccb51ea51f
+  languageName: node
+  linkType: hard
+
+"jsdoc-type-pratt-parser@npm:^2.0.2":
   version: 2.2.1
   resolution: "jsdoc-type-pratt-parser@npm:2.2.1"
   checksum: 1cb5c9b49009e7cf4f1d126cbc6b2cc90279fb78275bef6705dd319f86f2ccb60be7600190dcf6fb8ad041f40ed206a619b90291e65f1ddb12397a8294fe11b7
@@ -5009,14 +5024,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:1.6.1":
-  version: 1.6.1
-  resolution: "prettier-plugin-java@npm:1.6.1"
+"prettier-plugin-java@npm:1.6.0":
+  version: 1.6.0
+  resolution: "prettier-plugin-java@npm:1.6.0"
   dependencies:
-    java-parser: 2.0.1
+    java-parser: 2.0.0
     lodash: 4.17.21
     prettier: 2.3.1
-  checksum: c36708a190115549e8158c8740404224e11fe63fd075f0ad6aa589453d583b10bba9c6a4b6498f259aaa1ccfb4528ec763ebaff48beaf04f9198b95abced706d
+  checksum: 30fe055ba370cd9f05204ea5b5cabdb490521b84d7673ded0151aba16c0767b1f596600a4924b3541ac1a82819b67a5cd783094b53192612e9f48ae23edbaa3d
   languageName: node
   linkType: hard
 
