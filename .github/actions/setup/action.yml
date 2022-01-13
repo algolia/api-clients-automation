@@ -105,7 +105,7 @@ outputs:
     value: ${{ steps.js-matrix.outputs.RUN_CLIENT }}
 
   JS_MATRIX:
-    description: Generate the matrix for javascript client build
+    description: Generate the matrix for the Javascript client
     value: ${{ steps.js-matrix.outputs.MATRIX }}
 
   RUN_JAVA:
@@ -113,7 +113,7 @@ outputs:
     value: ${{ steps.java-matrix.outputs.RUN_CLIENT }}
 
   JAVA_MATRIX:
-    description: Generate the matrix for javascript client build
+    description: Generate the matrix for the Java client
     value: ${{ steps.java-matrix.outputs.MATRIX }}
 
   RUN_CTS:
