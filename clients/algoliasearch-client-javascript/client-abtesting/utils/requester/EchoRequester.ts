@@ -1,10 +1,10 @@
-import type { EndRequest, Request, Response } from '../types';
+import type { EndRequest, Request, Response, EchoResponse } from '../types';
 
 import { Requester } from './Requester';
 
 function searchParamsWithoutUA(
   params: URLSearchParams
-): Record<string, any> | undefined {
+): EchoResponse['searchParams'] {
   const searchParams = {};
 
   for (const [k, v] of params) {

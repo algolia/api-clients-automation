@@ -43,11 +43,10 @@ export type Response = {
   status: number;
 };
 
-export type EchoResponse = Omit<Request, 'data'> & {
+export type EchoResponse = Request & {
   connectTimeout: number;
   headers: Record<string, string>;
   responseTimeout: number;
-  data?: Record<string, any>;
   searchParams?: Record<string, string>;
   userAgent?: string;
 };
