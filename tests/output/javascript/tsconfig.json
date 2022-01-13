@@ -21,18 +21,15 @@
     ],
     "outDir": "dist",
     "typeRoots": [
-      "../node_modules/@types"
+      "../../../node_modules/@types"
     ],
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "resolveJsonModule": true
   },
   "include": [
-    "src"
-  ],
-  "exclude": [
-    "dist",
-    "output"
+    "tests"
   ]
 }
