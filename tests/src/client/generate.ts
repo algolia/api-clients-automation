@@ -12,7 +12,13 @@ import { TestsBlock, Test } from './types';
 
 async function loadTests(client: string) {
   const testBlocks: TestsBlock[] = [];
-  for await (const file of walk(`./CTS/client/${client}`)) {
+  const clientPath = `./CTS/client/${client}`;
+
+  if (!(await exists(clientPath))) {
+    return;
+  }
+
+  for await (const file of walk(clientPath)) {
     if (!file.name.endsWith('.json')) {
       continue;
     }
@@ -67,6 +73,13 @@ async function loadTemplates(language: string) {
 
 export async function generateTests(language: string, client: string) {
   const testsBlocks = await loadTests(client);
+
+  if (!testsBlocks) {
+    console.warn(
+        `Skipping because tests dont't exist for CTS > generate:client for ${language}-${client}`
+      );
+      return;
+  }
 
   const outputPath = `output/${language}/tests/client/`;
   await fsp.mkdir(outputPath, { recursive: true });
