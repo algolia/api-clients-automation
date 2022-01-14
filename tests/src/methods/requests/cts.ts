@@ -19,7 +19,7 @@ async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
 
   const ctsClient: CTSBlock[] = [];
 
-  for await (const file of walk(`./CTS/clients/${client}/requests`)) {
+  for await (const file of walk(`./CTS/methods/requests/${client}`)) {
     if (!file.name.endsWith('json')) {
       continue;
     }
