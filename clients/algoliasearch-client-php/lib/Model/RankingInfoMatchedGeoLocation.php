@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * RankingInfoMatchedGeoLocation Class Doc Comment
@@ -33,7 +33,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     protected static $openAPITypes = [
         'lat' => 'double',
         'lng' => 'double',
-        'distance' => 'int'
+        'distance' => 'int',
     ];
 
     /**
@@ -46,7 +46,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     protected static $openAPIFormats = [
         'lat' => 'double',
         'lng' => 'double',
-        'distance' => null
+        'distance' => null,
     ];
 
     /**
@@ -78,7 +78,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     protected static $attributeMap = [
         'lat' => 'lat',
         'lng' => 'lng',
-        'distance' => 'distance'
+        'distance' => 'distance',
     ];
 
     /**
@@ -89,7 +89,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     protected static $setters = [
         'lat' => 'setLat',
         'lng' => 'setLng',
-        'distance' => 'setDistance'
+        'distance' => 'setDistance',
     ];
 
     /**
@@ -100,7 +100,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     protected static $getters = [
         'lat' => 'getLat',
         'lng' => 'getLng',
-        'distance' => 'getDistance'
+        'distance' => 'getDistance',
     ];
 
     /**
@@ -143,7 +143,6 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -188,11 +187,10 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets lat
      *
-     * @return double|null
+     * @return float|null
      */
     public function getLat()
     {
@@ -202,7 +200,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets lat
      *
-     * @param double|null $lat Latitude of the matched location.
+     * @param float|null $lat latitude of the matched location
      *
      * @return self
      */
@@ -216,7 +214,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets lng
      *
-     * @return double|null
+     * @return float|null
      */
     public function getLng()
     {
@@ -226,7 +224,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets lng
      *
-     * @param double|null $lng Longitude of the matched location.
+     * @param float|null $lng longitude of the matched location
      *
      * @return self
      */
@@ -250,7 +248,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets distance
      *
-     * @param int|null $distance Distance between the matched location and the search location (in meters).
+     * @param int|null $distance distance between the matched location and the search location (in meters)
      *
      * @return self
      */
@@ -263,9 +261,9 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -275,7 +273,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -304,7 +302,7 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -315,14 +313,15 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -348,5 +347,4 @@ class RankingInfoMatchedGeoLocation implements ModelInterface, ArrayAccess, \Jso
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

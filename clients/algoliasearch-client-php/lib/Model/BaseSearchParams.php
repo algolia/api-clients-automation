@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * BaseSearchParams Class Doc Comment
@@ -62,7 +62,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
         'analyticsTags' => 'string[]',
         'percentileComputation' => 'bool',
         'enableABTest' => 'bool',
-        'enableReRanking' => 'bool'
+        'enableReRanking' => 'bool',
     ];
 
     /**
@@ -104,7 +104,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
         'analyticsTags' => null,
         'percentileComputation' => null,
         'enableABTest' => null,
-        'enableReRanking' => null
+        'enableReRanking' => null,
     ];
 
     /**
@@ -165,7 +165,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
         'analyticsTags' => 'analyticsTags',
         'percentileComputation' => 'percentileComputation',
         'enableABTest' => 'enableABTest',
-        'enableReRanking' => 'enableReRanking'
+        'enableReRanking' => 'enableReRanking',
     ];
 
     /**
@@ -205,7 +205,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
         'analyticsTags' => 'setAnalyticsTags',
         'percentileComputation' => 'setPercentileComputation',
         'enableABTest' => 'setEnableABTest',
-        'enableReRanking' => 'setEnableReRanking'
+        'enableReRanking' => 'setEnableReRanking',
     ];
 
     /**
@@ -245,7 +245,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
         'analyticsTags' => 'getAnalyticsTags',
         'percentileComputation' => 'getPercentileComputation',
         'enableABTest' => 'getEnableABTest',
-        'enableReRanking' => 'getEnableReRanking'
+        'enableReRanking' => 'getEnableReRanking',
     ];
 
     /**
@@ -288,7 +288,6 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -374,7 +373,6 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets similarQuery
      *
@@ -388,7 +386,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets similarQuery
      *
-     * @param string|null $similarQuery Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results.
+     * @param string|null $similarQuery overrides the query parameter and performs a more generic search that can be used to find \"similar\" results
      *
      * @return self
      */
@@ -412,7 +410,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets filters
      *
-     * @param string|null $filters Filter the query with numeric, facet and/or tag filters.
+     * @param string|null $filters filter the query with numeric, facet and/or tag filters
      *
      * @return self
      */
@@ -436,7 +434,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets facetFilters
      *
-     * @param string[]|null $facetFilters Filter hits by facet value.
+     * @param string[]|null $facetFilters filter hits by facet value
      *
      * @return self
      */
@@ -460,7 +458,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets optionalFilters
      *
-     * @param string[]|null $optionalFilters Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
+     * @param string[]|null $optionalFilters create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter
      *
      * @return self
      */
@@ -484,7 +482,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets numericFilters
      *
-     * @param string[]|null $numericFilters Filter on numeric attributes.
+     * @param string[]|null $numericFilters filter on numeric attributes
      *
      * @return self
      */
@@ -508,7 +506,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets tagFilters
      *
-     * @param string[]|null $tagFilters Filter hits by tags.
+     * @param string[]|null $tagFilters filter hits by tags
      *
      * @return self
      */
@@ -532,7 +530,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets sumOrFiltersScores
      *
-     * @param bool|null $sumOrFiltersScores Determines how to calculate the total score for filtering.
+     * @param bool|null $sumOrFiltersScores determines how to calculate the total score for filtering
      *
      * @return self
      */
@@ -556,7 +554,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets facets
      *
-     * @param string[]|null $facets Retrieve facets and their facet values.
+     * @param string[]|null $facets retrieve facets and their facet values
      *
      * @return self
      */
@@ -580,7 +578,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets maxValuesPerFacet
      *
-     * @param int|null $maxValuesPerFacet Maximum number of facet values to return for each facet during a regular search.
+     * @param int|null $maxValuesPerFacet maximum number of facet values to return for each facet during a regular search
      *
      * @return self
      */
@@ -604,7 +602,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets facetingAfterDistinct
      *
-     * @param bool|null $facetingAfterDistinct Force faceting to be applied after de-duplication (via the Distinct setting).
+     * @param bool|null $facetingAfterDistinct force faceting to be applied after de-duplication (via the Distinct setting)
      *
      * @return self
      */
@@ -628,7 +626,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets sortFacetValuesBy
      *
-     * @param string|null $sortFacetValuesBy Controls how facet values are fetched.
+     * @param string|null $sortFacetValuesBy controls how facet values are fetched
      *
      * @return self
      */
@@ -652,7 +650,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets page
      *
-     * @param int|null $page Specify the page to retrieve.
+     * @param int|null $page specify the page to retrieve
      *
      * @return self
      */
@@ -676,7 +674,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets offset
      *
-     * @param int|null $offset Specify the offset of the first hit to return.
+     * @param int|null $offset specify the offset of the first hit to return
      *
      * @return self
      */
@@ -700,13 +698,12 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets length
      *
-     * @param int|null $length Set the number of hits to retrieve (used only with offset).
+     * @param int|null $length set the number of hits to retrieve (used only with offset)
      *
      * @return self
      */
     public function setLength($length)
     {
-
         if (!is_null($length) && ($length > 1000)) {
             throw new \InvalidArgumentException('invalid value for $length when calling BaseSearchParams., must be smaller than or equal to 1000.');
         }
@@ -732,7 +729,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets aroundLatLng
      *
-     * @param string|null $aroundLatLng Search for entries around a central geolocation, enabling a geo search within a circular area.
+     * @param string|null $aroundLatLng search for entries around a central geolocation, enabling a geo search within a circular area
      *
      * @return self
      */
@@ -756,7 +753,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets aroundLatLngViaIP
      *
-     * @param bool|null $aroundLatLngViaIP Search for entries around a given location automatically computed from the requester's IP address.
+     * @param bool|null $aroundLatLngViaIP search for entries around a given location automatically computed from the requester's IP address
      *
      * @return self
      */
@@ -780,7 +777,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets aroundRadius
      *
-     * @param OneOfIntegerString|null $aroundRadius Define the maximum radius for a geo search (in meters).
+     * @param OneOfIntegerString|null $aroundRadius define the maximum radius for a geo search (in meters)
      *
      * @return self
      */
@@ -804,7 +801,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets aroundPrecision
      *
-     * @param int|null $aroundPrecision Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
+     * @param int|null $aroundPrecision precision of geo search (in meters), to add grouping by geo location to the ranking formula
      *
      * @return self
      */
@@ -828,13 +825,12 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets minimumAroundRadius
      *
-     * @param int|null $minimumAroundRadius Minimum radius (in meters) used for a geo search when aroundRadius is not set.
+     * @param int|null $minimumAroundRadius minimum radius (in meters) used for a geo search when aroundRadius is not set
      *
      * @return self
      */
     public function setMinimumAroundRadius($minimumAroundRadius)
     {
-
         if (!is_null($minimumAroundRadius) && ($minimumAroundRadius < 1)) {
             throw new \InvalidArgumentException('invalid value for $minimumAroundRadius when calling BaseSearchParams., must be bigger than or equal to 1.');
         }
@@ -857,7 +853,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets insideBoundingBox
      *
-     * @param float[]|null $insideBoundingBox Search inside a rectangular area (in geo coordinates).
+     * @param float[]|null $insideBoundingBox search inside a rectangular area (in geo coordinates)
      *
      * @return self
      */
@@ -881,7 +877,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets insidePolygon
      *
-     * @param float[]|null $insidePolygon Search inside a polygon (in geo coordinates).
+     * @param float[]|null $insidePolygon search inside a polygon (in geo coordinates)
      *
      * @return self
      */
@@ -929,7 +925,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets ruleContexts
      *
-     * @param string[]|null $ruleContexts Enables contextual rules.
+     * @param string[]|null $ruleContexts enables contextual rules
      *
      * @return self
      */
@@ -953,7 +949,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets personalizationImpact
      *
-     * @param int|null $personalizationImpact Define the impact of the Personalization feature.
+     * @param int|null $personalizationImpact define the impact of the Personalization feature
      *
      * @return self
      */
@@ -977,7 +973,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets userToken
      *
-     * @param string|null $userToken Associates a certain user token with the current search.
+     * @param string|null $userToken associates a certain user token with the current search
      *
      * @return self
      */
@@ -1001,7 +997,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets getRankingInfo
      *
-     * @param bool|null $getRankingInfo Retrieve detailed ranking information.
+     * @param bool|null $getRankingInfo retrieve detailed ranking information
      *
      * @return self
      */
@@ -1025,7 +1021,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets clickAnalytics
      *
-     * @param bool|null $clickAnalytics Enable the Click Analytics feature.
+     * @param bool|null $clickAnalytics enable the Click Analytics feature
      *
      * @return self
      */
@@ -1049,7 +1045,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets analytics
      *
-     * @param bool|null $analytics Whether the current query will be taken into account in the Analytics.
+     * @param bool|null $analytics whether the current query will be taken into account in the Analytics
      *
      * @return self
      */
@@ -1073,7 +1069,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets analyticsTags
      *
-     * @param string[]|null $analyticsTags List of tags to apply to the query for analytics purposes.
+     * @param string[]|null $analyticsTags list of tags to apply to the query for analytics purposes
      *
      * @return self
      */
@@ -1097,7 +1093,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets percentileComputation
      *
-     * @param bool|null $percentileComputation Whether to include or exclude a query from the processing-time percentile computation.
+     * @param bool|null $percentileComputation whether to include or exclude a query from the processing-time percentile computation
      *
      * @return self
      */
@@ -1121,7 +1117,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets enableABTest
      *
-     * @param bool|null $enableABTest Whether this search should participate in running AB tests.
+     * @param bool|null $enableABTest whether this search should participate in running AB tests
      *
      * @return self
      */
@@ -1145,7 +1141,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets enableReRanking
      *
-     * @param bool|null $enableReRanking Whether this search should use AI Re-Ranking.
+     * @param bool|null $enableReRanking whether this search should use AI Re-Ranking
      *
      * @return self
      */
@@ -1158,9 +1154,9 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -1170,7 +1166,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -1199,7 +1195,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -1210,14 +1206,15 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -1243,5 +1240,4 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

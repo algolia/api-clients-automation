@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * BrowseResponse Class Doc Comment
@@ -56,7 +56,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'serverUsed' => 'string',
         'userData' => 'object',
         'hits' => '\Algolia\AlgoliaSearch\Model\Record[]',
-        'cursor' => 'string'
+        'cursor' => 'string',
     ];
 
     /**
@@ -92,7 +92,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'serverUsed' => null,
         'userData' => null,
         'hits' => null,
-        'cursor' => null
+        'cursor' => null,
     ];
 
     /**
@@ -147,7 +147,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'serverUsed' => 'serverUsed',
         'userData' => 'userData',
         'hits' => 'hits',
-        'cursor' => 'cursor'
+        'cursor' => 'cursor',
     ];
 
     /**
@@ -181,7 +181,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'serverUsed' => 'setServerUsed',
         'userData' => 'setUserData',
         'hits' => 'setHits',
-        'cursor' => 'setCursor'
+        'cursor' => 'setCursor',
     ];
 
     /**
@@ -215,7 +215,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'serverUsed' => 'getServerUsed',
         'userData' => 'getUserData',
         'hits' => 'getHits',
-        'cursor' => 'getCursor'
+        'cursor' => 'getCursor',
     ];
 
     /**
@@ -258,7 +258,6 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -312,7 +311,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['aroundLatLng']) && !preg_match("/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/", $this->container['aroundLatLng'])) {
+        if (!is_null($this->container['aroundLatLng']) && !preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $this->container['aroundLatLng'])) {
             $invalidProperties[] = "invalid value for 'aroundLatLng', must be conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.";
         }
 
@@ -349,6 +348,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['cursor'] === null) {
             $invalidProperties[] = "'cursor' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -363,7 +363,6 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets abTestID
      *
@@ -377,7 +376,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets abTestID
      *
-     * @param int|null $abTestID If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
+     * @param int|null $abTestID if a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID
      *
      * @return self
      */
@@ -401,7 +400,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets abTestVariantID
      *
-     * @param int|null $abTestVariantID If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used.
+     * @param int|null $abTestVariantID if a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used
      *
      * @return self
      */
@@ -425,14 +424,13 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets aroundLatLng
      *
-     * @param string|null $aroundLatLng The computed geo location.
+     * @param string|null $aroundLatLng the computed geo location
      *
      * @return self
      */
     public function setAroundLatLng($aroundLatLng)
     {
-
-        if (!is_null($aroundLatLng) && (!preg_match("/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/", $aroundLatLng))) {
+        if (!is_null($aroundLatLng) && (!preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $aroundLatLng))) {
             throw new \InvalidArgumentException("invalid value for $aroundLatLng when calling BrowseResponse., must conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.");
         }
 
@@ -478,7 +476,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets exhaustiveFacetsCount
      *
-     * @param bool|null $exhaustiveFacetsCount Whether the facet count is exhaustive or approximate.
+     * @param bool|null $exhaustiveFacetsCount whether the facet count is exhaustive or approximate
      *
      * @return self
      */
@@ -550,7 +548,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets facets
      *
-     * @param array<string,array<string,string>>|null $facets A mapping of each facet name to the corresponding facet counts.
+     * @param array<string,array<string,string>>|null $facets a mapping of each facet name to the corresponding facet counts
      *
      * @return self
      */
@@ -574,7 +572,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets facetsStats
      *
-     * @param array<string,\Algolia\AlgoliaSearch\Model\BaseSearchResponseFacetsStats>|null $facetsStats Statistics for numerical facets.
+     * @param array<string,\Algolia\AlgoliaSearch\Model\BaseSearchResponseFacetsStats>|null $facetsStats statistics for numerical facets
      *
      * @return self
      */
@@ -598,7 +596,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets hitsPerPage
      *
-     * @param int $hitsPerPage Set the number of hits per page.
+     * @param int $hitsPerPage set the number of hits per page
      *
      * @return self
      */
@@ -622,7 +620,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets index
      *
-     * @param string|null $index Index name used for the query.
+     * @param string|null $index index name used for the query
      *
      * @return self
      */
@@ -670,7 +668,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets message
      *
-     * @param string|null $message Used to return warnings about the query.
+     * @param string|null $message used to return warnings about the query
      *
      * @return self
      */
@@ -694,7 +692,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets nbHits
      *
-     * @param int $nbHits Number of hits that the search query matched.
+     * @param int $nbHits number of hits that the search query matched
      *
      * @return self
      */
@@ -766,7 +764,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets page
      *
-     * @param int $page Specify the page to retrieve.
+     * @param int $page specify the page to retrieve
      *
      * @return self
      */
@@ -790,7 +788,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets params
      *
-     * @param string $params A url-encoded string of all search parameters.
+     * @param string $params a url-encoded string of all search parameters
      *
      * @return self
      */
@@ -814,7 +812,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets parsedQuery
      *
-     * @param string|null $parsedQuery The query string that will be searched, after normalization.
+     * @param string|null $parsedQuery the query string that will be searched, after normalization
      *
      * @return self
      */
@@ -838,7 +836,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets processingTimeMS
      *
-     * @param int $processingTimeMS Time the server took to process the request, in milliseconds.
+     * @param int $processingTimeMS time the server took to process the request, in milliseconds
      *
      * @return self
      */
@@ -862,7 +860,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets query
      *
-     * @param string $query The text to search in the index.
+     * @param string $query the text to search in the index
      *
      * @return self
      */
@@ -886,7 +884,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets queryAfterRemoval
      *
-     * @param string|null $queryAfterRemoval A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
+     * @param string|null $queryAfterRemoval a markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set
      *
      * @return self
      */
@@ -910,7 +908,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets serverUsed
      *
-     * @param string|null $serverUsed Actual host name of the server that processed the request.
+     * @param string|null $serverUsed actual host name of the server that processed the request
      *
      * @return self
      */
@@ -934,7 +932,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets userData
      *
-     * @param object|null $userData Lets you store custom data in your indices.
+     * @param object|null $userData lets you store custom data in your indices
      *
      * @return self
      */
@@ -995,9 +993,9 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -1007,7 +1005,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -1036,7 +1034,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -1047,14 +1045,15 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -1080,5 +1079,4 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

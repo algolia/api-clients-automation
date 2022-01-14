@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * MultipleBatchResponse Class Doc Comment
@@ -32,7 +32,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       */
     protected static $openAPITypes = [
         'taskID' => 'object',
-        'objectIDs' => 'string[]'
+        'objectIDs' => 'string[]',
     ];
 
     /**
@@ -44,7 +44,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       */
     protected static $openAPIFormats = [
         'taskID' => null,
-        'objectIDs' => null
+        'objectIDs' => null,
     ];
 
     /**
@@ -75,7 +75,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     protected static $attributeMap = [
         'taskID' => 'taskID',
-        'objectIDs' => 'objectIDs'
+        'objectIDs' => 'objectIDs',
     ];
 
     /**
@@ -85,7 +85,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     protected static $setters = [
         'taskID' => 'setTaskID',
-        'objectIDs' => 'setObjectIDs'
+        'objectIDs' => 'setObjectIDs',
     ];
 
     /**
@@ -95,7 +95,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     protected static $getters = [
         'taskID' => 'getTaskID',
-        'objectIDs' => 'getObjectIDs'
+        'objectIDs' => 'getObjectIDs',
     ];
 
     /**
@@ -139,7 +139,6 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -182,7 +181,6 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets taskID
      *
@@ -196,7 +194,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets taskID
      *
-     * @param object|null $taskID List of tasksIDs per index.
+     * @param object|null $taskID list of tasksIDs per index
      *
      * @return self
      */
@@ -220,7 +218,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets objectIDs
      *
-     * @param string[]|null $objectIDs List of objectID.
+     * @param string[]|null $objectIDs list of objectID
      *
      * @return self
      */
@@ -233,9 +231,9 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -245,7 +243,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -274,7 +272,7 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -285,14 +283,15 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -318,5 +317,4 @@ class MultipleBatchResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * SearchForFacetValuesRequest Class Doc Comment
@@ -33,7 +33,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $openAPITypes = [
         'params' => 'string',
         'facetQuery' => 'string',
-        'maxFacetHits' => 'int'
+        'maxFacetHits' => 'int',
     ];
 
     /**
@@ -46,7 +46,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $openAPIFormats = [
         'params' => null,
         'facetQuery' => null,
-        'maxFacetHits' => null
+        'maxFacetHits' => null,
     ];
 
     /**
@@ -78,7 +78,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $attributeMap = [
         'params' => 'params',
         'facetQuery' => 'facetQuery',
-        'maxFacetHits' => 'maxFacetHits'
+        'maxFacetHits' => 'maxFacetHits',
     ];
 
     /**
@@ -89,7 +89,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $setters = [
         'params' => 'setParams',
         'facetQuery' => 'setFacetQuery',
-        'maxFacetHits' => 'setMaxFacetHits'
+        'maxFacetHits' => 'setMaxFacetHits',
     ];
 
     /**
@@ -100,7 +100,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $getters = [
         'params' => 'getParams',
         'facetQuery' => 'getFacetQuery',
-        'maxFacetHits' => 'getMaxFacetHits'
+        'maxFacetHits' => 'getMaxFacetHits',
     ];
 
     /**
@@ -143,7 +143,6 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -192,7 +191,6 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets params
      *
@@ -206,7 +204,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets params
      *
-     * @param string|null $params Search parameters as URL-encoded query string.
+     * @param string|null $params search parameters as URL-encoded query string
      *
      * @return self
      */
@@ -230,7 +228,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets facetQuery
      *
-     * @param string|null $facetQuery Text to search inside the facet's values.
+     * @param string|null $facetQuery text to search inside the facet's values
      *
      * @return self
      */
@@ -260,7 +258,6 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
      */
     public function setMaxFacetHits($maxFacetHits)
     {
-
         if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
             throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling SearchForFacetValuesRequest., must be smaller than or equal to 100.');
         }
@@ -272,9 +269,9 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -284,7 +281,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -313,7 +310,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -324,14 +321,15 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -357,5 +355,4 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

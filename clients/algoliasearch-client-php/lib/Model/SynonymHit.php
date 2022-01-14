@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * SynonymHit Class Doc Comment
  *
  * @category Class
  * @description Synonym object.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -40,7 +41,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         'corrections' => 'string[]',
         'placeholder' => 'string',
         'replacements' => 'string[]',
-        'highlightResult' => '\Algolia\AlgoliaSearch\Model\SynonymHitHighlightResult'
+        'highlightResult' => '\Algolia\AlgoliaSearch\Model\SynonymHitHighlightResult',
     ];
 
     /**
@@ -59,7 +60,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         'corrections' => null,
         'placeholder' => null,
         'replacements' => null,
-        'highlightResult' => null
+        'highlightResult' => null,
     ];
 
     /**
@@ -97,7 +98,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         'corrections' => 'corrections',
         'placeholder' => 'placeholder',
         'replacements' => 'replacements',
-        'highlightResult' => '_highlightResult'
+        'highlightResult' => '_highlightResult',
     ];
 
     /**
@@ -114,7 +115,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         'corrections' => 'setCorrections',
         'placeholder' => 'setPlaceholder',
         'replacements' => 'setReplacements',
-        'highlightResult' => 'setHighlightResult'
+        'highlightResult' => 'setHighlightResult',
     ];
 
     /**
@@ -131,7 +132,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         'corrections' => 'getCorrections',
         'placeholder' => 'getPlaceholder',
         'replacements' => 'getReplacements',
-        'highlightResult' => 'getHighlightResult'
+        'highlightResult' => 'getHighlightResult',
     ];
 
     /**
@@ -261,7 +262,6 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets objectID
      *
@@ -275,7 +275,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets objectID
      *
-     * @param string $objectID Unique identifier of the synonym object to be created or updated.
+     * @param string $objectID unique identifier of the synonym object to be created or updated
      *
      * @return self
      */
@@ -299,7 +299,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets type
      *
-     * @param string $type Type of the synonym object.
+     * @param string $type type of the synonym object
      *
      * @return self
      */
@@ -333,7 +333,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets synonyms
      *
-     * @param string[]|null $synonyms Words or phrases to be considered equivalent.
+     * @param string[]|null $synonyms words or phrases to be considered equivalent
      *
      * @return self
      */
@@ -357,7 +357,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets input
      *
-     * @param string|null $input Word or phrase to appear in query strings (for onewaysynonym).
+     * @param string|null $input word or phrase to appear in query strings (for onewaysynonym)
      *
      * @return self
      */
@@ -381,7 +381,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets word
      *
-     * @param string|null $word Word or phrase to appear in query strings (for altcorrection1 and altcorrection2).
+     * @param string|null $word word or phrase to appear in query strings (for altcorrection1 and altcorrection2)
      *
      * @return self
      */
@@ -405,7 +405,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets corrections
      *
-     * @param string[]|null $corrections Words to be matched in records.
+     * @param string[]|null $corrections words to be matched in records
      *
      * @return self
      */
@@ -429,7 +429,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets placeholder
      *
-     * @param string|null $placeholder Token to be put inside records.
+     * @param string|null $placeholder token to be put inside records
      *
      * @return self
      */
@@ -453,7 +453,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets replacements
      *
-     * @param string[]|null $replacements List of query words that will match the token.
+     * @param string[]|null $replacements list of query words that will match the token
      *
      * @return self
      */
@@ -490,9 +490,9 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -502,7 +502,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -531,7 +531,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -542,14 +542,15 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -575,5 +576,4 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

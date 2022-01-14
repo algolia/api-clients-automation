@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * IndexSettings Class Doc Comment
  *
  * @category Class
  * @description The Algolia index settings.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -87,7 +88,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
         'responseFields' => 'string[]',
         'maxFacetHits' => 'int',
         'attributeCriteriaComputedByMinProximity' => 'bool',
-        'renderingContent' => 'object'
+        'renderingContent' => 'object',
     ];
 
     /**
@@ -153,7 +154,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
         'responseFields' => null,
         'maxFacetHits' => null,
         'attributeCriteriaComputedByMinProximity' => null,
-        'renderingContent' => null
+        'renderingContent' => null,
     ];
 
     /**
@@ -238,7 +239,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
         'responseFields' => 'responseFields',
         'maxFacetHits' => 'maxFacetHits',
         'attributeCriteriaComputedByMinProximity' => 'attributeCriteriaComputedByMinProximity',
-        'renderingContent' => 'renderingContent'
+        'renderingContent' => 'renderingContent',
     ];
 
     /**
@@ -302,7 +303,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
         'responseFields' => 'setResponseFields',
         'maxFacetHits' => 'setMaxFacetHits',
         'attributeCriteriaComputedByMinProximity' => 'setAttributeCriteriaComputedByMinProximity',
-        'renderingContent' => 'setRenderingContent'
+        'renderingContent' => 'setRenderingContent',
     ];
 
     /**
@@ -366,7 +367,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
         'responseFields' => 'getResponseFields',
         'maxFacetHits' => 'getMaxFacetHits',
         'attributeCriteriaComputedByMinProximity' => 'getAttributeCriteriaComputedByMinProximity',
-        'renderingContent' => 'getRenderingContent'
+        'renderingContent' => 'getRenderingContent',
     ];
 
     /**
@@ -667,7 +668,6 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets replicas
      *
@@ -681,7 +681,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets replicas
      *
-     * @param string[]|null $replicas Creates replicas, exact copies of an index.
+     * @param string[]|null $replicas creates replicas, exact copies of an index
      *
      * @return self
      */
@@ -705,7 +705,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets paginationLimitedTo
      *
-     * @param int|null $paginationLimitedTo Set the maximum number of hits accessible via pagination.
+     * @param int|null $paginationLimitedTo set the maximum number of hits accessible via pagination
      *
      * @return self
      */
@@ -729,7 +729,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets disableTypoToleranceOnWords
      *
-     * @param string[]|null $disableTypoToleranceOnWords A list of words for which you want to turn off typo tolerance.
+     * @param string[]|null $disableTypoToleranceOnWords a list of words for which you want to turn off typo tolerance
      *
      * @return self
      */
@@ -753,7 +753,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets attributesToTransliterate
      *
-     * @param string[]|null $attributesToTransliterate Specify on which attributes to apply transliteration.
+     * @param string[]|null $attributesToTransliterate specify on which attributes to apply transliteration
      *
      * @return self
      */
@@ -777,7 +777,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets camelCaseAttributes
      *
-     * @param string[]|null $camelCaseAttributes List of attributes on which to do a decomposition of camel case words.
+     * @param string[]|null $camelCaseAttributes list of attributes on which to do a decomposition of camel case words
      *
      * @return self
      */
@@ -801,7 +801,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets decompoundedAttributes
      *
-     * @param object|null $decompoundedAttributes Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+     * @param object|null $decompoundedAttributes specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding
      *
      * @return self
      */
@@ -825,7 +825,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets indexLanguages
      *
-     * @param string[]|null $indexLanguages Sets the languages at the index level for language-specific processing such as tokenization and normalization.
+     * @param string[]|null $indexLanguages sets the languages at the index level for language-specific processing such as tokenization and normalization
      *
      * @return self
      */
@@ -849,7 +849,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets filterPromotes
      *
-     * @param bool|null $filterPromotes Whether promoted results should match the filters of the current search, except for geographic filters.
+     * @param bool|null $filterPromotes whether promoted results should match the filters of the current search, except for geographic filters
      *
      * @return self
      */
@@ -873,7 +873,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets disablePrefixOnAttributes
      *
-     * @param string[]|null $disablePrefixOnAttributes List of attributes on which you want to disable prefix matching.
+     * @param string[]|null $disablePrefixOnAttributes list of attributes on which you want to disable prefix matching
      *
      * @return self
      */
@@ -897,7 +897,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets allowCompressionOfIntegerArray
      *
-     * @param bool|null $allowCompressionOfIntegerArray Enables compression of large integer arrays.
+     * @param bool|null $allowCompressionOfIntegerArray enables compression of large integer arrays
      *
      * @return self
      */
@@ -921,7 +921,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets numericAttributesForFiltering
      *
-     * @param string[]|null $numericAttributesForFiltering List of numeric attributes that can be used as numerical filters.
+     * @param string[]|null $numericAttributesForFiltering list of numeric attributes that can be used as numerical filters
      *
      * @return self
      */
@@ -945,7 +945,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets userData
      *
-     * @param object|null $userData Lets you store custom data in your indices.
+     * @param object|null $userData lets you store custom data in your indices
      *
      * @return self
      */
@@ -969,7 +969,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets searchableAttributes
      *
-     * @param string[]|null $searchableAttributes The complete list of attributes used for searching.
+     * @param string[]|null $searchableAttributes the complete list of attributes used for searching
      *
      * @return self
      */
@@ -993,7 +993,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets attributesForFaceting
      *
-     * @param string[]|null $attributesForFaceting The complete list of attributes that will be used for faceting.
+     * @param string[]|null $attributesForFaceting the complete list of attributes that will be used for faceting
      *
      * @return self
      */
@@ -1017,7 +1017,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets unretrievableAttributes
      *
-     * @param string[]|null $unretrievableAttributes List of attributes that can't be retrieved at query time.
+     * @param string[]|null $unretrievableAttributes list of attributes that can't be retrieved at query time
      *
      * @return self
      */
@@ -1041,7 +1041,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets attributesToRetrieve
      *
-     * @param string[]|null $attributesToRetrieve This parameter controls which attributes to retrieve and which not to retrieve.
+     * @param string[]|null $attributesToRetrieve this parameter controls which attributes to retrieve and which not to retrieve
      *
      * @return self
      */
@@ -1065,7 +1065,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets restrictSearchableAttributes
      *
-     * @param string[]|null $restrictSearchableAttributes Restricts a given query to look in only a subset of your searchable attributes.
+     * @param string[]|null $restrictSearchableAttributes restricts a given query to look in only a subset of your searchable attributes
      *
      * @return self
      */
@@ -1089,7 +1089,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets ranking
      *
-     * @param string[]|null $ranking Controls how Algolia should sort your results.
+     * @param string[]|null $ranking controls how Algolia should sort your results
      *
      * @return self
      */
@@ -1113,7 +1113,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets customRanking
      *
-     * @param string[]|null $customRanking Specifies the custom ranking criterion.
+     * @param string[]|null $customRanking specifies the custom ranking criterion
      *
      * @return self
      */
@@ -1137,7 +1137,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets relevancyStrictness
      *
-     * @param int|null $relevancyStrictness Controls the relevancy threshold below which less relevant results aren't included in the results.
+     * @param int|null $relevancyStrictness controls the relevancy threshold below which less relevant results aren't included in the results
      *
      * @return self
      */
@@ -1161,7 +1161,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets attributesToHighlight
      *
-     * @param string[]|null $attributesToHighlight List of attributes to highlight.
+     * @param string[]|null $attributesToHighlight list of attributes to highlight
      *
      * @return self
      */
@@ -1185,7 +1185,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets attributesToSnippet
      *
-     * @param string[]|null $attributesToSnippet List of attributes to snippet, with an optional maximum number of words to snippet.
+     * @param string[]|null $attributesToSnippet list of attributes to snippet, with an optional maximum number of words to snippet
      *
      * @return self
      */
@@ -1209,7 +1209,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets highlightPreTag
      *
-     * @param string|null $highlightPreTag The HTML string to insert before the highlighted parts in all highlight and snippet results.
+     * @param string|null $highlightPreTag the HTML string to insert before the highlighted parts in all highlight and snippet results
      *
      * @return self
      */
@@ -1233,7 +1233,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets highlightPostTag
      *
-     * @param string|null $highlightPostTag The HTML string to insert after the highlighted parts in all highlight and snippet results.
+     * @param string|null $highlightPostTag the HTML string to insert after the highlighted parts in all highlight and snippet results
      *
      * @return self
      */
@@ -1257,7 +1257,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets snippetEllipsisText
      *
-     * @param string|null $snippetEllipsisText String used as an ellipsis indicator when a snippet is truncated.
+     * @param string|null $snippetEllipsisText string used as an ellipsis indicator when a snippet is truncated
      *
      * @return self
      */
@@ -1281,7 +1281,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets restrictHighlightAndSnippetArrays
      *
-     * @param bool|null $restrictHighlightAndSnippetArrays Restrict highlighting and snippeting to items that matched the query.
+     * @param bool|null $restrictHighlightAndSnippetArrays restrict highlighting and snippeting to items that matched the query
      *
      * @return self
      */
@@ -1305,7 +1305,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets hitsPerPage
      *
-     * @param int|null $hitsPerPage Set the number of hits per page.
+     * @param int|null $hitsPerPage set the number of hits per page
      *
      * @return self
      */
@@ -1329,7 +1329,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets minWordSizefor1Typo
      *
-     * @param int|null $minWordSizefor1Typo Minimum number of characters a word in the query string must contain to accept matches with 1 typo.
+     * @param int|null $minWordSizefor1Typo minimum number of characters a word in the query string must contain to accept matches with 1 typo
      *
      * @return self
      */
@@ -1353,7 +1353,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets minWordSizefor2Typos
      *
-     * @param int|null $minWordSizefor2Typos Minimum number of characters a word in the query string must contain to accept matches with 2 typos.
+     * @param int|null $minWordSizefor2Typos minimum number of characters a word in the query string must contain to accept matches with 2 typos
      *
      * @return self
      */
@@ -1377,7 +1377,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets typoTolerance
      *
-     * @param string|null $typoTolerance Controls whether typo tolerance is enabled and how it is applied.
+     * @param string|null $typoTolerance controls whether typo tolerance is enabled and how it is applied
      *
      * @return self
      */
@@ -1411,7 +1411,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets allowTyposOnNumericTokens
      *
-     * @param bool|null $allowTyposOnNumericTokens Whether to allow typos on numbers (\"numeric tokens\") in the query string.
+     * @param bool|null $allowTyposOnNumericTokens whether to allow typos on numbers (\"numeric tokens\") in the query string
      *
      * @return self
      */
@@ -1435,7 +1435,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets disableTypoToleranceOnAttributes
      *
-     * @param string[]|null $disableTypoToleranceOnAttributes List of attributes on which you want to disable typo tolerance.
+     * @param string[]|null $disableTypoToleranceOnAttributes list of attributes on which you want to disable typo tolerance
      *
      * @return self
      */
@@ -1459,7 +1459,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets separatorsToIndex
      *
-     * @param string|null $separatorsToIndex Control which separators are indexed.
+     * @param string|null $separatorsToIndex control which separators are indexed
      *
      * @return self
      */
@@ -1483,7 +1483,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets ignorePlurals
      *
-     * @param string|null $ignorePlurals Treats singular, plurals, and other forms of declensions as matching terms.
+     * @param string|null $ignorePlurals treats singular, plurals, and other forms of declensions as matching terms
      *
      * @return self
      */
@@ -1507,7 +1507,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets removeStopWords
      *
-     * @param string|null $removeStopWords Removes stop (common) words from the query before executing it.
+     * @param string|null $removeStopWords removes stop (common) words from the query before executing it
      *
      * @return self
      */
@@ -1531,7 +1531,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets keepDiacriticsOnCharacters
      *
-     * @param string|null $keepDiacriticsOnCharacters List of characters that the engine shouldn't automatically normalize.
+     * @param string|null $keepDiacriticsOnCharacters list of characters that the engine shouldn't automatically normalize
      *
      * @return self
      */
@@ -1555,7 +1555,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets queryLanguages
      *
-     * @param string[]|null $queryLanguages Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
+     * @param string[]|null $queryLanguages sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection
      *
      * @return self
      */
@@ -1579,7 +1579,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets decompoundQuery
      *
-     * @param bool|null $decompoundQuery Splits compound words into their composing atoms in the query.
+     * @param bool|null $decompoundQuery splits compound words into their composing atoms in the query
      *
      * @return self
      */
@@ -1603,7 +1603,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets enableRules
      *
-     * @param bool|null $enableRules Whether Rules should be globally enabled.
+     * @param bool|null $enableRules whether Rules should be globally enabled
      *
      * @return self
      */
@@ -1627,7 +1627,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets enablePersonalization
      *
-     * @param bool|null $enablePersonalization Enable the Personalization feature.
+     * @param bool|null $enablePersonalization enable the Personalization feature
      *
      * @return self
      */
@@ -1651,7 +1651,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets queryType
      *
-     * @param string|null $queryType Controls if and how query words are interpreted as prefixes.
+     * @param string|null $queryType controls if and how query words are interpreted as prefixes
      *
      * @return self
      */
@@ -1685,7 +1685,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets removeWordsIfNoResults
      *
-     * @param string|null $removeWordsIfNoResults Selects a strategy to remove words from the query when it doesn't match any hits.
+     * @param string|null $removeWordsIfNoResults selects a strategy to remove words from the query when it doesn't match any hits
      *
      * @return self
      */
@@ -1719,7 +1719,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets advancedSyntax
      *
-     * @param bool|null $advancedSyntax Enables the advanced query syntax.
+     * @param bool|null $advancedSyntax enables the advanced query syntax
      *
      * @return self
      */
@@ -1743,7 +1743,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets optionalWords
      *
-     * @param string[]|null $optionalWords A list of words that should be considered as optional when found in the query.
+     * @param string[]|null $optionalWords a list of words that should be considered as optional when found in the query
      *
      * @return self
      */
@@ -1767,7 +1767,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets disableExactOnAttributes
      *
-     * @param string[]|null $disableExactOnAttributes List of attributes on which you want to disable the exact ranking criterion.
+     * @param string[]|null $disableExactOnAttributes list of attributes on which you want to disable the exact ranking criterion
      *
      * @return self
      */
@@ -1791,7 +1791,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets exactOnSingleWordQuery
      *
-     * @param string|null $exactOnSingleWordQuery Controls how the exact ranking criterion is computed when the query contains only one word.
+     * @param string|null $exactOnSingleWordQuery controls how the exact ranking criterion is computed when the query contains only one word
      *
      * @return self
      */
@@ -1825,7 +1825,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets alternativesAsExact
      *
-     * @param string[]|null $alternativesAsExact List of alternatives that should be considered an exact match by the exact ranking criterion.
+     * @param string[]|null $alternativesAsExact list of alternatives that should be considered an exact match by the exact ranking criterion
      *
      * @return self
      */
@@ -1858,7 +1858,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets advancedSyntaxFeatures
      *
-     * @param string[]|null $advancedSyntaxFeatures Allows you to specify which advanced syntax features are active when ‘advancedSyntax' is enabled.
+     * @param string[]|null $advancedSyntaxFeatures allows you to specify which advanced syntax features are active when ‘advancedSyntax' is enabled
      *
      * @return self
      */
@@ -1891,13 +1891,12 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets distinct
      *
-     * @param int|null $distinct Enables de-duplication or grouping of results.
+     * @param int|null $distinct enables de-duplication or grouping of results
      *
      * @return self
      */
     public function setDistinct($distinct)
     {
-
         if (!is_null($distinct) && ($distinct > 4)) {
             throw new \InvalidArgumentException('invalid value for $distinct when calling IndexSettings., must be smaller than or equal to 4.');
         }
@@ -1923,7 +1922,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets synonyms
      *
-     * @param bool|null $synonyms Whether to take into account an index's synonyms for a particular search.
+     * @param bool|null $synonyms whether to take into account an index's synonyms for a particular search
      *
      * @return self
      */
@@ -1947,7 +1946,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets replaceSynonymsInHighlight
      *
-     * @param bool|null $replaceSynonymsInHighlight Whether to highlight and snippet the original word that matches the synonym or the synonym itself.
+     * @param bool|null $replaceSynonymsInHighlight whether to highlight and snippet the original word that matches the synonym or the synonym itself
      *
      * @return self
      */
@@ -1971,13 +1970,12 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets minProximity
      *
-     * @param int|null $minProximity Precision of the proximity ranking criterion.
+     * @param int|null $minProximity precision of the proximity ranking criterion
      *
      * @return self
      */
     public function setMinProximity($minProximity)
     {
-
         if (!is_null($minProximity) && ($minProximity > 7)) {
             throw new \InvalidArgumentException('invalid value for $minProximity when calling IndexSettings., must be smaller than or equal to 7.');
         }
@@ -2033,7 +2031,6 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setMaxFacetHits($maxFacetHits)
     {
-
         if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
             throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling IndexSettings., must be smaller than or equal to 100.');
         }
@@ -2056,7 +2053,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets attributeCriteriaComputedByMinProximity
      *
-     * @param bool|null $attributeCriteriaComputedByMinProximity When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
+     * @param bool|null $attributeCriteriaComputedByMinProximity when attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage
      *
      * @return self
      */
@@ -2093,9 +2090,9 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -2105,7 +2102,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -2134,7 +2131,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -2145,14 +2142,15 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -2178,5 +2176,4 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * SearchUserIdsResponseHighlightResult Class Doc Comment
@@ -32,7 +32,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
       */
     protected static $openAPITypes = [
         'userID' => '\Algolia\AlgoliaSearch\Model\HighlightResult',
-        'clusterName' => '\Algolia\AlgoliaSearch\Model\HighlightResult'
+        'clusterName' => '\Algolia\AlgoliaSearch\Model\HighlightResult',
     ];
 
     /**
@@ -44,7 +44,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
       */
     protected static $openAPIFormats = [
         'userID' => null,
-        'clusterName' => null
+        'clusterName' => null,
     ];
 
     /**
@@ -75,7 +75,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
      */
     protected static $attributeMap = [
         'userID' => 'userID',
-        'clusterName' => 'clusterName'
+        'clusterName' => 'clusterName',
     ];
 
     /**
@@ -85,7 +85,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
      */
     protected static $setters = [
         'userID' => 'setUserID',
-        'clusterName' => 'setClusterName'
+        'clusterName' => 'setClusterName',
     ];
 
     /**
@@ -95,7 +95,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
      */
     protected static $getters = [
         'userID' => 'getUserID',
-        'clusterName' => 'getClusterName'
+        'clusterName' => 'getClusterName',
     ];
 
     /**
@@ -139,7 +139,6 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -174,6 +173,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
         if ($this->container['clusterName'] === null) {
             $invalidProperties[] = "'clusterName' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -187,7 +187,6 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
     {
         return count($this->listInvalidProperties()) === 0;
     }
-
 
     /**
      * Gets userID
@@ -239,9 +238,9 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -251,7 +250,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -280,7 +279,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -291,14 +290,15 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -324,5 +324,4 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

@@ -113,6 +113,7 @@ class Configuration
     public function setApiKey($apiKeyIdentifier, $key)
     {
         $this->apiKeys[$apiKeyIdentifier] = $key;
+
         return $this;
     }
 
@@ -139,6 +140,7 @@ class Configuration
     public function setApiKeyPrefix($apiKeyIdentifier, $prefix)
     {
         $this->apiKeyPrefixes[$apiKeyIdentifier] = $prefix;
+
         return $this;
     }
 
@@ -164,6 +166,7 @@ class Configuration
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
+
         return $this;
     }
 
@@ -192,7 +195,7 @@ class Configuration
     /**
      * Gets the Algolia application ID
      *
-     * @return string 
+     * @return string
      */
     public function getAppId()
     {
@@ -214,7 +217,7 @@ class Configuration
     /**
      * Gets the Algolia API Key
      *
-     * @return string 
+     * @return string
      */
     public function getAlgoliaApiKey()
     {
@@ -231,6 +234,7 @@ class Configuration
     public function setHost($host)
     {
         $this->host = $host;
+
         return $this;
     }
 
@@ -250,6 +254,7 @@ class Configuration
      * @param string $userAgent the user agent of the api client
      *
      * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function setUserAgent($userAgent)
@@ -259,6 +264,7 @@ class Configuration
         }
 
         $this->userAgent = $userAgent;
+
         return $this;
     }
 
@@ -282,6 +288,7 @@ class Configuration
     public function setDebug($debug)
     {
         $this->debug = $debug;
+
         return $this;
     }
 
@@ -305,6 +312,7 @@ class Configuration
     public function setDebugFile($debugFile)
     {
         $this->debugFile = $debugFile;
+
         return $this;
     }
 
@@ -328,6 +336,7 @@ class Configuration
     public function setTempFolderPath($tempFolderPath)
     {
         $this->tempFolderPath = $tempFolderPath;
+
         return $this;
     }
 
@@ -417,9 +426,9 @@ class Configuration
     {
         return [
             [
-                "url" => "",
-                "description" => "No description provided",
-            ]
+                'url' => '',
+                'description' => 'No description provided',
+            ],
         ];
     }
 
@@ -428,6 +437,7 @@ class Configuration
      *
      * @param int        $index     index of the host settings
      * @param array|null $variables hash of variable and the corresponding value (optional)
+     *
      * @return string URL based on host settings
      */
     public function getHostFromSettings($index, $variables = null)
@@ -444,19 +454,19 @@ class Configuration
         }
 
         $host = $hosts[$index];
-        $url = $host["url"];
+        $url = $host['url'];
 
         // go through variable and assign a value
-        foreach ($host["variables"] ?? [] as $name => $variable) {
+        foreach ($host['variables'] ?? [] as $name => $variable) {
             if (array_key_exists($name, $variables)) { // check to see if it's in the variables provided by the user
-                if (in_array($variables[$name], $variable["enum_values"], true)) { // check to see if the value is in the enum
-                    $url = str_replace("{".$name."}", $variables[$name], $url);
+                if (in_array($variables[$name], $variable['enum_values'], true)) { // check to see if the value is in the enum
+                    $url = str_replace('{'.$name.'}', $variables[$name], $url);
                 } else {
-                    throw new \InvalidArgumentException("The variable `$name` in the host URL has invalid value ".$variables[$name].". Must be ".join(',', $variable["enum_values"]).".");
+                    throw new \InvalidArgumentException("The variable `$name` in the host URL has invalid value ".$variables[$name].'. Must be '.join(',', $variable['enum_values']).'.');
                 }
             } else {
                 // use default value
-                $url = str_replace("{".$name."}", $variable["default_value"], $url);
+                $url = str_replace('{'.$name.'}', $variable['default_value'], $url);
             }
         }
 

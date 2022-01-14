@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * BaseSearchResponse Class Doc Comment
@@ -54,7 +54,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'query' => 'string',
         'queryAfterRemoval' => 'string',
         'serverUsed' => 'string',
-        'userData' => 'object'
+        'userData' => 'object',
     ];
 
     /**
@@ -88,7 +88,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'query' => null,
         'queryAfterRemoval' => null,
         'serverUsed' => null,
-        'userData' => null
+        'userData' => null,
     ];
 
     /**
@@ -141,7 +141,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'query' => 'query',
         'queryAfterRemoval' => 'queryAfterRemoval',
         'serverUsed' => 'serverUsed',
-        'userData' => 'userData'
+        'userData' => 'userData',
     ];
 
     /**
@@ -173,7 +173,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'query' => 'setQuery',
         'queryAfterRemoval' => 'setQueryAfterRemoval',
         'serverUsed' => 'setServerUsed',
-        'userData' => 'setUserData'
+        'userData' => 'setUserData',
     ];
 
     /**
@@ -205,7 +205,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'query' => 'getQuery',
         'queryAfterRemoval' => 'getQueryAfterRemoval',
         'serverUsed' => 'getServerUsed',
-        'userData' => 'getUserData'
+        'userData' => 'getUserData',
     ];
 
     /**
@@ -248,7 +248,6 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -300,7 +299,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['aroundLatLng']) && !preg_match("/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/", $this->container['aroundLatLng'])) {
+        if (!is_null($this->container['aroundLatLng']) && !preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $this->container['aroundLatLng'])) {
             $invalidProperties[] = "invalid value for 'aroundLatLng', must be conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.";
         }
 
@@ -331,6 +330,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         if ($this->container['query'] === null) {
             $invalidProperties[] = "'query' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -345,7 +345,6 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets abTestID
      *
@@ -359,7 +358,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets abTestID
      *
-     * @param int|null $abTestID If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
+     * @param int|null $abTestID if a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID
      *
      * @return self
      */
@@ -383,7 +382,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets abTestVariantID
      *
-     * @param int|null $abTestVariantID If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used.
+     * @param int|null $abTestVariantID if a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used
      *
      * @return self
      */
@@ -407,14 +406,13 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets aroundLatLng
      *
-     * @param string|null $aroundLatLng The computed geo location.
+     * @param string|null $aroundLatLng the computed geo location
      *
      * @return self
      */
     public function setAroundLatLng($aroundLatLng)
     {
-
-        if (!is_null($aroundLatLng) && (!preg_match("/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/", $aroundLatLng))) {
+        if (!is_null($aroundLatLng) && (!preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $aroundLatLng))) {
             throw new \InvalidArgumentException("invalid value for $aroundLatLng when calling BaseSearchResponse., must conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.");
         }
 
@@ -460,7 +458,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets exhaustiveFacetsCount
      *
-     * @param bool|null $exhaustiveFacetsCount Whether the facet count is exhaustive or approximate.
+     * @param bool|null $exhaustiveFacetsCount whether the facet count is exhaustive or approximate
      *
      * @return self
      */
@@ -532,7 +530,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets facets
      *
-     * @param array<string,array<string,string>>|null $facets A mapping of each facet name to the corresponding facet counts.
+     * @param array<string,array<string,string>>|null $facets a mapping of each facet name to the corresponding facet counts
      *
      * @return self
      */
@@ -556,7 +554,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets facetsStats
      *
-     * @param array<string,\Algolia\AlgoliaSearch\Model\BaseSearchResponseFacetsStats>|null $facetsStats Statistics for numerical facets.
+     * @param array<string,\Algolia\AlgoliaSearch\Model\BaseSearchResponseFacetsStats>|null $facetsStats statistics for numerical facets
      *
      * @return self
      */
@@ -580,7 +578,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets hitsPerPage
      *
-     * @param int $hitsPerPage Set the number of hits per page.
+     * @param int $hitsPerPage set the number of hits per page
      *
      * @return self
      */
@@ -604,7 +602,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets index
      *
-     * @param string|null $index Index name used for the query.
+     * @param string|null $index index name used for the query
      *
      * @return self
      */
@@ -652,7 +650,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets message
      *
-     * @param string|null $message Used to return warnings about the query.
+     * @param string|null $message used to return warnings about the query
      *
      * @return self
      */
@@ -676,7 +674,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets nbHits
      *
-     * @param int $nbHits Number of hits that the search query matched.
+     * @param int $nbHits number of hits that the search query matched
      *
      * @return self
      */
@@ -748,7 +746,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets page
      *
-     * @param int $page Specify the page to retrieve.
+     * @param int $page specify the page to retrieve
      *
      * @return self
      */
@@ -772,7 +770,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets params
      *
-     * @param string $params A url-encoded string of all search parameters.
+     * @param string $params a url-encoded string of all search parameters
      *
      * @return self
      */
@@ -796,7 +794,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets parsedQuery
      *
-     * @param string|null $parsedQuery The query string that will be searched, after normalization.
+     * @param string|null $parsedQuery the query string that will be searched, after normalization
      *
      * @return self
      */
@@ -820,7 +818,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets processingTimeMS
      *
-     * @param int $processingTimeMS Time the server took to process the request, in milliseconds.
+     * @param int $processingTimeMS time the server took to process the request, in milliseconds
      *
      * @return self
      */
@@ -844,7 +842,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets query
      *
-     * @param string $query The text to search in the index.
+     * @param string $query the text to search in the index
      *
      * @return self
      */
@@ -868,7 +866,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets queryAfterRemoval
      *
-     * @param string|null $queryAfterRemoval A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
+     * @param string|null $queryAfterRemoval a markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set
      *
      * @return self
      */
@@ -892,7 +890,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets serverUsed
      *
-     * @param string|null $serverUsed Actual host name of the server that processed the request.
+     * @param string|null $serverUsed actual host name of the server that processed the request
      *
      * @return self
      */
@@ -916,7 +914,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets userData
      *
-     * @param object|null $userData Lets you store custom data in your indices.
+     * @param object|null $userData lets you store custom data in your indices
      *
      * @return self
      */
@@ -929,9 +927,9 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -941,7 +939,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -970,7 +968,7 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -981,14 +979,15 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -1014,5 +1013,4 @@ class BaseSearchResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

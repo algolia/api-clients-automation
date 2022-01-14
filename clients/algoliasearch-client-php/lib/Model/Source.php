@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * Source Class Doc Comment
  *
  * @category Class
  * @description The source.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -33,7 +34,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'source' => 'string',
-        'description' => 'string'
+        'description' => 'string',
     ];
 
     /**
@@ -45,7 +46,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'source' => null,
-        'description' => null
+        'description' => null,
     ];
 
     /**
@@ -76,7 +77,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'source' => 'source',
-        'description' => 'description'
+        'description' => 'description',
     ];
 
     /**
@@ -86,7 +87,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'source' => 'setSource',
-        'description' => 'setDescription'
+        'description' => 'setDescription',
     ];
 
     /**
@@ -96,7 +97,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'source' => 'getSource',
-        'description' => 'getDescription'
+        'description' => 'getDescription',
     ];
 
     /**
@@ -140,7 +141,6 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -172,6 +172,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['source'] === null) {
             $invalidProperties[] = "'source' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -186,7 +187,6 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets source
      *
@@ -200,7 +200,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets source
      *
-     * @param string $source The IP range of the source.
+     * @param string $source the IP range of the source
      *
      * @return self
      */
@@ -224,7 +224,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets description
      *
-     * @param string|null $description The description of the source.
+     * @param string|null $description the description of the source
      *
      * @return self
      */
@@ -237,9 +237,9 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -249,7 +249,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -278,7 +278,7 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -289,14 +289,15 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -322,5 +323,4 @@ class Source implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

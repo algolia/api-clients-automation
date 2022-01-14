@@ -1,13 +1,13 @@
 <?php
 
 namespace Algolia\AlgoliaSearch\Model;
-use \Algolia\AlgoliaSearch\ObjectSerializer;
 
 /**
  * Anchoring Class Doc Comment
  *
  * @category Class
  * @description Whether the pattern parameter must match the beginning or the end of the query string, or both, or none.
+ *
  * @package  Algolia\AlgoliaSearch
  */
 class Anchoring
@@ -25,6 +25,7 @@ class Anchoring
 
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public static function getAllowableEnumValues()
@@ -33,9 +34,8 @@ class Anchoring
             self::IS,
             self::STARTS_WITH,
             self::ENDS_WITH,
-            self::CONTAINS
+            self::CONTAINS,
         ];
     }
 }
-
 

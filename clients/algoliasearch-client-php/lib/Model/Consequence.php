@@ -2,14 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Model;
 
-use \ArrayAccess;
 use \Algolia\AlgoliaSearch\ObjectSerializer;
+use \ArrayAccess;
 
 /**
  * Consequence Class Doc Comment
  *
  * @category Class
  * @description Consequence of the Rule.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
@@ -36,7 +37,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         'promote' => '\Algolia\AlgoliaSearch\Model\Promote[]',
         'filterPromotes' => 'bool',
         'hide' => '\Algolia\AlgoliaSearch\Model\ConsequenceHide[]',
-        'userData' => 'object'
+        'userData' => 'object',
     ];
 
     /**
@@ -51,7 +52,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         'promote' => null,
         'filterPromotes' => null,
         'hide' => null,
-        'userData' => null
+        'userData' => null,
     ];
 
     /**
@@ -85,7 +86,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         'promote' => 'promote',
         'filterPromotes' => 'filterPromotes',
         'hide' => 'hide',
-        'userData' => 'userData'
+        'userData' => 'userData',
     ];
 
     /**
@@ -98,7 +99,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         'promote' => 'setPromote',
         'filterPromotes' => 'setFilterPromotes',
         'hide' => 'setHide',
-        'userData' => 'setUserData'
+        'userData' => 'setUserData',
     ];
 
     /**
@@ -111,7 +112,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         'promote' => 'getPromote',
         'filterPromotes' => 'getFilterPromotes',
         'hide' => 'getHide',
-        'userData' => 'getUserData'
+        'userData' => 'getUserData',
     ];
 
     /**
@@ -154,7 +155,6 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIModelName;
     }
-
 
     /**
      * Associative array for storing property values
@@ -201,7 +201,6 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets params
      *
@@ -239,7 +238,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets promote
      *
-     * @param \Algolia\AlgoliaSearch\Model\Promote[]|null $promote Objects to promote as hits.
+     * @param \Algolia\AlgoliaSearch\Model\Promote[]|null $promote objects to promote as hits
      *
      * @return self
      */
@@ -324,9 +323,9 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -336,7 +335,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return mixed|null
      */
@@ -365,7 +364,7 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param int $offset Offset
      *
      * @return void
      */
@@ -376,14 +375,15 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     * @return mixed returns data which can be serialized by json_encode(), which is a value
+     * of any type other than a resource
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -409,5 +409,4 @@ class Consequence implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 
