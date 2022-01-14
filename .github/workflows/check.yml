@@ -50,6 +50,13 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
+      - name: Cache ${{ matrix.client }} spec
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/specs/dist/${{ matrix.client }}.yml'
+          key: ${{ runner.os }}-${{ matrix.client }}-spec-${{ hashFiles('specs/dist/${{ matrix.client }}.yml') }}
+
       - name: Checking ${{ matrix.client }} specs
         run: yarn build:specs ${{ matrix.client }}
 
@@ -69,6 +76,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          job: client
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache

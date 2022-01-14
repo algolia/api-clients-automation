@@ -20,31 +20,45 @@ cd ${DIR}/../..
 
 find_specs() {
     echo "> Searching for available specs..."
-    local specs=( $(cat openapitools.json | jq -r '."generator-cli".generators[] | .glob') )
+
+    local specs=$(find specs/*/spec.yml)
 
     for spec in "${specs[@]}"; do
         if [[ ! ${SPECS[*]} =~ $spec ]]; then
             SPECS+=($spec)
         fi
     done
+
+    echo ""
+}
+
+check_format_spec() {
+    local spec=$1
+    local client=$(echo $spec | awk -F / '{ print $(NF-1) }')
+
+    echo "> Checking format of input spec file ${spec}"
+
+    yarn eslint --ext=yml ${spec}
+
+    echo ""
 }
 
 build_spec() {
     local spec=$1
     local client=$(echo $spec | awk -F / '{ print $(NF-1) }')
 
-    echo "> Building specs: ${client} ${OUTPUT}"
+    yarn openapi bundle ${spec} -o specs/dist/${client}.${OUTPUT} --ext ${OUTPUT}
 
-    yarn swagger-cli bundle ${spec} --outfile specs/dist/${client}.${OUTPUT} --type ${OUTPUT}
+    echo ""
 }
 
 validate_spec() {
     local spec=$1
     local client=$(echo $spec | awk -F / '{ print $(NF-1) }')
 
-    echo "> Validating specs: ${client}"
+    yarn openapi lint specs/dist/${client}.${OUTPUT}
 
-    yarn swagger-cli validate specs/dist/${client}.${OUTPUT}
+    echo ""
 }
 
 find_specs
@@ -58,12 +72,13 @@ else
     exit 1
 fi
 
-if [[ $OUTPUT != "yaml" ]] && [[ $OUTPUT != "json" ]]; then
+if [[ $OUTPUT != "yml" ]] && [[ $OUTPUT != "json" ]]; then
     echo "Unknown output ${OUTPUT}"
     exit 1
 fi
 
 for spec in "${SPECS[@]}"; do
+    check_format_spec $spec
     build_spec $spec
     validate_spec $spec
 done
