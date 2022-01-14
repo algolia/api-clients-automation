@@ -7,6 +7,7 @@ components:
   securitySchemes:
     appId:
       $ref: '../common/securitySchemes.yml#/appId'
+    apiKey:
 security:
   - appId: []
     apiKey: []
