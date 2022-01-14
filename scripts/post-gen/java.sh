@@ -15,6 +15,8 @@ find "$CLIENT" -type f -name "*.java" | xargs sed -i -e 's~= {}~= new Object()~g
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
 echo "package com.algolia.model;public class OneOfstringbuiltInOperation {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfstringbuiltInOperation.java
 
+cp -R clients/algoliasearch-client-java-2/utils/ $CLIENT/algoliasearch-core/com/algolia/
+
 format_client() {
     echo "> Formatting $GENERATOR..."
 
@@ -34,7 +36,7 @@ format_client() {
                                                      --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
                                                      -jar dist/$javaFormatter -r
 
-    CMD="yarn prettier --write $CLIENT/**/*.java"
+    CMD="yarn prettier --write $CLIENT"
     if [[ $VERBOSE == "true" ]]; then
         $CMD
     else

@@ -60,6 +60,7 @@ import com.algolia.model.UpdatedAtResponse;
 import com.algolia.model.UpdatedAtWithObjectIdResponse;
 import com.algolia.model.UpdatedRuleResponse;
 import com.algolia.model.UserId;
+import com.algolia.utils.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -71,7 +72,11 @@ import okhttp3.Call;
 public class SearchApi extends ApiClient {
 
   public SearchApi(String appId, String apiKey) {
-    super(appId, apiKey);
+    super(appId, apiKey, new HttpRequester());
+  }
+
+  public SearchApi(String appId, String apiKey, Requester requester) {
+    super(appId, apiKey, requester);
   }
 
   /**
@@ -79,10 +84,10 @@ public class SearchApi extends ApiClient {
    *
    * @param apiKey (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call addApiKeyCall(ApiKey apiKey, final ApiCallback _callback)
+  private Object addApiKeyCall(ApiKey apiKey, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = apiKey;
 
@@ -105,8 +110,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call addApiKeyValidateBeforeCall(
+  private Object addApiKeyValidateBeforeCall(
     ApiKey apiKey,
     final ApiCallback _callback
   ) throws ApiException {
@@ -128,11 +132,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public AddApiKeyResponse addApiKey(ApiKey apiKey) throws ApiException {
-    Call call = addApiKeyValidateBeforeCall(apiKey, null);
-    Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
-    ApiResponse<AddApiKeyResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T addApiKey(ApiKey apiKey) throws ApiException {
+    Object req = addApiKeyValidateBeforeCall(apiKey, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
+      ApiResponse<AddApiKeyResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -147,7 +155,7 @@ public class SearchApi extends ApiClient {
     ApiKey apiKey,
     final ApiCallback<AddApiKeyResponse> _callback
   ) throws ApiException {
-    Call call = addApiKeyValidateBeforeCall(apiKey, _callback);
+    Call call = (Call) addApiKeyValidateBeforeCall(apiKey, _callback);
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -160,10 +168,10 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param body The Algolia object. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call addOrUpdateObjectCall(
+  private Object addOrUpdateObjectCall(
     String indexName,
     String objectID,
     Object body,
@@ -198,8 +206,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call addOrUpdateObjectValidateBeforeCall(
+  private Object addOrUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
     Object body,
@@ -240,22 +247,26 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtWithObjectIdResponse addOrUpdateObject(
+  public <T> T addOrUpdateObject(
     String indexName,
     String objectID,
     Object body
   ) throws ApiException {
-    Call call = addOrUpdateObjectValidateBeforeCall(
+    Object req = addOrUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
       body,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
-      .getType();
-    ApiResponse<UpdatedAtWithObjectIdResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
+        .getType();
+      ApiResponse<UpdatedAtWithObjectIdResponse> res =
+        this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -275,7 +286,7 @@ public class SearchApi extends ApiClient {
     Object body,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
-    Call call = addOrUpdateObjectValidateBeforeCall(
+    Call call = (Call) addOrUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
       body,
@@ -292,10 +303,10 @@ public class SearchApi extends ApiClient {
    *
    * @param source The source to add. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call appendSourceCall(Source source, final ApiCallback _callback)
+  private Object appendSourceCall(Source source, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = source;
 
@@ -318,8 +329,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call appendSourceValidateBeforeCall(
+  private Object appendSourceValidateBeforeCall(
     Source source,
     final ApiCallback _callback
   ) throws ApiException {
@@ -341,11 +351,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public CreatedAtResponse appendSource(Source source) throws ApiException {
-    Call call = appendSourceValidateBeforeCall(source, null);
-    Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
-    ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T appendSource(Source source) throws ApiException {
+    Object req = appendSourceValidateBeforeCall(source, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
+      ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -360,7 +374,7 @@ public class SearchApi extends ApiClient {
     Source source,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
-    Call call = appendSourceValidateBeforeCall(source, _callback);
+    Call call = (Call) appendSourceValidateBeforeCall(source, _callback);
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -372,10 +386,10 @@ public class SearchApi extends ApiClient {
    * @param xAlgoliaUserID userID to assign. (required)
    * @param assignUserIdObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call assignUserIdCall(
+  private Object assignUserIdCall(
     String xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject,
     final ApiCallback _callback
@@ -407,8 +421,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call assignUserIdValidateBeforeCall(
+  private Object assignUserIdValidateBeforeCall(
     String xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject,
     final ApiCallback _callback
@@ -442,18 +455,22 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public CreatedAtResponse assignUserId(
+  public <T> T assignUserId(
     String xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject
   ) throws ApiException {
-    Call call = assignUserIdValidateBeforeCall(
+    Object req = assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
       assignUserIdObject,
       null
     );
-    Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
-    ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
+      ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -473,7 +490,7 @@ public class SearchApi extends ApiClient {
     AssignUserIdObject assignUserIdObject,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
-    Call call = assignUserIdValidateBeforeCall(
+    Call call = (Call) assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
       assignUserIdObject,
       _callback
@@ -489,10 +506,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param batchWriteObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call batchCall(
+  private Object batchCall(
     String indexName,
     BatchWriteObject batchWriteObject,
     final ApiCallback _callback
@@ -522,8 +539,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call batchValidateBeforeCall(
+  private Object batchValidateBeforeCall(
     String indexName,
     BatchWriteObject batchWriteObject,
     final ApiCallback _callback
@@ -554,14 +570,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public BatchResponse batch(
-    String indexName,
-    BatchWriteObject batchWriteObject
-  ) throws ApiException {
-    Call call = batchValidateBeforeCall(indexName, batchWriteObject, null);
-    Type returnType = new TypeToken<BatchResponse>() {}.getType();
-    ApiResponse<BatchResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T batch(String indexName, BatchWriteObject batchWriteObject)
+    throws ApiException {
+    Object req = batchValidateBeforeCall(indexName, batchWriteObject, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<BatchResponse>() {}.getType();
+      ApiResponse<BatchResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -578,7 +596,11 @@ public class SearchApi extends ApiClient {
     BatchWriteObject batchWriteObject,
     final ApiCallback<BatchResponse> _callback
   ) throws ApiException {
-    Call call = batchValidateBeforeCall(indexName, batchWriteObject, _callback);
+    Call call = (Call) batchValidateBeforeCall(
+      indexName,
+      batchWriteObject,
+      _callback
+    );
     Type returnType = new TypeToken<BatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -590,10 +612,10 @@ public class SearchApi extends ApiClient {
    * @param xAlgoliaUserID userID to assign. (required)
    * @param batchAssignUserIdsObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call batchAssignUserIdsCall(
+  private Object batchAssignUserIdsCall(
     String xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject,
     final ApiCallback _callback
@@ -625,8 +647,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call batchAssignUserIdsValidateBeforeCall(
+  private Object batchAssignUserIdsValidateBeforeCall(
     String xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject,
     final ApiCallback _callback
@@ -664,18 +685,22 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public CreatedAtResponse batchAssignUserIds(
+  public <T> T batchAssignUserIds(
     String xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject
   ) throws ApiException {
-    Call call = batchAssignUserIdsValidateBeforeCall(
+    Object req = batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
       batchAssignUserIdsObject,
       null
     );
-    Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
-    ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
+      ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -694,7 +719,7 @@ public class SearchApi extends ApiClient {
     BatchAssignUserIdsObject batchAssignUserIdsObject,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
-    Call call = batchAssignUserIdsValidateBeforeCall(
+    Call call = (Call) batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
       batchAssignUserIdsObject,
       _callback
@@ -710,10 +735,10 @@ public class SearchApi extends ApiClient {
    * @param dictionaryName The dictionary to search in. (required)
    * @param batchDictionaryEntries (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call batchDictionaryEntriesCall(
+  private Object batchDictionaryEntriesCall(
     String dictionaryName,
     BatchDictionaryEntries batchDictionaryEntries,
     final ApiCallback _callback
@@ -743,8 +768,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call batchDictionaryEntriesValidateBeforeCall(
+  private Object batchDictionaryEntriesValidateBeforeCall(
     String dictionaryName,
     BatchDictionaryEntries batchDictionaryEntries,
     final ApiCallback _callback
@@ -781,18 +805,22 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse batchDictionaryEntries(
+  public <T> T batchDictionaryEntries(
     String dictionaryName,
     BatchDictionaryEntries batchDictionaryEntries
   ) throws ApiException {
-    Call call = batchDictionaryEntriesValidateBeforeCall(
+    Object req = batchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       batchDictionaryEntries,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -809,7 +837,7 @@ public class SearchApi extends ApiClient {
     BatchDictionaryEntries batchDictionaryEntries,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = batchDictionaryEntriesValidateBeforeCall(
+    Call call = (Call) batchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       batchDictionaryEntries,
       _callback
@@ -829,10 +857,10 @@ public class SearchApi extends ApiClient {
    * @param clearExistingRules When true, existing Rules are cleared before adding this batch. When
    *     false, existing Rules are kept. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call batchRulesCall(
+  private Object batchRulesCall(
     String indexName,
     List<Rule> rule,
     Boolean forwardToReplicas,
@@ -876,8 +904,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call batchRulesValidateBeforeCall(
+  private Object batchRulesValidateBeforeCall(
     String indexName,
     List<Rule> rule,
     Boolean forwardToReplicas,
@@ -920,22 +947,26 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse batchRules(
+  public <T> T batchRules(
     String indexName,
     List<Rule> rule,
     Boolean forwardToReplicas,
     Boolean clearExistingRules
   ) throws ApiException {
-    Call call = batchRulesValidateBeforeCall(
+    Object req = batchRulesValidateBeforeCall(
       indexName,
       rule,
       forwardToReplicas,
       clearExistingRules,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -958,7 +989,7 @@ public class SearchApi extends ApiClient {
     Boolean clearExistingRules,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = batchRulesValidateBeforeCall(
+    Call call = (Call) batchRulesValidateBeforeCall(
       indexName,
       rule,
       forwardToReplicas,
@@ -976,10 +1007,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param browseRequest (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call browseCall(
+  private Object browseCall(
     String indexName,
     BrowseRequest browseRequest,
     final ApiCallback _callback
@@ -1009,8 +1040,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call browseValidateBeforeCall(
+  private Object browseValidateBeforeCall(
     String indexName,
     BrowseRequest browseRequest,
     final ApiCallback _callback
@@ -1039,12 +1069,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public BrowseResponse browse(String indexName, BrowseRequest browseRequest)
+  public <T> T browse(String indexName, BrowseRequest browseRequest)
     throws ApiException {
-    Call call = browseValidateBeforeCall(indexName, browseRequest, null);
-    Type returnType = new TypeToken<BrowseResponse>() {}.getType();
-    ApiResponse<BrowseResponse> res = this.execute(call, returnType);
-    return res.getData();
+    Object req = browseValidateBeforeCall(indexName, browseRequest, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<BrowseResponse>() {}.getType();
+      ApiResponse<BrowseResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1067,7 +1101,11 @@ public class SearchApi extends ApiClient {
     BrowseRequest browseRequest,
     final ApiCallback<BrowseResponse> _callback
   ) throws ApiException {
-    Call call = browseValidateBeforeCall(indexName, browseRequest, _callback);
+    Call call = (Call) browseValidateBeforeCall(
+      indexName,
+      browseRequest,
+      _callback
+    );
     Type returnType = new TypeToken<BrowseResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -1080,10 +1118,10 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call clearAllSynonymsCall(
+  private Object clearAllSynonymsCall(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback _callback
@@ -1119,8 +1157,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call clearAllSynonymsValidateBeforeCall(
+  private Object clearAllSynonymsValidateBeforeCall(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback _callback
@@ -1145,18 +1182,20 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse clearAllSynonyms(
-    String indexName,
-    Boolean forwardToReplicas
-  ) throws ApiException {
-    Call call = clearAllSynonymsValidateBeforeCall(
+  public <T> T clearAllSynonyms(String indexName, Boolean forwardToReplicas)
+    throws ApiException {
+    Object req = clearAllSynonymsValidateBeforeCall(
       indexName,
       forwardToReplicas,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1174,7 +1213,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = clearAllSynonymsValidateBeforeCall(
+    Call call = (Call) clearAllSynonymsValidateBeforeCall(
       indexName,
       forwardToReplicas,
       _callback
@@ -1189,11 +1228,13 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call clearObjectsCall(String indexName, final ApiCallback _callback)
-    throws ApiException {
+  private Object clearObjectsCall(
+    String indexName,
+    final ApiCallback _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1219,8 +1260,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call clearObjectsValidateBeforeCall(
+  private Object clearObjectsValidateBeforeCall(
     String indexName,
     final ApiCallback _callback
   ) throws ApiException {
@@ -1242,11 +1282,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse clearObjects(String indexName) throws ApiException {
-    Call call = clearObjectsValidateBeforeCall(indexName, null);
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T clearObjects(String indexName) throws ApiException {
+    Object req = clearObjectsValidateBeforeCall(indexName, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1262,7 +1306,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = clearObjectsValidateBeforeCall(indexName, _callback);
+    Call call = (Call) clearObjectsValidateBeforeCall(indexName, _callback);
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -1275,10 +1319,10 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call clearRulesCall(
+  private Object clearRulesCall(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback _callback
@@ -1314,8 +1358,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call clearRulesValidateBeforeCall(
+  private Object clearRulesValidateBeforeCall(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback _callback
@@ -1340,18 +1383,20 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse clearRules(
-    String indexName,
-    Boolean forwardToReplicas
-  ) throws ApiException {
-    Call call = clearRulesValidateBeforeCall(
+  public <T> T clearRules(String indexName, Boolean forwardToReplicas)
+    throws ApiException {
+    Object req = clearRulesValidateBeforeCall(
       indexName,
       forwardToReplicas,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1369,7 +1414,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = clearRulesValidateBeforeCall(
+    Call call = (Call) clearRulesValidateBeforeCall(
       indexName,
       forwardToReplicas,
       _callback
@@ -1384,10 +1429,10 @@ public class SearchApi extends ApiClient {
    *
    * @param key API Key string. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteApiKeyCall(String key, final ApiCallback _callback)
+  private Object deleteApiKeyCall(String key, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -1414,8 +1459,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call deleteApiKeyValidateBeforeCall(
+  private Object deleteApiKeyValidateBeforeCall(
     String key,
     final ApiCallback _callback
   ) throws ApiException {
@@ -1437,11 +1481,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public DeleteApiKeyResponse deleteApiKey(String key) throws ApiException {
-    Call call = deleteApiKeyValidateBeforeCall(key, null);
-    Type returnType = new TypeToken<DeleteApiKeyResponse>() {}.getType();
-    ApiResponse<DeleteApiKeyResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T deleteApiKey(String key) throws ApiException {
+    Object req = deleteApiKeyValidateBeforeCall(key, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<DeleteApiKeyResponse>() {}.getType();
+      ApiResponse<DeleteApiKeyResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1456,7 +1504,7 @@ public class SearchApi extends ApiClient {
     String key,
     final ApiCallback<DeleteApiKeyResponse> _callback
   ) throws ApiException {
-    Call call = deleteApiKeyValidateBeforeCall(key, _callback);
+    Call call = (Call) deleteApiKeyValidateBeforeCall(key, _callback);
     Type returnType = new TypeToken<DeleteApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -1468,10 +1516,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteByCall(
+  private Object deleteByCall(
     String indexName,
     SearchParams searchParams,
     final ApiCallback _callback
@@ -1501,8 +1549,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call deleteByValidateBeforeCall(
+  private Object deleteByValidateBeforeCall(
     String indexName,
     SearchParams searchParams,
     final ApiCallback _callback
@@ -1535,14 +1582,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public DeletedAtResponse deleteBy(
-    String indexName,
-    SearchParams searchParams
-  ) throws ApiException {
-    Call call = deleteByValidateBeforeCall(indexName, searchParams, null);
-    Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
-    ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T deleteBy(String indexName, SearchParams searchParams)
+    throws ApiException {
+    Object req = deleteByValidateBeforeCall(indexName, searchParams, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
+      ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1561,7 +1610,11 @@ public class SearchApi extends ApiClient {
     SearchParams searchParams,
     final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
-    Call call = deleteByValidateBeforeCall(indexName, searchParams, _callback);
+    Call call = (Call) deleteByValidateBeforeCall(
+      indexName,
+      searchParams,
+      _callback
+    );
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -1572,10 +1625,10 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteIndexCall(String indexName, final ApiCallback _callback)
+  private Object deleteIndexCall(String indexName, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -1602,8 +1655,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call deleteIndexValidateBeforeCall(
+  private Object deleteIndexValidateBeforeCall(
     String indexName,
     final ApiCallback _callback
   ) throws ApiException {
@@ -1625,11 +1677,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public DeletedAtResponse deleteIndex(String indexName) throws ApiException {
-    Call call = deleteIndexValidateBeforeCall(indexName, null);
-    Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
-    ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T deleteIndex(String indexName) throws ApiException {
+    Object req = deleteIndexValidateBeforeCall(indexName, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
+      ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1644,7 +1700,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
-    Call call = deleteIndexValidateBeforeCall(indexName, _callback);
+    Call call = (Call) deleteIndexValidateBeforeCall(indexName, _callback);
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -1656,10 +1712,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteObjectCall(
+  private Object deleteObjectCall(
     String indexName,
     String objectID,
     final ApiCallback _callback
@@ -1693,8 +1749,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call deleteObjectValidateBeforeCall(
+  private Object deleteObjectValidateBeforeCall(
     String indexName,
     String objectID,
     final ApiCallback _callback
@@ -1725,12 +1780,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public DeletedAtResponse deleteObject(String indexName, String objectID)
+  public <T> T deleteObject(String indexName, String objectID)
     throws ApiException {
-    Call call = deleteObjectValidateBeforeCall(indexName, objectID, null);
-    Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
-    ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    Object req = deleteObjectValidateBeforeCall(indexName, objectID, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
+      ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1747,7 +1806,11 @@ public class SearchApi extends ApiClient {
     String objectID,
     final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
-    Call call = deleteObjectValidateBeforeCall(indexName, objectID, _callback);
+    Call call = (Call) deleteObjectValidateBeforeCall(
+      indexName,
+      objectID,
+      _callback
+    );
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -1761,10 +1824,10 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteRuleCall(
+  private Object deleteRuleCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
@@ -1805,8 +1868,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call deleteRuleValidateBeforeCall(
+  private Object deleteRuleValidateBeforeCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
@@ -1840,20 +1902,24 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse deleteRule(
+  public <T> T deleteRule(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = deleteRuleValidateBeforeCall(
+    Object req = deleteRuleValidateBeforeCall(
       indexName,
       objectID,
       forwardToReplicas,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1873,7 +1939,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = deleteRuleValidateBeforeCall(
+    Call call = (Call) deleteRuleValidateBeforeCall(
       indexName,
       objectID,
       forwardToReplicas,
@@ -1889,10 +1955,10 @@ public class SearchApi extends ApiClient {
    *
    * @param source The IP range of the source. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteSourceCall(String source, final ApiCallback _callback)
+  private Object deleteSourceCall(String source, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -1919,8 +1985,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call deleteSourceValidateBeforeCall(
+  private Object deleteSourceValidateBeforeCall(
     String source,
     final ApiCallback _callback
   ) throws ApiException {
@@ -1942,11 +2007,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public DeleteSourceResponse deleteSource(String source) throws ApiException {
-    Call call = deleteSourceValidateBeforeCall(source, null);
-    Type returnType = new TypeToken<DeleteSourceResponse>() {}.getType();
-    ApiResponse<DeleteSourceResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T deleteSource(String source) throws ApiException {
+    Object req = deleteSourceValidateBeforeCall(source, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<DeleteSourceResponse>() {}.getType();
+      ApiResponse<DeleteSourceResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -1961,7 +2030,7 @@ public class SearchApi extends ApiClient {
     String source,
     final ApiCallback<DeleteSourceResponse> _callback
   ) throws ApiException {
-    Call call = deleteSourceValidateBeforeCall(source, _callback);
+    Call call = (Call) deleteSourceValidateBeforeCall(source, _callback);
     Type returnType = new TypeToken<DeleteSourceResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -1975,10 +2044,10 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteSynonymCall(
+  private Object deleteSynonymCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
@@ -2019,8 +2088,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call deleteSynonymValidateBeforeCall(
+  private Object deleteSynonymValidateBeforeCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
@@ -2054,20 +2122,24 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public DeletedAtResponse deleteSynonym(
+  public <T> T deleteSynonym(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = deleteSynonymValidateBeforeCall(
+    Object req = deleteSynonymValidateBeforeCall(
       indexName,
       objectID,
       forwardToReplicas,
       null
     );
-    Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
-    ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
+      ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2087,7 +2159,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
-    Call call = deleteSynonymValidateBeforeCall(
+    Call call = (Call) deleteSynonymValidateBeforeCall(
       indexName,
       objectID,
       forwardToReplicas,
@@ -2103,10 +2175,10 @@ public class SearchApi extends ApiClient {
    *
    * @param key API Key string. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getApiKeyCall(String key, final ApiCallback _callback)
+  private Object getApiKeyCall(String key, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -2133,8 +2205,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getApiKeyValidateBeforeCall(
+  private Object getApiKeyValidateBeforeCall(
     String key,
     final ApiCallback _callback
   ) throws ApiException {
@@ -2156,11 +2227,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public KeyObject getApiKey(String key) throws ApiException {
-    Call call = getApiKeyValidateBeforeCall(key, null);
-    Type returnType = new TypeToken<KeyObject>() {}.getType();
-    ApiResponse<KeyObject> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getApiKey(String key) throws ApiException {
+    Object req = getApiKeyValidateBeforeCall(key, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<KeyObject>() {}.getType();
+      ApiResponse<KeyObject> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2175,7 +2250,7 @@ public class SearchApi extends ApiClient {
     String key,
     final ApiCallback<KeyObject> _callback
   ) throws ApiException {
-    Call call = getApiKeyValidateBeforeCall(key, _callback);
+    Call call = (Call) getApiKeyValidateBeforeCall(key, _callback);
     Type returnType = new TypeToken<KeyObject>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -2185,10 +2260,10 @@ public class SearchApi extends ApiClient {
    * Build call for getDictionaryLanguages
    *
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getDictionaryLanguagesCall(final ApiCallback _callback)
+  private Object getDictionaryLanguagesCall(final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -2211,8 +2286,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getDictionaryLanguagesValidateBeforeCall(
+  private Object getDictionaryLanguagesValidateBeforeCall(
     final ApiCallback _callback
   ) throws ApiException {
     return getDictionaryLanguagesCall(_callback);
@@ -2225,11 +2299,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Map<String, Languages> getDictionaryLanguages() throws ApiException {
-    Call call = getDictionaryLanguagesValidateBeforeCall(null);
-    Type returnType = new TypeToken<Map<String, Languages>>() {}.getType();
-    ApiResponse<Map<String, Languages>> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getDictionaryLanguages() throws ApiException {
+    Object req = getDictionaryLanguagesValidateBeforeCall(null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<Map<String, Languages>>() {}.getType();
+      ApiResponse<Map<String, Languages>> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2242,7 +2320,7 @@ public class SearchApi extends ApiClient {
   public Call getDictionaryLanguagesAsync(
     final ApiCallback<Map<String, Languages>> _callback
   ) throws ApiException {
-    Call call = getDictionaryLanguagesValidateBeforeCall(_callback);
+    Call call = (Call) getDictionaryLanguagesValidateBeforeCall(_callback);
     Type returnType = new TypeToken<Map<String, Languages>>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -2252,10 +2330,10 @@ public class SearchApi extends ApiClient {
    * Build call for getDictionarySettings
    *
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getDictionarySettingsCall(final ApiCallback _callback)
+  private Object getDictionarySettingsCall(final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -2278,8 +2356,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getDictionarySettingsValidateBeforeCall(
+  private Object getDictionarySettingsValidateBeforeCall(
     final ApiCallback _callback
   ) throws ApiException {
     return getDictionarySettingsCall(_callback);
@@ -2292,14 +2369,17 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public GetDictionarySettingsResponse getDictionarySettings()
-    throws ApiException {
-    Call call = getDictionarySettingsValidateBeforeCall(null);
-    Type returnType = new TypeToken<GetDictionarySettingsResponse>() {}
-      .getType();
-    ApiResponse<GetDictionarySettingsResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+  public <T> T getDictionarySettings() throws ApiException {
+    Object req = getDictionarySettingsValidateBeforeCall(null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<GetDictionarySettingsResponse>() {}
+        .getType();
+      ApiResponse<GetDictionarySettingsResponse> res =
+        this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2312,7 +2392,7 @@ public class SearchApi extends ApiClient {
   public Call getDictionarySettingsAsync(
     final ApiCallback<GetDictionarySettingsResponse> _callback
   ) throws ApiException {
-    Call call = getDictionarySettingsValidateBeforeCall(_callback);
+    Call call = (Call) getDictionarySettingsValidateBeforeCall(_callback);
     Type returnType = new TypeToken<GetDictionarySettingsResponse>() {}
       .getType();
     this.executeAsync(call, returnType, _callback);
@@ -2331,10 +2411,10 @@ public class SearchApi extends ApiClient {
    * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
    *     (optional, default to all)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getLogsCall(
+  private Object getLogsCall(
     Integer offset,
     Integer length,
     String indexName,
@@ -2378,8 +2458,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getLogsValidateBeforeCall(
+  private Object getLogsValidateBeforeCall(
     Integer offset,
     Integer length,
     String indexName,
@@ -2404,22 +2483,26 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public GetLogsResponse getLogs(
+  public <T> T getLogs(
     Integer offset,
     Integer length,
     String indexName,
     String type
   ) throws ApiException {
-    Call call = getLogsValidateBeforeCall(
+    Object req = getLogsValidateBeforeCall(
       offset,
       length,
       indexName,
       type,
       null
     );
-    Type returnType = new TypeToken<GetLogsResponse>() {}.getType();
-    ApiResponse<GetLogsResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<GetLogsResponse>() {}.getType();
+      ApiResponse<GetLogsResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2444,7 +2527,7 @@ public class SearchApi extends ApiClient {
     String type,
     final ApiCallback<GetLogsResponse> _callback
   ) throws ApiException {
-    Call call = getLogsValidateBeforeCall(
+    Call call = (Call) getLogsValidateBeforeCall(
       offset,
       length,
       indexName,
@@ -2464,10 +2547,10 @@ public class SearchApi extends ApiClient {
    * @param attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable
    *     attributes are returned. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getObjectCall(
+  private Object getObjectCall(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve,
@@ -2508,8 +2591,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getObjectValidateBeforeCall(
+  private Object getObjectValidateBeforeCall(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve,
@@ -2543,20 +2625,24 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Map<String, String> getObject(
+  public <T> T getObject(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve
   ) throws ApiException {
-    Call call = getObjectValidateBeforeCall(
+    Object req = getObjectValidateBeforeCall(
       indexName,
       objectID,
       attributesToRetrieve,
       null
     );
-    Type returnType = new TypeToken<Map<String, String>>() {}.getType();
-    ApiResponse<Map<String, String>> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<Map<String, String>>() {}.getType();
+      ApiResponse<Map<String, String>> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2576,7 +2662,7 @@ public class SearchApi extends ApiClient {
     List<String> attributesToRetrieve,
     final ApiCallback<Map<String, String>> _callback
   ) throws ApiException {
-    Call call = getObjectValidateBeforeCall(
+    Call call = (Call) getObjectValidateBeforeCall(
       indexName,
       objectID,
       attributesToRetrieve,
@@ -2592,10 +2678,10 @@ public class SearchApi extends ApiClient {
    *
    * @param getObjectsObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getObjectsCall(
+  private Object getObjectsCall(
     GetObjectsObject getObjectsObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -2620,8 +2706,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getObjectsValidateBeforeCall(
+  private Object getObjectsValidateBeforeCall(
     GetObjectsObject getObjectsObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -2643,12 +2728,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public GetObjectsResponse getObjects(GetObjectsObject getObjectsObject)
+  public <T> T getObjects(GetObjectsObject getObjectsObject)
     throws ApiException {
-    Call call = getObjectsValidateBeforeCall(getObjectsObject, null);
-    Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
-    ApiResponse<GetObjectsResponse> res = this.execute(call, returnType);
-    return res.getData();
+    Object req = getObjectsValidateBeforeCall(getObjectsObject, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
+      ApiResponse<GetObjectsResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2664,7 +2753,10 @@ public class SearchApi extends ApiClient {
     GetObjectsObject getObjectsObject,
     final ApiCallback<GetObjectsResponse> _callback
   ) throws ApiException {
-    Call call = getObjectsValidateBeforeCall(getObjectsObject, _callback);
+    Call call = (Call) getObjectsValidateBeforeCall(
+      getObjectsObject,
+      _callback
+    );
     Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -2676,10 +2768,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getRuleCall(
+  private Object getRuleCall(
     String indexName,
     String objectID,
     final ApiCallback _callback
@@ -2713,8 +2805,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getRuleValidateBeforeCall(
+  private Object getRuleValidateBeforeCall(
     String indexName,
     String objectID,
     final ApiCallback _callback
@@ -2745,11 +2836,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Rule getRule(String indexName, String objectID) throws ApiException {
-    Call call = getRuleValidateBeforeCall(indexName, objectID, null);
-    Type returnType = new TypeToken<Rule>() {}.getType();
-    ApiResponse<Rule> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getRule(String indexName, String objectID) throws ApiException {
+    Object req = getRuleValidateBeforeCall(indexName, objectID, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<Rule>() {}.getType();
+      ApiResponse<Rule> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2766,7 +2861,11 @@ public class SearchApi extends ApiClient {
     String objectID,
     final ApiCallback<Rule> _callback
   ) throws ApiException {
-    Call call = getRuleValidateBeforeCall(indexName, objectID, _callback);
+    Call call = (Call) getRuleValidateBeforeCall(
+      indexName,
+      objectID,
+      _callback
+    );
     Type returnType = new TypeToken<Rule>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -2777,10 +2876,10 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getSettingsCall(String indexName, final ApiCallback _callback)
+  private Object getSettingsCall(String indexName, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -2807,8 +2906,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getSettingsValidateBeforeCall(
+  private Object getSettingsValidateBeforeCall(
     String indexName,
     final ApiCallback _callback
   ) throws ApiException {
@@ -2830,11 +2928,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public IndexSettings getSettings(String indexName) throws ApiException {
-    Call call = getSettingsValidateBeforeCall(indexName, null);
-    Type returnType = new TypeToken<IndexSettings>() {}.getType();
-    ApiResponse<IndexSettings> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getSettings(String indexName) throws ApiException {
+    Object req = getSettingsValidateBeforeCall(indexName, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<IndexSettings>() {}.getType();
+      ApiResponse<IndexSettings> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2849,7 +2951,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     final ApiCallback<IndexSettings> _callback
   ) throws ApiException {
-    Call call = getSettingsValidateBeforeCall(indexName, _callback);
+    Call call = (Call) getSettingsValidateBeforeCall(indexName, _callback);
     Type returnType = new TypeToken<IndexSettings>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -2859,10 +2961,11 @@ public class SearchApi extends ApiClient {
    * Build call for getSources
    *
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getSourcesCall(final ApiCallback _callback) throws ApiException {
+  private Object getSourcesCall(final ApiCallback _callback)
+    throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2884,8 +2987,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getSourcesValidateBeforeCall(final ApiCallback _callback)
+  private Object getSourcesValidateBeforeCall(final ApiCallback _callback)
     throws ApiException {
     return getSourcesCall(_callback);
   }
@@ -2897,11 +2999,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public List<Source> getSources() throws ApiException {
-    Call call = getSourcesValidateBeforeCall(null);
-    Type returnType = new TypeToken<List<Source>>() {}.getType();
-    ApiResponse<List<Source>> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getSources() throws ApiException {
+    Object req = getSourcesValidateBeforeCall(null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<List<Source>>() {}.getType();
+      ApiResponse<List<Source>> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -2913,7 +3019,7 @@ public class SearchApi extends ApiClient {
    */
   public Call getSourcesAsync(final ApiCallback<List<Source>> _callback)
     throws ApiException {
-    Call call = getSourcesValidateBeforeCall(_callback);
+    Call call = (Call) getSourcesValidateBeforeCall(_callback);
     Type returnType = new TypeToken<List<Source>>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -2925,10 +3031,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getSynonymCall(
+  private Object getSynonymCall(
     String indexName,
     String objectID,
     final ApiCallback _callback
@@ -2962,8 +3068,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getSynonymValidateBeforeCall(
+  private Object getSynonymValidateBeforeCall(
     String indexName,
     String objectID,
     final ApiCallback _callback
@@ -2994,12 +3099,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SynonymHit getSynonym(String indexName, String objectID)
+  public <T> T getSynonym(String indexName, String objectID)
     throws ApiException {
-    Call call = getSynonymValidateBeforeCall(indexName, objectID, null);
-    Type returnType = new TypeToken<SynonymHit>() {}.getType();
-    ApiResponse<SynonymHit> res = this.execute(call, returnType);
-    return res.getData();
+    Object req = getSynonymValidateBeforeCall(indexName, objectID, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SynonymHit>() {}.getType();
+      ApiResponse<SynonymHit> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3016,7 +3125,11 @@ public class SearchApi extends ApiClient {
     String objectID,
     final ApiCallback<SynonymHit> _callback
   ) throws ApiException {
-    Call call = getSynonymValidateBeforeCall(indexName, objectID, _callback);
+    Call call = (Call) getSynonymValidateBeforeCall(
+      indexName,
+      objectID,
+      _callback
+    );
     Type returnType = new TypeToken<SynonymHit>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3028,10 +3141,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getTaskCall(
+  private Object getTaskCall(
     String indexName,
     Integer taskID,
     final ApiCallback _callback
@@ -3065,8 +3178,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getTaskValidateBeforeCall(
+  private Object getTaskValidateBeforeCall(
     String indexName,
     Integer taskID,
     final ApiCallback _callback
@@ -3097,12 +3209,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public GetTaskResponse getTask(String indexName, Integer taskID)
-    throws ApiException {
-    Call call = getTaskValidateBeforeCall(indexName, taskID, null);
-    Type returnType = new TypeToken<GetTaskResponse>() {}.getType();
-    ApiResponse<GetTaskResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getTask(String indexName, Integer taskID) throws ApiException {
+    Object req = getTaskValidateBeforeCall(indexName, taskID, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<GetTaskResponse>() {}.getType();
+      ApiResponse<GetTaskResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3119,7 +3234,7 @@ public class SearchApi extends ApiClient {
     Integer taskID,
     final ApiCallback<GetTaskResponse> _callback
   ) throws ApiException {
-    Call call = getTaskValidateBeforeCall(indexName, taskID, _callback);
+    Call call = (Call) getTaskValidateBeforeCall(indexName, taskID, _callback);
     Type returnType = new TypeToken<GetTaskResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3129,10 +3244,10 @@ public class SearchApi extends ApiClient {
    * Build call for getTopUserIds
    *
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getTopUserIdsCall(final ApiCallback _callback)
+  private Object getTopUserIdsCall(final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -3155,8 +3270,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getTopUserIdsValidateBeforeCall(final ApiCallback _callback)
+  private Object getTopUserIdsValidateBeforeCall(final ApiCallback _callback)
     throws ApiException {
     return getTopUserIdsCall(_callback);
   }
@@ -3171,11 +3285,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public GetTopUserIdsResponse getTopUserIds() throws ApiException {
-    Call call = getTopUserIdsValidateBeforeCall(null);
-    Type returnType = new TypeToken<GetTopUserIdsResponse>() {}.getType();
-    ApiResponse<GetTopUserIdsResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getTopUserIds() throws ApiException {
+    Object req = getTopUserIdsValidateBeforeCall(null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<GetTopUserIdsResponse>() {}.getType();
+      ApiResponse<GetTopUserIdsResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3191,7 +3309,7 @@ public class SearchApi extends ApiClient {
   public Call getTopUserIdsAsync(
     final ApiCallback<GetTopUserIdsResponse> _callback
   ) throws ApiException {
-    Call call = getTopUserIdsValidateBeforeCall(_callback);
+    Call call = (Call) getTopUserIdsValidateBeforeCall(_callback);
     Type returnType = new TypeToken<GetTopUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3202,10 +3320,10 @@ public class SearchApi extends ApiClient {
    *
    * @param userID userID to assign. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getUserIdCall(String userID, final ApiCallback _callback)
+  private Object getUserIdCall(String userID, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -3232,8 +3350,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getUserIdValidateBeforeCall(
+  private Object getUserIdValidateBeforeCall(
     String userID,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3258,11 +3375,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UserId getUserId(String userID) throws ApiException {
-    Call call = getUserIdValidateBeforeCall(userID, null);
-    Type returnType = new TypeToken<UserId>() {}.getType();
-    ApiResponse<UserId> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T getUserId(String userID) throws ApiException {
+    Object req = getUserIdValidateBeforeCall(userID, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UserId>() {}.getType();
+      ApiResponse<UserId> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3280,7 +3401,7 @@ public class SearchApi extends ApiClient {
     String userID,
     final ApiCallback<UserId> _callback
   ) throws ApiException {
-    Call call = getUserIdValidateBeforeCall(userID, _callback);
+    Call call = (Call) getUserIdValidateBeforeCall(userID, _callback);
     Type returnType = new TypeToken<UserId>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3291,10 +3412,10 @@ public class SearchApi extends ApiClient {
    *
    * @param getClusters Whether to get clusters or not. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call hasPendingMappingsCall(
+  private Object hasPendingMappingsCall(
     Boolean getClusters,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3323,8 +3444,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call hasPendingMappingsValidateBeforeCall(
+  private Object hasPendingMappingsValidateBeforeCall(
     Boolean getClusters,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3343,12 +3463,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public CreatedAtResponse hasPendingMappings(Boolean getClusters)
-    throws ApiException {
-    Call call = hasPendingMappingsValidateBeforeCall(getClusters, null);
-    Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
-    ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T hasPendingMappings(Boolean getClusters) throws ApiException {
+    Object req = hasPendingMappingsValidateBeforeCall(getClusters, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
+      ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3367,7 +3490,10 @@ public class SearchApi extends ApiClient {
     Boolean getClusters,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
-    Call call = hasPendingMappingsValidateBeforeCall(getClusters, _callback);
+    Call call = (Call) hasPendingMappingsValidateBeforeCall(
+      getClusters,
+      _callback
+    );
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3377,10 +3503,10 @@ public class SearchApi extends ApiClient {
    * Build call for listApiKeys
    *
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call listApiKeysCall(final ApiCallback _callback)
+  private Object listApiKeysCall(final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -3403,8 +3529,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call listApiKeysValidateBeforeCall(final ApiCallback _callback)
+  private Object listApiKeysValidateBeforeCall(final ApiCallback _callback)
     throws ApiException {
     return listApiKeysCall(_callback);
   }
@@ -3416,11 +3541,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public ListApiKeysResponse listApiKeys() throws ApiException {
-    Call call = listApiKeysValidateBeforeCall(null);
-    Type returnType = new TypeToken<ListApiKeysResponse>() {}.getType();
-    ApiResponse<ListApiKeysResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T listApiKeys() throws ApiException {
+    Object req = listApiKeysValidateBeforeCall(null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<ListApiKeysResponse>() {}.getType();
+      ApiResponse<ListApiKeysResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3433,7 +3562,7 @@ public class SearchApi extends ApiClient {
   public Call listApiKeysAsync(
     final ApiCallback<ListApiKeysResponse> _callback
   ) throws ApiException {
-    Call call = listApiKeysValidateBeforeCall(_callback);
+    Call call = (Call) listApiKeysValidateBeforeCall(_callback);
     Type returnType = new TypeToken<ListApiKeysResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3443,10 +3572,10 @@ public class SearchApi extends ApiClient {
    * Build call for listClusters
    *
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call listClustersCall(final ApiCallback _callback)
+  private Object listClustersCall(final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -3469,8 +3598,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call listClustersValidateBeforeCall(final ApiCallback _callback)
+  private Object listClustersValidateBeforeCall(final ApiCallback _callback)
     throws ApiException {
     return listClustersCall(_callback);
   }
@@ -3483,11 +3611,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public ListClustersResponse listClusters() throws ApiException {
-    Call call = listClustersValidateBeforeCall(null);
-    Type returnType = new TypeToken<ListClustersResponse>() {}.getType();
-    ApiResponse<ListClustersResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T listClusters() throws ApiException {
+    Object req = listClustersValidateBeforeCall(null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<ListClustersResponse>() {}.getType();
+      ApiResponse<ListClustersResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3501,7 +3633,7 @@ public class SearchApi extends ApiClient {
   public Call listClustersAsync(
     final ApiCallback<ListClustersResponse> _callback
   ) throws ApiException {
-    Call call = listClustersValidateBeforeCall(_callback);
+    Call call = (Call) listClustersValidateBeforeCall(_callback);
     Type returnType = new TypeToken<ListClustersResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3514,10 +3646,10 @@ public class SearchApi extends ApiClient {
    *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    *     (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call listIndicesCall(Integer page, final ApiCallback _callback)
+  private Object listIndicesCall(Integer page, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -3544,8 +3676,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call listIndicesValidateBeforeCall(
+  private Object listIndicesValidateBeforeCall(
     Integer page,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3562,11 +3693,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public ListIndicesResponse listIndices(Integer page) throws ApiException {
-    Call call = listIndicesValidateBeforeCall(page, null);
-    Type returnType = new TypeToken<ListIndicesResponse>() {}.getType();
-    ApiResponse<ListIndicesResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T listIndices(Integer page) throws ApiException {
+    Object req = listIndicesValidateBeforeCall(page, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<ListIndicesResponse>() {}.getType();
+      ApiResponse<ListIndicesResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3583,7 +3718,7 @@ public class SearchApi extends ApiClient {
     Integer page,
     final ApiCallback<ListIndicesResponse> _callback
   ) throws ApiException {
-    Call call = listIndicesValidateBeforeCall(page, _callback);
+    Call call = (Call) listIndicesValidateBeforeCall(page, _callback);
     Type returnType = new TypeToken<ListIndicesResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3597,10 +3732,10 @@ public class SearchApi extends ApiClient {
    *     (optional)
    * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call listUserIdsCall(
+  private Object listUserIdsCall(
     Integer page,
     Integer hitsPerPage,
     final ApiCallback _callback
@@ -3634,8 +3769,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call listUserIdsValidateBeforeCall(
+  private Object listUserIdsValidateBeforeCall(
     Integer page,
     Integer hitsPerPage,
     final ApiCallback _callback
@@ -3657,12 +3791,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public ListUserIdsResponse listUserIds(Integer page, Integer hitsPerPage)
+  public <T> T listUserIds(Integer page, Integer hitsPerPage)
     throws ApiException {
-    Call call = listUserIdsValidateBeforeCall(page, hitsPerPage, null);
-    Type returnType = new TypeToken<ListUserIdsResponse>() {}.getType();
-    ApiResponse<ListUserIdsResponse> res = this.execute(call, returnType);
-    return res.getData();
+    Object req = listUserIdsValidateBeforeCall(page, hitsPerPage, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<ListUserIdsResponse>() {}.getType();
+      ApiResponse<ListUserIdsResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3684,7 +3822,11 @@ public class SearchApi extends ApiClient {
     Integer hitsPerPage,
     final ApiCallback<ListUserIdsResponse> _callback
   ) throws ApiException {
-    Call call = listUserIdsValidateBeforeCall(page, hitsPerPage, _callback);
+    Call call = (Call) listUserIdsValidateBeforeCall(
+      page,
+      hitsPerPage,
+      _callback
+    );
     Type returnType = new TypeToken<ListUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3695,10 +3837,10 @@ public class SearchApi extends ApiClient {
    *
    * @param batchObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call multipleBatchCall(
+  private Object multipleBatchCall(
     BatchObject batchObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3723,8 +3865,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call multipleBatchValidateBeforeCall(
+  private Object multipleBatchValidateBeforeCall(
     BatchObject batchObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3747,12 +3888,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public MultipleBatchResponse multipleBatch(BatchObject batchObject)
-    throws ApiException {
-    Call call = multipleBatchValidateBeforeCall(batchObject, null);
-    Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
-    ApiResponse<MultipleBatchResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T multipleBatch(BatchObject batchObject) throws ApiException {
+    Object req = multipleBatchValidateBeforeCall(batchObject, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
+      ApiResponse<MultipleBatchResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3768,7 +3912,7 @@ public class SearchApi extends ApiClient {
     BatchObject batchObject,
     final ApiCallback<MultipleBatchResponse> _callback
   ) throws ApiException {
-    Call call = multipleBatchValidateBeforeCall(batchObject, _callback);
+    Call call = (Call) multipleBatchValidateBeforeCall(batchObject, _callback);
     Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3779,10 +3923,10 @@ public class SearchApi extends ApiClient {
    *
    * @param multipleQueriesObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call multipleQueriesCall(
+  private Object multipleQueriesCall(
     MultipleQueriesObject multipleQueriesObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3807,8 +3951,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call multipleQueriesValidateBeforeCall(
+  private Object multipleQueriesValidateBeforeCall(
     MultipleQueriesObject multipleQueriesObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -3831,13 +3974,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public MultipleQueriesResponse multipleQueries(
-    MultipleQueriesObject multipleQueriesObject
-  ) throws ApiException {
-    Call call = multipleQueriesValidateBeforeCall(multipleQueriesObject, null);
-    Type returnType = new TypeToken<MultipleQueriesResponse>() {}.getType();
-    ApiResponse<MultipleQueriesResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T multipleQueries(MultipleQueriesObject multipleQueriesObject)
+    throws ApiException {
+    Object req = multipleQueriesValidateBeforeCall(multipleQueriesObject, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<MultipleQueriesResponse>() {}.getType();
+      ApiResponse<MultipleQueriesResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3852,7 +3998,7 @@ public class SearchApi extends ApiClient {
     MultipleQueriesObject multipleQueriesObject,
     final ApiCallback<MultipleQueriesResponse> _callback
   ) throws ApiException {
-    Call call = multipleQueriesValidateBeforeCall(
+    Call call = (Call) multipleQueriesValidateBeforeCall(
       multipleQueriesObject,
       _callback
     );
@@ -3867,10 +4013,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param operationIndexObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call operationIndexCall(
+  private Object operationIndexCall(
     String indexName,
     OperationIndexObject operationIndexObject,
     final ApiCallback _callback
@@ -3900,8 +4046,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call operationIndexValidateBeforeCall(
+  private Object operationIndexValidateBeforeCall(
     String indexName,
     OperationIndexObject operationIndexObject,
     final ApiCallback _callback
@@ -3933,18 +4078,22 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse operationIndex(
+  public <T> T operationIndex(
     String indexName,
     OperationIndexObject operationIndexObject
   ) throws ApiException {
-    Call call = operationIndexValidateBeforeCall(
+    Object req = operationIndexValidateBeforeCall(
       indexName,
       operationIndexObject,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -3961,7 +4110,7 @@ public class SearchApi extends ApiClient {
     OperationIndexObject operationIndexObject,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = operationIndexValidateBeforeCall(
+    Call call = (Call) operationIndexValidateBeforeCall(
       indexName,
       operationIndexObject,
       _callback
@@ -3980,10 +4129,10 @@ public class SearchApi extends ApiClient {
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call partialUpdateObjectCall(
+  private Object partialUpdateObjectCall(
     String indexName,
     String objectID,
     List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
@@ -4025,8 +4174,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call partialUpdateObjectValidateBeforeCall(
+  private Object partialUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
     List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
@@ -4079,24 +4227,28 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtWithObjectIdResponse partialUpdateObject(
+  public <T> T partialUpdateObject(
     String indexName,
     String objectID,
     List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
-    Call call = partialUpdateObjectValidateBeforeCall(
+    Object req = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
       oneOfstringbuiltInOperation,
       createIfNotExists,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
-      .getType();
-    ApiResponse<UpdatedAtWithObjectIdResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
+        .getType();
+      ApiResponse<UpdatedAtWithObjectIdResponse> res =
+        this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4121,7 +4273,7 @@ public class SearchApi extends ApiClient {
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
-    Call call = partialUpdateObjectValidateBeforeCall(
+    Call call = (Call) partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
       oneOfstringbuiltInOperation,
@@ -4139,10 +4291,10 @@ public class SearchApi extends ApiClient {
    *
    * @param userID userID to assign. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call removeUserIdCall(String userID, final ApiCallback _callback)
+  private Object removeUserIdCall(String userID, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -4169,8 +4321,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call removeUserIdValidateBeforeCall(
+  private Object removeUserIdValidateBeforeCall(
     String userID,
     final ApiCallback _callback
   ) throws ApiException {
@@ -4193,11 +4344,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public RemoveUserIdResponse removeUserId(String userID) throws ApiException {
-    Call call = removeUserIdValidateBeforeCall(userID, null);
-    Type returnType = new TypeToken<RemoveUserIdResponse>() {}.getType();
-    ApiResponse<RemoveUserIdResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T removeUserId(String userID) throws ApiException {
+    Object req = removeUserIdValidateBeforeCall(userID, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<RemoveUserIdResponse>() {}.getType();
+      ApiResponse<RemoveUserIdResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4213,7 +4368,7 @@ public class SearchApi extends ApiClient {
     String userID,
     final ApiCallback<RemoveUserIdResponse> _callback
   ) throws ApiException {
-    Call call = removeUserIdValidateBeforeCall(userID, _callback);
+    Call call = (Call) removeUserIdValidateBeforeCall(userID, _callback);
     Type returnType = new TypeToken<RemoveUserIdResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -4224,10 +4379,10 @@ public class SearchApi extends ApiClient {
    *
    * @param source The sources to allow. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call replaceSourcesCall(
+  private Object replaceSourcesCall(
     List<Source> source,
     final ApiCallback _callback
   ) throws ApiException {
@@ -4252,8 +4407,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call replaceSourcesValidateBeforeCall(
+  private Object replaceSourcesValidateBeforeCall(
     List<Source> source,
     final ApiCallback _callback
   ) throws ApiException {
@@ -4275,12 +4429,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public ReplaceSourceResponse replaceSources(List<Source> source)
-    throws ApiException {
-    Call call = replaceSourcesValidateBeforeCall(source, null);
-    Type returnType = new TypeToken<ReplaceSourceResponse>() {}.getType();
-    ApiResponse<ReplaceSourceResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T replaceSources(List<Source> source) throws ApiException {
+    Object req = replaceSourcesValidateBeforeCall(source, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<ReplaceSourceResponse>() {}.getType();
+      ApiResponse<ReplaceSourceResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4295,7 +4452,7 @@ public class SearchApi extends ApiClient {
     List<Source> source,
     final ApiCallback<ReplaceSourceResponse> _callback
   ) throws ApiException {
-    Call call = replaceSourcesValidateBeforeCall(source, _callback);
+    Call call = (Call) replaceSourcesValidateBeforeCall(source, _callback);
     Type returnType = new TypeToken<ReplaceSourceResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -4306,10 +4463,10 @@ public class SearchApi extends ApiClient {
    *
    * @param key API Key string. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call restoreApiKeyCall(String key, final ApiCallback _callback)
+  private Object restoreApiKeyCall(String key, final ApiCallback _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -4336,8 +4493,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call restoreApiKeyValidateBeforeCall(
+  private Object restoreApiKeyValidateBeforeCall(
     String key,
     final ApiCallback _callback
   ) throws ApiException {
@@ -4359,11 +4515,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public AddApiKeyResponse restoreApiKey(String key) throws ApiException {
-    Call call = restoreApiKeyValidateBeforeCall(key, null);
-    Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
-    ApiResponse<AddApiKeyResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T restoreApiKey(String key) throws ApiException {
+    Object req = restoreApiKeyValidateBeforeCall(key, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
+      ApiResponse<AddApiKeyResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4378,7 +4538,7 @@ public class SearchApi extends ApiClient {
     String key,
     final ApiCallback<AddApiKeyResponse> _callback
   ) throws ApiException {
-    Call call = restoreApiKeyValidateBeforeCall(key, _callback);
+    Call call = (Call) restoreApiKeyValidateBeforeCall(key, _callback);
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -4390,10 +4550,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param body The Algolia object. (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call saveObjectCall(
+  private Object saveObjectCall(
     String indexName,
     Object body,
     final ApiCallback _callback
@@ -4423,8 +4583,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call saveObjectValidateBeforeCall(
+  private Object saveObjectValidateBeforeCall(
     String indexName,
     Object body,
     final ApiCallback _callback
@@ -4455,12 +4614,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SaveObjectResponse saveObject(String indexName, Object body)
-    throws ApiException {
-    Call call = saveObjectValidateBeforeCall(indexName, body, null);
-    Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
-    ApiResponse<SaveObjectResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T saveObject(String indexName, Object body) throws ApiException {
+    Object req = saveObjectValidateBeforeCall(indexName, body, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
+      ApiResponse<SaveObjectResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4477,7 +4639,7 @@ public class SearchApi extends ApiClient {
     Object body,
     final ApiCallback<SaveObjectResponse> _callback
   ) throws ApiException {
-    Call call = saveObjectValidateBeforeCall(indexName, body, _callback);
+    Call call = (Call) saveObjectValidateBeforeCall(indexName, body, _callback);
     Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -4492,10 +4654,10 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call saveRuleCall(
+  private Object saveRuleCall(
     String indexName,
     String objectID,
     Rule rule,
@@ -4537,8 +4699,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call saveRuleValidateBeforeCall(
+  private Object saveRuleValidateBeforeCall(
     String indexName,
     String objectID,
     Rule rule,
@@ -4587,22 +4748,26 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedRuleResponse saveRule(
+  public <T> T saveRule(
     String indexName,
     String objectID,
     Rule rule,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = saveRuleValidateBeforeCall(
+    Object req = saveRuleValidateBeforeCall(
       indexName,
       objectID,
       rule,
       forwardToReplicas,
       null
     );
-    Type returnType = new TypeToken<UpdatedRuleResponse>() {}.getType();
-    ApiResponse<UpdatedRuleResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedRuleResponse>() {}.getType();
+      ApiResponse<UpdatedRuleResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4624,7 +4789,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedRuleResponse> _callback
   ) throws ApiException {
-    Call call = saveRuleValidateBeforeCall(
+    Call call = (Call) saveRuleValidateBeforeCall(
       indexName,
       objectID,
       rule,
@@ -4645,10 +4810,10 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call saveSynonymCall(
+  private Object saveSynonymCall(
     String indexName,
     String objectID,
     SynonymHit synonymHit,
@@ -4690,8 +4855,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call saveSynonymValidateBeforeCall(
+  private Object saveSynonymValidateBeforeCall(
     String indexName,
     String objectID,
     SynonymHit synonymHit,
@@ -4740,22 +4904,26 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SaveSynonymResponse saveSynonym(
+  public <T> T saveSynonym(
     String indexName,
     String objectID,
     SynonymHit synonymHit,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = saveSynonymValidateBeforeCall(
+    Object req = saveSynonymValidateBeforeCall(
       indexName,
       objectID,
       synonymHit,
       forwardToReplicas,
       null
     );
-    Type returnType = new TypeToken<SaveSynonymResponse>() {}.getType();
-    ApiResponse<SaveSynonymResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SaveSynonymResponse>() {}.getType();
+      ApiResponse<SaveSynonymResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4778,7 +4946,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback<SaveSynonymResponse> _callback
   ) throws ApiException {
-    Call call = saveSynonymValidateBeforeCall(
+    Call call = (Call) saveSynonymValidateBeforeCall(
       indexName,
       objectID,
       synonymHit,
@@ -4800,10 +4968,10 @@ public class SearchApi extends ApiClient {
    * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this
    *     request. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call saveSynonymsCall(
+  private Object saveSynonymsCall(
     String indexName,
     List<SynonymHit> synonymHit,
     Boolean forwardToReplicas,
@@ -4847,8 +5015,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call saveSynonymsValidateBeforeCall(
+  private Object saveSynonymsValidateBeforeCall(
     String indexName,
     List<SynonymHit> synonymHit,
     Boolean forwardToReplicas,
@@ -4892,22 +5059,26 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse saveSynonyms(
+  public <T> T saveSynonyms(
     String indexName,
     List<SynonymHit> synonymHit,
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms
   ) throws ApiException {
-    Call call = saveSynonymsValidateBeforeCall(
+    Object req = saveSynonymsValidateBeforeCall(
       indexName,
       synonymHit,
       forwardToReplicas,
       replaceExistingSynonyms,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -4931,7 +5102,7 @@ public class SearchApi extends ApiClient {
     Boolean replaceExistingSynonyms,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = saveSynonymsValidateBeforeCall(
+    Call call = (Call) saveSynonymsValidateBeforeCall(
       indexName,
       synonymHit,
       forwardToReplicas,
@@ -4949,10 +5120,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call searchCall(
+  private Object searchCall(
     String indexName,
     SearchParams searchParams,
     final ApiCallback _callback
@@ -4982,8 +5153,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call searchValidateBeforeCall(
+  private Object searchValidateBeforeCall(
     String indexName,
     SearchParams searchParams,
     final ApiCallback _callback
@@ -5014,12 +5184,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SearchResponse search(String indexName, SearchParams searchParams)
+  public <T> T search(String indexName, SearchParams searchParams)
     throws ApiException {
-    Call call = searchValidateBeforeCall(indexName, searchParams, null);
-    Type returnType = new TypeToken<SearchResponse>() {}.getType();
-    ApiResponse<SearchResponse> res = this.execute(call, returnType);
-    return res.getData();
+    Object req = searchValidateBeforeCall(indexName, searchParams, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SearchResponse>() {}.getType();
+      ApiResponse<SearchResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5036,7 +5210,11 @@ public class SearchApi extends ApiClient {
     SearchParams searchParams,
     final ApiCallback<SearchResponse> _callback
   ) throws ApiException {
-    Call call = searchValidateBeforeCall(indexName, searchParams, _callback);
+    Call call = (Call) searchValidateBeforeCall(
+      indexName,
+      searchParams,
+      _callback
+    );
     Type returnType = new TypeToken<SearchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -5048,10 +5226,10 @@ public class SearchApi extends ApiClient {
    * @param dictionaryName The dictionary to search in. (required)
    * @param searchDictionaryEntries (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call searchDictionaryEntriesCall(
+  private Object searchDictionaryEntriesCall(
     String dictionaryName,
     SearchDictionaryEntries searchDictionaryEntries,
     final ApiCallback _callback
@@ -5081,8 +5259,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call searchDictionaryEntriesValidateBeforeCall(
+  private Object searchDictionaryEntriesValidateBeforeCall(
     String dictionaryName,
     SearchDictionaryEntries searchDictionaryEntries,
     final ApiCallback _callback
@@ -5119,18 +5296,22 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse searchDictionaryEntries(
+  public <T> T searchDictionaryEntries(
     String dictionaryName,
     SearchDictionaryEntries searchDictionaryEntries
   ) throws ApiException {
-    Call call = searchDictionaryEntriesValidateBeforeCall(
+    Object req = searchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       searchDictionaryEntries,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5147,7 +5328,7 @@ public class SearchApi extends ApiClient {
     SearchDictionaryEntries searchDictionaryEntries,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = searchDictionaryEntriesValidateBeforeCall(
+    Call call = (Call) searchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       searchDictionaryEntries,
       _callback
@@ -5164,10 +5345,10 @@ public class SearchApi extends ApiClient {
    * @param facetName The facet name. (required)
    * @param searchForFacetValuesRequest (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call searchForFacetValuesCall(
+  private Object searchForFacetValuesCall(
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest,
@@ -5202,8 +5383,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call searchForFacetValuesValidateBeforeCall(
+  private Object searchForFacetValuesValidateBeforeCall(
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest,
@@ -5242,22 +5422,26 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SearchForFacetValuesResponse searchForFacetValues(
+  public <T> T searchForFacetValues(
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest
   ) throws ApiException {
-    Call call = searchForFacetValuesValidateBeforeCall(
+    Object req = searchForFacetValuesValidateBeforeCall(
       indexName,
       facetName,
       searchForFacetValuesRequest,
       null
     );
-    Type returnType = new TypeToken<SearchForFacetValuesResponse>() {}
-      .getType();
-    ApiResponse<SearchForFacetValuesResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SearchForFacetValuesResponse>() {}
+        .getType();
+      ApiResponse<SearchForFacetValuesResponse> res =
+        this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5277,7 +5461,7 @@ public class SearchApi extends ApiClient {
     SearchForFacetValuesRequest searchForFacetValuesRequest,
     final ApiCallback<SearchForFacetValuesResponse> _callback
   ) throws ApiException {
-    Call call = searchForFacetValuesValidateBeforeCall(
+    Call call = (Call) searchForFacetValuesValidateBeforeCall(
       indexName,
       facetName,
       searchForFacetValuesRequest,
@@ -5295,10 +5479,10 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param searchRulesParams (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call searchRulesCall(
+  private Object searchRulesCall(
     String indexName,
     SearchRulesParams searchRulesParams,
     final ApiCallback _callback
@@ -5328,8 +5512,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call searchRulesValidateBeforeCall(
+  private Object searchRulesValidateBeforeCall(
     String indexName,
     SearchRulesParams searchRulesParams,
     final ApiCallback _callback
@@ -5360,18 +5543,22 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SearchRulesResponse searchRules(
+  public <T> T searchRules(
     String indexName,
     SearchRulesParams searchRulesParams
   ) throws ApiException {
-    Call call = searchRulesValidateBeforeCall(
+    Object req = searchRulesValidateBeforeCall(
       indexName,
       searchRulesParams,
       null
     );
-    Type returnType = new TypeToken<SearchRulesResponse>() {}.getType();
-    ApiResponse<SearchRulesResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SearchRulesResponse>() {}.getType();
+      ApiResponse<SearchRulesResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5388,7 +5575,7 @@ public class SearchApi extends ApiClient {
     SearchRulesParams searchRulesParams,
     final ApiCallback<SearchRulesResponse> _callback
   ) throws ApiException {
-    Call call = searchRulesValidateBeforeCall(
+    Call call = (Call) searchRulesValidateBeforeCall(
       indexName,
       searchRulesParams,
       _callback
@@ -5409,10 +5596,10 @@ public class SearchApi extends ApiClient {
    *     (optional, default to 0)
    * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call searchSynonymsCall(
+  private Object searchSynonymsCall(
     String indexName,
     String query,
     String type,
@@ -5461,8 +5648,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call searchSynonymsValidateBeforeCall(
+  private Object searchSynonymsValidateBeforeCall(
     String indexName,
     String query,
     String type,
@@ -5501,14 +5687,14 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SearchSynonymsResponse searchSynonyms(
+  public <T> T searchSynonyms(
     String indexName,
     String query,
     String type,
     Integer page,
     Integer hitsPerPage
   ) throws ApiException {
-    Call call = searchSynonymsValidateBeforeCall(
+    Object req = searchSynonymsValidateBeforeCall(
       indexName,
       query,
       type,
@@ -5516,9 +5702,13 @@ public class SearchApi extends ApiClient {
       hitsPerPage,
       null
     );
-    Type returnType = new TypeToken<SearchSynonymsResponse>() {}.getType();
-    ApiResponse<SearchSynonymsResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SearchSynonymsResponse>() {}.getType();
+      ApiResponse<SearchSynonymsResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5543,7 +5733,7 @@ public class SearchApi extends ApiClient {
     Integer hitsPerPage,
     final ApiCallback<SearchSynonymsResponse> _callback
   ) throws ApiException {
-    Call call = searchSynonymsValidateBeforeCall(
+    Call call = (Call) searchSynonymsValidateBeforeCall(
       indexName,
       query,
       type,
@@ -5561,10 +5751,10 @@ public class SearchApi extends ApiClient {
    *
    * @param searchUserIdsObject (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call searchUserIdsCall(
+  private Object searchUserIdsCall(
     SearchUserIdsObject searchUserIdsObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -5589,8 +5779,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call searchUserIdsValidateBeforeCall(
+  private Object searchUserIdsValidateBeforeCall(
     SearchUserIdsObject searchUserIdsObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -5618,13 +5807,16 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SearchUserIdsResponse searchUserIds(
-    SearchUserIdsObject searchUserIdsObject
-  ) throws ApiException {
-    Call call = searchUserIdsValidateBeforeCall(searchUserIdsObject, null);
-    Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
-    ApiResponse<SearchUserIdsResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T searchUserIds(SearchUserIdsObject searchUserIdsObject)
+    throws ApiException {
+    Object req = searchUserIdsValidateBeforeCall(searchUserIdsObject, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
+      ApiResponse<SearchUserIdsResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5645,7 +5837,10 @@ public class SearchApi extends ApiClient {
     SearchUserIdsObject searchUserIdsObject,
     final ApiCallback<SearchUserIdsResponse> _callback
   ) throws ApiException {
-    Call call = searchUserIdsValidateBeforeCall(searchUserIdsObject, _callback);
+    Call call = (Call) searchUserIdsValidateBeforeCall(
+      searchUserIdsObject,
+      _callback
+    );
     Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -5656,10 +5851,10 @@ public class SearchApi extends ApiClient {
    *
    * @param dictionarySettingsRequest (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call setDictionarySettingsCall(
+  private Object setDictionarySettingsCall(
     DictionarySettingsRequest dictionarySettingsRequest,
     final ApiCallback _callback
   ) throws ApiException {
@@ -5684,8 +5879,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call setDictionarySettingsValidateBeforeCall(
+  private Object setDictionarySettingsValidateBeforeCall(
     DictionarySettingsRequest dictionarySettingsRequest,
     final ApiCallback _callback
   ) throws ApiException {
@@ -5708,16 +5902,20 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse setDictionarySettings(
+  public <T> T setDictionarySettings(
     DictionarySettingsRequest dictionarySettingsRequest
   ) throws ApiException {
-    Call call = setDictionarySettingsValidateBeforeCall(
+    Object req = setDictionarySettingsValidateBeforeCall(
       dictionarySettingsRequest,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5732,7 +5930,7 @@ public class SearchApi extends ApiClient {
     DictionarySettingsRequest dictionarySettingsRequest,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = setDictionarySettingsValidateBeforeCall(
+    Call call = (Call) setDictionarySettingsValidateBeforeCall(
       dictionarySettingsRequest,
       _callback
     );
@@ -5749,10 +5947,10 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call setSettingsCall(
+  private Object setSettingsCall(
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas,
@@ -5789,8 +5987,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call setSettingsValidateBeforeCall(
+  private Object setSettingsValidateBeforeCall(
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas,
@@ -5830,20 +6027,24 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdatedAtResponse setSettings(
+  public <T> T setSettings(
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = setSettingsValidateBeforeCall(
+    Object req = setSettingsValidateBeforeCall(
       indexName,
       indexSettings,
       forwardToReplicas,
       null
     );
-    Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
-    ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
-    return res.getData();
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
+      ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5865,7 +6066,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Call call = setSettingsValidateBeforeCall(
+    Call call = (Call) setSettingsValidateBeforeCall(
       indexName,
       indexSettings,
       forwardToReplicas,
@@ -5882,10 +6083,10 @@ public class SearchApi extends ApiClient {
    * @param key API Key string. (required)
    * @param apiKey (required)
    * @param _callback Callback for upload/download progress
-   * @return Call to execute
+   * @return Call to execute or EchoRequest
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call updateApiKeyCall(
+  private Object updateApiKeyCall(
     String key,
     ApiKey apiKey,
     final ApiCallback _callback
@@ -5915,8 +6116,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call updateApiKeyValidateBeforeCall(
+  private Object updateApiKeyValidateBeforeCall(
     String key,
     ApiKey apiKey,
     final ApiCallback _callback
@@ -5947,12 +6147,15 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UpdateApiKeyResponse updateApiKey(String key, ApiKey apiKey)
-    throws ApiException {
-    Call call = updateApiKeyValidateBeforeCall(key, apiKey, null);
-    Type returnType = new TypeToken<UpdateApiKeyResponse>() {}.getType();
-    ApiResponse<UpdateApiKeyResponse> res = this.execute(call, returnType);
-    return res.getData();
+  public <T> T updateApiKey(String key, ApiKey apiKey) throws ApiException {
+    Object req = updateApiKeyValidateBeforeCall(key, apiKey, null);
+    if (req instanceof Call) {
+      Call call = (Call) req;
+      Type returnType = new TypeToken<UpdateApiKeyResponse>() {}.getType();
+      ApiResponse<UpdateApiKeyResponse> res = this.execute(call, returnType);
+      return (T) res.getData();
+    }
+    return (T) req;
   }
 
   /**
@@ -5969,7 +6172,7 @@ public class SearchApi extends ApiClient {
     ApiKey apiKey,
     final ApiCallback<UpdateApiKeyResponse> _callback
   ) throws ApiException {
-    Call call = updateApiKeyValidateBeforeCall(key, apiKey, _callback);
+    Call call = (Call) updateApiKeyValidateBeforeCall(key, apiKey, _callback);
     Type returnType = new TypeToken<UpdateApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
