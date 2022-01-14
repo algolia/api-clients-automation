@@ -61,3 +61,38 @@ export const extensionForLanguage: Record<string, string> = {
   javascript: 'test.ts',
   java: 'java',
 };
+
+function printUsage(commandName: string): void {
+  console.log(`usage: ${commandName} language client`);
+  // eslint-disable-next-line no-process-exit
+  process.exit(1);
+}
+
+export function parseCLI(
+  args: string[],
+  commandName: string
+): { lang: string; client: string } {
+  if (args.length < 3) {
+    console.log('not enough arguments');
+    printUsage(commandName);
+  }
+
+  const lang = args[2];
+  const client = args[3];
+
+  if (!(lang in packageNames)) {
+    console.log('Unknown language', lang);
+    // eslint-disable-next-line no-process-exit
+    process.exit(1);
+  }
+  if (!(client in packageNames[lang])) {
+    console.log('Unknown client', client);
+    // eslint-disable-next-line no-process-exit
+    process.exit(1);
+  }
+
+  return {
+    lang,
+    client,
+  };
+}

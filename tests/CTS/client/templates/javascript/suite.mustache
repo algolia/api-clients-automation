@@ -1,0 +1,42 @@
+import { {{client}} } from '{{{import}}}';
+
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
+
+function createClient() {
+    return new {{client}}(appId, apiKey{{#hasRegionalHost}}, 'us'{{/hasRegionalHost}});
+}
+
+async function createIndex() {
+    // TODO
+}
+
+{{#blocks}}
+describe('{{operationId}}', () => {
+    {{#tests}}
+    test('{{testName}}', async () => {
+        {{#autoCreateClient}}
+            const $client = createClient();
+        {{/autoCreateClient}}
+        {{#autoCreateIndex}}
+            const $index = await createIndex();
+        {{/autoCreateIndex}}
+
+        let result;
+        {{#steps}}
+            {{#expectedError}}
+                expect(() => {
+                    {{> step}}
+                }).toThrowError("{{expectedError}}")
+            {{/expectedError}}
+
+            {{^expectedError}}
+                {{> step}}
+            {{/expectedError}}
+        {{/steps}}
+    });
+
+    {{/tests}}
+})
+
+{{/blocks}}
