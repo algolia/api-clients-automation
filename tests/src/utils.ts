@@ -35,6 +35,15 @@ export async function* walk(
   }
 }
 
+export async function exists(path: string): Promise<boolean> {
+  try {
+    await fsp.stat(path);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }

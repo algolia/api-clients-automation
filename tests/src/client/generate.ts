@@ -6,6 +6,7 @@ import {
   extensionForLanguage,
   packageNames,
   createClientName,
+  exists,
 } from '../utils';
 import { TestsBlock, Test } from './types';
 
@@ -46,7 +47,14 @@ async function loadTests(client: string) {
 
 async function loadTemplates(language: string) {
   const templates: Record<string, string> = {};
-  for await (const file of walk(`./CTS/client/templates/${language}`)) {
+  const templatePath = `./CTS/client/templates/${language}`;
+
+  await exists(`./CTS/client/templates/javascript`);
+  if (!(await exists(templatePath))) {
+    return {};
+  }
+
+  for await (const file of walk(templatePath)) {
     if (!file.name.endsWith('.mustache')) {
       continue;
     }
@@ -65,6 +73,14 @@ export async function generateTests(language: string, client: string) {
   const { suite: template, ...partialTemplates } = await loadTemplates(
     language
   );
+
+  if (!template) {
+    console.warn(
+      `Skipping because template doesn't exist for CTS > generate:client for ${language}-${client}`
+    );
+    return;
+  }
+
   const code = Mustache.render(
     template,
     {
