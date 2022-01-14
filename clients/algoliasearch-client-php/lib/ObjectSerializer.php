@@ -76,16 +76,15 @@ class ObjectSerializer
                     }
                 }
             } else {
-                foreach($data as $property => $value) {
+                foreach ($data as $property => $value) {
                     $values[$property] = self::sanitizeForSerialization($value);
                 }
             }
 
             return (object) $values;
         }
-  
-            return (string) $data;
 
+        return (string) $data;
     }
 
     /**
@@ -101,9 +100,8 @@ class ObjectSerializer
         if (preg_match("/.*[\/\\\\](.*)$/", $filename, $match)) {
             return $match[1];
         }
-  
-            return $filename;
 
+        return $filename;
     }
 
     /**
@@ -134,9 +132,8 @@ class ObjectSerializer
         if (is_array($object)) {
             return implode(',', $object);
         }
-  
-            return self::toString($object);
 
+        return self::toString($object);
     }
 
     /**
@@ -172,9 +169,8 @@ class ObjectSerializer
         if ($value instanceof \SplFileObject) {
             return $value->getRealPath();
         }
-  
-            return self::toString($value);
 
+        return self::toString($value);
     }
 
     /**
@@ -194,9 +190,8 @@ class ObjectSerializer
         } elseif (is_bool($value)) {
             return $value ? 'true' : 'false';
         }
-  
-            return $value;
 
+        return $value;
     }
 
     /**
@@ -288,7 +283,7 @@ class ObjectSerializer
             settype($data, 'array');
 
             return $data;
-        } else if ($class === 'mixed') {
+        } elseif ($class === 'mixed') {
             settype($data, gettype($data));
 
             return $data;
@@ -349,33 +344,32 @@ class ObjectSerializer
             }
 
             return $data;
-        }  
-            $data = is_string($data) ? json_decode($data) : $data;
-            // If a discriminator is defined and points to a valid subclass, use it.
-            $discriminator = $class::DISCRIMINATOR;
-            if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
-                $subclass = '\Algolia\AlgoliaSearch\Model\\' . $data->{$discriminator};
-                if (is_subclass_of($subclass, $class)) {
-                    $class = $subclass;
-                }
+        }
+        $data = is_string($data) ? json_decode($data) : $data;
+        // If a discriminator is defined and points to a valid subclass, use it.
+        $discriminator = $class::DISCRIMINATOR;
+        if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
+            $subclass = '\Algolia\AlgoliaSearch\Model\\' . $data->{$discriminator};
+            if (is_subclass_of($subclass, $class)) {
+                $class = $subclass;
+            }
+        }
+
+        /** @var ModelInterface $instance */
+        $instance = new $class();
+        foreach ($instance::openAPITypes() as $property => $type) {
+            $propertySetter = $instance::setters()[$property];
+
+            if (!isset($propertySetter) || !isset($data->{$instance::attributeMap()[$property]})) {
+                continue;
             }
 
-            /** @var ModelInterface $instance */
-            $instance = new $class();
-            foreach ($instance::openAPITypes() as $property => $type) {
-                $propertySetter = $instance::setters()[$property];
-
-                if (!isset($propertySetter) || !isset($data->{$instance::attributeMap()[$property]})) {
-                    continue;
-                }
-
-                if (isset($data->{$instance::attributeMap()[$property]})) {
-                    $propertyValue = $data->{$instance::attributeMap()[$property]};
-                    $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
-                }
+            if (isset($data->{$instance::attributeMap()[$property]})) {
+                $propertyValue = $data->{$instance::attributeMap()[$property]};
+                $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
             }
+        }
 
-            return $instance;
-
+        return $instance;
     }
 }

@@ -298,7 +298,7 @@ class SearchSynonymsResponse implements ModelInterface, ArrayAccess, \JsonSerial
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

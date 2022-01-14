@@ -58,9 +58,8 @@ class HeaderSelector
         } elseif ($jsonAccept = preg_grep('~(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$~', $accept)) {
             return implode(',', $jsonAccept);
         }
-  
-            return implode(',', $accept);
 
+        return implode(',', $accept);
     }
 
     /**
@@ -77,8 +76,7 @@ class HeaderSelector
         } elseif (preg_grep("/application\/json/i", $contentType)) {
             return 'application/json';
         }
-  
-            return implode(',', $contentType);
 
+        return implode(',', $contentType);
     }
 }

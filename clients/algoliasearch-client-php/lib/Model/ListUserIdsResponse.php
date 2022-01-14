@@ -267,7 +267,7 @@ class ListUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

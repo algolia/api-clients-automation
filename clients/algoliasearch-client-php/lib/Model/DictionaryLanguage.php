@@ -263,7 +263,7 @@ class DictionaryLanguage implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

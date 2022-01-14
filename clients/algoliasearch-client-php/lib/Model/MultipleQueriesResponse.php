@@ -261,7 +261,7 @@ class MultipleQueriesResponse implements ModelInterface, ArrayAccess, \JsonSeria
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

@@ -421,7 +421,6 @@ class SearchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setAroundLatLng($aroundLatLng)
     {
-
         if (!is_null($aroundLatLng) && (!preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $aroundLatLng))) {
             throw new \InvalidArgumentException("invalid value for $aroundLatLng when calling SearchResponse., must conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.");
         }
@@ -1021,7 +1020,7 @@ class SearchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

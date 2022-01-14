@@ -1219,7 +1219,6 @@ class ConsequenceParams implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function setLength($length)
     {
-
         if (!is_null($length) && ($length > 1000)) {
             throw new \InvalidArgumentException('invalid value for $length when calling ConsequenceParams., must be smaller than or equal to 1000.');
         }
@@ -1347,7 +1346,6 @@ class ConsequenceParams implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function setMinimumAroundRadius($minimumAroundRadius)
     {
-
         if (!is_null($minimumAroundRadius) && ($minimumAroundRadius < 1)) {
             throw new \InvalidArgumentException('invalid value for $minimumAroundRadius when calling ConsequenceParams., must be bigger than or equal to 1.');
         }
@@ -2610,7 +2608,6 @@ class ConsequenceParams implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function setDistinct($distinct)
     {
-
         if (!is_null($distinct) && ($distinct > 4)) {
             throw new \InvalidArgumentException('invalid value for $distinct when calling ConsequenceParams., must be smaller than or equal to 4.');
         }
@@ -2690,7 +2687,6 @@ class ConsequenceParams implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function setMinProximity($minProximity)
     {
-
         if (!is_null($minProximity) && ($minProximity > 7)) {
             throw new \InvalidArgumentException('invalid value for $minProximity when calling ConsequenceParams., must be smaller than or equal to 7.');
         }
@@ -2746,7 +2742,6 @@ class ConsequenceParams implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function setMaxFacetHits($maxFacetHits)
     {
-
         if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
             throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling ConsequenceParams., must be smaller than or equal to 100.');
         }
@@ -2866,7 +2861,7 @@ class ConsequenceParams implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

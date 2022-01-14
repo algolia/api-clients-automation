@@ -258,7 +258,6 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
      */
     public function setMaxFacetHits($maxFacetHits)
     {
-
         if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
             throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling SearchForFacetValuesRequest., must be smaller than or equal to 100.');
         }
@@ -330,7 +329,7 @@ class SearchForFacetValuesRequest implements ModelInterface, ArrayAccess, \JsonS
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

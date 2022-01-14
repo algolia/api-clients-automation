@@ -323,7 +323,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

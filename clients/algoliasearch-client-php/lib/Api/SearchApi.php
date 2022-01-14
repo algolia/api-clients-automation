@@ -44,7 +44,7 @@ class SearchApi
     /**
      * @param Configuration $config
      */
-    public function __construct(Configuration $config = null) 
+    public function __construct(Configuration $config = null)
     {
         $this->config = $config ?: new Configuration();
 
@@ -110,9 +110,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($apiKey)) { 
+        if (isset($apiKey)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($apiKey));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -208,9 +208,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($body)) { 
+        if (isset($body)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($body));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -274,9 +274,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($source)) { 
+        if (isset($source)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($source));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -360,9 +360,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($assignUserIdObject)) { 
+        if (isset($assignUserIdObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($assignUserIdObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -441,9 +441,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($batchWriteObject)) { 
+        if (isset($batchWriteObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchWriteObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -527,9 +527,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($batchAssignUserIdsObject)) { 
+        if (isset($batchAssignUserIdsObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchAssignUserIdsObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -610,9 +610,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($batchDictionaryEntries)) { 
+        if (isset($batchDictionaryEntries)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchDictionaryEntries));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -709,9 +709,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($rule)) { 
+        if (isset($rule)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($rule));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -786,9 +786,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($browseRequest)) { 
+        if (isset($browseRequest)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($browseRequest));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -1177,9 +1177,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchParams)) { 
+        if (isset($searchParams)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchParams));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -1726,7 +1726,6 @@ class SearchApi
      */
     public function getDictionaryLanguages()
     {
-
         $resourcePath = '/1/dictionaries/*/languages';
         $queryParams = [];
         $headerParams = [];
@@ -1784,7 +1783,6 @@ class SearchApi
      */
     public function getDictionarySettings()
     {
-
         $resourcePath = '/1/dictionaries/*/settings';
         $queryParams = [];
         $headerParams = [];
@@ -2045,9 +2043,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($getObjectsObject)) { 
+        if (isset($getObjectsObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($getObjectsObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -2254,7 +2252,6 @@ class SearchApi
      */
     public function getSources()
     {
-
         $resourcePath = '/1/security/sources';
         $queryParams = [];
         $headerParams = [];
@@ -2486,7 +2483,6 @@ class SearchApi
      */
     public function getTopUserIds()
     {
-
         $resourcePath = '/1/clusters/mapping/top';
         $queryParams = [];
         $headerParams = [];
@@ -2621,7 +2617,6 @@ class SearchApi
      */
     public function hasPendingMappings($getClusters = null)
     {
-
         $resourcePath = '/1/clusters/mapping/pending';
         $queryParams = [];
         $headerParams = [];
@@ -2686,7 +2681,6 @@ class SearchApi
      */
     public function listApiKeys()
     {
-
         $resourcePath = '/1/keys';
         $queryParams = [];
         $headerParams = [];
@@ -2744,7 +2738,6 @@ class SearchApi
      */
     public function listClusters()
     {
-
         $resourcePath = '/1/clusters';
         $queryParams = [];
         $headerParams = [];
@@ -2803,7 +2796,6 @@ class SearchApi
      */
     public function listIndices($page = null)
     {
-
         $resourcePath = '/1/indexes';
         $queryParams = [];
         $headerParams = [];
@@ -2870,7 +2862,6 @@ class SearchApi
      */
     public function listUserIds($page = null, $hitsPerPage = 100)
     {
-
         $resourcePath = '/1/clusters/mapping';
         $queryParams = [];
         $headerParams = [];
@@ -2956,9 +2947,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($batchObject)) { 
+        if (isset($batchObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3022,9 +3013,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($multipleQueriesObject)) { 
+        if (isset($multipleQueriesObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($multipleQueriesObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3105,9 +3096,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($operationIndexObject)) { 
+        if (isset($operationIndexObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($operationIndexObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3211,9 +3202,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($oneOfStringBuildInOperation)) { 
+        if (isset($oneOfStringBuildInOperation)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($oneOfStringBuildInOperation));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3353,9 +3344,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($source)) { 
+        if (isset($source)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($source));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3507,9 +3498,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($body)) { 
+        if (isset($body)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($body));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3613,9 +3604,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($rule)) { 
+        if (isset($rule)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($rule));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3719,9 +3710,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($synonymHit)) { 
+        if (isset($synonymHit)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($synonymHit));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3818,9 +3809,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($synonymHit)) { 
+        if (isset($synonymHit)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($synonymHit));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3899,9 +3890,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchParams)) { 
+        if (isset($searchParams)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchParams));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -3982,9 +3973,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchDictionaryEntries)) { 
+        if (isset($searchDictionaryEntries)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchDictionaryEntries));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -4074,9 +4065,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchForFacetValuesRequest)) { 
+        if (isset($searchForFacetValuesRequest)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchForFacetValuesRequest));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -4157,9 +4148,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchRulesParams)) { 
+        if (isset($searchRulesParams)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchRulesParams));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -4330,9 +4321,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchUserIdsObject)) { 
+        if (isset($searchUserIdsObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchUserIdsObject));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -4398,9 +4389,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($dictionarySettingsRequest)) { 
+        if (isset($dictionarySettingsRequest)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($dictionarySettingsRequest));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -4487,9 +4478,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($indexSettings)) { 
+        if (isset($indexSettings)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($indexSettings));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -4570,9 +4561,9 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($apiKey)) { 
+        if (isset($apiKey)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($apiKey));
-        } 
+        }
         // this endpoint requires API key authentication
         $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
         if ($apiKey !== null) {
@@ -4634,7 +4625,7 @@ class SearchApi
      *
      * @throws \RuntimeException on file opening failure
      *
-     * @return array 
+     * @return array
      */
     protected function sendRequest($request, $expectedResponse)
     {
@@ -4674,7 +4665,7 @@ class SearchApi
                 );
             }
 
-            switch($statusCode) {
+            switch ($statusCode) {
                 case 200:
                     if ($expectedResponse === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -4750,7 +4741,6 @@ class SearchApi
                 $response->getStatusCode(),
                 $response->getHeaders(),
             ];
-
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:

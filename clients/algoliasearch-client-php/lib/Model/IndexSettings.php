@@ -1897,7 +1897,6 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setDistinct($distinct)
     {
-
         if (!is_null($distinct) && ($distinct > 4)) {
             throw new \InvalidArgumentException('invalid value for $distinct when calling IndexSettings., must be smaller than or equal to 4.');
         }
@@ -1977,7 +1976,6 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setMinProximity($minProximity)
     {
-
         if (!is_null($minProximity) && ($minProximity > 7)) {
             throw new \InvalidArgumentException('invalid value for $minProximity when calling IndexSettings., must be smaller than or equal to 7.');
         }
@@ -2033,7 +2031,6 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setMaxFacetHits($maxFacetHits)
     {
-
         if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
             throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling IndexSettings., must be smaller than or equal to 100.');
         }
@@ -2153,7 +2150,7 @@ class IndexSettings implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

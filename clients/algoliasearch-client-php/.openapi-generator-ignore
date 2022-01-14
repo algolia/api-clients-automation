@@ -11,3 +11,4 @@ test/**
 phpunit.xml.dist
 README.md
 git_push.sh
+.php_cs

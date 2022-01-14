@@ -293,7 +293,7 @@ class SynonymHitHighlightResult implements ModelInterface, ArrayAccess, \JsonSer
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

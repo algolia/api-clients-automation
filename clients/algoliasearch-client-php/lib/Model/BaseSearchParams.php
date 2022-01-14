@@ -704,7 +704,6 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setLength($length)
     {
-
         if (!is_null($length) && ($length > 1000)) {
             throw new \InvalidArgumentException('invalid value for $length when calling BaseSearchParams., must be smaller than or equal to 1000.');
         }
@@ -832,7 +831,6 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setMinimumAroundRadius($minimumAroundRadius)
     {
-
         if (!is_null($minimumAroundRadius) && ($minimumAroundRadius < 1)) {
             throw new \InvalidArgumentException('invalid value for $minimumAroundRadius when calling BaseSearchParams., must be bigger than or equal to 1.');
         }
@@ -1216,7 +1214,7 @@ class BaseSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

@@ -330,7 +330,7 @@ class MultipleGetObjectsObject implements ModelInterface, ArrayAccess, \JsonSeri
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

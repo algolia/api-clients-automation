@@ -298,7 +298,7 @@ class SearchUserIdsResponseHighlightResult implements ModelInterface, ArrayAcces
      */
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**

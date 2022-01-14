@@ -195,7 +195,7 @@ class Configuration
     /**
      * Gets the Algolia application ID
      *
-     * @return string 
+     * @return string
      */
     public function getAppId()
     {
@@ -217,7 +217,7 @@ class Configuration
     /**
      * Gets the Algolia API Key
      *
-     * @return string 
+     * @return string
      */
     public function getAlgoliaApiKey()
     {
