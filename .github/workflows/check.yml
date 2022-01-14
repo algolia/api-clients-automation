@@ -36,7 +36,7 @@ jobs:
       RUN_JAVA: ${{ steps.setup.outputs.RUN_JAVA }}
       JAVA_MATRIX: ${{ steps.setup.outputs.JAVA_MATRIX }}
 
-      RUN_PHP: ${{ steps.setup.outputs.RUN_PHP_CLIENT }}
+      RUN_PHP: ${{ steps.setup.outputs.RUN_PHP }}
       PHP_MATRIX: ${{ steps.setup.outputs.PHP_MATRIX }}
 
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
@@ -124,7 +124,7 @@ jobs:
     needs:
       - setup
       - specs
-    if: ${{ always() && needs.setup.outputs.RUN_PHP_CLIENT == 'true' }}
+    if: ${{ always() && needs.setup.outputs.RUN_PHP == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
     steps:
