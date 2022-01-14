@@ -7,8 +7,9 @@
   "scripts": {
     "build": "tsc",
     "lint:fix": "yarn workspace javascript-tests lint:fix",
+    "generate": "yarn generate:cts ${0:-javascript} ${1:-search}",
     "generate:cts": "node dist/tests/src/cts/main.js ${0:-javascript} ${1:-search}",
-    "start": "yarn build && yarn generate:cts ${0:-javascript} ${1:-search} && yarn lint:fix"
+    "start": "yarn build && yarn generate ${0:-javascript} ${1:-search} && yarn lint:fix"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "10.0.3",
