@@ -9,7 +9,7 @@ lint_client() {
     echo "> Linting ${GENERATOR}..."
     cd $CLIENT
     composer install
-    php vendor/bin/php-cs-fixer fix lib/ -v --using-cache=no --allow-risky=yes
+    PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix lib/ -v --using-cache=no --allow-risky=yes
 
     set -e
 }
