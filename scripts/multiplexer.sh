@@ -30,6 +30,16 @@ if [[ $CMD == "./scripts/playground.sh" ]] && ([[ $LANGUAGE == "all" ]] || [[ $C
     exit 1
 fi
 
+if [[ $CMD == "./scripts/runCTS.sh" ]]; then
+    if [[ $CLIENT == "all" ]]; then
+        CLIENT=search # dummy client to only run once
+    else
+        echo "You must use 'all' clients when testing the CTS, as they all run at the same time"
+
+        exit 1
+    fi
+fi
+
 LANGUAGES=()
 CLIENTS=()
 
