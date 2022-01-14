@@ -5,8 +5,7 @@ import Mustache from 'mustache';
 import { loadCTS } from './cts';
 import { loadRequestsTemplate } from './templates';
 import type { CTSBlock } from './types';
-import { extensionForLanguage } from './types';
-import { createClientName, packageNames } from './utils';
+import { createClientName, packageNames, extensionForLanguage } from '../utils';
 
 async function createOutputDir(language: string): Promise<void> {
   await fsp.mkdir(`output/${language}`, { recursive: true });
