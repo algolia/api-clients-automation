@@ -93,7 +93,7 @@ runs:
 
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_CLIENT::$run"
-        
+
     - name: Compute the PHP client build matrix
       id: php-matrix
       shell: bash
@@ -135,7 +135,7 @@ outputs:
   JAVA_MATRIX:
     description: Generate the matrix for the Java client
     value: ${{ steps.java-matrix.outputs.MATRIX }}
-    
+
   RUN_PHP:
     description: Whether to run php client or not
     value: ${{ steps.php-matrix.outputs.RUN_CLIENT }}
