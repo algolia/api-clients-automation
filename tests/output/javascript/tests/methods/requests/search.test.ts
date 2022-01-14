@@ -16,7 +16,7 @@ describe('addApiKey', () => {
       maxHitsPerQuery: 20,
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/keyssss');
+    expect(req.path).toEqual('/1/keys');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       acl: ['search', 'addObject'],
