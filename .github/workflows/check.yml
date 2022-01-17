@@ -93,9 +93,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript ${{ matrix.client.name }}
 
-      - name: Debug
-        run: ls specs/dist
-
   client_java:
     runs-on: ubuntu-20.04
     needs:
@@ -113,9 +110,6 @@ jobs:
           job: client
           language: java
           spec: ${{ matrix.client.name }}
-
-      - name: Debug
-        run: ls specs/dist
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
@@ -144,6 +138,8 @@ jobs:
       - name: Restore cache
         id: restore
         uses: ./.github/actions/cache
+        with:
+          job: cts
 
       - name: Generate CTS
         run: yarn cts:generate

@@ -6,7 +6,6 @@ inputs:
   job:
     description: The job that requires this composite
     required: false
-    default: cts
   language:
     description: The language to retrieve dependencies
     required: false
