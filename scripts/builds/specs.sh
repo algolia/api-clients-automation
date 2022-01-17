@@ -13,6 +13,7 @@ SPEC=$1
 OUTPUT=$2
 
 SPECS=()
+CLIENT=""
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
@@ -34,7 +35,6 @@ find_specs() {
 
 check_format_spec() {
     local spec=$1
-    local client=$(echo $spec | awk -F / '{ print $(NF-1) }')
 
     echo "> Checking format of input spec file ${spec}"
 
@@ -45,18 +45,16 @@ check_format_spec() {
 
 build_spec() {
     local spec=$1
-    local client=$(echo $spec | awk -F / '{ print $(NF-1) }')
 
-    yarn openapi bundle ${spec} -o specs/dist/${client}.${OUTPUT} --ext ${OUTPUT}
+    yarn openapi bundle ${spec} -o specs/dist/${CLIENT}.${OUTPUT} --ext ${OUTPUT}
 
     echo ""
 }
 
 validate_spec() {
     local spec=$1
-    local client=$(echo $spec | awk -F / '{ print $(NF-1) }')
 
-    yarn openapi lint specs/dist/${client}.${OUTPUT}
+    yarn openapi lint specs/dist/${CLIENT}.${OUTPUT}
 
     echo ""
 }
@@ -78,6 +76,8 @@ if [[ $OUTPUT != "yml" ]] && [[ $OUTPUT != "json" ]]; then
 fi
 
 for spec in "${SPECS[@]}"; do
+    CLIENT=$(echo $spec | awk -F / '{ print $(NF-1) }')
+
     check_format_spec $spec
     build_spec $spec
     validate_spec $spec
