@@ -55,9 +55,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/specs/dist/${{ matrix.client }}.yml'
-          key: ${{ runner.os }}-${{ matrix.client }}-spec-${{ hashFiles(format('specs/{0}/**', matrix.client)) }}
+          key: ${{ runner.os }}-${{ matrix.client }}-specs-${{ hashFiles(format('specs/{0}/**', matrix.client)) }}
 
       - name: Building ${{ matrix.client }} specs
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:specs ${{ matrix.client }}
 
   client_javascript:
@@ -92,6 +93,9 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript ${{ matrix.client.name }}
 
+      - name: Debug
+        run: ls specs/dist
+
   client_java:
     runs-on: ubuntu-20.04
     needs:
@@ -106,8 +110,12 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          job: java
+          job: client
+          language: java
           spec: ${{ matrix.client.name }}
+
+      - name: Debug
+        run: ls specs/dist
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
@@ -136,8 +144,6 @@ jobs:
       - name: Restore cache
         id: restore
         uses: ./.github/actions/cache
-        with:
-          job: cts
 
       - name: Generate CTS
         run: yarn cts:generate

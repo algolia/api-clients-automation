@@ -5,7 +5,11 @@ description: Restore cached dependencies.
 inputs:
   job:
     description: The job that requires this composite
-    required: true
+    required: false
+    default: cts
+  language:
+    description: The language to retrieve dependencies
+    required: false
   spec:
     description: The spec name to restore
     required: false
@@ -15,11 +19,11 @@ runs:
   steps:
     # restore specs
     - name: Restore built ${{ inputs.spec }} spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
+      if: ${{ inputs.job == 'client' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/${{ inputs.spec }}.yml
-        key: ${{ runner.os }}-${{ inputs.spec }}-spec-${{ hashFiles(format('specs/{0}/**', inputs.spec)) }}
+        key: ${{ runner.os }}-${{ inputs.spec }}-specs-${{ hashFiles(format('specs/{0}/**', inputs.spec)) }}
 
     # restore clients
     - name: Restore built JavaScript search client
@@ -96,13 +100,13 @@ runs:
 
     # setup maven
     - name: Restore Maven
-      if: ${{ inputs.job == 'java' }}
+      if: ${{ inputs.language == 'java' }}
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
         key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
     - name: Install Maven dependencies
-      if: ${{ inputs.job == 'java' }}
+      if: ${{ inputs.language == 'java' }}
       shell: bash
       run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
