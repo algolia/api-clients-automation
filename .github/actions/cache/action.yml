@@ -19,7 +19,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/${{ inputs.spec }}.yml
-        key: ${{ runner.os }}-${{ inputs.spec }}-spec-${{ hashFiles('specs/${{ inputs.spec }}/**') }}
+        key: ${{ runner.os }}-${{ inputs.spec }}-spec-${{ hashFiles(format('specs/{0}/**', inputs.spec)) }}
 
     # restore clients
     - name: Restore built JavaScript search client
