@@ -113,7 +113,7 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/target'
           key: ${{ runner.os }}-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
       - name: Generate ${{ matrix.client.name }} client
