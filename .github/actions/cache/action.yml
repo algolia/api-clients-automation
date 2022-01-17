@@ -6,59 +6,20 @@ inputs:
   job:
     description: The job that requires this composite
     required: true
+  spec:
+    description: The spec name to restore
+    required: false
 
 runs:
   using: composite
   steps:
     # restore specs
-    - name: Restore built abtesting spec
+    - name: Restore built ${{ inputs.spec }} spec
       if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/abtesting.yml
-        key: ${{ runner.os }}-abtesting-spec-${{ hashFiles('specs/abtesting/**') }}
-
-    - name: Restore built analytics spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/analytics.yml
-        key: ${{ runner.os }}-analytics-spec-${{ hashFiles('specs/analytics/**') }}
-
-    - name: Restore built insights spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/insights.yml
-        key: ${{ runner.os }}-insights-spec-${{ hashFiles('specs/insights/**') }}
-
-    - name: Restore built personalization spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/personalization.yml
-        key: ${{ runner.os }}-personalization-spec-${{ hashFiles('specs/personalization/**') }}
-
-    - name: Restore built query-suggestions spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/query-suggestions.yml
-        key: ${{ runner.os }}-query-suggestions-spec-${{ hashFiles('specs/query-suggestions/**') }}
-
-    - name: Restore built recommend spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/recommend.yml
-        key: ${{ runner.os }}-recommend-spec-${{ hashFiles('specs/recommend/**') }}
-
-    - name: Restore built search spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'java' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/search.yml
-        key: ${{ runner.os }}-search-spec-${{ hashFiles('specs/search/**') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/specs/dist/${{ inputs.spec }}.yml
+        key: ${{ runner.os }}-${{ inputs.spec }}-spec-${{ hashFiles('specs/${{ inputs.spec }}/**') }}
 
     # restore clients
     - name: Restore built JavaScript search client
