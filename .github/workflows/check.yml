@@ -83,7 +83,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
-          key: ${{ runner.os }}-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          key: ${{ runner.os }}-1-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -116,7 +116,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/target'
-          key: ${{ runner.os }}-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
