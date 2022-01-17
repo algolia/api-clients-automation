@@ -48,6 +48,10 @@ run_post_gen() {
     fi
 }
 
+if [[ ! $CI ]]; then
+    build_spec
+fi
+
 run_pre_gen
 generate_client
 run_post_gen

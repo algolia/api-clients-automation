@@ -36,7 +36,7 @@ import com.algolia.model.ListUserIdsResponse;
 import com.algolia.model.MultipleBatchResponse;
 import com.algolia.model.MultipleQueriesObject;
 import com.algolia.model.MultipleQueriesResponse;
-import com.algolia.model.OneOfstringbuildInOperation;
+import com.algolia.model.OneOfstringbuiltInOperation;
 import com.algolia.model.OperationIndexObject;
 import com.algolia.model.RemoveUserIdResponse;
 import com.algolia.model.ReplaceSourceResponse;
@@ -3994,7 +3994,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuildInOperation List of attributes to update. (required)
+   * @param oneOfstringbuiltInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback Callback for upload/download progress
@@ -4004,11 +4004,11 @@ public class SearchApi extends ApiClient {
   private Call partialUpdateObjectCall(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = oneOfstringbuildInOperation;
+    Object bodyObj = oneOfstringbuiltInOperation;
 
     // create path and map variables
     String path =
@@ -4047,7 +4047,7 @@ public class SearchApi extends ApiClient {
   private Call partialUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
@@ -4065,10 +4065,10 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'oneOfstringbuildInOperation' is set
-    if (oneOfstringbuildInOperation == null) {
+    // verify the required parameter 'oneOfstringbuiltInOperation' is set
+    if (oneOfstringbuiltInOperation == null) {
       throw new ApiException(
-        "Missing the required parameter 'oneOfstringbuildInOperation' when calling" +
+        "Missing the required parameter 'oneOfstringbuiltInOperation' when calling" +
         " partialUpdateObject(Async)"
       );
     }
@@ -4076,7 +4076,7 @@ public class SearchApi extends ApiClient {
     return partialUpdateObjectCall(
       indexName,
       objectID,
-      oneOfstringbuildInOperation,
+      oneOfstringbuiltInOperation,
       createIfNotExists,
       _callback
     );
@@ -4090,7 +4090,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuildInOperation List of attributes to update. (required)
+   * @param oneOfstringbuiltInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @return UpdatedAtWithObjectIdResponse
@@ -4100,13 +4100,13 @@ public class SearchApi extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
     Call call = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      oneOfstringbuildInOperation,
+      oneOfstringbuiltInOperation,
       createIfNotExists,
       null
     );
@@ -4126,7 +4126,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuildInOperation List of attributes to update. (required)
+   * @param oneOfstringbuiltInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback The callback to be executed when the API call finishes
@@ -4136,14 +4136,14 @@ public class SearchApi extends ApiClient {
   public Call partialUpdateObjectAsync(
     String indexName,
     String objectID,
-    List<Map<String, OneOfstringbuildInOperation>> oneOfstringbuildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     Call call = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      oneOfstringbuildInOperation,
+      oneOfstringbuiltInOperation,
       createIfNotExists,
       _callback
     );

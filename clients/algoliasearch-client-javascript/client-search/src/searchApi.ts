@@ -8,7 +8,7 @@ import type { BatchResponse } from '../model/batchResponse';
 import type { BatchWriteObject } from '../model/batchWriteObject';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
-import type { BuildInOperation } from '../model/buildInOperation';
+import type { BuiltInOperation } from '../model/builtInOperation';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
@@ -1684,13 +1684,13 @@ export class SearchApi {
    * @param partialUpdateObject - The partialUpdateObject object.
    * @param partialUpdateObject.indexName - The index in which to perform the request.
    * @param partialUpdateObject.objectID - Unique identifier of an object.
-   * @param partialUpdateObject.stringBuildInOperation - List of attributes to update.
+   * @param partialUpdateObject.stringBuiltInOperation - List of attributes to update.
    * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
    */
   partialUpdateObject({
     indexName,
     objectID,
-    stringBuildInOperation,
+    stringBuiltInOperation,
     createIfNotExists,
   }: PartialUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
     const path = '/1/indexes/{indexName}/{objectID}/partial'
@@ -1712,11 +1712,11 @@ export class SearchApi {
     }
 
     if (
-      stringBuildInOperation === null ||
-      stringBuildInOperation === undefined
+      stringBuiltInOperation === null ||
+      stringBuiltInOperation === undefined
     ) {
       throw new Error(
-        'Required parameter stringBuildInOperation was null or undefined when calling partialUpdateObject.'
+        'Required parameter stringBuiltInOperation was null or undefined when calling partialUpdateObject.'
       );
     }
 
@@ -1727,7 +1727,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: stringBuildInOperation,
+      data: stringBuiltInOperation,
     };
 
     const requestOptions: RequestOptions = {
@@ -2808,7 +2808,7 @@ export type PartialUpdateObjectProps = {
   /**
    * List of attributes to update.
    */
-  stringBuildInOperation: Array<{ [key: string]: BuildInOperation | string }>;
+  stringBuiltInOperation: Array<{ [key: string]: BuiltInOperation | string }>;
   /**
    * Creates the record if it does not exist yet.
    */
