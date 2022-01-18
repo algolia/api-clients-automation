@@ -17,7 +17,7 @@ public class CallEcho implements Call {
 
   @Override
   public Request request() {
-    return null;
+    return request;
   }
 
   @Override
