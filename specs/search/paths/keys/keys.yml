@@ -3,7 +3,7 @@ post:
     - search
   operationId: addApiKey
   summary: Create a new API key.
-  description: Add a new API Key with specific permissions/restrictions.
+  description: Add a new API Key with specific permissions/restrictions. THROW
   requestBody:
     required: true
     content:
