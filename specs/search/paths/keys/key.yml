@@ -3,7 +3,7 @@ put:
     - search
   operationId: updateApiKey
   summary: Update an API key.
-  description: Replace every permission of an existing API key.
+  description: Replace every permission of an existing API key. THROW
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'
   requestBody:
