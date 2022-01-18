@@ -22,13 +22,7 @@ cd ${DIR}/../..
 find_specs() {
     echo "> Searching for available specs..."
 
-    local specs=$(find specs/*/spec.yml)
-
-    for spec in "${specs[@]}"; do
-        if [[ ! ${SPECS[*]} =~ $spec ]]; then
-            SPECS+=($spec)
-        fi
-    done
+    SPECS=($(find specs/*/spec.yml))
 
     echo ""
 }

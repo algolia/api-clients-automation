@@ -12,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/IndexSettings.yml#/indexSettings'
+            $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':
@@ -36,7 +36,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/IndexSettings.yml#/indexSettings'
+          $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
   responses:
     '200':
       $ref: ../../../common/responses/UpdatedAt.yml
