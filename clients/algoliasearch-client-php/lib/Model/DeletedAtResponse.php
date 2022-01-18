@@ -34,7 +34,7 @@ class DeletedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPITypes = [
         'taskID' => 'int',
-        'deletedAt' => '\DateTime',
+        'deletedAt' => 'string',
     ];
 
     /**
@@ -46,7 +46,7 @@ class DeletedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPIFormats = [
         'taskID' => null,
-        'deletedAt' => 'date-time',
+        'deletedAt' => null,
     ];
 
     /**
@@ -203,7 +203,7 @@ class DeletedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets taskID
      *
-     * @param int $taskID taskID of the indexing task to wait for
+     * @param int $taskID taskID of the task to wait for
      *
      * @return self
      */
@@ -217,7 +217,7 @@ class DeletedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets deletedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDeletedAt()
     {
@@ -227,7 +227,7 @@ class DeletedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets deletedAt
      *
-     * @param \DateTime $deletedAt date of deletion (ISO-8601 format)
+     * @param string $deletedAt date of deletion (ISO-8601 format)
      *
      * @return self
      */

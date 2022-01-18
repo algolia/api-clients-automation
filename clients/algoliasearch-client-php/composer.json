@@ -27,8 +27,7 @@
         "guzzlehttp/psr7": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0 || ^9.0",
-        "friendsofphp/php-cs-fixer": "^2.12"
+        "friendsofphp/php-cs-fixer": "^3.5.0"
     },
     "autoload": {
         "psr-4": { "Algolia\\AlgoliaSearch\\" : "lib/" }

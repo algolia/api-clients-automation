@@ -44,13 +44,34 @@ class SearchApi
     /**
      * @param Configuration $config
      */
-    public function __construct(Configuration $config = null)
+    public function __construct(Configuration $config)
     {
-        $this->config = $config ?: new Configuration();
+        $this->config = $config;
 
         $this->client = new Client();
         $this->headerSelector = new HeaderSelector();
         $this->hostIndex = 0;
+    }
+
+    /**
+     * Instantiate the client with basic credentials
+     *
+     * @param string $appId  Application ID
+     * @param string $apiKey Algolia API Key
+     */
+    public static function create($appId = null, $apiKey = null)
+    {
+        return static::createWithConfig(new Configuration($appId, $apiKey));
+    }
+
+    /**
+     * Instantiate the client with congiguration
+     *
+     * @param Configuration $config Configuration
+     */
+    public static function createWithConfig(Configuration $config)
+    {
+        return new static($config);
     }
 
     /**
@@ -1925,7 +1946,7 @@ class SearchApi
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  string $objectID Unique identifier of an object. (required)
-     * @param  string[] $attributesToRetrieve attributesToRetrieve (optional)
+     * @param  string[] $attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable attributes are returned. (optional)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2608,7 +2629,7 @@ class SearchApi
      *
      * Has pending mappings
      *
-     * @param  bool $getClusters getClusters (optional)
+     * @param  bool $getClusters Whether to get clusters or not. (optional)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3142,7 +3163,7 @@ class SearchApi
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  string $objectID Unique identifier of an object. (required)
-     * @param  array<string,OneOfStringBuildInOperation>[] $oneOfStringBuildInOperation The Algolia object. (required)
+     * @param  array<string,OneOfStringBuildInOperation>[] $oneOfStringBuildInOperation List of attributes to update. (required)
      * @param  bool $createIfNotExists Creates the record if it does not exist yet. (optional, default to true)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response

@@ -34,7 +34,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPITypes = [
         'taskID' => 'int',
-        'updatedAt' => '\DateTime',
+        'updatedAt' => 'string',
     ];
 
     /**
@@ -46,7 +46,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPIFormats = [
         'taskID' => null,
-        'updatedAt' => 'date-time',
+        'updatedAt' => null,
     ];
 
     /**
@@ -203,7 +203,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets taskID
      *
-     * @param int $taskID taskID of the indexing task to wait for
+     * @param int $taskID taskID of the task to wait for
      *
      * @return self
      */
@@ -217,7 +217,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets updatedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -227,7 +227,7 @@ class UpdatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param string $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */

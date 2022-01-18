@@ -37,7 +37,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         'nbHits' => 'int',
         'page' => 'int',
         'hitsPerPage' => 'int',
-        'updatedAt' => '\DateTime',
+        'updatedAt' => 'string',
     ];
 
     /**
@@ -52,7 +52,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         'nbHits' => null,
         'page' => null,
         'hitsPerPage' => null,
-        'updatedAt' => 'date-time',
+        'updatedAt' => null,
     ];
 
     /**
@@ -316,7 +316,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets updatedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -326,7 +326,7 @@ class SearchUserIdsResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param string $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */

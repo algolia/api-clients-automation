@@ -31,7 +31,7 @@ class DeleteApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
       * @var string[]
       */
     protected static $openAPITypes = [
-        'deletedAt' => '\DateTime',
+        'deletedAt' => 'string',
     ];
 
     /**
@@ -42,7 +42,7 @@ class DeleteApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'deletedAt' => 'date-time',
+        'deletedAt' => null,
     ];
 
     /**
@@ -182,7 +182,7 @@ class DeleteApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets deletedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDeletedAt()
     {
@@ -192,7 +192,7 @@ class DeleteApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets deletedAt
      *
-     * @param \DateTime $deletedAt date of deletion (ISO-8601 format)
+     * @param string $deletedAt date of deletion (ISO-8601 format)
      *
      * @return self
      */

@@ -32,8 +32,8 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'name' => 'string',
-        'createdAt' => '\DateTime',
-        'updatedAt' => '\DateTime',
+        'createdAt' => 'string',
+        'updatedAt' => 'string',
         'entries' => 'int',
         'dataSize' => 'int',
         'fileSize' => 'int',
@@ -53,8 +53,8 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'name' => null,
-        'createdAt' => 'date-time',
-        'updatedAt' => 'date-time',
+        'createdAt' => null,
+        'updatedAt' => null,
         'entries' => null,
         'dataSize' => null,
         'fileSize' => null,
@@ -287,7 +287,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets createdAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -297,7 +297,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets createdAt
      *
-     * @param \DateTime $createdAt Index creation date. An empty string means that the index has no records.
+     * @param string $createdAt Index creation date. An empty string means that the index has no records.
      *
      * @return self
      */
@@ -311,7 +311,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets updatedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -321,7 +321,7 @@ class Index implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param string $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */

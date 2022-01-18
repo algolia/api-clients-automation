@@ -45,13 +45,34 @@ use {{invokerPackage}}\ObjectSerializer;
     /**
      * @param Configuration $config
      */
-    public function __construct(Configuration $config = null) 
+    public function __construct(Configuration $config)
     {
-        $this->config = $config ?: new Configuration();
+        $this->config = $config;
 
         $this->client = new Client();
         $this->headerSelector = new HeaderSelector();
         $this->hostIndex = 0;
+    }
+
+    /**
+     * Instantiate the client with basic credentials
+     *
+     * @param string $appId  Application ID
+     * @param string $apiKey Algolia API Key
+     */
+    public static function create($appId = null, $apiKey = null)
+    {
+        return static::createWithConfig(new Configuration($appId, $apiKey));
+    }
+
+    /**
+     * Instantiate the client with congiguration
+     *
+     * @param Configuration $config Configuration
+     */
+    public static function createWithConfig(Configuration $config)
+    {
+        return new static($config);
     }
 
     /**

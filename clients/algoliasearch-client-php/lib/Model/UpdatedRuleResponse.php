@@ -32,7 +32,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       */
     protected static $openAPITypes = [
         'objectID' => 'string',
-        'updatedAt' => '\DateTime',
+        'updatedAt' => 'string',
         'taskID' => 'int',
     ];
 
@@ -45,7 +45,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       */
     protected static $openAPIFormats = [
         'objectID' => null,
-        'updatedAt' => 'date-time',
+        'updatedAt' => null,
         'taskID' => null,
     ];
 
@@ -224,7 +224,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets updatedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -234,7 +234,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param string $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */
@@ -258,7 +258,7 @@ class UpdatedRuleResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets taskID
      *
-     * @param int $taskID taskID of the indexing task to wait for
+     * @param int $taskID taskID of the task to wait for
      *
      * @return self
      */
