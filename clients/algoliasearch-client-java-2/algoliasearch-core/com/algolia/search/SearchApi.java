@@ -334,7 +334,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Add a single source. Add a single source to the list of allowed sources.
+   * Add a single source to the list of allowed sources.
    *
    * @param source The source to add. (required)
    * @return CreatedAtResponse
@@ -349,7 +349,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Add a single source. (asynchronously) Add a single source to the list of allowed sources.
+   * (asynchronously) Add a single source to the list of allowed sources.
    *
    * @param source The source to add. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -546,8 +546,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Performs multiple write operations in a single API call. Performs multiple write operations in
-   * a single API call.
+   * Performs multiple write operations in a single API call.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param batchWriteObject (required)
@@ -566,8 +565,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Performs multiple write operations in a single API call. (asynchronously) Performs multiple
-   * write operations in a single API call.
+   * (asynchronously) Performs multiple write operations in a single API call.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param batchWriteObject (required)
@@ -1937,7 +1935,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Remove a single source. Remove a single source from the list of allowed sources.
+   * Remove a single source from the list of allowed sources.
    *
    * @param source The IP range of the source. (required)
    * @return DeleteSourceResponse
@@ -1952,8 +1950,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Remove a single source. (asynchronously) Remove a single source from the list of allowed
-   * sources.
+   * (asynchronously) Remove a single source from the list of allowed sources.
    *
    * @param source The IP range of the source. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -2393,7 +2390,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Return the lastest log entries. Return the lastest log entries.
+   * Return the lastest log entries.
    *
    * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
    *     therefore 0 designates the most recent log entry. (optional, default to 0)
@@ -2426,7 +2423,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Return the lastest log entries. (asynchronously) Return the lastest log entries.
+   * (asynchronously) Return the lastest log entries.
    *
    * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
    *     therefore 0 designates the most recent log entry. (optional, default to 0)
@@ -2826,7 +2823,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve settings of a given indexName. Retrieve settings of a given indexName.
+   * Retrieve settings of a given indexName.
    *
    * @param indexName The index in which to perform the request. (required)
    * @return IndexSettings
@@ -2841,8 +2838,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve settings of a given indexName. (asynchronously) Retrieve settings of a given
-   * indexName.
+   * (asynchronously) Retrieve settings of a given indexName.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -2895,7 +2891,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List all allowed sources. List all allowed sources.
+   * List all allowed sources.
    *
    * @return List&lt;Source&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -2909,7 +2905,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List all allowed sources. (asynchronously) List all allowed sources.
+   * (asynchronously) List all allowed sources.
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -3093,7 +3089,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Check the current status of a given task. Check the current status of a given task.
+   * Check the current status of a given task.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
@@ -3110,8 +3106,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Check the current status of a given task. (asynchronously) Check the current status of a given
-   * task.
+   * (asynchronously) Check the current status of a given task.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
@@ -3744,8 +3739,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Perform multiple write operations. Perform multiple write operations, potentially targeting
-   * multiple indices, in a single API call.
+   * Perform multiple write operations, potentially targeting multiple indices, in a single API
+   * call.
    *
    * @param batchObject (required)
    * @return MultipleBatchResponse
@@ -3761,8 +3756,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Perform multiple write operations. (asynchronously) Perform multiple write operations,
-   * potentially targeting multiple indices, in a single API call.
+   * (asynchronously) Perform multiple write operations, potentially targeting multiple indices, in
+   * a single API call.
    *
    * @param batchObject (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -3829,7 +3824,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get search results for the given requests. Get search results for the given requests.
+   * Get search results for the given requests.
    *
    * @param multipleQueriesObject (required)
    * @return MultipleQueriesResponse
@@ -3846,8 +3841,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get search results for the given requests. (asynchronously) Get search results for the given
-   * requests.
+   * (asynchronously) Get search results for the given requests.
    *
    * @param multipleQueriesObject (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -4274,7 +4268,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Replace all allowed sources. Replace all allowed sources.
+   * Replace all allowed sources.
    *
    * @param source The sources to allow. (required)
    * @return ReplaceSourceResponse
@@ -4290,7 +4284,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Replace all allowed sources. (asynchronously) Replace all allowed sources.
+   * (asynchronously) Replace all allowed sources.
    *
    * @param source The sources to allow. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -4453,8 +4447,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Add an object to the index. Add an object to the index, automatically assigning it an object
-   * ID.
+   * Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param body The Algolia object. (required)
@@ -4471,8 +4464,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Add an object to the index. (asynchronously) Add an object to the index, automatically
-   * assigning it an object ID.
+   * (asynchronously) Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param body The Algolia object. (required)
@@ -5014,7 +5006,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get search results. Get search results.
+   * Get search results.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -5031,7 +5023,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get search results. (asynchronously) Get search results.
+   * (asynchronously) Get search results.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -5827,9 +5819,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Update settings of a given indexName. Update settings of a given indexName. Only specified
-   * settings are overridden; unspecified settings are left unchanged. Specifying null for a setting
-   * resets it to its default value.
+   * Update settings of a given indexName. Only specified settings are overridden; unspecified
+   * settings are left unchanged. Specifying null for a setting resets it to its default value.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param indexSettings (required)
@@ -5856,9 +5847,9 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Update settings of a given indexName. (asynchronously) Update settings of a given indexName.
-   * Only specified settings are overridden; unspecified settings are left unchanged. Specifying
-   * null for a setting resets it to its default value.
+   * (asynchronously) Update settings of a given indexName. Only specified settings are overridden;
+   * unspecified settings are left unchanged. Specifying null for a setting resets it to its default
+   * value.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param indexSettings (required)
