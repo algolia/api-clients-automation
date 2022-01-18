@@ -15,10 +15,6 @@ public class CallEcho implements Call {
     this.request = request;
   }
 
-  public Request getRequest() {
-    return request;
-  }
-
   @Override
   public Request request() {
     return null;
