@@ -9,11 +9,11 @@ import {{invokerPackage}}.Pair;
 import com.google.gson.reflect.TypeToken;
 
 import okhttp3.Call;
+import okhttp3.Request;
 
 import com.algolia.utils.*;
-
-{{#imports}}import {{import}};
-{{/imports}}
+import com.algolia.utils.echoResponse.*;
+import com.algolia.model.*;
 
 import java.lang.reflect.Type;
 {{^fullJavaUtil}}
@@ -38,7 +38,7 @@ public class {{classname}} extends ApiClient {
      * Build call for {{operationId}}{{#allParams}}
      * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
      * @param _callback Callback for upload/download progress
-     * @return Call to execute or EchoRequest
+     * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      {{#isDeprecated}}
      * @deprecated
@@ -51,7 +51,7 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    private Object {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+    private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> _callback) throws ApiException {
         Object bodyObj = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
         // create path and map variables
@@ -82,7 +82,7 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    private Object {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+    private Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> _callback) throws ApiException {
         {{#allParams}}{{#required}}
         // verify the required parameter '{{paramName}}' is set
         if ({{paramName}} == null) {
@@ -109,15 +109,15 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public {{#returnType}}<T> T {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        Object req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
-        if(req instanceof Call) {
-            Call call = (Call)req;
-            {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();
-            ApiResponse<{{{.}}}> res = this.execute(call, returnType);
-            return (T)res.getData();{{/returnType}}{{^returnType}}this.execute(call).getData();{{/returnType}}
+    public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
+        Call req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
+        if (req instanceof CallEcho) {
+            {{#returnType}}return new {{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}Echo(((CallEcho)req).getRequest());{{/returnType}}
         }
-        {{#returnType}}return (T)req;{{/returnType}}
+        Call call = (Call)req;
+        {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();
+        ApiResponse<{{{.}}}> res = this.execute(call, returnType);
+        return res.getData();{{/returnType}}{{^returnType}}this.execute(call).getData();{{/returnType}}
     }
     /**
      * (asynchronously)
@@ -138,7 +138,7 @@ public class {{classname}} extends ApiClient {
     @Deprecated
     {{/isDeprecated}}
     public Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
-        Call call = (Call){{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+        Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
         {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
         this.executeAsync(call, returnType, _callback);{{/returnType}}{{^returnType}}this.executeAsync(call, _callback);{{/returnType}}
         return call;

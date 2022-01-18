@@ -15,7 +15,29 @@ find "$CLIENT" -type f -name "*.java" | xargs sed -i -e 's~= {}~= new Object()~g
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
 echo "package com.algolia.model;public class OneOfstringbuiltInOperation {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfstringbuiltInOperation.java
 
-cp -R clients/algoliasearch-client-java-2/utils/ $CLIENT/algoliasearch-core/com/algolia/
+cp -R $CLIENT/utils/ $CLIENT/algoliasearch-core/com/algolia/
+
+# Generate types for the EchoRequester, to be able to keep the correct response type on the API method.
+# Extract the normal response to extend it
+responses=($(grep -o 'public .*ApiCallback<.*>' $CLIENT/algoliasearch-core/com/algolia/**/*Api.java | sed 's/public.*ApiCallback<//; s/>$//; s/ //; s/^Map</HashMap</; s/^List</ArrayList</'))
+operationId=($(grep -o 'public Call .*(' $CLIENT/algoliasearch-core/com/algolia/**/*Api.java | sed 's/public Call //; s/Async(//'))
+for i in "${!responses[@]}"; do
+    class="${operationId[$i]^}Echo"
+    super=${responses[$i]}
+    cat > "${CLIENT}/algoliasearch-core/com/algolia/utils/echoResponse/${class}.java" << EOL
+    package com.algolia.utils.echoResponse;
+    import com.algolia.model.*;
+    import okhttp3.Request;
+    import java.util.ArrayList;
+    import java.util.HashMap;
+    public class $class extends $super implements EchoResponse {
+        private Request request;
+        public $class(Request request) { this.request = request; }
+        public String getPath() { return request.url().encodedPath(); }
+    }
+EOL
+done
+
 
 format_client() {
     echo "> Formatting $GENERATOR..."

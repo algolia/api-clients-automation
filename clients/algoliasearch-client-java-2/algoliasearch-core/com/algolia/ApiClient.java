@@ -610,10 +610,10 @@ public class ApiClient {
    * @param body The request body object
    * @param headerParams The header parameters
    * @param callback Callback for upload/download progress
-   * @return The HTTP call or EchoRequester
+   * @return The HTTP call
    * @throws ApiException If fail to serialize the request body object
    */
-  public Object buildCall(
+  public Call buildCall(
     String path,
     String method,
     List<Pair> queryParams,

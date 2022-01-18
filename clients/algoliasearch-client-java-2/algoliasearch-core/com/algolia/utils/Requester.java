@@ -1,10 +1,11 @@
 package com.algolia.utils;
 
 import com.algolia.ApiException;
+import okhttp3.Call;
 import okhttp3.Request;
 
 public interface Requester {
-  public Object newCall(Request request) throws ApiException;
+  public Call newCall(Request request) throws ApiException;
 
   /**
    * Enable/disable debugging for this API client.

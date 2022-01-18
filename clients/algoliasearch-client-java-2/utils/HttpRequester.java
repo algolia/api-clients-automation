@@ -5,6 +5,7 @@ import com.algolia.ApiException;
 import com.algolia.ProgressResponseBody;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,7 +26,7 @@ public class HttpRequester implements Requester {
     httpClient = builder.build();
   }
 
-  public Object newCall(Request request) throws ApiException {
+  public Call newCall(Request request) throws ApiException {
     return httpClient.newCall(request);
   }
 

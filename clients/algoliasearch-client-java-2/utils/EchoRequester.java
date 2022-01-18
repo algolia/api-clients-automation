@@ -5,8 +5,8 @@ import okhttp3.Request;
 
 public class EchoRequester implements Requester {
 
-  public Object newCall(Request request) throws ApiException {
-    return request;
+  public CallEcho newCall(Request request) throws ApiException {
+    return new CallEcho(request);
   }
 
   // NO-OP for now
