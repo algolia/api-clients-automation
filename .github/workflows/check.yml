@@ -91,12 +91,7 @@ jobs:
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          if [[ $(git status --porcelain ${{ matrix.client.folder }} | wc -l) == '0' ]]; then
-            exit 0
-          else
-            exit 1
-          fi
+        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -133,12 +128,7 @@ jobs:
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          if [[ $(git status --porcelain ${{ matrix.client.folder }} | wc -l) == '0' ]]; then
-            exit 0
-          else
-            exit 1
-          fi
+        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
