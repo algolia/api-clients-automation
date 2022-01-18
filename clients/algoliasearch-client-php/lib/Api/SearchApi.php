@@ -2,10 +2,14 @@
 
 namespace Algolia\AlgoliaSearch\Api;
 
+use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\ApiException;
-use Algolia\AlgoliaSearch\Configuration;
+use Algolia\AlgoliaSearch\Configuration\Configuration;
 use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -27,6 +31,11 @@ class SearchApi
     protected $client;
 
     /**
+     * @var ApiWrapperInterface
+     */
+    protected $api;
+
+    /**
      * @var Configuration
      */
     protected $config;
@@ -43,11 +52,13 @@ class SearchApi
 
     /**
      * @param Configuration $config
+     * @param ApiWrapperInterface $apiWrapper
      */
-    public function __construct(Configuration $config)
+    public function __construct(ApiWrapperInterface $apiWrapper, Configuration $config)
     {
         $this->config = $config;
 
+        $this->api = $apiWrapper;
         $this->client = new Client();
         $this->headerSelector = new HeaderSelector();
         $this->hostIndex = 0;
@@ -61,7 +72,7 @@ class SearchApi
      */
     public static function create($appId = null, $apiKey = null)
     {
-        return static::createWithConfig(new Configuration($appId, $apiKey));
+        return static::createWithConfig(Configuration::create($appId, $apiKey));
     }
 
     /**
@@ -71,7 +82,27 @@ class SearchApi
      */
     public static function createWithConfig(Configuration $config)
     {
-        return new static($config);
+        $config = clone $config;
+
+        $cacheKey = sprintf('%s-clusterHosts-%s', __CLASS__, $config->getAppId());
+
+        if ($hosts = $config->getHosts()) {
+            // If a list of hosts was passed, we ignore the cache
+            $clusterHosts = ClusterHosts::create($hosts);
+        } elseif (false === ($clusterHosts = ClusterHosts::createFromCache($cacheKey))) {
+            // We'll try to restore the ClusterHost from cache, if we cannot
+            // we create a new instance and set the cache key
+            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
+                ->setCacheKey($cacheKey);
+        }
+
+        $apiWrapper = new ApiWrapper(
+            Algolia::getHttpClient(),
+            $config,
+            $clusterHosts
+        );
+
+        return new static($apiWrapper, $config);
     }
 
     /**
