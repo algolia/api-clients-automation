@@ -76,9 +76,9 @@ export async function generateTests(language: string, client: string) {
 
   if (!testsBlocks) {
     console.warn(
-        `Skipping because tests dont't exist for CTS > generate:client for ${language}-${client}`
-      );
-      return;
+      `Skipping because tests dont't exist for CTS > generate:client for ${language}-${client}`
+    );
+    return;
   }
 
   const outputPath = `output/${language}/tests/client/`;
@@ -134,6 +134,11 @@ function modifyForMustache(blocks: TestsBlock[]) {
         if (step.expected && step.expected.error) {
           // @ts-expect-error
           modified.expectedError = step.expected.error;
+        }
+
+        if (step.expected && step.expected.error === false) {
+          // @ts-expect-error
+          modified.expectedNoError = true;
         }
 
         return modified;

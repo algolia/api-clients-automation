@@ -49,6 +49,10 @@ export class PersonalizationApi {
   ) {
     this.setAuthentication({ appId, apiKey });
 
+    if (region !== 'eu' && region !== 'us') {
+      throw new Error('`region` must be either `eu` or `us`.');
+    }
+
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(region),
       baseHeaders: {
@@ -64,7 +68,7 @@ export class PersonalizationApi {
     });
   }
 
-  getDefaultHosts(region: 'eu' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'eu' | 'us'): Host[] {
     return [
       {
         url: `personalization.${region}.algolia.com`,

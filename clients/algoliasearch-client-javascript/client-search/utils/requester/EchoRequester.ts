@@ -35,6 +35,7 @@ export class EchoRequester extends Requester {
     return Promise.resolve({
       content: JSON.stringify({
         ...originalRequest,
+        url,
         headers,
         connectTimeout,
         responseTimeout,

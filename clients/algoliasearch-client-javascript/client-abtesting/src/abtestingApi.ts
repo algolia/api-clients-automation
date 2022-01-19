@@ -49,6 +49,10 @@ export class AbtestingApi {
   ) {
     this.setAuthentication({ appId, apiKey });
 
+    if (region !== 'de' && region !== 'us') {
+      throw new Error('`region` must be either `de` or `us`.');
+    }
+
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(region),
       baseHeaders: {
@@ -64,7 +68,7 @@ export class AbtestingApi {
     });
   }
 
-  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'de' | 'us'): Host[] {
     return [
       {
         url: `analytics.${region}.algolia.com`,

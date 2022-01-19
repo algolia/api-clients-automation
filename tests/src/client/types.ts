@@ -33,7 +33,7 @@ type MethodStep = {
 
 type Expected = {
   length?: number;
-  error?: string;
+  error?: string | false;
   match?: { objectContaining: object } | any;
 };
 

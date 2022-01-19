@@ -1,14 +1,14 @@
 {{#isCreateClient}}
     const $client = {{> createClient}}
-    result = $client;
+    actual = $client;
 {{/isCreateClient}}
 
 {{#isVariable}}
-    result = {{> variable}}
+    actual = {{> variable}}
 {{/isVariable}}
 
 {{#isMethod}}
-    result = {{> method}}
+    actual = {{> method}}
 {{/isMethod}}
 
 {{#expected}}

@@ -1,15 +1,16 @@
-import { {{client}} } from '{{{import}}}';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable require-await */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { {{client}}, EchoRequester } from '{{{import}}}';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
 function createClient() {
-    return new {{client}}(appId, apiKey{{#hasRegionalHost}}, 'us'{{/hasRegionalHost}});
+    return new {{client}}(appId, apiKey, 'us', { requester: new EchoRequester() });
 }
 
-async function createIndex() {
-    // TODO
-}
+async function createIndex() {}
 
 {{#blocks}}
 describe('{{operationId}}', () => {
@@ -22,16 +23,24 @@ describe('{{operationId}}', () => {
             const $index = await createIndex();
         {{/autoCreateIndex}}
 
-        let result;
+        let actual;
         {{#steps}}
             {{#expectedError}}
-                expect(() => {
+                expect(async () => {
                     {{> step}}
                 }).toThrowError("{{expectedError}}")
             {{/expectedError}}
 
             {{^expectedError}}
-                {{> step}}
+                {{#expectedNoError}}
+                    expect(async () => {
+                        {{> step}}
+                    }).not.toThrowError();
+                {{/expectedNoError}}
+                
+                {{^expectedNoError}}
+                    {{> step}}
+                {{/expectedNoError}}
             {{/expectedError}}
         {{/steps}}
     });

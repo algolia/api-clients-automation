@@ -51,6 +51,10 @@ export class QuerySuggestionsApi {
   ) {
     this.setAuthentication({ appId, apiKey });
 
+    if (region !== 'eu' && region !== 'us') {
+      throw new Error('`region` must be either `eu` or `us`.');
+    }
+
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(region),
       baseHeaders: {
@@ -66,7 +70,7 @@ export class QuerySuggestionsApi {
     });
   }
 
-  getDefaultHosts(region: 'eu' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'eu' | 'us'): Host[] {
     return [
       {
         url: `query-suggestions.${region}.algolia.com`,

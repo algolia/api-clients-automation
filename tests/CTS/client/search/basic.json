@@ -15,31 +15,6 @@
     ]
   },
   {
-    "testName": "client has instance variables for appId and apiKey",
-    "autoCreateClient": false,
-    "steps": [
-      {
-        "type": "createClient",
-        "parameters": {
-          "appId": "my-app-id",
-          "apiKey": "my-api-key"
-        }
-      },
-      {
-        "type": "variable",
-        "object": "$client",
-        "path": ["appId"],
-        "expected": { "match": "my-app-id" }
-      },
-      {
-        "type": "variable",
-        "object": "$client",
-        "path": ["apiKey"],
-        "expected": { "match": "my-api-key" }
-      }
-    ]
-  },
-  {
     "testName": "sets user agent",
     "steps": [
       {
@@ -53,90 +28,6 @@
         "object": "$client",
         "path": ["getUserAgent"],
         "expected": { "match": "hello" }
-      }
-    ]
-  },
-  {
-    "testName": "save objects and perform a basic search",
-    "autoCreateIndex": true,
-    "steps": [
-      {
-        "type": "method",
-        "object": "$index",
-        "path": ["saveObjects"],
-        "parameters": [
-          [
-            {
-              "objectID": "julien-lemoine",
-              "company": "Algolia",
-              "name": "Julien Lemoine"
-            },
-            {
-              "objectID": "nicolas-dessaigne",
-              "company": "Algolia",
-              "name": "Nicolas Dessaigne"
-            },
-            { "company": "Amazon", "name": "Jeff Bezos" },
-            { "company": "Apple", "name": "Steve Jobs" },
-            { "company": "Apple", "name": "Steve Wozniak" },
-            { "company": "Arista Networks", "name": "Jayshree Ullal" },
-            { "company": "Google", "name": "Larry Page" },
-            { "company": "Google", "name": "Rob Pike" },
-            { "company": "Google", "name": "Serguey Brin" },
-            { "company": "Microsoft", "name": "Bill Gates" },
-            { "company": "SpaceX", "name": "Elon Musk" },
-            { "company": "Tesla", "name": "Elon Musk" },
-            { "company": "Yahoo", "name": "Marissa Mayer" }
-          ],
-          {
-            "autoGenerateObjectIDIfNotExist": true
-          }
-        ]
-      },
-      {
-        "type": "method",
-        "object": "$index",
-        "path": ["setSettings"],
-        "parameters": [{ "attributesForFaceting": ["searchable(company)"] }]
-      },
-      {
-        "type": "method",
-        "object": "$index",
-        "path": ["search"],
-        "parameters": ["algolia"],
-        "expected": {
-          "match": [
-            {
-              "objectContaining": {
-                "name": "Julien Lemoine"
-              }
-            },
-            {
-              "objectContaining": {
-                "name": "Nicolas Dessaigne"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "type": "method",
-        "object": "$index",
-        "path": ["search"],
-        "parameters": [
-          "elon",
-          {
-            "facets": ["*"],
-            "facetFilters": [["company:tesla", "company:spacex"]]
-          }
-        ],
-        "expected": {
-          "length": 2,
-          "match": [
-            { "objectContaining": { "company": "SpaceX" } },
-            { "objectContaining": { "company": "Tesla" } }
-          ]
-        }
       }
     ]
   }
