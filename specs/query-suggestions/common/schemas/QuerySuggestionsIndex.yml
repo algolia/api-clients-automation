@@ -23,39 +23,20 @@ QuerySuggestionsIndex:
         type: string
       description: List of words and patterns to exclude from the Query Suggestions index.
 
-SourceIndexWithReplicas:
+SourceIndexReplica:
   type: object
   additionalProperties: false
   required:
-    - indexName
     - replicas
-    - analyticsTags
-    - facets
-    - minHits
-    - minLetters
-    - generate
-    - external
   properties:
-    indexName:
-      $ref: ../parameters.yml#/SourceIndex/properties/indexName
     replicas:
       type: boolean
       description: true if the Query Suggestions index is a replicas.
-    analyticsTags:
-      $ref: ../parameters.yml#/SourceIndex/properties/analyticsTags
-    facets:
-      $ref: ../parameters.yml#/SourceIndex/properties/facets
-    minHits:
-      $ref: ../parameters.yml#/SourceIndex/properties/minHits
-    minLetters:
-      $ref: ../parameters.yml#/SourceIndex/properties/minLetters
-    generate:
-      $ref: ../parameters.yml#/SourceIndex/properties/generate
-    external:
-      $ref: ../parameters.yml#/SourceIndex/properties/external
 
 SourceIndicesWithReplicas:
   type: array
-  items:
-    $ref: '#/SourceIndexWithReplicas'
   description: List of source indices used to generate a Query Suggestions index.
+  items:
+    allOf:
+      - $ref: '../parameters.yml#/SourceIndex'
+      - $ref: '#/SourceIndexReplica'
