@@ -225,13 +225,13 @@ export class {{classname}} {
 
     {{#allParams}}
     {{#required}}
-    if (!{{paramName}}) {
+    if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
       throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}`.');
     }
 
     {{#vars}}
     {{#required}}
-    if (!{{paramName}}.{{baseName}}) {
+    if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
       throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}`.');
     }
     {{/required}}
