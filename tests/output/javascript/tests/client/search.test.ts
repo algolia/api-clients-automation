@@ -27,14 +27,4 @@ describe('basic', () => {
       actual = $client;
     }).toThrowError('appId is missing!');
   });
-
-  test('sets user agent', async () => {
-    const $client = createClient();
-
-    let actual;
-
-    actual = await $client.setUserAgent('hello');
-
-    actual = await $client.getUserAgent();
-  });
 });

@@ -13,22 +13,5 @@
         }
       }
     ]
-  },
-  {
-    "testName": "sets user agent",
-    "steps": [
-      {
-        "type": "method",
-        "object": "$client",
-        "path": ["setUserAgent"],
-        "parameters": ["hello"]
-      },
-      {
-        "type": "method",
-        "object": "$client",
-        "path": ["getUserAgent"],
-        "expected": { "match": "hello" }
-      }
-    ]
   }
 ]

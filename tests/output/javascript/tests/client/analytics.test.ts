@@ -19,14 +19,9 @@ describe('basic', () => {
     let actual;
 
     expect(async () => {
-      const $client = new AnalyticsApi(
-        'my-app-id',
-        'my-api-key',
-
-        {
-          requester: new EchoRequester(),
-        }
-      );
+      const $client = new AnalyticsApi('my-app-id', 'my-api-key', '', {
+        requester: new EchoRequester(),
+      });
       actual = $client;
     }).not.toThrowError();
   });
