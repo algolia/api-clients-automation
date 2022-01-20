@@ -7,7 +7,7 @@ import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.model.*;
 import com.algolia.utils.*;
-import com.algolia.utils.echoResponse.EchoResponse;
+import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;

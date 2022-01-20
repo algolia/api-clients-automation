@@ -1,11 +1,24 @@
-package com.algolia.utils.echoResponse;
+package com.algolia.utils.echo;
 
 import com.algolia.model.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import okhttp3.Request;
+import okio.Buffer;
 
 public class EchoResponse {
+
+  private static String parseRequestBody(Request req) {
+    try {
+      final Request copy = req.newBuilder().build();
+      final Buffer buffer = new Buffer();
+      copy.body().writeTo(buffer);
+      return buffer.readUtf8();
+    } catch (final IOException e) {
+      return "error";
+    }
+  }
 
   public static class AddApiKey
     extends AddApiKeyResponse
@@ -19,6 +32,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -35,6 +56,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class AppendSource
@@ -49,6 +78,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -65,6 +102,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class Batch
@@ -79,6 +124,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -95,6 +148,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class BatchDictionaryEntries
@@ -109,6 +170,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -125,6 +194,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class Browse
@@ -139,6 +216,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -155,6 +240,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class ClearObjects
@@ -169,6 +262,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -185,6 +286,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class DeleteApiKey
@@ -199,6 +308,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -215,6 +332,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class DeleteIndex
@@ -229,6 +354,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -245,6 +378,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class DeleteRule
@@ -259,6 +400,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -275,6 +424,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class DeleteSynonym
@@ -289,6 +446,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -305,6 +470,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class GetDictionaryLanguages
@@ -319,6 +492,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -335,6 +516,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class GetLogs
@@ -349,6 +538,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -365,6 +562,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class GetObjects
@@ -380,6 +585,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class GetRule extends Rule implements EchoResponseInterface {
@@ -392,6 +605,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -408,6 +629,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class GetSources
@@ -422,6 +651,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -438,6 +675,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class GetTask
@@ -452,6 +697,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -468,6 +721,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class GetUserId
@@ -482,6 +743,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -498,6 +767,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class ListApiKeys
@@ -512,6 +789,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -528,6 +813,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class ListIndices
@@ -542,6 +835,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -558,6 +859,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class MultipleBatch
@@ -572,6 +881,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -588,6 +905,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class OperationIndex
@@ -602,6 +927,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -618,6 +951,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class RemoveUserId
@@ -632,6 +973,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -648,6 +997,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class RestoreApiKey
@@ -662,6 +1019,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -678,6 +1043,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class SaveRule
@@ -692,6 +1065,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -708,6 +1089,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class SaveSynonyms
@@ -722,6 +1111,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -738,6 +1135,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class SearchDictionaryEntries
@@ -752,6 +1157,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -768,6 +1181,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class SearchRules
@@ -782,6 +1203,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -798,6 +1227,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class SearchUserIds
@@ -812,6 +1249,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 
@@ -828,6 +1273,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class SetSettings
@@ -843,6 +1296,14 @@ public class EchoResponse {
     public String getPath() {
       return request.url().encodedPath();
     }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
   }
 
   public static class UpdateApiKey
@@ -857,6 +1318,14 @@ public class EchoResponse {
 
     public String getPath() {
       return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
     }
   }
 }

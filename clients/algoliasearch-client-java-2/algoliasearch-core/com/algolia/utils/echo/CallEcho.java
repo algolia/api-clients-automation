@@ -1,4 +1,4 @@
-package com.algolia.utils;
+package com.algolia.utils.echo;
 
 import java.io.IOException;
 import okhttp3.Call;

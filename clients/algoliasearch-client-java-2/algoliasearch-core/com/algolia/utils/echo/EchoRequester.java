@@ -1,6 +1,7 @@
-package com.algolia.utils;
+package com.algolia.utils.echo;
 
 import com.algolia.ApiException;
+import com.algolia.utils.Requester;
 import okhttp3.Request;
 
 public class EchoRequester implements Requester {
