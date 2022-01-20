@@ -19,6 +19,7 @@
           "supportsES6": true,
           "npmName": "@algolia/client-search",
           "npmVersion": "5.0.0",
+
           "packageName": "@algolia/client-search",
           "isSearchHost": true
         }
@@ -39,6 +40,7 @@
           "supportsES6": true,
           "npmName": "@algolia/recommend",
           "npmVersion": "5.0.0",
+
           "packageName": "@algolia/recommend",
           "isSearchHost": true
         }
@@ -58,6 +60,7 @@
           "supportsES6": true,
           "npmName": "@algolia/client-personalization",
           "npmVersion": "5.0.0",
+
           "packageName": "@algolia/client-personalization",
           "hasRegionalHost": true,
           "isEuHost": true,
@@ -79,6 +82,7 @@
           "supportsES6": true,
           "npmName": "@algolia/client-analytics",
           "npmVersion": "5.0.0",
+
           "packageName": "@algolia/client-analytics",
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -100,6 +104,7 @@
           "supportsES6": true,
           "npmName": "@algolia/client-insights",
           "npmVersion": "5.0.0",
+
           "packageName": "@algolia/client-insights",
           "host": "insights"
         }
@@ -119,6 +124,7 @@
           "supportsES6": true,
           "npmName": "@algolia/client-abtesting",
           "npmVersion": "5.0.0",
+
           "packageName": "@algolia/client-abtesting",
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -140,6 +146,7 @@
           "supportsES6": true,
           "npmName": "@algolia/client-query-suggestions",
           "npmVersion": "5.0.0",
+
           "packageName": "@algolia/client-query-suggestions",
           "hasRegionalHost": true,
           "isEuHost": true,
@@ -156,12 +163,12 @@
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
-        "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions",
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-sources",
           "npmVersion": "0.0.1",
+
           "packageName": "@algolia/client-sources",
           "hasRegionalHost": true,
           "host": "data"
@@ -186,6 +193,7 @@
           "sourceFolder": "algoliasearch-core",
           "java8": true,
           "dateLibrary": "java8",
+
           "packageName": "algoliasearch-client-java-2"
         }
       }

@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
+const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** ALGOLIA_ADMIN_KEY *****';
 
 // Init client with appId and apiKey
 const client = new SourcesApi(appId, apiKey);
