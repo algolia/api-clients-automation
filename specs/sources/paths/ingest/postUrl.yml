@@ -1,0 +1,24 @@
+post:
+  tags:
+    - sources
+  operationId: postUrl
+  summary: Create a new ingestion job via URL.
+  description: Add an ingestion job that will fetch data from an URL.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: postUrlResponse
+            type: object
+            additionalProperties: false
+            required:
+              - task
+            properties:
+              task:
+                $ref: ../../common/schemas/Task.yml#/task
+    '400':
+      $ref: ../../../common/responses/BadRequest.yml
