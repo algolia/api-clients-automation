@@ -457,9 +457,7 @@ public class EchoResponse {
     }
   }
 
-  public static class GetApiKey
-    extends KeyObject
-    implements EchoResponseInterface {
+  public static class GetApiKey extends Key implements EchoResponseInterface {
 
     private Request request;
 
