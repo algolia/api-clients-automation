@@ -1,5 +1,4 @@
-import type { SourceIndex } from './sourceIndex';
-import type { SourceIndexReplica } from './sourceIndexReplica';
+import type { SourceIndiceWithReplicas } from './sourceIndiceWithReplicas';
 
 export type QuerySuggestionsIndex = {
   /**
@@ -9,7 +8,7 @@ export type QuerySuggestionsIndex = {
   /**
    * List of source indices used to generate a Query Suggestions index.
    */
-  sourceIndices: Array<SourceIndex & SourceIndexReplica>;
+  sourceIndices: SourceIndiceWithReplicas[];
   /**
    * De-duplicate singular and plural suggestions. For example, let\'s say your index contains English content, and that two suggestions “shoe” and “shoes” end up in your Query Suggestions index. If the English language is configured, only the most popular of those two suggestions would remain.
    */
