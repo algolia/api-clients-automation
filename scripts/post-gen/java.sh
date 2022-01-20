@@ -18,25 +18,28 @@ echo "package com.algolia.model;public class OneOfstringbuiltInOperation {}" > $
 cp -R $CLIENT/utils/ $CLIENT/algoliasearch-core/com/algolia/
 
 # Generate types for the EchoRequester, to be able to keep the correct response type on the API method.
+
+# Create the file to hold all the EchoResponse
+echo "package com.algolia.utils.echoResponse; \
+      import com.algolia.model.*; \
+      import okhttp3.Request; \
+      import java.util.ArrayList; \
+      import java.util.HashMap; \
+      public class EchoResponse {" > $CLIENT/algoliasearch-core/com/algolia/utils/echoResponse/EchoResponse.java
+
 # Extract the normal response to extend it
 responses=($(grep -o 'public .*ApiCallback<.*>' $CLIENT/algoliasearch-core/com/algolia/**/*Api.java | sed 's/public.*ApiCallback<//; s/>$//; s/ //; s/^Map</HashMap</; s/^List</ArrayList</'))
 operationId=($(grep -o 'public Call .*(' $CLIENT/algoliasearch-core/com/algolia/**/*Api.java | sed 's/public Call //; s/Async(//'))
 for i in "${!responses[@]}"; do
-    class="${operationId[$i]^}Echo"
+    class="${operationId[$i]^}"
     super=${responses[$i]}
-    cat > "${CLIENT}/algoliasearch-core/com/algolia/utils/echoResponse/${class}.java" << EOL
-    package com.algolia.utils.echoResponse;
-    import com.algolia.model.*;
-    import okhttp3.Request;
-    import java.util.ArrayList;
-    import java.util.HashMap;
-    public class $class extends $super implements EchoResponse {
-        private Request request;
-        public $class(Request request) { this.request = request; }
-        public String getPath() { return request.url().encodedPath(); }
-    }
-EOL
+    echo -e "static public class $class extends $super implements EchoResponseInterface { \
+                private Request request; \
+                public $class(Request request) { this.request = request; } \
+                public String getPath() { return request.url().encodedPath(); } \
+             }" >> $CLIENT/algoliasearch-core/com/algolia/utils/echoResponse/EchoResponse.java
 done
+echo '}' >> $CLIENT/algoliasearch-core/com/algolia/utils/echoResponse/EchoResponse.java
 
 
 format_client() {

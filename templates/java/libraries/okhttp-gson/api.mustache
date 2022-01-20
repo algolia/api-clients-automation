@@ -12,7 +12,7 @@ import okhttp3.Call;
 import okhttp3.Request;
 
 import com.algolia.utils.*;
-import com.algolia.utils.echoResponse.*;
+import com.algolia.utils.echoResponse.EchoResponse;
 import com.algolia.model.*;
 
 import java.lang.reflect.Type;
@@ -112,7 +112,7 @@ public class {{classname}} extends ApiClient {
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
         Call req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
         if (req instanceof CallEcho) {
-            {{#returnType}}return new {{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}Echo(((CallEcho)req).request());{{/returnType}}
+            {{#returnType}}return new EchoResponse.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
         }
         Call call = (Call)req;
         {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();

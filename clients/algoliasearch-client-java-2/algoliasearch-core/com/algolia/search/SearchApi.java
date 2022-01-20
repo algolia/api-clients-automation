@@ -7,7 +7,7 @@ import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.model.*;
 import com.algolia.utils.*;
-import com.algolia.utils.echoResponse.*;
+import com.algolia.utils.echoResponse.EchoResponse;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class SearchApi extends ApiClient {
   public AddApiKeyResponse addApiKey(ApiKey apiKey) throws ApiException {
     Call req = addApiKeyValidateBeforeCall(apiKey, null);
     if (req instanceof CallEcho) {
-      return new AddApiKeyEcho(((CallEcho) req).request());
+      return new EchoResponse.AddApiKey(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
@@ -208,7 +208,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new AddOrUpdateObjectEcho(((CallEcho) req).request());
+      return new EchoResponse.AddOrUpdateObject(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
@@ -305,7 +305,7 @@ public class SearchApi extends ApiClient {
   public CreatedAtResponse appendSource(Source source) throws ApiException {
     Call req = appendSourceValidateBeforeCall(source, null);
     if (req instanceof CallEcho) {
-      return new AppendSourceEcho(((CallEcho) req).request());
+      return new EchoResponse.AppendSource(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -416,7 +416,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new AssignUserIdEcho(((CallEcho) req).request());
+      return new EchoResponse.AssignUserId(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -527,7 +527,7 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     Call req = batchValidateBeforeCall(indexName, batchWriteObject, null);
     if (req instanceof CallEcho) {
-      return new BatchEcho(((CallEcho) req).request());
+      return new EchoResponse.Batch(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<BatchResponse>() {}.getType();
@@ -644,7 +644,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new BatchAssignUserIdsEcho(((CallEcho) req).request());
+      return new EchoResponse.BatchAssignUserIds(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -764,7 +764,9 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new BatchDictionaryEntriesEcho(((CallEcho) req).request());
+      return new EchoResponse.BatchDictionaryEntries(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -910,7 +912,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new BatchRulesEcho(((CallEcho) req).request());
+      return new EchoResponse.BatchRules(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -1022,7 +1024,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = browseValidateBeforeCall(indexName, browseRequest, null);
     if (req instanceof CallEcho) {
-      return new BrowseEcho(((CallEcho) req).request());
+      return new EchoResponse.Browse(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<BrowseResponse>() {}.getType();
@@ -1137,7 +1139,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new ClearAllSynonymsEcho(((CallEcho) req).request());
+      return new EchoResponse.ClearAllSynonyms(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -1232,7 +1234,7 @@ public class SearchApi extends ApiClient {
   public UpdatedAtResponse clearObjects(String indexName) throws ApiException {
     Call req = clearObjectsValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
-      return new ClearObjectsEcho(((CallEcho) req).request());
+      return new EchoResponse.ClearObjects(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -1336,7 +1338,7 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     Call req = clearRulesValidateBeforeCall(indexName, forwardToReplicas, null);
     if (req instanceof CallEcho) {
-      return new ClearRulesEcho(((CallEcho) req).request());
+      return new EchoResponse.ClearRules(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -1431,7 +1433,7 @@ public class SearchApi extends ApiClient {
   public DeleteApiKeyResponse deleteApiKey(String key) throws ApiException {
     Call req = deleteApiKeyValidateBeforeCall(key, null);
     if (req instanceof CallEcho) {
-      return new DeleteApiKeyEcho(((CallEcho) req).request());
+      return new EchoResponse.DeleteApiKey(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<DeleteApiKeyResponse>() {}.getType();
@@ -1535,7 +1537,7 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     Call req = deleteByValidateBeforeCall(indexName, searchParams, null);
     if (req instanceof CallEcho) {
-      return new DeleteByEcho(((CallEcho) req).request());
+      return new EchoResponse.DeleteBy(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
@@ -1627,7 +1629,7 @@ public class SearchApi extends ApiClient {
   public DeletedAtResponse deleteIndex(String indexName) throws ApiException {
     Call req = deleteIndexValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
-      return new DeleteIndexEcho(((CallEcho) req).request());
+      return new EchoResponse.DeleteIndex(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
@@ -1731,7 +1733,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = deleteObjectValidateBeforeCall(indexName, objectID, null);
     if (req instanceof CallEcho) {
-      return new DeleteObjectEcho(((CallEcho) req).request());
+      return new EchoResponse.DeleteObject(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
@@ -1857,7 +1859,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new DeleteRuleEcho(((CallEcho) req).request());
+      return new EchoResponse.DeleteRule(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -1955,7 +1957,7 @@ public class SearchApi extends ApiClient {
   public DeleteSourceResponse deleteSource(String source) throws ApiException {
     Call req = deleteSourceValidateBeforeCall(source, null);
     if (req instanceof CallEcho) {
-      return new DeleteSourceEcho(((CallEcho) req).request());
+      return new EchoResponse.DeleteSource(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<DeleteSourceResponse>() {}.getType();
@@ -2079,7 +2081,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new DeleteSynonymEcho(((CallEcho) req).request());
+      return new EchoResponse.DeleteSynonym(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
@@ -2177,7 +2179,7 @@ public class SearchApi extends ApiClient {
   public KeyObject getApiKey(String key) throws ApiException {
     Call req = getApiKeyValidateBeforeCall(key, null);
     if (req instanceof CallEcho) {
-      return new GetApiKeyEcho(((CallEcho) req).request());
+      return new EchoResponse.GetApiKey(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<KeyObject>() {}.getType();
@@ -2250,7 +2252,9 @@ public class SearchApi extends ApiClient {
   public Map<String, Languages> getDictionaryLanguages() throws ApiException {
     Call req = getDictionaryLanguagesValidateBeforeCall(null);
     if (req instanceof CallEcho) {
-      return new GetDictionaryLanguagesEcho(((CallEcho) req).request());
+      return new EchoResponse.GetDictionaryLanguages(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Map<String, Languages>>() {}.getType();
@@ -2322,7 +2326,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = getDictionarySettingsValidateBeforeCall(null);
     if (req instanceof CallEcho) {
-      return new GetDictionarySettingsEcho(((CallEcho) req).request());
+      return new EchoResponse.GetDictionarySettings(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<GetDictionarySettingsResponse>() {}
@@ -2441,7 +2445,7 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     Call req = getLogsValidateBeforeCall(offset, length, indexName, type, null);
     if (req instanceof CallEcho) {
-      return new GetLogsEcho(((CallEcho) req).request());
+      return new EchoResponse.GetLogs(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<GetLogsResponse>() {}.getType();
@@ -2581,7 +2585,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new GetObjectEcho(((CallEcho) req).request());
+      return new EchoResponse.GetObject(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Map<String, String>>() {}.getType();
@@ -2676,7 +2680,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = getObjectsValidateBeforeCall(getObjectsObject, null);
     if (req instanceof CallEcho) {
-      return new GetObjectsEcho(((CallEcho) req).request());
+      return new EchoResponse.GetObjects(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
@@ -2780,7 +2784,7 @@ public class SearchApi extends ApiClient {
   public Rule getRule(String indexName, String objectID) throws ApiException {
     Call req = getRuleValidateBeforeCall(indexName, objectID, null);
     if (req instanceof CallEcho) {
-      return new GetRuleEcho(((CallEcho) req).request());
+      return new EchoResponse.GetRule(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Rule>() {}.getType();
@@ -2870,7 +2874,7 @@ public class SearchApi extends ApiClient {
   public IndexSettings getSettings(String indexName) throws ApiException {
     Call req = getSettingsValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
-      return new GetSettingsEcho(((CallEcho) req).request());
+      return new EchoResponse.GetSettings(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<IndexSettings>() {}.getType();
@@ -2942,7 +2946,7 @@ public class SearchApi extends ApiClient {
   public List<Source> getSources() throws ApiException {
     Call req = getSourcesValidateBeforeCall(null);
     if (req instanceof CallEcho) {
-      return new GetSourcesEcho(((CallEcho) req).request());
+      return new EchoResponse.GetSources(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<List<Source>>() {}.getType();
@@ -3043,7 +3047,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = getSynonymValidateBeforeCall(indexName, objectID, null);
     if (req instanceof CallEcho) {
-      return new GetSynonymEcho(((CallEcho) req).request());
+      return new EchoResponse.GetSynonym(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SynonymHit>() {}.getType();
@@ -3149,7 +3153,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = getTaskValidateBeforeCall(indexName, taskID, null);
     if (req instanceof CallEcho) {
-      return new GetTaskEcho(((CallEcho) req).request());
+      return new EchoResponse.GetTask(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<GetTaskResponse>() {}.getType();
@@ -3227,7 +3231,7 @@ public class SearchApi extends ApiClient {
   public GetTopUserIdsResponse getTopUserIds() throws ApiException {
     Call req = getTopUserIdsValidateBeforeCall(null);
     if (req instanceof CallEcho) {
-      return new GetTopUserIdsEcho(((CallEcho) req).request());
+      return new EchoResponse.GetTopUserIds(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<GetTopUserIdsResponse>() {}.getType();
@@ -3319,7 +3323,7 @@ public class SearchApi extends ApiClient {
   public UserId getUserId(String userID) throws ApiException {
     Call req = getUserIdValidateBeforeCall(userID, null);
     if (req instanceof CallEcho) {
-      return new GetUserIdEcho(((CallEcho) req).request());
+      return new EchoResponse.GetUserId(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UserId>() {}.getType();
@@ -3408,7 +3412,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = hasPendingMappingsValidateBeforeCall(getClusters, null);
     if (req instanceof CallEcho) {
-      return new HasPendingMappingsEcho(((CallEcho) req).request());
+      return new EchoResponse.HasPendingMappings(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -3485,7 +3489,7 @@ public class SearchApi extends ApiClient {
   public ListApiKeysResponse listApiKeys() throws ApiException {
     Call req = listApiKeysValidateBeforeCall(null);
     if (req instanceof CallEcho) {
-      return new ListApiKeysEcho(((CallEcho) req).request());
+      return new EchoResponse.ListApiKeys(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<ListApiKeysResponse>() {}.getType();
@@ -3557,7 +3561,7 @@ public class SearchApi extends ApiClient {
   public ListClustersResponse listClusters() throws ApiException {
     Call req = listClustersValidateBeforeCall(null);
     if (req instanceof CallEcho) {
-      return new ListClustersEcho(((CallEcho) req).request());
+      return new EchoResponse.ListClusters(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<ListClustersResponse>() {}.getType();
@@ -3641,7 +3645,7 @@ public class SearchApi extends ApiClient {
   public ListIndicesResponse listIndices(Integer page) throws ApiException {
     Call req = listIndicesValidateBeforeCall(page, null);
     if (req instanceof CallEcho) {
-      return new ListIndicesEcho(((CallEcho) req).request());
+      return new EchoResponse.ListIndices(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<ListIndicesResponse>() {}.getType();
@@ -3740,7 +3744,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = listUserIdsValidateBeforeCall(page, hitsPerPage, null);
     if (req instanceof CallEcho) {
-      return new ListUserIdsEcho(((CallEcho) req).request());
+      return new EchoResponse.ListUserIds(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<ListUserIdsResponse>() {}.getType();
@@ -3833,7 +3837,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = multipleBatchValidateBeforeCall(batchObject, null);
     if (req instanceof CallEcho) {
-      return new MultipleBatchEcho(((CallEcho) req).request());
+      return new EchoResponse.MultipleBatch(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
@@ -3921,7 +3925,7 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     Call req = multipleQueriesValidateBeforeCall(multipleQueriesObject, null);
     if (req instanceof CallEcho) {
-      return new MultipleQueriesEcho(((CallEcho) req).request());
+      return new EchoResponse.MultipleQueries(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<MultipleQueriesResponse>() {}.getType();
@@ -4031,7 +4035,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new OperationIndexEcho(((CallEcho) req).request());
+      return new EchoResponse.OperationIndex(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -4184,7 +4188,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new PartialUpdateObjectEcho(((CallEcho) req).request());
+      return new EchoResponse.PartialUpdateObject(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
@@ -4292,7 +4296,7 @@ public class SearchApi extends ApiClient {
   public RemoveUserIdResponse removeUserId(String userID) throws ApiException {
     Call req = removeUserIdValidateBeforeCall(userID, null);
     if (req instanceof CallEcho) {
-      return new RemoveUserIdEcho(((CallEcho) req).request());
+      return new EchoResponse.RemoveUserId(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<RemoveUserIdResponse>() {}.getType();
@@ -4378,7 +4382,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = replaceSourcesValidateBeforeCall(source, null);
     if (req instanceof CallEcho) {
-      return new ReplaceSourcesEcho(((CallEcho) req).request());
+      return new EchoResponse.ReplaceSources(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<ReplaceSourceResponse>() {}.getType();
@@ -4466,7 +4470,7 @@ public class SearchApi extends ApiClient {
   public AddApiKeyResponse restoreApiKey(String key) throws ApiException {
     Call req = restoreApiKeyValidateBeforeCall(key, null);
     if (req instanceof CallEcho) {
-      return new RestoreApiKeyEcho(((CallEcho) req).request());
+      return new EchoResponse.RestoreApiKey(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
@@ -4566,7 +4570,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = saveObjectValidateBeforeCall(indexName, body, null);
     if (req instanceof CallEcho) {
-      return new SaveObjectEcho(((CallEcho) req).request());
+      return new EchoResponse.SaveObject(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
@@ -4711,7 +4715,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SaveRuleEcho(((CallEcho) req).request());
+      return new EchoResponse.SaveRule(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedRuleResponse>() {}.getType();
@@ -4867,7 +4871,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SaveSynonymEcho(((CallEcho) req).request());
+      return new EchoResponse.SaveSynonym(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SaveSynonymResponse>() {}.getType();
@@ -5022,7 +5026,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SaveSynonymsEcho(((CallEcho) req).request());
+      return new EchoResponse.SaveSynonyms(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -5137,7 +5141,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = searchValidateBeforeCall(indexName, searchParams, null);
     if (req instanceof CallEcho) {
-      return new SearchEcho(((CallEcho) req).request());
+      return new EchoResponse.Search(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SearchResponse>() {}.getType();
@@ -5251,7 +5255,9 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SearchDictionaryEntriesEcho(((CallEcho) req).request());
+      return new EchoResponse.SearchDictionaryEntries(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -5379,7 +5385,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SearchForFacetValuesEcho(((CallEcho) req).request());
+      return new EchoResponse.SearchForFacetValues(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SearchForFacetValuesResponse>() {}
@@ -5498,7 +5504,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SearchRulesEcho(((CallEcho) req).request());
+      return new EchoResponse.SearchRules(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SearchRulesResponse>() {}.getType();
@@ -5648,7 +5654,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SearchSynonymsEcho(((CallEcho) req).request());
+      return new EchoResponse.SearchSynonyms(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SearchSynonymsResponse>() {}.getType();
@@ -5757,7 +5763,7 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     Call req = searchUserIdsValidateBeforeCall(searchUserIdsObject, null);
     if (req instanceof CallEcho) {
-      return new SearchUserIdsEcho(((CallEcho) req).request());
+      return new EchoResponse.SearchUserIds(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
@@ -5853,7 +5859,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SetDictionarySettingsEcho(((CallEcho) req).request());
+      return new EchoResponse.SetDictionarySettings(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -5982,7 +5988,7 @@ public class SearchApi extends ApiClient {
       null
     );
     if (req instanceof CallEcho) {
-      return new SetSettingsEcho(((CallEcho) req).request());
+      return new EchoResponse.SetSettings(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -6094,7 +6100,7 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call req = updateApiKeyValidateBeforeCall(key, apiKey, null);
     if (req instanceof CallEcho) {
-      return new UpdateApiKeyEcho(((CallEcho) req).request());
+      return new EchoResponse.UpdateApiKey(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<UpdateApiKeyResponse>() {}.getType();
