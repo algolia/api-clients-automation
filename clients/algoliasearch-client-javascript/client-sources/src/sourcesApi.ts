@@ -1,4 +1,4 @@
-import type { PostUrlResponse } from '../model/postUrlResponse';
+import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
 import type { URLJob } from '../model/uRLJob';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
@@ -42,7 +42,7 @@ export class SourcesApi {
   constructor(
     appId: string,
     apiKey: string,
-    region: 'us',
+    region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     this.setAuthentication({ appId, apiKey });
@@ -62,7 +62,7 @@ export class SourcesApi {
     });
   }
 
-  getDefaultHosts(region: 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
     return [
       {
         url: `data.${region}.algolia.com`,
@@ -93,25 +93,25 @@ export class SourcesApi {
    * @summary Create a new ingestion job via URL.
    * @param uRLJob - The uRLJob object.
    */
-  postUrl(uRLJob: URLJob): Promise<PostUrlResponse> {
+  postIngestUrl(uRLJob: URLJob): Promise<PostIngestUrlResponse> {
     const path = '/1/ingest/url';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     if (uRLJob === null || uRLJob === undefined) {
       throw new Error(
-        'Required parameter uRLJob was null or undefined when calling postUrl.'
+        'Required parameter uRLJob was null or undefined when calling postIngestUrl.'
       );
     }
 
     if (uRLJob.type === null || uRLJob.type === undefined) {
       throw new Error(
-        'Required parameter uRLJob.type was null or undefined when calling postUrl.'
+        'Required parameter uRLJob.type was null or undefined when calling postIngestUrl.'
       );
     }
     if (uRLJob.input === null || uRLJob.input === undefined) {
       throw new Error(
-        'Required parameter uRLJob.input was null or undefined when calling postUrl.'
+        'Required parameter uRLJob.input was null or undefined when calling postIngestUrl.'
       );
     }
 

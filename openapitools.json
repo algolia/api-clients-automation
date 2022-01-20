@@ -171,6 +171,7 @@
 
           "packageName": "@algolia/client-sources",
           "hasRegionalHost": true,
+          "isDeHost": true,
           "host": "data"
         }
       },
