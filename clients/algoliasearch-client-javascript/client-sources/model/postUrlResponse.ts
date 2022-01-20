@@ -1,9 +1,5 @@
-import { Task } from './task';
-
+import type { Task } from './task';
 
 export type PostUrlResponse = {
-    task: Task;
-}
-
-
-
+  task: Task;
+};

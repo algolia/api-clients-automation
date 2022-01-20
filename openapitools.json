@@ -163,7 +163,8 @@
           "npmName": "@algolia/client-sources",
           "npmVersion": "0.0.1",
           "packageName": "@algolia/client-sources",
-          "hasRegionalHost": true
+          "hasRegionalHost": true,
+          "host": "data"
         }
       },
       "java-search": {

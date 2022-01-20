@@ -1,14 +1,9 @@
-
-
 /**
-* A task object.
-*/
+ * A task object.
+ */
 export type Task = {
-    id: string;
-    type: TaskType;
-}
+  id: string;
+  type: TaskType;
+};
 
-export type TaskType = 'csv'
-
-
-
+export type TaskType = 'csv';

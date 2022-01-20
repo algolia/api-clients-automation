@@ -12,8 +12,8 @@
     "@algolia/client-personalization": "5.0.0",
     "@algolia/client-query-suggestions": "5.0.0",
     "@algolia/client-search": "5.0.0",
-    "@algolia/recommend": "5.0.0",
-    "@algolia/client-sources": "5.0.0"
+    "@algolia/client-sources": "0.0.1",
+    "@algolia/recommend": "5.0.0"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "10.0.3",

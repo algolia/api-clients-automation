@@ -1,5 +1,6 @@
-export * from './sourcesApi';
 import { SourcesApi } from './sourcesApi';
+
+export * from './sourcesApi';
 export * from '../utils/errors';
 export { EchoRequester } from '../utils/requester/EchoRequester';
 export { EchoResponse } from '../utils/types';
