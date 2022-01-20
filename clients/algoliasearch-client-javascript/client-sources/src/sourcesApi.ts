@@ -1,4 +1,5 @@
 import type { PostUrlResponse } from '../model/postUrlResponse';
+import type { URLJob } from '../model/uRLJob';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
@@ -90,27 +91,34 @@ export class SourcesApi {
    * Add an ingestion job that will fetch data from an URL.
    *
    * @summary Create a new ingestion job via URL.
-   * @param postUrl - The postUrl object.
-   * @param postUrl.index - The index name to target.
+   * @param uRLJob - The uRLJob object.
    */
-  postUrl({ index }: PostUrlProps): Promise<PostUrlResponse> {
+  postUrl(uRLJob: URLJob): Promise<PostUrlResponse> {
     const path = '/1/ingest/url';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (uRLJob === null || uRLJob === undefined) {
       throw new Error(
-        'Required parameter index was null or undefined when calling postUrl.'
+        'Required parameter uRLJob was null or undefined when calling postUrl.'
       );
     }
 
-    if (index !== undefined) {
-      queryParameters.index = index.toString();
+    if (uRLJob.type === null || uRLJob.type === undefined) {
+      throw new Error(
+        'Required parameter uRLJob.type was null or undefined when calling postUrl.'
+      );
+    }
+    if (uRLJob.input === null || uRLJob.input === undefined) {
+      throw new Error(
+        'Required parameter uRLJob.input was null or undefined when calling postUrl.'
+      );
     }
 
     const request: Request = {
       method: 'POST',
       path,
+      data: uRLJob,
     };
 
     const requestOptions: RequestOptions = {
@@ -121,10 +129,3 @@ export class SourcesApi {
     return this.sendRequest(request, requestOptions);
   }
 }
-
-export type PostUrlProps = {
-  /**
-   * The index name to target.
-   */
-  index: string;
-};
