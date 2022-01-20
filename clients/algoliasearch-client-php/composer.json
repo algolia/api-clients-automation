@@ -33,7 +33,10 @@
         "friendsofphp/php-cs-fixer": "^3.5.0"
     },
     "autoload": {
-        "psr-4": { "Algolia\\AlgoliaSearch\\" : "lib/" }
+        "psr-4": { "Algolia\\AlgoliaSearch\\" : "lib/" },
+        "files": [
+            "lib/Http/Psr7/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": { "Algolia\\AlgoliaSearch\\Test\\" : "test/" }

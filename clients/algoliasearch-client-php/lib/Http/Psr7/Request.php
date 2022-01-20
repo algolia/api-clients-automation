@@ -2,6 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Http\Psr7;
 
+require_once 'functions.php';
+
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;

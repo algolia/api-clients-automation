@@ -12,6 +12,13 @@ abstract class AbstractConfig
 
     protected $defaultConnectTimeout = 2;
 
+    /**
+     * User agent of the HTTP request, set to "OpenAPI-Generator/{version}/PHP" by default
+     *
+     * @var string
+     */
+    protected $userAgent = null;
+
     public function __construct(array $config = [])
     {
         $config += $this->getDefaultConfiguration();
@@ -53,7 +60,7 @@ abstract class AbstractConfig
         return $this;
     }
 
-    public function getAlgolliaApiKey()
+    public function getAlgoliaApiKey()
     {
         return $this->config['apiKey'];
     }
@@ -123,5 +130,35 @@ abstract class AbstractConfig
         $this->config['defaultHeaders'] = $defaultHeaders;
 
         return $this;
+    }
+
+    /**
+     * Sets the user agent of the api client
+     *
+     * @param string $userAgent the user agent of the api client
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
+     */
+    public function setUserAgent($userAgent)
+    {
+        if (!is_string($userAgent)) {
+            throw new \InvalidArgumentException('User-agent must be a string.');
+        }
+
+        $this->userAgent = $userAgent;
+
+        return $this;
+    }
+
+    /**
+     * Gets the user agent of the api client
+     *
+     * @return string user agent
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
     }
 }

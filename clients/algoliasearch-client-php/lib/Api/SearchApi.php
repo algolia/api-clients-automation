@@ -3,19 +3,12 @@
 namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
-use Algolia\AlgoliaSearch\ApiException;
 use Algolia\AlgoliaSearch\Configuration\Configuration;
 use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 
 /**
  * SearchApi Class Doc Comment
@@ -25,11 +18,6 @@ use GuzzleHttp\RequestOptions;
  */
 class SearchApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
     /**
      * @var ApiWrapperInterface
      */
@@ -46,11 +34,6 @@ class SearchApi
     protected $headerSelector;
 
     /**
-     * @var int Host index
-     */
-    protected $hostIndex;
-
-    /**
      * @param Configuration $config
      * @param ApiWrapperInterface $apiWrapper
      */
@@ -59,9 +42,7 @@ class SearchApi
         $this->config = $config;
 
         $this->api = $apiWrapper;
-        $this->client = new Client();
         $this->headerSelector = new HeaderSelector();
-        $this->hostIndex = 0;
     }
 
     /**
@@ -106,26 +87,6 @@ class SearchApi
     }
 
     /**
-     * Set the host index
-     *
-     * @param int $hostIndex Host index (required)
-     */
-    public function setHostIndex($hostIndex): void
-    {
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * Get the host index
-     *
-     * @return int Host index
-     */
-    public function getHostIndex()
-    {
-        return $this->hostIndex;
-    }
-
-    /**
      * @return Configuration
      */
     public function getConfig()
@@ -165,16 +126,6 @@ class SearchApi
         if (isset($apiKey)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($apiKey));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -188,18 +139,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\AddApiKeyResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation addOrUpdateObject
@@ -263,16 +218,6 @@ class SearchApi
         if (isset($body)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($body));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -286,18 +231,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'PUT',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'PUT';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation appendSource
@@ -329,16 +278,6 @@ class SearchApi
         if (isset($source)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($source));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -352,18 +291,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation assignUserId
@@ -415,16 +358,6 @@ class SearchApi
         if (isset($assignUserIdObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($assignUserIdObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -438,18 +371,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation batch
@@ -496,16 +433,6 @@ class SearchApi
         if (isset($batchWriteObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchWriteObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -519,18 +446,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\BatchResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation batchAssignUserIds
@@ -582,16 +513,6 @@ class SearchApi
         if (isset($batchAssignUserIdsObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchAssignUserIdsObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -605,18 +526,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation batchDictionaryEntries
@@ -665,16 +590,6 @@ class SearchApi
         if (isset($batchDictionaryEntries)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchDictionaryEntries));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -688,18 +603,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation batchRules
@@ -764,16 +683,6 @@ class SearchApi
         if (isset($rule)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($rule));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -787,18 +696,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation browse
@@ -841,16 +754,6 @@ class SearchApi
         if (isset($browseRequest)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($browseRequest));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -864,18 +767,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\BrowseResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation clearAllSynonyms
@@ -922,16 +829,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -945,18 +842,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation clearObjects
@@ -995,16 +896,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1018,18 +909,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation clearRules
@@ -1076,16 +971,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1099,18 +984,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation deleteApiKey
@@ -1149,16 +1038,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1172,18 +1051,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'DELETE';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeleteApiKeyResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation deleteBy
@@ -1232,16 +1115,6 @@ class SearchApi
         if (isset($searchParams)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchParams));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1255,18 +1128,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation deleteIndex
@@ -1305,16 +1182,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1328,18 +1195,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'DELETE';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation deleteObject
@@ -1393,16 +1264,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1416,18 +1277,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'DELETE';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation deleteRule
@@ -1489,16 +1354,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1512,18 +1367,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'DELETE';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation deleteSource
@@ -1560,16 +1419,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1583,18 +1432,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'DELETE';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeleteSourceResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation deleteSynonym
@@ -1656,16 +1509,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1679,18 +1522,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'DELETE';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\DeletedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getApiKey
@@ -1729,16 +1576,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1752,18 +1589,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\KeyObject';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getDictionaryLanguages
@@ -1786,16 +1627,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1809,18 +1640,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = 'array&lt;string,\Algolia\AlgoliaSearch\Model\Languages&gt;';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getDictionarySettings
@@ -1843,16 +1678,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1866,18 +1691,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetDictionarySettingsResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getLogs
@@ -1934,16 +1763,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1957,18 +1776,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetLogsResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getObject
@@ -2030,16 +1853,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2053,18 +1866,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = 'array&lt;string,string&gt;';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getObjects
@@ -2098,16 +1915,6 @@ class SearchApi
         if (isset($getObjectsObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($getObjectsObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2121,18 +1928,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetObjectsResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getRule
@@ -2186,16 +1997,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2209,18 +2010,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\Rule';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getSettings
@@ -2257,16 +2062,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2280,18 +2075,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\IndexSettings';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getSources
@@ -2312,16 +2111,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2335,18 +2124,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\Source[]';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getSynonym
@@ -2400,16 +2193,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2423,18 +2206,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SynonymHit';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getTask
@@ -2486,16 +2273,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2509,18 +2286,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetTaskResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getTopUserIds
@@ -2543,16 +2324,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2566,18 +2337,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\GetTopUserIdsResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation getUserId
@@ -2619,16 +2394,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2642,18 +2407,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UserId';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation hasPendingMappings
@@ -2684,16 +2453,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2707,18 +2466,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\CreatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation listApiKeys
@@ -2741,16 +2504,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2764,18 +2517,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListApiKeysResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation listClusters
@@ -2798,16 +2555,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2821,18 +2568,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListClustersResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation listIndices
@@ -2863,16 +2614,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2886,18 +2627,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListIndicesResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation listUserIds
@@ -2936,16 +2681,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2959,18 +2694,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'GET';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\ListUserIdsResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation multipleBatch
@@ -3002,16 +2741,6 @@ class SearchApi
         if (isset($batchObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($batchObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3025,18 +2754,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\MultipleBatchResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation multipleQueries
@@ -3068,16 +2801,6 @@ class SearchApi
         if (isset($multipleQueriesObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($multipleQueriesObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3091,18 +2814,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\MultipleQueriesResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation operationIndex
@@ -3151,16 +2878,6 @@ class SearchApi
         if (isset($operationIndexObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($operationIndexObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3174,18 +2891,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation partialUpdateObject
@@ -3257,16 +2978,6 @@ class SearchApi
         if (isset($oneOfStringBuildInOperation)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($oneOfStringBuildInOperation));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3280,18 +2991,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation removeUserId
@@ -3333,16 +3048,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3356,18 +3061,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'DELETE';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\RemoveUserIdResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation replaceSources
@@ -3399,16 +3108,6 @@ class SearchApi
         if (isset($source)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($source));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3422,18 +3121,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'PUT',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'PUT';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\ReplaceSourceResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation restoreApiKey
@@ -3472,16 +3175,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3495,18 +3188,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\AddApiKeyResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation saveObject
@@ -3553,16 +3250,6 @@ class SearchApi
         if (isset($body)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($body));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3576,18 +3263,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SaveObjectResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation saveRule
@@ -3659,16 +3350,6 @@ class SearchApi
         if (isset($rule)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($rule));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3682,18 +3363,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'PUT',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'PUT';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedRuleResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation saveSynonym
@@ -3765,16 +3450,6 @@ class SearchApi
         if (isset($synonymHit)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($synonymHit));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3788,18 +3463,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'PUT',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'PUT';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SaveSynonymResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation saveSynonyms
@@ -3864,16 +3543,6 @@ class SearchApi
         if (isset($synonymHit)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($synonymHit));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3887,18 +3556,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation search
@@ -3945,16 +3618,6 @@ class SearchApi
         if (isset($searchParams)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchParams));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3968,18 +3631,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation searchDictionaryEntries
@@ -4028,16 +3695,6 @@ class SearchApi
         if (isset($searchDictionaryEntries)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchDictionaryEntries));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4051,18 +3708,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation searchForFacetValues
@@ -4120,16 +3781,6 @@ class SearchApi
         if (isset($searchForFacetValuesRequest)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchForFacetValuesRequest));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4143,18 +3794,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchForFacetValuesResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation searchRules
@@ -4203,16 +3858,6 @@ class SearchApi
         if (isset($searchRulesParams)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchRulesParams));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4226,18 +3871,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchRulesResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation searchSynonyms
@@ -4308,16 +3957,6 @@ class SearchApi
             ['application/json'],
             []
         );
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4331,18 +3970,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchSynonymsResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation searchUserIds
@@ -4376,16 +4019,6 @@ class SearchApi
         if (isset($searchUserIdsObject)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($searchUserIdsObject));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4399,18 +4032,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'POST';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\SearchUserIdsResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation setDictionarySettings
@@ -4444,16 +4081,6 @@ class SearchApi
         if (isset($dictionarySettingsRequest)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($dictionarySettingsRequest));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4467,18 +4094,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'PUT',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'PUT';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation setSettings
@@ -4533,16 +4164,6 @@ class SearchApi
         if (isset($indexSettings)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($indexSettings));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4556,18 +4177,22 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'PUT',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'PUT';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdatedAtResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
+        }
 
-        return $response;
+        return $request;
     }
     /**
      * Operation updateApiKey
@@ -4616,16 +4241,6 @@ class SearchApi
         if (isset($apiKey)) {
             $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($apiKey));
         }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-API-Key');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-API-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('X-Algolia-Application-Id');
-        if ($apiKey !== null) {
-            $headers['X-Algolia-Application-Id'] = $apiKey;
-        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4639,210 +4254,21 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            'PUT',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        $method = 'PUT';
 
-        $expectedResponse = null;
-        $expectedResponse = '\Algolia\AlgoliaSearch\Model\UpdateApiKeyResponse';
-        list($response) = $this->sendRequest($request, $expectedResponse);
-
-        return $response;
-    }
-    /**
-     * Create http client option
-     *
-     * @throws \RuntimeException on file opening failure
-     *
-     * @return array of http client options
-     */
-    protected function createHttpClientOption()
-    {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
+        if ($method === 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
         }
 
-        return $options;
-    }
-
-    /**
-     * Send the request and handle the response
-     *
-     * @throws \RuntimeException on file opening failure
-     *
-     * @return array
-     */
-    protected function sendRequest($request, $expectedResponse)
-    {
-        try {
-            $options = $this->createHttpClientOption();
-
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch ($statusCode) {
-                case 200:
-                    if ($expectedResponse === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $expectedResponse, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders(),
-                    ];
-                case 400:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders(),
-                    ];
-                case 402:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders(),
-                    ];
-                case 403:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders(),
-                    ];
-                case 404:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders(),
-                    ];
-
-            }
-
-            $returnType = $expectedResponse;
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders(),
-            ];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        $expectedResponse,
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-
-                    break;
-            }
-
-            throw $e;
-        }
+        return $request;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Http\Psr7;
 
+require_once 'functions.php';
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
