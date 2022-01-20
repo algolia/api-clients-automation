@@ -303,8 +303,13 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 
         {{/servers.0}}
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = '{{httpMethod}}';
 
+        return $this->sendRequest('{{httpMethod}}', $resourcePath, $query, $httpBody);
+    }
+    {{/operation}}
+
+    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    {
         if($method == 'GET') {
             $request = $this->api->read(
                 $method,
@@ -320,6 +325,5 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 
         return $request;
     }
-    {{/operation}}
 }
 {{/operations}}

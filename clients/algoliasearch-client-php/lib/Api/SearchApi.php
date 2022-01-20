@@ -139,22 +139,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation addOrUpdateObject
@@ -231,22 +217,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'PUT';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation appendSource
@@ -291,22 +263,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation assignUserId
@@ -371,22 +329,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation batch
@@ -446,22 +390,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation batchAssignUserIds
@@ -526,22 +456,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation batchDictionaryEntries
@@ -603,22 +519,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation batchRules
@@ -696,22 +598,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation browse
@@ -767,22 +655,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation clearAllSynonyms
@@ -842,22 +716,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation clearObjects
@@ -909,22 +769,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation clearRules
@@ -984,22 +830,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation deleteApiKey
@@ -1051,22 +883,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'DELETE';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation deleteBy
@@ -1128,22 +946,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation deleteIndex
@@ -1195,22 +999,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'DELETE';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation deleteObject
@@ -1277,22 +1067,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'DELETE';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation deleteRule
@@ -1367,22 +1143,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'DELETE';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation deleteSource
@@ -1432,22 +1194,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'DELETE';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation deleteSynonym
@@ -1522,22 +1270,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'DELETE';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getApiKey
@@ -1589,22 +1323,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getDictionaryLanguages
@@ -1640,22 +1360,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getDictionarySettings
@@ -1691,22 +1397,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getLogs
@@ -1776,22 +1468,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getObject
@@ -1866,22 +1544,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getObjects
@@ -1928,22 +1592,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getRule
@@ -2010,22 +1660,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getSettings
@@ -2075,22 +1711,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getSources
@@ -2124,22 +1746,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getSynonym
@@ -2206,22 +1814,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getTask
@@ -2286,22 +1880,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getTopUserIds
@@ -2337,22 +1917,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation getUserId
@@ -2407,22 +1973,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation hasPendingMappings
@@ -2466,22 +2018,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation listApiKeys
@@ -2517,22 +2055,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation listClusters
@@ -2568,22 +2092,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation listIndices
@@ -2627,22 +2137,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation listUserIds
@@ -2694,22 +2190,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'GET';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation multipleBatch
@@ -2754,22 +2236,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation multipleQueries
@@ -2814,22 +2282,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation operationIndex
@@ -2891,22 +2345,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation partialUpdateObject
@@ -2991,22 +2431,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation removeUserId
@@ -3061,22 +2487,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'DELETE';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation replaceSources
@@ -3121,22 +2533,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'PUT';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation restoreApiKey
@@ -3188,22 +2586,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation saveObject
@@ -3263,22 +2647,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation saveRule
@@ -3363,22 +2733,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'PUT';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation saveSynonym
@@ -3463,22 +2819,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'PUT';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation saveSynonyms
@@ -3556,22 +2898,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation search
@@ -3631,22 +2959,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation searchDictionaryEntries
@@ -3708,22 +3022,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation searchForFacetValues
@@ -3794,22 +3094,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation searchRules
@@ -3871,22 +3157,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation searchSynonyms
@@ -3970,22 +3242,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation searchUserIds
@@ -4032,22 +3290,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'POST';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation setDictionarySettings
@@ -4094,22 +3338,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'PUT';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation setSettings
@@ -4177,22 +3407,8 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'PUT';
 
-        if ($method === 'GET') {
-            $request = $this->api->read(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : '')
-            );
-        } else {
-            $request = $this->api->write(
-                $method,
-                $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
-            );
-        }
-
-        return $request;
+        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
     }
     /**
      * Operation updateApiKey
@@ -4254,8 +3470,12 @@ class SearchApi
         );
 
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $method = 'PUT';
 
+        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+    }
+
+    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    {
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,
