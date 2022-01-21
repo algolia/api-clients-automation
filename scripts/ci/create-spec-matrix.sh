@@ -4,11 +4,11 @@ BASE_CHANGED=$1
 BASE_BRANCH=$2
 
 specs='{"client":[]}'
-generators=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
+GENERATORS=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
 
-for generator in "${generators[@]}"; do
+for generator in "${GENERATORS[@]}"; do
     client=${generator#*-}
-    if [[ ! ${specs[*]} =~ $client ]]; then
+    if [[ ! ${SPECS[*]} =~ $client ]]; then
         changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- specs/$client | wc -l)
         if [[ $BASE_CHANGED == "true" || $changed > 0 ]]; then
             specs=$(echo $specs | jq --arg client $client '.client |= .+ [$client]')

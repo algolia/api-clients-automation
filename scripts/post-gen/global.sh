@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Break on non-zero code
+set -e
+
 LANGUAGE=$1
 
 if [[ $CI ]]; then
