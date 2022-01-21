@@ -125,6 +125,6 @@ runs:
       run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
 
     - name: Download Java formatter
-      if: ${{ inputs.language == 'java' }}
+      if: ${{ inputs.language == 'java' || inputs.job == 'cts' }}
       shell: bash
       run: curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar" > /tmp/java-formatter.jar
