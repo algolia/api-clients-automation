@@ -7,7 +7,7 @@ const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
 function createClient() {
-    return new {{client}}(appId, apiKey, 'us', { requester: new EchoRequester() });
+    return new {{client}}(appId, apiKey, {{#hasRegionalHost}}'us', {{/hasRegionalHost}}{ requester: new EchoRequester() });
 }
 
 async function createIndex() {}
