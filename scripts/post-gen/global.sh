@@ -26,7 +26,7 @@ build_js_common() {
 format_specs() {
     echo "> Formatting specs..."
 
-    CMD="yarn specs:format"
+    CMD="yarn specs:fix"
     if [[ $VERBOSE == "true" ]]; then
         $CMD
     else
