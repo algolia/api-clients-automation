@@ -108,12 +108,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (
-      querySuggestionsIndexWithIndexParam === null ||
-      querySuggestionsIndexWithIndexParam === undefined
-    ) {
+    if (!querySuggestionsIndexWithIndexParam) {
       throw new Error(
-        'Required parameter querySuggestionsIndexWithIndexParam was null or undefined when calling createConfig.'
+        'Parameter `querySuggestionsIndexWithIndexParam` is required when calling `createConfig`.'
       );
     }
 
@@ -145,9 +142,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling deleteConfig.'
+        'Parameter `indexName` is required when calling `deleteConfig`.'
       );
     }
 
@@ -200,9 +197,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getConfig.'
+        'Parameter `indexName` is required when calling `getConfig`.'
       );
     }
 
@@ -233,9 +230,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getConfigStatus.'
+        'Parameter `indexName` is required when calling `getConfigStatus`.'
       );
     }
 
@@ -266,9 +263,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getLogFile.'
+        'Parameter `indexName` is required when calling `getLogFile`.'
       );
     }
 
@@ -303,27 +300,21 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling updateConfig.'
+        'Parameter `indexName` is required when calling `updateConfig`.'
       );
     }
 
-    if (
-      querySuggestionsIndexParam === null ||
-      querySuggestionsIndexParam === undefined
-    ) {
+    if (!querySuggestionsIndexParam) {
       throw new Error(
-        'Required parameter querySuggestionsIndexParam was null or undefined when calling updateConfig.'
+        'Parameter `querySuggestionsIndexParam` is required when calling `updateConfig`.'
       );
     }
 
-    if (
-      querySuggestionsIndexParam.sourceIndices === null ||
-      querySuggestionsIndexParam.sourceIndices === undefined
-    ) {
+    if (!querySuggestionsIndexParam.sourceIndices) {
       throw new Error(
-        'Required parameter querySuggestionsIndexParam.sourceIndices was null or undefined when calling updateConfig.'
+        'Parameter `querySuggestionsIndexParam.sourceIndices` is required when calling `updateConfig`.'
       );
     }
 

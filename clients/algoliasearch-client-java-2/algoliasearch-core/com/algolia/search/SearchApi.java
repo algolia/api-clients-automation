@@ -5,61 +5,9 @@ import com.algolia.ApiClient;
 import com.algolia.ApiException;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
-import com.algolia.model.AddApiKeyResponse;
-import com.algolia.model.ApiKey;
-import com.algolia.model.AssignUserIdObject;
-import com.algolia.model.BatchAssignUserIdsObject;
-import com.algolia.model.BatchDictionaryEntries;
-import com.algolia.model.BatchObject;
-import com.algolia.model.BatchResponse;
-import com.algolia.model.BatchWriteObject;
-import com.algolia.model.BrowseRequest;
-import com.algolia.model.BrowseResponse;
-import com.algolia.model.CreatedAtResponse;
-import com.algolia.model.DeleteApiKeyResponse;
-import com.algolia.model.DeleteSourceResponse;
-import com.algolia.model.DeletedAtResponse;
-import com.algolia.model.DictionarySettingsRequest;
-import com.algolia.model.GetDictionarySettingsResponse;
-import com.algolia.model.GetLogsResponse;
-import com.algolia.model.GetObjectsObject;
-import com.algolia.model.GetObjectsResponse;
-import com.algolia.model.GetTaskResponse;
-import com.algolia.model.GetTopUserIdsResponse;
-import com.algolia.model.IndexSettings;
-import com.algolia.model.KeyObject;
-import com.algolia.model.Languages;
-import com.algolia.model.ListApiKeysResponse;
-import com.algolia.model.ListClustersResponse;
-import com.algolia.model.ListIndicesResponse;
-import com.algolia.model.ListUserIdsResponse;
-import com.algolia.model.MultipleBatchResponse;
-import com.algolia.model.MultipleQueriesObject;
-import com.algolia.model.MultipleQueriesResponse;
-import com.algolia.model.OneOfstringbuiltInOperation;
-import com.algolia.model.OperationIndexObject;
-import com.algolia.model.RemoveUserIdResponse;
-import com.algolia.model.ReplaceSourceResponse;
-import com.algolia.model.Rule;
-import com.algolia.model.SaveObjectResponse;
-import com.algolia.model.SaveSynonymResponse;
-import com.algolia.model.SearchDictionaryEntries;
-import com.algolia.model.SearchForFacetValuesRequest;
-import com.algolia.model.SearchForFacetValuesResponse;
-import com.algolia.model.SearchParams;
-import com.algolia.model.SearchResponse;
-import com.algolia.model.SearchRulesParams;
-import com.algolia.model.SearchRulesResponse;
-import com.algolia.model.SearchSynonymsResponse;
-import com.algolia.model.SearchUserIdsObject;
-import com.algolia.model.SearchUserIdsResponse;
-import com.algolia.model.Source;
-import com.algolia.model.SynonymHit;
-import com.algolia.model.UpdateApiKeyResponse;
-import com.algolia.model.UpdatedAtResponse;
-import com.algolia.model.UpdatedAtWithObjectIdResponse;
-import com.algolia.model.UpdatedRuleResponse;
-import com.algolia.model.UserId;
+import com.algolia.model.*;
+import com.algolia.utils.*;
+import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -71,7 +19,11 @@ import okhttp3.Call;
 public class SearchApi extends ApiClient {
 
   public SearchApi(String appId, String apiKey) {
-    super(appId, apiKey);
+    super(appId, apiKey, new HttpRequester());
+  }
+
+  public SearchApi(String appId, String apiKey, Requester requester) {
+    super(appId, apiKey, requester);
   }
 
   /**
@@ -82,8 +34,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call addApiKeyCall(ApiKey apiKey, final ApiCallback _callback)
-    throws ApiException {
+  private Call addApiKeyCall(
+    ApiKey apiKey,
+    final ApiCallback<AddApiKeyResponse> _callback
+  ) throws ApiException {
     Object bodyObj = apiKey;
 
     // create path and map variables
@@ -105,10 +59,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call addApiKeyValidateBeforeCall(
     ApiKey apiKey,
-    final ApiCallback _callback
+    final ApiCallback<AddApiKeyResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'apiKey' is set
     if (apiKey == null) {
@@ -129,7 +82,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public AddApiKeyResponse addApiKey(ApiKey apiKey) throws ApiException {
-    Call call = addApiKeyValidateBeforeCall(apiKey, null);
+    Call req = addApiKeyValidateBeforeCall(apiKey, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.AddApiKey(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
     ApiResponse<AddApiKeyResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -167,7 +124,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     Object body,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     Object bodyObj = body;
 
@@ -198,12 +155,11 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call addOrUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
     Object body,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -245,12 +201,16 @@ public class SearchApi extends ApiClient {
     String objectID,
     Object body
   ) throws ApiException {
-    Call call = addOrUpdateObjectValidateBeforeCall(
+    Call req = addOrUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
       body,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.AddOrUpdateObject(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
       .getType();
     ApiResponse<UpdatedAtWithObjectIdResponse> res =
@@ -295,8 +255,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call appendSourceCall(Source source, final ApiCallback _callback)
-    throws ApiException {
+  private Call appendSourceCall(
+    Source source,
+    final ApiCallback<CreatedAtResponse> _callback
+  ) throws ApiException {
     Object bodyObj = source;
 
     // create path and map variables
@@ -318,10 +280,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call appendSourceValidateBeforeCall(
     Source source,
-    final ApiCallback _callback
+    final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'source' is set
     if (source == null) {
@@ -342,7 +303,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public CreatedAtResponse appendSource(Source source) throws ApiException {
-    Call call = appendSourceValidateBeforeCall(source, null);
+    Call req = appendSourceValidateBeforeCall(source, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.AppendSource(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -370,17 +335,17 @@ public class SearchApi extends ApiClient {
    * Build call for assignUserId
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param assignUserIdObject (required)
+   * @param assignUserIdParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call assignUserIdCall(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject,
-    final ApiCallback _callback
+    AssignUserIdParams assignUserIdParams,
+    final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
-    Object bodyObj = assignUserIdObject;
+    Object bodyObj = assignUserIdParams;
 
     // create path and map variables
     String path = "/1/clusters/mapping";
@@ -407,11 +372,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call assignUserIdValidateBeforeCall(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject,
-    final ApiCallback _callback
+    AssignUserIdParams assignUserIdParams,
+    final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'xAlgoliaUserID' is set
     if (xAlgoliaUserID == null) {
@@ -420,14 +384,14 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'assignUserIdObject' is set
-    if (assignUserIdObject == null) {
+    // verify the required parameter 'assignUserIdParams' is set
+    if (assignUserIdParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'assignUserIdObject' when calling assignUserId(Async)"
+        "Missing the required parameter 'assignUserIdParams' when calling assignUserId(Async)"
       );
     }
 
-    return assignUserIdCall(xAlgoliaUserID, assignUserIdObject, _callback);
+    return assignUserIdCall(xAlgoliaUserID, assignUserIdParams, _callback);
   }
 
   /**
@@ -437,20 +401,24 @@ public class SearchApi extends ApiClient {
    * is directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param assignUserIdObject (required)
+   * @param assignUserIdParams (required)
    * @return CreatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public CreatedAtResponse assignUserId(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject
+    AssignUserIdParams assignUserIdParams
   ) throws ApiException {
-    Call call = assignUserIdValidateBeforeCall(
+    Call req = assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
-      assignUserIdObject,
+      assignUserIdParams,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.AssignUserId(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -463,19 +431,19 @@ public class SearchApi extends ApiClient {
    * userID is directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param assignUserIdObject (required)
+   * @param assignUserIdParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call assignUserIdAsync(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject,
+    AssignUserIdParams assignUserIdParams,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     Call call = assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
-      assignUserIdObject,
+      assignUserIdParams,
       _callback
     );
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -487,17 +455,17 @@ public class SearchApi extends ApiClient {
    * Build call for batch
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param batchWriteObject (required)
+   * @param batchWriteParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call batchCall(
     String indexName,
-    BatchWriteObject batchWriteObject,
-    final ApiCallback _callback
+    BatchWriteParams batchWriteParams,
+    final ApiCallback<BatchResponse> _callback
   ) throws ApiException {
-    Object bodyObj = batchWriteObject;
+    Object bodyObj = batchWriteParams;
 
     // create path and map variables
     String path =
@@ -522,11 +490,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call batchValidateBeforeCall(
     String indexName,
-    BatchWriteObject batchWriteObject,
-    final ApiCallback _callback
+    BatchWriteParams batchWriteParams,
+    final ApiCallback<BatchResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -535,30 +502,34 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'batchWriteObject' is set
-    if (batchWriteObject == null) {
+    // verify the required parameter 'batchWriteParams' is set
+    if (batchWriteParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchWriteObject' when calling batch(Async)"
+        "Missing the required parameter 'batchWriteParams' when calling batch(Async)"
       );
     }
 
-    return batchCall(indexName, batchWriteObject, _callback);
+    return batchCall(indexName, batchWriteParams, _callback);
   }
 
   /**
    * Performs multiple write operations in a single API call.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param batchWriteObject (required)
+   * @param batchWriteParams (required)
    * @return BatchResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public BatchResponse batch(
     String indexName,
-    BatchWriteObject batchWriteObject
+    BatchWriteParams batchWriteParams
   ) throws ApiException {
-    Call call = batchValidateBeforeCall(indexName, batchWriteObject, null);
+    Call req = batchValidateBeforeCall(indexName, batchWriteParams, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.Batch(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<BatchResponse>() {}.getType();
     ApiResponse<BatchResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -568,17 +539,17 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Performs multiple write operations in a single API call.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param batchWriteObject (required)
+   * @param batchWriteParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call batchAsync(
     String indexName,
-    BatchWriteObject batchWriteObject,
+    BatchWriteParams batchWriteParams,
     final ApiCallback<BatchResponse> _callback
   ) throws ApiException {
-    Call call = batchValidateBeforeCall(indexName, batchWriteObject, _callback);
+    Call call = batchValidateBeforeCall(indexName, batchWriteParams, _callback);
     Type returnType = new TypeToken<BatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -588,17 +559,17 @@ public class SearchApi extends ApiClient {
    * Build call for batchAssignUserIds
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param batchAssignUserIdsObject (required)
+   * @param batchAssignUserIdsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call batchAssignUserIdsCall(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject,
-    final ApiCallback _callback
+    BatchAssignUserIdsParams batchAssignUserIdsParams,
+    final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
-    Object bodyObj = batchAssignUserIdsObject;
+    Object bodyObj = batchAssignUserIdsParams;
 
     // create path and map variables
     String path = "/1/clusters/mapping/batch";
@@ -625,11 +596,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call batchAssignUserIdsValidateBeforeCall(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject,
-    final ApiCallback _callback
+    BatchAssignUserIdsParams batchAssignUserIdsParams,
+    final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'xAlgoliaUserID' is set
     if (xAlgoliaUserID == null) {
@@ -638,17 +608,17 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'batchAssignUserIdsObject' is set
-    if (batchAssignUserIdsObject == null) {
+    // verify the required parameter 'batchAssignUserIdsParams' is set
+    if (batchAssignUserIdsParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchAssignUserIdsObject' when calling" +
+        "Missing the required parameter 'batchAssignUserIdsParams' when calling" +
         " batchAssignUserIds(Async)"
       );
     }
 
     return batchAssignUserIdsCall(
       xAlgoliaUserID,
-      batchAssignUserIdsObject,
+      batchAssignUserIdsParams,
       _callback
     );
   }
@@ -659,20 +629,24 @@ public class SearchApi extends ApiClient {
    * usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param batchAssignUserIdsObject (required)
+   * @param batchAssignUserIdsParams (required)
    * @return CreatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public CreatedAtResponse batchAssignUserIds(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject
+    BatchAssignUserIdsParams batchAssignUserIdsParams
   ) throws ApiException {
-    Call call = batchAssignUserIdsValidateBeforeCall(
+    Call req = batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
-      batchAssignUserIdsObject,
+      batchAssignUserIdsParams,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.BatchAssignUserIds(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -684,19 +658,19 @@ public class SearchApi extends ApiClient {
    * are directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param batchAssignUserIdsObject (required)
+   * @param batchAssignUserIdsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call batchAssignUserIdsAsync(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject,
+    BatchAssignUserIdsParams batchAssignUserIdsParams,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     Call call = batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
-      batchAssignUserIdsObject,
+      batchAssignUserIdsParams,
       _callback
     );
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -716,7 +690,7 @@ public class SearchApi extends ApiClient {
   private Call batchDictionaryEntriesCall(
     String dictionaryName,
     BatchDictionaryEntries batchDictionaryEntries,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = batchDictionaryEntries;
 
@@ -743,11 +717,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call batchDictionaryEntriesValidateBeforeCall(
     String dictionaryName,
     BatchDictionaryEntries batchDictionaryEntries,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'dictionaryName' is set
     if (dictionaryName == null) {
@@ -785,11 +758,17 @@ public class SearchApi extends ApiClient {
     String dictionaryName,
     BatchDictionaryEntries batchDictionaryEntries
   ) throws ApiException {
-    Call call = batchDictionaryEntriesValidateBeforeCall(
+    Call req = batchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       batchDictionaryEntries,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.BatchDictionaryEntries(
+        ((CallEcho) req).request()
+      );
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -837,7 +816,7 @@ public class SearchApi extends ApiClient {
     List<Rule> rule,
     Boolean forwardToReplicas,
     Boolean clearExistingRules,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = rule;
 
@@ -876,13 +855,12 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call batchRulesValidateBeforeCall(
     String indexName,
     List<Rule> rule,
     Boolean forwardToReplicas,
     Boolean clearExistingRules,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -926,13 +904,17 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean clearExistingRules
   ) throws ApiException {
-    Call call = batchRulesValidateBeforeCall(
+    Call req = batchRulesValidateBeforeCall(
       indexName,
       rule,
       forwardToReplicas,
       clearExistingRules,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.BatchRules(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -982,7 +964,7 @@ public class SearchApi extends ApiClient {
   private Call browseCall(
     String indexName,
     BrowseRequest browseRequest,
-    final ApiCallback _callback
+    final ApiCallback<BrowseResponse> _callback
   ) throws ApiException {
     Object bodyObj = browseRequest;
 
@@ -1009,11 +991,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call browseValidateBeforeCall(
     String indexName,
     BrowseRequest browseRequest,
-    final ApiCallback _callback
+    final ApiCallback<BrowseResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1041,7 +1022,11 @@ public class SearchApi extends ApiClient {
    */
   public BrowseResponse browse(String indexName, BrowseRequest browseRequest)
     throws ApiException {
-    Call call = browseValidateBeforeCall(indexName, browseRequest, null);
+    Call req = browseValidateBeforeCall(indexName, browseRequest, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.Browse(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<BrowseResponse>() {}.getType();
     ApiResponse<BrowseResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1086,7 +1071,7 @@ public class SearchApi extends ApiClient {
   private Call clearAllSynonymsCall(
     String indexName,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -1119,11 +1104,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call clearAllSynonymsValidateBeforeCall(
     String indexName,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1149,11 +1133,15 @@ public class SearchApi extends ApiClient {
     String indexName,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = clearAllSynonymsValidateBeforeCall(
+    Call req = clearAllSynonymsValidateBeforeCall(
       indexName,
       forwardToReplicas,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ClearAllSynonyms(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1192,8 +1180,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call clearObjectsCall(String indexName, final ApiCallback _callback)
-    throws ApiException {
+  private Call clearObjectsCall(
+    String indexName,
+    final ApiCallback<UpdatedAtResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1219,10 +1209,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call clearObjectsValidateBeforeCall(
     String indexName,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1243,7 +1232,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public UpdatedAtResponse clearObjects(String indexName) throws ApiException {
-    Call call = clearObjectsValidateBeforeCall(indexName, null);
+    Call req = clearObjectsValidateBeforeCall(indexName, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ClearObjects(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1281,7 +1274,7 @@ public class SearchApi extends ApiClient {
   private Call clearRulesCall(
     String indexName,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -1314,11 +1307,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call clearRulesValidateBeforeCall(
     String indexName,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1344,11 +1336,11 @@ public class SearchApi extends ApiClient {
     String indexName,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = clearRulesValidateBeforeCall(
-      indexName,
-      forwardToReplicas,
-      null
-    );
+    Call req = clearRulesValidateBeforeCall(indexName, forwardToReplicas, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ClearRules(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1387,8 +1379,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteApiKeyCall(String key, final ApiCallback _callback)
-    throws ApiException {
+  private Call deleteApiKeyCall(
+    String key,
+    final ApiCallback<DeleteApiKeyResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1414,10 +1408,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call deleteApiKeyValidateBeforeCall(
     String key,
-    final ApiCallback _callback
+    final ApiCallback<DeleteApiKeyResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'key' is set
     if (key == null) {
@@ -1438,7 +1431,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public DeleteApiKeyResponse deleteApiKey(String key) throws ApiException {
-    Call call = deleteApiKeyValidateBeforeCall(key, null);
+    Call req = deleteApiKeyValidateBeforeCall(key, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteApiKey(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<DeleteApiKeyResponse>() {}.getType();
     ApiResponse<DeleteApiKeyResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1474,7 +1471,7 @@ public class SearchApi extends ApiClient {
   private Call deleteByCall(
     String indexName,
     SearchParams searchParams,
-    final ApiCallback _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = searchParams;
 
@@ -1501,11 +1498,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call deleteByValidateBeforeCall(
     String indexName,
     SearchParams searchParams,
-    final ApiCallback _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1539,7 +1535,11 @@ public class SearchApi extends ApiClient {
     String indexName,
     SearchParams searchParams
   ) throws ApiException {
-    Call call = deleteByValidateBeforeCall(indexName, searchParams, null);
+    Call req = deleteByValidateBeforeCall(indexName, searchParams, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteBy(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1575,8 +1575,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteIndexCall(String indexName, final ApiCallback _callback)
-    throws ApiException {
+  private Call deleteIndexCall(
+    String indexName,
+    final ApiCallback<DeletedAtResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1602,10 +1604,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call deleteIndexValidateBeforeCall(
     String indexName,
-    final ApiCallback _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1626,7 +1627,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public DeletedAtResponse deleteIndex(String indexName) throws ApiException {
-    Call call = deleteIndexValidateBeforeCall(indexName, null);
+    Call req = deleteIndexValidateBeforeCall(indexName, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteIndex(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1662,7 +1667,7 @@ public class SearchApi extends ApiClient {
   private Call deleteObjectCall(
     String indexName,
     String objectID,
-    final ApiCallback _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -1693,11 +1698,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call deleteObjectValidateBeforeCall(
     String indexName,
     String objectID,
-    final ApiCallback _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1727,7 +1731,11 @@ public class SearchApi extends ApiClient {
    */
   public DeletedAtResponse deleteObject(String indexName, String objectID)
     throws ApiException {
-    Call call = deleteObjectValidateBeforeCall(indexName, objectID, null);
+    Call req = deleteObjectValidateBeforeCall(indexName, objectID, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteObject(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1768,7 +1776,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -1805,12 +1813,11 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call deleteRuleValidateBeforeCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -1845,12 +1852,16 @@ public class SearchApi extends ApiClient {
     String objectID,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = deleteRuleValidateBeforeCall(
+    Call req = deleteRuleValidateBeforeCall(
       indexName,
       objectID,
       forwardToReplicas,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteRule(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1892,8 +1903,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call deleteSourceCall(String source, final ApiCallback _callback)
-    throws ApiException {
+  private Call deleteSourceCall(
+    String source,
+    final ApiCallback<DeleteSourceResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1919,10 +1932,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call deleteSourceValidateBeforeCall(
     String source,
-    final ApiCallback _callback
+    final ApiCallback<DeleteSourceResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'source' is set
     if (source == null) {
@@ -1943,7 +1955,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public DeleteSourceResponse deleteSource(String source) throws ApiException {
-    Call call = deleteSourceValidateBeforeCall(source, null);
+    Call req = deleteSourceValidateBeforeCall(source, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteSource(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<DeleteSourceResponse>() {}.getType();
     ApiResponse<DeleteSourceResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -1982,7 +1998,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -2019,12 +2035,11 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call deleteSynonymValidateBeforeCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<DeletedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -2059,12 +2074,16 @@ public class SearchApi extends ApiClient {
     String objectID,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = deleteSynonymValidateBeforeCall(
+    Call req = deleteSynonymValidateBeforeCall(
       indexName,
       objectID,
       forwardToReplicas,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteSynonym(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     ApiResponse<DeletedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -2106,7 +2125,7 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getApiKeyCall(String key, final ApiCallback _callback)
+  private Call getApiKeyCall(String key, final ApiCallback<Key> _callback)
     throws ApiException {
     Object bodyObj = null;
 
@@ -2133,10 +2152,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getApiKeyValidateBeforeCall(
     String key,
-    final ApiCallback _callback
+    final ApiCallback<Key> _callback
   ) throws ApiException {
     // verify the required parameter 'key' is set
     if (key == null) {
@@ -2152,14 +2170,18 @@ public class SearchApi extends ApiClient {
    * Get the permissions of an API key.
    *
    * @param key API Key string. (required)
-   * @return KeyObject
+   * @return Key
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public KeyObject getApiKey(String key) throws ApiException {
-    Call call = getApiKeyValidateBeforeCall(key, null);
-    Type returnType = new TypeToken<KeyObject>() {}.getType();
-    ApiResponse<KeyObject> res = this.execute(call, returnType);
+  public Key getApiKey(String key) throws ApiException {
+    Call req = getApiKeyValidateBeforeCall(key, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetApiKey(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<Key>() {}.getType();
+    ApiResponse<Key> res = this.execute(call, returnType);
     return res.getData();
   }
 
@@ -2171,12 +2193,10 @@ public class SearchApi extends ApiClient {
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
-  public Call getApiKeyAsync(
-    String key,
-    final ApiCallback<KeyObject> _callback
-  ) throws ApiException {
+  public Call getApiKeyAsync(String key, final ApiCallback<Key> _callback)
+    throws ApiException {
     Call call = getApiKeyValidateBeforeCall(key, _callback);
-    Type returnType = new TypeToken<KeyObject>() {}.getType();
+    Type returnType = new TypeToken<Key>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
   }
@@ -2188,8 +2208,9 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getDictionaryLanguagesCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call getDictionaryLanguagesCall(
+    final ApiCallback<Map<String, Languages>> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2211,9 +2232,8 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getDictionaryLanguagesValidateBeforeCall(
-    final ApiCallback _callback
+    final ApiCallback<Map<String, Languages>> _callback
   ) throws ApiException {
     return getDictionaryLanguagesCall(_callback);
   }
@@ -2226,7 +2246,13 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public Map<String, Languages> getDictionaryLanguages() throws ApiException {
-    Call call = getDictionaryLanguagesValidateBeforeCall(null);
+    Call req = getDictionaryLanguagesValidateBeforeCall(null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetDictionaryLanguages(
+        ((CallEcho) req).request()
+      );
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<Map<String, Languages>>() {}.getType();
     ApiResponse<Map<String, Languages>> res = this.execute(call, returnType);
     return res.getData();
@@ -2255,8 +2281,9 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getDictionarySettingsCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call getDictionarySettingsCall(
+    final ApiCallback<GetDictionarySettingsResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2278,9 +2305,8 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getDictionarySettingsValidateBeforeCall(
-    final ApiCallback _callback
+    final ApiCallback<GetDictionarySettingsResponse> _callback
   ) throws ApiException {
     return getDictionarySettingsCall(_callback);
   }
@@ -2294,7 +2320,11 @@ public class SearchApi extends ApiClient {
    */
   public GetDictionarySettingsResponse getDictionarySettings()
     throws ApiException {
-    Call call = getDictionarySettingsValidateBeforeCall(null);
+    Call req = getDictionarySettingsValidateBeforeCall(null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetDictionarySettings(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<GetDictionarySettingsResponse>() {}
       .getType();
     ApiResponse<GetDictionarySettingsResponse> res =
@@ -2339,7 +2369,7 @@ public class SearchApi extends ApiClient {
     Integer length,
     String indexName,
     String type,
-    final ApiCallback _callback
+    final ApiCallback<GetLogsResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -2378,13 +2408,12 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getLogsValidateBeforeCall(
     Integer offset,
     Integer length,
     String indexName,
     String type,
-    final ApiCallback _callback
+    final ApiCallback<GetLogsResponse> _callback
   ) throws ApiException {
     return getLogsCall(offset, length, indexName, type, _callback);
   }
@@ -2410,13 +2439,11 @@ public class SearchApi extends ApiClient {
     String indexName,
     String type
   ) throws ApiException {
-    Call call = getLogsValidateBeforeCall(
-      offset,
-      length,
-      indexName,
-      type,
-      null
-    );
+    Call req = getLogsValidateBeforeCall(offset, length, indexName, type, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetLogs(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<GetLogsResponse>() {}.getType();
     ApiResponse<GetLogsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -2471,7 +2498,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     List<String> attributesToRetrieve,
-    final ApiCallback _callback
+    final ApiCallback<Map<String, String>> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -2508,12 +2535,11 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getObjectValidateBeforeCall(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve,
-    final ApiCallback _callback
+    final ApiCallback<Map<String, String>> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -2548,12 +2574,16 @@ public class SearchApi extends ApiClient {
     String objectID,
     List<String> attributesToRetrieve
   ) throws ApiException {
-    Call call = getObjectValidateBeforeCall(
+    Call req = getObjectValidateBeforeCall(
       indexName,
       objectID,
       attributesToRetrieve,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetObject(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<Map<String, String>>() {}.getType();
     ApiResponse<Map<String, String>> res = this.execute(call, returnType);
     return res.getData();
@@ -2590,16 +2620,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getObjects
    *
-   * @param getObjectsObject (required)
+   * @param getObjectsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call getObjectsCall(
-    GetObjectsObject getObjectsObject,
-    final ApiCallback _callback
+    GetObjectsParams getObjectsParams,
+    final ApiCallback<GetObjectsResponse> _callback
   ) throws ApiException {
-    Object bodyObj = getObjectsObject;
+    Object bodyObj = getObjectsParams;
 
     // create path and map variables
     String path = "/1/indexes/*/objects";
@@ -2620,32 +2650,35 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getObjectsValidateBeforeCall(
-    GetObjectsObject getObjectsObject,
-    final ApiCallback _callback
+    GetObjectsParams getObjectsParams,
+    final ApiCallback<GetObjectsResponse> _callback
   ) throws ApiException {
-    // verify the required parameter 'getObjectsObject' is set
-    if (getObjectsObject == null) {
+    // verify the required parameter 'getObjectsParams' is set
+    if (getObjectsParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'getObjectsObject' when calling getObjects(Async)"
+        "Missing the required parameter 'getObjectsParams' when calling getObjects(Async)"
       );
     }
 
-    return getObjectsCall(getObjectsObject, _callback);
+    return getObjectsCall(getObjectsParams, _callback);
   }
 
   /**
    * Retrieve one or more objects, potentially from different indices, in a single API call.
    *
-   * @param getObjectsObject (required)
+   * @param getObjectsParams (required)
    * @return GetObjectsResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public GetObjectsResponse getObjects(GetObjectsObject getObjectsObject)
+  public GetObjectsResponse getObjects(GetObjectsParams getObjectsParams)
     throws ApiException {
-    Call call = getObjectsValidateBeforeCall(getObjectsObject, null);
+    Call req = getObjectsValidateBeforeCall(getObjectsParams, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetObjects(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
     ApiResponse<GetObjectsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -2655,16 +2688,16 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Retrieve one or more objects, potentially from different indices, in a single
    * API call.
    *
-   * @param getObjectsObject (required)
+   * @param getObjectsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call getObjectsAsync(
-    GetObjectsObject getObjectsObject,
+    GetObjectsParams getObjectsParams,
     final ApiCallback<GetObjectsResponse> _callback
   ) throws ApiException {
-    Call call = getObjectsValidateBeforeCall(getObjectsObject, _callback);
+    Call call = getObjectsValidateBeforeCall(getObjectsParams, _callback);
     Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -2682,7 +2715,7 @@ public class SearchApi extends ApiClient {
   private Call getRuleCall(
     String indexName,
     String objectID,
-    final ApiCallback _callback
+    final ApiCallback<Rule> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -2713,11 +2746,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getRuleValidateBeforeCall(
     String indexName,
     String objectID,
-    final ApiCallback _callback
+    final ApiCallback<Rule> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -2746,7 +2778,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public Rule getRule(String indexName, String objectID) throws ApiException {
-    Call call = getRuleValidateBeforeCall(indexName, objectID, null);
+    Call req = getRuleValidateBeforeCall(indexName, objectID, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetRule(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<Rule>() {}.getType();
     ApiResponse<Rule> res = this.execute(call, returnType);
     return res.getData();
@@ -2780,8 +2816,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getSettingsCall(String indexName, final ApiCallback _callback)
-    throws ApiException {
+  private Call getSettingsCall(
+    String indexName,
+    final ApiCallback<IndexSettings> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2807,10 +2845,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getSettingsValidateBeforeCall(
     String indexName,
-    final ApiCallback _callback
+    final ApiCallback<IndexSettings> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -2831,7 +2868,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public IndexSettings getSettings(String indexName) throws ApiException {
-    Call call = getSettingsValidateBeforeCall(indexName, null);
+    Call req = getSettingsValidateBeforeCall(indexName, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetSettings(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<IndexSettings>() {}.getType();
     ApiResponse<IndexSettings> res = this.execute(call, returnType);
     return res.getData();
@@ -2862,7 +2903,8 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getSourcesCall(final ApiCallback _callback) throws ApiException {
+  private Call getSourcesCall(final ApiCallback<List<Source>> _callback)
+    throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2884,9 +2926,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getSourcesValidateBeforeCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call getSourcesValidateBeforeCall(
+    final ApiCallback<List<Source>> _callback
+  ) throws ApiException {
     return getSourcesCall(_callback);
   }
 
@@ -2898,7 +2940,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public List<Source> getSources() throws ApiException {
-    Call call = getSourcesValidateBeforeCall(null);
+    Call req = getSourcesValidateBeforeCall(null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetSources(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<List<Source>>() {}.getType();
     ApiResponse<List<Source>> res = this.execute(call, returnType);
     return res.getData();
@@ -2931,7 +2977,7 @@ public class SearchApi extends ApiClient {
   private Call getSynonymCall(
     String indexName,
     String objectID,
-    final ApiCallback _callback
+    final ApiCallback<SynonymHit> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -2962,11 +3008,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getSynonymValidateBeforeCall(
     String indexName,
     String objectID,
-    final ApiCallback _callback
+    final ApiCallback<SynonymHit> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -2996,7 +3041,11 @@ public class SearchApi extends ApiClient {
    */
   public SynonymHit getSynonym(String indexName, String objectID)
     throws ApiException {
-    Call call = getSynonymValidateBeforeCall(indexName, objectID, null);
+    Call req = getSynonymValidateBeforeCall(indexName, objectID, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetSynonym(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SynonymHit>() {}.getType();
     ApiResponse<SynonymHit> res = this.execute(call, returnType);
     return res.getData();
@@ -3034,7 +3083,7 @@ public class SearchApi extends ApiClient {
   private Call getTaskCall(
     String indexName,
     Integer taskID,
-    final ApiCallback _callback
+    final ApiCallback<GetTaskResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -3065,11 +3114,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getTaskValidateBeforeCall(
     String indexName,
     Integer taskID,
-    final ApiCallback _callback
+    final ApiCallback<GetTaskResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -3099,7 +3147,11 @@ public class SearchApi extends ApiClient {
    */
   public GetTaskResponse getTask(String indexName, Integer taskID)
     throws ApiException {
-    Call call = getTaskValidateBeforeCall(indexName, taskID, null);
+    Call req = getTaskValidateBeforeCall(indexName, taskID, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetTask(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<GetTaskResponse>() {}.getType();
     ApiResponse<GetTaskResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3132,8 +3184,9 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getTopUserIdsCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call getTopUserIdsCall(
+    final ApiCallback<GetTopUserIdsResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3155,9 +3208,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call getTopUserIdsValidateBeforeCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call getTopUserIdsValidateBeforeCall(
+    final ApiCallback<GetTopUserIdsResponse> _callback
+  ) throws ApiException {
     return getTopUserIdsCall(_callback);
   }
 
@@ -3172,7 +3225,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public GetTopUserIdsResponse getTopUserIds() throws ApiException {
-    Call call = getTopUserIdsValidateBeforeCall(null);
+    Call req = getTopUserIdsValidateBeforeCall(null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetTopUserIds(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<GetTopUserIdsResponse>() {}.getType();
     ApiResponse<GetTopUserIdsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3205,8 +3262,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getUserIdCall(String userID, final ApiCallback _callback)
-    throws ApiException {
+  private Call getUserIdCall(
+    String userID,
+    final ApiCallback<UserId> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3232,10 +3291,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call getUserIdValidateBeforeCall(
     String userID,
-    final ApiCallback _callback
+    final ApiCallback<UserId> _callback
   ) throws ApiException {
     // verify the required parameter 'userID' is set
     if (userID == null) {
@@ -3259,7 +3317,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public UserId getUserId(String userID) throws ApiException {
-    Call call = getUserIdValidateBeforeCall(userID, null);
+    Call req = getUserIdValidateBeforeCall(userID, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetUserId(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UserId>() {}.getType();
     ApiResponse<UserId> res = this.execute(call, returnType);
     return res.getData();
@@ -3296,7 +3358,7 @@ public class SearchApi extends ApiClient {
    */
   private Call hasPendingMappingsCall(
     Boolean getClusters,
-    final ApiCallback _callback
+    final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -3323,10 +3385,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call hasPendingMappingsValidateBeforeCall(
     Boolean getClusters,
-    final ApiCallback _callback
+    final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     return hasPendingMappingsCall(getClusters, _callback);
   }
@@ -3345,7 +3406,11 @@ public class SearchApi extends ApiClient {
    */
   public CreatedAtResponse hasPendingMappings(Boolean getClusters)
     throws ApiException {
-    Call call = hasPendingMappingsValidateBeforeCall(getClusters, null);
+    Call req = hasPendingMappingsValidateBeforeCall(getClusters, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.HasPendingMappings(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3380,8 +3445,9 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call listApiKeysCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call listApiKeysCall(
+    final ApiCallback<ListApiKeysResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3403,9 +3469,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call listApiKeysValidateBeforeCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call listApiKeysValidateBeforeCall(
+    final ApiCallback<ListApiKeysResponse> _callback
+  ) throws ApiException {
     return listApiKeysCall(_callback);
   }
 
@@ -3417,7 +3483,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public ListApiKeysResponse listApiKeys() throws ApiException {
-    Call call = listApiKeysValidateBeforeCall(null);
+    Call req = listApiKeysValidateBeforeCall(null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ListApiKeys(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<ListApiKeysResponse>() {}.getType();
     ApiResponse<ListApiKeysResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3446,8 +3516,9 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call listClustersCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call listClustersCall(
+    final ApiCallback<ListClustersResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3469,9 +3540,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
-  private Call listClustersValidateBeforeCall(final ApiCallback _callback)
-    throws ApiException {
+  private Call listClustersValidateBeforeCall(
+    final ApiCallback<ListClustersResponse> _callback
+  ) throws ApiException {
     return listClustersCall(_callback);
   }
 
@@ -3484,7 +3555,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public ListClustersResponse listClusters() throws ApiException {
-    Call call = listClustersValidateBeforeCall(null);
+    Call req = listClustersValidateBeforeCall(null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ListClusters(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<ListClustersResponse>() {}.getType();
     ApiResponse<ListClustersResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3517,8 +3592,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call listIndicesCall(Integer page, final ApiCallback _callback)
-    throws ApiException {
+  private Call listIndicesCall(
+    Integer page,
+    final ApiCallback<ListIndicesResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3544,10 +3621,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call listIndicesValidateBeforeCall(
     Integer page,
-    final ApiCallback _callback
+    final ApiCallback<ListIndicesResponse> _callback
   ) throws ApiException {
     return listIndicesCall(page, _callback);
   }
@@ -3563,7 +3639,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public ListIndicesResponse listIndices(Integer page) throws ApiException {
-    Call call = listIndicesValidateBeforeCall(page, null);
+    Call req = listIndicesValidateBeforeCall(page, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ListIndices(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<ListIndicesResponse>() {}.getType();
     ApiResponse<ListIndicesResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3603,7 +3683,7 @@ public class SearchApi extends ApiClient {
   private Call listUserIdsCall(
     Integer page,
     Integer hitsPerPage,
-    final ApiCallback _callback
+    final ApiCallback<ListUserIdsResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -3634,11 +3714,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call listUserIdsValidateBeforeCall(
     Integer page,
     Integer hitsPerPage,
-    final ApiCallback _callback
+    final ApiCallback<ListUserIdsResponse> _callback
   ) throws ApiException {
     return listUserIdsCall(page, hitsPerPage, _callback);
   }
@@ -3659,7 +3738,11 @@ public class SearchApi extends ApiClient {
    */
   public ListUserIdsResponse listUserIds(Integer page, Integer hitsPerPage)
     throws ApiException {
-    Call call = listUserIdsValidateBeforeCall(page, hitsPerPage, null);
+    Call req = listUserIdsValidateBeforeCall(page, hitsPerPage, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ListUserIds(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<ListUserIdsResponse>() {}.getType();
     ApiResponse<ListUserIdsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3693,16 +3776,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for multipleBatch
    *
-   * @param batchObject (required)
+   * @param batchParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call multipleBatchCall(
-    BatchObject batchObject,
-    final ApiCallback _callback
+    BatchParams batchParams,
+    final ApiCallback<MultipleBatchResponse> _callback
   ) throws ApiException {
-    Object bodyObj = batchObject;
+    Object bodyObj = batchParams;
 
     // create path and map variables
     String path = "/1/indexes/*/batch";
@@ -3723,33 +3806,36 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call multipleBatchValidateBeforeCall(
-    BatchObject batchObject,
-    final ApiCallback _callback
+    BatchParams batchParams,
+    final ApiCallback<MultipleBatchResponse> _callback
   ) throws ApiException {
-    // verify the required parameter 'batchObject' is set
-    if (batchObject == null) {
+    // verify the required parameter 'batchParams' is set
+    if (batchParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchObject' when calling multipleBatch(Async)"
+        "Missing the required parameter 'batchParams' when calling multipleBatch(Async)"
       );
     }
 
-    return multipleBatchCall(batchObject, _callback);
+    return multipleBatchCall(batchParams, _callback);
   }
 
   /**
    * Perform multiple write operations, potentially targeting multiple indices, in a single API
    * call.
    *
-   * @param batchObject (required)
+   * @param batchParams (required)
    * @return MultipleBatchResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public MultipleBatchResponse multipleBatch(BatchObject batchObject)
+  public MultipleBatchResponse multipleBatch(BatchParams batchParams)
     throws ApiException {
-    Call call = multipleBatchValidateBeforeCall(batchObject, null);
+    Call req = multipleBatchValidateBeforeCall(batchParams, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.MultipleBatch(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
     ApiResponse<MultipleBatchResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3759,16 +3845,16 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Perform multiple write operations, potentially targeting multiple indices, in
    * a single API call.
    *
-   * @param batchObject (required)
+   * @param batchParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call multipleBatchAsync(
-    BatchObject batchObject,
+    BatchParams batchParams,
     final ApiCallback<MultipleBatchResponse> _callback
   ) throws ApiException {
-    Call call = multipleBatchValidateBeforeCall(batchObject, _callback);
+    Call call = multipleBatchValidateBeforeCall(batchParams, _callback);
     Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3777,16 +3863,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for multipleQueries
    *
-   * @param multipleQueriesObject (required)
+   * @param multipleQueriesParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call multipleQueriesCall(
-    MultipleQueriesObject multipleQueriesObject,
-    final ApiCallback _callback
+    MultipleQueriesParams multipleQueriesParams,
+    final ApiCallback<MultipleQueriesResponse> _callback
   ) throws ApiException {
-    Object bodyObj = multipleQueriesObject;
+    Object bodyObj = multipleQueriesParams;
 
     // create path and map variables
     String path = "/1/indexes/*/queries";
@@ -3807,34 +3893,37 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call multipleQueriesValidateBeforeCall(
-    MultipleQueriesObject multipleQueriesObject,
-    final ApiCallback _callback
+    MultipleQueriesParams multipleQueriesParams,
+    final ApiCallback<MultipleQueriesResponse> _callback
   ) throws ApiException {
-    // verify the required parameter 'multipleQueriesObject' is set
-    if (multipleQueriesObject == null) {
+    // verify the required parameter 'multipleQueriesParams' is set
+    if (multipleQueriesParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'multipleQueriesObject' when calling" +
+        "Missing the required parameter 'multipleQueriesParams' when calling" +
         " multipleQueries(Async)"
       );
     }
 
-    return multipleQueriesCall(multipleQueriesObject, _callback);
+    return multipleQueriesCall(multipleQueriesParams, _callback);
   }
 
   /**
    * Get search results for the given requests.
    *
-   * @param multipleQueriesObject (required)
+   * @param multipleQueriesParams (required)
    * @return MultipleQueriesResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public MultipleQueriesResponse multipleQueries(
-    MultipleQueriesObject multipleQueriesObject
+    MultipleQueriesParams multipleQueriesParams
   ) throws ApiException {
-    Call call = multipleQueriesValidateBeforeCall(multipleQueriesObject, null);
+    Call req = multipleQueriesValidateBeforeCall(multipleQueriesParams, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.MultipleQueries(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<MultipleQueriesResponse>() {}.getType();
     ApiResponse<MultipleQueriesResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3843,17 +3932,17 @@ public class SearchApi extends ApiClient {
   /**
    * (asynchronously) Get search results for the given requests.
    *
-   * @param multipleQueriesObject (required)
+   * @param multipleQueriesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call multipleQueriesAsync(
-    MultipleQueriesObject multipleQueriesObject,
+    MultipleQueriesParams multipleQueriesParams,
     final ApiCallback<MultipleQueriesResponse> _callback
   ) throws ApiException {
     Call call = multipleQueriesValidateBeforeCall(
-      multipleQueriesObject,
+      multipleQueriesParams,
       _callback
     );
     Type returnType = new TypeToken<MultipleQueriesResponse>() {}.getType();
@@ -3865,17 +3954,17 @@ public class SearchApi extends ApiClient {
    * Build call for operationIndex
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param operationIndexObject (required)
+   * @param operationIndexParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call operationIndexCall(
     String indexName,
-    OperationIndexObject operationIndexObject,
-    final ApiCallback _callback
+    OperationIndexParams operationIndexParams,
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Object bodyObj = operationIndexObject;
+    Object bodyObj = operationIndexParams;
 
     // create path and map variables
     String path =
@@ -3900,11 +3989,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call operationIndexValidateBeforeCall(
     String indexName,
-    OperationIndexObject operationIndexObject,
-    final ApiCallback _callback
+    OperationIndexParams operationIndexParams,
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -3913,35 +4001,39 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'operationIndexObject' is set
-    if (operationIndexObject == null) {
+    // verify the required parameter 'operationIndexParams' is set
+    if (operationIndexParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'operationIndexObject' when calling" +
+        "Missing the required parameter 'operationIndexParams' when calling" +
         " operationIndex(Async)"
       );
     }
 
-    return operationIndexCall(indexName, operationIndexObject, _callback);
+    return operationIndexCall(indexName, operationIndexParams, _callback);
   }
 
   /**
    * Peforms a copy or a move operation on a index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param operationIndexObject (required)
+   * @param operationIndexParams (required)
    * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public UpdatedAtResponse operationIndex(
     String indexName,
-    OperationIndexObject operationIndexObject
+    OperationIndexParams operationIndexParams
   ) throws ApiException {
-    Call call = operationIndexValidateBeforeCall(
+    Call req = operationIndexValidateBeforeCall(
       indexName,
-      operationIndexObject,
+      operationIndexParams,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.OperationIndex(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3951,19 +4043,19 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Peforms a copy or a move operation on a index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param operationIndexObject (required)
+   * @param operationIndexParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call operationIndexAsync(
     String indexName,
-    OperationIndexObject operationIndexObject,
+    OperationIndexParams operationIndexParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Call call = operationIndexValidateBeforeCall(
       indexName,
-      operationIndexObject,
+      operationIndexParams,
       _callback
     );
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -3988,7 +4080,7 @@ public class SearchApi extends ApiClient {
     String objectID,
     List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     Object bodyObj = oneOfstringbuiltInOperation;
 
@@ -4025,13 +4117,12 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call partialUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
     List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -4085,13 +4176,17 @@ public class SearchApi extends ApiClient {
     List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
-    Call call = partialUpdateObjectValidateBeforeCall(
+    Call req = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
       oneOfstringbuiltInOperation,
       createIfNotExists,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.PartialUpdateObject(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
       .getType();
     ApiResponse<UpdatedAtWithObjectIdResponse> res =
@@ -4142,8 +4237,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call removeUserIdCall(String userID, final ApiCallback _callback)
-    throws ApiException {
+  private Call removeUserIdCall(
+    String userID,
+    final ApiCallback<RemoveUserIdResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -4169,10 +4266,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call removeUserIdValidateBeforeCall(
     String userID,
-    final ApiCallback _callback
+    final ApiCallback<RemoveUserIdResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'userID' is set
     if (userID == null) {
@@ -4194,7 +4290,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public RemoveUserIdResponse removeUserId(String userID) throws ApiException {
-    Call call = removeUserIdValidateBeforeCall(userID, null);
+    Call req = removeUserIdValidateBeforeCall(userID, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.RemoveUserId(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<RemoveUserIdResponse>() {}.getType();
     ApiResponse<RemoveUserIdResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4229,7 +4329,7 @@ public class SearchApi extends ApiClient {
    */
   private Call replaceSourcesCall(
     List<Source> source,
-    final ApiCallback _callback
+    final ApiCallback<ReplaceSourceResponse> _callback
   ) throws ApiException {
     Object bodyObj = source;
 
@@ -4252,10 +4352,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call replaceSourcesValidateBeforeCall(
     List<Source> source,
-    final ApiCallback _callback
+    final ApiCallback<ReplaceSourceResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'source' is set
     if (source == null) {
@@ -4277,7 +4376,11 @@ public class SearchApi extends ApiClient {
    */
   public ReplaceSourceResponse replaceSources(List<Source> source)
     throws ApiException {
-    Call call = replaceSourcesValidateBeforeCall(source, null);
+    Call req = replaceSourcesValidateBeforeCall(source, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.ReplaceSources(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<ReplaceSourceResponse>() {}.getType();
     ApiResponse<ReplaceSourceResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4309,8 +4412,10 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call restoreApiKeyCall(String key, final ApiCallback _callback)
-    throws ApiException {
+  private Call restoreApiKeyCall(
+    String key,
+    final ApiCallback<AddApiKeyResponse> _callback
+  ) throws ApiException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -4336,10 +4441,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call restoreApiKeyValidateBeforeCall(
     String key,
-    final ApiCallback _callback
+    final ApiCallback<AddApiKeyResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'key' is set
     if (key == null) {
@@ -4360,7 +4464,11 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public AddApiKeyResponse restoreApiKey(String key) throws ApiException {
-    Call call = restoreApiKeyValidateBeforeCall(key, null);
+    Call req = restoreApiKeyValidateBeforeCall(key, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.RestoreApiKey(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
     ApiResponse<AddApiKeyResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4388,7 +4496,7 @@ public class SearchApi extends ApiClient {
    * Build call for saveObject
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param body The Algolia object. (required)
+   * @param body The Algolia record. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4396,7 +4504,7 @@ public class SearchApi extends ApiClient {
   private Call saveObjectCall(
     String indexName,
     Object body,
-    final ApiCallback _callback
+    final ApiCallback<SaveObjectResponse> _callback
   ) throws ApiException {
     Object bodyObj = body;
 
@@ -4423,11 +4531,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call saveObjectValidateBeforeCall(
     String indexName,
     Object body,
-    final ApiCallback _callback
+    final ApiCallback<SaveObjectResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -4450,14 +4557,18 @@ public class SearchApi extends ApiClient {
    * Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param body The Algolia object. (required)
+   * @param body The Algolia record. (required)
    * @return SaveObjectResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public SaveObjectResponse saveObject(String indexName, Object body)
     throws ApiException {
-    Call call = saveObjectValidateBeforeCall(indexName, body, null);
+    Call req = saveObjectValidateBeforeCall(indexName, body, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SaveObject(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
     ApiResponse<SaveObjectResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4467,7 +4578,7 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param body The Algolia object. (required)
+   * @param body The Algolia record. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4500,7 +4611,7 @@ public class SearchApi extends ApiClient {
     String objectID,
     Rule rule,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedRuleResponse> _callback
   ) throws ApiException {
     Object bodyObj = rule;
 
@@ -4537,13 +4648,12 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call saveRuleValidateBeforeCall(
     String indexName,
     String objectID,
     Rule rule,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedRuleResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -4593,13 +4703,17 @@ public class SearchApi extends ApiClient {
     Rule rule,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = saveRuleValidateBeforeCall(
+    Call req = saveRuleValidateBeforeCall(
       indexName,
       objectID,
       rule,
       forwardToReplicas,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SaveRule(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedRuleResponse>() {}.getType();
     ApiResponse<UpdatedRuleResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4653,7 +4767,7 @@ public class SearchApi extends ApiClient {
     String objectID,
     SynonymHit synonymHit,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<SaveSynonymResponse> _callback
   ) throws ApiException {
     Object bodyObj = synonymHit;
 
@@ -4690,13 +4804,12 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call saveSynonymValidateBeforeCall(
     String indexName,
     String objectID,
     SynonymHit synonymHit,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<SaveSynonymResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -4746,13 +4859,17 @@ public class SearchApi extends ApiClient {
     SynonymHit synonymHit,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = saveSynonymValidateBeforeCall(
+    Call req = saveSynonymValidateBeforeCall(
       indexName,
       objectID,
       synonymHit,
       forwardToReplicas,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SaveSynonym(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SaveSynonymResponse>() {}.getType();
     ApiResponse<SaveSynonymResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4808,7 +4925,7 @@ public class SearchApi extends ApiClient {
     List<SynonymHit> synonymHit,
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = synonymHit;
 
@@ -4847,13 +4964,12 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call saveSynonymsValidateBeforeCall(
     String indexName,
     List<SynonymHit> synonymHit,
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -4898,13 +5014,17 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms
   ) throws ApiException {
-    Call call = saveSynonymsValidateBeforeCall(
+    Call req = saveSynonymsValidateBeforeCall(
       indexName,
       synonymHit,
       forwardToReplicas,
       replaceExistingSynonyms,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SaveSynonyms(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4955,7 +5075,7 @@ public class SearchApi extends ApiClient {
   private Call searchCall(
     String indexName,
     SearchParams searchParams,
-    final ApiCallback _callback
+    final ApiCallback<SearchResponse> _callback
   ) throws ApiException {
     Object bodyObj = searchParams;
 
@@ -4982,11 +5102,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call searchValidateBeforeCall(
     String indexName,
     SearchParams searchParams,
-    final ApiCallback _callback
+    final ApiCallback<SearchResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -5016,7 +5135,11 @@ public class SearchApi extends ApiClient {
    */
   public SearchResponse search(String indexName, SearchParams searchParams)
     throws ApiException {
-    Call call = searchValidateBeforeCall(indexName, searchParams, null);
+    Call req = searchValidateBeforeCall(indexName, searchParams, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.Search(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SearchResponse>() {}.getType();
     ApiResponse<SearchResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5054,7 +5177,7 @@ public class SearchApi extends ApiClient {
   private Call searchDictionaryEntriesCall(
     String dictionaryName,
     SearchDictionaryEntries searchDictionaryEntries,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = searchDictionaryEntries;
 
@@ -5081,11 +5204,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call searchDictionaryEntriesValidateBeforeCall(
     String dictionaryName,
     SearchDictionaryEntries searchDictionaryEntries,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'dictionaryName' is set
     if (dictionaryName == null) {
@@ -5123,11 +5245,17 @@ public class SearchApi extends ApiClient {
     String dictionaryName,
     SearchDictionaryEntries searchDictionaryEntries
   ) throws ApiException {
-    Call call = searchDictionaryEntriesValidateBeforeCall(
+    Call req = searchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       searchDictionaryEntries,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SearchDictionaryEntries(
+        ((CallEcho) req).request()
+      );
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5171,7 +5299,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest,
-    final ApiCallback _callback
+    final ApiCallback<SearchForFacetValuesResponse> _callback
   ) throws ApiException {
     Object bodyObj = searchForFacetValuesRequest;
 
@@ -5202,12 +5330,11 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call searchForFacetValuesValidateBeforeCall(
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest,
-    final ApiCallback _callback
+    final ApiCallback<SearchForFacetValuesResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -5247,12 +5374,16 @@ public class SearchApi extends ApiClient {
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest
   ) throws ApiException {
-    Call call = searchForFacetValuesValidateBeforeCall(
+    Call req = searchForFacetValuesValidateBeforeCall(
       indexName,
       facetName,
       searchForFacetValuesRequest,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SearchForFacetValues(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SearchForFacetValuesResponse>() {}
       .getType();
     ApiResponse<SearchForFacetValuesResponse> res =
@@ -5301,7 +5432,7 @@ public class SearchApi extends ApiClient {
   private Call searchRulesCall(
     String indexName,
     SearchRulesParams searchRulesParams,
-    final ApiCallback _callback
+    final ApiCallback<SearchRulesResponse> _callback
   ) throws ApiException {
     Object bodyObj = searchRulesParams;
 
@@ -5328,11 +5459,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call searchRulesValidateBeforeCall(
     String indexName,
     SearchRulesParams searchRulesParams,
-    final ApiCallback _callback
+    final ApiCallback<SearchRulesResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -5364,11 +5494,15 @@ public class SearchApi extends ApiClient {
     String indexName,
     SearchRulesParams searchRulesParams
   ) throws ApiException {
-    Call call = searchRulesValidateBeforeCall(
+    Call req = searchRulesValidateBeforeCall(
       indexName,
       searchRulesParams,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SearchRules(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SearchRulesResponse>() {}.getType();
     ApiResponse<SearchRulesResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5418,7 +5552,7 @@ public class SearchApi extends ApiClient {
     String type,
     Integer page,
     Integer hitsPerPage,
-    final ApiCallback _callback
+    final ApiCallback<SearchSynonymsResponse> _callback
   ) throws ApiException {
     Object bodyObj = null;
 
@@ -5461,14 +5595,13 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call searchSynonymsValidateBeforeCall(
     String indexName,
     String query,
     String type,
     Integer page,
     Integer hitsPerPage,
-    final ApiCallback _callback
+    final ApiCallback<SearchSynonymsResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -5508,7 +5641,7 @@ public class SearchApi extends ApiClient {
     Integer page,
     Integer hitsPerPage
   ) throws ApiException {
-    Call call = searchSynonymsValidateBeforeCall(
+    Call req = searchSynonymsValidateBeforeCall(
       indexName,
       query,
       type,
@@ -5516,6 +5649,10 @@ public class SearchApi extends ApiClient {
       hitsPerPage,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SearchSynonyms(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SearchSynonymsResponse>() {}.getType();
     ApiResponse<SearchSynonymsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5559,16 +5696,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for searchUserIds
    *
-   * @param searchUserIdsObject (required)
+   * @param searchUserIdsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call searchUserIdsCall(
-    SearchUserIdsObject searchUserIdsObject,
-    final ApiCallback _callback
+    SearchUserIdsParams searchUserIdsParams,
+    final ApiCallback<SearchUserIdsResponse> _callback
   ) throws ApiException {
-    Object bodyObj = searchUserIdsObject;
+    Object bodyObj = searchUserIdsParams;
 
     // create path and map variables
     String path = "/1/clusters/mapping/search";
@@ -5589,19 +5726,18 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call searchUserIdsValidateBeforeCall(
-    SearchUserIdsObject searchUserIdsObject,
-    final ApiCallback _callback
+    SearchUserIdsParams searchUserIdsParams,
+    final ApiCallback<SearchUserIdsResponse> _callback
   ) throws ApiException {
-    // verify the required parameter 'searchUserIdsObject' is set
-    if (searchUserIdsObject == null) {
+    // verify the required parameter 'searchUserIdsParams' is set
+    if (searchUserIdsParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'searchUserIdsObject' when calling searchUserIds(Async)"
+        "Missing the required parameter 'searchUserIdsParams' when calling searchUserIds(Async)"
       );
     }
 
-    return searchUserIdsCall(searchUserIdsObject, _callback);
+    return searchUserIdsCall(searchUserIdsParams, _callback);
   }
 
   /**
@@ -5613,15 +5749,19 @@ public class SearchApi extends ApiClient {
    * outdated value until the next rebuild of the mapping, which takes place every 12h. Upon
    * success, the response is 200 OK and contains the following userIDs data.
    *
-   * @param searchUserIdsObject (required)
+   * @param searchUserIdsParams (required)
    * @return SearchUserIdsResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public SearchUserIdsResponse searchUserIds(
-    SearchUserIdsObject searchUserIdsObject
+    SearchUserIdsParams searchUserIdsParams
   ) throws ApiException {
-    Call call = searchUserIdsValidateBeforeCall(searchUserIdsObject, null);
+    Call req = searchUserIdsValidateBeforeCall(searchUserIdsParams, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SearchUserIds(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
     ApiResponse<SearchUserIdsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5636,16 +5776,16 @@ public class SearchApi extends ApiClient {
    * search will report an outdated value until the next rebuild of the mapping, which takes place
    * every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
    *
-   * @param searchUserIdsObject (required)
+   * @param searchUserIdsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call searchUserIdsAsync(
-    SearchUserIdsObject searchUserIdsObject,
+    SearchUserIdsParams searchUserIdsParams,
     final ApiCallback<SearchUserIdsResponse> _callback
   ) throws ApiException {
-    Call call = searchUserIdsValidateBeforeCall(searchUserIdsObject, _callback);
+    Call call = searchUserIdsValidateBeforeCall(searchUserIdsParams, _callback);
     Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -5661,7 +5801,7 @@ public class SearchApi extends ApiClient {
    */
   private Call setDictionarySettingsCall(
     DictionarySettingsRequest dictionarySettingsRequest,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = dictionarySettingsRequest;
 
@@ -5684,10 +5824,9 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call setDictionarySettingsValidateBeforeCall(
     DictionarySettingsRequest dictionarySettingsRequest,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'dictionarySettingsRequest' is set
     if (dictionarySettingsRequest == null) {
@@ -5711,10 +5850,14 @@ public class SearchApi extends ApiClient {
   public UpdatedAtResponse setDictionarySettings(
     DictionarySettingsRequest dictionarySettingsRequest
   ) throws ApiException {
-    Call call = setDictionarySettingsValidateBeforeCall(
+    Call req = setDictionarySettingsValidateBeforeCall(
       dictionarySettingsRequest,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SetDictionarySettings(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5756,7 +5899,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Object bodyObj = indexSettings;
 
@@ -5789,12 +5932,11 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call setSettingsValidateBeforeCall(
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas,
-    final ApiCallback _callback
+    final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
@@ -5835,12 +5977,16 @@ public class SearchApi extends ApiClient {
     IndexSettings indexSettings,
     Boolean forwardToReplicas
   ) throws ApiException {
-    Call call = setSettingsValidateBeforeCall(
+    Call req = setSettingsValidateBeforeCall(
       indexName,
       indexSettings,
       forwardToReplicas,
       null
     );
+    if (req instanceof CallEcho) {
+      return new EchoResponse.SetSettings(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     ApiResponse<UpdatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5888,7 +6034,7 @@ public class SearchApi extends ApiClient {
   private Call updateApiKeyCall(
     String key,
     ApiKey apiKey,
-    final ApiCallback _callback
+    final ApiCallback<UpdateApiKeyResponse> _callback
   ) throws ApiException {
     Object bodyObj = apiKey;
 
@@ -5915,11 +6061,10 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  @SuppressWarnings("rawtypes")
   private Call updateApiKeyValidateBeforeCall(
     String key,
     ApiKey apiKey,
-    final ApiCallback _callback
+    final ApiCallback<UpdateApiKeyResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'key' is set
     if (key == null) {
@@ -5949,7 +6094,11 @@ public class SearchApi extends ApiClient {
    */
   public UpdateApiKeyResponse updateApiKey(String key, ApiKey apiKey)
     throws ApiException {
-    Call call = updateApiKeyValidateBeforeCall(key, apiKey, null);
+    Call req = updateApiKeyValidateBeforeCall(key, apiKey, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.UpdateApiKey(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
     Type returnType = new TypeToken<UpdateApiKeyResponse>() {}.getType();
     ApiResponse<UpdateApiKeyResponse> res = this.execute(call, returnType);
     return res.getData();
