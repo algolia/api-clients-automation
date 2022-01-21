@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
+import openapitools from '../../../../openapitools.json';
 import { loadCTS } from './cts';
 import { loadRequestsTemplate } from './templates';
 import type { CTSBlock } from './types';
@@ -31,6 +32,11 @@ async function generateRequestsTests(
     import: packageNames[language][client],
     client: createClientName(client),
     blocks: cts,
+    hasRegionalHost:
+      openapitools['generator-cli'].generators[`${language}-${client}`]
+        .additionalProperties.hasRegionalHost === true
+        ? true
+        : undefined,
   });
   await fsp.writeFile(
     `output/${language}/tests/methods/requests/${client}.${extensionForLanguage[language]}`,
