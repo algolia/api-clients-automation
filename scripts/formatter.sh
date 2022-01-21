@@ -20,7 +20,7 @@ elif [[ $LANGUAGE == 'java' ]]; then
                                                      --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
-                                                     -jar /tmp/google-java-format-1.13.0-all-deps.jar -r \
+                                                     -jar /tmp/java-formatter.jar -r \
         && yarn prettier --write $FOLDER"
 else
     echo "Cannot format unknow language $LANGUAGE"
