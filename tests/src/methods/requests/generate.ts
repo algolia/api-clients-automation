@@ -12,6 +12,10 @@ import {
   extensionForLanguage,
 } from '../../utils';
 
+import { loadCTS } from './cts';
+import { loadRequestsTemplate } from './templates';
+import type { CTSBlock } from './types';
+
 async function createOutputDir(language: string): Promise<void> {
   await fsp.mkdir(`output/${language}/tests/methods/requests`, {
     recursive: true,
