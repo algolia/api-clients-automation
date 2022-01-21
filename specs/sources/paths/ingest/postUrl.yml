@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          title: URLJob
+          title: postURLJob
           type: object
           description: Object containing a URL job.
           additionalProperties: false
@@ -24,7 +24,7 @@ post:
                 - csv
             input:
               type: object
-              title: URLJobInput
+              title: postURLJobInput
               description: The input of the job.
               properties:
                 url:
