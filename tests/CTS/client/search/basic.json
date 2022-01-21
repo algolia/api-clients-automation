@@ -9,7 +9,7 @@
           "apiKey": "blah"
         },
         "expected": {
-          "error": "appId is missing!"
+          "error": "`appId` is missing."
         }
       }
     ]

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable require-await */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+// @ts-nocheck
 import { {{client}}, EchoRequester } from '{{{import}}}';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
@@ -26,20 +27,38 @@ describe('{{operationId}}', () => {
         let actual;
         {{#steps}}
             {{#expectedError}}
-                expect(async () => {
+                await expect(new Promise((resolve, reject) => {
                     {{> step}}
-                }).toThrowError("{{expectedError}}")
+                    if (actual instanceof Promise) {
+                        actual.then(resolve).catch(reject);
+                    } else {
+                        resolve();
+                    }
+                })).rejects.toThrow("{{{expectedError}}}")
             {{/expectedError}}
 
             {{^expectedError}}
                 {{#expectedNoError}}
-                    expect(async () => {
+                    await expect(new Promise((resolve, reject) => {
                         {{> step}}
-                    }).not.toThrowError();
+                        if (actual instanceof Promise) {
+                            actual.then(resolve).catch(reject);
+                        } else {
+                            resolve();
+                        }
+                    })).resolves.not.toThrow();
                 {{/expectedNoError}}
                 
                 {{^expectedNoError}}
                     {{> step}}
+
+                    if (actual instanceof Promise) {
+                        actual = await actual;
+                    }
+
+                    {{#expected}}
+                        {{> expected}}
+                    {{/expected}}
                 {{/expectedNoError}}
             {{/expectedError}}
         {{/steps}}

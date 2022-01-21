@@ -57,6 +57,12 @@ export class {{classname}} {
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
+    if (!appId) {
+      throw new Error("`appId` is missing.");
+    }
+    if (!apiKey) {
+      throw new Error("`apiKey` is missing.");
+    }
     {{#hasRegionalHost}}
     {{^fallbackToUS}}
     if (!region) {

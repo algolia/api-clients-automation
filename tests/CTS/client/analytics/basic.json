@@ -25,7 +25,7 @@
         "path": "getClickPositions",
         "parameters": [{}],
         "expected": {
-          "error": "Required parameter index was null or undefined when calling getAverageClickPosition."
+          "error": "Parameter `index` is required when calling `getClickPositions`."
         }
       }
     ]
