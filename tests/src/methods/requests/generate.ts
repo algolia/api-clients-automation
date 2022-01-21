@@ -3,9 +3,6 @@ import fsp from 'fs/promises';
 import Mustache from 'mustache';
 
 import openapitools from '../../../../openapitools.json';
-import { loadCTS } from './cts';
-import { loadRequestsTemplate } from './templates';
-import type { CTSBlock } from './types';
 import {
   createClientName,
   packageNames,
