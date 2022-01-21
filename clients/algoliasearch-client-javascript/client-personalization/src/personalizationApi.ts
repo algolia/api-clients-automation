@@ -47,11 +47,11 @@ export class PersonalizationApi {
     region: 'eu' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
-    this.setAuthentication({ appId, apiKey });
-
-    if (region !== 'eu' && region !== 'us') {
-      throw new Error('`region` must be either `eu` or `us`.');
+    if (!region) {
+      throw new Error('`region` is missing.');
     }
+
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(region),

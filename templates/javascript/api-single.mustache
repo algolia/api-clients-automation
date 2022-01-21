@@ -57,6 +57,14 @@ export class {{classname}} {
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
+    {{#hasRegionalHost}}
+    {{^fallbackToUS}}
+    if (!region) {
+      throw new Error("`region` is missing.");
+    }
+    {{/fallbackToUS}}
+    {{/hasRegionalHost}}
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -96,7 +104,7 @@ export class {{classname}} {
 
   {{^isSearchHost}}
     {{#hasRegionalHost}}
-    public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us' = 'us'): Host[] {
+    public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us'{{#fallbackToUS}} = 'us'{{/fallbackToUS}}): Host[] {
       return [{ url: `{{{host}}}.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
     }
     {{/hasRegionalHost}}

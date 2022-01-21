@@ -1,8 +1,6 @@
 import fsp from 'fs/promises';
 import Mustache from 'mustache';
 
-import openapitools from '../../../openapitools.json';
-
 import {
   walk,
   extensionForLanguage,
@@ -102,8 +100,6 @@ export async function generateTests(language: string, client: string) {
       import: packageNames[language][client],
       client: createClientName(client),
       blocks: modifyForMustache(testsBlocks),
-      ...openapitools['generator-cli'].generators[`${language}-${client}`]
-        .additionalProperties,
     },
     partialTemplates
   );

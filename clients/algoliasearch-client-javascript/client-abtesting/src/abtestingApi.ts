@@ -47,11 +47,11 @@ export class AbtestingApi {
     region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
-    this.setAuthentication({ appId, apiKey });
-
-    if (region !== 'de' && region !== 'us') {
-      throw new Error('`region` must be either `de` or `us`.');
+    if (!region) {
+      throw new Error('`region` is missing.');
     }
+
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(region),

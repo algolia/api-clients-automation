@@ -1,7 +1,6 @@
 import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
-import openapitools from '../../../../openapitools.json';
 
 import { loadCTS } from './cts';
 import { loadRequestsTemplate } from './templates';
@@ -32,8 +31,6 @@ async function generateRequestsTests(
     import: packageNames[language][client],
     client: createClientName(client),
     blocks: cts,
-    ...openapitools['generator-cli'].generators[`${language}-${client}`]
-      .additionalProperties,
   });
   await fsp.writeFile(
     `output/${language}/tests/methods/requests/${client}.${extensionForLanguage[language]}`,
