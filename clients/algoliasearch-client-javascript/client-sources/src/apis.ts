@@ -1,8 +1,6 @@
 import { SourcesApi } from './sourcesApi';
 
 export * from './sourcesApi';
-export * from '../utils/errors';
-export { EchoRequester } from '../utils/requester/EchoRequester';
-export { EchoResponse } from '../utils/types';
+export * from '@algolia/client-common';
 
 export const APIS = [SourcesApi];
