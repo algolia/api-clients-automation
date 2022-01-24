@@ -33,7 +33,7 @@ class CreatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var string[]
       */
     protected static $openAPITypes = [
-        'createdAt' => '\DateTime',
+        'createdAt' => 'string',
     ];
 
     /**
@@ -44,7 +44,7 @@ class CreatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'createdAt' => 'date-time',
+        'createdAt' => null,
     ];
 
     /**
@@ -184,7 +184,7 @@ class CreatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets createdAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -194,7 +194,7 @@ class CreatedAtResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets createdAt
      *
-     * @param \DateTime $createdAt date of creation (ISO-8601 format)
+     * @param string $createdAt date of creation (ISO-8601 format)
      *
      * @return self
      */

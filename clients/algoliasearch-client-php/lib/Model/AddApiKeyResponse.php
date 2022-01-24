@@ -32,7 +32,7 @@ class AddApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPITypes = [
         'key' => 'string',
-        'createdAt' => '\DateTime',
+        'createdAt' => 'string',
     ];
 
     /**
@@ -44,7 +44,7 @@ class AddApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPIFormats = [
         'key' => null,
-        'createdAt' => 'date-time',
+        'createdAt' => null,
     ];
 
     /**
@@ -215,7 +215,7 @@ class AddApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets createdAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -225,7 +225,7 @@ class AddApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets createdAt
      *
-     * @param \DateTime $createdAt date of creation (ISO-8601 format)
+     * @param string $createdAt date of creation (ISO-8601 format)
      *
      * @return self
      */

@@ -31,7 +31,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       * @var string[]
       */
     protected static $openAPITypes = [
-        'updatedAt' => '\DateTime',
+        'updatedAt' => 'string',
     ];
 
     /**
@@ -42,7 +42,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'updatedAt' => 'date-time',
+        'updatedAt' => null,
     ];
 
     /**
@@ -182,7 +182,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets updatedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -192,7 +192,7 @@ class ReplaceSourceResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param string $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */

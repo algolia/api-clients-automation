@@ -32,7 +32,7 @@ class UpdateApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
       */
     protected static $openAPITypes = [
         'key' => 'string',
-        'updatedAt' => '\DateTime',
+        'updatedAt' => 'string',
     ];
 
     /**
@@ -44,7 +44,7 @@ class UpdateApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
       */
     protected static $openAPIFormats = [
         'key' => null,
-        'updatedAt' => 'date-time',
+        'updatedAt' => null,
     ];
 
     /**
@@ -215,7 +215,7 @@ class UpdateApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets updatedAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -225,7 +225,7 @@ class UpdateApiKeyResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets updatedAt
      *
-     * @param \DateTime $updatedAt date of last update (ISO-8601 format)
+     * @param string $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */

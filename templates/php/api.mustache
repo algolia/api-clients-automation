@@ -2,17 +2,19 @@
 
 namespace {{apiPackage}};
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\MultipartStream;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Utils;
+use {{invokerPackage}}\Algolia;
 use {{invokerPackage}}\ApiException;
-use {{invokerPackage}}\Configuration;
+use {{invokerPackage}}\Configuration\Configuration;
 use {{invokerPackage}}\HeaderSelector;
 use {{invokerPackage}}\ObjectSerializer;
+use {{invokerPackage}}\RetryStrategy\ApiWrapper;
+use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
+use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 
 /**
  * {{classname}} Class Doc Comment
@@ -23,9 +25,9 @@ use {{invokerPackage}}\ObjectSerializer;
 {{#operations}}class {{classname}}
 {
     /**
-     * @var ClientInterface
+     * @var ApiWrapperInterface
      */
-    protected $client;
+    protected $api;
 
     /**
      * @var Configuration
@@ -38,40 +40,56 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $headerSelector;
 
     /**
-     * @var int Host index
-     */
-    protected $hostIndex;
-
-    /**
      * @param Configuration $config
+     * @param ApiWrapperInterface $apiWrapper
      */
-    public function __construct(Configuration $config = null) 
+    public function __construct(ApiWrapperInterface $apiWrapper, Configuration $config)
     {
-        $this->config = $config ?: new Configuration();
+        $this->config = $config;
 
-        $this->client = new Client();
+        $this->api = $apiWrapper;
         $this->headerSelector = new HeaderSelector();
-        $this->hostIndex = 0;
     }
 
     /**
-     * Set the host index
+     * Instantiate the client with basic credentials
      *
-     * @param int $hostIndex Host index (required)
+     * @param string $appId  Application ID
+     * @param string $apiKey Algolia API Key
      */
-    public function setHostIndex($hostIndex): void
+    public static function create($appId = null, $apiKey = null)
     {
-        $this->hostIndex = $hostIndex;
+        return static::createWithConfig(Configuration::create($appId, $apiKey));
     }
 
     /**
-     * Get the host index
+     * Instantiate the client with congiguration
      *
-     * @return int Host index
+     * @param Configuration $config Configuration
      */
-    public function getHostIndex()
+    public static function createWithConfig(Configuration $config)
     {
-        return $this->hostIndex;
+        $config = clone $config;
+
+        $cacheKey = sprintf('%s-clusterHosts-%s', __CLASS__, $config->getAppId());
+
+        if ($hosts = $config->getHosts()) {
+            // If a list of hosts was passed, we ignore the cache
+            $clusterHosts = ClusterHosts::create($hosts);
+        } elseif (false === ($clusterHosts = ClusterHosts::createFromCache($cacheKey))) {
+            // We'll try to restore the ClusterHost from cache, if we cannot
+            // we create a new instance and set the cache key
+            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
+                ->setCacheKey($cacheKey);
+        }
+
+        $apiWrapper = new ApiWrapper(
+            Algolia::getHttpClient(),
+            $config,
+            $clusterHosts
+        );
+
+        return new static($apiWrapper, $config);
     }
 
     /**
@@ -179,7 +197,7 @@ use {{invokerPackage}}\ObjectSerializer;
         $resourcePath = '{{{path}}}';
         $queryParams = [];
         $headerParams = [];
-        $httpBody = '';
+        $httpBody = [];
         {{#queryParams}}
         // query params
         {{#isExplode}}
@@ -240,17 +258,10 @@ use {{invokerPackage}}\ObjectSerializer;
         );
         {{#bodyParams}}
         if (isset(${{paramName}})) { 
-            $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization(${{paramName}}));
+            $httpBody = ${{paramName}};
         } 
         {{/bodyParams}}
         {{#authMethods}}
-        {{#isApiKey}}
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('{{keyParamName}}');
-        if ($apiKey !== null) {
-            {{#isKeyInHeader}}$headers['{{keyParamName}}'] = $apiKey;{{/isKeyInHeader}}{{#isKeyInQuery}}$queryParams['{{keyParamName}}'] = $apiKey;{{/isKeyInQuery}}
-        }
-        {{/isApiKey}}
         {{#isBasic}}
         {{#isBasicBasic}}
         // this endpoint requires HTTP basic authentication
@@ -293,208 +304,27 @@ use {{invokerPackage}}\ObjectSerializer;
 
         {{/servers.0}}
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        $request = new Request(
-            '{{httpMethod}}',
-            {{^servers.0}}$this->config->getHost(){{/servers.0}}{{#servers.0}}$operationHost{{/servers.0}} . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-        
-        $expectedResponse = null;
-        {{#responses.0}}
-        $expectedResponse = '{{responses.0.dataType}}';
-        {{/responses.0}}
-        {{#returnType}}list($response) = {{/returnType}}$this->sendRequest($request, $expectedResponse);
 
-        {{#returnType}}
-        return $response;
-        {{/returnType}}
+        return $this->sendRequest('{{httpMethod}}', $resourcePath, $query, $httpBody);
     }
     {{/operation}}
-    /**
-     * Create http client option
-     *
-     * @throws \RuntimeException on file opening failure
-     * @return array of http client options
-     */
-    protected function createHttpClientOption()
+
+    private function sendRequest($method, $resourcePath, $query, $httpBody)
     {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
+        if($method == 'GET') {
+            $request = $this->api->read(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : '')
+            );
+        } else {
+            $request = $this->api->write(
+                $method,
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $httpBody
+            );
         }
 
-        return $options;
-    }
-
-    /**
-     * Send the request and handle the response
-     *
-     * @throws \RuntimeException on file opening failure
-     * @return array 
-     */
-    protected function sendRequest($request, $expectedResponse)
-    {
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ($expectedResponse === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $expectedResponse, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 402:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 403:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('\Algolia\AlgoliaSearch\Model\ErrorBase'  === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Algolia\AlgoliaSearch\Model\ErrorBase', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-
-            }
-
-            $returnType = $expectedResponse;
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        $expectedResponse,
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Algolia\AlgoliaSearch\Model\ErrorBase',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $request;
     }
 }
 {{/operations}}

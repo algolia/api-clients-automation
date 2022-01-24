@@ -39,7 +39,7 @@ class KeyObject implements ModelInterface, ArrayAccess, \JsonSerializable
         'queryParameters' => 'string',
         'referers' => 'string[]',
         'validity' => 'int',
-        'createdAt' => '\DateTime',
+        'createdAt' => 'string',
     ];
 
     /**
@@ -58,7 +58,7 @@ class KeyObject implements ModelInterface, ArrayAccess, \JsonSerializable
         'queryParameters' => null,
         'referers' => null,
         'validity' => null,
-        'createdAt' => 'date-time',
+        'createdAt' => null,
     ];
 
     /**
@@ -474,7 +474,7 @@ class KeyObject implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets createdAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -484,7 +484,7 @@ class KeyObject implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets createdAt
      *
-     * @param \DateTime $createdAt date of creation (ISO-8601 format)
+     * @param string $createdAt date of creation (ISO-8601 format)
      *
      * @return self
      */

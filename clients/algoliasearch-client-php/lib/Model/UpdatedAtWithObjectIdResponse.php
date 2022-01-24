@@ -34,7 +34,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
       */
     protected static $openAPITypes = [
         'taskID' => 'int',
-        'updatedAt' => '\DateTime',
+        'updatedAt' => 'string',
         'objectID' => 'string',
     ];
 
@@ -47,7 +47,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
       */
     protected static $openAPIFormats = [
         'taskID' => null,
-        'updatedAt' => 'date-time',
+        'updatedAt' => null,
         'objectID' => null,
     ];
 
@@ -202,7 +202,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets taskID
      *
-     * @param int|null $taskID taskID of the indexing task to wait for
+     * @param int|null $taskID taskID of the task to wait for
      *
      * @return self
      */
@@ -216,7 +216,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets updatedAt
      *
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getUpdatedAt()
     {
@@ -226,7 +226,7 @@ class UpdatedAtWithObjectIdResponse implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets updatedAt
      *
-     * @param \DateTime|null $updatedAt date of last update (ISO-8601 format)
+     * @param string|null $updatedAt date of last update (ISO-8601 format)
      *
      * @return self
      */

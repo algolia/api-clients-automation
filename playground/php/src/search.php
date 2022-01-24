@@ -1,11 +1,10 @@
 <?php
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use Algolia\AlgoliaSearch\Api\SearchApi;
-use Algolia\AlgoliaSearch\Configuration;
 
-$config = new Configuration(getenv('ALGOLIA_APPLICATION_ID_1'), getenv('ALGOLIA_ADMIN_KEY_1'));
-$client = new SearchApi($config);
+$client = SearchApi::create(getenv('ALGOLIA_APPLICATION_ID'), getenv('ALGOLIA_ADMIN_KEY'));
+$indexName = getenv('SEARCH_INDEX');
 
-var_dump($client->listIndices());
+var_dump($client->search($indexName, ['query' => getenv('SEARCH_QUERY')]));

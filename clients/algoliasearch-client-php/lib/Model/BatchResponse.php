@@ -194,7 +194,7 @@ class BatchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets taskID
      *
-     * @param int|null $taskID taskID of the indexing task to wait for
+     * @param int|null $taskID taskID of the task to wait for
      *
      * @return self
      */
