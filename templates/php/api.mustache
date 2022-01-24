@@ -197,6 +197,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $resourcePath = '{{{path}}}';
         $queryParams = [];
         $headerParams = [];
+        $httpBody = [];
         {{#queryParams}}
         // query params
         {{#isExplode}}
@@ -256,6 +257,9 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             [{{#consumes}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}]
         );
         {{#bodyParams}}
+        if (isset(${{paramName}})) { 
+            $httpBody = ${{paramName}};
+        } 
         {{/bodyParams}}
         {{#authMethods}}
         {{#isBasic}}
@@ -301,11 +305,11 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         {{/servers.0}}
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
 
-        return $this->sendRequest('{{httpMethod}}', $resourcePath, $query, $searchParams);
+        return $this->sendRequest('{{httpMethod}}', $resourcePath, $query, $httpBody);
     }
     {{/operation}}
 
-    private function sendRequest($method, $resourcePath, $query, $searchParams)
+    private function sendRequest($method, $resourcePath, $query, $httpBody)
     {
         if($method == 'GET') {
             $request = $this->api->read(
@@ -316,7 +320,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             $request = $this->api->write(
                 $method,
                 $resourcePath . ($query ? "?{$query}" : ''),
-                $searchParams
+                $httpBody
             );
         }
 
