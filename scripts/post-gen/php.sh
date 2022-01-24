@@ -12,11 +12,13 @@ lint_client() {
     cd $CLIENT
     composer update
     composer dump-autoload
+    
     if [[ $CI ]]; then
-        PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix lib/ -v --using-cache=no --allow-risky=yes
+        PHP="php"
     else
-        PHP_CS_FIXER_IGNORE_ENV=1 php8 vendor/bin/php-cs-fixer fix lib/ -v --using-cache=no --allow-risky=yes
+        PHP="php8"
     fi
+    PHP_CS_FIXER_IGNORE_ENV=1 $PHP vendor/bin/php-cs-fixer fix lib/ -v --using-cache=no --allow-risky=yes
 }
 
 lint_client

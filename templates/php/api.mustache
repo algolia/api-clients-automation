@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Utils;
 use {{invokerPackage}}\Algolia;
 use {{invokerPackage}}\ApiException;
 use {{invokerPackage}}\Configuration\Configuration;
@@ -196,7 +197,6 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $resourcePath = '{{{path}}}';
         $queryParams = [];
         $headerParams = [];
-        $httpBody = '';
         {{#queryParams}}
         // query params
         {{#isExplode}}
@@ -256,9 +256,6 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             [{{#consumes}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}]
         );
         {{#bodyParams}}
-        if (isset(${{paramName}})) { 
-            $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization(${{paramName}}));
-        } 
         {{/bodyParams}}
         {{#authMethods}}
         {{#isBasic}}
@@ -304,11 +301,11 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         {{/servers.0}}
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
 
-        return $this->sendRequest('{{httpMethod}}', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('{{httpMethod}}', $resourcePath, $query, $searchParams);
     }
     {{/operation}}
 
-    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    private function sendRequest($method, $resourcePath, $query, $searchParams)
     {
         if($method == 'GET') {
             $request = $this->api->read(
@@ -319,7 +316,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             $request = $this->api->write(
                 $method,
                 $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
+                $searchParams
             );
         }
 
