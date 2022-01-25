@@ -1,4 +1,5 @@
 import fsp from 'fs/promises';
+
 import Mustache from 'mustache';
 
 import openapitools from '../../../openapitools.json';
@@ -9,14 +10,15 @@ import {
   createClientName,
   exists,
 } from '../utils';
-import { TestsBlock, Test } from './types';
 
-async function loadTests(client: string) {
-  const testBlocks: TestsBlock[] = [];
+import type { TestsBlock, Test, ModifiedStepForMustache } from './types';
+
+async function loadTests(client: string): Promise<TestsBlock[]> {
+  const testsBlocks: TestsBlock[] = [];
   const clientPath = `./CTS/client/${client}`;
 
   if (!(await exists(clientPath))) {
-    return;
+    return [];
   }
 
   for await (const file of walk(clientPath)) {
@@ -42,16 +44,18 @@ async function loadTests(client: string) {
       };
     });
 
-    testBlocks.push({
+    testsBlocks.push({
       operationId: fileName,
       tests,
     });
   }
 
-  return testBlocks;
+  return testsBlocks;
 }
 
-async function loadTemplates(language: string) {
+async function loadTemplates(
+  language: string
+): Promise<Record<string, string>> {
   const templates: Record<string, string> = {};
   const templatePath = `./CTS/client/templates/${language}`;
 
@@ -71,10 +75,14 @@ async function loadTemplates(language: string) {
   return templates;
 }
 
-export async function generateTests(language: string, client: string) {
+export async function generateTests(
+  language: string,
+  client: string
+): Promise<void> {
   const testsBlocks = await loadTests(client);
 
-  if (!testsBlocks) {
+  if (testsBlocks.length === 0) {
+    // eslint-disable-next-line no-console
     console.warn(
       `Skipping because tests dont't exist for CTS > generate:client for ${language}-${client}`
     );
@@ -88,6 +96,7 @@ export async function generateTests(language: string, client: string) {
   );
 
   if (!template) {
+    // eslint-disable-next-line no-console
     console.warn(
       `Skipping because template doesn't exist for CTS > generate:client for ${language}-${client}`
     );
@@ -114,35 +123,43 @@ export async function generateTests(language: string, client: string) {
   );
 }
 
-function modifyForMustache(blocks: TestsBlock[]) {
-  return blocks.map(({ tests, ...rest }) => ({
-    ...rest,
-    tests: tests.map(({ steps, ...rest }) => ({
-      ...rest,
+function serializeParameters(parameters: any): string {
+  const serialized = JSON.stringify(parameters);
+  return serialized.slice(1, serialized.length - 1); // remove array bracket surrounding the parameters
+}
+
+function modifyForMustache(
+  blocks: TestsBlock[]
+): Array<TestsBlock<ModifiedStepForMustache>> {
+  return blocks.map(({ tests, ...blockRest }) => ({
+    ...blockRest,
+    tests: tests.map(({ steps, ...testRest }) => ({
+      ...testRest,
       steps: steps.map((step) => {
-        const modified = {
-          ...step,
+        const base = {
           isCreateClient: step.type === 'createClient',
           isVariable: step.type === 'variable',
           isMethod: step.type === 'method',
         };
 
+        let modified: ModifiedStepForMustache;
         if (step.type === 'method') {
-          if (step.parameters) {
-            let serialized = JSON.stringify(step.parameters);
-            serialized = serialized.slice(1, serialized.length - 1);
-            // @ts-expect-error
-            modified.parameters = serialized;
-          }
+          modified = {
+            type: step.type,
+            object: step.object,
+            path: step.path,
+            parameters: step.parameters && serializeParameters(step.parameters),
+            ...base,
+          };
+        } else {
+          modified = { ...step, ...base };
         }
 
         if (step.expected?.error) {
-          // @ts-expect-error
           modified.expectedError = step.expected.error;
         }
 
         if (step.expected?.error === false) {
-          // @ts-expect-error
           modified.expectedNoError = true;
         }
 

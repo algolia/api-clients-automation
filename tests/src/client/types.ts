@@ -1,12 +1,24 @@
-export type Test = {
+export type Test<TStep = Step> = {
   testName: string;
   autoCreateClient?: boolean; // `true` by default
-  steps: Step[];
+  steps: TStep[];
 };
 
-type Step = CreateClientStep | VariableStep | MethodStep;
+export type Step = CreateClientStep | MethodStep | VariableStep;
 
-type CreateClientStep = {
+export type ModifiedStepForMustache = {
+  isCreateClient: boolean;
+  isVariable: boolean;
+  isMethod: boolean;
+  expectedError?: string;
+  expectedNoError?: true;
+} & (
+  | CreateClientStep
+  | VariableStep
+  | (Omit<MethodStep, 'parameters'> & { parameters: string })
+);
+
+export type CreateClientStep = {
   type: 'createClient';
   parameters: {
     appId: string;
@@ -33,14 +45,10 @@ type MethodStep = {
 type Expected = {
   length?: number;
   error?: string | false;
-  match?: { objectContaining: object } | any;
+  match?: any | { objectContaining: Record<any, any> };
 };
 
-export type TestsBlock = {
+export type TestsBlock<TStep = Step> = {
   operationId: string;
-  tests: Test[];
-};
-
-type AllTests = {
-  [client: string]: TestsBlock[];
+  tests: Array<Test<TStep>>;
 };
