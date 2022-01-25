@@ -9,7 +9,7 @@ use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Utils;
 use {{invokerPackage}}\Algolia;
 use {{invokerPackage}}\ApiException;
-use {{invokerPackage}}\Configuration\Configuration;
+use {{invokerPackage}}\Configuration\{{configClassname}};
 use {{invokerPackage}}\HeaderSelector;
 use {{invokerPackage}}\ObjectSerializer;
 use {{invokerPackage}}\RetryStrategy\ApiWrapper;
@@ -30,7 +30,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     protected $api;
 
     /**
-     * @var Configuration
+     * @var {{configClassname}}
      */
     protected $config;
 
@@ -40,10 +40,10 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     protected $headerSelector;
 
     /**
-     * @param Configuration $config
+     * @param {{configClassname}} $config
      * @param ApiWrapperInterface $apiWrapper
      */
-    public function __construct(ApiWrapperInterface $apiWrapper, Configuration $config)
+    public function __construct(ApiWrapperInterface $apiWrapper, {{configClassname}} $config)
     {
         $this->config = $config;
 
@@ -51,6 +51,23 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $this->headerSelector = new HeaderSelector();
     }
 
+    {{#hasRegionalHost}}
+    /**
+     * Instantiate the client with basic credentials and region
+     *
+     * @param string $appId  Application ID
+     * @param string $apiKey Algolia API Key
+     * @param string $region Region
+     */
+    public static function create($appId = null, $apiKey = null, $region = null)
+    {
+        $config = {{configClassname}}::create($appId, $apiKey, $region);
+
+        return static::createWithConfig($config);
+    }
+    {{/hasRegionalHost}}
+
+    {{^hasRegionalHost}}
     /**
      * Instantiate the client with basic credentials
      *
@@ -59,18 +76,20 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
      */
     public static function create($appId = null, $apiKey = null)
     {
-        return static::createWithConfig(Configuration::create($appId, $apiKey));
+        return static::createWithConfig({{configClassname}}::create($appId, $apiKey));
     }
-
+    {{/hasRegionalHost}}
+    
     /**
      * Instantiate the client with congiguration
      *
-     * @param Configuration $config Configuration
+     * @param {{configClassname}} $config Configuration
      */
-    public static function createWithConfig(Configuration $config)
+    public static function createWithConfig({{configClassname}} $config)
     {
         $config = clone $config;
 
+        {{#useCache}}
         $cacheKey = sprintf('%s-clusterHosts-%s', __CLASS__, $config->getAppId());
 
         if ($hosts = $config->getHosts()) {
@@ -79,9 +98,19 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         } elseif (false === ($clusterHosts = ClusterHosts::createFromCache($cacheKey))) {
             // We'll try to restore the ClusterHost from cache, if we cannot
             // we create a new instance and set the cache key
-            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
+            $clusterHosts = ClusterHosts::{{clusterHostsMethod}}($config->getAppId())
                 ->setCacheKey($cacheKey);
         }
+        {{/useCache}}
+
+        {{^useCache}}
+        if ($hosts = $config->getHosts()) {
+            // If a list of hosts was passed, we ignore the cache
+            $clusterHosts = ClusterHosts::create($hosts);
+        } else {
+            $clusterHosts = ClusterHosts::{{clusterHostsMethod}}($config->getAppId());
+        }
+        {{/useCache}}
 
         $apiWrapper = new ApiWrapper(
             Algolia::getHttpClient(),
@@ -93,7 +122,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     }
 
     /**
-     * @return Configuration
+     * @return {{configClassname}}
      */
     public function getConfig()
     {

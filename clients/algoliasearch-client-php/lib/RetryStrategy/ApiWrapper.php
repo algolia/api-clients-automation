@@ -3,7 +3,7 @@
 namespace Algolia\AlgoliaSearch\RetryStrategy;
 
 use Algolia\AlgoliaSearch\Algolia;
-use Algolia\AlgoliaSearch\Configuration\AbstractConfig;
+use Algolia\AlgoliaSearch\Configuration\Configuration;
 use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
@@ -29,7 +29,7 @@ final class ApiWrapper implements ApiWrapperInterface
     private $http;
 
     /**
-     * @var AbstractConfig
+     * @var Configuration
      */
     private $config;
 
@@ -55,7 +55,7 @@ final class ApiWrapper implements ApiWrapperInterface
 
     public function __construct(
         HttpClientInterface $http,
-        AbstractConfig $config,
+        Configuration $config,
         ClusterHosts $clusterHosts,
         RequestOptionsFactory $RqstOptsFactory = null,
         LoggerInterface $logger = null

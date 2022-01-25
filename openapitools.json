@@ -188,6 +188,28 @@
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
+          "configClassname": "SearchConfig",
+          "clusterHostsMethod":"createFromAppId",
+          "useCache": true,
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php"
+        }
+      },
+      "php-recommend": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "apiPackage": "",
+        "glob": "specs/recommend/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "additionalProperties": {
+          "configClassname": "RecommendConfig",
+          "clusterHostsMethod":"createFromAppId",
+          "hasRegionalHost": true,
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php"
         }
