@@ -13,8 +13,6 @@ function createClient() {
   });
 }
 
-async function createIndex() {}
-
 describe('basic', () => {
   test('does not throw when region is not given', async () => {
     let actual;

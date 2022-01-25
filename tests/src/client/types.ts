@@ -1,7 +1,6 @@
 export type Test = {
   testName: string;
   autoCreateClient?: boolean; // `true` by default
-  autoCreateIndex?: boolean; // `false` by default
   steps: Step[];
 };
 

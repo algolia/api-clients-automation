@@ -38,7 +38,6 @@ async function loadTests(client: string) {
       }
       return {
         autoCreateClient: true,
-        autoCreateIndex: false,
         ...testCase,
       };
     });
@@ -102,10 +101,10 @@ export async function generateTests(language: string, client: string) {
       client: createClientName(client),
       blocks: modifyForMustache(testsBlocks),
       hasRegionalHost:
-      openapitools['generator-cli'].generators[`${language}-${client}`]
-        .additionalProperties.hasRegionalHost === true
-        ? true
-        : undefined,
+        openapitools['generator-cli'].generators[`${language}-${client}`]
+          .additionalProperties.hasRegionalHost === true
+          ? true
+          : undefined,
     },
     partialTemplates
   );

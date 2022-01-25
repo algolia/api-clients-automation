@@ -11,8 +11,6 @@ function createClient() {
     return new {{client}}(appId, apiKey, {{#hasRegionalHost}}'us', {{/hasRegionalHost}}{ requester: new EchoRequester() });
 }
 
-async function createIndex() {}
-
 {{#blocks}}
 describe('{{operationId}}', () => {
     {{#tests}}
@@ -20,9 +18,6 @@ describe('{{operationId}}', () => {
         {{#autoCreateClient}}
             const $client = createClient();
         {{/autoCreateClient}}
-        {{#autoCreateIndex}}
-            const $index = await createIndex();
-        {{/autoCreateIndex}}
 
         let actual;
         {{#steps}}

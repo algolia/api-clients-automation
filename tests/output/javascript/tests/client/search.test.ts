@@ -11,8 +11,6 @@ function createClient() {
   return new SearchApi(appId, apiKey, { requester: new EchoRequester() });
 }
 
-async function createIndex() {}
-
 describe('basic', () => {
   test('client throws with invalid parameters', async () => {
     let actual;
