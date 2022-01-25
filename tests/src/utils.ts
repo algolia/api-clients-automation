@@ -35,9 +35,9 @@ export async function* walk(
   }
 }
 
-export async function exists(path: string): Promise<boolean> {
+export async function exists(filePath: string): Promise<boolean> {
   try {
-    await fsp.stat(path);
+    await fsp.stat(filePath);
     return true;
   } catch (err) {
     return false;
@@ -71,6 +71,7 @@ export const extensionForLanguage: Record<string, string> = {
   java: 'java',
 };
 
+/* eslint-disable no-console */
 function printUsage(commandName: string): void {
   console.log(`usage: ${commandName} language client`);
   // eslint-disable-next-line no-process-exit
@@ -105,3 +106,4 @@ export function parseCLI(
     client,
   };
 }
+/* eslint-enable no-console */

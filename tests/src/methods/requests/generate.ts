@@ -33,11 +33,11 @@ async function generateRequestsTests(
     import: packageNames[language][client],
     client: createClientName(client),
     blocks: cts,
-    hasRegionalHost:
-      openapitools['generator-cli'].generators[`${language}-${client}`]
-        .additionalProperties.hasRegionalHost === true
-        ? true
-        : undefined,
+    hasRegionalHost: openapitools['generator-cli'].generators[
+      `${language}-${client}`
+    ].additionalProperties.hasRegionalHost
+      ? true
+      : undefined,
   });
   await fsp.writeFile(
     `output/${language}/tests/methods/requests/${client}.${extensionForLanguage[language]}`,

@@ -109,11 +109,11 @@ export async function generateTests(
       import: packageNames[language][client],
       client: createClientName(client),
       blocks: modifyForMustache(testsBlocks),
-      hasRegionalHost:
-        openapitools['generator-cli'].generators[`${language}-${client}`]
-          .additionalProperties.hasRegionalHost === true
-          ? true
-          : undefined,
+      hasRegionalHost: openapitools['generator-cli'].generators[
+        `${language}-${client}`
+      ].additionalProperties.hasRegionalHost
+        ? true
+        : undefined,
     },
     partialTemplates
   );
