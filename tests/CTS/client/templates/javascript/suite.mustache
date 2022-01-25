@@ -7,7 +7,7 @@ import { {{client}}, EchoRequester } from '{{{import}}}';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
-function createClient() {
+function createClient(): {{client}} {
     return new {{client}}(appId, apiKey, {{#hasRegionalHost}}'us', {{/hasRegionalHost}}{ requester: new EchoRequester() });
 }
 
