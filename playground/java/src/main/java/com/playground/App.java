@@ -1,4 +1,4 @@
-package com.test;
+package com.playground;
 
 import com.algolia.model.*;
 import com.algolia.search.SearchApi;

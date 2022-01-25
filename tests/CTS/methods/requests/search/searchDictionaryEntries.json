@@ -5,6 +5,7 @@
     "parameters": {
       "dictionaryName": "compounds",
       "searchDictionaryEntries": {
+        "$objectName": "SearchDictionaryEntries",
         "query": "foo"
       }
     },
@@ -22,6 +23,7 @@
     "parameters": {
       "dictionaryName": "compounds",
       "searchDictionaryEntries": {
+        "$objectName": "SearchDictionaryEntries",
         "query": "foo",
         "page": 4,
         "hitsPerPage": 2,
