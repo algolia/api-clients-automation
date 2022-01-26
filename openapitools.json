@@ -251,6 +251,25 @@
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php"
         }
+      },
+      "php-insights": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "apiPackage": "",
+        "glob": "specs/insights/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "additionalProperties": {
+          "configClassname": "InsightsConfig",
+          "clusterHostsMethod":"createForInsights",
+          "hasRegionalHost": true,
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php"
+        }
       }
     }
   }
