@@ -120,7 +120,7 @@ runs:
         key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
     - name: Install Maven dependencies
-      if: ${{ inputs.language == 'java' }}
+      if: ${{ inputs.language == 'java' || inputs.job == 'cts' }}
       shell: bash
       run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
 
