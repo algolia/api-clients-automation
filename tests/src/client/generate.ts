@@ -5,13 +5,16 @@ import Mustache from 'mustache';
 import openapitools from '../../../openapitools.json';
 import {
   walk,
-  extensionForLanguage,
   packageNames,
   createClientName,
   exists,
+  createOutputDir,
+  outputPath,
 } from '../utils';
 
 import type { TestsBlock, Test, ModifiedStepForMustache } from './types';
+
+const testPath = 'client';
 
 async function loadTests(client: string): Promise<TestsBlock[]> {
   const testsBlocks: TestsBlock[] = [];
@@ -89,8 +92,8 @@ export async function generateTests(
     return;
   }
 
-  const outputPath = `output/${language}/tests/client/`;
-  await fsp.mkdir(outputPath, { recursive: true });
+  await createOutputDir({ language, testPath });
+
   const { suite: template, ...partialTemplates } = await loadTemplates(
     language
   );
@@ -117,10 +120,7 @@ export async function generateTests(
     },
     partialTemplates
   );
-  await fsp.writeFile(
-    `${outputPath}/${client}.${extensionForLanguage[language]}`,
-    code
-  );
+  await fsp.writeFile(outputPath({ language, client, testPath }), code);
 }
 
 function serializeParameters(parameters: any): string {

@@ -6,20 +6,16 @@ import openapitools from '../../../../openapitools.json';
 import {
   createClientName,
   packageNames,
-  extensionForLanguage,
-  sourcePathForLanguage,
   capitalize,
+  outputPath,
+  createOutputDir,
 } from '../../utils';
 
 import { loadCTS } from './cts';
 import { loadPartials, loadRequestsTemplate } from './templates';
 import type { CTSBlock } from './types';
 
-async function createOutputDir(language: string): Promise<void> {
-  await fsp.mkdir(`output/${language}/${sourcePathForLanguage[language]}`, {
-    recursive: true,
-  });
-}
+const testPath = 'methods/requests';
 
 async function generateRequestsTests(
   cts: CTSBlock[],
@@ -57,10 +53,7 @@ async function generateRequestsTests(
     partials
   );
 
-  await fsp.writeFile(
-    `output/${language}/${sourcePathForLanguage[language]}/${client}.${extensionForLanguage[language]}`,
-    code
-  );
+  await fsp.writeFile(outputPath({ language, client, testPath }), code);
 }
 
 export async function generateTests(
@@ -71,7 +64,7 @@ export async function generateTests(
   const cts = await loadCTS(client);
   const partials = await loadPartials(language);
 
-  await createOutputDir(language);
+  await createOutputDir({ language, testPath });
 
   await generateRequestsTests(
     cts.requests,

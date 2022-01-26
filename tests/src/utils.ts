@@ -90,19 +90,8 @@ export function removeEnumType(obj: any): any {
   return obj;
 }
 
-// All those language dependents object should be defined in the CTS itself
-export const extensionForLanguage: Record<string, string> = {
-  javascript: 'test.ts',
-  java: 'test.java',
-};
-
-export const sourcePathForLanguage: Record<string, string> = {
-  javascript: 'tests/methods/requests',
-  java: 'src/test/java/com/algolia',
-};
-
-/* eslint-disable no-console */
 function printUsage(commandName: string): void {
+  /* eslint-disable no-console */
   console.log(`usage: ${commandName} language client`);
   // eslint-disable-next-line no-process-exit
   process.exit(1);
@@ -130,10 +119,48 @@ export function parseCLI(
     // eslint-disable-next-line no-process-exit
     process.exit(1);
   }
+  /* eslint-enable no-console */
 
   return {
     lang,
     client,
   };
 }
-/* eslint-enable no-console */
+
+// All those language dependents object should be defined in the CTS itself
+const extensionForLanguage: Record<string, string> = {
+  javascript: 'test.ts',
+  java: 'test.java',
+};
+
+const baseOutputForLanguage: Record<string, string> = {
+  javascript: 'tests',
+  java: 'src/test/java/com/algolia',
+};
+
+export async function createOutputDir({
+  language,
+  testPath,
+}: {
+  language: string;
+  testPath: string;
+}): Promise<void> {
+  await fsp.mkdir(
+    `output/${language}/${baseOutputForLanguage[language]}/${testPath}`,
+    {
+      recursive: true,
+    }
+  );
+}
+
+export function outputPath({
+  language,
+  client,
+  testPath,
+}: {
+  language: string;
+  client: string;
+  testPath: string;
+}): string {
+  return `output/${language}/${baseOutputForLanguage[language]}/${testPath}/${client}.${extensionForLanguage[language]}`;
+}
