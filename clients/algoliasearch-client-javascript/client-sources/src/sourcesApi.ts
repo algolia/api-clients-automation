@@ -60,7 +60,7 @@ export class SourcesApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript 0.0.1',
+      userAgent: 'Algolia for Javascript (0.0.1)',
       timeouts: {
         connect: 2,
         read: 5,
