@@ -4,7 +4,6 @@ import com.algolia.Pair;
 import com.algolia.model.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import okhttp3.HttpUrl;
@@ -32,15 +31,6 @@ public class EchoResponse {
         params.add(new Pair(name, value));
       }
     }
-    Collections.sort(
-      params,
-      (p1, p2) -> {
-        if (p1.getName().equals(p2.getName())) return p1
-          .getValue()
-          .compareTo(p2.getValue());
-        return p1.getName().compareTo(p2.getName());
-      }
-    );
     return params;
   }
 
