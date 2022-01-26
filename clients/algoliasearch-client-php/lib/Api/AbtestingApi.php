@@ -87,7 +87,7 @@ class AbtestingApi
     /**
      * @return AbTestingConfig
      */
-    public function getConfig()
+    public function getClientConfig()
     {
         return $this->config;
     }

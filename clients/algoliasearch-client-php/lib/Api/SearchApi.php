@@ -89,7 +89,7 @@ class SearchApi
     /**
      * @return SearchConfig
      */
-    public function getConfig()
+    public function getClientConfig()
     {
         return $this->config;
     }

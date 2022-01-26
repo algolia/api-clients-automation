@@ -87,7 +87,7 @@ class PersonalizationApi
     /**
      * @return PersonalizationConfig
      */
-    public function getConfig()
+    public function getClientConfig()
     {
         return $this->config;
     }

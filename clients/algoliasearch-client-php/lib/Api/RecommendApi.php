@@ -86,7 +86,7 @@ class RecommendApi
     /**
      * @return RecommendConfig
      */
-    public function getConfig()
+    public function getClientConfig()
     {
         return $this->config;
     }

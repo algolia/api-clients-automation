@@ -289,6 +289,25 @@
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php"
         }
+      },
+      "php-query-suggestions": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "apiPackage": "",
+        "glob": "specs/query-suggestions/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "additionalProperties": {
+          "configClassname": "QuerySuggestionsConfig",
+          "clusterHostsMethod":"createForQuerySuggestions",
+          "hasRegionalHost": true,
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php"
+        }
       }
     }
   }

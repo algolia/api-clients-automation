@@ -87,7 +87,7 @@ class AnalyticsApi
     /**
      * @return AnalyticsConfig
      */
-    public function getConfig()
+    public function getClientConfig()
     {
         return $this->config;
     }
