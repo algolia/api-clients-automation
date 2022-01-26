@@ -1027,7 +1027,7 @@ describe('searchSynonyms', () => {
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({});
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 

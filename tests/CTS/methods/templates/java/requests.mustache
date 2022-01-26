@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.BeforeAll;
+import com.google.gson.reflect.TypeToken;
 
 import com.algolia.model.*;
 import com.algolia.search.{{client}};
@@ -19,10 +20,12 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class {{client}}Tests {
     private {{client}} client;
+    private JSON json;
 
     @BeforeAll
     void init() {
         client = new {{client}}("APPID", "apiKey", new EchoRequester());
+        json = new JSON();
     }
 
     {{#blocks}}
@@ -44,6 +47,14 @@ class {{client}}Tests {
             JSONAssert.assertEquals("{{#escapeQuotes}}{{{request.data}}}{{/escapeQuotes}}", req.getBody(), JSONCompareMode.STRICT_ORDER);
         });
         {{/request.data}}
+
+        {{#request.searchParams}}
+        HashMap<String, String> expectedQuery = json.deserialize("{{#escapeQuotes}}{{{request.searchParams}}}{{/escapeQuotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
+        List<Pair> acutalQuery = req.getQueryParams();
+        for (Pair p : acutalQuery) {
+            assertEquals(expectedQuery.get(p.getName()), p.getValue());
+        }
+        {{/request.searchParams}}
     }
     {{/tests}}
     {{/blocks}}

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.algolia.model.*;
 import com.algolia.search.SearchApi;
 import com.algolia.utils.echo.*;
+import com.google.gson.reflect.TypeToken;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +19,12 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class SearchApiTests {
 
   private SearchApi client;
+  private JSON json;
 
   @BeforeAll
   void init() {
     client = new SearchApi("APPID", "apiKey", new EchoRequester());
+    json = new JSON();
   }
 
   @Test
@@ -163,6 +166,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"X-Algolia-User-ID\":\"userID\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -256,6 +268,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"X-Algolia-User-ID\":\"userID\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -578,6 +599,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -843,6 +873,15 @@ class SearchApiTests {
 
     assertEquals(req.getPath(), "/1/logs");
     assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -869,6 +908,15 @@ class SearchApiTests {
 
     assertEquals(req.getPath(), "/1/indexes/theIndexName/uniqueID");
     assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"attributesToRetrieve\":\"attr1,attr2\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1033,6 +1081,15 @@ class SearchApiTests {
 
     assertEquals(req.getPath(), "/1/clusters/mapping/pending");
     assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"getClusters\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1071,6 +1128,15 @@ class SearchApiTests {
 
     assertEquals(req.getPath(), "/1/indexes");
     assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"page\":\"8\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1087,6 +1153,15 @@ class SearchApiTests {
 
     assertEquals(req.getPath(), "/1/clusters/mapping");
     assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"page\":\"8\",\"hitsPerPage\":\"100\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1286,6 +1361,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"createIfNotExists\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1447,6 +1531,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"forwardToReplicas\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1504,6 +1597,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"forwardToReplicas\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1595,6 +1697,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -1975,6 +2086,15 @@ class SearchApiTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    HashMap<String, String> expectedQuery = json.deserialize(
+      "{\"forwardToReplicas\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> acutalQuery = req.getQueryParams();
+    for (Pair p : acutalQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test

@@ -1,9 +1,13 @@
 package com.algolia.utils.echo;
 
+import com.algolia.Pair;
 import com.algolia.model.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okio.Buffer;
 
@@ -18,6 +22,26 @@ public class EchoResponse {
     } catch (final IOException e) {
       return "error";
     }
+  }
+
+  private static List<Pair> buildQueryParams(Request req) {
+    List<Pair> params = new ArrayList<Pair>();
+    HttpUrl url = req.url();
+    for (String name : url.queryParameterNames()) {
+      for (String value : url.queryParameterValues(name)) {
+        params.add(new Pair(name, value));
+      }
+    }
+    Collections.sort(
+      params,
+      (p1, p2) -> {
+        if (p1.getName().equals(p2.getName())) return p1
+          .getValue()
+          .compareTo(p2.getValue());
+        return p1.getName().compareTo(p2.getName());
+      }
+    );
+    return params;
   }
 
   public static class AddApiKey
@@ -40,6 +64,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -64,6 +92,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class AppendSource
@@ -86,6 +118,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -110,6 +146,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class Batch
@@ -132,6 +172,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -156,6 +200,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class BatchDictionaryEntries
@@ -178,6 +226,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -202,6 +254,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class Browse
@@ -224,6 +280,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -248,6 +308,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class ClearObjects
@@ -270,6 +334,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -294,6 +362,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class DeleteApiKey
@@ -316,6 +388,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -340,6 +416,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class DeleteIndex
@@ -362,6 +442,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -386,6 +470,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class DeleteRule
@@ -408,6 +496,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -432,6 +524,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class DeleteSynonym
@@ -455,6 +551,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class GetApiKey extends Key implements EchoResponseInterface {
@@ -475,6 +575,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -499,6 +603,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class GetDictionarySettings
@@ -521,6 +629,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -545,6 +657,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class GetObject
@@ -567,6 +683,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -591,6 +711,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class GetRule extends Rule implements EchoResponseInterface {
@@ -611,6 +735,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -635,6 +763,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class GetSources
@@ -657,6 +789,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -681,6 +817,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class GetTask
@@ -703,6 +843,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -727,6 +871,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class GetUserId
@@ -749,6 +897,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -773,6 +925,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class ListApiKeys
@@ -795,6 +951,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -819,6 +979,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class ListIndices
@@ -841,6 +1005,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -865,6 +1033,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class MultipleBatch
@@ -887,6 +1059,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -911,6 +1087,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class OperationIndex
@@ -933,6 +1113,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -957,6 +1141,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class RemoveUserId
@@ -979,6 +1167,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -1003,6 +1195,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class RestoreApiKey
@@ -1025,6 +1221,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -1049,6 +1249,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class SaveRule
@@ -1071,6 +1275,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -1095,6 +1303,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class SaveSynonyms
@@ -1117,6 +1329,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -1141,6 +1357,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class SearchDictionaryEntries
@@ -1163,6 +1383,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -1187,6 +1411,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class SearchRules
@@ -1209,6 +1437,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -1233,6 +1465,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class SearchUserIds
@@ -1255,6 +1491,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 
@@ -1279,6 +1519,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class SetSettings
@@ -1302,6 +1546,10 @@ public class EchoResponse {
     public String getBody() {
       return parseRequestBody(request);
     }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
   }
 
   public static class UpdateApiKey
@@ -1324,6 +1572,10 @@ public class EchoResponse {
 
     public String getBody() {
       return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
     }
   }
 }

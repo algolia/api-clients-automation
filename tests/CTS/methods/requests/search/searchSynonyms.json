@@ -6,8 +6,7 @@
     },
     "request": {
       "path": "/1/indexes/indexName/synonyms/search",
-      "method": "POST",
-      "searchParams": {}
+      "method": "POST"
     }
   }
 ]
