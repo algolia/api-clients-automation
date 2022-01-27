@@ -26,6 +26,9 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
+      - name: Validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
     outputs:
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
