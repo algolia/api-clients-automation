@@ -10,6 +10,7 @@ import {
   exists,
   createOutputDir,
   outputPath,
+  loadTemplates,
 } from '../utils';
 
 import type { TestsBlock, Test, ModifiedStepForMustache } from './types';
@@ -56,28 +57,6 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
   return testsBlocks;
 }
 
-async function loadTemplates(
-  language: string
-): Promise<Record<string, string>> {
-  const templates: Record<string, string> = {};
-  const templatePath = `./CTS/client/templates/${language}`;
-
-  await exists(`./CTS/client/templates/javascript`);
-  if (!(await exists(templatePath))) {
-    return {};
-  }
-
-  for await (const file of walk(templatePath)) {
-    if (!file.name.endsWith('.mustache')) {
-      continue;
-    }
-    const type = file.name.replace('.mustache', '');
-    const fileContent = (await fsp.readFile(file.path)).toString();
-    templates[type] = fileContent;
-  }
-  return templates;
-}
-
 export async function generateTests(
   language: string,
   client: string
@@ -94,9 +73,10 @@ export async function generateTests(
 
   await createOutputDir({ language, testPath });
 
-  const { suite: template, ...partialTemplates } = await loadTemplates(
-    language
-  );
+  const { suite: template, ...partialTemplates } = await loadTemplates({
+    language,
+    testPath,
+  });
 
   if (!template) {
     // eslint-disable-next-line no-console

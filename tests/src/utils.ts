@@ -164,3 +164,28 @@ export function outputPath({
 }): string {
   return `output/${language}/${baseOutputForLanguage[language]}/${testPath}/${client}.${extensionForLanguage[language]}`;
 }
+
+export async function loadTemplates({
+  language,
+  testPath,
+}: {
+  language: string;
+  testPath: string;
+}): Promise<Record<string, string>> {
+  const templates: Record<string, string> = {};
+  const templatePath = `./CTS/${testPath}/templates/${language}`;
+
+  if (!(await exists(templatePath))) {
+    return {};
+  }
+
+  for await (const file of walk(templatePath)) {
+    if (!file.name.endsWith('.mustache')) {
+      continue;
+    }
+    const name = file.name.replace('.mustache', '');
+    const fileContent = (await fsp.readFile(file.path)).toString();
+    templates[name] = fileContent;
+  }
+  return templates;
+}

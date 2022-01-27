@@ -9,21 +9,24 @@ import {
   capitalize,
   outputPath,
   createOutputDir,
+  loadTemplates,
 } from '../../utils';
 
 import { loadCTS } from './cts';
-import { loadPartials, loadRequestsTemplate } from './templates';
-import type { CTSBlock } from './types';
 
 const testPath = 'methods/requests';
 
-async function generateRequestsTests(
-  cts: CTSBlock[],
-  template: string,
+export async function generateTests(
   language: string,
-  client: string,
-  partials: Record<string, string>
+  client: string
 ): Promise<void> {
+  const { requests: template, ...partialTemplates } = await loadTemplates({
+    language,
+    testPath,
+  });
+  const cts = (await loadCTS(client)).requests;
+  await createOutputDir({ language, testPath });
+
   if (cts.length === 0) {
     return;
   }
@@ -50,27 +53,8 @@ async function generateRequestsTests(
         };
       },
     },
-    partials
+    partialTemplates
   );
 
   await fsp.writeFile(outputPath({ language, client, testPath }), code);
-}
-
-export async function generateTests(
-  language: string,
-  client: string
-): Promise<void> {
-  const template = await loadRequestsTemplate(language);
-  const cts = await loadCTS(client);
-  const partials = await loadPartials(language);
-
-  await createOutputDir({ language, testPath });
-
-  await generateRequestsTests(
-    cts.requests,
-    template,
-    language,
-    client,
-    partials
-  );
 }
