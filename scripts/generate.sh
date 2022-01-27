@@ -13,7 +13,21 @@ GENERATOR="$1-$2"
 
 # build spec before generating client
 build_spec() {
+    # check if file and cache exist
+    cacheFile="specs/dist/$CLIENT.cache"
+    if [[ -f specs/dist/$CLIENT.yml ]]; then
+        cache=$(find specs/$CLIENT -type f -print0 | xargs -0 sha1sum | sha1sum | tr -d ' ')
+        # compare with stored cache
+        if [[ -f $cacheFile && $(cat $cacheFile) == $cache ]]; then
+            echo "> Skipped building spec because the files did not change..."
+            return
+        fi
+    fi
     yarn build:specs $CLIENT
+
+    # store hash
+    cache=$(find specs/$CLIENT -type f -print0 | xargs -0 sha1sum | sha1sum | tr -d ' ')
+    echo $cache > $cacheFile
 }
 
 # Run the pre generation script if it exists.
