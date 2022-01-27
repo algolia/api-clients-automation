@@ -10,7 +10,7 @@ runs:
       with:
         distribution: zulu
         java-version: 11.0.4
-        cache: maven
+        cache: gradle
 
     - name: Install Node
       uses: actions/setup-node@v2
