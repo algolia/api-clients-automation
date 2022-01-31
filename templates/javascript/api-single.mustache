@@ -60,9 +60,11 @@ export class {{classname}} {
     if (!appId) {
       throw new Error("`appId` is missing.");
     }
+
     if (!apiKey) {
       throw new Error("`apiKey` is missing.");
     }
+
     {{#hasRegionalHost}}
     {{^fallbackToUS}}
     if (!region) {
@@ -108,19 +110,11 @@ export class {{classname}} {
   }
   {{/isSearchHost}}
 
-  {{^isSearchHost}}
-    {{#hasRegionalHost}}
+  {{#hasRegionalHost}}
     public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us'{{#fallbackToUS}} = 'us'{{/fallbackToUS}}): Host[] {
-      return [{ url: `{{{host}}}.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
+      return [{ url: `{{{host}}}.${region}.algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}`, accept: 'readWrite', protocol: 'https' }];
     }
-    {{/hasRegionalHost}}
-
-    {{^hasRegionalHost}}
-    public getDefaultHosts(): Host[] {
-      return [{ url: '{{{host}}}.algolia.io', accept: 'readWrite', protocol: 'https' }];
-    }
-    {{/hasRegionalHost}}
-  {{/isSearchHost}}
+  {{/hasRegionalHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);

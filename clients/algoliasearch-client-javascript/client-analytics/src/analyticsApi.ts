@@ -73,6 +73,7 @@ export class AnalyticsApi {
     if (!appId) {
       throw new Error('`appId` is missing.');
     }
+
     if (!apiKey) {
       throw new Error('`apiKey` is missing.');
     }

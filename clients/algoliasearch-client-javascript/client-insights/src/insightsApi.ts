@@ -50,11 +50,13 @@ export class InsightsApi {
   constructor(
     appId: string,
     apiKey: string,
+    region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     if (!appId) {
       throw new Error('`appId` is missing.');
     }
+
     if (!apiKey) {
       throw new Error('`apiKey` is missing.');
     }
@@ -62,7 +64,7 @@ export class InsightsApi {
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(),
+      hosts: options?.hosts ?? this.getDefaultHosts(region),
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
@@ -76,9 +78,13 @@ export class InsightsApi {
     });
   }
 
-  getDefaultHosts(): Host[] {
+  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
     return [
-      { url: 'insights.algolia.io', accept: 'readWrite', protocol: 'https' },
+      {
+        url: `insights.${region}.algolia.io`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
     ];
   }
 

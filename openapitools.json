@@ -107,7 +107,11 @@
           "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-insights",
-          "host": "insights"
+          "hasRegionalHost": true,
+          "isDeHost": true,
+          "fallbackToUS": true,
+          "host": "insights",
+          "topLevelDomain": "io"
         }
       },
       "javascript-abtesting": {
