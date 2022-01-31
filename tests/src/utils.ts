@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import openapitools from '../../openapitools.json';
+import ctsConfig from '../CTS/config.json';
 
 // For each generator, we map the packageName with the language and client
 export const packageNames: Record<
@@ -127,17 +128,6 @@ export function parseCLI(
   };
 }
 
-// All those language dependents object should be defined in the CTS itself
-const extensionForLanguage: Record<string, string> = {
-  javascript: 'test.ts',
-  java: 'test.java',
-};
-
-const baseOutputForLanguage: Record<string, string> = {
-  javascript: 'tests',
-  java: 'src/test/java/com/algolia',
-};
-
 export async function createOutputDir({
   language,
   testPath,
@@ -146,7 +136,7 @@ export async function createOutputDir({
   testPath: string;
 }): Promise<void> {
   await fsp.mkdir(
-    `output/${language}/${baseOutputForLanguage[language]}/${testPath}`,
+    `output/${language}/${ctsConfig[language].outputFolder}/${testPath}`,
     {
       recursive: true,
     }
@@ -162,7 +152,7 @@ export function outputPath({
   client: string;
   testPath: string;
 }): string {
-  return `output/${language}/${baseOutputForLanguage[language]}/${testPath}/${client}.${extensionForLanguage[language]}`;
+  return `output/${language}/${ctsConfig[language].outputFolder}/${testPath}/${client}.${ctsConfig[language].extension}`;
 }
 
 export async function loadTemplates({
