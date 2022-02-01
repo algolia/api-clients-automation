@@ -12,11 +12,37 @@ post:
 
     The usage of segments for a user profile assumes that actions are implemented in a website or app and can be triggered when a segment is identified: *if segment1 in user_segments then do action*. For example, a segment can represent users that are close to churning and the action can be offering them an incentive such as a discount code or free shipping.
 
-  summary: Get user profile 
+  summary: Get user profile
   parameters:
     - $ref: '../common/parameters.yml#/userID'
-    - $ref: '../common/parameters.yml#/modelsToRetrieve'
-    - $ref: '../common/parameters.yml#/typesToRetrieve'
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          additionalProperties: false
+          properties:
+            modelsToRetrieve:
+              description: List with model types for which to retrieve predictions
+              type: array
+              items:
+                type: string
+                enum:
+                  - funnel_stage
+                  - order_value
+                  - affinities
+              minItems: 1
+            typesToRetrieve:
+              description: List with types to be retrieved.
+              type: array
+              items:
+                type: string
+                enum:
+                  - properties
+                  - segments
+              minItems: 1
+
   responses:
     '200':
       description: OK
@@ -25,12 +51,11 @@ post:
           schema:
             title: fetchUserProfileResponse
             type: object
-            # additionalProperties: false
             required:
               - user
             properties:
               user:
-                $ref: '../common/parameters.yml#/userID'
+                type: string
               predictions:
                 type: object
                 properties:
@@ -54,8 +79,8 @@ post:
                                 - transaction
                             probability:
                               type: number
-                              min: 0
-                              max: 1
+                              minimum: 0
+                              maximum: 1
                       lastUpdatedAt:
                         type: string
                   order_value:
@@ -64,7 +89,7 @@ post:
                     properties:
                       value:
                         type: number
-                        min: 0
+                        minimum: 0
                       lastUpdatedAt:
                         type: string
                   affinities:
@@ -82,8 +107,8 @@ post:
                               type: string
                             probability:
                               type: number
-                              min: 0
-                              max: 1
+                              minimum: 0
+                              maximum: 1
                       lastUpdatedAt:
                         type: string
               properties:

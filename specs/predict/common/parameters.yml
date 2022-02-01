@@ -2,34 +2,9 @@ userID:
   name: userID
   in: path
   required: true
+  schema:
+    type: string
   description: |
     This parameter can have different values:
     * An user ID for authenticated users.
     * A cookie ID for non-authenticated repeated users (visitors)
-  schema:
-    type: string
-
-modelsToRetrieve:
-  name: modelsToRetrieve
-  description: List with model types for which to retrieve predictions
-  schema:
-    type: array
-    items:
-      type: string
-      enum:
-        - funnel_stage
-        - order_value
-        - affinities
-    minItems: 1
-
-typesToRetrieve:
-  name: typesToRetrieve
-  description: List with types to be retrieved.
-  schema:
-    type: array
-    items:
-      type: string
-      enum:
-        - properties
-        - segments
-    minItems: 1
