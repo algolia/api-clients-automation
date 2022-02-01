@@ -151,7 +151,9 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          job: php
+          job: client
+          language: php
+          spec: ${{ matrix.client.name }}
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
@@ -163,6 +165,10 @@ jobs:
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate php ${{ matrix.client.name }}
+
+      - name: Check diff with pushed client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
