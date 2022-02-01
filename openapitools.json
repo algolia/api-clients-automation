@@ -198,6 +198,18 @@
 
           "packageName": "algoliasearch-client-java-2"
         }
+      },
+      "javascript-predict": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/predict",
+        "glob": "specs/dist/predict.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "reservedWordsMappings": "queryParameters=queryParameters"
       }
     }
   }
