@@ -27,7 +27,7 @@ export class EchoRequester extends Requester {
     { headers, url, connectTimeout, responseTimeout }: EndRequest,
     { data, ...originalRequest }: Request
   ): Promise<Response> {
-    const urlSearchParams = new URL(url).searchParams;
+    const { host, searchParams: urlSearchParams } = new URL(url);
     const userAgent = urlSearchParams.get('x-algolia-agent') || undefined;
     const originalData =
       data && Object.entries(data).length > 0 ? data : undefined;
@@ -35,6 +35,7 @@ export class EchoRequester extends Requester {
     return Promise.resolve({
       content: JSON.stringify({
         ...originalRequest,
+        host,
         headers,
         connectTimeout,
         responseTimeout,

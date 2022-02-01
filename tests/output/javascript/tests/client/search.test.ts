@@ -8,6 +8,56 @@ function createClient(): SearchApi {
   return new SearchApi(appId, apiKey, { requester: new EchoRequester() });
 }
 
+describe('basic', () => {
+  test('searches with correct host', async () => {
+    const $client = createClient();
+
+    let actual;
+
+    actual = $client.search({ indexName: 'my-index', searchParams: {} });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ host: 'algolia-api-key.algolia.net' })
+    );
+  });
+
+  test('searches with correct user agent', async () => {
+    const $client = createClient();
+
+    let actual;
+
+    actual = $client.search({ indexName: 'my-index', searchParams: {} });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual.userAgent).toMatch(
+      /Algolia%20for%20(.+)%20\(\d+\.\d+\.\d+\)/
+    );
+  });
+
+  test('searches with correct timeouts', async () => {
+    const $client = createClient();
+
+    let actual;
+
+    actual = $client.search({ indexName: 'my-index', searchParams: {} });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
+    );
+  });
+});
+
 describe('parameters', () => {
   test('constructor throws with invalid parameters', async () => {
     let actual;
