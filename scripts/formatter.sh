@@ -14,6 +14,13 @@ if [[ $LANGUAGE == 'javascript' ]]; then
     # jsdoc/require-hyphen-before-param-description fails to lint more than
     # 6 parameters, we re-run the script if failed to lint the rest
     CMD="yarn eslint --ext=ts ${FOLDER} --fix || yarn eslint --ext=ts ${FOLDER} --fix"
+elif [[ $LANGUAGE == 'php' ]]; then  
+    if [[ $CI ]]; then
+        PHP="php"
+    else
+        PHP="php8"
+    fi
+    CMD= "composer update && composer dump-autoload && PHP_CS_FIXER_IGNORE_ENV=1 $PHP vendor/bin/php-cs-fixer fix lib/ --using-cache=no --allow-risky=yes"
 elif [[ $LANGUAGE == 'java' ]]; then
     CMD="find $FOLDER -type f -name \"*.java\" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
