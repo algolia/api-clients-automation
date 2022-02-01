@@ -1,10 +1,18 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { ABTest } from '../model/aBTest';
 import type { ABTestResponse } from '../model/aBTestResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
+
+export const version = '5.0.0';
 
 export class AbtestingApi {
   protected authentications = {
@@ -47,6 +55,16 @@ export class AbtestingApi {
     region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
+    if (!appId) {
+      throw new Error('`appId` is missing.');
+    }
+    if (!apiKey) {
+      throw new Error('`apiKey` is missing.');
+    }
+    if (!region) {
+      throw new Error('`region` is missing.');
+    }
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -54,7 +72,7 @@ export class AbtestingApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,
@@ -64,7 +82,7 @@ export class AbtestingApi {
     });
   }
 
-  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'de' | 'us'): Host[] {
     return [
       {
         url: `analytics.${region}.algolia.com`,
@@ -100,34 +118,25 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (addABTestsRequest === null || addABTestsRequest === undefined) {
+    if (!addABTestsRequest) {
       throw new Error(
-        'Required parameter addABTestsRequest was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest` is required when calling `addABTests`.'
       );
     }
 
-    if (
-      addABTestsRequest.name === null ||
-      addABTestsRequest.name === undefined
-    ) {
+    if (!addABTestsRequest.name) {
       throw new Error(
-        'Required parameter addABTestsRequest.name was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest.name` is required when calling `addABTests`.'
       );
     }
-    if (
-      addABTestsRequest.variant === null ||
-      addABTestsRequest.variant === undefined
-    ) {
+    if (!addABTestsRequest.variant) {
       throw new Error(
-        'Required parameter addABTestsRequest.variant was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest.variant` is required when calling `addABTests`.'
       );
     }
-    if (
-      addABTestsRequest.endAt === null ||
-      addABTestsRequest.endAt === undefined
-    ) {
+    if (!addABTestsRequest.endAt) {
       throw new Error(
-        'Required parameter addABTestsRequest.endAt was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest.endAt` is required when calling `addABTests`.'
       );
     }
 
@@ -159,9 +168,9 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (id === null || id === undefined) {
+    if (!id) {
       throw new Error(
-        'Required parameter id was null or undefined when calling deleteABTest.'
+        'Parameter `id` is required when calling `deleteABTest`.'
       );
     }
 
@@ -192,10 +201,8 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (id === null || id === undefined) {
-      throw new Error(
-        'Required parameter id was null or undefined when calling getABTest.'
-      );
+    if (!id) {
+      throw new Error('Parameter `id` is required when calling `getABTest`.');
     }
 
     const request: Request = {
@@ -261,10 +268,8 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (id === null || id === undefined) {
-      throw new Error(
-        'Required parameter id was null or undefined when calling stopABTest.'
-      );
+    if (!id) {
+      throw new Error('Parameter `id` is required when calling `stopABTest`.');
     }
 
     const request: Request = {

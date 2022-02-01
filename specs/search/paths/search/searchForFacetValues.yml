@@ -21,13 +21,13 @@ post:
           additionalProperties: false
           properties:
             params:
-              $ref: '../../common/schemas/SearchParams.yml#/paramsAsString'
+              $ref: '../../../common/schemas/SearchParams.yml#/paramsAsString'
             facetQuery:
               type: string
               description: Text to search inside the facet's values.
               default: ''
             maxFacetHits:
-              $ref: '../../common/schemas/IndexSettings.yml#/maxFacetHits'
+              $ref: '../../../common/schemas/IndexSettings.yml#/maxFacetHits'
   responses:
     '200':
       description: OK
@@ -54,7 +54,7 @@ post:
                       description: Raw value of the facet.
                       type: string
                     highlighted:
-                      $ref: '../../common/schemas/Record.yml#/highlightedValue'
+                      $ref: '../../common/schemas/Hit.yml#/highlightedValue'
                     count:
                       description: How many objects contain this facet value. This takes into account the extra search parameters specified in the query. Like for a regular search query, the counts may not be exhaustive.
                       type: integer

@@ -1,9 +1,16 @@
+import { shuffle, Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { GetRecommendations } from '../model/getRecommendations';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
-import { Transporter } from '../utils/Transporter';
-import { shuffle } from '../utils/helpers';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
+
+export const version = '5.0.0';
 
 export class RecommendApi {
   protected authentications = {
@@ -45,6 +52,13 @@ export class RecommendApi {
     apiKey: string,
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
+    if (!appId) {
+      throw new Error('`appId` is missing.');
+    }
+    if (!apiKey) {
+      throw new Error('`apiKey` is missing.');
+    }
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -52,7 +66,7 @@ export class RecommendApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,
@@ -107,6 +121,7 @@ export class RecommendApi {
   /**
    * Returns recommendations for a specific model and objectID.
    *
+   * @summary Returns recommendations for a specific model and objectID.
    * @param getRecommendations - The getRecommendations object.
    */
   getRecommendations(
@@ -116,18 +131,15 @@ export class RecommendApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (getRecommendations === null || getRecommendations === undefined) {
+    if (!getRecommendations) {
       throw new Error(
-        'Required parameter getRecommendations was null or undefined when calling getRecommendations.'
+        'Parameter `getRecommendations` is required when calling `getRecommendations`.'
       );
     }
 
-    if (
-      getRecommendations.requests === null ||
-      getRecommendations.requests === undefined
-    ) {
+    if (!getRecommendations.requests) {
       throw new Error(
-        'Required parameter getRecommendations.requests was null or undefined when calling getRecommendations.'
+        'Parameter `getRecommendations.requests` is required when calling `getRecommendations`.'
       );
     }
 

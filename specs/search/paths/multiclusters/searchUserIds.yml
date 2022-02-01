@@ -16,7 +16,7 @@ post:
     content:
       application/json:
         schema:
-          title: searchUserIdsObject
+          title: searchUserIdsParams
           type: object
           description: OK
           additionalProperties: false
@@ -27,9 +27,9 @@ post:
             clusterName:
               $ref: '../../common/schemas/Cluster.yml#/clusterName'
             page:
-              $ref: '../../common/schemas/SearchParams.yml#/page'
+              $ref: '../../../common/schemas/SearchParams.yml#/page'
             hitsPerPage:
-              $ref: '../../common/schemas/IndexSettings.yml#/hitsPerPage'
+              $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
           required:
             - query
   responses:
@@ -49,7 +49,7 @@ post:
                   type: object
                   properties:
                     userID:
-                      $ref: '../../common/schemas/UserId.yml#/userId/properties/userID'
+                      $ref: '../../common/parameters.yml#/userID'
                     clusterName:
                       $ref: '../../common/schemas/Cluster.yml#/clusterName'
                     nbRecords:
@@ -63,9 +63,9 @@ post:
                       type: object
                       properties:
                         userID:
-                          $ref: '../../common/schemas/Record.yml#/highlightResult'
+                          $ref: '../../common/schemas/Hit.yml#/highlightResult'
                         clusterName:
-                          $ref: '../../common/schemas/Record.yml#/highlightResult'
+                          $ref: '../../common/schemas/Hit.yml#/highlightResult'
                       required:
                         - userID
                         - clusterName
@@ -79,7 +79,7 @@ post:
               nbHits:
                 $ref: '../../common/schemas/SearchResponse.yml#/nbHits'
               page:
-                $ref: '../../common/schemas/SearchParams.yml#/page'
+                $ref: '../../../common/schemas/SearchParams.yml#/page'
               hitsPerPage:
                 $ref: '../../../common/parameters.yml#/hitsPerPage'
               updatedAt:

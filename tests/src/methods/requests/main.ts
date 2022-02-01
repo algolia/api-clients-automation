@@ -1,43 +1,22 @@
-/* eslint-disable no-console */
+import { parseCLI } from '../../utils';
 
 import { generateTests } from './generate';
-import { packageNames } from '../../utils';
 
-function printUsage(): void {
-  console.log(`usage: generateCTS language client`);
-  // eslint-disable-next-line no-process-exit
-  process.exit(1);
-}
-
-async function parseCLI(args: string[]): Promise<void> {
-  if (args.length < 3) {
-    console.log('not enough arguments');
-    printUsage();
-  }
-
-  const lang = args[2];
-  const client = args[3];
-
-  if (!(lang in packageNames)) {
-    console.log('Unknown language', lang);
-    // eslint-disable-next-line no-process-exit
-    process.exit(1);
-  }
-  if (!(client in packageNames[lang])) {
-    console.log('Unknown client', client);
-    // eslint-disable-next-line no-process-exit
-    process.exit(1);
-  }
-
-  console.log(`Generating CTS for ${lang}-${client}`);
+async function main(): Promise<void> {
+  const { lang, client } = parseCLI(process.argv, 'generate:methods:requests');
+  // eslint-disable-next-line no-console
+  console.log(
+    `Generating CTS > generate:methods:requests for ${lang}-${client}`
+  );
 
   try {
-    await generateTests(args[2], args[3]);
+    await generateTests(lang, client);
   } catch (e) {
     if (e instanceof Error) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   }
 }
 
-parseCLI(process.argv);
+main();

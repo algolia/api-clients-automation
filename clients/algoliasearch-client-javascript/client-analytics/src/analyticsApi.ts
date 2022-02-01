@@ -1,3 +1,12 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
 import type { GetClickPositionsResponse } from '../model/getClickPositionsResponse';
 import type { GetClickThroughRateResponse } from '../model/getClickThroughRateResponse';
@@ -17,9 +26,8 @@ import type { GetTopHitsResponseWithAnalytics } from '../model/getTopHitsRespons
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
+
+export const version = '5.0.0';
 
 export class AnalyticsApi {
   protected authentications = {
@@ -62,6 +70,13 @@ export class AnalyticsApi {
     region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
+    if (!appId) {
+      throw new Error('`appId` is missing.');
+    }
+    if (!apiKey) {
+      throw new Error('`apiKey` is missing.');
+    }
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -69,7 +84,7 @@ export class AnalyticsApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,
@@ -124,9 +139,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getAverageClickPosition.'
+        'Parameter `index` is required when calling `getAverageClickPosition`.'
       );
     }
 
@@ -178,9 +193,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getClickPositions.'
+        'Parameter `index` is required when calling `getClickPositions`.'
       );
     }
 
@@ -232,9 +247,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getClickThroughRate.'
+        'Parameter `index` is required when calling `getClickThroughRate`.'
       );
     }
 
@@ -286,9 +301,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getConversationRate.'
+        'Parameter `index` is required when calling `getConversationRate`.'
       );
     }
 
@@ -340,9 +355,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getNoClickRate.'
+        'Parameter `index` is required when calling `getNoClickRate`.'
       );
     }
 
@@ -394,9 +409,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getNoResultsRate.'
+        'Parameter `index` is required when calling `getNoResultsRate`.'
       );
     }
 
@@ -448,9 +463,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getSearchesCount.'
+        'Parameter `index` is required when calling `getSearchesCount`.'
       );
     }
 
@@ -506,9 +521,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getSearchesNoClicks.'
+        'Parameter `index` is required when calling `getSearchesNoClicks`.'
       );
     }
 
@@ -572,9 +587,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getSearchesNoResults.'
+        'Parameter `index` is required when calling `getSearchesNoResults`.'
       );
     }
 
@@ -626,9 +641,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getStatus.'
+        'Parameter `index` is required when calling `getStatus`.'
       );
     }
 
@@ -672,9 +687,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getTopCountries.'
+        'Parameter `index` is required when calling `getTopCountries`.'
       );
     }
 
@@ -740,9 +755,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getTopFilterAttributes.'
+        'Parameter `index` is required when calling `getTopFilterAttributes`.'
       );
     }
 
@@ -817,15 +832,15 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (attribute === null || attribute === undefined) {
+    if (!attribute) {
       throw new Error(
-        'Required parameter attribute was null or undefined when calling getTopFilterForAttribute.'
+        'Parameter `attribute` is required when calling `getTopFilterForAttribute`.'
       );
     }
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getTopFilterForAttribute.'
+        'Parameter `index` is required when calling `getTopFilterForAttribute`.'
       );
     }
 
@@ -895,9 +910,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getTopFiltersNoResults.'
+        'Parameter `index` is required when calling `getTopFiltersNoResults`.'
       );
     }
 
@@ -971,9 +986,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getTopHits.'
+        'Parameter `index` is required when calling `getTopHits`.'
       );
     }
 
@@ -1053,9 +1068,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getTopSearches.'
+        'Parameter `index` is required when calling `getTopSearches`.'
       );
     }
 
@@ -1127,9 +1142,9 @@ export class AnalyticsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (index === null || index === undefined) {
+    if (!index) {
       throw new Error(
-        'Required parameter index was null or undefined when calling getUsersCount.'
+        'Parameter `index` is required when calling `getUsersCount`.'
       );
     }
 

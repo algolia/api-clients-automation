@@ -1,12 +1,20 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { LogFile } from '../model/logFile';
 import type { QuerySuggestionsIndex } from '../model/querySuggestionsIndex';
 import type { QuerySuggestionsIndexParam } from '../model/querySuggestionsIndexParam';
 import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggestionsIndexWithIndexParam';
 import type { Status } from '../model/status';
 import type { SucessResponse } from '../model/sucessResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
+
+export const version = '5.0.0';
 
 export class QuerySuggestionsApi {
   protected authentications = {
@@ -49,6 +57,16 @@ export class QuerySuggestionsApi {
     region: 'eu' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
+    if (!appId) {
+      throw new Error('`appId` is missing.');
+    }
+    if (!apiKey) {
+      throw new Error('`apiKey` is missing.');
+    }
+    if (!region) {
+      throw new Error('`region` is missing.');
+    }
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -56,7 +74,7 @@ export class QuerySuggestionsApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,
@@ -66,7 +84,7 @@ export class QuerySuggestionsApi {
     });
   }
 
-  getDefaultHosts(region: 'eu' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'eu' | 'us'): Host[] {
     return [
       {
         url: `query-suggestions.${region}.algolia.com`,
@@ -94,6 +112,7 @@ export class QuerySuggestionsApi {
   /**
    * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
    *
+   * @summary Create a configuration of a Query Suggestions index.
    * @param querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam object.
    */
   createConfig(
@@ -103,12 +122,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (
-      querySuggestionsIndexWithIndexParam === null ||
-      querySuggestionsIndexWithIndexParam === undefined
-    ) {
+    if (!querySuggestionsIndexWithIndexParam) {
       throw new Error(
-        'Required parameter querySuggestionsIndexWithIndexParam was null or undefined when calling createConfig.'
+        'Parameter `querySuggestionsIndexWithIndexParam` is required when calling `createConfig`.'
       );
     }
 
@@ -128,6 +144,7 @@ export class QuerySuggestionsApi {
   /**
    * Delete a configuration of a Query Suggestion\'s index. By deleting a configuraton, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
    *
+   * @summary Delete a configuration of a Query Suggestion\'s index.
    * @param deleteConfig - The deleteConfig object.
    * @param deleteConfig.indexName - The index in which to perform the request.
    */
@@ -139,9 +156,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling deleteConfig.'
+        'Parameter `indexName` is required when calling `deleteConfig`.'
       );
     }
 
@@ -159,6 +176,8 @@ export class QuerySuggestionsApi {
   }
   /**
    * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a list of its configuration settings.
+   *
+   * @summary Get all the configurations of Query Suggestions.
    */
   getAllConfigs(): Promise<QuerySuggestionsIndex[]> {
     const path = '/1/configs';
@@ -180,6 +199,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the configuration of a single Query Suggestions index.
    *
+   * @summary Get the configuration of a single Query Suggestions index.
    * @param getConfig - The getConfig object.
    * @param getConfig.indexName - The index in which to perform the request.
    */
@@ -191,9 +211,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getConfig.'
+        'Parameter `indexName` is required when calling `getConfig`.'
       );
     }
 
@@ -212,6 +232,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the status of a Query Suggestion\'s index. The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
    *
+   * @summary Get the status of a Query Suggestion\'s index.
    * @param getConfigStatus - The getConfigStatus object.
    * @param getConfigStatus.indexName - The index in which to perform the request.
    */
@@ -223,9 +244,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getConfigStatus.'
+        'Parameter `indexName` is required when calling `getConfigStatus`.'
       );
     }
 
@@ -244,6 +265,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the log file of the last build of a single Query Suggestion index.
    *
+   * @summary Get the log file of the last build of a single Query Suggestion index.
    * @param getLogFile - The getLogFile object.
    * @param getLogFile.indexName - The index in which to perform the request.
    */
@@ -255,9 +277,9 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getLogFile.'
+        'Parameter `indexName` is required when calling `getLogFile`.'
       );
     }
 
@@ -276,6 +298,7 @@ export class QuerySuggestionsApi {
   /**
    * Update the configuration of a Query Suggestions index.
    *
+   * @summary Update the configuration of a Query Suggestions index.
    * @param updateConfig - The updateConfig object.
    * @param updateConfig.indexName - The index in which to perform the request.
    * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.
@@ -291,27 +314,21 @@ export class QuerySuggestionsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling updateConfig.'
+        'Parameter `indexName` is required when calling `updateConfig`.'
       );
     }
 
-    if (
-      querySuggestionsIndexParam === null ||
-      querySuggestionsIndexParam === undefined
-    ) {
+    if (!querySuggestionsIndexParam) {
       throw new Error(
-        'Required parameter querySuggestionsIndexParam was null or undefined when calling updateConfig.'
+        'Parameter `querySuggestionsIndexParam` is required when calling `updateConfig`.'
       );
     }
 
-    if (
-      querySuggestionsIndexParam.sourceIndices === null ||
-      querySuggestionsIndexParam.sourceIndices === undefined
-    ) {
+    if (!querySuggestionsIndexParam.sourceIndices) {
       throw new Error(
-        'Required parameter querySuggestionsIndexParam.sourceIndices was null or undefined when calling updateConfig.'
+        'Parameter `querySuggestionsIndexParam.sourceIndices` is required when calling `updateConfig`.'
       );
     }
 

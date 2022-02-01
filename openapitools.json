@@ -9,7 +9,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/client-search",
-        "glob": "specs/search/spec.yml",
+        "glob": "specs/dist/search.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -18,7 +18,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-search",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-search",
           "isSearchHost": true
@@ -30,7 +30,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/recommend",
-        "glob": "specs/recommend/spec.yml",
+        "glob": "specs/dist/recommend.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -39,7 +39,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/recommend",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/recommend",
           "isSearchHost": true
@@ -51,7 +51,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/client-personalization",
-        "glob": "specs/personalization/spec.yml",
+        "glob": "specs/dist/personalization.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -59,7 +59,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-personalization",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-personalization",
           "hasRegionalHost": true,
@@ -73,7 +73,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/client-analytics",
-        "glob": "specs/analytics/spec.yml",
+        "glob": "specs/dist/analytics.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -81,11 +81,12 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-analytics",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-analytics",
           "hasRegionalHost": true,
           "isDeHost": true,
+          "fallbackToUS": true,
           "host": "analytics"
         }
       },
@@ -95,7 +96,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/client-insights",
-        "glob": "specs/insights/spec.yml",
+        "glob": "specs/dist/insights.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -103,7 +104,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-insights",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-insights",
           "host": "insights"
@@ -115,7 +116,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/client-abtesting",
-        "glob": "specs/abtesting/spec.yml",
+        "glob": "specs/dist/abtesting.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -123,7 +124,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-abtesting",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-abtesting",
           "hasRegionalHost": true,
@@ -137,7 +138,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/client-query-suggestions",
-        "glob": "specs/query-suggestions/spec.yml",
+        "glob": "specs/dist/query-suggestions.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -145,12 +146,34 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-query-suggestions",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-query-suggestions",
           "hasRegionalHost": true,
           "isEuHost": true,
           "host": "query-suggestions"
+        }
+      },
+      "javascript-sources": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-sources",
+        "glob": "specs/dist/sources.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-sources",
+          "packageVersion": "0.0.1",
+
+          "packageName": "@algolia/client-sources",
+          "hasRegionalHost": true,
+          "isDeHost": true,
+          "host": "data"
         }
       },
       "java-search": {
@@ -164,7 +187,7 @@
         "invokerPackage": "com.algolia",
         "modelPackage": "com.algolia.model",
         "library": "okhttp-gson",
-        "glob": "specs/search/spec.yml",
+        "glob": "specs/dist/search.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-java-2",

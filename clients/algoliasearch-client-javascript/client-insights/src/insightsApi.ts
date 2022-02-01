@@ -1,8 +1,16 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { InsightEvents } from '../model/insightEvents';
 import type { PushEventsResponse } from '../model/pushEventsResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
+
+export const version = '5.0.0';
 
 export class InsightsApi {
   protected authentications = {
@@ -44,6 +52,13 @@ export class InsightsApi {
     apiKey: string,
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
+    if (!appId) {
+      throw new Error('`appId` is missing.');
+    }
+    if (!apiKey) {
+      throw new Error('`apiKey` is missing.');
+    }
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -51,7 +66,7 @@ export class InsightsApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,
@@ -93,15 +108,15 @@ export class InsightsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (insightEvents === null || insightEvents === undefined) {
+    if (!insightEvents) {
       throw new Error(
-        'Required parameter insightEvents was null or undefined when calling pushEvents.'
+        'Parameter `insightEvents` is required when calling `pushEvents`.'
       );
     }
 
-    if (insightEvents.events === null || insightEvents.events === undefined) {
+    if (!insightEvents.events) {
       throw new Error(
-        'Required parameter insightEvents.events was null or undefined when calling pushEvents.'
+        'Parameter `insightEvents.events` is required when calling `pushEvents`.'
       );
     }
 

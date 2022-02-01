@@ -1,11 +1,11 @@
-import { shuffle } from '../utils/helpers';
-import { Transporter } from '../utils/Transporter'; 
-import { Headers, Host, Request, RequestOptions } from '../utils/types';
-import { Requester } from '../utils/requester/Requester';
+import { shuffle, Transporter } from '@algolia/client-common';
+import type { Headers, Requester, Host, Request, RequestOptions } from '@algolia/client-common';
 
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
+
+export const version = '{{packageVersion}}';
 
 {{#operations}}
 {{#description}}
@@ -57,6 +57,20 @@ export class {{classname}} {
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
+    if (!appId) {
+      throw new Error("`appId` is missing.");
+    }
+    if (!apiKey) {
+      throw new Error("`apiKey` is missing.");
+    }
+    {{#hasRegionalHost}}
+    {{^fallbackToUS}}
+    if (!region) {
+      throw new Error("`region` is missing.");
+    }
+    {{/fallbackToUS}}
+    {{/hasRegionalHost}}
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -67,7 +81,7 @@ export class {{classname}} {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript ({{packageVersion}})',
       timeouts: {
         connect: 2,
         read: 5,
@@ -96,7 +110,7 @@ export class {{classname}} {
 
   {{^isSearchHost}}
     {{#hasRegionalHost}}
-    public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us' = 'us'): Host[] {
+    public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us'{{#fallbackToUS}} = 'us'{{/fallbackToUS}}): Host[] {
       return [{ url: `{{{host}}}.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
     }
     {{/hasRegionalHost}}
@@ -225,14 +239,14 @@ export class {{classname}} {
 
     {{#allParams}}
     {{#required}}
-    if ({{paramName}} === null || {{paramName}} === undefined) {
-      throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
+    if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
+      throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}`.');
     }
 
     {{#vars}}
     {{#required}}
-    if ({{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined) {
-      throw new Error('Required parameter {{paramName}}.{{baseName}} was null or undefined when calling {{nickname}}.');
+    if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
+      throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}`.');
     }
     {{/required}}
     {{/vars}}

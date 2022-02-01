@@ -13,14 +13,7 @@ synonymHit:
       type: string
       description: Unique identifier of the synonym object to be created or updated.
     type:
-      type: string
-      description: Type of the synonym object.
-      enum:
-        - synonym
-        - onewaysynonym
-        - altcorrection1
-        - altcorrection2
-        - placeholder
+      $ref: './parameters.yml#/SynonymType'
 
     synonyms:
       type: array
@@ -52,11 +45,11 @@ synonymHit:
       additionalProperties: false
       properties:
         type:
-          $ref: '../../../common/schemas/Record.yml#/highlightResult'
+          $ref: '../../../common/schemas/Hit.yml#/highlightResult'
         synonyms:
           type: array
           items:
-            $ref: '../../../common/schemas/Record.yml#/highlightResult'
+            $ref: '../../../common/schemas/Hit.yml#/highlightResult'
   required:
     - objectID
     - type
