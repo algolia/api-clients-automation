@@ -50,7 +50,7 @@ export class InsightsApi {
   constructor(
     appId: string,
     apiKey: string,
-    region: 'de' | 'us',
+    region?: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     if (!appId) {
@@ -78,10 +78,12 @@ export class InsightsApi {
     });
   }
 
-  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region?: 'de' | 'us'): Host[] {
+    const regionHost = region ? `.${region}.` : '.';
+
     return [
       {
-        url: `insights.${region}.algolia.io`,
+        url: `insights${regionHost}algolia.io`,
         accept: 'readWrite',
         protocol: 'https',
       },

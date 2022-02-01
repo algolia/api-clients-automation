@@ -44,11 +44,35 @@ run_pre_gen() {
         echo "> Running pre-gen script for $GENERATOR..."
         $pregen $CLIENT
     fi
+
+    # Sets the hosts option to the `openapitools.json` config file
+    regions=($(yq e '.servers[].variables.region.enum[]' specs/dist/$CLIENT.yml))
+    hasRegionalHost=$([[ ${#regions[@]} == 0 ]] && echo "false" || echo "true")
+
+    # search hosts does not need informations
+    if [[ $hasRegionalHost == 'true' ]]; then
+        url=$(yq e '.servers[].url' specs/dist/$CLIENT.yml)
+        fallbackToAliasHost=$([[ $CLIENT == 'insights' || $CLIENT == 'analytics' || $CLIENT == 'abtesting' ]] && echo "true" || echo "false")
+        isEuHost="false"
+        isDeHost="false"
+
+        for region in "${regions[@]}"; do
+            if [[ $region == 'de' ]]; then
+                isDeHost="true"
+            elif [[ $region == 'eu' ]]; then
+                isEuHost="true"
+            fi
+        done
+
+        yarn workspace scripts setHostsOptions $GENERATOR $url $fallbackToAliasHost $isEuHost $isDeHost
+    fi
 }
 
 generate_client() {
     echo "> Generating code for $GENERATOR..."
+
     CMD="yarn openapi-generator-cli generate --generator-key $GENERATOR"
+
     if [[ $VERBOSE == "true" ]]; then
         $CMD
     else
