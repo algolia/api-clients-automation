@@ -31,7 +31,7 @@ class BatchDictionaryEntriesRequest implements ModelInterface, ArrayAccess, \Jso
       * @var string[]
       */
     protected static $openAPITypes = [
-        'action' => 'string',
+        'action' => '\Algolia\AlgoliaSearch\Model\DictionaryAction',
         'body' => '\Algolia\AlgoliaSearch\Model\DictionaryEntry',
     ];
 
@@ -139,22 +139,6 @@ class BatchDictionaryEntriesRequest implements ModelInterface, ArrayAccess, \Jso
         return self::$openAPIModelName;
     }
 
-    const ACTION_ADD_ENTRY = 'addEntry';
-    const ACTION_DELETE_ENTRY = 'deleteEntry';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getActionAllowableValues()
-    {
-        return [
-            self::ACTION_ADD_ENTRY,
-            self::ACTION_DELETE_ENTRY,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -186,15 +170,6 @@ class BatchDictionaryEntriesRequest implements ModelInterface, ArrayAccess, \Jso
         if ($this->container['action'] === null) {
             $invalidProperties[] = "'action' can't be null";
         }
-        $allowedValues = $this->getActionAllowableValues();
-        if (!is_null($this->container['action']) && !in_array($this->container['action'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'action', must be one of '%s'",
-                $this->container['action'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['body'] === null) {
             $invalidProperties[] = "'body' can't be null";
         }
@@ -216,7 +191,7 @@ class BatchDictionaryEntriesRequest implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets action
      *
-     * @return string
+     * @return \Algolia\AlgoliaSearch\Model\DictionaryAction
      */
     public function getAction()
     {
@@ -226,22 +201,12 @@ class BatchDictionaryEntriesRequest implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets action
      *
-     * @param string $action actions to perform
+     * @param \Algolia\AlgoliaSearch\Model\DictionaryAction $action action
      *
      * @return self
      */
     public function setAction($action)
     {
-        $allowedValues = $this->getActionAllowableValues();
-        if (!in_array($action, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'action', must be one of '%s'",
-                    $action,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['action'] = $action;
 
         return $this;

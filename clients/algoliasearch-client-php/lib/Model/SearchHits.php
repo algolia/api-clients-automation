@@ -31,7 +31,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'hits' => '\Algolia\AlgoliaSearch\Model\Record[]',
+        'hits' => '\Algolia\AlgoliaSearch\Model\Hit[]',
     ];
 
     /**
@@ -178,7 +178,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets hits
      *
-     * @return \Algolia\AlgoliaSearch\Model\Record[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Hit[]|null
      */
     public function getHits()
     {
@@ -188,7 +188,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\Record[]|null $hits hits
+     * @param \Algolia\AlgoliaSearch\Model\Hit[]|null $hits hits
      *
      * @return self
      */

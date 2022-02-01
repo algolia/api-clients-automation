@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * BatchWriteParams Class Doc Comment
  *
  * @category Class
+ * @description The &#x60;batch&#x60; parameters.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class BatchWriteParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'batchWriteParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'requests' => '\Algolia\AlgoliaSearch\Model\Operation[]',
     ];
 
     /**
@@ -42,7 +44,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'requests' => null,
     ];
 
     /**
@@ -72,7 +74,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'requests' => 'requests',
     ];
 
     /**
@@ -81,7 +83,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'requests' => 'setRequests',
     ];
 
     /**
@@ -90,7 +92,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'requests' => 'getRequests',
     ];
 
     /**
@@ -149,7 +151,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['requests'] = $data['requests'] ?? null;
     }
 
     /**
@@ -160,10 +162,6 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     public function listInvalidProperties()
     {
         $invalidProperties = [];
-
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
-        }
 
         return $invalidProperties;
     }
@@ -180,25 +178,25 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets requests
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return \Algolia\AlgoliaSearch\Model\Operation[]|null
      */
-    public function getKeys()
+    public function getRequests()
     {
-        return $this->container['keys'];
+        return $this->container['requests'];
     }
 
     /**
-     * Sets keys
+     * Sets requests
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param \Algolia\AlgoliaSearch\Model\Operation[]|null $requests requests
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setRequests($requests)
     {
-        $this->container['keys'] = $keys;
+        $this->container['requests'] = $requests;
 
         return $this;
     }

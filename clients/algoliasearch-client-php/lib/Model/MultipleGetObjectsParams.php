@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * MultipleGetObjectsParams Class Doc Comment
  *
  * @category Class
+ * @description getObjects operation on an index.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class MultipleGetObjectsParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'multipleGetObjectsParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'attributesToRetrieve' => 'string[]',
+        'objectID' => 'string',
+        'indexName' => 'string',
     ];
 
     /**
@@ -42,7 +46,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'attributesToRetrieve' => null,
+        'objectID' => null,
+        'indexName' => null,
     ];
 
     /**
@@ -72,7 +78,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'attributesToRetrieve' => 'attributesToRetrieve',
+        'objectID' => 'objectID',
+        'indexName' => 'indexName',
     ];
 
     /**
@@ -81,7 +89,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'attributesToRetrieve' => 'setAttributesToRetrieve',
+        'objectID' => 'setObjectID',
+        'indexName' => 'setIndexName',
     ];
 
     /**
@@ -90,7 +100,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'attributesToRetrieve' => 'getAttributesToRetrieve',
+        'objectID' => 'getObjectID',
+        'indexName' => 'getIndexName',
     ];
 
     /**
@@ -149,7 +161,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['attributesToRetrieve'] = $data['attributesToRetrieve'] ?? null;
+        $this->container['objectID'] = $data['objectID'] ?? null;
+        $this->container['indexName'] = $data['indexName'] ?? null;
     }
 
     /**
@@ -161,8 +175,11 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
+        if ($this->container['objectID'] === null) {
+            $invalidProperties[] = "'objectID' can't be null";
+        }
+        if ($this->container['indexName'] === null) {
+            $invalidProperties[] = "'indexName' can't be null";
         }
 
         return $invalidProperties;
@@ -180,25 +197,73 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets attributesToRetrieve
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return string[]|null
      */
-    public function getKeys()
+    public function getAttributesToRetrieve()
     {
-        return $this->container['keys'];
+        return $this->container['attributesToRetrieve'];
     }
 
     /**
-     * Sets keys
+     * Sets attributesToRetrieve
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param string[]|null $attributesToRetrieve List of attributes to retrieve. By default, all retrievable attributes are returned.
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setAttributesToRetrieve($attributesToRetrieve)
     {
-        $this->container['keys'] = $keys;
+        $this->container['attributesToRetrieve'] = $attributesToRetrieve;
+
+        return $this;
+    }
+
+    /**
+     * Gets objectID
+     *
+     * @return string
+     */
+    public function getObjectID()
+    {
+        return $this->container['objectID'];
+    }
+
+    /**
+     * Sets objectID
+     *
+     * @param string $objectID ID of the object within that index
+     *
+     * @return self
+     */
+    public function setObjectID($objectID)
+    {
+        $this->container['objectID'] = $objectID;
+
+        return $this;
+    }
+
+    /**
+     * Gets indexName
+     *
+     * @return string
+     */
+    public function getIndexName()
+    {
+        return $this->container['indexName'];
+    }
+
+    /**
+     * Sets indexName
+     *
+     * @param string $indexName name of the index containing the object
+     *
+     * @return self
+     */
+    public function setIndexName($indexName)
+    {
+        $this->container['indexName'] = $indexName;
 
         return $this;
     }

@@ -32,7 +32,7 @@ class QuerySuggestionsIndex implements ModelInterface, ArrayAccess, \JsonSeriali
       */
     protected static $openAPITypes = [
         'indexName' => 'string',
-        'sourceIndices' => '\Algolia\AlgoliaSearch\Model\SourceIndexWithReplicas[]',
+        'sourceIndices' => '\Algolia\AlgoliaSearch\Model\SourceIndiceWithReplicas[]',
         'languages' => 'string[]',
         'exclude' => 'string[]',
     ];
@@ -233,7 +233,7 @@ class QuerySuggestionsIndex implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets sourceIndices
      *
-     * @return \Algolia\AlgoliaSearch\Model\SourceIndexWithReplicas[]
+     * @return \Algolia\AlgoliaSearch\Model\SourceIndiceWithReplicas[]
      */
     public function getSourceIndices()
     {
@@ -243,7 +243,7 @@ class QuerySuggestionsIndex implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets sourceIndices
      *
-     * @param \Algolia\AlgoliaSearch\Model\SourceIndexWithReplicas[] $sourceIndices list of source indices used to generate a Query Suggestions index
+     * @param \Algolia\AlgoliaSearch\Model\SourceIndiceWithReplicas[] $sourceIndices list of source indices used to generate a Query Suggestions index
      *
      * @return self
      */

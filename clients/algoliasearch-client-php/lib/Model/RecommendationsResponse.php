@@ -55,7 +55,7 @@ class RecommendationsResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'queryAfterRemoval' => 'string',
         'serverUsed' => 'string',
         'userData' => 'object',
-        'hits' => '\Algolia\AlgoliaSearch\Model\RecommendRecord[]',
+        'hits' => '\Algolia\AlgoliaSearch\Model\RecommendHit[]',
     ];
 
     /**
@@ -937,7 +937,7 @@ class RecommendationsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets hits
      *
-     * @return \Algolia\AlgoliaSearch\Model\RecommendRecord[]
+     * @return \Algolia\AlgoliaSearch\Model\RecommendHit[]
      */
     public function getHits()
     {
@@ -947,7 +947,7 @@ class RecommendationsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\RecommendRecord[] $hits hits
+     * @param \Algolia\AlgoliaSearch\Model\RecommendHit[] $hits hits
      *
      * @return self
      */

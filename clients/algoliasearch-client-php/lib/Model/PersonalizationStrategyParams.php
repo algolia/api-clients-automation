@@ -6,7 +6,7 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * PersonalizationStrategyParams Class Doc Comment
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
@@ -14,7 +14,7 @@ use \ArrayAccess;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class PersonalizationStrategyParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +23,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'personalizationStrategyParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +31,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'eventScoring' => '\Algolia\AlgoliaSearch\Model\EventScoring[]',
+        'facetScoring' => '\Algolia\AlgoliaSearch\Model\FacetScoring[]',
+        'personalizationImpact' => 'int',
     ];
 
     /**
@@ -42,7 +44,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'eventScoring' => null,
+        'facetScoring' => null,
+        'personalizationImpact' => null,
     ];
 
     /**
@@ -72,7 +76,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'eventScoring' => 'eventScoring',
+        'facetScoring' => 'facetScoring',
+        'personalizationImpact' => 'personalizationImpact',
     ];
 
     /**
@@ -81,7 +87,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'eventScoring' => 'setEventScoring',
+        'facetScoring' => 'setFacetScoring',
+        'personalizationImpact' => 'setPersonalizationImpact',
     ];
 
     /**
@@ -90,7 +98,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'eventScoring' => 'getEventScoring',
+        'facetScoring' => 'getFacetScoring',
+        'personalizationImpact' => 'getPersonalizationImpact',
     ];
 
     /**
@@ -149,7 +159,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['eventScoring'] = $data['eventScoring'] ?? null;
+        $this->container['facetScoring'] = $data['facetScoring'] ?? null;
+        $this->container['personalizationImpact'] = $data['personalizationImpact'] ?? null;
     }
 
     /**
@@ -161,8 +173,14 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
+        if ($this->container['eventScoring'] === null) {
+            $invalidProperties[] = "'eventScoring' can't be null";
+        }
+        if ($this->container['facetScoring'] === null) {
+            $invalidProperties[] = "'facetScoring' can't be null";
+        }
+        if ($this->container['personalizationImpact'] === null) {
+            $invalidProperties[] = "'personalizationImpact' can't be null";
         }
 
         return $invalidProperties;
@@ -180,25 +198,73 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets eventScoring
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return \Algolia\AlgoliaSearch\Model\EventScoring[]
      */
-    public function getKeys()
+    public function getEventScoring()
     {
-        return $this->container['keys'];
+        return $this->container['eventScoring'];
     }
 
     /**
-     * Sets keys
+     * Sets eventScoring
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param \Algolia\AlgoliaSearch\Model\EventScoring[] $eventScoring scores associated with the events
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setEventScoring($eventScoring)
     {
-        $this->container['keys'] = $keys;
+        $this->container['eventScoring'] = $eventScoring;
+
+        return $this;
+    }
+
+    /**
+     * Gets facetScoring
+     *
+     * @return \Algolia\AlgoliaSearch\Model\FacetScoring[]
+     */
+    public function getFacetScoring()
+    {
+        return $this->container['facetScoring'];
+    }
+
+    /**
+     * Sets facetScoring
+     *
+     * @param \Algolia\AlgoliaSearch\Model\FacetScoring[] $facetScoring scores associated with the facets
+     *
+     * @return self
+     */
+    public function setFacetScoring($facetScoring)
+    {
+        $this->container['facetScoring'] = $facetScoring;
+
+        return $this;
+    }
+
+    /**
+     * Gets personalizationImpact
+     *
+     * @return int
+     */
+    public function getPersonalizationImpact()
+    {
+        return $this->container['personalizationImpact'];
+    }
+
+    /**
+     * Sets personalizationImpact
+     *
+     * @param int $personalizationImpact the impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled)
+     *
+     * @return self
+     */
+    public function setPersonalizationImpact($personalizationImpact)
+    {
+        $this->container['personalizationImpact'] = $personalizationImpact;
 
         return $this;
     }

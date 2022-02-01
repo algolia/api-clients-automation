@@ -38,7 +38,7 @@ class DictionaryEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'word' => 'string',
         'words' => 'string[]',
         'decomposition' => 'string[]',
-        'state' => 'string',
+        'state' => '\Algolia\AlgoliaSearch\Model\DictionaryEntryState',
     ];
 
     /**
@@ -161,22 +161,6 @@ class DictionaryEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    const STATE_ENABLED = 'enabled';
-    const STATE_DISABLED = 'disabled';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStateAllowableValues()
-    {
-        return [
-            self::STATE_ENABLED,
-            self::STATE_DISABLED,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -197,7 +181,7 @@ class DictionaryEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->container['word'] = $data['word'] ?? null;
         $this->container['words'] = $data['words'] ?? null;
         $this->container['decomposition'] = $data['decomposition'] ?? null;
-        $this->container['state'] = $data['state'] ?? 'enabled';
+        $this->container['state'] = $data['state'] ?? null;
     }
 
     /**
@@ -214,14 +198,6 @@ class DictionaryEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['language'] === null) {
             $invalidProperties[] = "'language' can't be null";
-        }
-        $allowedValues = $this->getStateAllowableValues();
-        if (!is_null($this->container['state']) && !in_array($this->container['state'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'state', must be one of '%s'",
-                $this->container['state'],
-                implode("', '", $allowedValues)
-            );
         }
 
         return $invalidProperties;
@@ -361,7 +337,7 @@ class DictionaryEntry implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets state
      *
-     * @return string|null
+     * @return \Algolia\AlgoliaSearch\Model\DictionaryEntryState|null
      */
     public function getState()
     {
@@ -371,22 +347,12 @@ class DictionaryEntry implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets state
      *
-     * @param string|null $state the state of the dictionary entry
+     * @param \Algolia\AlgoliaSearch\Model\DictionaryEntryState|null $state state
      *
      * @return self
      */
     public function setState($state)
     {
-        $allowedValues = $this->getStateAllowableValues();
-        if (!is_null($state) && !in_array($state, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'state', must be one of '%s'",
-                    $state,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['state'] = $state;
 
         return $this;

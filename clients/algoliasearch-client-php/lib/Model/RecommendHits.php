@@ -31,7 +31,7 @@ class RecommendHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'hits' => '\Algolia\AlgoliaSearch\Model\RecommendRecord[]',
+        'hits' => '\Algolia\AlgoliaSearch\Model\RecommendHit[]',
     ];
 
     /**
@@ -178,7 +178,7 @@ class RecommendHits implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets hits
      *
-     * @return \Algolia\AlgoliaSearch\Model\RecommendRecord[]|null
+     * @return \Algolia\AlgoliaSearch\Model\RecommendHit[]|null
      */
     public function getHits()
     {
@@ -188,7 +188,7 @@ class RecommendHits implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\RecommendRecord[]|null $hits hits
+     * @param \Algolia\AlgoliaSearch\Model\RecommendHit[]|null $hits hits
      *
      * @return self
      */

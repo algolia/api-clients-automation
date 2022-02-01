@@ -223,12 +223,14 @@ class SearchApi
     /**
      * Operation appendSource
      *
+     * Add a single source.
+     *
      * @param  \Algolia\AlgoliaSearch\Model\Source $source The source to add. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse
+     * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function appendSource($source)
     {
@@ -272,14 +274,14 @@ class SearchApi
      * Assign or Move userID
      *
      * @param  string $xAlgoliaUserID userID to assign. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\AssignUserIdObject $assignUserIdObject assignUserIdObject (required)
+     * @param  \Algolia\AlgoliaSearch\Model\AssignUserIdParams $assignUserIdParams assignUserIdParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function assignUserId($xAlgoliaUserID, $assignUserIdObject)
+    public function assignUserId($xAlgoliaUserID, $assignUserIdParams)
     {
         // verify the required parameter 'xAlgoliaUserID' is set
         if ($xAlgoliaUserID === null || (is_array($xAlgoliaUserID) && count($xAlgoliaUserID) === 0)) {
@@ -291,10 +293,10 @@ class SearchApi
             throw new \InvalidArgumentException('invalid value for "xAlgoliaUserID" when calling SearchApi.assignUserId, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.');
         }
 
-        // verify the required parameter 'assignUserIdObject' is set
-        if ($assignUserIdObject === null || (is_array($assignUserIdObject) && count($assignUserIdObject) === 0)) {
+        // verify the required parameter 'assignUserIdParams' is set
+        if ($assignUserIdParams === null || (is_array($assignUserIdParams) && count($assignUserIdParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $assignUserIdObject when calling assignUserId'
+                'Missing the required parameter $assignUserIdParams when calling assignUserId'
             );
         }
 
@@ -303,18 +305,21 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($xAlgoliaUserID)) {
-            $xAlgoliaUserID = ObjectSerializer::serializeCollection($xAlgoliaUserID, '', true);
-        }
         if ($xAlgoliaUserID !== null) {
-            $queryParams['X-Algolia-User-ID'] = $xAlgoliaUserID;
+            if ('form' === 'form' && is_array($xAlgoliaUserID)) {
+                foreach ($xAlgoliaUserID as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['X-Algolia-User-ID'] = $xAlgoliaUserID;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
             ['application/json']
         );
-        if (isset($assignUserIdObject)) {
-            $httpBody = $assignUserIdObject;
+        if (isset($assignUserIdParams)) {
+            $httpBody = $assignUserIdParams;
         }
 
         $defaultHeaders = [];
@@ -335,15 +340,17 @@ class SearchApi
     /**
      * Operation batch
      *
+     * Performs multiple write operations in a single API call.
+     *
      * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\BatchWriteObject $batchWriteObject batchWriteObject (required)
+     * @param  \Algolia\AlgoliaSearch\Model\BatchWriteParams $batchWriteParams batchWriteParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\BatchResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function batch($indexName, $batchWriteObject)
+    public function batch($indexName, $batchWriteParams)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -351,10 +358,10 @@ class SearchApi
                 'Missing the required parameter $indexName when calling batch'
             );
         }
-        // verify the required parameter 'batchWriteObject' is set
-        if ($batchWriteObject === null || (is_array($batchWriteObject) && count($batchWriteObject) === 0)) {
+        // verify the required parameter 'batchWriteParams' is set
+        if ($batchWriteParams === null || (is_array($batchWriteParams) && count($batchWriteParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $batchWriteObject when calling batch'
+                'Missing the required parameter $batchWriteParams when calling batch'
             );
         }
 
@@ -374,8 +381,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($batchWriteObject)) {
-            $httpBody = $batchWriteObject;
+        if (isset($batchWriteParams)) {
+            $httpBody = $batchWriteParams;
         }
 
         $defaultHeaders = [];
@@ -399,14 +406,14 @@ class SearchApi
      * Batch assign userIDs
      *
      * @param  string $xAlgoliaUserID userID to assign. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\BatchAssignUserIdsObject $batchAssignUserIdsObject batchAssignUserIdsObject (required)
+     * @param  \Algolia\AlgoliaSearch\Model\BatchAssignUserIdsParams $batchAssignUserIdsParams batchAssignUserIdsParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function batchAssignUserIds($xAlgoliaUserID, $batchAssignUserIdsObject)
+    public function batchAssignUserIds($xAlgoliaUserID, $batchAssignUserIdsParams)
     {
         // verify the required parameter 'xAlgoliaUserID' is set
         if ($xAlgoliaUserID === null || (is_array($xAlgoliaUserID) && count($xAlgoliaUserID) === 0)) {
@@ -418,10 +425,10 @@ class SearchApi
             throw new \InvalidArgumentException('invalid value for "xAlgoliaUserID" when calling SearchApi.batchAssignUserIds, must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.');
         }
 
-        // verify the required parameter 'batchAssignUserIdsObject' is set
-        if ($batchAssignUserIdsObject === null || (is_array($batchAssignUserIdsObject) && count($batchAssignUserIdsObject) === 0)) {
+        // verify the required parameter 'batchAssignUserIdsParams' is set
+        if ($batchAssignUserIdsParams === null || (is_array($batchAssignUserIdsParams) && count($batchAssignUserIdsParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $batchAssignUserIdsObject when calling batchAssignUserIds'
+                'Missing the required parameter $batchAssignUserIdsParams when calling batchAssignUserIds'
             );
         }
 
@@ -430,18 +437,21 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($xAlgoliaUserID)) {
-            $xAlgoliaUserID = ObjectSerializer::serializeCollection($xAlgoliaUserID, '', true);
-        }
         if ($xAlgoliaUserID !== null) {
-            $queryParams['X-Algolia-User-ID'] = $xAlgoliaUserID;
+            if ('form' === 'form' && is_array($xAlgoliaUserID)) {
+                foreach ($xAlgoliaUserID as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['X-Algolia-User-ID'] = $xAlgoliaUserID;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
             ['application/json']
         );
-        if (isset($batchAssignUserIdsObject)) {
-            $httpBody = $batchAssignUserIdsObject;
+        if (isset($batchAssignUserIdsParams)) {
+            $httpBody = $batchAssignUserIdsParams;
         }
 
         $defaultHeaders = [];
@@ -557,18 +567,24 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // query params
-        if (is_array($clearExistingRules)) {
-            $clearExistingRules = ObjectSerializer::serializeCollection($clearExistingRules, '', true);
-        }
         if ($clearExistingRules !== null) {
-            $queryParams['clearExistingRules'] = $clearExistingRules;
+            if ('form' === 'form' && is_array($clearExistingRules)) {
+                foreach ($clearExistingRules as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['clearExistingRules'] = $clearExistingRules;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -685,11 +701,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -799,11 +818,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -1104,11 +1126,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -1149,12 +1174,14 @@ class SearchApi
     /**
      * Operation deleteSource
      *
+     * Remove a single source.
+     *
      * @param  string $source The IP range of the source. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\DeleteSourceResponse
+     * @return \Algolia\AlgoliaSearch\Model\DeleteSourceResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function deleteSource($source)
     {
@@ -1231,11 +1258,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -1283,7 +1313,7 @@ class SearchApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\KeyObject|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Key|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getApiKey($key)
     {
@@ -1403,9 +1433,11 @@ class SearchApi
     /**
      * Operation getLogs
      *
+     * Return the lastest log entries.
+     *
      * @param  int $offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
      * @param  int $length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
-     * @param  string $indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional)
+     * @param  string $indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional, default to 'null')
      * @param  string $type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to 'all')
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -1413,7 +1445,7 @@ class SearchApi
      *
      * @return \Algolia\AlgoliaSearch\Model\GetLogsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function getLogs($offset = 0, $length = 10, $indexName = null, $type = 'all')
+    public function getLogs($offset = 0, $length = 10, $indexName = 'null', $type = 'all')
     {
         if ($length !== null && $length > 1000) {
             throw new \InvalidArgumentException('invalid value for "$length" when calling SearchApi.getLogs, must be smaller than or equal to 1000.');
@@ -1424,32 +1456,44 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($length)) {
-            $length = ObjectSerializer::serializeCollection($length, '', true);
-        }
         if ($length !== null) {
-            $queryParams['length'] = $length;
+            if ('form' === 'form' && is_array($length)) {
+                foreach ($length as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['length'] = $length;
+            }
         }
         // query params
-        if (is_array($indexName)) {
-            $indexName = ObjectSerializer::serializeCollection($indexName, '', true);
-        }
         if ($indexName !== null) {
-            $queryParams['indexName'] = $indexName;
+            if ('form' === 'form' && is_array($indexName)) {
+                foreach ($indexName as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['indexName'] = $indexName;
+            }
         }
         // query params
-        if (is_array($type)) {
-            $type = ObjectSerializer::serializeCollection($type, '', true);
-        }
         if ($type !== null) {
-            $queryParams['type'] = $type;
+            if ('form' === 'form' && is_array($type)) {
+                foreach ($type as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['type'] = $type;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -1505,11 +1549,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($attributesToRetrieve)) {
-            $attributesToRetrieve = ObjectSerializer::serializeCollection($attributesToRetrieve, 'csv', true);
-        }
         if ($attributesToRetrieve !== null) {
-            $queryParams['attributesToRetrieve'] = $attributesToRetrieve;
+            if ('form' === 'form' && is_array($attributesToRetrieve)) {
+                foreach ($attributesToRetrieve as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['attributesToRetrieve'] = $attributesToRetrieve;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -1552,19 +1599,19 @@ class SearchApi
      *
      * Retrieve one or more objects.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\GetObjectsObject $getObjectsObject getObjectsObject (required)
+     * @param  \Algolia\AlgoliaSearch\Model\GetObjectsParams $getObjectsParams getObjectsParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\GetObjectsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function getObjects($getObjectsObject)
+    public function getObjects($getObjectsParams)
     {
-        // verify the required parameter 'getObjectsObject' is set
-        if ($getObjectsObject === null || (is_array($getObjectsObject) && count($getObjectsObject) === 0)) {
+        // verify the required parameter 'getObjectsParams' is set
+        if ($getObjectsParams === null || (is_array($getObjectsParams) && count($getObjectsParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $getObjectsObject when calling getObjects'
+                'Missing the required parameter $getObjectsParams when calling getObjects'
             );
         }
 
@@ -1576,8 +1623,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($getObjectsObject)) {
-            $httpBody = $getObjectsObject;
+        if (isset($getObjectsParams)) {
+            $httpBody = $getObjectsParams;
         }
 
         $defaultHeaders = [];
@@ -1666,6 +1713,8 @@ class SearchApi
     /**
      * Operation getSettings
      *
+     * Retrieve settings of a given indexName.
+     *
      * @param  string $indexName The index in which to perform the request. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -1717,11 +1766,13 @@ class SearchApi
     /**
      * Operation getSources
      *
+     * List all allowed sources.
+     *
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\Source[]
+     * @return \Algolia\AlgoliaSearch\Model\Source[]|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getSources()
     {
@@ -1819,6 +1870,8 @@ class SearchApi
     }
     /**
      * Operation getTask
+     *
+     * Check the current status of a given task.
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  int $taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
@@ -1995,11 +2048,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($getClusters)) {
-            $getClusters = ObjectSerializer::serializeCollection($getClusters, '', true);
-        }
         if ($getClusters !== null) {
-            $queryParams['getClusters'] = $getClusters;
+            if ('form' === 'form' && is_array($getClusters)) {
+                foreach ($getClusters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['getClusters'] = $getClusters;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -2114,11 +2170,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($page)) {
-            $page = ObjectSerializer::serializeCollection($page, '', true);
-        }
         if ($page !== null) {
-            $queryParams['page'] = $page;
+            if ('form' === 'form' && is_array($page)) {
+                foreach ($page as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['page'] = $page;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -2160,18 +2219,24 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($page)) {
-            $page = ObjectSerializer::serializeCollection($page, '', true);
-        }
         if ($page !== null) {
-            $queryParams['page'] = $page;
+            if ('form' === 'form' && is_array($page)) {
+                foreach ($page as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['page'] = $page;
+            }
         }
         // query params
-        if (is_array($hitsPerPage)) {
-            $hitsPerPage = ObjectSerializer::serializeCollection($hitsPerPage, '', true);
-        }
         if ($hitsPerPage !== null) {
-            $queryParams['hitsPerPage'] = $hitsPerPage;
+            if ('form' === 'form' && is_array($hitsPerPage)) {
+                foreach ($hitsPerPage as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['hitsPerPage'] = $hitsPerPage;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -2196,19 +2261,21 @@ class SearchApi
     /**
      * Operation multipleBatch
      *
-     * @param  \Algolia\AlgoliaSearch\Model\BatchObject $batchObject batchObject (required)
+     * Perform multiple write operations.
+     *
+     * @param  \Algolia\AlgoliaSearch\Model\BatchParams $batchParams batchParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\MultipleBatchResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function multipleBatch($batchObject)
+    public function multipleBatch($batchParams)
     {
-        // verify the required parameter 'batchObject' is set
-        if ($batchObject === null || (is_array($batchObject) && count($batchObject) === 0)) {
+        // verify the required parameter 'batchParams' is set
+        if ($batchParams === null || (is_array($batchParams) && count($batchParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $batchObject when calling multipleBatch'
+                'Missing the required parameter $batchParams when calling multipleBatch'
             );
         }
 
@@ -2220,8 +2287,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($batchObject)) {
-            $httpBody = $batchObject;
+        if (isset($batchParams)) {
+            $httpBody = $batchParams;
         }
 
         $defaultHeaders = [];
@@ -2242,19 +2309,21 @@ class SearchApi
     /**
      * Operation multipleQueries
      *
-     * @param  \Algolia\AlgoliaSearch\Model\MultipleQueriesObject $multipleQueriesObject multipleQueriesObject (required)
+     * Get search results for the given requests.
+     *
+     * @param  \Algolia\AlgoliaSearch\Model\MultipleQueriesParams $multipleQueriesParams multipleQueriesParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\MultipleQueriesResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function multipleQueries($multipleQueriesObject)
+    public function multipleQueries($multipleQueriesParams)
     {
-        // verify the required parameter 'multipleQueriesObject' is set
-        if ($multipleQueriesObject === null || (is_array($multipleQueriesObject) && count($multipleQueriesObject) === 0)) {
+        // verify the required parameter 'multipleQueriesParams' is set
+        if ($multipleQueriesParams === null || (is_array($multipleQueriesParams) && count($multipleQueriesParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $multipleQueriesObject when calling multipleQueries'
+                'Missing the required parameter $multipleQueriesParams when calling multipleQueries'
             );
         }
 
@@ -2266,8 +2335,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($multipleQueriesObject)) {
-            $httpBody = $multipleQueriesObject;
+        if (isset($multipleQueriesParams)) {
+            $httpBody = $multipleQueriesParams;
         }
 
         $defaultHeaders = [];
@@ -2291,14 +2360,14 @@ class SearchApi
      * Copy/move index.
      *
      * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\OperationIndexObject $operationIndexObject operationIndexObject (required)
+     * @param  \Algolia\AlgoliaSearch\Model\OperationIndexParams $operationIndexParams operationIndexParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function operationIndex($indexName, $operationIndexObject)
+    public function operationIndex($indexName, $operationIndexParams)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -2306,10 +2375,10 @@ class SearchApi
                 'Missing the required parameter $indexName when calling operationIndex'
             );
         }
-        // verify the required parameter 'operationIndexObject' is set
-        if ($operationIndexObject === null || (is_array($operationIndexObject) && count($operationIndexObject) === 0)) {
+        // verify the required parameter 'operationIndexParams' is set
+        if ($operationIndexParams === null || (is_array($operationIndexParams) && count($operationIndexParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $operationIndexObject when calling operationIndex'
+                'Missing the required parameter $operationIndexParams when calling operationIndex'
             );
         }
 
@@ -2329,8 +2398,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($operationIndexObject)) {
-            $httpBody = $operationIndexObject;
+        if (isset($operationIndexParams)) {
+            $httpBody = $operationIndexParams;
         }
 
         $defaultHeaders = [];
@@ -2355,7 +2424,7 @@ class SearchApi
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  string $objectID Unique identifier of an object. (required)
-     * @param  array<string,OneOfStringBuildInOperation>[] $oneOfStringBuildInOperation List of attributes to update. (required)
+     * @param  array<string,OneOfStringBuiltInOperation>[] $oneOfStringBuiltInOperation List of attributes to update. (required)
      * @param  bool $createIfNotExists Creates the record if it does not exist yet. (optional, default to true)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -2363,7 +2432,7 @@ class SearchApi
      *
      * @return \Algolia\AlgoliaSearch\Model\UpdatedAtWithObjectIdResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function partialUpdateObject($indexName, $objectID, $oneOfStringBuildInOperation, $createIfNotExists = true)
+    public function partialUpdateObject($indexName, $objectID, $oneOfStringBuiltInOperation, $createIfNotExists = true)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -2377,10 +2446,10 @@ class SearchApi
                 'Missing the required parameter $objectID when calling partialUpdateObject'
             );
         }
-        // verify the required parameter 'oneOfStringBuildInOperation' is set
-        if ($oneOfStringBuildInOperation === null || (is_array($oneOfStringBuildInOperation) && count($oneOfStringBuildInOperation) === 0)) {
+        // verify the required parameter 'oneOfStringBuiltInOperation' is set
+        if ($oneOfStringBuiltInOperation === null || (is_array($oneOfStringBuiltInOperation) && count($oneOfStringBuiltInOperation) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $oneOfStringBuildInOperation when calling partialUpdateObject'
+                'Missing the required parameter $oneOfStringBuiltInOperation when calling partialUpdateObject'
             );
         }
 
@@ -2389,11 +2458,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($createIfNotExists)) {
-            $createIfNotExists = ObjectSerializer::serializeCollection($createIfNotExists, '', true);
-        }
         if ($createIfNotExists !== null) {
-            $queryParams['createIfNotExists'] = $createIfNotExists;
+            if ('form' === 'form' && is_array($createIfNotExists)) {
+                foreach ($createIfNotExists as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['createIfNotExists'] = $createIfNotExists;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -2415,8 +2487,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($oneOfStringBuildInOperation)) {
-            $httpBody = $oneOfStringBuildInOperation;
+        if (isset($oneOfStringBuiltInOperation)) {
+            $httpBody = $oneOfStringBuiltInOperation;
         }
 
         $defaultHeaders = [];
@@ -2493,12 +2565,14 @@ class SearchApi
     /**
      * Operation replaceSources
      *
+     * Replace all allowed sources.
+     *
      * @param  \Algolia\AlgoliaSearch\Model\Source[] $source The sources to allow. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\ReplaceSourceResponse
+     * @return \Algolia\AlgoliaSearch\Model\ReplaceSourceResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function replaceSources($source)
     {
@@ -2592,8 +2666,10 @@ class SearchApi
     /**
      * Operation saveObject
      *
+     * Add an object to the index.
+     *
      * @param  string $indexName The index in which to perform the request. (required)
-     * @param  object $body The Algolia object. (required)
+     * @param  object $body The Algolia record. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2691,11 +2767,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -2777,11 +2856,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -2857,18 +2939,24 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // query params
-        if (is_array($replaceExistingSynonyms)) {
-            $replaceExistingSynonyms = ObjectSerializer::serializeCollection($replaceExistingSynonyms, '', true);
-        }
         if ($replaceExistingSynonyms !== null) {
-            $queryParams['replaceExistingSynonyms'] = $replaceExistingSynonyms;
+            if ('form' === 'form' && is_array($replaceExistingSynonyms)) {
+                foreach ($replaceExistingSynonyms as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['replaceExistingSynonyms'] = $replaceExistingSynonyms;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -2903,6 +2991,8 @@ class SearchApi
     }
     /**
      * Operation search
+     *
+     * Get search results.
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  \Algolia\AlgoliaSearch\Model\SearchParams $searchParams searchParams (required)
@@ -3167,7 +3257,7 @@ class SearchApi
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  string $query Search for specific synonyms matching this string. (optional, default to '')
-     * @param  string $type Only search for specific types of synonyms. (optional)
+     * @param  \Algolia\AlgoliaSearch\Model\SynonymType $type Only search for specific types of synonyms. (optional)
      * @param  int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
      * @param  int $hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
      *
@@ -3190,32 +3280,44 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($query)) {
-            $query = ObjectSerializer::serializeCollection($query, '', true);
-        }
         if ($query !== null) {
-            $queryParams['query'] = $query;
+            if ('form' === 'form' && is_array($query)) {
+                foreach ($query as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['query'] = $query;
+            }
         }
         // query params
-        if (is_array($type)) {
-            $type = ObjectSerializer::serializeCollection($type, '', true);
-        }
         if ($type !== null) {
-            $queryParams['type'] = $type;
+            if ('form' === 'form' && is_array($type)) {
+                foreach ($type as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['type'] = $type;
+            }
         }
         // query params
-        if (is_array($page)) {
-            $page = ObjectSerializer::serializeCollection($page, '', true);
-        }
         if ($page !== null) {
-            $queryParams['page'] = $page;
+            if ('form' === 'form' && is_array($page)) {
+                foreach ($page as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['page'] = $page;
+            }
         }
         // query params
-        if (is_array($hitsPerPage)) {
-            $hitsPerPage = ObjectSerializer::serializeCollection($hitsPerPage, '', true);
-        }
         if ($hitsPerPage !== null) {
-            $queryParams['hitsPerPage'] = $hitsPerPage;
+            if ('form' === 'form' && is_array($hitsPerPage)) {
+                foreach ($hitsPerPage as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['hitsPerPage'] = $hitsPerPage;
+            }
         }
         // path params
         if ($indexName !== null) {
@@ -3250,19 +3352,19 @@ class SearchApi
      *
      * Search userID
      *
-     * @param  \Algolia\AlgoliaSearch\Model\SearchUserIdsObject $searchUserIdsObject searchUserIdsObject (required)
+     * @param  \Algolia\AlgoliaSearch\Model\SearchUserIdsParams $searchUserIdsParams searchUserIdsParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\SearchUserIdsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function searchUserIds($searchUserIdsObject)
+    public function searchUserIds($searchUserIdsParams)
     {
-        // verify the required parameter 'searchUserIdsObject' is set
-        if ($searchUserIdsObject === null || (is_array($searchUserIdsObject) && count($searchUserIdsObject) === 0)) {
+        // verify the required parameter 'searchUserIdsParams' is set
+        if ($searchUserIdsParams === null || (is_array($searchUserIdsParams) && count($searchUserIdsParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $searchUserIdsObject when calling searchUserIds'
+                'Missing the required parameter $searchUserIdsParams when calling searchUserIds'
             );
         }
 
@@ -3274,8 +3376,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchUserIdsObject)) {
-            $httpBody = $searchUserIdsObject;
+        if (isset($searchUserIdsParams)) {
+            $httpBody = $searchUserIdsParams;
         }
 
         $defaultHeaders = [];
@@ -3344,6 +3446,8 @@ class SearchApi
     /**
      * Operation setSettings
      *
+     * Update settings of a given indexName.
+     *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  \Algolia\AlgoliaSearch\Model\IndexSettings $indexSettings indexSettings (required)
      * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
@@ -3373,11 +3477,14 @@ class SearchApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($forwardToReplicas)) {
-            $forwardToReplicas = ObjectSerializer::serializeCollection($forwardToReplicas, '', true);
-        }
         if ($forwardToReplicas !== null) {
-            $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            if ('form' === 'form' && is_array($forwardToReplicas)) {
+                foreach ($forwardToReplicas as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['forwardToReplicas'] = $forwardToReplicas;
+            }
         }
         // path params
         if ($indexName !== null) {

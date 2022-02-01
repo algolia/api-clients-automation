@@ -34,7 +34,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'objectID' => 'string',
-        'type' => 'string',
+        'type' => '\Algolia\AlgoliaSearch\Model\SynonymType',
         'synonyms' => 'string[]',
         'input' => 'string',
         'word' => 'string',
@@ -176,28 +176,6 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    const TYPE_SYNONYM = 'synonym';
-    const TYPE_ONEWAYSYNONYM = 'onewaysynonym';
-    const TYPE_ALTCORRECTION1 = 'altcorrection1';
-    const TYPE_ALTCORRECTION2 = 'altcorrection2';
-    const TYPE_PLACEHOLDER = 'placeholder';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_SYNONYM,
-            self::TYPE_ONEWAYSYNONYM,
-            self::TYPE_ALTCORRECTION1,
-            self::TYPE_ALTCORRECTION2,
-            self::TYPE_PLACEHOLDER,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -238,14 +216,6 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['type'] === null) {
             $invalidProperties[] = "'type' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
         }
 
         return $invalidProperties;
@@ -289,7 +259,7 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets type
      *
-     * @return string
+     * @return \Algolia\AlgoliaSearch\Model\SynonymType
      */
     public function getType()
     {
@@ -299,22 +269,12 @@ class SynonymHit implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets type
      *
-     * @param string $type type of the synonym object
+     * @param \Algolia\AlgoliaSearch\Model\SynonymType $type type
      *
      * @return self
      */
     public function setType($type)
     {
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['type'] = $type;
 
         return $this;

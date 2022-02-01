@@ -6,7 +6,7 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * OperationIndexParams Class Doc Comment
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
@@ -14,7 +14,7 @@ use \ArrayAccess;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class OperationIndexParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +23,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'operationIndexParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +31,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'operation' => '\Algolia\AlgoliaSearch\Model\OperationType',
+        'destination' => 'string',
+        'scope' => '\Algolia\AlgoliaSearch\Model\ScopeType[]',
     ];
 
     /**
@@ -42,7 +44,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'operation' => null,
+        'destination' => null,
+        'scope' => null,
     ];
 
     /**
@@ -72,7 +76,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'operation' => 'operation',
+        'destination' => 'destination',
+        'scope' => 'scope',
     ];
 
     /**
@@ -81,7 +87,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'operation' => 'setOperation',
+        'destination' => 'setDestination',
+        'scope' => 'setScope',
     ];
 
     /**
@@ -90,7 +98,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'operation' => 'getOperation',
+        'destination' => 'getDestination',
+        'scope' => 'getScope',
     ];
 
     /**
@@ -149,7 +159,9 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['operation'] = $data['operation'] ?? null;
+        $this->container['destination'] = $data['destination'] ?? null;
+        $this->container['scope'] = $data['scope'] ?? null;
     }
 
     /**
@@ -161,8 +173,11 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
+        if ($this->container['operation'] === null) {
+            $invalidProperties[] = "'operation' can't be null";
+        }
+        if ($this->container['destination'] === null) {
+            $invalidProperties[] = "'destination' can't be null";
         }
 
         return $invalidProperties;
@@ -180,25 +195,73 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets operation
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return \Algolia\AlgoliaSearch\Model\OperationType
      */
-    public function getKeys()
+    public function getOperation()
     {
-        return $this->container['keys'];
+        return $this->container['operation'];
     }
 
     /**
-     * Sets keys
+     * Sets operation
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param \Algolia\AlgoliaSearch\Model\OperationType $operation operation
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setOperation($operation)
     {
-        $this->container['keys'] = $keys;
+        $this->container['operation'] = $operation;
+
+        return $this;
+    }
+
+    /**
+     * Gets destination
+     *
+     * @return string
+     */
+    public function getDestination()
+    {
+        return $this->container['destination'];
+    }
+
+    /**
+     * Sets destination
+     *
+     * @param string $destination the Algolia index name
+     *
+     * @return self
+     */
+    public function setDestination($destination)
+    {
+        $this->container['destination'] = $destination;
+
+        return $this;
+    }
+
+    /**
+     * Gets scope
+     *
+     * @return \Algolia\AlgoliaSearch\Model\ScopeType[]|null
+     */
+    public function getScope()
+    {
+        return $this->container['scope'];
+    }
+
+    /**
+     * Sets scope
+     *
+     * @param \Algolia\AlgoliaSearch\Model\ScopeType[]|null $scope Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
+     *
+     * @return self
+     */
+    public function setScope($scope)
+    {
+        $this->container['scope'] = $scope;
 
         return $this;
     }

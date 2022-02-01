@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * SearchUserIdsParams Class Doc Comment
  *
  * @category Class
+ * @description OK
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class SearchUserIdsParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'searchUserIdsParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,10 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'query' => 'string',
+        'clusterName' => 'string',
+        'page' => 'int',
+        'hitsPerPage' => 'int',
     ];
 
     /**
@@ -42,7 +47,10 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'query' => null,
+        'clusterName' => null,
+        'page' => null,
+        'hitsPerPage' => null,
     ];
 
     /**
@@ -72,7 +80,10 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'query' => 'query',
+        'clusterName' => 'clusterName',
+        'page' => 'page',
+        'hitsPerPage' => 'hitsPerPage',
     ];
 
     /**
@@ -81,7 +92,10 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'query' => 'setQuery',
+        'clusterName' => 'setClusterName',
+        'page' => 'setPage',
+        'hitsPerPage' => 'setHitsPerPage',
     ];
 
     /**
@@ -90,7 +104,10 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'query' => 'getQuery',
+        'clusterName' => 'getClusterName',
+        'page' => 'getPage',
+        'hitsPerPage' => 'getHitsPerPage',
     ];
 
     /**
@@ -149,7 +166,10 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['query'] = $data['query'] ?? null;
+        $this->container['clusterName'] = $data['clusterName'] ?? null;
+        $this->container['page'] = $data['page'] ?? 0;
+        $this->container['hitsPerPage'] = $data['hitsPerPage'] ?? 20;
     }
 
     /**
@@ -161,8 +181,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
+        if ($this->container['query'] === null) {
+            $invalidProperties[] = "'query' can't be null";
         }
 
         return $invalidProperties;
@@ -180,25 +200,97 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets query
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return string
      */
-    public function getKeys()
+    public function getQuery()
     {
-        return $this->container['keys'];
+        return $this->container['query'];
     }
 
     /**
-     * Sets keys
+     * Sets query
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param string $query Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setQuery($query)
     {
-        $this->container['keys'] = $keys;
+        $this->container['query'] = $query;
+
+        return $this;
+    }
+
+    /**
+     * Gets clusterName
+     *
+     * @return string|null
+     */
+    public function getClusterName()
+    {
+        return $this->container['clusterName'];
+    }
+
+    /**
+     * Sets clusterName
+     *
+     * @param string|null $clusterName name of the cluster
+     *
+     * @return self
+     */
+    public function setClusterName($clusterName)
+    {
+        $this->container['clusterName'] = $clusterName;
+
+        return $this;
+    }
+
+    /**
+     * Gets page
+     *
+     * @return int|null
+     */
+    public function getPage()
+    {
+        return $this->container['page'];
+    }
+
+    /**
+     * Sets page
+     *
+     * @param int|null $page specify the page to retrieve
+     *
+     * @return self
+     */
+    public function setPage($page)
+    {
+        $this->container['page'] = $page;
+
+        return $this;
+    }
+
+    /**
+     * Gets hitsPerPage
+     *
+     * @return int|null
+     */
+    public function getHitsPerPage()
+    {
+        return $this->container['hitsPerPage'];
+    }
+
+    /**
+     * Sets hitsPerPage
+     *
+     * @param int|null $hitsPerPage set the number of hits per page
+     *
+     * @return self
+     */
+    public function setHitsPerPage($hitsPerPage)
+    {
+        $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;
     }

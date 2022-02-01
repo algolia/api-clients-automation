@@ -96,6 +96,8 @@ class QuerySuggestionsApi
     /**
      * Operation createConfig
      *
+     * Create a configuration of a Query Suggestions index.
+     *
      * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestionsIndexWithIndexParam $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -141,6 +143,8 @@ class QuerySuggestionsApi
     }
     /**
      * Operation deleteConfig
+     *
+     * Delete a configuration of a Query Suggestion&#39;s index.
      *
      * @param  string $indexName The index in which to perform the request. (required)
      *
@@ -193,6 +197,8 @@ class QuerySuggestionsApi
     /**
      * Operation getAllConfigs
      *
+     * Get all the configurations of Query Suggestions.
+     *
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -227,6 +233,8 @@ class QuerySuggestionsApi
     }
     /**
      * Operation getConfig
+     *
+     * Get the configuration of a single Query Suggestions index.
      *
      * @param  string $indexName The index in which to perform the request. (required)
      *
@@ -279,6 +287,8 @@ class QuerySuggestionsApi
     /**
      * Operation getConfigStatus
      *
+     * Get the status of a Query Suggestion&#39;s index.
+     *
      * @param  string $indexName The index in which to perform the request. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -330,6 +340,8 @@ class QuerySuggestionsApi
     /**
      * Operation getLogFile
      *
+     * Get the log file of the last build of a single Query Suggestion index.
+     *
      * @param  string $indexName The index in which to perform the request. (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
@@ -380,6 +392,8 @@ class QuerySuggestionsApi
     }
     /**
      * Operation updateConfig
+     *
+     * Update the configuration of a Query Suggestions index.
      *
      * @param  string $indexName The index in which to perform the request. (required)
      * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestionsIndexParam $querySuggestionsIndexParam querySuggestionsIndexParam (required)

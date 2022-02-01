@@ -55,7 +55,7 @@ class SearchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'queryAfterRemoval' => 'string',
         'serverUsed' => 'string',
         'userData' => 'object',
-        'hits' => '\Algolia\AlgoliaSearch\Model\Record[]',
+        'hits' => '\Algolia\AlgoliaSearch\Model\Hit[]',
     ];
 
     /**
@@ -937,7 +937,7 @@ class SearchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets hits
      *
-     * @return \Algolia\AlgoliaSearch\Model\Record[]
+     * @return \Algolia\AlgoliaSearch\Model\Hit[]
      */
     public function getHits()
     {
@@ -947,7 +947,7 @@ class SearchResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\Record[] $hits hits
+     * @param \Algolia\AlgoliaSearch\Model\Hit[] $hits hits
      *
      * @return self
      */

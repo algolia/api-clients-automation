@@ -95,6 +95,8 @@ class RecommendApi
     /**
      * Operation getRecommendations
      *
+     * Returns recommendations for a specific model and objectID.
+     *
      * @param  \Algolia\AlgoliaSearch\Model\GetRecommendations $getRecommendations getRecommendations (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response

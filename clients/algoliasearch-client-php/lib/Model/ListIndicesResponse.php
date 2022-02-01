@@ -31,7 +31,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'items' => '\Algolia\AlgoliaSearch\Model\Index[]',
+        'items' => '\Algolia\AlgoliaSearch\Model\Indice[]',
         'nbPages' => 'int',
     ];
 
@@ -184,7 +184,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets items
      *
-     * @return \Algolia\AlgoliaSearch\Model\Index[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Indice[]|null
      */
     public function getItems()
     {
@@ -194,7 +194,7 @@ class ListIndicesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets items
      *
-     * @param \Algolia\AlgoliaSearch\Model\Index[]|null $items list of the fetched indices
+     * @param \Algolia\AlgoliaSearch\Model\Indice[]|null $items list of the fetched indices
      *
      * @return self
      */

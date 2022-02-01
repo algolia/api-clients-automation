@@ -33,7 +33,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'indexName' => 'string',
         'query' => 'string',
-        'type' => 'string',
+        'type' => '\Algolia\AlgoliaSearch\Model\MultipleQueriesType',
         'facet' => 'string',
         'params' => 'string',
     ];
@@ -154,22 +154,6 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    const TYPE__DEFAULT = 'default';
-    const TYPE_FACET = 'facet';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE__DEFAULT,
-            self::TYPE_FACET,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -187,7 +171,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $this->container['indexName'] = $data['indexName'] ?? null;
         $this->container['query'] = $data['query'] ?? '';
-        $this->container['type'] = $data['type'] ?? 'default';
+        $this->container['type'] = $data['type'] ?? null;
         $this->container['facet'] = $data['facet'] ?? null;
         $this->container['params'] = $data['params'] ?? null;
     }
@@ -203,14 +187,6 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
 
         if ($this->container['indexName'] === null) {
             $invalidProperties[] = "'indexName' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
         }
 
         return $invalidProperties;
@@ -278,7 +254,7 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets type
      *
-     * @return string|null
+     * @return \Algolia\AlgoliaSearch\Model\MultipleQueriesType|null
      */
     public function getType()
     {
@@ -288,22 +264,12 @@ class MultipleQueries implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets type
      *
-     * @param string|null $type perform a search query with `default`, will search for facet values if `facet` is given
+     * @param \Algolia\AlgoliaSearch\Model\MultipleQueriesType|null $type type
      *
      * @return self
      */
     public function setType($type)
     {
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($type) && !in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['type'] = $type;
 
         return $this;

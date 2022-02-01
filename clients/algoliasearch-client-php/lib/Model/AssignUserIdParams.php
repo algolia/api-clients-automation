@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * AssignUserIdParams Class Doc Comment
  *
  * @category Class
+ * @description Assign userID parameters.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class AssignUserIdParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'assignUserIdParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'cluster' => 'string',
     ];
 
     /**
@@ -42,7 +44,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'cluster' => null,
     ];
 
     /**
@@ -72,7 +74,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'cluster' => 'cluster',
     ];
 
     /**
@@ -81,7 +83,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'cluster' => 'setCluster',
     ];
 
     /**
@@ -90,7 +92,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'cluster' => 'getCluster',
     ];
 
     /**
@@ -149,7 +151,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['cluster'] = $data['cluster'] ?? null;
     }
 
     /**
@@ -161,8 +163,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
+        if ($this->container['cluster'] === null) {
+            $invalidProperties[] = "'cluster' can't be null";
         }
 
         return $invalidProperties;
@@ -180,25 +182,25 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets cluster
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return string
      */
-    public function getKeys()
+    public function getCluster()
     {
-        return $this->container['keys'];
+        return $this->container['cluster'];
     }
 
     /**
-     * Sets keys
+     * Sets cluster
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param string $cluster name of the cluster
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setCluster($cluster)
     {
-        $this->container['keys'] = $keys;
+        $this->container['cluster'] = $cluster;
 
         return $this;
     }

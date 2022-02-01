@@ -6,7 +6,7 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * MultipleQueriesParams Class Doc Comment
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
@@ -14,7 +14,7 @@ use \ArrayAccess;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class MultipleQueriesParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +23,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'multipleQueriesParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +31,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'requests' => '\Algolia\AlgoliaSearch\Model\MultipleQueries[]',
+        'strategy' => '\Algolia\AlgoliaSearch\Model\MultipleQueriesStrategy',
     ];
 
     /**
@@ -42,7 +43,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'requests' => null,
+        'strategy' => null,
     ];
 
     /**
@@ -72,7 +74,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'requests' => 'requests',
+        'strategy' => 'strategy',
     ];
 
     /**
@@ -81,7 +84,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'requests' => 'setRequests',
+        'strategy' => 'setStrategy',
     ];
 
     /**
@@ -90,7 +94,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'requests' => 'getRequests',
+        'strategy' => 'getStrategy',
     ];
 
     /**
@@ -149,7 +154,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['requests'] = $data['requests'] ?? null;
+        $this->container['strategy'] = $data['strategy'] ?? null;
     }
 
     /**
@@ -161,8 +167,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
+        if ($this->container['requests'] === null) {
+            $invalidProperties[] = "'requests' can't be null";
         }
 
         return $invalidProperties;
@@ -180,25 +186,49 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets requests
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return \Algolia\AlgoliaSearch\Model\MultipleQueries[]
      */
-    public function getKeys()
+    public function getRequests()
     {
-        return $this->container['keys'];
+        return $this->container['requests'];
     }
 
     /**
-     * Sets keys
+     * Sets requests
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param \Algolia\AlgoliaSearch\Model\MultipleQueries[] $requests requests
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setRequests($requests)
     {
-        $this->container['keys'] = $keys;
+        $this->container['requests'] = $requests;
+
+        return $this;
+    }
+
+    /**
+     * Gets strategy
+     *
+     * @return \Algolia\AlgoliaSearch\Model\MultipleQueriesStrategy|null
+     */
+    public function getStrategy()
+    {
+        return $this->container['strategy'];
+    }
+
+    /**
+     * Sets strategy
+     *
+     * @param \Algolia\AlgoliaSearch\Model\MultipleQueriesStrategy|null $strategy strategy
+     *
+     * @return self
+     */
+    public function setStrategy($strategy)
+    {
+        $this->container['strategy'] = $strategy;
 
         return $this;
     }

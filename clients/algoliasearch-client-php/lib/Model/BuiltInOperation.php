@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * ListApiKeysResponse Class Doc Comment
+ * BuiltInOperation Class Doc Comment
  *
  * @category Class
+ * @description To update an attribute without pushing the entire record, you can use these built-in operations.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class BuiltInOperation implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       *
       * @var string
       */
-    protected static $openAPIModelName = 'listApiKeysResponse';
+    protected static $openAPIModelName = 'builtInOperation';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @var string[]
       */
     protected static $openAPITypes = [
-        'keys' => '\Algolia\AlgoliaSearch\Model\Key[]',
+        'operation' => 'string',
+        'value' => 'string',
     ];
 
     /**
@@ -42,7 +45,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'keys' => null,
+        'operation' => null,
+        'value' => null,
     ];
 
     /**
@@ -72,7 +76,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'keys' => 'keys',
+        'operation' => '_operation',
+        'value' => 'value',
     ];
 
     /**
@@ -81,7 +86,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'keys' => 'setKeys',
+        'operation' => 'setOperation',
+        'value' => 'setValue',
     ];
 
     /**
@@ -90,7 +96,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'keys' => 'getKeys',
+        'operation' => 'getOperation',
+        'value' => 'getValue',
     ];
 
     /**
@@ -134,6 +141,32 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return self::$openAPIModelName;
     }
 
+    const OPERATION_INCREMENT = 'Increment';
+    const OPERATION_DECREMENT = 'Decrement';
+    const OPERATION_ADD = 'Add';
+    const OPERATION_REMOVE = 'Remove';
+    const OPERATION_ADD_UNIQUE = 'AddUnique';
+    const OPERATION_INCREMENT_FROM = 'IncrementFrom';
+    const OPERATION_INCREMENT_SET = 'IncrementSet';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getOperationAllowableValues()
+    {
+        return [
+            self::OPERATION_INCREMENT,
+            self::OPERATION_DECREMENT,
+            self::OPERATION_ADD,
+            self::OPERATION_REMOVE,
+            self::OPERATION_ADD_UNIQUE,
+            self::OPERATION_INCREMENT_FROM,
+            self::OPERATION_INCREMENT_SET,
+        ];
+    }
+
     /**
      * Associative array for storing property values
      *
@@ -149,7 +182,8 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(array $data = null)
     {
-        $this->container['keys'] = $data['keys'] ?? null;
+        $this->container['operation'] = $data['operation'] ?? null;
+        $this->container['value'] = $data['value'] ?? null;
     }
 
     /**
@@ -161,8 +195,20 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['keys'] === null) {
-            $invalidProperties[] = "'keys' can't be null";
+        if ($this->container['operation'] === null) {
+            $invalidProperties[] = "'operation' can't be null";
+        }
+        $allowedValues = $this->getOperationAllowableValues();
+        if (!is_null($this->container['operation']) && !in_array($this->container['operation'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'operation', must be one of '%s'",
+                $this->container['operation'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if ($this->container['value'] === null) {
+            $invalidProperties[] = "'value' can't be null";
         }
 
         return $invalidProperties;
@@ -180,25 +226,59 @@ class ListApiKeysResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets keys
+     * Gets operation
      *
-     * @return \Algolia\AlgoliaSearch\Model\Key[]
+     * @return string
      */
-    public function getKeys()
+    public function getOperation()
     {
-        return $this->container['keys'];
+        return $this->container['operation'];
     }
 
     /**
-     * Sets keys
+     * Sets operation
      *
-     * @param \Algolia\AlgoliaSearch\Model\Key[] $keys list of api keys
+     * @param string $operation the operation to apply on the attribute
      *
      * @return self
      */
-    public function setKeys($keys)
+    public function setOperation($operation)
     {
-        $this->container['keys'] = $keys;
+        $allowedValues = $this->getOperationAllowableValues();
+        if (!in_array($operation, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'operation', must be one of '%s'",
+                    $operation,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['operation'] = $operation;
+
+        return $this;
+    }
+
+    /**
+     * Gets value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->container['value'];
+    }
+
+    /**
+     * Sets value
+     *
+     * @param string $value the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove
+     *
+     * @return self
+     */
+    public function setValue($value)
+    {
+        $this->container['value'] = $value;
 
         return $this;
     }

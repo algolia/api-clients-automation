@@ -129,32 +129,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -212,32 +224,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -295,32 +319,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -378,32 +414,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -461,32 +509,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -544,32 +604,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -627,32 +699,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -712,46 +796,64 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -811,46 +913,64 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -898,11 +1018,14 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -962,46 +1085,64 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -1062,53 +1203,74 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($search)) {
-            $search = ObjectSerializer::serializeCollection($search, '', true);
-        }
         if ($search !== null) {
-            $queryParams['search'] = $search;
+            if ('form' === 'form' && is_array($search)) {
+                foreach ($search as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['search'] = $search;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -1176,53 +1338,74 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($search)) {
-            $search = ObjectSerializer::serializeCollection($search, '', true);
-        }
         if ($search !== null) {
-            $queryParams['search'] = $search;
+            if ('form' === 'form' && is_array($search)) {
+                foreach ($search as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['search'] = $search;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         // path params
         if ($attribute !== null) {
@@ -1291,53 +1474,74 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($search)) {
-            $search = ObjectSerializer::serializeCollection($search, '', true);
-        }
         if ($search !== null) {
-            $queryParams['search'] = $search;
+            if ('form' === 'form' && is_array($search)) {
+                foreach ($search as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['search'] = $search;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -1399,60 +1603,84 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($search)) {
-            $search = ObjectSerializer::serializeCollection($search, '', true);
-        }
         if ($search !== null) {
-            $queryParams['search'] = $search;
+            if ('form' === 'form' && is_array($search)) {
+                foreach ($search as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['search'] = $search;
+            }
         }
         // query params
-        if (is_array($clickAnalytics)) {
-            $clickAnalytics = ObjectSerializer::serializeCollection($clickAnalytics, '', true);
-        }
         if ($clickAnalytics !== null) {
-            $queryParams['clickAnalytics'] = $clickAnalytics;
+            if ('form' === 'form' && is_array($clickAnalytics)) {
+                foreach ($clickAnalytics as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['clickAnalytics'] = $clickAnalytics;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -1515,67 +1743,94 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($clickAnalytics)) {
-            $clickAnalytics = ObjectSerializer::serializeCollection($clickAnalytics, '', true);
-        }
         if ($clickAnalytics !== null) {
-            $queryParams['clickAnalytics'] = $clickAnalytics;
+            if ('form' === 'form' && is_array($clickAnalytics)) {
+                foreach ($clickAnalytics as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['clickAnalytics'] = $clickAnalytics;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($orderBy)) {
-            $orderBy = ObjectSerializer::serializeCollection($orderBy, '', true);
-        }
         if ($orderBy !== null) {
-            $queryParams['orderBy'] = $orderBy;
+            if ('form' === 'form' && is_array($orderBy)) {
+                foreach ($orderBy as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['orderBy'] = $orderBy;
+            }
         }
         // query params
-        if (is_array($direction)) {
-            $direction = ObjectSerializer::serializeCollection($direction, '', true);
-        }
         if ($direction !== null) {
-            $queryParams['direction'] = $direction;
+            if ('form' === 'form' && is_array($direction)) {
+                foreach ($direction as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['direction'] = $direction;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],
@@ -1633,32 +1888,44 @@ class AnalyticsApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($index)) {
-            $index = ObjectSerializer::serializeCollection($index, '', true);
-        }
         if ($index !== null) {
-            $queryParams['index'] = $index;
+            if ('form' === 'form' && is_array($index)) {
+                foreach ($index as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['index'] = $index;
+            }
         }
         // query params
-        if (is_array($startDate)) {
-            $startDate = ObjectSerializer::serializeCollection($startDate, '', true);
-        }
         if ($startDate !== null) {
-            $queryParams['startDate'] = $startDate;
+            if ('form' === 'form' && is_array($startDate)) {
+                foreach ($startDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['startDate'] = $startDate;
+            }
         }
         // query params
-        if (is_array($endDate)) {
-            $endDate = ObjectSerializer::serializeCollection($endDate, '', true);
-        }
         if ($endDate !== null) {
-            $queryParams['endDate'] = $endDate;
+            if ('form' === 'form' && is_array($endDate)) {
+                foreach ($endDate as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['endDate'] = $endDate;
+            }
         }
         // query params
-        if (is_array($tags)) {
-            $tags = ObjectSerializer::serializeCollection($tags, '', true);
-        }
         if ($tags !== null) {
-            $queryParams['tags'] = $tags;
+            if ('form' === 'form' && is_array($tags)) {
+                foreach ($tags as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['tags'] = $tags;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],

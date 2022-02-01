@@ -267,18 +267,24 @@ class AbtestingApi
         $headerParams = [];
         $httpBody = [];
         // query params
-        if (is_array($offset)) {
-            $offset = ObjectSerializer::serializeCollection($offset, '', true);
-        }
         if ($offset !== null) {
-            $queryParams['offset'] = $offset;
+            if ('form' === 'form' && is_array($offset)) {
+                foreach ($offset as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['offset'] = $offset;
+            }
         }
         // query params
-        if (is_array($limit)) {
-            $limit = ObjectSerializer::serializeCollection($limit, '', true);
-        }
         if ($limit !== null) {
-            $queryParams['limit'] = $limit;
+            if ('form' === 'form' && is_array($limit)) {
+                foreach ($limit as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['limit'] = $limit;
+            }
         }
         $headers = $this->headerSelector->selectHeaders(
             ['application/json'],

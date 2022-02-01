@@ -184,6 +184,10 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['userID'] === null) {
             $invalidProperties[] = "'userID' can't be null";
         }
+        if (!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $this->container['userID'])) {
+            $invalidProperties[] = "invalid value for 'userID', must be conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.";
+        }
+
         if ($this->container['clusterName'] === null) {
             $invalidProperties[] = "'clusterName' can't be null";
         }
@@ -227,6 +231,10 @@ class UserId implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function setUserID($userID)
     {
+        if ((!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $userID))) {
+            throw new \InvalidArgumentException("invalid value for $userID when calling UserId., must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
+        }
+
         $this->container['userID'] = $userID;
 
         return $this;

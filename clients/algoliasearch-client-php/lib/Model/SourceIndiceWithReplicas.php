@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * SearchUserIdsResponseHits Class Doc Comment
+ * SourceIndiceWithReplicas Class Doc Comment
  *
  * @category Class
+ * @description Source indice with replicas used to generate a Query Suggestions index.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSerializable
+class SourceIndiceWithReplicas implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
       *
       * @var string
       */
-    protected static $openAPIModelName = 'searchUserIdsResponse_hits';
+    protected static $openAPIModelName = 'SourceIndiceWithReplicas';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,12 +33,14 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
       * @var string[]
       */
     protected static $openAPITypes = [
-        'userID' => 'string',
-        'clusterName' => 'string',
-        'nbRecords' => 'int',
-        'dataSize' => 'int',
-        'objectID' => 'string',
-        'highlightResult' => '\Algolia\AlgoliaSearch\Model\SearchUserIdsResponseHighlightResult',
+        'replicas' => 'bool',
+        'indexName' => 'string',
+        'analyticsTags' => 'string[]',
+        'facets' => 'object[]',
+        'minHits' => 'int',
+        'minLetters' => 'int',
+        'generate' => 'string[][]',
+        'external' => '\Algolia\AlgoliaSearch\Model\SourceIndexExternal[]',
     ];
 
     /**
@@ -47,12 +51,14 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'userID' => null,
-        'clusterName' => null,
-        'nbRecords' => null,
-        'dataSize' => null,
-        'objectID' => null,
-        'highlightResult' => null,
+        'replicas' => null,
+        'indexName' => null,
+        'analyticsTags' => null,
+        'facets' => null,
+        'minHits' => null,
+        'minLetters' => null,
+        'generate' => null,
+        'external' => null,
     ];
 
     /**
@@ -82,12 +88,14 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $attributeMap = [
-        'userID' => 'userID',
-        'clusterName' => 'clusterName',
-        'nbRecords' => 'nbRecords',
-        'dataSize' => 'dataSize',
-        'objectID' => 'objectID',
-        'highlightResult' => '_highlightResult',
+        'replicas' => 'replicas',
+        'indexName' => 'indexName',
+        'analyticsTags' => 'analyticsTags',
+        'facets' => 'facets',
+        'minHits' => 'minHits',
+        'minLetters' => 'minLetters',
+        'generate' => 'generate',
+        'external' => 'external',
     ];
 
     /**
@@ -96,12 +104,14 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $setters = [
-        'userID' => 'setUserID',
-        'clusterName' => 'setClusterName',
-        'nbRecords' => 'setNbRecords',
-        'dataSize' => 'setDataSize',
-        'objectID' => 'setObjectID',
-        'highlightResult' => 'setHighlightResult',
+        'replicas' => 'setReplicas',
+        'indexName' => 'setIndexName',
+        'analyticsTags' => 'setAnalyticsTags',
+        'facets' => 'setFacets',
+        'minHits' => 'setMinHits',
+        'minLetters' => 'setMinLetters',
+        'generate' => 'setGenerate',
+        'external' => 'setExternal',
     ];
 
     /**
@@ -110,12 +120,14 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $getters = [
-        'userID' => 'getUserID',
-        'clusterName' => 'getClusterName',
-        'nbRecords' => 'getNbRecords',
-        'dataSize' => 'getDataSize',
-        'objectID' => 'getObjectID',
-        'highlightResult' => 'getHighlightResult',
+        'replicas' => 'getReplicas',
+        'indexName' => 'getIndexName',
+        'analyticsTags' => 'getAnalyticsTags',
+        'facets' => 'getFacets',
+        'minHits' => 'getMinHits',
+        'minLetters' => 'getMinLetters',
+        'generate' => 'getGenerate',
+        'external' => 'getExternal',
     ];
 
     /**
@@ -174,12 +186,14 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
      */
     public function __construct(array $data = null)
     {
-        $this->container['userID'] = $data['userID'] ?? null;
-        $this->container['clusterName'] = $data['clusterName'] ?? null;
-        $this->container['nbRecords'] = $data['nbRecords'] ?? null;
-        $this->container['dataSize'] = $data['dataSize'] ?? null;
-        $this->container['objectID'] = $data['objectID'] ?? null;
-        $this->container['highlightResult'] = $data['highlightResult'] ?? null;
+        $this->container['replicas'] = $data['replicas'] ?? null;
+        $this->container['indexName'] = $data['indexName'] ?? null;
+        $this->container['analyticsTags'] = $data['analyticsTags'] ?? null;
+        $this->container['facets'] = $data['facets'] ?? null;
+        $this->container['minHits'] = $data['minHits'] ?? null;
+        $this->container['minLetters'] = $data['minLetters'] ?? null;
+        $this->container['generate'] = $data['generate'] ?? null;
+        $this->container['external'] = $data['external'] ?? null;
     }
 
     /**
@@ -191,27 +205,29 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     {
         $invalidProperties = [];
 
-        if ($this->container['userID'] === null) {
-            $invalidProperties[] = "'userID' can't be null";
+        if ($this->container['replicas'] === null) {
+            $invalidProperties[] = "'replicas' can't be null";
         }
-        if (!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $this->container['userID'])) {
-            $invalidProperties[] = "invalid value for 'userID', must be conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.";
+        if ($this->container['indexName'] === null) {
+            $invalidProperties[] = "'indexName' can't be null";
         }
-
-        if ($this->container['clusterName'] === null) {
-            $invalidProperties[] = "'clusterName' can't be null";
+        if ($this->container['analyticsTags'] === null) {
+            $invalidProperties[] = "'analyticsTags' can't be null";
         }
-        if ($this->container['nbRecords'] === null) {
-            $invalidProperties[] = "'nbRecords' can't be null";
+        if ($this->container['facets'] === null) {
+            $invalidProperties[] = "'facets' can't be null";
         }
-        if ($this->container['dataSize'] === null) {
-            $invalidProperties[] = "'dataSize' can't be null";
+        if ($this->container['minHits'] === null) {
+            $invalidProperties[] = "'minHits' can't be null";
         }
-        if ($this->container['objectID'] === null) {
-            $invalidProperties[] = "'objectID' can't be null";
+        if ($this->container['minLetters'] === null) {
+            $invalidProperties[] = "'minLetters' can't be null";
         }
-        if ($this->container['highlightResult'] === null) {
-            $invalidProperties[] = "'highlightResult' can't be null";
+        if ($this->container['generate'] === null) {
+            $invalidProperties[] = "'generate' can't be null";
+        }
+        if ($this->container['external'] === null) {
+            $invalidProperties[] = "'external' can't be null";
         }
 
         return $invalidProperties;
@@ -229,149 +245,193 @@ class SearchUserIdsResponseHits implements ModelInterface, ArrayAccess, \JsonSer
     }
 
     /**
-     * Gets userID
+     * Gets replicas
      *
-     * @return string
+     * @return bool
      */
-    public function getUserID()
+    public function getReplicas()
     {
-        return $this->container['userID'];
+        return $this->container['replicas'];
     }
 
     /**
-     * Sets userID
+     * Sets replicas
      *
-     * @param string $userID userID of the user
+     * @param bool $replicas true if the Query Suggestions index is a replicas
      *
      * @return self
      */
-    public function setUserID($userID)
+    public function setReplicas($replicas)
     {
-        if ((!preg_match('/^[a-zA-Z0-9 \\-*.]+$/', $userID))) {
-            throw new \InvalidArgumentException("invalid value for $userID when calling SearchUserIdsResponseHits., must conform to the pattern /^[a-zA-Z0-9 \\-*.]+$/.");
-        }
-
-        $this->container['userID'] = $userID;
+        $this->container['replicas'] = $replicas;
 
         return $this;
     }
 
     /**
-     * Gets clusterName
+     * Gets indexName
      *
      * @return string
      */
-    public function getClusterName()
+    public function getIndexName()
     {
-        return $this->container['clusterName'];
+        return $this->container['indexName'];
     }
 
     /**
-     * Sets clusterName
+     * Sets indexName
      *
-     * @param string $clusterName name of the cluster
+     * @param string $indexName source index name
      *
      * @return self
      */
-    public function setClusterName($clusterName)
+    public function setIndexName($indexName)
     {
-        $this->container['clusterName'] = $clusterName;
+        $this->container['indexName'] = $indexName;
 
         return $this;
     }
 
     /**
-     * Gets nbRecords
+     * Gets analyticsTags
+     *
+     * @return string[]
+     */
+    public function getAnalyticsTags()
+    {
+        return $this->container['analyticsTags'];
+    }
+
+    /**
+     * Sets analyticsTags
+     *
+     * @param string[] $analyticsTags list of analytics tags to filter the popular searches per tag
+     *
+     * @return self
+     */
+    public function setAnalyticsTags($analyticsTags)
+    {
+        $this->container['analyticsTags'] = $analyticsTags;
+
+        return $this;
+    }
+
+    /**
+     * Gets facets
+     *
+     * @return object[]
+     */
+    public function getFacets()
+    {
+        return $this->container['facets'];
+    }
+
+    /**
+     * Sets facets
+     *
+     * @param object[] $facets list of facets to define as categories for the query suggestions
+     *
+     * @return self
+     */
+    public function setFacets($facets)
+    {
+        $this->container['facets'] = $facets;
+
+        return $this;
+    }
+
+    /**
+     * Gets minHits
      *
      * @return int
      */
-    public function getNbRecords()
+    public function getMinHits()
     {
-        return $this->container['nbRecords'];
+        return $this->container['minHits'];
     }
 
     /**
-     * Sets nbRecords
+     * Sets minHits
      *
-     * @param int $nbRecords number of records in the cluster
+     * @param int $minHits Minimum number of hits (e.g., matching records in the source index) to generate a suggestions.
      *
      * @return self
      */
-    public function setNbRecords($nbRecords)
+    public function setMinHits($minHits)
     {
-        $this->container['nbRecords'] = $nbRecords;
+        $this->container['minHits'] = $minHits;
 
         return $this;
     }
 
     /**
-     * Gets dataSize
+     * Gets minLetters
      *
      * @return int
      */
-    public function getDataSize()
+    public function getMinLetters()
     {
-        return $this->container['dataSize'];
+        return $this->container['minLetters'];
     }
 
     /**
-     * Sets dataSize
+     * Sets minLetters
      *
-     * @param int $dataSize data size taken by all the users assigned to the cluster
+     * @param int $minLetters minimum number of required letters for a suggestion to remain
      *
      * @return self
      */
-    public function setDataSize($dataSize)
+    public function setMinLetters($minLetters)
     {
-        $this->container['dataSize'] = $dataSize;
+        $this->container['minLetters'] = $minLetters;
 
         return $this;
     }
 
     /**
-     * Gets objectID
+     * Gets generate
      *
-     * @return string
+     * @return string[][]
      */
-    public function getObjectID()
+    public function getGenerate()
     {
-        return $this->container['objectID'];
+        return $this->container['generate'];
     }
 
     /**
-     * Sets objectID
+     * Sets generate
      *
-     * @param string $objectID userID of the requested user. Same as userID.
+     * @param string[][] $generate List of facet attributes used to generate Query Suggestions. The resulting suggestions are every combination of the facets in the nested list (e.g., (facetA and facetB) and facetC).
      *
      * @return self
      */
-    public function setObjectID($objectID)
+    public function setGenerate($generate)
     {
-        $this->container['objectID'] = $objectID;
+        $this->container['generate'] = $generate;
 
         return $this;
     }
 
     /**
-     * Gets highlightResult
+     * Gets external
      *
-     * @return \Algolia\AlgoliaSearch\Model\SearchUserIdsResponseHighlightResult
+     * @return \Algolia\AlgoliaSearch\Model\SourceIndexExternal[]
      */
-    public function getHighlightResult()
+    public function getExternal()
     {
-        return $this->container['highlightResult'];
+        return $this->container['external'];
     }
 
     /**
-     * Sets highlightResult
+     * Sets external
      *
-     * @param \Algolia\AlgoliaSearch\Model\SearchUserIdsResponseHighlightResult $highlightResult highlightResult
+     * @param \Algolia\AlgoliaSearch\Model\SourceIndexExternal[] $external list of external indices to use to generate custom Query Suggestions
      *
      * @return self
      */
-    public function setHighlightResult($highlightResult)
+    public function setExternal($external)
     {
-        $this->container['highlightResult'] = $highlightResult;
+        $this->container['external'] = $external;
 
         return $this;
     }

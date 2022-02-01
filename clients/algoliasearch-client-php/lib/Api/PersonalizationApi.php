@@ -155,7 +155,7 @@ class PersonalizationApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\PersonalizationStrategyObject|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\PersonalizationStrategyParams|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
     public function getPersonalizationStrategy()
     {
@@ -241,19 +241,19 @@ class PersonalizationApi
      *
      * Set a new personalization strategy.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\PersonalizationStrategyObject $personalizationStrategyObject personalizationStrategyObject (required)
+     * @param  \Algolia\AlgoliaSearch\Model\PersonalizationStrategyParams $personalizationStrategyParams personalizationStrategyParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\SetPersonalizationStrategyResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function setPersonalizationStrategy($personalizationStrategyObject)
+    public function setPersonalizationStrategy($personalizationStrategyParams)
     {
-        // verify the required parameter 'personalizationStrategyObject' is set
-        if ($personalizationStrategyObject === null || (is_array($personalizationStrategyObject) && count($personalizationStrategyObject) === 0)) {
+        // verify the required parameter 'personalizationStrategyParams' is set
+        if ($personalizationStrategyParams === null || (is_array($personalizationStrategyParams) && count($personalizationStrategyParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $personalizationStrategyObject when calling setPersonalizationStrategy'
+                'Missing the required parameter $personalizationStrategyParams when calling setPersonalizationStrategy'
             );
         }
 
@@ -265,8 +265,8 @@ class PersonalizationApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($personalizationStrategyObject)) {
-            $httpBody = $personalizationStrategyObject;
+        if (isset($personalizationStrategyParams)) {
+            $httpBody = $personalizationStrategyParams;
         }
 
         $defaultHeaders = [];
