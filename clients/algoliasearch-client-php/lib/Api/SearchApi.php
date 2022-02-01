@@ -3,7 +3,7 @@
 namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
-use Algolia\AlgoliaSearch\Configuration\Configuration;
+use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -24,7 +24,7 @@ class SearchApi
     protected $api;
 
     /**
-     * @var Configuration
+     * @var SearchConfig
      */
     protected $config;
 
@@ -34,10 +34,10 @@ class SearchApi
     protected $headerSelector;
 
     /**
-     * @param Configuration $config
+     * @param SearchConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
-    public function __construct(ApiWrapperInterface $apiWrapper, Configuration $config)
+    public function __construct(ApiWrapperInterface $apiWrapper, SearchConfig $config)
     {
         $this->config = $config;
 
@@ -53,15 +53,15 @@ class SearchApi
      */
     public static function create($appId = null, $apiKey = null)
     {
-        return static::createWithConfig(Configuration::create($appId, $apiKey));
+        return static::createWithConfig(SearchConfig::create($appId, $apiKey));
     }
 
     /**
      * Instantiate the client with congiguration
      *
-     * @param Configuration $config Configuration
+     * @param SearchConfig $config Configuration
      */
-    public static function createWithConfig(Configuration $config)
+    public static function createWithConfig(SearchConfig $config)
     {
         $config = clone $config;
 
@@ -87,9 +87,9 @@ class SearchApi
     }
 
     /**
-     * @return Configuration
+     * @return SearchConfig
      */
-    public function getConfig()
+    public function getClientConfig()
     {
         return $this->config;
     }

@@ -31,7 +31,6 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'params' => 'string',
         'similarQuery' => 'string',
         'filters' => 'string',
         'facetFilters' => 'string[]',
@@ -119,7 +118,6 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'params' => null,
         'similarQuery' => null,
         'filters' => null,
         'facetFilters' => null,
@@ -226,7 +224,6 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'params' => 'params',
         'similarQuery' => 'similarQuery',
         'filters' => 'filters',
         'facetFilters' => 'facetFilters',
@@ -312,7 +309,6 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'params' => 'setParams',
         'similarQuery' => 'setSimilarQuery',
         'filters' => 'setFilters',
         'facetFilters' => 'setFacetFilters',
@@ -398,7 +394,6 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'params' => 'getParams',
         'similarQuery' => 'getSimilarQuery',
         'filters' => 'getFilters',
         'facetFilters' => 'getFacetFilters',
@@ -639,7 +634,6 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['params'] = $data['params'] ?? '';
         $this->container['similarQuery'] = $data['similarQuery'] ?? '';
         $this->container['filters'] = $data['filters'] ?? '';
         $this->container['facetFilters'] = $data['facetFilters'] ?? null;
@@ -811,30 +805,6 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     public function valid()
     {
         return count($this->listInvalidProperties()) === 0;
-    }
-
-    /**
-     * Gets params
-     *
-     * @return string|null
-     */
-    public function getParams()
-    {
-        return $this->container['params'];
-    }
-
-    /**
-     * Sets params
-     *
-     * @param string|null $params search parameters as URL-encoded query string
-     *
-     * @return self
-     */
-    public function setParams($params)
-    {
-        $this->container['params'] = $params;
-
-        return $this;
     }
 
     /**

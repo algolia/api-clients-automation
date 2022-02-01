@@ -18,7 +18,7 @@ lint_client() {
     else
         PHP="php8"
     fi
-    PHP_CS_FIXER_IGNORE_ENV=1 $PHP vendor/bin/php-cs-fixer fix lib/ -v --using-cache=no --allow-risky=yes
+    PHP_CS_FIXER_IGNORE_ENV=1 $PHP vendor/bin/php-cs-fixer fix lib/ --using-cache=no --allow-risky=yes
 }
 
 lint_client

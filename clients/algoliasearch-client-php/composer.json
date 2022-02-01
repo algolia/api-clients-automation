@@ -1,6 +1,6 @@
 {
     "name": "algolia/algoliasearch-client-php",
-    "description": "API powering the Search feature of Algolia.",
+    "description": "API powering the features of Algolia.",
     "keywords": [
         "openapitools",
         "openapi-generator",
