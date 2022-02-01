@@ -20,7 +20,7 @@ elif [[ $LANGUAGE == 'php' ]]; then
     else
         PHP="php8"
     fi
-    CMD= "composer update && composer dump-autoload && PHP_CS_FIXER_IGNORE_ENV=1 $PHP vendor/bin/php-cs-fixer fix lib/ --using-cache=no --allow-risky=yes"
+    CMD= "cd $FOLDER && composer update && composer dump-autoload && PHP_CS_FIXER_IGNORE_ENV=1 $PHP vendor/bin/php-cs-fixer fix lib/ --using-cache=no --allow-risky=yes"
 elif [[ $LANGUAGE == 'java' ]]; then
     CMD="find $FOLDER -type f -name \"*.java\" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
