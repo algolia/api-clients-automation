@@ -21,13 +21,6 @@ abstract class ConfigWithRegion extends Configuration
         return new static($config);
     }
 
-    public function setRegion($region)
-    {
-        $this->config['region'] = $region;
-
-        return $this;
-    }
-
     public function getRegion()
     {
         return $this->config['region'];
