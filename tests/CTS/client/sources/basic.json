@@ -5,8 +5,8 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "path": "postIngestUrl",
+        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
         "expected": {
           "testSubject": "actual.userAgent",
           "match": {
@@ -22,13 +22,13 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "path": "postIngestUrl",
+        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
         "expected": {
           "match": {
             "objectContaining": {
               "connectTimeout": 2,
-              "responseTimeout": 5
+              "responseTimeout": 30
             }
           }
         }

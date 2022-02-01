@@ -5,8 +5,14 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "path": "addABTests",
+        "parameters": [
+          {
+            "name": "test",
+            "variant": [{ "index": "my-test-index", "trafficPercentage": 90 }],
+            "endAt": "2022-02-01T13:37:01Z"
+          }
+        ],
         "expected": {
           "testSubject": "actual.userAgent",
           "match": {
@@ -22,13 +28,19 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "path": "addABTests",
+        "parameters": [
+          {
+            "name": "test",
+            "variant": [{ "index": "my-test-index", "trafficPercentage": 90 }],
+            "endAt": "2022-02-01T13:37:01Z"
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {
               "connectTimeout": 2,
-              "responseTimeout": 5
+              "responseTimeout": 30
             }
           }
         }

@@ -5,8 +5,12 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "path": "pushEvents",
+        "parameters": [
+          {
+            "events": []
+          }
+        ],
         "expected": {
           "testSubject": "actual.userAgent",
           "match": {
@@ -22,13 +26,17 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "path": "pushEvents",
+        "parameters": [
+          {
+            "events": []
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {
               "connectTimeout": 2,
-              "responseTimeout": 5
+              "responseTimeout": 30
             }
           }
         }

@@ -1,6 +1,6 @@
 [
   {
-    "testName": "searches with correct host",
+    "testName": "calls api with correct host",
     "steps": [
       {
         "type": "method",
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "testName": "searches with correct user agent",
+    "testName": "calls api with correct user agent",
     "steps": [
       {
         "type": "method",
@@ -35,7 +35,7 @@
     ]
   },
   {
-    "testName": "searches with correct timeouts",
+    "testName": "calls api with correct timeouts",
     "steps": [
       {
         "type": "method",

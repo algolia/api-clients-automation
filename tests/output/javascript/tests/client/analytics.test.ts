@@ -11,6 +11,40 @@ function createClient(): AnalyticsApi {
 }
 
 describe('basic', () => {
+  test('calls api with correct user agent', async () => {
+    const $client = createClient();
+
+    let actual;
+
+    actual = $client.getAverageClickPosition({ index: 'my-index' });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual.userAgent).toMatch(
+      /Algolia%20for%20(.+)%20\(\d+\.\d+\.\d+\)/
+    );
+  });
+
+  test('calls api with correct timeouts', async () => {
+    const $client = createClient();
+
+    let actual;
+
+    actual = $client.getAverageClickPosition({ index: 'my-index' });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ connectTimeout: 2, responseTimeout: 5 })
+    );
+  });
+});
+
+describe('parameters', () => {
   test('does not throw when region is not given', async () => {
     let actual;
 
