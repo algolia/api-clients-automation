@@ -54,7 +54,8 @@ class AnalyticsApi
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $config = AnalyticsConfig::create($appId, $apiKey, $region);
+        $allowedRegions = explode('-', 'us-de');
+        $config = AnalyticsConfig::create($appId, $apiKey, $region, $allowedRegions);
 
         return static::createWithConfig($config);
     }

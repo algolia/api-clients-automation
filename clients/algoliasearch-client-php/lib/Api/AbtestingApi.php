@@ -54,7 +54,8 @@ class AbtestingApi
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $config = AbTestingConfig::create($appId, $apiKey, $region);
+        $allowedRegions = explode('-', 'us-de');
+        $config = AbTestingConfig::create($appId, $apiKey, $region, $allowedRegions);
 
         return static::createWithConfig($config);
     }

@@ -54,7 +54,8 @@ class QuerySuggestionsApi
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $config = QuerySuggestionsConfig::create($appId, $apiKey, $region);
+        $allowedRegions = explode('-', 'us-eu');
+        $config = QuerySuggestionsConfig::create($appId, $apiKey, $region, $allowedRegions);
 
         return static::createWithConfig($config);
     }

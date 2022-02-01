@@ -53,7 +53,8 @@ class RecommendApi
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $config = RecommendConfig::create($appId, $apiKey, $region);
+        $allowedRegions = explode('-', 'us-de');
+        $config = RecommendConfig::create($appId, $apiKey, $region, $allowedRegions);
 
         return static::createWithConfig($config);
     }
