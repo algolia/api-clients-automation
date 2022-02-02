@@ -23,7 +23,7 @@ echo "> Building $GENERATOR..."
 if [[ $LANGUAGE == 'javascript' ]]; then
     CMD="yarn workspace $PACKAGE build"
 elif [[ $LANGUAGE == 'java' ]]; then
-    CMD="./gradlew --no-daemon -p clients/$PACKAGE assemble"
+    CMD="./gradle/gradlew --no-daemon -p clients/$PACKAGE assemble"
 fi
 
 if [[ $VERBOSE == "true" ]]; then

@@ -15,7 +15,7 @@ run_playground() {
     if [[ $LANGUAGE == 'javascript' ]]; then
         yarn workspace javascript-playground start:$CLIENT
     elif [[ $LANGUAGE == 'java' ]]; then
-        ./gradlew --no-daemon -p playground/java run
+        ./gradle/gradlew --no-daemon -p playground/java run
     fi
 }
 

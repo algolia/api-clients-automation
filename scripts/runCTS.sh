@@ -14,7 +14,7 @@ run_cts() {
     if [[ $LANGUAGE == 'javascript' ]]; then
         yarn workspace javascript-tests test
     elif [[ $LANGUAGE == 'java' ]]; then
-        ./gradlew --no-daemon -p tests/output/java test
+        ./gradle/gradlew --no-daemon -p tests/output/java test
     else
         echo "Cannot run CTS on unknown language $LANGUAGE"
         exit 1
