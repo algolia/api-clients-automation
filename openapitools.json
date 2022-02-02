@@ -79,8 +79,8 @@
           "npmName": "@algolia/client-analytics",
           "packageVersion": "5.0.0",
           "packageName": "@algolia/client-analytics",
-          "hasRegionalHost": true,
           "fallbackToAliasHost": true,
+          "hasRegionalHost": true,
           "isDeHost": true,
           "host": "analytics",
           "topLevelDomain": "com"
@@ -102,11 +102,11 @@
           "npmName": "@algolia/client-insights",
           "packageVersion": "5.0.0",
           "packageName": "@algolia/client-insights",
-          "host": "insights",
-          "topLevelDomain": "io",
-          "hasRegionalHost": true,
           "fallbackToAliasHost": true,
-          "isDeHost": true
+          "hasRegionalHost": true,
+          "isDeHost": true,
+          "host": "insights",
+          "topLevelDomain": "io"
         }
       },
       "javascript-abtesting": {
