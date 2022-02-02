@@ -29,11 +29,13 @@
     "github-actions:lint": "eslint --ext=yml .github/"
   },
   "devDependencies": {
+    "@octokit/rest": "18.12.0",
     "@openapitools/openapi-generator-cli": "2.4.18",
     "@redocly/openapi-cli": "1.0.0-beta.79",
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",
     "babel-eslint": "10.1.0",
+    "dotenv": "14.3.2",
     "eslint": "8.6.0",
     "eslint-config-algolia": "20.0.0",
     "eslint-config-prettier": "8.3.0",
@@ -44,10 +46,12 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
     "eslint-plugin-yml": "0.12.0",
+    "execa": "5.1.1",
     "json": "11.0.0",
     "mustache": "4.2.0",
     "prettier": "2.5.1",
     "prettier-plugin-java": "1.6.0",
+    "semver": "7.3.5",
     "typescript": "4.5.4"
   },
   "engines": {
