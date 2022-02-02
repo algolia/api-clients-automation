@@ -164,8 +164,8 @@ const versionChanges = langs
       `- [${checked}] ${langName}: v${current} -> v${next}`,
       skipRelease &&
         `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
-      `  - **Checked** → Update version, update repository, and release the library.`,
-      `  - **Unchecked** → Update repository.`,
+      `  - **Checked** → Update version, update ${langName} repository, and release the library.`,
+      `  - **Unchecked** → Update ${langName} repository.`,
       `  - **Line removed** → Do nothing.`,
     ]
       .filter(Boolean)
