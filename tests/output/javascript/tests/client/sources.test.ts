@@ -10,7 +10,7 @@ function createClient(): SourcesApi {
   });
 }
 
-describe('basic', () => {
+describe('api', () => {
   test('calls api with correct user agent', async () => {
     const $client = createClient();
 

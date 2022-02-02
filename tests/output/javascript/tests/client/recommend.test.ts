@@ -8,7 +8,7 @@ function createClient(): RecommendApi {
   return new RecommendApi(appId, apiKey, { requester: new EchoRequester() });
 }
 
-describe('basic', () => {
+describe('api', () => {
   test('calls api with correct user agent', async () => {
     const $client = createClient();
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { SearchApi, EchoRequester } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
@@ -8,8 +7,8 @@ function createClient(): SearchApi {
   return new SearchApi(appId, apiKey, { requester: new EchoRequester() });
 }
 
-describe('basic', () => {
-  test('searches with correct host', async () => {
+describe('api', () => {
+  test('calls api with correct host', async () => {
     const $client = createClient();
 
     let actual;
@@ -25,7 +24,7 @@ describe('basic', () => {
     );
   });
 
-  test('searches with correct user agent', async () => {
+  test('calls api with correct user agent', async () => {
     const $client = createClient();
 
     let actual;
@@ -41,7 +40,7 @@ describe('basic', () => {
     );
   });
 
-  test('searches with correct timeouts', async () => {
+  test('calls api with correct timeouts', async () => {
     const $client = createClient();
 
     let actual;
@@ -59,7 +58,7 @@ describe('basic', () => {
 });
 
 describe('parameters', () => {
-  test('constructor throws with invalid parameters', async () => {
+  test('client throws with invalid parameters', async () => {
     let actual;
     await expect(
       new Promise((resolve, reject) => {
@@ -190,7 +189,7 @@ describe('parameters', () => {
     );
 
     await expect(
-      new Promise((resolve, reject) => {
+      new Promise<void>((resolve, reject) => {
         actual = $client.addOrUpdateObject({
           indexName: 'my-index-name',
           objectID: 'my-object-id',
