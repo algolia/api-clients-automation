@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
-/* eslint-disable no-process-exit */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
@@ -41,19 +40,11 @@ if (run('git rev-parse --abbrev-ref HEAD') !== RELEASE_BRANCH) {
   );
 }
 
-const lastCommit = run('git log --oneline -n 1').trim();
-if (!lastCommit.slice(8).startsWith('chore: release')) {
-  console.log("Quitting because the latest commit isn't a release commit.");
-  process.exit(0);
-}
-
-const [, prNumber] = lastCommit.match(/\(#(\d+)\)$/);
-
 const pullRequestBody = JSON.parse(
   execa.sync('curl', [
     '-H',
     `Authorization: token ${process.env.GITHUB_TOKEN}`,
-    `https://api.github.com/repos/algolia/api-clients-automation/pulls/${prNumber}`,
+    `https://api.github.com/repos/algolia/api-clients-automation/pulls/${process.env.PR_NUMBER}`,
   ]).stdout
 ).body;
 
