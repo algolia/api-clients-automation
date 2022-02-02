@@ -151,28 +151,25 @@ const versionChanges = langs
   .map((lang) => {
     const { current, next, noCommit, skipRelease, langName } = versions[lang];
 
-    if (!current) {
-      return `- [ ] ~${langName}: (current version not found)~`;
-    }
-
     if (noCommit) {
       return `- ~${langName}: v${current} (no commit)~`;
     }
 
-    if (skipRelease) {
-      return [
-        `- [ ] ${langName}: v${current} -> v${next}`,
-        `  * No \`feat\` or \`fix\` commit, thus unchecked by default.`,
-        `  * If you check it, ${lang} repo will be updated, and the library will be released with the new version.`,
-        `  * If you leave it unchecked, ${lang} repo will still be updated (no version update).`,
-        `  * If you don't want to update ${lang} repo at all, edit this pull request to remove the line above.`,
-      ].join('\n');
+    if (!current) {
+      return `- ~${langName}: (current version not found)~`;
     }
 
+    const checked = skipRelease ? ' ' : 'x';
     return [
-      `- [x] ${langName}: v${current} -> v${next}`,
-      `  * Uncheck if you want to skip it.`,
-    ].join('\n');
+      `- [${checked}] ${langName}: v${current} -> v${next}`,
+      skipRelease &&
+        `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
+      `  - **Checked** → Update version, update repository, and release the library.`,
+      `  - **Unchecked** → Update repository.`,
+      `  - **Line removed** → Do nothing.`,
+    ]
+      .filter(Boolean)
+      .join('\n');
   })
   .join('\n');
 
@@ -182,6 +179,7 @@ const changelogHeader = [
 ].join('\n');
 
 const changelogs = langs
+  .filter((lang) => !versions[lang].noCommit && versions[lang].current)
   .flatMap((lang) => {
     if (versions[lang].noCommit) {
       return [];
@@ -222,6 +220,7 @@ octokit.rest.pulls
       data: { number, html_url: url },
     } = result;
 
+    console.log('');
     console.log(`Pull Request #${number} is ready for review.`);
     console.log(`  > ${url}`);
   });
