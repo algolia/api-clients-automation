@@ -55,7 +55,7 @@ if (run('git rev-parse --abbrev-ref HEAD') !== MAIN_BRANCH) {
   );
 }
 
-if (!run('git status --porcelain')) {
+if (run('git status --porcelain')) {
   throw new Error(
     'Working directory is not clean. Commit all the changes first.'
   );
