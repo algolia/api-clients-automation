@@ -5,6 +5,7 @@
 const fs = require('fs');
 
 const { Octokit } = require('@octokit/rest');
+const dotenv = require('dotenv');
 const execa = require('execa'); // https://github.com/sindresorhus/execa/tree/v5.1.1
 const semver = require('semver');
 
@@ -13,6 +14,8 @@ const MAIN_BRANCH = 'main';
 
 const OWNER = 'algolia';
 const REPO = 'api-clients-automation';
+
+dotenv.config();
 
 const LANG_NAME_ALIAS = {
   js: 'javascript',
