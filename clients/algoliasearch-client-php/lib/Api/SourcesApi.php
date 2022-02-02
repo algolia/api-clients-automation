@@ -10,12 +10,12 @@ use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 
 /**
- * RecommendApi Class Doc Comment
+ * SourcesApi Class Doc Comment
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
  */
-class RecommendApi
+class SourcesApi
 {
     /**
      * @var ApiWrapperInterface
@@ -94,27 +94,27 @@ class RecommendApi
     }
 
     /**
-     * Operation getRecommendations
+     * Operation postIngestUrl
      *
-     * Returns recommendations for a specific model and objectID.
+     * Create a new ingestion job via URL.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\GetRecommendations $getRecommendations getRecommendations (required)
+     * @param  \Algolia\AlgoliaSearch\Model\PostURLJob $postURLJob postURLJob (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetRecommendationsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\PostIngestUrlResponse|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function getRecommendations($getRecommendations)
+    public function postIngestUrl($postURLJob)
     {
-        // verify the required parameter 'getRecommendations' is set
-        if ($getRecommendations === null || (is_array($getRecommendations) && count($getRecommendations) === 0)) {
+        // verify the required parameter 'postURLJob' is set
+        if ($postURLJob === null || (is_array($postURLJob) && count($postURLJob) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $getRecommendations when calling getRecommendations'
+                'Missing the required parameter $postURLJob when calling postIngestUrl'
             );
         }
 
-        $resourcePath = '/1/indexes/*/recommendations';
+        $resourcePath = '/1/ingest/url';
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
@@ -122,8 +122,8 @@ class RecommendApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($getRecommendations)) {
-            $httpBody = $getRecommendations;
+        if (isset($postURLJob)) {
+            $httpBody = $postURLJob;
         }
 
         $defaultHeaders = [];

@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * SearchHits Class Doc Comment
+ * HitHit Class Doc Comment
  *
  * @category Class
+ * @description A single hit.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
+class HitHit implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'searchHits';
+    protected static $openAPIModelName = 'Hit_hit';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,11 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'hits' => '\Algolia\AlgoliaSearch\Model\HitHit[]',
+        'objectID' => 'string',
+        'highlightResult' => '\Algolia\AlgoliaSearch\Model\HighlightResult',
+        'snippetResult' => '\Algolia\AlgoliaSearch\Model\SnippetResult',
+        'rankingInfo' => '\Algolia\AlgoliaSearch\Model\RankingInfo',
+        'distinctSeqID' => 'int',
     ];
 
     /**
@@ -42,7 +48,11 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'hits' => null,
+        'objectID' => null,
+        'highlightResult' => null,
+        'snippetResult' => null,
+        'rankingInfo' => null,
+        'distinctSeqID' => null,
     ];
 
     /**
@@ -72,7 +82,11 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'hits' => 'hits',
+        'objectID' => 'objectID',
+        'highlightResult' => '_highlightResult',
+        'snippetResult' => '_snippetResult',
+        'rankingInfo' => '_rankingInfo',
+        'distinctSeqID' => '_distinctSeqID',
     ];
 
     /**
@@ -81,7 +95,11 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'hits' => 'setHits',
+        'objectID' => 'setObjectID',
+        'highlightResult' => 'setHighlightResult',
+        'snippetResult' => 'setSnippetResult',
+        'rankingInfo' => 'setRankingInfo',
+        'distinctSeqID' => 'setDistinctSeqID',
     ];
 
     /**
@@ -90,7 +108,11 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'hits' => 'getHits',
+        'objectID' => 'getObjectID',
+        'highlightResult' => 'getHighlightResult',
+        'snippetResult' => 'getSnippetResult',
+        'rankingInfo' => 'getRankingInfo',
+        'distinctSeqID' => 'getDistinctSeqID',
     ];
 
     /**
@@ -149,7 +171,11 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['hits'] = $data['hits'] ?? null;
+        $this->container['objectID'] = $data['objectID'] ?? null;
+        $this->container['highlightResult'] = $data['highlightResult'] ?? null;
+        $this->container['snippetResult'] = $data['snippetResult'] ?? null;
+        $this->container['rankingInfo'] = $data['rankingInfo'] ?? null;
+        $this->container['distinctSeqID'] = $data['distinctSeqID'] ?? null;
     }
 
     /**
@@ -160,6 +186,10 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if ($this->container['objectID'] === null) {
+            $invalidProperties[] = "'objectID' can't be null";
+        }
 
         return $invalidProperties;
     }
@@ -176,25 +206,121 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets hits
+     * Gets objectID
      *
-     * @return \Algolia\AlgoliaSearch\Model\HitHit[]|null
+     * @return string
      */
-    public function getHits()
+    public function getObjectID()
     {
-        return $this->container['hits'];
+        return $this->container['objectID'];
     }
 
     /**
-     * Sets hits
+     * Sets objectID
      *
-     * @param \Algolia\AlgoliaSearch\Model\HitHit[]|null $hits hits
+     * @param string $objectID unique identifier of the object
      *
      * @return self
      */
-    public function setHits($hits)
+    public function setObjectID($objectID)
     {
-        $this->container['hits'] = $hits;
+        $this->container['objectID'] = $objectID;
+
+        return $this;
+    }
+
+    /**
+     * Gets highlightResult
+     *
+     * @return \Algolia\AlgoliaSearch\Model\HighlightResult|null
+     */
+    public function getHighlightResult()
+    {
+        return $this->container['highlightResult'];
+    }
+
+    /**
+     * Sets highlightResult
+     *
+     * @param \Algolia\AlgoliaSearch\Model\HighlightResult|null $highlightResult highlightResult
+     *
+     * @return self
+     */
+    public function setHighlightResult($highlightResult)
+    {
+        $this->container['highlightResult'] = $highlightResult;
+
+        return $this;
+    }
+
+    /**
+     * Gets snippetResult
+     *
+     * @return \Algolia\AlgoliaSearch\Model\SnippetResult|null
+     */
+    public function getSnippetResult()
+    {
+        return $this->container['snippetResult'];
+    }
+
+    /**
+     * Sets snippetResult
+     *
+     * @param \Algolia\AlgoliaSearch\Model\SnippetResult|null $snippetResult snippetResult
+     *
+     * @return self
+     */
+    public function setSnippetResult($snippetResult)
+    {
+        $this->container['snippetResult'] = $snippetResult;
+
+        return $this;
+    }
+
+    /**
+     * Gets rankingInfo
+     *
+     * @return \Algolia\AlgoliaSearch\Model\RankingInfo|null
+     */
+    public function getRankingInfo()
+    {
+        return $this->container['rankingInfo'];
+    }
+
+    /**
+     * Sets rankingInfo
+     *
+     * @param \Algolia\AlgoliaSearch\Model\RankingInfo|null $rankingInfo rankingInfo
+     *
+     * @return self
+     */
+    public function setRankingInfo($rankingInfo)
+    {
+        $this->container['rankingInfo'] = $rankingInfo;
+
+        return $this;
+    }
+
+    /**
+     * Gets distinctSeqID
+     *
+     * @return int|null
+     */
+    public function getDistinctSeqID()
+    {
+        return $this->container['distinctSeqID'];
+    }
+
+    /**
+     * Sets distinctSeqID
+     *
+     * @param int|null $distinctSeqID distinctSeqID
+     *
+     * @return self
+     */
+    public function setDistinctSeqID($distinctSeqID)
+    {
+        $this->container['distinctSeqID'] = $distinctSeqID;
 
         return $this;
     }

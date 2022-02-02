@@ -19,7 +19,6 @@
           "supportsES6": true,
           "npmName": "@algolia/client-search",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-search",
           "isSearchHost": true
         }
@@ -40,7 +39,6 @@
           "supportsES6": true,
           "npmName": "@algolia/recommend",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/recommend",
           "isSearchHost": true
         }
@@ -60,7 +58,6 @@
           "supportsES6": true,
           "npmName": "@algolia/client-personalization",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-personalization",
           "hasRegionalHost": true,
           "isEuHost": true,
@@ -82,7 +79,6 @@
           "supportsES6": true,
           "npmName": "@algolia/client-analytics",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-analytics",
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -105,7 +101,6 @@
           "supportsES6": true,
           "npmName": "@algolia/client-insights",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-insights",
           "host": "insights"
         }
@@ -125,7 +120,6 @@
           "supportsES6": true,
           "npmName": "@algolia/client-abtesting",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-abtesting",
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -147,7 +141,6 @@
           "supportsES6": true,
           "npmName": "@algolia/client-query-suggestions",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-query-suggestions",
           "hasRegionalHost": true,
           "isEuHost": true,
@@ -169,7 +162,6 @@
           "supportsES6": true,
           "npmName": "@algolia/client-sources",
           "packageVersion": "0.0.1",
-
           "packageName": "@algolia/client-sources",
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -195,7 +187,6 @@
           "sourceFolder": "algoliasearch-core",
           "java8": true,
           "dateLibrary": "java8",
-
           "packageName": "algoliasearch-client-java-2"
         }
       },
@@ -204,14 +195,14 @@
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
-        "glob": "specs/dist/search.yml",
+        "glob": "specs/dist/global.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
           "configClassname": "SearchConfig",
-          "clusterHostsMethod":"createFromAppId",
+          "clusterHostsMethod": "createFromAppId",
           "useCache": true,
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php"
@@ -229,7 +220,7 @@
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
           "configClassname": "RecommendConfig",
-          "clusterHostsMethod":"createFromAppId",
+          "clusterHostsMethod": "createFromAppId",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
@@ -248,7 +239,7 @@
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
           "configClassname": "PersonalizationConfig",
-          "clusterHostsMethod":"createForRecommendation",
+          "clusterHostsMethod": "createForRecommendation",
           "hasRegionalHost": true,
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
@@ -267,7 +258,7 @@
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
           "configClassname": "AnalyticsConfig",
-          "clusterHostsMethod":"createForAnalytics",
+          "clusterHostsMethod": "createForAnalytics",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
@@ -286,7 +277,7 @@
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
           "configClassname": "InsightsConfig",
-          "clusterHostsMethod":"createForInsights",
+          "clusterHostsMethod": "createForInsights",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
@@ -305,7 +296,7 @@
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
           "configClassname": "AbTestingConfig",
-          "clusterHostsMethod":"createForAnalytics",
+          "clusterHostsMethod": "createForAnalytics",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
@@ -324,7 +315,7 @@
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "additionalProperties": {
           "configClassname": "QuerySuggestionsConfig",
-          "clusterHostsMethod":"createForQuerySuggestions",
+          "clusterHostsMethod": "createForQuerySuggestions",
           "hasRegionalHost": true,
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",

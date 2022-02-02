@@ -55,7 +55,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'queryAfterRemoval' => 'string',
         'serverUsed' => 'string',
         'userData' => 'object',
-        'hits' => '\Algolia\AlgoliaSearch\Model\Hit[]',
+        'hits' => '\Algolia\AlgoliaSearch\Model\HitHit[]',
         'cursor' => 'string',
     ];
 
@@ -946,7 +946,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets hits
      *
-     * @return \Algolia\AlgoliaSearch\Model\Hit[]
+     * @return \Algolia\AlgoliaSearch\Model\HitHit[]
      */
     public function getHits()
     {
@@ -956,7 +956,7 @@ class BrowseResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets hits
      *
-     * @param \Algolia\AlgoliaSearch\Model\Hit[] $hits hits
+     * @param \Algolia\AlgoliaSearch\Model\HitHit[] $hits hits
      *
      * @return self
      */

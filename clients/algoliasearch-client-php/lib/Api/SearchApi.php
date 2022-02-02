@@ -914,14 +914,14 @@ class SearchApi
      * Delete all records matching the query.
      *
      * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\SearchParams $searchParams searchParams (required)
+     * @param  \Algolia\AlgoliaSearch\Model\SearchParamsSearchParams $searchParamsSearchParams searchParamsSearchParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function deleteBy($indexName, $searchParams)
+    public function deleteBy($indexName, $searchParamsSearchParams)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -929,10 +929,10 @@ class SearchApi
                 'Missing the required parameter $indexName when calling deleteBy'
             );
         }
-        // verify the required parameter 'searchParams' is set
-        if ($searchParams === null || (is_array($searchParams) && count($searchParams) === 0)) {
+        // verify the required parameter 'searchParamsSearchParams' is set
+        if ($searchParamsSearchParams === null || (is_array($searchParamsSearchParams) && count($searchParamsSearchParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $searchParams when calling deleteBy'
+                'Missing the required parameter $searchParamsSearchParams when calling deleteBy'
             );
         }
 
@@ -952,8 +952,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchParams)) {
-            $httpBody = $searchParams;
+        if (isset($searchParamsSearchParams)) {
+            $httpBody = $searchParamsSearchParams;
         }
 
         $defaultHeaders = [];
@@ -2995,14 +2995,14 @@ class SearchApi
      * Get search results.
      *
      * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\SearchParams $searchParams searchParams (required)
+     * @param  \Algolia\AlgoliaSearch\Model\SearchParamsSearchParams $searchParamsSearchParams searchParamsSearchParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\SearchResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
      */
-    public function search($indexName, $searchParams)
+    public function search($indexName, $searchParamsSearchParams)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -3010,10 +3010,10 @@ class SearchApi
                 'Missing the required parameter $indexName when calling search'
             );
         }
-        // verify the required parameter 'searchParams' is set
-        if ($searchParams === null || (is_array($searchParams) && count($searchParams) === 0)) {
+        // verify the required parameter 'searchParamsSearchParams' is set
+        if ($searchParamsSearchParams === null || (is_array($searchParamsSearchParams) && count($searchParamsSearchParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $searchParams when calling search'
+                'Missing the required parameter $searchParamsSearchParams when calling search'
             );
         }
 
@@ -3033,8 +3033,8 @@ class SearchApi
             ['application/json'],
             ['application/json']
         );
-        if (isset($searchParams)) {
-            $httpBody = $searchParams;
+        if (isset($searchParamsSearchParams)) {
+            $httpBody = $searchParamsSearchParams;
         }
 
         $defaultHeaders = [];

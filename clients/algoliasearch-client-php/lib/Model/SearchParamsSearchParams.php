@@ -6,7 +6,7 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * SearchParams Class Doc Comment
+ * SearchParamsSearchParams Class Doc Comment
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
@@ -14,7 +14,7 @@ use \ArrayAccess;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
+class SearchParamsSearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +23,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'searchParams';
+    protected static $openAPIModelName = 'SearchParams_searchParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,6 +31,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
+        'params' => 'string',
         'similarQuery' => 'string',
         'filters' => 'string',
         'facetFilters' => 'string[]',
@@ -118,6 +119,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'params' => null,
         'similarQuery' => null,
         'filters' => null,
         'facetFilters' => null,
@@ -224,6 +226,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
+        'params' => 'params',
         'similarQuery' => 'similarQuery',
         'filters' => 'filters',
         'facetFilters' => 'facetFilters',
@@ -309,6 +312,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
+        'params' => 'setParams',
         'similarQuery' => 'setSimilarQuery',
         'filters' => 'setFilters',
         'facetFilters' => 'setFacetFilters',
@@ -394,6 +398,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
+        'params' => 'getParams',
         'similarQuery' => 'getSimilarQuery',
         'filters' => 'getFilters',
         'facetFilters' => 'getFacetFilters',
@@ -634,6 +639,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
+        $this->container['params'] = $data['params'] ?? '';
         $this->container['similarQuery'] = $data['similarQuery'] ?? '';
         $this->container['filters'] = $data['filters'] ?? '';
         $this->container['facetFilters'] = $data['facetFilters'] ?? null;
@@ -805,6 +811,30 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     public function valid()
     {
         return count($this->listInvalidProperties()) === 0;
+    }
+
+    /**
+     * Gets params
+     *
+     * @return string|null
+     */
+    public function getParams()
+    {
+        return $this->container['params'];
+    }
+
+    /**
+     * Sets params
+     *
+     * @param string|null $params search parameters as URL-encoded query string
+     *
+     * @return self
+     */
+    public function setParams($params)
+    {
+        $this->container['params'] = $params;
+
+        return $this;
     }
 
     /**
@@ -1139,10 +1169,10 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     public function setLength($length)
     {
         if (!is_null($length) && ($length > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $length when calling SearchParams., must be smaller than or equal to 1000.');
+            throw new \InvalidArgumentException('invalid value for $length when calling SearchParamsSearchParams., must be smaller than or equal to 1000.');
         }
         if (!is_null($length) && ($length < 1)) {
-            throw new \InvalidArgumentException('invalid value for $length when calling SearchParams., must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid value for $length when calling SearchParamsSearchParams., must be bigger than or equal to 1.');
         }
 
         $this->container['length'] = $length;
@@ -1266,7 +1296,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     public function setMinimumAroundRadius($minimumAroundRadius)
     {
         if (!is_null($minimumAroundRadius) && ($minimumAroundRadius < 1)) {
-            throw new \InvalidArgumentException('invalid value for $minimumAroundRadius when calling SearchParams., must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid value for $minimumAroundRadius when calling SearchParamsSearchParams., must be bigger than or equal to 1.');
         }
 
         $this->container['minimumAroundRadius'] = $minimumAroundRadius;
@@ -2552,10 +2582,10 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     public function setDistinct($distinct)
     {
         if (!is_null($distinct) && ($distinct > 4)) {
-            throw new \InvalidArgumentException('invalid value for $distinct when calling SearchParams., must be smaller than or equal to 4.');
+            throw new \InvalidArgumentException('invalid value for $distinct when calling SearchParamsSearchParams., must be smaller than or equal to 4.');
         }
         if (!is_null($distinct) && ($distinct < 0)) {
-            throw new \InvalidArgumentException('invalid value for $distinct when calling SearchParams., must be bigger than or equal to 0.');
+            throw new \InvalidArgumentException('invalid value for $distinct when calling SearchParamsSearchParams., must be bigger than or equal to 0.');
         }
 
         $this->container['distinct'] = $distinct;
@@ -2631,10 +2661,10 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     public function setMinProximity($minProximity)
     {
         if (!is_null($minProximity) && ($minProximity > 7)) {
-            throw new \InvalidArgumentException('invalid value for $minProximity when calling SearchParams., must be smaller than or equal to 7.');
+            throw new \InvalidArgumentException('invalid value for $minProximity when calling SearchParamsSearchParams., must be smaller than or equal to 7.');
         }
         if (!is_null($minProximity) && ($minProximity < 1)) {
-            throw new \InvalidArgumentException('invalid value for $minProximity when calling SearchParams., must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid value for $minProximity when calling SearchParamsSearchParams., must be bigger than or equal to 1.');
         }
 
         $this->container['minProximity'] = $minProximity;
@@ -2686,7 +2716,7 @@ class SearchParams implements ModelInterface, ArrayAccess, \JsonSerializable
     public function setMaxFacetHits($maxFacetHits)
     {
         if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
-            throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling SearchParams., must be smaller than or equal to 100.');
+            throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling SearchParamsSearchParams., must be smaller than or equal to 100.');
         }
 
         $this->container['maxFacetHits'] = $maxFacetHits;

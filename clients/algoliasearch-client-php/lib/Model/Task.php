@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * SearchHits Class Doc Comment
+ * Task Class Doc Comment
  *
  * @category Class
+ * @description A task object.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
+class Task implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'searchHits';
+    protected static $openAPIModelName = 'task';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,8 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'hits' => '\Algolia\AlgoliaSearch\Model\HitHit[]',
+        'id' => 'string',
+        'type' => 'string',
     ];
 
     /**
@@ -42,7 +45,8 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'hits' => null,
+        'id' => 'uuid',
+        'type' => null,
     ];
 
     /**
@@ -72,7 +76,8 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'hits' => 'hits',
+        'id' => 'id',
+        'type' => 'type',
     ];
 
     /**
@@ -81,7 +86,8 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'hits' => 'setHits',
+        'id' => 'setId',
+        'type' => 'setType',
     ];
 
     /**
@@ -90,7 +96,8 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'hits' => 'getHits',
+        'id' => 'getId',
+        'type' => 'getType',
     ];
 
     /**
@@ -134,6 +141,20 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    const TYPE_CSV = 'csv';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getTypeAllowableValues()
+    {
+        return [
+            self::TYPE_CSV,
+        ];
+    }
+
     /**
      * Associative array for storing property values
      *
@@ -149,7 +170,8 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['hits'] = $data['hits'] ?? null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
     }
 
     /**
@@ -160,6 +182,21 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if ($this->container['id'] === null) {
+            $invalidProperties[] = "'id' can't be null";
+        }
+        if ($this->container['type'] === null) {
+            $invalidProperties[] = "'type' can't be null";
+        }
+        $allowedValues = $this->getTypeAllowableValues();
+        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'type', must be one of '%s'",
+                $this->container['type'],
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -176,25 +213,59 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets hits
+     * Gets id
      *
-     * @return \Algolia\AlgoliaSearch\Model\HitHit[]|null
+     * @return string
      */
-    public function getHits()
+    public function getId()
     {
-        return $this->container['hits'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets hits
+     * Sets id
      *
-     * @param \Algolia\AlgoliaSearch\Model\HitHit[]|null $hits hits
+     * @param string $id the id of the task
      *
      * @return self
      */
-    public function setHits($hits)
+    public function setId($id)
     {
-        $this->container['hits'] = $hits;
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->container['type'];
+    }
+
+    /**
+     * Sets type
+     *
+     * @param string $type the type of the task executed
+     *
+     * @return self
+     */
+    public function setType($type)
+    {
+        $allowedValues = $this->getTypeAllowableValues();
+        if (!in_array($type, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'type', must be one of '%s'",
+                    $type,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['type'] = $type;
 
         return $this;
     }

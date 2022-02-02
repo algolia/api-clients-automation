@@ -3,7 +3,7 @@
 namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
-use Algolia\AlgoliaSearch\Configuration\QuerySuggestionsConfig;
+use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -24,7 +24,7 @@ class QuerySuggestionsApi
     protected $api;
 
     /**
-     * @var QuerySuggestionsConfig
+     * @var SearchConfig
      */
     protected $config;
 
@@ -34,10 +34,10 @@ class QuerySuggestionsApi
     protected $headerSelector;
 
     /**
-     * @param QuerySuggestionsConfig $config
+     * @param SearchConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
-    public function __construct(ApiWrapperInterface $apiWrapper, QuerySuggestionsConfig $config)
+    public function __construct(ApiWrapperInterface $apiWrapper, SearchConfig $config)
     {
         $this->config = $config;
 
@@ -46,34 +46,35 @@ class QuerySuggestionsApi
     }
 
     /**
-     * Instantiate the client with basic credentials and region
+     * Instantiate the client with basic credentials
      *
      * @param string $appId  Application ID
      * @param string $apiKey Algolia API Key
-     * @param string $region Region
      */
-    public static function create($appId = null, $apiKey = null, $region = null)
+    public static function create($appId = null, $apiKey = null)
     {
-        $allowedRegions = explode('-', 'us-eu');
-        $config = QuerySuggestionsConfig::create($appId, $apiKey, $region, $allowedRegions);
-
-        return static::createWithConfig($config);
+        return static::createWithConfig(SearchConfig::create($appId, $apiKey));
     }
 
     /**
      * Instantiate the client with congiguration
      *
-     * @param QuerySuggestionsConfig $config Configuration
+     * @param SearchConfig $config Configuration
      */
-    public static function createWithConfig(QuerySuggestionsConfig $config)
+    public static function createWithConfig(SearchConfig $config)
     {
         $config = clone $config;
+
+        $cacheKey = sprintf('%s-clusterHosts-%s', __CLASS__, $config->getAppId());
 
         if ($hosts = $config->getHosts()) {
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
-        } else {
-            $clusterHosts = ClusterHosts::createForQuerySuggestions($config->getAppId());
+        } elseif (false === ($clusterHosts = ClusterHosts::createFromCache($cacheKey))) {
+            // We'll try to restore the ClusterHost from cache, if we cannot
+            // we create a new instance and set the cache key
+            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
+                ->setCacheKey($cacheKey);
         }
 
         $apiWrapper = new ApiWrapper(
@@ -86,7 +87,7 @@ class QuerySuggestionsApi
     }
 
     /**
-     * @return QuerySuggestionsConfig
+     * @return SearchConfig
      */
     public function getClientConfig()
     {

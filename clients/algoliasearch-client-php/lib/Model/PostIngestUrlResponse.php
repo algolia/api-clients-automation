@@ -6,7 +6,7 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * SearchHits Class Doc Comment
+ * PostIngestUrlResponse Class Doc Comment
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
@@ -14,7 +14,7 @@ use \ArrayAccess;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
+class PostIngestUrlResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +23,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'searchHits';
+    protected static $openAPIModelName = 'postIngestUrlResponse';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +31,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'hits' => '\Algolia\AlgoliaSearch\Model\HitHit[]',
+        'task' => '\Algolia\AlgoliaSearch\Model\Task',
     ];
 
     /**
@@ -42,7 +42,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'hits' => null,
+        'task' => null,
     ];
 
     /**
@@ -72,7 +72,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'hits' => 'hits',
+        'task' => 'task',
     ];
 
     /**
@@ -81,7 +81,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'hits' => 'setHits',
+        'task' => 'setTask',
     ];
 
     /**
@@ -90,7 +90,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'hits' => 'getHits',
+        'task' => 'getTask',
     ];
 
     /**
@@ -149,7 +149,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['hits'] = $data['hits'] ?? null;
+        $this->container['task'] = $data['task'] ?? null;
     }
 
     /**
@@ -160,6 +160,10 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if ($this->container['task'] === null) {
+            $invalidProperties[] = "'task' can't be null";
+        }
 
         return $invalidProperties;
     }
@@ -176,25 +180,25 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets hits
+     * Gets task
      *
-     * @return \Algolia\AlgoliaSearch\Model\HitHit[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Task
      */
-    public function getHits()
+    public function getTask()
     {
-        return $this->container['hits'];
+        return $this->container['task'];
     }
 
     /**
-     * Sets hits
+     * Sets task
      *
-     * @param \Algolia\AlgoliaSearch\Model\HitHit[]|null $hits hits
+     * @param \Algolia\AlgoliaSearch\Model\Task $task task
      *
      * @return self
      */
-    public function setHits($hits)
+    public function setTask($task)
     {
-        $this->container['hits'] = $hits;
+        $this->container['task'] = $task;
 
         return $this;
     }

@@ -6,15 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * SearchHits Class Doc Comment
+ * PostURLJobInput Class Doc Comment
  *
  * @category Class
+ * @description The input of the job.
+ *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
+class PostURLJobInput implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -23,7 +25,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'searchHits';
+    protected static $openAPIModelName = 'postURLJobInput';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -31,7 +33,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'hits' => '\Algolia\AlgoliaSearch\Model\HitHit[]',
+        'url' => 'string',
     ];
 
     /**
@@ -42,7 +44,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'hits' => null,
+        'url' => null,
     ];
 
     /**
@@ -72,7 +74,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'hits' => 'hits',
+        'url' => 'url',
     ];
 
     /**
@@ -81,7 +83,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'hits' => 'setHits',
+        'url' => 'setUrl',
     ];
 
     /**
@@ -90,7 +92,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'hits' => 'getHits',
+        'url' => 'getUrl',
     ];
 
     /**
@@ -149,7 +151,7 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['hits'] = $data['hits'] ?? null;
+        $this->container['url'] = $data['url'] ?? null;
     }
 
     /**
@@ -160,6 +162,10 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if ($this->container['url'] === null) {
+            $invalidProperties[] = "'url' can't be null";
+        }
 
         return $invalidProperties;
     }
@@ -176,25 +182,25 @@ class SearchHits implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets hits
+     * Gets url
      *
-     * @return \Algolia\AlgoliaSearch\Model\HitHit[]|null
+     * @return string
      */
-    public function getHits()
+    public function getUrl()
     {
-        return $this->container['hits'];
+        return $this->container['url'];
     }
 
     /**
-     * Sets hits
+     * Sets url
      *
-     * @param \Algolia\AlgoliaSearch\Model\HitHit[]|null $hits hits
+     * @param string $url the URL of the file to ingest
      *
      * @return self
      */
-    public function setHits($hits)
+    public function setUrl($url)
     {
-        $this->container['hits'] = $hits;
+        $this->container['url'] = $url;
 
         return $this;
     }
