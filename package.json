@@ -26,7 +26,8 @@
     "playground": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/playground.sh ${0:-javascript} ${1:-search}",
     "specs:fix": "eslint --ext=yml specs/ --fix",
     "specs:lint": "eslint --ext=yml specs/$0",
-    "github-actions:lint": "eslint --ext=yml .github/"
+    "github-actions:lint": "eslint --ext=yml .github/",
+    "release": "./scripts/release/prepare-release-pull-request.js"
   },
   "devDependencies": {
     "@octokit/rest": "18.12.0",
