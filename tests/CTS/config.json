@@ -1,10 +1,10 @@
 {
-    "javascript": {
-        "extension": "test.ts",
-        "outputFolder": "tests"
-    },
-    "java": {
-        "extension": "test.java",
-        "outputFolder": "src/test/java/com/algolia"
-    }
+  "javascript": {
+    "extension": "test.ts",
+    "outputFolder": "tests"
+  },
+  "java": {
+    "extension": "test.java",
+    "outputFolder": "src/test/java/com/algolia"
+  }
 }

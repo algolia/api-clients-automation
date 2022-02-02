@@ -143,7 +143,7 @@ export async function createOutputDir({
   );
 }
 
-export function outputPath({
+export function getOutputPath({
   language,
   client,
   testPath,

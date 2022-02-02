@@ -7,7 +7,7 @@ import {
   createClientName,
   packageNames,
   capitalize,
-  outputPath,
+  getOutputPath,
   createOutputDir,
   loadTemplates,
 } from '../../utils';
@@ -56,5 +56,5 @@ export async function generateTests(
     partialTemplates
   );
 
-  await fsp.writeFile(outputPath({ language, client, testPath }), code);
+  await fsp.writeFile(getOutputPath({ language, client, testPath }), code);
 }

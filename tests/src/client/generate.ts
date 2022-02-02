@@ -9,7 +9,7 @@ import {
   createClientName,
   exists,
   createOutputDir,
-  outputPath,
+  getOutputPath,
   loadTemplates,
 } from '../utils';
 
@@ -100,7 +100,7 @@ export async function generateTests(
     },
     partialTemplates
   );
-  await fsp.writeFile(outputPath({ language, client, testPath }), code);
+  await fsp.writeFile(getOutputPath({ language, client, testPath }), code);
 }
 
 function serializeParameters(parameters: any): string {
