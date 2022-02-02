@@ -1,5 +1,6 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { readFile, stat, writeFile } from 'fs/promises';
 import path from 'path';
+import { URL } from 'url';
 
 import yaml from 'js-yaml';
 
@@ -13,7 +14,7 @@ type Server = {
   };
 };
 
-type Spec = Record<string, any> & {
+type Spec = {
   servers: Server[];
 };
 
@@ -26,9 +27,9 @@ type AdditionalProperties = Partial<{
   topLevelDomain: string;
 }>;
 
-function setHostsOptions(): void {
+async function setHostsOptions(): Promise<void> {
   const openapitoolsPath = path.join(__dirname, '../../openapitools.json');
-  const openapitools = JSON.parse(readFileSync(openapitoolsPath, 'utf-8'));
+  const openapitools = JSON.parse(await readFile(openapitoolsPath, 'utf-8'));
 
   const [language, client] = process.argv.slice(2);
   const generator = `${language}-${client}`;
@@ -40,21 +41,15 @@ function setHostsOptions(): void {
 
   const specPath = path.join(__dirname, `../../specs/dist/${client}.yml`);
 
-  if (!existsSync(specPath)) {
+  if (!(await stat(specPath))) {
     throw new Error(`File not found ${specPath}`);
   }
 
   try {
-    const { servers } = yaml.load(readFileSync(specPath, 'utf8')) as Spec;
-    const options: AdditionalProperties = {
-      fallbackToAliasHost:
-        client === 'insights' ||
-        client === 'analytics' ||
-        client === 'abtesting' ||
-        undefined,
-    };
+    const { servers } = yaml.load(await readFile(specPath, 'utf8')) as Spec;
+    const additionalProperties: AdditionalProperties = {};
 
-    for (const { url, variables } of servers) {
+    for (const [index, { url, variables }] of servers.entries()) {
       if (!url) {
         throw new Error(`Invalid server: ${url}`);
       }
@@ -65,26 +60,40 @@ function setHostsOptions(): void {
         continue;
       }
 
-      options.hasRegionalHost = true;
+      additionalProperties.hasRegionalHost = true;
+
+      if (!additionalProperties.fallbackToAliasHost) {
+        // Determine if the current URL with `region` also have an alias without variables.
+        additionalProperties.fallbackToAliasHost =
+          servers.some((curr, i) => {
+            // we skip current item
+            if (i === index) {
+              return false;
+            }
+
+            return curr.url === url.replace('.{region}', '');
+          }) || undefined;
+      }
 
       if (variables.region.enum.includes('eu')) {
-        options.isEuHost = true;
+        additionalProperties.isEuHost = true;
       }
 
       if (variables.region.enum.includes('de')) {
-        options.isDeHost = true;
+        additionalProperties.isDeHost = true;
       }
 
-      options.host = host.split('.')[0];
-      options.topLevelDomain = host.split('.').pop();
+      // This is used for hosts like `insights` that uses `.io`
+      additionalProperties.host = host.split('.')[0];
+      additionalProperties.topLevelDomain = host.split('.').pop();
     }
 
-    openapitools['generator-cli'].generators[generator].additionalProperties = {
+    generatorOptions.additionalProperties = {
       ...generatorOptions.additionalProperties,
-      ...options,
+      ...additionalProperties,
     };
 
-    writeFileSync(openapitoolsPath, JSON.stringify(openapitools, null, 2));
+    writeFile(openapitoolsPath, JSON.stringify(openapitools, null, 2));
   } catch (e) {
     throw new Error(`Error reading yaml file ${generator}: ${e}`);
   }

@@ -17,6 +17,7 @@ servers:
           - us
           - de
         default: us
+  - url: https://insights.algolia.io
 security:
   - appId: []
     apiKey: []
