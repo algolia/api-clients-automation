@@ -12,7 +12,7 @@ const semver = require('semver');
 const RELEASE_BRANCH = 'release';
 const MAIN_BRANCH = 'main';
 
-const OWNER = 'algolia';
+const OWNER = 'eunjae-lee'; // TODO: change this later
 const REPO = 'api-clients-automation';
 
 dotenv.config();
