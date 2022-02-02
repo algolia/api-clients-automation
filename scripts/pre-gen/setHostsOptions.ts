@@ -93,7 +93,7 @@ async function setHostsOptions(): Promise<void> {
       ...additionalProperties,
     };
 
-    writeFile(openapitoolsPath, JSON.stringify(openapitools, null, 2));
+    await writeFile(openapitoolsPath, JSON.stringify(openapitools, null, 2));
   } catch (e) {
     throw new Error(`Error reading yaml file ${generator}: ${e}`);
   }
