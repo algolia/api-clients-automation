@@ -98,12 +98,12 @@ class QuerySuggestionsApi
      *
      * Create a configuration of a Query Suggestions index.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestionsIndexWithIndexParam $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
+     * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexWithIndexParam $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\SucessResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
      */
     public function createConfig($querySuggestionsIndexWithIndexParam)
     {
@@ -151,7 +151,7 @@ class QuerySuggestionsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\SucessResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
      */
     public function deleteConfig($indexName)
     {
@@ -203,7 +203,7 @@ class QuerySuggestionsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestionsIndex[]|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex[]|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
      */
     public function getAllConfigs()
     {
@@ -241,7 +241,7 @@ class QuerySuggestionsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestionsIndex|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
      */
     public function getConfig($indexName)
     {
@@ -294,7 +294,7 @@ class QuerySuggestionsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\Status|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\Status|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
      */
     public function getConfigStatus($indexName)
     {
@@ -347,7 +347,7 @@ class QuerySuggestionsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\LogFile[]|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\LogFile[]|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
      */
     public function getLogFile($indexName)
     {
@@ -396,12 +396,12 @@ class QuerySuggestionsApi
      * Update the configuration of a Query Suggestions index.
      *
      * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestionsIndexParam $querySuggestionsIndexParam querySuggestionsIndexParam (required)
+     * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexParam $querySuggestionsIndexParam querySuggestionsIndexParam (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\SucessResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
      */
     public function updateConfig($indexName, $querySuggestionsIndexParam)
     {

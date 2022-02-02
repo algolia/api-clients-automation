@@ -98,12 +98,12 @@ class AbtestingApi
      *
      * Creates a new A/B test with provided configuration.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\AddABTestsRequest $addABTestsRequest addABTestsRequest (required)
+     * @param  \Algolia\AlgoliaSearch\Model\ABTesting\AddABTestsRequest $addABTestsRequest addABTestsRequest (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\ABTestResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTestResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
      */
     public function addABTests($addABTestsRequest)
     {
@@ -151,7 +151,7 @@ class AbtestingApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\ABTestResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTestResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
      */
     public function deleteABTest($id)
     {
@@ -204,7 +204,7 @@ class AbtestingApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\ABTest|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTest|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
      */
     public function getABTest($id)
     {
@@ -258,7 +258,7 @@ class AbtestingApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\ListABTestsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ListABTestsResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
      */
     public function listABTests($offset = 0, $limit = 10)
     {
@@ -316,7 +316,7 @@ class AbtestingApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\ABTestResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTestResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
      */
     public function stopABTest($id)
     {

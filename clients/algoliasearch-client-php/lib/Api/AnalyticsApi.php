@@ -106,7 +106,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetAverageClickPositionResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetAverageClickPositionResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getAverageClickPosition($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -201,7 +201,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetClickPositionsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetClickPositionsResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getClickPositions($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -296,7 +296,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetClickThroughRateResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetClickThroughRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getClickThroughRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -391,7 +391,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetConversationRateResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetConversationRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getConversationRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -486,7 +486,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetNoClickRateResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetNoClickRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getNoClickRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -581,7 +581,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetNoResultsRateResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetNoResultsRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getNoResultsRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -676,7 +676,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetSearchesCountResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesCountResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getSearchesCount($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -773,7 +773,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetSearchesNoClicksResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesNoClicksResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getSearchesNoClicks($index, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -890,7 +890,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetSearchesNoResultsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesNoResultsResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getSearchesNoResults($index, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1002,7 +1002,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetStatusResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetStatusResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getStatus($index)
     {
@@ -1062,7 +1062,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetTopCountriesResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopCountriesResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getTopCountries($index, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1180,7 +1180,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetTopFilterAttributesResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFilterAttributesResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getTopFilterAttributes($index, $search = null, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1309,7 +1309,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetTopFilterForAttributeResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFilterForAttributeResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getTopFilterForAttribute($attribute, $index, $search = null, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1451,7 +1451,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetTopFiltersNoResultsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFiltersNoResultsResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getTopFiltersNoResults($index, $search = null, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1580,7 +1580,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return OneOfGetTopHitsResponseGetTopHitsResponseWithAnalytics|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return OneOfGetTopHitsResponseGetTopHitsResponseWithAnalytics|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getTopHits($index, $search = null, $clickAnalytics = false, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1720,7 +1720,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return OneOfGetTopSearchesResponseGetTopSearchesResponseWithAnalytics|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return OneOfGetTopSearchesResponseGetTopSearchesResponseWithAnalytics|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getTopSearches($index, $clickAnalytics = false, $startDate = null, $endDate = null, $orderBy = 'searchCount', $direction = 'asc', $limit = 10, $offset = 0, $tags = null)
     {
@@ -1865,7 +1865,7 @@ class AnalyticsApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetUsersCountResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetUsersCountResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
      */
     public function getUsersCount($index, $startDate = null, $endDate = null, $tags = null)
     {

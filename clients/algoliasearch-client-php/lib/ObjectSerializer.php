@@ -2,7 +2,7 @@
 
 namespace Algolia\AlgoliaSearch;
 
-use Algolia\AlgoliaSearch\Model\ModelInterface;
+use Algolia\AlgoliaSearch\Model\Recommend\ModelInterface;
 
 /**
  * ObjectSerializer Class Doc Comment

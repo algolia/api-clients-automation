@@ -103,7 +103,7 @@ class PersonalizationApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\DeleteUserProfileResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Personalization\DeleteUserProfileResponse|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
      */
     public function deleteUserProfile($userToken)
     {
@@ -155,7 +155,7 @@ class PersonalizationApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\PersonalizationStrategyParams|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
      */
     public function getPersonalizationStrategy()
     {
@@ -193,7 +193,7 @@ class PersonalizationApi
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\GetUserTokenResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Personalization\GetUserTokenResponse|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
      */
     public function getUserTokenProfile($userToken)
     {
@@ -241,12 +241,12 @@ class PersonalizationApi
      *
      * Set a new personalization strategy.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\PersonalizationStrategyParams $personalizationStrategyParams personalizationStrategyParams (required)
+     * @param  \Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams $personalizationStrategyParams personalizationStrategyParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\SetPersonalizationStrategyResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Personalization\SetPersonalizationStrategyResponse|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
      */
     public function setPersonalizationStrategy($personalizationStrategyParams)
     {

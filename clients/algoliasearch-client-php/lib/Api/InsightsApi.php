@@ -97,12 +97,12 @@ class InsightsApi
      *
      * Pushes an array of events.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\InsightEvents $insightEvents insightEvents (required)
+     * @param  \Algolia\AlgoliaSearch\Model\Insights\InsightEvents $insightEvents insightEvents (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
-     * @return \Algolia\AlgoliaSearch\Model\PushEventsResponse|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase|\Algolia\AlgoliaSearch\Model\ErrorBase
+     * @return \Algolia\AlgoliaSearch\Model\Insights\PushEventsResponse|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase
      */
     public function pushEvents($insightEvents)
     {
