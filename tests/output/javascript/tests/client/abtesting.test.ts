@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { AbtestingApi, EchoRequester } from '@algolia/client-abtesting';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
+const appId = 'test-app-id';
+const apiKey = 'test-api-key';
 
 function createClient(): AbtestingApi {
   return new AbtestingApi(appId, apiKey, 'us', {
@@ -49,5 +49,44 @@ describe('api', () => {
     expect(actual).toEqual(
       expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
     );
+  });
+});
+
+describe('parameters', () => {
+  test('throws when region is not given', async () => {
+    let actual;
+    await expect(
+      new Promise((resolve, reject) => {
+        const $client = new AbtestingApi('my-app-id', 'my-api-key', '', {
+          requester: new EchoRequester(),
+        });
+        actual = $client;
+
+        if (actual instanceof Promise) {
+          actual.then(resolve).catch(reject);
+        } else {
+          resolve();
+        }
+      })
+    ).rejects.toThrow('`region` is missing.');
+  });
+
+  test('does not throw when region is given', async () => {
+    let actual;
+
+    await expect(
+      new Promise((resolve, reject) => {
+        const $client = new AbtestingApi('my-app-id', 'my-api-key', 'us', {
+          requester: new EchoRequester(),
+        });
+        actual = $client;
+
+        if (actual instanceof Promise) {
+          actual.then(resolve).catch(reject);
+        } else {
+          resolve();
+        }
+      })
+    ).resolves.not.toThrow();
   });
 });

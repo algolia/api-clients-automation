@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { RecommendApi, EchoRequester } from '@algolia/recommend';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
+const appId = 'test-app-id';
+const apiKey = 'test-api-key';
 
 function createClient(): RecommendApi {
   return new RecommendApi(appId, apiKey, { requester: new EchoRequester() });

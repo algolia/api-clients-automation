@@ -10,7 +10,7 @@
         "expected": {
           "match": {
             "objectContaining": {
-              "host": "algolia-api-key.algolia.net"
+              "host": "test-app-id.algolia.net"
             }
           }
         }

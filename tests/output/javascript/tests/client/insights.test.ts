@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { InsightsApi, EchoRequester } from '@algolia/client-insights';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
+const appId = 'test-app-id';
+const apiKey = 'test-api-key';
 
 function createClient(): InsightsApi {
   return new InsightsApi(appId, apiKey, { requester: new EchoRequester() });

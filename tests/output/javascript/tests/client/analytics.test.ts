@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { AnalyticsApi, EchoRequester } from '@algolia/client-analytics';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
+const appId = 'test-app-id';
+const apiKey = 'test-api-key';
 
 function createClient(): AnalyticsApi {
   return new AnalyticsApi(appId, apiKey, 'us', {

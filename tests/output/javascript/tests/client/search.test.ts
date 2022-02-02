@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { SearchApi, EchoRequester } from '@algolia/client-search';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
+const appId = 'test-app-id';
+const apiKey = 'test-api-key';
 
 function createClient(): SearchApi {
   return new SearchApi(appId, apiKey, { requester: new EchoRequester() });
@@ -20,7 +21,7 @@ describe('api', () => {
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ host: 'algolia-api-key.algolia.net' })
+      expect.objectContaining({ host: 'test-app-id.algolia.net' })
     );
   });
 
@@ -189,7 +190,7 @@ describe('parameters', () => {
     );
 
     await expect(
-      new Promise<void>((resolve, reject) => {
+      new Promise((resolve, reject) => {
         actual = $client.addOrUpdateObject({
           indexName: 'my-index-name',
           objectID: 'my-object-id',
