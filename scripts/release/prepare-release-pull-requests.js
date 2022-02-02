@@ -69,6 +69,9 @@ const langs = Object.keys(versions); // ["javascript", "php", "java", ...]
 console.log('Pulling from origin...');
 run(`git pull origin ${MAIN_BRANCH}`);
 
+console.log('Pushing to origin...');
+run(`git push origin ${MAIN_BRANCH}`);
+
 const header = [
   `## Summary`,
   `Once ready, squash and merge this PR to trigger a release.`,
