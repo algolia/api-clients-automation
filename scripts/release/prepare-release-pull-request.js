@@ -74,7 +74,7 @@ run(`git push origin ${MAIN_BRANCH}`);
 
 const header = [
   `## Summary`,
-  `Once ready, squash and merge this PR to trigger a release.`,
+  `To trigger a release, merge this PR by "Create a merge commit".`,
 ].join('\n');
 
 const skippedCommits = [];

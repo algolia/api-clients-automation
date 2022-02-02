@@ -9,7 +9,7 @@ jobs:
   build:
     name: Release
     runs-on: ubuntu-20.04
-    if: "github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.event.head_commit.message, 'chore: release')"
+    if: github.event.pull_request.merged == true && github.head_ref == 'main'
     steps:
       - uses: actions/checkout@v2
         with:
