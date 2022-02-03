@@ -107,11 +107,11 @@ describe('utils', () => {
 
   describe('checkIfLanguageExists', () => {
     it('returns `true` if the language is present in the config', () => {
-      expect(checkIfLanguageExists('javascript', 'search')).toBe(true);
+      expect(checkIfLanguageExists('javascript')).toBe(true);
     });
 
     it('returns `false` if the language is not present in the config', () => {
-      expect(checkIfLanguageExists('algo', 'lia')).toBe(false);
+      expect(checkIfLanguageExists('algo')).toBe(false);
     });
   });
 });
