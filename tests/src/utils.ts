@@ -83,7 +83,7 @@ export function checkIfLanguageExists(
   if (!ctsConfig[language]) {
     // eslint-disable-next-line no-console
     console.log(
-      `Skipping CTS generation > generate:methods:requests for ${language}-${client}: No config found`
+      `Skipping CTS generation for ${language}-${client}: Language not present in the config.json file`
     );
 
     return false;
