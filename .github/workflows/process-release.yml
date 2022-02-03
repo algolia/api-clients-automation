@@ -19,5 +19,5 @@ jobs:
 
       - run: ./scripts/release/process-release.js
         env:
-          EVENT_NUMBER: $${{ github.event.number }}
+          EVENT_NUMBER: ${{ github.event.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
