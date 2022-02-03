@@ -43,21 +43,6 @@ const issueBody = JSON.parse(
   ]).stdout
 ).body;
 
-// const issueBody = `## Summary
-// Once ready, squash and merge this PR to trigger a release.
-
-// ## Version Changes
-
-// - [x] javascript: v5.0.0 -> v5.0.1
-//   * Uncheck if you want to skip it.
-// - [ ] ~java: v4.0.0 (no commit)~
-
-// ## CHANGELOG
-// Update the following lines. Once merged, it will be reflected to \`docs/changelogs/*.\`
-
-// ### javascript
-// - 70369f5 fix(js): add version to user agent (#105)`;
-
 if (
   !getMarkdownSection(issueBody, '## Confirmation')
     .split('\n')
@@ -75,10 +60,10 @@ getMarkdownSection(issueBody, '## Version Changes')
     if (!result) {
       return;
     }
-    const [, lang, currentVersion, nextVersion] = result;
+    const [, lang, current, next] = result;
     versionsToRelease[lang] = {
-      currentVersion,
-      nextVersion,
+      current,
+      next,
     };
   });
 
@@ -96,10 +81,28 @@ Object.keys(json['generator-cli'].generators).forEach((client) => {
   if (versionsToRelease[lang]) {
     json['generator-cli'].generators[
       client
-    ].additionalProperties.packageVersion = versionsToRelease[lang].nextVersion;
+    ].additionalProperties.packageVersion = versionsToRelease[lang].next;
   }
 });
 fs.writeFileSync('openapitools.json', JSON.stringify(json, null, 2));
+
+new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
+  (lang) => {
+    const filePath = `doc/changelogs/${lang}.md`;
+    const header = versionsToRelease[lang]
+      ? `## ${versionsToRelease[lang].next}`
+      : `## ${new Date().toISOString().split('T')[0]}`;
+    const newChangelog = getMarkdownSection(
+      getMarkdownSection(issueBody, '## CHANGELOG'),
+      `### ${lang}`
+    );
+    const existingContent = fs.readFileSync(filePath).toString();
+    fs.writeFileSync(
+      filePath,
+      [header, newChangelog, existingContent].join('\n\n')
+    );
+  }
+);
 
 run('git config user.name "api-client-bot"');
 run('git config user.email "bot@algolia.com"');
