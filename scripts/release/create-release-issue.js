@@ -10,18 +10,9 @@ const dotenv = require('dotenv');
 const execa = require('execa'); // https://github.com/sindresorhus/execa/tree/v5.1.1
 const semver = require('semver');
 
-const RELEASED_TAG = 'released';
-
-const MAIN_BRANCH = 'main';
-
-const OWNER = 'eunjae-lee'; // TODO: change this later
-const REPO = 'api-clients-automation';
+const { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO, LANGS } = require('./common');
 
 dotenv.config();
-
-const LANG_NAME_ALIAS = {
-  js: 'javascript',
-};
 
 function run(command, errorMessage = undefined) {
   let result;
@@ -89,6 +80,7 @@ run(`git push origin ${MAIN_BRANCH}`);
 const header = [`## Summary`].join('\n');
 
 const skippedCommits = [];
+const wronglyScopedCommits = [];
 const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
   .split('\n')
   .filter(Boolean)
@@ -105,8 +97,12 @@ const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
     }
     message = message.slice(message.indexOf(':') + 2);
     type = matchResult[1];
-    let lang = matchResult[2];
-    lang = LANG_NAME_ALIAS[lang] || lang;
+    const lang = matchResult[2];
+
+    if (!LANGS.has(lang)) {
+      wronglyScopedCommits.push(commit);
+      return undefined;
+    }
 
     return {
       hash,
@@ -118,8 +114,12 @@ const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
   })
   .filter(Boolean);
 
-console.warn('Skipping these commits due to lack of language scope:');
+console.log('[INFO] Skipping these commits due to lack of language scope:');
 console.log(skippedCommits.map((commit) => `  ${commit}`).join('\n'));
+
+console.log('');
+console.log('[INFO] Skipping these commits due to wrong scopes:');
+console.log(wronglyScopedCommits.map((commit) => `  ${commit}`).join('\n'));
 
 langs.forEach((lang) => {
   const commits = latestCommits.filter(

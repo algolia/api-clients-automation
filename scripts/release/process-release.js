@@ -12,9 +12,7 @@ dotenv.config();
 
 const execa = require('execa');
 
-const MAIN_BRANCH = 'main';
-const OWNER = 'eunjae-lee'; // TODO: change this later
-const REPO = 'api-clients-automation';
+const { MAIN_BRANCH, OWNER, REPO } = require('./common');
 
 function run(command) {
   const result = execa.commandSync(command);
