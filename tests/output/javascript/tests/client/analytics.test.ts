@@ -1,13 +1,12 @@
 // @ts-nocheck
-import { AnalyticsApi, EchoRequester } from '@algolia/client-analytics';
+import { analyticsApi } from '@algolia/client-analytics';
+import { EchoRequester } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
-function createClient(): AnalyticsApi {
-  return new AnalyticsApi(appId, apiKey, 'us', {
-    requester: new EchoRequester(),
-  });
+function createClient(): analyticsApi {
+  return analyticsApi(appId, apiKey, 'us', { requester: new EchoRequester() });
 }
 
 describe('basic', () => {
@@ -16,9 +15,10 @@ describe('basic', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new AnalyticsApi('my-app-id', 'my-api-key', '', {
+        const $client = analyticsApi('my-app-id', 'my-api-key', '', {
           requester: new EchoRequester(),
         });
+
         actual = $client;
 
         if (actual instanceof Promise) {

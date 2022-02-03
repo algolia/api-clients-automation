@@ -1,4 +1,6 @@
 export * from './src/cache';
+export * from './src/createAuth';
+export * from './src/createUserAgent';
 export * from './src/errors';
 export * from './src/helpers';
 export * from './src/requester';
