@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
+/* eslint-disable no-process-exit */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
@@ -23,9 +24,16 @@ const LANG_NAME_ALIAS = {
 };
 
 function run(command, errorMessage = undefined) {
-  const result = execa.commandSync(command);
-  if (result.exitCode !== 0) {
-    throw new Error(errorMessage || result.stderr);
+  let result;
+  try {
+    result = execa.commandSync(command);
+  } catch (err) {
+    if (errorMessage) {
+      console.error(`[ERROR] ${errorMessage}`);
+      process.exit(err.exitCode);
+    } else {
+      throw err;
+    }
   }
   return result.stdout;
 }
