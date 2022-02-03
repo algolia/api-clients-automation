@@ -9,7 +9,8 @@ const dotenv = require('dotenv');
 const execa = require('execa'); // https://github.com/sindresorhus/execa/tree/v5.1.1
 const semver = require('semver');
 
-const RELEASE_BRANCH = 'release';
+const RELEASED_TAG = 'released';
+
 const MAIN_BRANCH = 'main';
 
 const OWNER = 'eunjae-lee'; // TODO: change this later
@@ -72,13 +73,10 @@ run(`git pull origin ${MAIN_BRANCH}`);
 console.log('Pushing to origin...');
 run(`git push origin ${MAIN_BRANCH}`);
 
-const header = [
-  `## Summary`,
-  `To trigger a release, merge this PR by "Create a merge commit".`,
-].join('\n');
+const header = [`## Summary`].join('\n');
 
 const skippedCommits = [];
-const latestCommits = run(`git log --oneline ${RELEASE_BRANCH}..${MAIN_BRANCH}`)
+const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
   .split('\n')
   .filter(Boolean)
   .map((commit) => {
@@ -194,24 +192,30 @@ const changelogs = langs
   })
   .join('\n');
 
+const approval = [
+  `## Confirmation`,
+  `To proceed this release, check the box below and close the issue.`,
+  `To skip this release, just close the issue.`,
+  `- [ ] Approved`,
+].join('\n');
+
 const body = [
   header,
   versionChangeHeader,
   versionChanges,
   changelogHeader,
   changelogs,
+  approval,
 ].join('\n\n');
 
 const octokit = new Octokit({
   auth: `token ${process.env.GITHUB_TOKEN}`,
 });
 
-octokit.rest.pulls
+octokit.rest.issues
   .create({
     owner: OWNER,
     repo: REPO,
-    head: MAIN_BRANCH,
-    base: RELEASE_BRANCH,
     title: `chore: release ${new Date().toISOString().split('T')[0]}`,
     body,
   })
@@ -221,6 +225,6 @@ octokit.rest.pulls
     } = result;
 
     console.log('');
-    console.log(`Pull Request #${number} is ready for review.`);
+    console.log(`Release issue #${number} is ready for review.`);
     console.log(`  > ${url}`);
   });

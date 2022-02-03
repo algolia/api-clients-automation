@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
+/* eslint-disable no-process-exit */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
@@ -11,7 +12,8 @@ dotenv.config();
 
 const execa = require('execa');
 
-const RELEASE_BRANCH = 'release';
+const OWNER = 'eunjae-lee'; // TODO: change this later
+const REPO = 'api-clients-automation';
 
 function run(command) {
   const result = execa.commandSync(command);
@@ -40,15 +42,17 @@ if (run('git rev-parse --abbrev-ref HEAD') !== RELEASE_BRANCH) {
   );
 }
 
-const pullRequestBody = JSON.parse(
+const issueBody = JSON.parse(
   execa.sync('curl', [
     '-H',
     `Authorization: token ${process.env.GITHUB_TOKEN}`,
-    `https://api.github.com/repos/algolia/api-clients-automation/pulls/${process.env.PR_NUMBER}`,
+    `https://api.github.com/repos/${OWNER}/${REPO}/issues/${process.env.EVENT_NUMBER}`,
   ]).stdout
 ).body;
 
-// const pullRequestBody = `## Summary
+console.log('# issueBody', issueBody);
+
+// const issueBody = `## Summary
 // Once ready, squash and merge this PR to trigger a release.
 
 // ## Version Changes
@@ -63,8 +67,17 @@ const pullRequestBody = JSON.parse(
 // ### javascript
 // - 70369f5 fix(js): add version to user agent (#105)`;
 
+if (
+  !getMarkdownSection(issueBody, '## Confirmation')
+    .split('\n')
+    .find((line) => line.startsWith('- [x] Approved'))
+) {
+  console.log('The issue was not approved.');
+  process.exit(0);
+}
+
 const versionsToRelease = {};
-getMarkdownSection(pullRequestBody, '## Version Changes')
+getMarkdownSection(issueBody, '## Version Changes')
   .split('\n')
   .forEach((line) => {
     const result = line.match(/- \[x\] (.+): v(.+) -> v(.+)/);
@@ -78,10 +91,7 @@ getMarkdownSection(pullRequestBody, '## Version Changes')
     };
   });
 
-const langsToUpdateRepo = getMarkdownSection(
-  pullRequestBody,
-  '## Version Changes'
-)
+const langsToUpdateRepo = getMarkdownSection(issueBody, '## Version Changes')
   .split('\n')
   .map((line) => {
     const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);

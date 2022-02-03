@@ -1,10 +1,8 @@
 name: Process release
 on:
-  pull_request:
+  issues:
     types:
       - closed
-    branches:
-      - release
 jobs:
   build:
     name: Release
@@ -21,5 +19,5 @@ jobs:
 
       - run: ./scripts/release/process-release-commit.js
         env:
-          PR_NUMBER: $${{ github.event.number }}
+          EVENT_NUMBER: $${{ github.event.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
