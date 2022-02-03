@@ -254,7 +254,10 @@
           "hasRegionalHost": true,
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
-          "packageName": "algoliasearch-client-php"
+          "packageName": "algoliasearch-client-php",
+          "isEuHost": true,
+          "host": "personalization",
+          "topLevelDomain": "com"
         }
       },
       "php-analytics": {
@@ -274,7 +277,11 @@
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
-          "packageName": "algoliasearch-client-php"
+          "packageName": "algoliasearch-client-php",
+          "fallbackToAliasHost": true,
+          "isDeHost": true,
+          "host": "analytics",
+          "topLevelDomain": "com"
         }
       },
       "php-insights": {
@@ -294,7 +301,11 @@
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
-          "packageName": "algoliasearch-client-php"
+          "packageName": "algoliasearch-client-php",
+          "fallbackToAliasHost": true,
+          "isDeHost": true,
+          "host": "insights",
+          "topLevelDomain": "io"
         }
       },
       "php-abtesting": {
@@ -314,7 +325,11 @@
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
-          "packageName": "algoliasearch-client-php"
+          "packageName": "algoliasearch-client-php",
+          "fallbackToAliasHost": true,
+          "isDeHost": true,
+          "host": "analytics",
+          "topLevelDomain": "com"
         }
       },
       "php-query-suggestions": {
@@ -334,7 +349,10 @@
           "hasRegionalHost": true,
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
-          "packageName": "algoliasearch-client-php"
+          "packageName": "algoliasearch-client-php",
+          "isEuHost": true,
+          "host": "query-suggestions",
+          "topLevelDomain": "com"
         }
       }
     }

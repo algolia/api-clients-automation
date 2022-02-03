@@ -2,8 +2,6 @@
 
 namespace Algolia\AlgoliaSearch;
 
-use Algolia\AlgoliaSearch\Model\Recommend\ModelInterface;
-
 /**
  * ObjectSerializer Class Doc Comment
  *
