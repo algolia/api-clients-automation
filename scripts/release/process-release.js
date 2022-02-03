@@ -36,11 +36,6 @@ function getMarkdownSection(markdown, title) {
   return lines.slice(0, endIndex).join('\n');
 }
 
-console.log('# hey!!', {
-  EVENT_NUMBER: process.env.EVENT_NUMBER,
-  GITHUB_TOKEN: process.env.GITHUB_TOKEN ? 'exists' : 'nope',
-});
-
 const issueBody = JSON.parse(
   execa.sync('curl', [
     '-H',
@@ -48,8 +43,6 @@ const issueBody = JSON.parse(
     `https://api.github.com/repos/${OWNER}/${REPO}/issues/${process.env.EVENT_NUMBER}`,
   ]).stdout
 ).body;
-
-console.log('# issueBody', issueBody);
 
 // const issueBody = `## Summary
 // Once ready, squash and merge this PR to trigger a release.
@@ -72,7 +65,7 @@ if (
     .find((line) => line.startsWith('- [x] Approved'))
 ) {
   console.log('The issue was not approved.');
-  process.exit(0);
+  process.exit(1);
 }
 
 const versionsToRelease = {};
