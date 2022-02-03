@@ -22,10 +22,10 @@ const LANG_NAME_ALIAS = {
   js: 'javascript',
 };
 
-function run(command) {
+function run(command, errorMessage = undefined) {
   const result = execa.commandSync(command);
   if (result.exitCode !== 0) {
-    throw new Error(result.stderr);
+    throw new Error(errorMessage || result.stderr);
   }
   return result.stdout;
 }
@@ -61,6 +61,11 @@ if (run('git status --porcelain')) {
     'Working directory is not clean. Commit all the changes first.'
   );
 }
+
+run(
+  `git rev-parse --verify refs/tags/${RELEASED_TAG}`,
+  '`released` tag is missing in this repository.'
+);
 
 // Reading versions from `openapitools.json`
 const versions = readVersions();
