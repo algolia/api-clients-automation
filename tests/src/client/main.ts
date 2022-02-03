@@ -1,9 +1,14 @@
-import { parseCLI } from '../utils';
+import { parseCLI, checkIfLanguageExists } from '../utils';
 
 import { generateTests } from './generate';
 
 async function main(): Promise<void> {
   const { lang, client } = parseCLI(process.argv, 'generate:client');
+
+  if (checkIfLanguageExists(lang, client) === false) {
+    return;
+  }
+
   // eslint-disable-next-line no-console
   console.log(`Generating CTS > generate:client for ${lang}-${client}`);
 

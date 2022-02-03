@@ -76,6 +76,22 @@ export function removeObjectName(obj: any): any {
   return obj;
 }
 
+export function checkIfLanguageExists(
+  language: string,
+  client: string
+): boolean {
+  if (!ctsConfig[language]) {
+    // eslint-disable-next-line no-console
+    console.log(
+      `Skipping CTS generation > generate:methods:requests for ${language}-${client}: No config found`
+    );
+
+    return false;
+  }
+
+  return true;
+}
+
 export function removeEnumType(obj: any): any {
   if (typeof obj === 'object') {
     if (Array.isArray(obj)) {
