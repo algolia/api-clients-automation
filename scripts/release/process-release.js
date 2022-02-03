@@ -107,7 +107,8 @@ new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
 run('git config user.name "api-client-bot"');
 run('git config user.email "bot@algolia.com"');
 run('git add openapitools.json');
-execa.sync('git', ['commit', '-m', 'chore: update versions']);
+run('git add doc/changelogs/*');
+execa.sync('git', ['commit', '-m', 'chore: update versions and changelogs']);
 run(`git push origin ${MAIN_BRANCH}`);
 
 Object.keys(versionsToRelease).forEach((lang) => {
