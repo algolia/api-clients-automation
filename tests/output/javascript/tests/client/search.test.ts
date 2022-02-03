@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 // @ts-nocheck
 import { EchoRequester } from '@algolia/client-common';
 import { searchApi } from '@algolia/client-search';
@@ -5,7 +6,6 @@ import { searchApi } from '@algolia/client-search';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function createClient() {
   return searchApi(appId, apiKey, { requester: new EchoRequester() });
 }

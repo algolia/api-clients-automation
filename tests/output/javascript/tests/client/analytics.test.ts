@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 // @ts-nocheck
 import { analyticsApi } from '@algolia/client-analytics';
 import { EchoRequester } from '@algolia/client-common';
@@ -5,7 +6,7 @@ import { EchoRequester } from '@algolia/client-common';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
-function createClient(): analyticsApi {
+function createClient() {
   return analyticsApi(appId, apiKey, 'us', { requester: new EchoRequester() });
 }
 
