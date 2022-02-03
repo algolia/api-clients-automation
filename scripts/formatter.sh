@@ -10,6 +10,11 @@ cd ${DIR}/..
 LANGUAGE=$1
 FOLDER=$2
 
+if [[ ! -d "$FOLDER"]]; then 
+    echo "Output dolder does not exist for $LANGUAGE, skipping..."
+    exit 0 
+fi
+
 if [[ $LANGUAGE == 'javascript' ]]; then
     # jsdoc/require-hyphen-before-param-description fails to lint more than
     # 6 parameters, we re-run the script if failed to lint the rest
