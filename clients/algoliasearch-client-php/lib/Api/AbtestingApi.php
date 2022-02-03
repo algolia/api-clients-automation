@@ -266,7 +266,7 @@ class AbtestingApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -276,7 +276,7 @@ class AbtestingApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {

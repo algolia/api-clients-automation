@@ -304,7 +304,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($xAlgoliaUserID !== null) {
             if ('form' === 'form' && is_array($xAlgoliaUserID)) {
                 foreach ($xAlgoliaUserID as $key => $value) {
@@ -436,7 +436,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($xAlgoliaUserID !== null) {
             if ('form' === 'form' && is_array($xAlgoliaUserID)) {
                 foreach ($xAlgoliaUserID as $key => $value) {
@@ -566,7 +566,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -576,7 +576,7 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
-        // query params
+
         if ($clearExistingRules !== null) {
             if ('form' === 'form' && is_array($clearExistingRules)) {
                 foreach ($clearExistingRules as $key => $value) {
@@ -700,7 +700,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -817,7 +817,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -1125,7 +1125,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -1257,7 +1257,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -1455,7 +1455,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -1465,7 +1465,7 @@ class SearchApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($length !== null) {
             if ('form' === 'form' && is_array($length)) {
                 foreach ($length as $key => $value) {
@@ -1475,7 +1475,7 @@ class SearchApi
                 $queryParams['length'] = $length;
             }
         }
-        // query params
+
         if ($indexName !== null) {
             if ('form' === 'form' && is_array($indexName)) {
                 foreach ($indexName as $key => $value) {
@@ -1485,7 +1485,7 @@ class SearchApi
                 $queryParams['indexName'] = $indexName;
             }
         }
-        // query params
+
         if ($type !== null) {
             if ('form' === 'form' && is_array($type)) {
                 foreach ($type as $key => $value) {
@@ -1548,7 +1548,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($attributesToRetrieve !== null) {
             if ('form' === 'form' && is_array($attributesToRetrieve)) {
                 foreach ($attributesToRetrieve as $key => $value) {
@@ -2047,7 +2047,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($getClusters !== null) {
             if ('form' === 'form' && is_array($getClusters)) {
                 foreach ($getClusters as $key => $value) {
@@ -2169,7 +2169,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($page !== null) {
             if ('form' === 'form' && is_array($page)) {
                 foreach ($page as $key => $value) {
@@ -2218,7 +2218,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($page !== null) {
             if ('form' === 'form' && is_array($page)) {
                 foreach ($page as $key => $value) {
@@ -2228,7 +2228,7 @@ class SearchApi
                 $queryParams['page'] = $page;
             }
         }
-        // query params
+
         if ($hitsPerPage !== null) {
             if ('form' === 'form' && is_array($hitsPerPage)) {
                 foreach ($hitsPerPage as $key => $value) {
@@ -2457,7 +2457,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($createIfNotExists !== null) {
             if ('form' === 'form' && is_array($createIfNotExists)) {
                 foreach ($createIfNotExists as $key => $value) {
@@ -2766,7 +2766,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -2855,7 +2855,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -2938,7 +2938,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {
@@ -2948,7 +2948,7 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
-        // query params
+
         if ($replaceExistingSynonyms !== null) {
             if ('form' === 'form' && is_array($replaceExistingSynonyms)) {
                 foreach ($replaceExistingSynonyms as $key => $value) {
@@ -3279,7 +3279,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($query !== null) {
             if ('form' === 'form' && is_array($query)) {
                 foreach ($query as $key => $value) {
@@ -3289,7 +3289,7 @@ class SearchApi
                 $queryParams['query'] = $query;
             }
         }
-        // query params
+
         if ($type !== null) {
             if ('form' === 'form' && is_array($type)) {
                 foreach ($type as $key => $value) {
@@ -3299,7 +3299,7 @@ class SearchApi
                 $queryParams['type'] = $type;
             }
         }
-        // query params
+
         if ($page !== null) {
             if ('form' === 'form' && is_array($page)) {
                 foreach ($page as $key => $value) {
@@ -3309,7 +3309,7 @@ class SearchApi
                 $queryParams['page'] = $page;
             }
         }
-        // query params
+
         if ($hitsPerPage !== null) {
             if ('form' === 'form' && is_array($hitsPerPage)) {
                 foreach ($hitsPerPage as $key => $value) {
@@ -3476,7 +3476,7 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($forwardToReplicas !== null) {
             if ('form' === 'form' && is_array($forwardToReplicas)) {
                 foreach ($forwardToReplicas as $key => $value) {

@@ -128,7 +128,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -138,7 +138,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -148,7 +148,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -158,7 +158,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -223,7 +223,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -233,7 +233,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -243,7 +243,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -253,7 +253,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -318,7 +318,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -328,7 +328,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -338,7 +338,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -348,7 +348,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -413,7 +413,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -423,7 +423,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -433,7 +433,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -443,7 +443,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -508,7 +508,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -518,7 +518,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -528,7 +528,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -538,7 +538,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -603,7 +603,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -613,7 +613,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -623,7 +623,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -633,7 +633,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -698,7 +698,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -708,7 +708,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -718,7 +718,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -728,7 +728,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -795,7 +795,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -805,7 +805,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -815,7 +815,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -825,7 +825,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -835,7 +835,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -845,7 +845,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -912,7 +912,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -922,7 +922,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -932,7 +932,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -942,7 +942,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -952,7 +952,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -962,7 +962,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -1017,7 +1017,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1084,7 +1084,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1094,7 +1094,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -1104,7 +1104,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -1114,7 +1114,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -1124,7 +1124,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -1134,7 +1134,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -1202,7 +1202,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1212,7 +1212,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($search !== null) {
             if ('form' === 'form' && is_array($search)) {
                 foreach ($search as $key => $value) {
@@ -1222,7 +1222,7 @@ class AnalyticsApi
                 $queryParams['search'] = $search;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -1232,7 +1232,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -1242,7 +1242,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -1252,7 +1252,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -1262,7 +1262,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -1337,7 +1337,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1347,7 +1347,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($search !== null) {
             if ('form' === 'form' && is_array($search)) {
                 foreach ($search as $key => $value) {
@@ -1357,7 +1357,7 @@ class AnalyticsApi
                 $queryParams['search'] = $search;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -1367,7 +1367,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -1377,7 +1377,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -1387,7 +1387,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -1397,7 +1397,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -1473,7 +1473,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1483,7 +1483,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($search !== null) {
             if ('form' === 'form' && is_array($search)) {
                 foreach ($search as $key => $value) {
@@ -1493,7 +1493,7 @@ class AnalyticsApi
                 $queryParams['search'] = $search;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -1503,7 +1503,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -1513,7 +1513,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -1523,7 +1523,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -1533,7 +1533,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -1602,7 +1602,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1612,7 +1612,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($search !== null) {
             if ('form' === 'form' && is_array($search)) {
                 foreach ($search as $key => $value) {
@@ -1622,7 +1622,7 @@ class AnalyticsApi
                 $queryParams['search'] = $search;
             }
         }
-        // query params
+
         if ($clickAnalytics !== null) {
             if ('form' === 'form' && is_array($clickAnalytics)) {
                 foreach ($clickAnalytics as $key => $value) {
@@ -1632,7 +1632,7 @@ class AnalyticsApi
                 $queryParams['clickAnalytics'] = $clickAnalytics;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -1642,7 +1642,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -1652,7 +1652,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -1662,7 +1662,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -1672,7 +1672,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -1742,7 +1742,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1752,7 +1752,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($clickAnalytics !== null) {
             if ('form' === 'form' && is_array($clickAnalytics)) {
                 foreach ($clickAnalytics as $key => $value) {
@@ -1762,7 +1762,7 @@ class AnalyticsApi
                 $queryParams['clickAnalytics'] = $clickAnalytics;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -1772,7 +1772,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -1782,7 +1782,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($orderBy !== null) {
             if ('form' === 'form' && is_array($orderBy)) {
                 foreach ($orderBy as $key => $value) {
@@ -1792,7 +1792,7 @@ class AnalyticsApi
                 $queryParams['orderBy'] = $orderBy;
             }
         }
-        // query params
+
         if ($direction !== null) {
             if ('form' === 'form' && is_array($direction)) {
                 foreach ($direction as $key => $value) {
@@ -1802,7 +1802,7 @@ class AnalyticsApi
                 $queryParams['direction'] = $direction;
             }
         }
-        // query params
+
         if ($limit !== null) {
             if ('form' === 'form' && is_array($limit)) {
                 foreach ($limit as $key => $value) {
@@ -1812,7 +1812,7 @@ class AnalyticsApi
                 $queryParams['limit'] = $limit;
             }
         }
-        // query params
+
         if ($offset !== null) {
             if ('form' === 'form' && is_array($offset)) {
                 foreach ($offset as $key => $value) {
@@ -1822,7 +1822,7 @@ class AnalyticsApi
                 $queryParams['offset'] = $offset;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {
@@ -1887,7 +1887,7 @@ class AnalyticsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        // query params
+
         if ($index !== null) {
             if ('form' === 'form' && is_array($index)) {
                 foreach ($index as $key => $value) {
@@ -1897,7 +1897,7 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        // query params
+
         if ($startDate !== null) {
             if ('form' === 'form' && is_array($startDate)) {
                 foreach ($startDate as $key => $value) {
@@ -1907,7 +1907,7 @@ class AnalyticsApi
                 $queryParams['startDate'] = $startDate;
             }
         }
-        // query params
+
         if ($endDate !== null) {
             if ('form' === 'form' && is_array($endDate)) {
                 foreach ($endDate as $key => $value) {
@@ -1917,7 +1917,7 @@ class AnalyticsApi
                 $queryParams['endDate'] = $endDate;
             }
         }
-        // query params
+
         if ($tags !== null) {
             if ('form' === 'form' && is_array($tags)) {
                 foreach ($tags as $key => $value) {

@@ -22,7 +22,7 @@ return $config
         'no_multiline_whitespace_around_double_arrow' => true,
         'no_short_bool_cast' => true,
         'no_trailing_whitespace' => true,
-        'no_trailing_whitespace_in_comment' => false,
+        'no_trailing_whitespace_in_comment' => true,
         'no_unneeded_control_parentheses' => true,
         'no_unreachable_default_argument_value' => true,
         'no_unused_imports' => true,
