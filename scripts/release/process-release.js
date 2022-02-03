@@ -103,8 +103,8 @@ Object.keys(json['generator-cli'].generators).forEach((client) => {
 });
 fs.writeFileSync('openapitools.json', JSON.stringify(json, null, 2));
 
-run('git -c user.name="Algolia Bot"');
-run('git -c user.email="bot@algolia.com"');
+run('git -c user.name=api-client-bot');
+run('git -c user.email=bot@algolia.com');
 run('git add openapitools.json');
 run('git commit -m "chore: update versions"');
 run(`git push origin ${MAIN_BRANCH}`);
