@@ -12,6 +12,7 @@ dotenv.config();
 
 const execa = require('execa');
 
+const MAIN_BRANCH = 'main';
 const OWNER = 'eunjae-lee'; // TODO: change this later
 const REPO = 'api-clients-automation';
 
@@ -101,6 +102,12 @@ Object.keys(json['generator-cli'].generators).forEach((client) => {
   }
 });
 fs.writeFileSync('openapitools.json', JSON.stringify(json, null, 2));
+
+run('git -c user.name="Algolia Bot"');
+run('git -c user.email="bot@algolia.com"');
+run('git add openapitools.json');
+run('git commit -m "chore: update versions"');
+run(`git push origin ${MAIN_BRANCH}`);
 
 Object.keys(versionsToRelease).forEach((lang) => {
   console.log(`Generating ${lang} client(s)...`);
