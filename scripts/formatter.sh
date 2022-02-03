@@ -11,7 +11,7 @@ LANGUAGE=$1
 FOLDER=$2
 
 if [[ ! -d "$FOLDER"]]; then 
-    echo "Output dolder does not exist for $LANGUAGE, skipping..."
+    echo "Output folder does not exist for $LANGUAGE, skipping..."
     exit 0 
 fi
 
