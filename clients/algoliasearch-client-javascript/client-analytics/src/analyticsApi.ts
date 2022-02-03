@@ -1169,6 +1169,8 @@ export const createAnalyticsApi = (
   };
 };
 
+export type AnalyticsApi = ReturnType<typeof createAnalyticsApi>;
+
 export type GetAverageClickPositionProps = {
   /**
    * The index name to target.

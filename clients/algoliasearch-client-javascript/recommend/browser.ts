@@ -3,16 +3,16 @@ import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createRecommendApi, version } from './src/recommendApi';
+import type { RecommendApi } from './src/recommendApi';
 
 export * from './src/recommendApi';
 export * from '@algolia/client-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function recommendApi(
   appId: string,
   apiKey: string,
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): RecommendApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }

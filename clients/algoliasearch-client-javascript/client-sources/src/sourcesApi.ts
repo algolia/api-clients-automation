@@ -85,3 +85,5 @@ export const createSourcesApi = (
 
   return { postIngestUrl };
 };
+
+export type SourcesApi = ReturnType<typeof createSourcesApi>;

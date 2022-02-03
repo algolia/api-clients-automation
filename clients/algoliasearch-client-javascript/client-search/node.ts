@@ -3,16 +3,16 @@ import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
 import { createSearchApi, version } from './src/searchApi';
+import type { SearchApi } from './src/searchApi';
 
 export * from './src/searchApi';
 export * from '@algolia/client-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function searchApi(
   appId: string,
   apiKey: string,
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): SearchApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }

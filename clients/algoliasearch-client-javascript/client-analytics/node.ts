@@ -3,18 +3,17 @@ import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
 import { createAnalyticsApi, version } from './src/analyticsApi';
-import type { Region } from './src/analyticsApi';
+import type { AnalyticsApi, Region } from './src/analyticsApi';
 
 export * from './src/analyticsApi';
 export * from '@algolia/client-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function analyticsApi(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): AnalyticsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }

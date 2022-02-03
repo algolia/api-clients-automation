@@ -3,18 +3,17 @@ import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createQuerySuggestionsApi, version } from './src/querySuggestionsApi';
-import type { Region } from './src/querySuggestionsApi';
+import type { QuerySuggestionsApi, Region } from './src/querySuggestionsApi';
 
 export * from './src/querySuggestionsApi';
 export * from '@algolia/client-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function querySuggestionsApi(
   appId: string,
   apiKey: string,
   region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): QuerySuggestionsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }

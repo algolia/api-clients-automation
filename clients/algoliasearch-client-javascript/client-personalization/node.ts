@@ -3,18 +3,17 @@ import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
 import { createPersonalizationApi, version } from './src/personalizationApi';
-import type { Region } from './src/personalizationApi';
+import type { PersonalizationApi, Region } from './src/personalizationApi';
 
 export * from './src/personalizationApi';
 export * from '@algolia/client-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function personalizationApi(
   appId: string,
   apiKey: string,
   region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): PersonalizationApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }

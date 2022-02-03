@@ -3,18 +3,17 @@ import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
 import { createAbtestingApi, version } from './src/abtestingApi';
-import type { Region } from './src/abtestingApi';
+import type { AbtestingApi, Region } from './src/abtestingApi';
 
 export * from './src/abtestingApi';
 export * from '@algolia/client-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function abtestingApi(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): AbtestingApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }

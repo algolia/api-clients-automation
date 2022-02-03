@@ -5,6 +5,8 @@ import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
 import { create{{capitalizedApiName}}Api, version } from './src/{{apiName}}Api';
+import type { {{capitalizedApiName}}Api } from './src/{{apiName}}Api';
+
 {{#hasRegionalHost}}
 import type { Region } from './src/{{apiName}}Api';
 {{/hasRegionalHost}}
@@ -21,7 +23,7 @@ export function {{apiName}}Api(
   region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,
   {{/hasRegionalHost}}
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): {{capitalizedApiName}}Api {
   if (!appId) {
     throw new Error("`appId` is missing.");
   }

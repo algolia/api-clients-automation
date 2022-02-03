@@ -101,3 +101,5 @@ export const createRecommendApi = (options: CreateClientOptions) => {
 
   return { getRecommendations };
 };
+
+export type RecommendApi = ReturnType<typeof createRecommendApi>;

@@ -229,6 +229,8 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
   return { {{#operation}}{{nickname}},{{/operation}} };
 }
 
+export type {{capitalizedApiName}}Api = ReturnType<typeof create{{capitalizedApiName}}Api>;
+
 {{#operation}}
 {{#allParams.0}}
   {{^bodyParams.0}}

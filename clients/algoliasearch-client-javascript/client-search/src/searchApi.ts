@@ -2613,6 +2613,8 @@ export const createSearchApi = (options: CreateClientOptions) => {
   };
 };
 
+export type SearchApi = ReturnType<typeof createSearchApi>;
+
 export type AddOrUpdateObjectProps = {
   /**
    * The index in which to perform the request.

@@ -3,18 +3,17 @@ import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createInsightsApi, version } from './src/insightsApi';
-import type { Region } from './src/insightsApi';
+import type { InsightsApi, Region } from './src/insightsApi';
 
 export * from './src/insightsApi';
 export * from '@algolia/client-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function insightsApi(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-) {
+): InsightsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }

@@ -196,6 +196,8 @@ export const createPersonalizationApi = (
   };
 };
 
+export type PersonalizationApi = ReturnType<typeof createPersonalizationApi>;
+
 export type DeleteUserProfileProps = {
   /**
    * UserToken representing the user for which to fetch the Personalization profile.

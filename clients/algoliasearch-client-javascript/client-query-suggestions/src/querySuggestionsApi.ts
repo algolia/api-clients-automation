@@ -309,6 +309,8 @@ export const createQuerySuggestionsApi = (
   };
 };
 
+export type QuerySuggestionsApi = ReturnType<typeof createQuerySuggestionsApi>;
+
 export type DeleteConfigProps = {
   /**
    * The index in which to perform the request.

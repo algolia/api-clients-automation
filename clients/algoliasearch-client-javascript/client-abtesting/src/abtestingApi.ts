@@ -234,6 +234,8 @@ export const createAbtestingApi = (
   return { addABTests, deleteABTest, getABTest, listABTests, stopABTest };
 };
 
+export type AbtestingApi = ReturnType<typeof createAbtestingApi>;
+
 export type DeleteABTestProps = {
   /**
    * The A/B test ID.

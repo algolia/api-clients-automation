@@ -82,3 +82,5 @@ export const createInsightsApi = (
 
   return { pushEvents };
 };
+
+export type InsightsApi = ReturnType<typeof createInsightsApi>;
