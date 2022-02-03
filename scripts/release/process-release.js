@@ -36,6 +36,11 @@ function getMarkdownSection(markdown, title) {
   return lines.slice(0, endIndex).join('\n');
 }
 
+console.log('# hey!!', {
+  EVENT_NUMBER: process.env.EVENT_NUMBER,
+  GITHUB_TOKEN: process.env.GITHUB_TOKEN ? 'exists' : 'nope',
+});
+
 const issueBody = JSON.parse(
   execa.sync('curl', [
     '-H',
