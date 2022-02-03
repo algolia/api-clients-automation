@@ -36,12 +36,6 @@ function getMarkdownSection(markdown, title) {
   return lines.slice(0, endIndex).join('\n');
 }
 
-if (run('git rev-parse --abbrev-ref HEAD') !== RELEASE_BRANCH) {
-  throw new Error(
-    `You can run this script only from \`${RELEASE_BRANCH}\` branch.`
-  );
-}
-
 const issueBody = JSON.parse(
   execa.sync('curl', [
     '-H',
