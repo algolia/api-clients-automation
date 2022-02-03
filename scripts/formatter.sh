@@ -10,7 +10,7 @@ cd ${DIR}/..
 LANGUAGE=$1
 FOLDER=$2
 
-if [[ ! -d "$FOLDER"]]; then 
+if [[ ! -d "$FOLDER" ]]; then 
     echo "Output folder does not exist for $LANGUAGE, skipping..."
     exit 0 
 fi
