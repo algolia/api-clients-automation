@@ -4,7 +4,6 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\InsightsConfig;
-use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
@@ -28,11 +27,6 @@ class InsightsApi
     protected $config;
 
     /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
      * @param InsightsConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
@@ -41,7 +35,6 @@ class InsightsApi
         $this->config = $config;
 
         $this->api = $apiWrapper;
-        $this->headerSelector = new HeaderSelector();
     }
 
     /**
@@ -117,10 +110,10 @@ class InsightsApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($insightEvents)) {
             $httpBody = $insightEvents;
         }

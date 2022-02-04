@@ -4,7 +4,6 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\AnalyticsConfig;
-use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
@@ -29,11 +28,6 @@ class AnalyticsApi
     protected $config;
 
     /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
      * @param AnalyticsConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
@@ -42,7 +36,6 @@ class AnalyticsApi
         $this->config = $config;
 
         $this->api = $apiWrapper;
-        $this->headerSelector = new HeaderSelector();
     }
 
     /**
@@ -168,10 +161,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -263,10 +256,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -358,10 +351,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -453,10 +446,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -548,10 +541,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -643,10 +636,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -738,10 +731,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -855,10 +848,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -972,10 +965,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1027,10 +1020,10 @@ class AnalyticsApi
                 $queryParams['index'] = $index;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1144,10 +1137,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1272,10 +1265,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1415,10 +1408,10 @@ class AnalyticsApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1543,10 +1536,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1682,10 +1675,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1832,10 +1825,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1927,10 +1920,10 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

@@ -10,7 +10,6 @@ use GuzzleHttp\Utils;
 use {{invokerPackage}}\Algolia;
 use {{invokerPackage}}\ApiException;
 use {{invokerPackage}}\Configuration\{{configClassname}};
-use {{invokerPackage}}\HeaderSelector;
 use {{invokerPackage}}\ObjectSerializer;
 use {{invokerPackage}}\RetryStrategy\ApiWrapper;
 use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
@@ -35,11 +34,6 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     protected $config;
 
     /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
      * @param {{configClassname}} $config
      * @param ApiWrapperInterface $apiWrapper
      */
@@ -48,7 +42,6 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $this->config = $config;
 
         $this->api = $apiWrapper;
-        $this->headerSelector = new HeaderSelector();
     }
 
     {{#hasRegionalHost}}
@@ -282,10 +275,10 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             );
         }
         {{/pathParams}}
-        $headers = $this->headerSelector->selectHeaders(
-            [{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}],
-            [{{#consumes}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}]
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         {{#bodyParams}}
         if (isset(${{paramName}})) { 
             $httpBody = ${{paramName}};

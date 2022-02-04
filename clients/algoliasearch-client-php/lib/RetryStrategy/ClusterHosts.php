@@ -64,20 +64,6 @@ final class ClusterHosts
         return static::create($read, $write);
     }
 
-    public static function createForPlaces()
-    {
-        $read = $write = [
-            'places-1.algolianet.com' => 0,
-            'places-2.algolianet.com' => 0,
-            'places-3.algolianet.com' => 0,
-        ];
-
-        $read['places-dsn.algolia.net'] = 10;
-        $write['places.algolia.net'] = 10;
-
-        return static::create($read, $write);
-    }
-
     public static function createForAnalytics($region)
     {
         return static::create('analytics.'.$region.'.algolia.com');

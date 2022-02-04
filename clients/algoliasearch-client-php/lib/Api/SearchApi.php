@@ -4,7 +4,6 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
-use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
@@ -29,11 +28,6 @@ class SearchApi
     protected $config;
 
     /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
      * @param SearchConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
@@ -42,7 +36,6 @@ class SearchApi
         $this->config = $config;
 
         $this->api = $apiWrapper;
-        $this->headerSelector = new HeaderSelector();
     }
 
     /**
@@ -119,10 +112,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($apiKey)) {
             $httpBody = $apiKey;
         }
@@ -197,10 +190,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($body)) {
             $httpBody = $body;
         }
@@ -245,10 +238,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($source)) {
             $httpBody = $source;
         }
@@ -314,10 +307,10 @@ class SearchApi
                 $queryParams['X-Algolia-User-ID'] = $xAlgoliaUserID;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($assignUserIdParams)) {
             $httpBody = $assignUserIdParams;
         }
@@ -377,10 +370,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($batchWriteParams)) {
             $httpBody = $batchWriteParams;
         }
@@ -446,10 +439,10 @@ class SearchApi
                 $queryParams['X-Algolia-User-ID'] = $xAlgoliaUserID;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($batchAssignUserIdsParams)) {
             $httpBody = $batchAssignUserIdsParams;
         }
@@ -509,10 +502,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($batchDictionaryEntries)) {
             $httpBody = $batchDictionaryEntries;
         }
@@ -594,10 +587,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($rule)) {
             $httpBody = $rule;
         }
@@ -651,10 +644,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($browseRequest)) {
             $httpBody = $browseRequest;
         }
@@ -718,10 +711,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -771,10 +764,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -835,10 +828,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -888,10 +881,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -948,10 +941,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($searchParams)) {
             $httpBody = $searchParams;
         }
@@ -1004,10 +997,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1072,10 +1065,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1151,10 +1144,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1204,10 +1197,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1283,10 +1276,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1336,10 +1329,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1373,10 +1366,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1410,10 +1403,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1495,10 +1488,10 @@ class SearchApi
                 $queryParams['type'] = $type;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1574,10 +1567,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1619,10 +1612,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($getObjectsParams)) {
             $httpBody = $getObjectsParams;
         }
@@ -1690,10 +1683,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1743,10 +1736,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1780,10 +1773,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1848,10 +1841,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1916,10 +1909,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1953,10 +1946,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2009,10 +2002,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2057,10 +2050,10 @@ class SearchApi
                 $queryParams['getClusters'] = $getClusters;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2094,10 +2087,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2131,10 +2124,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2179,10 +2172,10 @@ class SearchApi
                 $queryParams['page'] = $page;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2238,10 +2231,10 @@ class SearchApi
                 $queryParams['hitsPerPage'] = $hitsPerPage;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2283,10 +2276,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($batchParams)) {
             $httpBody = $batchParams;
         }
@@ -2331,10 +2324,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($multipleQueriesParams)) {
             $httpBody = $multipleQueriesParams;
         }
@@ -2394,10 +2387,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($operationIndexParams)) {
             $httpBody = $operationIndexParams;
         }
@@ -2483,10 +2476,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($oneOfStringBuiltInOperation)) {
             $httpBody = $oneOfStringBuiltInOperation;
         }
@@ -2542,10 +2535,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2587,10 +2580,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($source)) {
             $httpBody = $source;
         }
@@ -2643,10 +2636,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2703,10 +2696,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($body)) {
             $httpBody = $body;
         }
@@ -2792,10 +2785,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($rule)) {
             $httpBody = $rule;
         }
@@ -2881,10 +2874,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($synonymHit)) {
             $httpBody = $synonymHit;
         }
@@ -2966,10 +2959,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($synonymHit)) {
             $httpBody = $synonymHit;
         }
@@ -3029,10 +3022,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($searchParams)) {
             $httpBody = $searchParams;
         }
@@ -3092,10 +3085,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($searchDictionaryEntries)) {
             $httpBody = $searchDictionaryEntries;
         }
@@ -3164,10 +3157,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($searchForFacetValuesRequest)) {
             $httpBody = $searchForFacetValuesRequest;
         }
@@ -3227,10 +3220,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($searchRulesParams)) {
             $httpBody = $searchRulesParams;
         }
@@ -3327,10 +3320,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3372,10 +3365,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($searchUserIdsParams)) {
             $httpBody = $searchUserIdsParams;
         }
@@ -3420,10 +3413,10 @@ class SearchApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($dictionarySettingsRequest)) {
             $httpBody = $dictionarySettingsRequest;
         }
@@ -3494,10 +3487,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($indexSettings)) {
             $httpBody = $indexSettings;
         }
@@ -3557,10 +3550,10 @@ class SearchApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($apiKey)) {
             $httpBody = $apiKey;
         }

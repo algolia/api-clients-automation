@@ -4,7 +4,6 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\AbTestingConfig;
-use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
@@ -29,11 +28,6 @@ class AbtestingApi
     protected $config;
 
     /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
      * @param AbTestingConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
@@ -42,7 +36,6 @@ class AbtestingApi
         $this->config = $config;
 
         $this->api = $apiWrapper;
-        $this->headerSelector = new HeaderSelector();
     }
 
     /**
@@ -118,10 +111,10 @@ class AbtestingApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($addABTestsRequest)) {
             $httpBody = $addABTestsRequest;
         }
@@ -174,10 +167,10 @@ class AbtestingApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -227,10 +220,10 @@ class AbtestingApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -286,10 +279,10 @@ class AbtestingApi
                 $queryParams['limit'] = $limit;
             }
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -339,10 +332,10 @@ class AbtestingApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

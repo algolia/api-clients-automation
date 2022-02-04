@@ -10,7 +10,7 @@ use Psr\SimpleCache\CacheInterface;
 
 final class Algolia
 {
-    const VERSION = '0.0.0';
+    const VERSION = '1.0.0';
 
     /**
      * Holds an instance of the simple cache repository (PSR-16).
@@ -86,21 +86,8 @@ final class Algolia
 
     public static function getHttpClient()
     {
-        $guzzleVersion = null;
-        if (interface_exists('\GuzzleHttp\ClientInterface')) {
-            if (defined('\GuzzleHttp\ClientInterface::VERSION')) {
-                $guzzleVersion = (int) mb_substr(\GuzzleHttp\Client::VERSION, 0, 1);
-            } else {
-                $guzzleVersion = \GuzzleHttp\ClientInterface::MAJOR_VERSION;
-            }
-        }
-
         if (null === self::$httpClient) {
-            if (class_exists('\GuzzleHttp\Client') && 6 <= $guzzleVersion) {
-                self::setHttpClient(new \Algolia\AlgoliaSearch\Http\GuzzleHttpClient());
-            } else {
-                self::setHttpClient(new \Algolia\AlgoliaSearch\Http\CurlHttpClient());
-            }
+            self::setHttpClient(new \Algolia\AlgoliaSearch\Http\GuzzleHttpClient());
         }
 
         return self::$httpClient;

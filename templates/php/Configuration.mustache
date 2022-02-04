@@ -19,13 +19,6 @@ abstract class Configuration
     protected $apiKeys = [];
 
     /**
-     * Associate array to store API prefix (e.g. Bearer)
-     *
-     * @var string[]
-     */
-    protected $apiKeyPrefixes = [];
-
-    /**
      * Access token for OAuth/Bearer authentication
      *
      * @var string
@@ -53,13 +46,6 @@ abstract class Configuration
      */
     protected $debugFile = 'php://output';
 
-    /**
-     * Debug file location (log to STDOUT by default)
-     *
-     * @var string
-     */
-    protected $tempFolderPath;
-
     protected $config;
 
     protected $defaultReadTimeout = 5;
@@ -70,8 +56,6 @@ abstract class Configuration
 
     public function __construct(array $config = [])
     {
-        $this->tempFolderPath = sys_get_temp_dir();
-
         if(isset($config['apiKey'])) {
             $this->setAlgoliaApiKey($config['apiKey']);
             $this->setApiKey('X-Algolia-API-Key', $config['apiKey']);
@@ -110,55 +94,6 @@ abstract class Configuration
     public function getApiKey($apiKeyIdentifier)
     {
         return isset($this->apiKeys[$apiKeyIdentifier]) ? $this->apiKeys[$apiKeyIdentifier] : null;
-    }
-
-    /**
-     * Sets the prefix for API key (e.g. Bearer)
-     *
-     * @param string $apiKeyIdentifier API key identifier (authentication scheme)
-     * @param string $prefix           API key prefix, e.g. Bearer
-     *
-     * @return $this
-     */
-    public function setApiKeyPrefix($apiKeyIdentifier, $prefix)
-    {
-        $this->apiKeyPrefixes[$apiKeyIdentifier] = $prefix;
-        return $this;
-    }
-
-    /**
-     * Gets API key prefix
-     *
-     * @param string $apiKeyIdentifier API key identifier (authentication scheme)
-     *
-     * @return null|string
-     */
-    public function getApiKeyPrefix($apiKeyIdentifier)
-    {
-        return isset($this->apiKeyPrefixes[$apiKeyIdentifier]) ? $this->apiKeyPrefixes[$apiKeyIdentifier] : null;
-    }
-
-    /**
-     * Sets the access token for OAuth
-     *
-     * @param string $accessToken Token for OAuth
-     *
-     * @return $this
-     */
-    public function setAccessToken($accessToken)
-    {
-        $this->accessToken = $accessToken;
-        return $this;
-    }
-
-    /**
-     * Gets the access token for OAuth
-     *
-     * @return string Access token for OAuth
-     */
-    public function getAccessToken()
-    {
-        return $this->accessToken;
     }
 
     /**
@@ -206,55 +141,7 @@ abstract class Configuration
     {
         return $this->debugFile;
     }
-
-    /**
-     * Sets the temp folder path
-     *
-     * @param string $tempFolderPath Temp folder path
-     *
-     * @return $this
-     */
-    public function setTempFolderPath($tempFolderPath)
-    {
-        $this->tempFolderPath = $tempFolderPath;
-        return $this;
-    }
-
-    /**
-     * Gets the temp folder path
-     *
-     * @return string Temp folder path
-     */
-    public function getTempFolderPath()
-    {
-        return $this->tempFolderPath;
-    }
-
-    /**
-     * Get API key (with prefix if set)
-     *
-     * @param  string $apiKeyIdentifier name of apikey
-     *
-     * @return null|string API key with the prefix
-     */
-    public function getApiKeyWithPrefix($apiKeyIdentifier)
-    {
-        $prefix = $this->getApiKeyPrefix($apiKeyIdentifier);
-        $apiKey = $this->getApiKey($apiKeyIdentifier);
-
-        if ($apiKey === null) {
-            return null;
-        }
-
-        if ($prefix === null) {
-            $keyWithPrefix = $apiKey;
-        } else {
-            $keyWithPrefix = $prefix . ' ' . $apiKey;
-        }
-
-        return $keyWithPrefix;
-    }
-
+    
     public function getDefaultConfiguration()
     {
         return [

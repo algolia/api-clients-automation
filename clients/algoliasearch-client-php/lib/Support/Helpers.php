@@ -2,38 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Support;
 
-use Algolia\AlgoliaSearch\Exceptions\MissingObjectId;
-
 final class Helpers
 {
-    /**
-     * Use this function to generate API path. It will ensure
-     * that all parameters are properly urlencoded.
-     * The function will not double encode if the params are
-     * already urlencoded
-     * Signature is the same `sprintf`.
-     *
-     * Examples:
-     *      - api_path('1/indexes/%s/search', $indexName)
-     *      - api_path('/1/indexes/%s/synonyms/%s', $indexName, $objectID)
-     *
-     * @param string $pathFormat
-     * @param mixed  $args
-     * @param mixed  $_
-     *
-     * @return mixed
-     */
-    public static function apiPath($pathFormat, $args = null, $_ = null)
-    {
-        $arguments = array_slice(func_get_args(), 1);
-        foreach ($arguments as &$arg) {
-            $arg = urlencode(urldecode($arg));
-        }
-        array_unshift($arguments, $pathFormat);
-
-        return call_user_func_array('sprintf', $arguments);
-    }
-
     /**
      * When building a query string, array values must be json_encoded.
      * This function can be used to turn any array into a Algolia-valid query string.
@@ -63,31 +33,6 @@ final class Helpers
         return http_build_query($args);
     }
 
-    public static function buildBatch($items, $action)
-    {
-        return array_map(function ($item) use ($action) {
-            return [
-                'action' => $action,
-                'body' => $item,
-            ];
-        }, $items);
-    }
-
-    public static function ensureObjectID($objects, $message = 'ObjectID is required to add a record, a synonym or a query rule.')
-    {
-        // In case a single objects is passed
-        if (isset($objects['objectID'])) {
-            return;
-        }
-
-        // In case multiple objects are passed
-        foreach ($objects as $object) {
-            if (!isset($object['objectID']) && !isset($object['body']['objectID'])) {
-                throw new MissingObjectId($message);
-            }
-        }
-    }
-
     /**
      * Wrapper for json_decode that throws when an error occurs.
      *
@@ -113,32 +58,5 @@ final class Helpers
         }
 
         return $data;
-    }
-
-    public static function mapObjectIDs($objectIDKey, $objects)
-    {
-        return array_map(function ($object) use ($objectIDKey) {
-            if (!isset($object[$objectIDKey])) {
-                throw new MissingObjectId("At least one object is missing the required $objectIDKey key: ".json_encode($object));
-            }
-            $object['objectID'] = $object[$objectIDKey];
-
-            return $object;
-        }, $objects);
-    }
-
-    public static function serializeQueryParameters($parameters)
-    {
-        if (is_string($parameters)) {
-            return $parameters;
-        }
-
-        foreach ($parameters as $key => $value) {
-            if (is_array($value)) {
-                $parameters[$key] = json_encode($value, JSON_THROW_ON_ERROR);
-            }
-        }
-
-        return http_build_query($parameters);
     }
 }

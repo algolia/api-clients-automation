@@ -4,7 +4,6 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\PersonalizationConfig;
-use Algolia\AlgoliaSearch\HeaderSelector;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
@@ -29,11 +28,6 @@ class PersonalizationApi
     protected $config;
 
     /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
      * @param PersonalizationConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
@@ -42,7 +36,6 @@ class PersonalizationApi
         $this->config = $config;
 
         $this->api = $apiWrapper;
-        $this->headerSelector = new HeaderSelector();
     }
 
     /**
@@ -126,10 +119,10 @@ class PersonalizationApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -163,10 +156,10 @@ class PersonalizationApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -216,10 +209,10 @@ class PersonalizationApi
                 $resourcePath
             );
         }
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -261,10 +254,10 @@ class PersonalizationApi
         $queryParams = [];
         $headerParams = [];
         $httpBody = [];
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
+
+        $headers = [];
+        $headers['Accept'] = 'application/json';
+        $headers['Content-Type'] = 'application/json';
         if (isset($personalizationStrategyParams)) {
             $httpBody = $personalizationStrategyParams;
         }
