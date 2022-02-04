@@ -1,6 +1,6 @@
 <?php
 
-require '../vendor/autoload.php';
+require '../../../clients/algoliasearch-client-php/vendor/autoload.php';
 
 use Algolia\AlgoliaSearch\Api\PersonalizationApi;
 
