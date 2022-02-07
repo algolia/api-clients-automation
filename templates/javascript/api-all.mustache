@@ -1,7 +1,6 @@
 {{! This file will be renamed to `browser.ts` after generating the client }}
 
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
 import { create{{capitalizedApiName}}Api, version } from './src/{{apiName}}Api';
@@ -18,10 +17,7 @@ export * from '@algolia/client-common';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function {{apiName}}Api(
   appId: string,
-  apiKey: string,
-  {{#hasRegionalHost}}
-  region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,
-  {{/hasRegionalHost}}
+  apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
   options?: { requester?: Requester; hosts?: Host[] }
 ): {{capitalizedApiName}}Api {
   if (!appId) {
@@ -50,9 +46,7 @@ export function {{apiName}}Api(
       write: 30,
     },
     requester: options?.requester ?? new XhrRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: '{{capitalizedApiName}}', version })
-      .add({ segment: 'Browser' }),
+    userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     ...options,
   });

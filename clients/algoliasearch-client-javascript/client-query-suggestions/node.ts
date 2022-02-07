@@ -1,8 +1,7 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createQuerySuggestionsApi, version } from './src/querySuggestionsApi';
+import { createQuerySuggestionsApi } from './src/querySuggestionsApi';
 import type { QuerySuggestionsApi, Region } from './src/querySuggestionsApi';
 
 export * from './src/querySuggestionsApi';
@@ -36,9 +35,7 @@ export function querySuggestionsApi(
       write: 30,
     },
     requester: options?.requester ?? new HttpRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: 'QuerySuggestions', version })
-      .add({ segment: 'Node.js', version: process.versions.node }),
+    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });
 }

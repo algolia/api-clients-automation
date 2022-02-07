@@ -1,8 +1,7 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createRecommendApi, version } from './src/recommendApi';
+import { createRecommendApi } from './src/recommendApi';
 import type { RecommendApi } from './src/recommendApi';
 
 export * from './src/recommendApi';
@@ -31,9 +30,7 @@ export function recommendApi(
       write: 30,
     },
     requester: options?.requester ?? new HttpRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: 'Recommend', version })
-      .add({ segment: 'Node.js', version: process.versions.node }),
+    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });
 }

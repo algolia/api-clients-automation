@@ -1,9 +1,9 @@
-import { Transporter, createAuth } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
   Host,
   Request,
-  CreateClientOptions,
 } from '@algolia/client-common';
 
 import type { LogFile } from '../model/logFile';
@@ -37,7 +37,11 @@ export const createQuerySuggestionsApi = (
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
     },
-    userAgent: options.userAgent,
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'QuerySuggestions',
+      version,
+    }),
     timeouts: options.timeouts,
     requester: options.requester,
   });

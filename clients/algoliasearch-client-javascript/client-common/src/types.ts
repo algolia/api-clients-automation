@@ -103,7 +103,7 @@ export type CreateClientOptions = {
   apiKey: string;
   requester: any;
   timeouts: Timeouts;
-  userAgent: UserAgent;
+  userAgents: UserAgentOptions[];
   hosts?: Host[];
   authMode?: AuthMode;
 };

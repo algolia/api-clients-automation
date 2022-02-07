@@ -1,9 +1,14 @@
-import { shuffle, Transporter, createAuth } from '@algolia/client-common';
+import {
+  shuffle,
+  Transporter,
+  createAuth,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
   Host,
   Request,
-  CreateClientOptions,
 } from '@algolia/client-common';
 
 import type { GetRecommendations } from '../model/getRecommendations';
@@ -54,7 +59,11 @@ export const createRecommendApi = (options: CreateClientOptions) => {
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
     },
-    userAgent: options.userAgent,
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Recommend',
+      version,
+    }),
     timeouts: options.timeouts,
     requester: options.requester,
   });

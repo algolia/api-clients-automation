@@ -1,8 +1,7 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createSourcesApi, version } from './src/sourcesApi';
+import { createSourcesApi } from './src/sourcesApi';
 import type { SourcesApi, Region } from './src/sourcesApi';
 
 export * from './src/sourcesApi';
@@ -36,9 +35,7 @@ export function sourcesApi(
       write: 30,
     },
     requester: options?.requester ?? new XhrRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: 'Sources', version })
-      .add({ segment: 'Browser' }),
+    userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     ...options,
   });

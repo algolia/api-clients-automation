@@ -1,8 +1,7 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createSearchApi, version } from './src/searchApi';
+import { createSearchApi } from './src/searchApi';
 import type { SearchApi } from './src/searchApi';
 
 export * from './src/searchApi';
@@ -31,9 +30,7 @@ export function searchApi(
       write: 30,
     },
     requester: options?.requester ?? new XhrRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: 'Search', version })
-      .add({ segment: 'Browser' }),
+    userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     ...options,
   });

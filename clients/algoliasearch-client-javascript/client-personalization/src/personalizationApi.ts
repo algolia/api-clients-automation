@@ -1,9 +1,9 @@
-import { Transporter, createAuth } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
   Host,
   Request,
-  CreateClientOptions,
 } from '@algolia/client-common';
 
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
@@ -35,7 +35,11 @@ export const createPersonalizationApi = (
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
     },
-    userAgent: options.userAgent,
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Personalization',
+      version,
+    }),
     timeouts: options.timeouts,
     requester: options.requester,
   });

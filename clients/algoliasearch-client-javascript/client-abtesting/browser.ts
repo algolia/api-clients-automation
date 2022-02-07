@@ -1,8 +1,7 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createAbtestingApi, version } from './src/abtestingApi';
+import { createAbtestingApi } from './src/abtestingApi';
 import type { AbtestingApi, Region } from './src/abtestingApi';
 
 export * from './src/abtestingApi';
@@ -32,9 +31,7 @@ export function abtestingApi(
       write: 30,
     },
     requester: options?.requester ?? new XhrRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: 'Abtesting', version })
-      .add({ segment: 'Browser' }),
+    userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     ...options,
   });

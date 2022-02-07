@@ -1,7 +1,6 @@
 {{! This file will be renamed to `node.ts` after generating the client }}
 
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
 import { create{{capitalizedApiName}}Api, version } from './src/{{apiName}}Api';
@@ -17,10 +16,7 @@ export * from '@algolia/client-common';
 
 export function {{apiName}}Api(
   appId: string,
-  apiKey: string,
-  {{#hasRegionalHost}}
-  region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,
-  {{/hasRegionalHost}}
+  apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
   options?: { requester?: Requester; hosts?: Host[] }
 ): {{capitalizedApiName}}Api {
   if (!appId) {
@@ -49,9 +45,7 @@ export function {{apiName}}Api(
       write: 30,
     },
     requester: options?.requester ?? new HttpRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: '{{capitalizedApiName}}', version })
-      .add({ segment: 'Node.js', version: process.versions.node }),
+    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });
 }

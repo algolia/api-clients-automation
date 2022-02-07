@@ -1,9 +1,9 @@
-import { Transporter, createAuth } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
   Host,
   Request,
-  CreateClientOptions,
 } from '@algolia/client-common';
 
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
@@ -52,7 +52,11 @@ export const createAnalyticsApi = (
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
     },
-    userAgent: options.userAgent,
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Analytics',
+      version,
+    }),
     timeouts: options.timeouts,
     requester: options.requester,
   });

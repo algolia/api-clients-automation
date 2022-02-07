@@ -1,10 +1,5 @@
-import { shuffle, Transporter, createAuth } from '@algolia/client-common';
-import type {
-  Headers,
-  Host,
-  Request,
-  CreateClientOptions
-} from '@algolia/client-common';
+import { shuffle, Transporter, createAuth, getUserAgent } from '@algolia/client-common';
+import type { CreateClientOptions, Headers, Host, Request } from '@algolia/client-common';
 
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
@@ -76,7 +71,11 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
     },
-    userAgent: options.userAgent,
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: '{{{capitalizedApiName}}}',
+      version,
+    }),
     timeouts: options.timeouts,
     requester: options.requester,
   });

@@ -1,8 +1,7 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createInsightsApi, version } from './src/insightsApi';
+import { createInsightsApi } from './src/insightsApi';
 import type { InsightsApi, Region } from './src/insightsApi';
 
 export * from './src/insightsApi';
@@ -32,9 +31,7 @@ export function insightsApi(
       write: 30,
     },
     requester: options?.requester ?? new HttpRequester(),
-    userAgent: createUserAgent(version)
-      .add({ segment: 'Insights', version })
-      .add({ segment: 'Node.js', version: process.versions.node }),
+    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });
 }

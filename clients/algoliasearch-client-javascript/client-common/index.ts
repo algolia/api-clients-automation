@@ -2,6 +2,7 @@ export * from './src/cache';
 export * from './src/createAuth';
 export * from './src/createUserAgent';
 export * from './src/errors';
+export * from './src/getUserAgent';
 export * from './src/helpers';
 export * from './src/requester';
 export * from './src/Response';
