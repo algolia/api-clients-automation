@@ -1,5 +1,6 @@
 import {
   capitalize,
+  checkIfLanguageExists,
   createClientName,
   removeEnumType,
   removeObjectName,
@@ -24,10 +25,22 @@ describe('utils', () => {
   });
 
   describe('createClientName', () => {
-    it('capitalize every part', () => {
-      expect(createClientName('search')).toEqual('SearchApi');
-      expect(createClientName('search-client')).toEqual('SearchClientApi');
-      expect(createClientName('search-cli!nt-complex')).toEqual(
+    it('does not capitalize every part for JavaScript', () => {
+      expect(createClientName('search', 'javascript')).toEqual('searchApi');
+      expect(createClientName('search-client', 'javascript')).toEqual(
+        'searchClientApi'
+      );
+      expect(createClientName('search-cli!nt-complex', 'javascript')).toEqual(
+        'searchCli!ntComplexApi'
+      );
+    });
+
+    it('capitalize every part for other languages', () => {
+      expect(createClientName('search', 'java')).toEqual('SearchApi');
+      expect(createClientName('search-client', 'java')).toEqual(
+        'SearchClientApi'
+      );
+      expect(createClientName('search-cli!nt-complex', 'java')).toEqual(
         'SearchCli!ntComplexApi'
       );
     });
@@ -101,6 +114,16 @@ describe('utils', () => {
         val: 'test',
         arr: ['addEntry', '$enumType'],
       });
+    });
+  });
+
+  describe('checkIfLanguageExists', () => {
+    it('returns `true` if the language is present in the config', () => {
+      expect(checkIfLanguageExists('javascript')).toBe(true);
+    });
+
+    it('returns `false` if the language is not present in the config', () => {
+      expect(checkIfLanguageExists('algo')).toBe(false);
     });
   });
 });
