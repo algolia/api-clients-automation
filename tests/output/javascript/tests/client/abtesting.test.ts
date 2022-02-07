@@ -47,14 +47,15 @@ describe('api', () => {
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
+      expect.objectContaining({ connectTimeout: 1, responseTimeout: 30 })
     );
   });
 });
 
 describe('parameters', () => {
-  test('throws when region is not given', async () => {
+  test('does not throw when region is not given', async () => {
     let actual;
+
     await expect(
       new Promise((resolve, reject) => {
         const $client = abtestingApi('my-app-id', 'my-api-key', '', {
@@ -69,7 +70,7 @@ describe('parameters', () => {
           resolve();
         }
       })
-    ).rejects.toThrow('`region` is missing.');
+    ).resolves.not.toThrow();
   });
 
   test('does not throw when region is given', async () => {

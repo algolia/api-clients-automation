@@ -1,6 +1,6 @@
 [
   {
-    "testName": "throws when region is not given",
+    "testName": "does not throw when region is not given",
     "autoCreateClient": false,
     "steps": [
       {
@@ -11,7 +11,7 @@
           "region": ""
         },
         "expected": {
-          "error": "`region` is missing."
+          "error": false
         }
       }
     ]

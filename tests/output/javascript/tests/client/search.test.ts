@@ -55,7 +55,7 @@ describe('api', () => {
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
+      expect.objectContaining({ connectTimeout: 1, responseTimeout: 30 })
     );
   });
 });

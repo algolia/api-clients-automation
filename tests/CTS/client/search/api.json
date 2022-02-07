@@ -45,7 +45,7 @@
         "expected": {
           "match": {
             "objectContaining": {
-              "connectTimeout": 2,
+              "connectTimeout": 1,
               "responseTimeout": 30
             }
           }
