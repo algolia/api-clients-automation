@@ -3,5 +3,5 @@ scopes:
   - php
   - java
   - cts
-  - specs
-  - scripts
+  - spec
+  - script
