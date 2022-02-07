@@ -1,14 +1,13 @@
-// @ts-nocheck
-import {
-  PersonalizationApi,
-  EchoRequester,
-} from '@algolia/client-personalization';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
+import { EchoRequester } from '@algolia/client-common';
+import { personalizationApi } from '@algolia/client-personalization';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
-function createClient(): PersonalizationApi {
-  return new PersonalizationApi(appId, apiKey, 'us', {
+function createClient() {
+  return personalizationApi(appId, apiKey, 'us', {
     requester: new EchoRequester(),
   });
 }
@@ -52,9 +51,10 @@ describe('parameters', () => {
     let actual;
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new PersonalizationApi('my-app-id', 'my-api-key', '', {
+        const $client = personalizationApi('my-app-id', 'my-api-key', '', {
           requester: new EchoRequester(),
         });
+
         actual = $client;
 
         if (actual instanceof Promise) {
@@ -71,14 +71,10 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new PersonalizationApi(
-          'my-app-id',
-          'my-api-key',
-          'us',
-          {
-            requester: new EchoRequester(),
-          }
-        );
+        const $client = personalizationApi('my-app-id', 'my-api-key', 'us', {
+          requester: new EchoRequester(),
+        });
+
         actual = $client;
 
         if (actual instanceof Promise) {

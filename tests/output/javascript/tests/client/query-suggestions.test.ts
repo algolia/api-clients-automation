@@ -1,14 +1,13 @@
-// @ts-nocheck
-import {
-  QuerySuggestionsApi,
-  EchoRequester,
-} from '@algolia/client-query-suggestions';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
+import { EchoRequester } from '@algolia/client-common';
+import { querySuggestionsApi } from '@algolia/client-query-suggestions';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
-function createClient(): QuerySuggestionsApi {
-  return new QuerySuggestionsApi(appId, apiKey, 'us', {
+function createClient() {
+  return querySuggestionsApi(appId, apiKey, 'us', {
     requester: new EchoRequester(),
   });
 }
@@ -52,9 +51,10 @@ describe('parameters', () => {
     let actual;
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new QuerySuggestionsApi('my-app-id', 'my-api-key', '', {
+        const $client = querySuggestionsApi('my-app-id', 'my-api-key', '', {
           requester: new EchoRequester(),
         });
+
         actual = $client;
 
         if (actual instanceof Promise) {
@@ -71,14 +71,10 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new QuerySuggestionsApi(
-          'my-app-id',
-          'my-api-key',
-          'us',
-          {
-            requester: new EchoRequester(),
-          }
-        );
+        const $client = querySuggestionsApi('my-app-id', 'my-api-key', 'us', {
+          requester: new EchoRequester(),
+        });
+
         actual = $client;
 
         if (actual instanceof Promise) {

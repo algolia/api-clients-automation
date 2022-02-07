@@ -1,13 +1,13 @@
-// @ts-nocheck
-import { SourcesApi, EchoRequester } from '@algolia/client-sources';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
+import { EchoRequester } from '@algolia/client-common';
+import { sourcesApi } from '@algolia/client-sources';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
-function createClient(): SourcesApi {
-  return new SourcesApi(appId, apiKey, 'us', {
-    requester: new EchoRequester(),
-  });
+function createClient() {
+  return sourcesApi(appId, apiKey, 'us', { requester: new EchoRequester() });
 }
 
 describe('api', () => {
