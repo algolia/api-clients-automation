@@ -1,17 +1,16 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createSourcesApi } from './src/sourcesApi';
-import type { SourcesApi, Region } from './src/sourcesApi';
+import { createSearchApi } from '../src/searchApi';
+import type { SearchApi } from '../src/searchApi';
 
-export * from './src/sourcesApi';
+export * from '../src/searchApi';
 
-export function sourcesApi(
+export function searchApi(
   appId: string,
   apiKey: string,
-  region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): SourcesApi {
+): SearchApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -20,14 +19,10 @@ export function sourcesApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  if (!region) {
-    throw new Error('`region` is missing.');
-  }
-
-  return createSourcesApi({
+  return createSearchApi({
     appId,
     apiKey,
-    region,
+
     timeouts: {
       connect: 2,
       read: 5,

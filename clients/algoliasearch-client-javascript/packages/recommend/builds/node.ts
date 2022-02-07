@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createRecommendApi } from './src/recommendApi';
-import type { RecommendApi } from './src/recommendApi';
+import { createRecommendApi } from '../src/recommendApi';
+import type { RecommendApi } from '../src/recommendApi';
 
-export * from './src/recommendApi';
+export * from '../src/recommendApi';
 
 export function recommendApi(
   appId: string,

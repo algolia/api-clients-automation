@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createPersonalizationApi } from './src/personalizationApi';
-import type { PersonalizationApi, Region } from './src/personalizationApi';
+import { createPersonalizationApi } from '../src/personalizationApi';
+import type { PersonalizationApi, Region } from '../src/personalizationApi';
 
-export * from './src/personalizationApi';
+export * from '../src/personalizationApi';
 
 export function personalizationApi(
   appId: string,

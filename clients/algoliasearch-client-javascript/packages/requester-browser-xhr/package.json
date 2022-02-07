@@ -6,8 +6,15 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "dist/index.js",
+  "type": "module",
+  "main": "dist/requester-browser-xhr.esm.js",
+  "module": "dist/requester-browser-xhr.esm.js",
   "types": "dist/index.d.ts",
+  "jsdelivr": "dist/requester-browser-xhr.umd.js",
+  "unpkg": "dist/requester-browser-xhr.umd.js",
+  "browser": {
+    "./index.js": "dist/requester-browser-xhr.umd.js"
+  },
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist/"

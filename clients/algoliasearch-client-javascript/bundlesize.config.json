@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "path": "packages/client-abtesting/dist/abtesting.umd.js",
+      "maxSize": "1.50KB"
+    },
+    {
+      "path": "packages/client-analytics/dist/analytics.umd.js",
+      "maxSize": "2.00KB"
+    },
+    {
+      "path": "packages/client-insights/dist/insights.umd.js",
+      "maxSize": "1.25KB"
+    },
+    {
+      "path": "packages/client-personalization/dist/personalization.umd.js",
+      "maxSize": "1.50KB"
+    },
+    {
+      "path": "packages/client-query-suggestions/dist/query-suggestions.umd.js",
+      "maxSize": "1.50KB"
+    },
+    {
+      "path": "packages/client-search/dist/search.umd.js",
+      "maxSize": "3.50KB"
+    },
+    {
+      "path": "packages/client-sources/dist/sources.umd.js",
+      "maxSize": "1.25KB"
+    },
+    {
+      "path": "packages/recommend/dist/recommend.umd.js",
+      "maxSize": "1.25KB"
+    },
+    {
+      "path": "packages/client-common/dist/client-common.umd.js",
+      "maxSize": "4.75KB"
+    },
+    {
+      "path": "packages/requester-browser-xhr/dist/requester-browser-xhr.umd.js",
+      "maxSize": "1.25KB"
+    },
+    {
+      "path": "packages/requester-node-http/dist/requester-node-http.umd.js",
+      "maxSize": "1.25KB"
+    }
+  ]
+}

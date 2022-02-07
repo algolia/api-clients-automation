@@ -1,10 +1,12 @@
 {
   "name": "javascript-playground",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start:abtesting": "yarn install && yarn build && yarn test:abtesting",
     "start:analytics": "yarn install && yarn build && yarn test:analytics",
+    "start:browser": "parcel browser/index.html",
     "start:personalization": "yarn install && yarn build && yarn test:personalization",
     "start:query-suggestions": "yarn install && yarn build && yarn test:query-suggestions",
     "start:recommend": "yarn install && yarn build && yarn test:recommend",
@@ -27,6 +29,7 @@
     "@algolia/client-sources": "0.0.1",
     "@algolia/recommend": "5.0.0",
     "dotenv": "10.0.0",
+    "parcel": "2.3.1",
     "typescript": "4.5.4"
   },
   "engines": {

@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createAnalyticsApi } from './src/analyticsApi';
-import type { AnalyticsApi, Region } from './src/analyticsApi';
+import { createAnalyticsApi } from '../src/analyticsApi';
+import type { AnalyticsApi, Region } from '../src/analyticsApi';
 
-export * from './src/analyticsApi';
+export * from '../src/analyticsApi';
 
 export function analyticsApi(
   appId: string,

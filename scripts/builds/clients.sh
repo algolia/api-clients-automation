@@ -20,12 +20,10 @@ fi
 # Commands are based on the LANGUAGE
 if [[ $LANGUAGE == 'javascript' ]]; then
     echo "> Cleaning previous build $GENERATOR..."
-
     yarn workspace $PACKAGE clean
 
     echo "> Bundling $GENERATOR..."
-
-    CMD="yarn workspace $PACKAGE build"
+    CMD="yarn workspace algoliasearch-client-javascript build $PACKAGE"
 elif [[ $LANGUAGE == 'php' ]]; then
     # no build needed (for now)
     :

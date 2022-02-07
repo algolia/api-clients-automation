@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { HttpRequester } from '@algolia/requester-node-http';
+import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createInsightsApi } from './src/insightsApi';
-import type { InsightsApi, Region } from './src/insightsApi';
+import { createInsightsApi } from '../src/insightsApi';
+import type { InsightsApi, Region } from '../src/insightsApi';
 
-export * from './src/insightsApi';
+export * from '../src/insightsApi';
 
 export function insightsApi(
   appId: string,
@@ -25,12 +25,13 @@ export function insightsApi(
     apiKey,
     region,
     timeouts: {
-      connect: 2,
-      read: 5,
+      connect: 1,
+      read: 2,
       write: 30,
     },
-    requester: options?.requester ?? new HttpRequester(),
-    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    requester: options?.requester ?? new XhrRequester(),
+    userAgents: [{ segment: 'Browser' }],
+    authMode: 'WithinQueryParameters',
     ...options,
   });
 }

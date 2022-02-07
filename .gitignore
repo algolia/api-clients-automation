@@ -3,6 +3,7 @@ node_modules
 .env
 dist
 .pnp.cjs
+.parcel-cache
 
 yarn-error.log
 

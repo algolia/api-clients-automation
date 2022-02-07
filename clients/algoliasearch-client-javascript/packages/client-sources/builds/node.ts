@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { XhrRequester } from '@algolia/requester-browser-xhr';
+import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createSourcesApi } from './src/sourcesApi';
-import type { SourcesApi, Region } from './src/sourcesApi';
+import { createSourcesApi } from '../src/sourcesApi';
+import type { SourcesApi, Region } from '../src/sourcesApi';
 
-export * from './src/sourcesApi';
+export * from '../src/sourcesApi';
 
 export function sourcesApi(
   appId: string,
@@ -29,13 +29,12 @@ export function sourcesApi(
     apiKey,
     region,
     timeouts: {
-      connect: 1,
-      read: 2,
+      connect: 2,
+      read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new XhrRequester(),
-    userAgents: [{ segment: 'Browser' }],
-    authMode: 'WithinQueryParameters',
+    requester: options?.requester ?? new HttpRequester(),
+    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });
 }

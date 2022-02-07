@@ -1,17 +1,16 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createInsightsApi } from './src/insightsApi';
-import type { InsightsApi, Region } from './src/insightsApi';
+import { createSearchApi } from '../src/searchApi';
+import type { SearchApi } from '../src/searchApi';
 
-export * from './src/insightsApi';
+export * from '../src/searchApi';
 
-export function insightsApi(
+export function searchApi(
   appId: string,
   apiKey: string,
-  region?: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): InsightsApi {
+): SearchApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -20,10 +19,10 @@ export function insightsApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createInsightsApi({
+  return createSearchApi({
     appId,
     apiKey,
-    region,
+
     timeouts: {
       connect: 1,
       read: 2,

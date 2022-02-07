@@ -1,16 +1,17 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createRecommendApi } from './src/recommendApi';
-import type { RecommendApi } from './src/recommendApi';
+import { createAnalyticsApi } from '../src/analyticsApi';
+import type { AnalyticsApi, Region } from '../src/analyticsApi';
 
-export * from './src/recommendApi';
+export * from '../src/analyticsApi';
 
-export function recommendApi(
+export function analyticsApi(
   appId: string,
   apiKey: string,
+  region?: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): RecommendApi {
+): AnalyticsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -19,10 +20,10 @@ export function recommendApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createRecommendApi({
+  return createAnalyticsApi({
     appId,
     apiKey,
-
+    region,
     timeouts: {
       connect: 1,
       read: 2,

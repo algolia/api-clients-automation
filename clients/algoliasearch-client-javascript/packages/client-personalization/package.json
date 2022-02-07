@@ -6,16 +6,18 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "./dist/node.js",
-  "types": "./dist/node.d.ts",
-  "jsdelivr": "./dist/browser.js",
-  "unpkg": "./dist/browser.js",
+  "type": "module",
+  "main": "index.js",
+  "module": "dist/personalization.esm.js",
+  "types": "index.d.ts",
+  "jsdelivr": "dist/personalization.umd.js",
+  "unpkg": "dist/personalization.umd.js",
   "browser": {
-    "./index.js": "./dist/browser.js"
+    "./dist/index.esm.js": "dist/personalization.umd.js",
+    "./dist/index.js": "dist/personalization.umd.js"
   },
   "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf ./dist"
   },
   "engines": {
     "node": "^14.0.0"

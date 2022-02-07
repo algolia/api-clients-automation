@@ -1,6 +1,7 @@
 {
   "extends": "../../base.tsconfig.json",
   "compilerOptions": {
+    "module": "ES2015",
     "outDir": "dist"
   },
   "include": ["*.ts"]
