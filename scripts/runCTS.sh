@@ -16,8 +16,8 @@ run_cts() {
     elif [[ $LANGUAGE == 'java' ]]; then
         ./gradle/gradlew --no-daemon -p tests/output/java test
     else
-        echo "Cannot run CTS on unknown language $LANGUAGE"
-        exit 1
+        echo "Skipping unknown language $LANGUAGE to run the CTS"
+        exit 0
     fi
 }
 
