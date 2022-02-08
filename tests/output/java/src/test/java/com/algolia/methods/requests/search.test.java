@@ -23,7 +23,7 @@ class SearchApiTests {
 
   @BeforeAll
   void init() {
-    client = new SearchApi("APPID", "apiKey", new EchoRequester());
+    client = new SearchApi("appId", "apiKey", new EchoRequester());
     json = new JSON();
   }
 
