@@ -24,7 +24,7 @@ class {{client}}Tests {
 
     @BeforeAll
     void init() {
-        client = new {{client}}("APPID", "apiKey", new EchoRequester());
+        client = new {{client}}("appId", "apiKey", new EchoRequester());
         json = new JSON();
     }
 
