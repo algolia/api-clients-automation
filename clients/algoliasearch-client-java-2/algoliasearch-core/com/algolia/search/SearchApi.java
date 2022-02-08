@@ -5,7 +5,7 @@ import com.algolia.ApiClient;
 import com.algolia.ApiException;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
-import com.algolia.model.*;
+import com.algolia.model.search.*;
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;

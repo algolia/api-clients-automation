@@ -3,11 +3,14 @@ package com.algolia.model.search;
 import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
-/** The `searchDictionaryEntries` parameters. */
-public class SearchDictionaryEntriesParams {
+/** OK */
+public class SearchUserIdsParams {
 
   @SerializedName("query")
-  private String query = "";
+  private String query;
+
+  @SerializedName("clusterName")
+  private String clusterName;
 
   @SerializedName("page")
   private Integer page = 0;
@@ -15,16 +18,14 @@ public class SearchDictionaryEntriesParams {
   @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  @SerializedName("language")
-  private String language;
-
-  public SearchDictionaryEntriesParams query(String query) {
+  public SearchUserIdsParams query(String query) {
     this.query = query;
     return this;
   }
 
   /**
-   * The text to search in the index.
+   * Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve
+   * all users.
    *
    * @return query
    */
@@ -37,7 +38,26 @@ public class SearchDictionaryEntriesParams {
     this.query = query;
   }
 
-  public SearchDictionaryEntriesParams page(Integer page) {
+  public SearchUserIdsParams clusterName(String clusterName) {
+    this.clusterName = clusterName;
+    return this;
+  }
+
+  /**
+   * Name of the cluster.
+   *
+   * @return clusterName
+   */
+  @javax.annotation.Nullable
+  public String getClusterName() {
+    return clusterName;
+  }
+
+  public void setClusterName(String clusterName) {
+    this.clusterName = clusterName;
+  }
+
+  public SearchUserIdsParams page(Integer page) {
     this.page = page;
     return this;
   }
@@ -56,7 +76,7 @@ public class SearchDictionaryEntriesParams {
     this.page = page;
   }
 
-  public SearchDictionaryEntriesParams hitsPerPage(Integer hitsPerPage) {
+  public SearchUserIdsParams hitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -75,25 +95,6 @@ public class SearchDictionaryEntriesParams {
     this.hitsPerPage = hitsPerPage;
   }
 
-  public SearchDictionaryEntriesParams language(String language) {
-    this.language = language;
-    return this;
-  }
-
-  /**
-   * Language ISO code supported by the dictionary (e.g., \"en\" for English).
-   *
-   * @return language
-   */
-  @javax.annotation.Nullable
-  public String getLanguage() {
-    return language;
-  }
-
-  public void setLanguage(String language) {
-    this.language = language;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -102,34 +103,34 @@ public class SearchDictionaryEntriesParams {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchDictionaryEntriesParams searchDictionaryEntriesParams = (SearchDictionaryEntriesParams) o;
+    SearchUserIdsParams searchUserIdsParams = (SearchUserIdsParams) o;
     return (
-      Objects.equals(this.query, searchDictionaryEntriesParams.query) &&
-      Objects.equals(this.page, searchDictionaryEntriesParams.page) &&
-      Objects.equals(
-        this.hitsPerPage,
-        searchDictionaryEntriesParams.hitsPerPage
-      ) &&
-      Objects.equals(this.language, searchDictionaryEntriesParams.language)
+      Objects.equals(this.query, searchUserIdsParams.query) &&
+      Objects.equals(this.clusterName, searchUserIdsParams.clusterName) &&
+      Objects.equals(this.page, searchUserIdsParams.page) &&
+      Objects.equals(this.hitsPerPage, searchUserIdsParams.hitsPerPage)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(query, page, hitsPerPage, language);
+    return Objects.hash(query, clusterName, page, hitsPerPage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SearchDictionaryEntriesParams {\n");
+    sb.append("class SearchUserIdsParams {\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb
+      .append("    clusterName: ")
+      .append(toIndentedString(clusterName))
+      .append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb
       .append("    hitsPerPage: ")
       .append(toIndentedString(hitsPerPage))
       .append("\n");
-    sb.append("    language: ").append(toIndentedString(language)).append("\n");
     sb.append("}");
     return sb.toString();
   }
