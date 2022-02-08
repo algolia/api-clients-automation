@@ -53,6 +53,7 @@ export type EchoResponse = Request & {
 };
 
 export type Headers = Record<string, string>;
+export type QueryParameters = Record<string, string>;
 
 export type Host = {
   url: string;
