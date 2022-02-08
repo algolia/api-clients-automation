@@ -2,16 +2,7 @@ post:
   tags:
     - predict
   operationId: fetchUserProfile
-  description: |
-    Get predictions, properties (raw, computed or custom) and segments (computed or custom) for an authenticated user (userID) or an anonymous user (cookieID).
-
-    The predictions can be goals, metrics or affinities: 
-    * **Goals** ML models compute the probability for an action. Ex. A funnel stage model can output the next stage in the user conversion funnel - add_to_cart with a probability of 72%.
-    * **Metrics** ML models output a number. Ex. Next order value is 172.43 USD. Since metrics models are usually based on regression, these predictions have a single value without a probability attached to it.
-    * **Affinities** ML models output a set of item attributes with associated probabilities. Ex. a user is interested in items with the following characteristics: *color: red* (56% probability), *brand: Adidas* (67% probability).
-
-    The usage of segments for a user profile assumes that actions are implemented in a website or app and can be triggered when a segment is identified: *if segment1 in user_segments then do action*. For example, a segment can represent users that are close to churning and the action can be offering them an incentive such as a discount code or free shipping.
-
+  description: Get predictions, properties (raw, computed or custom) and segments (computed or custom) for a user profile.
   summary: Get user profile
   parameters:
     - $ref: '../common/parameters.yml#/userID'
