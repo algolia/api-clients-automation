@@ -1,10 +1,11 @@
-import { SearchApi, EchoRequester } from '@algolia/client-search';
-import type { EchoResponse } from '@algolia/client-search';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
+import { searchApi } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new SearchApi(appId, apiKey, { requester: new EchoRequester() });
+const client = searchApi(appId, apiKey, { requester: new EchoRequester() });
 
 describe('addApiKey', () => {
   test('addApiKey', async () => {
@@ -129,7 +130,7 @@ describe('batchDictionaryEntries', () => {
   test('get batchDictionaryEntries results with minimal parameters', async () => {
     const req = (await client.batchDictionaryEntries({
       dictionaryName: 'compounds',
-      batchDictionaryEntries: {
+      batchDictionaryEntriesParams: {
         requests: [
           { action: 'addEntry', body: { objectID: '1', language: 'en' } },
           { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
@@ -151,7 +152,7 @@ describe('batchDictionaryEntries', () => {
   test('get batchDictionaryEntries results with all parameters', async () => {
     const req = (await client.batchDictionaryEntries({
       dictionaryName: 'compounds',
-      batchDictionaryEntries: {
+      batchDictionaryEntriesParams: {
         clearExistingDictionaryEntries: false,
         requests: [
           {
@@ -937,7 +938,7 @@ describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with minimal parameters', async () => {
     const req = (await client.searchDictionaryEntries({
       dictionaryName: 'compounds',
-      searchDictionaryEntries: { query: 'foo' },
+      searchDictionaryEntriesParams: { query: 'foo' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/dictionaries/compounds/search');
@@ -949,7 +950,7 @@ describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with all parameters', async () => {
     const req = (await client.searchDictionaryEntries({
       dictionaryName: 'compounds',
-      searchDictionaryEntries: {
+      searchDictionaryEntriesParams: {
         query: 'foo',
         page: 4,
         hitsPerPage: 2,

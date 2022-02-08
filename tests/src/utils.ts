@@ -49,11 +49,19 @@ export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function createClientName(client: string): string {
-  return `${client
+export function createClientName(client: string, language: string): string {
+  const clientName = client
     .split('-')
-    .map((part) => capitalize(part))
-    .join('')}Api`;
+    .map((part, i) => {
+      if (language === 'javascript' && i === 0) {
+        return part;
+      }
+
+      return capitalize(part);
+    })
+    .join('');
+
+  return `${clientName}Api`;
 }
 
 export function removeObjectName(obj: any): any {
@@ -74,6 +82,10 @@ export function removeObjectName(obj: any): any {
     return copy;
   }
   return obj;
+}
+
+export function checkIfLanguageExists(language: string): boolean {
+  return Boolean(ctsConfig[language]);
 }
 
 export function removeEnumType(obj: any): any {

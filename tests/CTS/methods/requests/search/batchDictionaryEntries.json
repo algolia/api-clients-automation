@@ -4,8 +4,8 @@
     "testName": "get batchDictionaryEntries results with minimal parameters",
     "parameters": {
       "dictionaryName": "compounds",
-      "batchDictionaryEntries": {
-        "$objectName": "BatchDictionaryEntries",
+      "batchDictionaryEntriesParams": {
+        "$objectName": "BatchDictionaryEntriesParams",
         "requests": [
           {
             "$objectName": "BatchDictionaryEntriesRequest",
@@ -62,8 +62,8 @@
     "testName": "get batchDictionaryEntries results with all parameters",
     "parameters": {
       "dictionaryName": "compounds",
-      "batchDictionaryEntries": {
-        "$objectName": "BatchDictionaryEntries",
+      "batchDictionaryEntriesParams": {
+        "$objectName": "BatchDictionaryEntriesParams",
         "clearExistingDictionaryEntries": false,
         "requests": [
           {
