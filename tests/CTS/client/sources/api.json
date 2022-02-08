@@ -1,5 +1,23 @@
 [
   {
+    "testName": "calls api with correct host",
+    "steps": [
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "postIngestUrl",
+        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
+        "expected": {
+          "match": {
+            "objectContaining": {
+              "host": "data.us.algolia.com"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
     "testName": "calls api with correct user agent",
     "steps": [
       {

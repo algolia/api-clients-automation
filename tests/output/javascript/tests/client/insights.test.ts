@@ -46,3 +46,37 @@ describe('api', () => {
     );
   });
 });
+
+describe('parameters', () => {
+  test('fallbacks to the alias when region is not given', async () => {
+    let $client;
+
+    let actual;
+
+    await expect(
+      new Promise((resolve, reject) => {
+        $client = insightsApi('my-app-id', 'my-api-key', '', {
+          requester: new EchoRequester(),
+        });
+
+        actual = $client;
+
+        if (actual instanceof Promise) {
+          actual.then(resolve).catch(reject);
+        } else {
+          resolve();
+        }
+      })
+    ).resolves.not.toThrow();
+
+    actual = $client.pushEvents({ events: [] });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ host: 'insights.algolia.io' })
+    );
+  });
+});

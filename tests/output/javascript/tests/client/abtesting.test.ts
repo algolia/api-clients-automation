@@ -84,29 +84,7 @@ describe('parameters', () => {
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ host: 'analytics.us.algolia.com' })
+      expect.objectContaining({ host: 'analytics.algolia.com' })
     );
-  });
-
-  test('does not throw when region is given', async () => {
-    let $client;
-
-    let actual;
-
-    await expect(
-      new Promise((resolve, reject) => {
-        $client = abtestingApi('my-app-id', 'my-api-key', 'us', {
-          requester: new EchoRequester(),
-        });
-
-        actual = $client;
-
-        if (actual instanceof Promise) {
-          actual.then(resolve).catch(reject);
-        } else {
-          resolve();
-        }
-      })
-    ).resolves.not.toThrow();
   });
 });

@@ -12,6 +12,23 @@ function createClient() {
 }
 
 describe('api', () => {
+  test('calls api with correct host', async () => {
+    let $client;
+    $client = createClient();
+
+    let actual;
+
+    actual = $client.postIngestUrl({ type: 'csv', input: { url: '...' } });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ host: 'data.us.algolia.com' })
+    );
+  });
+
   test('calls api with correct user agent', async () => {
     let $client;
     $client = createClient();
@@ -44,5 +61,50 @@ describe('api', () => {
     expect(actual).toEqual(
       expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
     );
+  });
+});
+
+describe('parameters', () => {
+  test('throws when region is not given', async () => {
+    let $client;
+
+    let actual;
+    await expect(
+      new Promise((resolve, reject) => {
+        $client = sourcesApi('my-app-id', 'my-api-key', '', {
+          requester: new EchoRequester(),
+        });
+
+        actual = $client;
+
+        if (actual instanceof Promise) {
+          actual.then(resolve).catch(reject);
+        } else {
+          resolve();
+        }
+      })
+    ).rejects.toThrow('`region` is missing.');
+  });
+
+  test('does not throw when region is given', async () => {
+    let $client;
+
+    let actual;
+
+    await expect(
+      new Promise((resolve, reject) => {
+        $client = sourcesApi('my-app-id', 'my-api-key', 'us', {
+          requester: new EchoRequester(),
+        });
+
+        actual = $client;
+
+        if (actual instanceof Promise) {
+          actual.then(resolve).catch(reject);
+        } else {
+          resolve();
+        }
+      })
+    ).resolves.not.toThrow();
   });
 });

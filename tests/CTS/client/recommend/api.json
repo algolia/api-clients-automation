@@ -1,5 +1,23 @@
 [
   {
+    "testName": "calls api with correct host",
+    "steps": [
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "getRecommendations",
+        "parameters": [{ "requests": [] }],
+        "expected": {
+          "match": {
+            "objectContaining": {
+              "host": "test-app-id.algolia.net"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
     "testName": "calls api with correct user agent",
     "steps": [
       {

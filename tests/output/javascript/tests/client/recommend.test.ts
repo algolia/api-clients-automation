@@ -12,6 +12,23 @@ function createClient() {
 }
 
 describe('api', () => {
+  test('calls api with correct host', async () => {
+    let $client;
+    $client = createClient();
+
+    let actual;
+
+    actual = $client.getRecommendations({ requests: [] });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ host: 'test-app-id.algolia.net' })
+    );
+  });
+
   test('calls api with correct user agent', async () => {
     let $client;
     $client = createClient();

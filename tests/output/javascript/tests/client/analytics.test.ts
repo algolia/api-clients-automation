@@ -48,7 +48,7 @@ describe('api', () => {
 });
 
 describe('parameters', () => {
-  test('does not throw when region is not given', async () => {
+  test('fallbacks to the alias when region is not given', async () => {
     let $client;
 
     let actual;
@@ -68,6 +68,16 @@ describe('parameters', () => {
         }
       })
     ).resolves.not.toThrow();
+
+    actual = $client.getAverageClickPosition({ index: 'my-index' });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ host: 'analytics.algolia.com' })
+    );
   });
 
   test('getAverageClickPosition throws without index', async () => {

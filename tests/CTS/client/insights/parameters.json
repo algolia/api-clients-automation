@@ -17,16 +17,12 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getABTest",
-        "parameters": [
-          {
-            "id": "test"
-          }
-        ],
+        "path": "pushEvents",
+        "parameters": [{ "events": [] }],
         "expected": {
           "match": {
             "objectContaining": {
-              "host": "analytics.algolia.com"
+              "host": "insights.algolia.io"
             }
           }
         }

@@ -1,6 +1,6 @@
 [
   {
-    "testName": "does not throw when region is not given",
+    "testName": "fallbacks to the alias when region is not given",
     "autoCreateClient": false,
     "steps": [
       {
@@ -12,6 +12,19 @@
         },
         "expected": {
           "error": false
+        }
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "getAverageClickPosition",
+        "parameters": [{ "index": "my-index" }],
+        "expected": {
+          "match": {
+            "objectContaining": {
+              "host": "analytics.algolia.com"
+            }
+          }
         }
       }
     ]
