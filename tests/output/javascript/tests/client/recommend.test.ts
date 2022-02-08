@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import { EchoRequester } from '@algolia/client-common';
 import { recommendApi } from '@algolia/recommend';
@@ -12,7 +13,8 @@ function createClient() {
 
 describe('api', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
 
@@ -28,7 +30,8 @@ describe('api', () => {
   });
 
   test('calls api with correct timeouts', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
 
@@ -39,7 +42,7 @@ describe('api', () => {
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ connectTimeout: 1, responseTimeout: 30 })
+      expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
     );
   });
 });

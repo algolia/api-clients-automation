@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import { abtestingApi } from '@algolia/client-abtesting';
 import { EchoRequester } from '@algolia/client-common';
@@ -12,7 +13,8 @@ function createClient() {
 
 describe('api', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
 
@@ -32,7 +34,8 @@ describe('api', () => {
   });
 
   test('calls api with correct timeouts', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
 
@@ -47,18 +50,20 @@ describe('api', () => {
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ connectTimeout: 1, responseTimeout: 30 })
+      expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
     );
   });
 });
 
 describe('parameters', () => {
-  test('does not throw when region is not given', async () => {
+  test('fallbacks to the alias when region is not given', async () => {
+    let $client;
+
     let actual;
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = abtestingApi('my-app-id', 'my-api-key', '', {
+        $client = abtestingApi('my-app-id', 'my-api-key', '', {
           requester: new EchoRequester(),
         });
 
@@ -71,14 +76,26 @@ describe('parameters', () => {
         }
       })
     ).resolves.not.toThrow();
+
+    actual = $client.getABTest({ id: 'test' });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ host: 'analytics.us.algolia.com' })
+    );
   });
 
   test('does not throw when region is given', async () => {
+    let $client;
+
     let actual;
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = abtestingApi('my-app-id', 'my-api-key', 'us', {
+        $client = abtestingApi('my-app-id', 'my-api-key', 'us', {
           requester: new EchoRequester(),
         });
 

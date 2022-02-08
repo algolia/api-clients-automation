@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import { analyticsApi } from '@algolia/client-analytics';
 import { EchoRequester } from '@algolia/client-common';
@@ -12,7 +13,8 @@ function createClient() {
 
 describe('api', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
 
@@ -28,7 +30,8 @@ describe('api', () => {
   });
 
   test('calls api with correct timeouts', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
 
@@ -39,18 +42,20 @@ describe('api', () => {
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ connectTimeout: 1, responseTimeout: 2 })
+      expect.objectContaining({ connectTimeout: 2, responseTimeout: 5 })
     );
   });
 });
 
 describe('parameters', () => {
   test('does not throw when region is not given', async () => {
+    let $client;
+
     let actual;
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = analyticsApi('my-app-id', 'my-api-key', '', {
+        $client = analyticsApi('my-app-id', 'my-api-key', '', {
           requester: new EchoRequester(),
         });
 
@@ -66,7 +71,8 @@ describe('parameters', () => {
   });
 
   test('getAverageClickPosition throws without index', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
     await expect(
