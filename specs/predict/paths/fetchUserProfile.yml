@@ -130,3 +130,9 @@ post:
       $ref: ../responses/UserNotFound.yml
     '405':
       $ref: ../../common/responses/MethodNotAllowed.yml
+    '400':
+      description: ModelsToRetrieve or typesToRetrieve must be set.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/ErrorBase.yml
