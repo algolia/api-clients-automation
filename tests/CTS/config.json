@@ -1,0 +1,10 @@
+{
+  "javascript": {
+    "extension": "test.ts",
+    "outputFolder": "src"
+  },
+  "java": {
+    "extension": "test.java",
+    "outputFolder": "src/test/java/com/algolia"
+  }
+}

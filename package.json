@@ -4,15 +4,16 @@
   "workspaces": [
     "clients/algoliasearch-client-javascript/*",
     "playground/javascript/",
-    "tests/"
+    "tests/",
+    "scripts/"
   ],
   "scripts": {
     "build:clients": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
     "build:specs": "./scripts/builds/specs.sh ${0:-all} ${1:-yml}",
     "build": "yarn build:specs && yarn build:clients",
-    "clean": "rm -rf **/dist **/build **/node_modules **/target",
+    "clean": "rm -rf **/dist **/build **/node_modules **/.gradle",
     "cts:generate": "yarn workspace tests build && ./scripts/multiplexer.sh ${2:-nonverbose} yarn workspace tests generate ${0:-all} ${1:-all}",
-    "cts:test": "./scripts/multiplexer.sh ${1:-nonverbose} ./scripts/runCTS.sh ${0:-javascript} all",
+    "cts:test": "./scripts/multiplexer.sh ${1:-nonverbose} ./scripts/runCTS.sh ${0:-all} all",
     "cts:test:scripts": "yarn workspace tests test:scripts",
     "cts:lint:scripts": "eslint --ext=ts tests/src/",
     "docker:build": "./scripts/docker/build.sh",
@@ -31,7 +32,7 @@
   },
   "devDependencies": {
     "@octokit/rest": "18.12.0",
-    "@openapitools/openapi-generator-cli": "2.4.18",
+    "@openapitools/openapi-generator-cli": "2.4.26",
     "@redocly/openapi-cli": "1.0.0-beta.79",
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",

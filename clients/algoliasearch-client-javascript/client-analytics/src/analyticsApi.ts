@@ -1,10 +1,9 @@
-import { Transporter } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
-  Requester,
   Host,
   Request,
-  RequestOptions,
 } from '@algolia/client-common';
 
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
@@ -29,95 +28,40 @@ import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
 export const version = '5.0.0';
 
-export class AnalyticsApi {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
+export type Region = 'de' | 'us';
 
-  private transporter: Transporter;
+function getDefaultHosts(region?: Region): Host[] {
+  const regionHost = region ? `.${region}.` : '.';
 
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
+  return [
+    {
+      url: `analytics${regionHost}algolia.com`,
+      accept: 'readWrite',
+      protocol: 'https',
+    },
+  ];
+}
 
-    return requestOptions;
-  }
-
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-    appId: string,
-    apiKey: string,
-    region: 'de' | 'us',
-    options?: { requester?: Requester; hosts?: Host[] }
-  ) {
-    if (!appId) {
-      throw new Error('`appId` is missing.');
-    }
-    if (!apiKey) {
-      throw new Error('`apiKey` is missing.');
-    }
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(region),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      userAgent: 'Algolia for Javascript (5.0.0)',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
-      },
-      requester: options?.requester,
-    });
-  }
-
-  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
-    return [
-      {
-        url: `analytics.${region}.algolia.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-    ];
-  }
-
-  setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createAnalyticsApi = (
+  options: CreateClientOptions & { region?: Region }
+) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts(options.region),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+      ...auth.headers(),
+    },
+    baseQueryParameters: auth.queryParameters(),
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Analytics',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   /**
    * Returns the average click position. The endpoint returns a value for the complete given time range, as well as a value per day.
@@ -129,7 +73,7 @@ export class AnalyticsApi {
    * @param getAverageClickPosition.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getAverageClickPosition.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getAverageClickPosition({
+  function getAverageClickPosition({
     index,
     startDate,
     endDate,
@@ -166,13 +110,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns the distribution of clicks per range of positions.
    *
@@ -183,7 +126,7 @@ export class AnalyticsApi {
    * @param getClickPositions.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getClickPositions.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getClickPositions({
+  function getClickPositions({
     index,
     startDate,
     endDate,
@@ -220,13 +163,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.
    *
@@ -237,7 +179,7 @@ export class AnalyticsApi {
    * @param getClickThroughRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getClickThroughRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getClickThroughRate({
+  function getClickThroughRate({
     index,
     startDate,
     endDate,
@@ -274,13 +216,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns a conversion rate (CR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of conversion and searches used to compute the rates.
    *
@@ -291,7 +232,7 @@ export class AnalyticsApi {
    * @param getConversationRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getConversationRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getConversationRate({
+  function getConversationRate({
     index,
     startDate,
     endDate,
@@ -328,13 +269,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns the rate at which searches didn\'t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
    *
@@ -345,7 +285,7 @@ export class AnalyticsApi {
    * @param getNoClickRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getNoClickRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getNoClickRate({
+  function getNoClickRate({
     index,
     startDate,
     endDate,
@@ -382,13 +322,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns the rate at which searches didn\'t return any results. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without results used to compute the rates.
    *
@@ -399,7 +338,7 @@ export class AnalyticsApi {
    * @param getNoResultsRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getNoResultsRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getNoResultsRate({
+  function getNoResultsRate({
     index,
     startDate,
     endDate,
@@ -436,13 +375,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns the number of searches across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
    *
@@ -453,7 +391,7 @@ export class AnalyticsApi {
    * @param getSearchesCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getSearchesCount.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getSearchesCount({
+  function getSearchesCount({
     index,
     startDate,
     endDate,
@@ -490,13 +428,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top searches that didn\'t lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
    *
@@ -509,7 +446,7 @@ export class AnalyticsApi {
    * @param getSearchesNoClicks.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getSearchesNoClicks.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getSearchesNoClicks({
+  function getSearchesNoClicks({
     index,
     startDate,
     endDate,
@@ -556,13 +493,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top searches that didn\'t return any results. Limited to the 1000 most frequent ones.
    *
@@ -575,7 +511,7 @@ export class AnalyticsApi {
    * @param getSearchesNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getSearchesNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getSearchesNoResults({
+  function getSearchesNoResults({
     index,
     startDate,
     endDate,
@@ -622,13 +558,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns the latest update time of the analytics API for a given index. If the index has been recently created and/or no search has been performed yet the updated time will be null.
    *
@@ -636,7 +571,7 @@ export class AnalyticsApi {
    * @param getStatus - The getStatus object.
    * @param getStatus.index - The index name to target.
    */
-  getStatus({ index }: GetStatusProps): Promise<GetStatusResponse> {
+  function getStatus({ index }: GetStatusProps): Promise<GetStatusResponse> {
     const path = '/2/status';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -656,13 +591,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top countries. Limited to the 1000 most frequent ones.
    *
@@ -675,7 +609,7 @@ export class AnalyticsApi {
    * @param getTopCountries.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopCountries.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopCountries({
+  function getTopCountries({
     index,
     startDate,
     endDate,
@@ -722,13 +656,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top filter attributes. Limited to the 1000 most used filters.
    *
@@ -742,7 +675,7 @@ export class AnalyticsApi {
    * @param getTopFilterAttributes.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFilterAttributes.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFilterAttributes({
+  function getTopFilterAttributes({
     index,
     search,
     startDate,
@@ -794,13 +727,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top filters for the given attribute. Limited to the 1000 most used filters.
    *
@@ -815,7 +747,7 @@ export class AnalyticsApi {
    * @param getTopFilterForAttribute.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFilterForAttribute.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFilterForAttribute({
+  function getTopFilterForAttribute({
     attribute,
     index,
     search,
@@ -877,13 +809,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top filters with no results. Limited to the 1000 most used filters.
    *
@@ -897,7 +828,7 @@ export class AnalyticsApi {
    * @param getTopFiltersNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFiltersNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopFiltersNoResults({
+  function getTopFiltersNoResults({
     index,
     search,
     startDate,
@@ -949,13 +880,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top hits. Limited to the 1000 most frequent ones.
    *
@@ -970,7 +900,7 @@ export class AnalyticsApi {
    * @param getTopHits.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopHits.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopHits({
+  function getTopHits({
     index,
     search,
     clickAnalytics,
@@ -1029,13 +959,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns top searches. Limited to the 1000 most frequent ones. For each search, also returns the average number of hits returned.
    *
@@ -1051,7 +980,7 @@ export class AnalyticsApi {
    * @param getTopSearches.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopSearches.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getTopSearches({
+  function getTopSearches({
     index,
     clickAnalytics,
     startDate,
@@ -1115,13 +1044,12 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
+
   /**
    * Returns the distinct count of users across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
    *
@@ -1132,7 +1060,7 @@ export class AnalyticsApi {
    * @param getUsersCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getUsersCount.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
-  getUsersCount({
+  function getUsersCount({
     index,
     startDate,
     endDate,
@@ -1169,14 +1097,34 @@ export class AnalyticsApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers,
+    });
   }
-}
+
+  return {
+    getAverageClickPosition,
+    getClickPositions,
+    getClickThroughRate,
+    getConversationRate,
+    getNoClickRate,
+    getNoResultsRate,
+    getSearchesCount,
+    getSearchesNoClicks,
+    getSearchesNoResults,
+    getStatus,
+    getTopCountries,
+    getTopFilterAttributes,
+    getTopFilterForAttribute,
+    getTopFiltersNoResults,
+    getTopHits,
+    getTopSearches,
+    getUsersCount,
+  };
+};
+
+export type AnalyticsApi = ReturnType<typeof createAnalyticsApi>;
 
 export type GetAverageClickPositionProps = {
   /**

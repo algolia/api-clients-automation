@@ -10,47 +10,52 @@ import {
   serializeHeaders,
   serializeUrl,
 } from './helpers';
-import { HttpRequester } from './requester/HttpRequester';
 import type { Requester } from './requester/Requester';
 import {
   stackTraceWithoutCredentials,
   stackFrameWithoutCredentials,
 } from './stackTrace';
 import type {
+  EndRequest,
   Headers,
   Host,
+  QueryParameters,
   Request,
   RequestOptions,
+  Response,
   StackFrame,
   Timeouts,
-  Response,
-  EndRequest,
+  UserAgent,
 } from './types';
 
 export class Transporter {
   private hosts: Host[];
   private baseHeaders: Headers;
+  private baseQueryParameters: QueryParameters;
   private hostsCache: Cache;
-  private userAgent: string;
+  private userAgent: UserAgent;
   private timeouts: Timeouts;
   private requester: Requester;
 
   constructor({
     hosts,
     baseHeaders,
+    baseQueryParameters,
     userAgent,
     timeouts,
-    requester = new HttpRequester(),
+    requester,
   }: {
     hosts: Host[];
     baseHeaders: Headers;
-    userAgent: string;
+    baseQueryParameters: QueryParameters;
+    userAgent: UserAgent;
     timeouts: Timeouts;
-    requester?: Requester;
+    requester: Requester;
   }) {
     this.hosts = hosts;
     this.hostsCache = new MemoryCache();
     this.baseHeaders = baseHeaders;
+    this.baseQueryParameters = baseQueryParameters;
     this.userAgent = userAgent;
     this.timeouts = timeouts;
     this.requester = requester;
@@ -134,7 +139,8 @@ export class Transporter {
       : {};
 
     const queryParameters = {
-      'x-algolia-agent': this.userAgent,
+      'x-algolia-agent': this.userAgent.value,
+      ...this.baseQueryParameters,
       ...dataQueryParameters,
       ...requestOptions.queryParameters,
     };
