@@ -3,6 +3,8 @@ package com.algolia.methods.requests;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.algolia.JSON;
+import com.algolia.Pair;
 import com.algolia.model.*;
 import com.algolia.search.SearchApi;
 import com.algolia.utils.echo.*;
