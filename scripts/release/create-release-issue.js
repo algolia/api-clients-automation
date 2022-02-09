@@ -1,33 +1,23 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
-/* eslint-disable no-process-exit */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
 
 const { Octokit } = require('@octokit/rest');
 const dotenv = require('dotenv');
-const execa = require('execa'); // https://github.com/sindresorhus/execa/tree/v5.1.1
 const semver = require('semver');
 
-const { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO, LANGS } = require('./common');
+const {
+  RELEASED_TAG,
+  MAIN_BRANCH,
+  OWNER,
+  REPO,
+  LANGS,
+  run,
+} = require('./common');
 
 dotenv.config();
-
-function run(command, errorMessage = undefined) {
-  let result;
-  try {
-    result = execa.commandSync(command);
-  } catch (err) {
-    if (errorMessage) {
-      console.error(`[ERROR] ${errorMessage}`);
-      process.exit(err.exitCode);
-    } else {
-      throw err;
-    }
-  }
-  return result.stdout;
-}
 
 function readVersions() {
   const versions = {};
@@ -68,19 +58,18 @@ run(
 
 // Reading versions from `openapitools.json`
 const versions = readVersions();
-const langs = Object.keys(versions); // ["javascript", "php", "java", ...]
 
-// Reading commits since last release
 console.log('Pulling from origin...');
 run(`git pull origin ${MAIN_BRANCH}`);
 
 console.log('Pushing to origin...');
 run(`git push origin ${MAIN_BRANCH}`);
 
-const header = [`## Summary`].join('\n');
+const header = `## Summary`;
 
-const skippedCommits = [];
-const wronglyScopedCommits = [];
+const commitsWithoutScope = [];
+const commitsWithNonLanguageScope = [];
+// Reading commits since last release
 const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
   .split('\n')
   .filter(Boolean)
@@ -90,24 +79,22 @@ const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
     let type = message.slice(0, message.indexOf(':'));
     const matchResult = type.match(/(.+)\((.+)\)/);
     if (!matchResult) {
-      skippedCommits.push(commit);
-      // console.warn(`Skipping commit ${hash} due to lack of language scope:`);
-      // console.warn(`  > ${message}`);
+      commitsWithoutScope.push(commit);
       return undefined;
     }
     message = message.slice(message.indexOf(':') + 2);
     type = matchResult[1];
     const lang = matchResult[2];
 
-    if (!LANGS.has(lang)) {
-      wronglyScopedCommits.push(commit);
+    if (!LANGS.includes(lang)) {
+      commitsWithNonLanguageScope.push(commit);
       return undefined;
     }
 
     return {
       hash,
-      type, // e.g. `fix`
-      lang, // e.g. `javascript`
+      type, // `fix` | `feat` | `chore` | ...
+      lang, // `javascript` | `php` | `java` | ...
       message,
       raw: commit,
     };
@@ -115,13 +102,15 @@ const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
   .filter(Boolean);
 
 console.log('[INFO] Skipping these commits due to lack of language scope:');
-console.log(skippedCommits.map((commit) => `  ${commit}`).join('\n'));
+console.log(commitsWithoutScope.map((commit) => `  ${commit}`).join('\n'));
 
 console.log('');
 console.log('[INFO] Skipping these commits due to wrong scopes:');
-console.log(wronglyScopedCommits.map((commit) => `  ${commit}`).join('\n'));
+console.log(
+  commitsWithNonLanguageScope.map((commit) => `  ${commit}`).join('\n')
+);
 
-langs.forEach((lang) => {
+LANGS.forEach((lang) => {
   const commits = latestCommits.filter(
     (lastestCommit) => lastestCommit.lang === lang
   );
@@ -156,41 +145,40 @@ langs.forEach((lang) => {
   }
 });
 
-const versionChangeHeader = [`## Version Changes`].join('\n');
+const versionChangeHeader = `## Version Changes`;
 
-const versionChanges = langs
-  .map((lang) => {
-    const { current, next, noCommit, skipRelease, langName } = versions[lang];
+const versionChanges = LANGS.map((lang) => {
+  const { current, next, noCommit, skipRelease, langName } = versions[lang];
 
-    if (noCommit) {
-      return `- ~${langName}: v${current} (no commit)~`;
-    }
+  if (noCommit) {
+    return `- ~${langName}: v${current} (no commit)~`;
+  }
 
-    if (!current) {
-      return `- ~${langName}: (current version not found)~`;
-    }
+  if (!current) {
+    return `- ~${langName}: (current version not found)~`;
+  }
 
-    const checked = skipRelease ? ' ' : 'x';
-    return [
-      `- [${checked}] ${langName}: v${current} -> v${next}`,
-      skipRelease &&
-        `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
-      `  - **Checked** → Update version, update ${langName} repository, and release the library.`,
-      `  - **Unchecked** → Update ${langName} repository.`,
-      `  - **Line removed** → Do nothing.`,
-    ]
-      .filter(Boolean)
-      .join('\n');
-  })
-  .join('\n');
+  const checked = skipRelease ? ' ' : 'x';
+  return [
+    `- [${checked}] ${langName}: v${current} -> v${next}`,
+    skipRelease &&
+      `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
+    `  - **Checked** → Update version, update ${langName} repository, and release the library.`,
+    `  - **Unchecked** → Update ${langName} repository.`,
+    `  - **Line removed** → Do nothing.`,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}).join('\n');
 
 const changelogHeader = [
   `## CHANGELOG`,
   `Update the following lines. Once merged, it will be reflected to \`docs/changelogs/*.\``,
 ].join('\n');
 
-const changelogs = langs
-  .filter((lang) => !versions[lang].noCommit && versions[lang].current)
+const changelogs = LANGS.filter(
+  (lang) => !versions[lang].noCommit && versions[lang].current
+)
   .flatMap((lang) => {
     if (versions[lang].noCommit) {
       return [];

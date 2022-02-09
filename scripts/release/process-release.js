@@ -12,15 +12,7 @@ dotenv.config();
 
 const execa = require('execa');
 
-const { MAIN_BRANCH, OWNER, REPO } = require('./common');
-
-function run(command) {
-  const result = execa.commandSync(command);
-  if (result.exitCode !== 0) {
-    throw new Error(result.stderr);
-  }
-  return result.stdout;
-}
+const { MAIN_BRANCH, OWNER, REPO, run } = require('./common');
 
 function getMarkdownSection(markdown, title) {
   const levelIndicator = title.split(' ')[0]; // e.g. `##`
@@ -73,8 +65,9 @@ const langsToUpdateRepo = getMarkdownSection(issueBody, '## Version Changes')
     const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);
     return result?.[1];
   })
-  .filter(Boolean);
+  .filter(Boolean); // e.g. ['javascript', 'php']
 
+// update versions in `openapitools.json`
 const json = JSON.parse(fs.readFileSync('openapitools.json').toString());
 Object.keys(json['generator-cli'].generators).forEach((client) => {
   const lang = client.split('-')[0];
@@ -86,6 +79,7 @@ Object.keys(json['generator-cli'].generators).forEach((client) => {
 });
 fs.writeFileSync('openapitools.json', JSON.stringify(json, null, 2));
 
+// update changelogs
 new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
   (lang) => {
     const filePath = `doc/changelogs/${lang}.md`;
@@ -104,6 +98,7 @@ new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
   }
 );
 
+// commit openapitools and changelogs
 run('git config user.name "api-client-bot"');
 run('git config user.email "bot@algolia.com"');
 run('git add openapitools.json');
@@ -111,11 +106,13 @@ run('git add doc/changelogs/*');
 execa.sync('git', ['commit', '-m', 'chore: update versions and changelogs']);
 run(`git push origin ${MAIN_BRANCH}`);
 
+// generate clients to release
 Object.keys(versionsToRelease).forEach((lang) => {
   console.log(`Generating ${lang} client(s)...`);
   run(`yarn generate ${lang}`).pipe(process.stdout);
 });
 
+// generate clients to just update the repos
 langsToUpdateRepo.forEach((lang) => {
   console.log(`Generating ${lang} client(s)...`);
   run(`yarn generate ${lang}`).pipe(process.stdout);
