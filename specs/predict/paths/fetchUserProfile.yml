@@ -12,26 +12,30 @@ post:
     content:
       application/json:
         schema:
+          title: ModelsTypesRequest
+          type: object
+          description: Object with models and types to retrieve.
           additionalProperties: false
           properties:
             modelsToRetrieve:
+              type: array
+              title: modelsToRetrieve
               description: List with model types for which to retrieve predictions
-              type: array
               items:
                 type: string
-                # enum:
-                #   - funnel_stage
-                #   - order_value
-                #   - affinities
-              minItems: 1
+                enum:
+                  - funnel_stage
+                  - order_value
+                  - affinities
             typesToRetrieve:
-              description: List with types to be retrieved.
               type: array
+              title: typesToRetrieve
+              description: List with types to be retrieved.
               items:
                 type: string
-                # enum:
-                #   - properties
-                #   - segments
+                enum:
+                  - properties
+                  - segments
               minItems: 1
 
   responses:
@@ -61,13 +65,6 @@ post:
                           properties:
                             name:
                               type: string
-                              # enum:
-                              #   - all_visits
-                              #   - click_product_list
-                              #   - product_view
-                              #   - add_to_cart
-                              #   - checkout
-                              #   - transaction
                             probability:
                               type: number
                               minimum: 0
