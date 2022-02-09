@@ -89,21 +89,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-predict@workspace:clients/algoliasearch-client-javascript/client-predict":
+"@algolia/client-predict@0.0.1, @algolia/client-predict@workspace:clients/algoliasearch-client-javascript/client-predict":
   version: 0.0.0-use.local
   resolution: "@algolia/client-predict@workspace:clients/algoliasearch-client-javascript/client-predict"
   dependencies:
     "@algolia/client-common": 5.0.0
-    "@types/node": 16.11.11
-    typescript: 4.5.4
-  languageName: unknown
-  linkType: soft
-
-"@algolia/client-predict@workspace:clients/algoliasearch-client-javascript/client-predict":
-  version: 0.0.0-use.local
-  resolution: "@algolia/client-predict@workspace:clients/algoliasearch-client-javascript/client-predict"
-  dependencies:
-    "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -3855,6 +3847,7 @@ __metadata:
     "@algolia/client-abtesting": 5.0.0
     "@algolia/client-analytics": 5.0.0
     "@algolia/client-personalization": 5.0.0
+    "@algolia/client-predict": 0.0.1
     "@algolia/client-query-suggestions": 5.0.0
     "@algolia/client-search": 5.0.0
     "@algolia/client-sources": 0.0.1

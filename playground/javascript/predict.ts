@@ -1,4 +1,4 @@
-import { predictApi, ApiError } from '@algolia/predict';
+import { predictApi, ApiError } from '@algolia/client-predict';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -14,7 +14,7 @@ const predictClient = predictApi(appId, apiKey);
 async function testPredict() {
   try {
     const userProfile = await predictClient.fetchUserProfile({
-      userId: 'user1',
+      userID: userId,
       params: {
         modelsToRetrieve: ["funnel_stage", "order_value", "affinities"],
         typesToRetrieve: ["properties", "segments"],
