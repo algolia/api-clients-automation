@@ -12,7 +12,7 @@ post:
     content:
       application/json:
         schema:
-          title: ModelsTypesRequest
+          title: params
           type: object
           description: Object with models and types to retrieve.
           additionalProperties: false

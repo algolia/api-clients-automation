@@ -12,7 +12,7 @@ import type {
 } from '@algolia/client-common';
 
 import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse';
-import type { ModelsTypesRequest } from '../model/modelsTypesRequest';
+import type { Params } from '../model/params';
 
 export const version = '0.0.1';
 
@@ -76,11 +76,11 @@ export const createPredictApi = (options: CreateClientOptions) => {
    * @summary Get user profile.
    * @param fetchUserProfile - The fetchUserProfile object.
    * @param fetchUserProfile.userID - User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
-   * @param fetchUserProfile.modelsTypesRequest - The modelsTypesRequest object.
+   * @param fetchUserProfile.params - The params object.
    */
   function fetchUserProfile({
     userID,
-    modelsTypesRequest,
+    params,
   }: FetchUserProfileProps): Promise<FetchUserProfileResponse> {
     const path = '/1/users/{userID}/fetch'.replace(
       '{userID}',
@@ -95,16 +95,16 @@ export const createPredictApi = (options: CreateClientOptions) => {
       );
     }
 
-    if (!modelsTypesRequest) {
+    if (!params) {
       throw new Error(
-        'Parameter `modelsTypesRequest` is required when calling `fetchUserProfile`.'
+        'Parameter `params` is required when calling `fetchUserProfile`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: modelsTypesRequest,
+      data: params,
     };
 
     return transporter.request(request, {
@@ -123,5 +123,5 @@ export type FetchUserProfileProps = {
    * User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
    */
   userID: string;
-  modelsTypesRequest: ModelsTypesRequest;
+  params: Params;
 };
