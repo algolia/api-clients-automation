@@ -245,8 +245,7 @@
         "modelPackage": "Model\\Recommend",
         "additionalProperties": {
           "configClassname": "RecommendConfig",
-          "hasRegionalHost": true,
-          "allowedRegions": "us-de",
+          "useCache": true,
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php"
         }
