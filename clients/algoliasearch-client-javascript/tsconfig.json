@@ -20,12 +20,6 @@
     "typeRoots": ["node_modules/@types"],
     "types": ["node"]
   },
-  "include": [
-    "packages/*/src/**.ts",
-    "packages/*/model/**.ts",
-    "packages/*/node.ts",
-    "packages/*/browser.ts",
-    "packages/*/index.ts"
-  ],
+  "include": ["*.ts"],
   "exclude": ["dist", "node_modules"]
 }

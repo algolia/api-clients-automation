@@ -25,7 +25,7 @@ if [[ $LANGUAGE == 'javascript' ]]; then
 
     echo "> Bundling $GENERATOR..."
 
-    yarn workspace $PACKAGE build
+    CMD="yarn workspace $PACKAGE build"
 elif [[ $LANGUAGE == 'php' ]]; then
     # no build needed (for now)
     :
