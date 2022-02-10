@@ -65,7 +65,7 @@ class RecommendApi
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId());
+            $clusterHosts = ClusterHosts::create('.'.$config->getRegion().'.algolia.');
         }
 
         $apiWrapper = new ApiWrapper(
