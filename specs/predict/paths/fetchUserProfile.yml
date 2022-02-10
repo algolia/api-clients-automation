@@ -6,7 +6,6 @@ post:
   summary: Get user profile.
   parameters:
     - $ref: '../common/parameters.yml#/userID'
-
   requestBody:
     required: true
     content:
@@ -19,7 +18,6 @@ post:
           properties:
             modelsToRetrieve:
               type: array
-              title: modelsToRetrieve
               description: List with model types for which to retrieve predictions
               items:
                 type: string
@@ -29,7 +27,6 @@ post:
                   - affinities
             typesToRetrieve:
               type: array
-              title: typesToRetrieve
               description: List with types to be retrieved.
               items:
                 type: string
@@ -37,7 +34,6 @@ post:
                   - properties
                   - segments
               minItems: 1
-
   responses:
     '200':
       description: OK
