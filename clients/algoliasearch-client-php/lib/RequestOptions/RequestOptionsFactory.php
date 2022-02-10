@@ -68,7 +68,9 @@ final class RequestOptionsFactory
             'headers' => [
                 'X-Algolia-Application-Id' => $this->config->getAppId(),
                 'X-Algolia-API-Key' => $this->config->getAlgoliaApiKey(),
-                'User-Agent' => UserAgent::get(),
+                'User-Agent' => $this->config->getUserAgent() !== null ?
+                  $this->config->getUserAgent() :
+                  UserAgent::get(),
                 'Content-Type' => 'application/json',
             ],
             'query' => [],
