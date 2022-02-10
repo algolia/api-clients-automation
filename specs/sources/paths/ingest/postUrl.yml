@@ -41,6 +41,7 @@ post:
                 method:
                   type: string
                   description: The HTTP method that will be used to fetch the URL.
+                  default: GET
                   enum:
                     - GET
                     - POST
@@ -67,7 +68,6 @@ post:
                       type: string
                       description: The password to use for Basic Auth.
                       example: mypassword
-
             target:
               type: object
               title: postURLJobTarget
