@@ -30,6 +30,8 @@
     "github-actions:lint": "eslint --ext=yml .github/"
   },
   "devDependencies": {
+    "@actions/github": "5.0.0",
+    "@octokit/rest": "18.12.0",
     "@openapitools/openapi-generator-cli": "2.4.26",
     "@redocly/openapi-cli": "1.0.0-beta.79",
     "@typescript-eslint/eslint-plugin": "5.5.0",
