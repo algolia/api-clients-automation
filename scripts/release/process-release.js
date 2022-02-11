@@ -27,6 +27,14 @@ function getMarkdownSection(markdown, title) {
   return lines.slice(0, endIndex).join('\n');
 }
 
+if (!process.env.GITHUB_TOKEN) {
+  throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
+}
+
+if (!process.env.EVENT_NUMBER) {
+  throw new Error('Environment variable `EVENT_NUMBER` does not exist.');
+}
+
 const issueBody = JSON.parse(
   execa.sync('curl', [
     '-H',

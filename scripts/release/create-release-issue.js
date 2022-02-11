@@ -39,6 +39,10 @@ function readVersions() {
   return versions;
 }
 
+if (!process.env.GITHUB_TOKEN) {
+  throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
+}
+
 if (run('git rev-parse --abbrev-ref HEAD') !== MAIN_BRANCH) {
   throw new Error(
     `You can run this script only from \`${MAIN_BRANCH}\` branch.`
