@@ -108,7 +108,7 @@ async function postValidationResult({
   });
 }
 
-async function getStatusComment(): Promise<GHComment | null> {
+async function getStatusComment(): Promise<GHComment | undefined> {
   // https://docs.github.com/en/rest/reference/issues#comments
   const { data: comments } = await client.request(
     'GET /repos/:owner/:repo/issues/:number/comments',
