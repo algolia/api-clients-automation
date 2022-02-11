@@ -3,13 +3,6 @@ name: Validate pull-request title
 on:
   pull_request:
     types: [opened, edited, synchronize]
-  push:
-    branches:
-      - main
-
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   setup:
