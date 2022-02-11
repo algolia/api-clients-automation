@@ -18,7 +18,7 @@ async function testSource() {
         url: '',
       },
       target: {
-        indexName: 'a',
+        indexName: 'test',
         operation: 'replace',
         type: 'search',
       },
