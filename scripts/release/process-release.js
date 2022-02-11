@@ -99,7 +99,7 @@ new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
 );
 
 // commit openapitools and changelogs
-run('git config user.name "api-client-bot"');
+run('git config user.name "api-clients-bot"');
 run('git config user.email "bot@algolia.com"');
 run('git add openapitools.json');
 run('git add doc/changelogs/*');
