@@ -1,8 +1,7 @@
-#!/usr/bin/env node
-/* eslint-disable no-console */
+#!/usr/bin/env ts-node
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
-
+// eslint-disable-next-line import/no-extraneous-dependencies
 const github = require('@actions/github');
 
 const TYPES = [
@@ -41,8 +40,37 @@ ${SCOPES.map((type) => `  * ${type}`).join('\n')}
 
 To add new type or scope, edit \`scripts/ci/validate-pr-title.js\`.`;
 
+// https://docs.github.com/en/rest/reference/issues#comments
+type GHComment = {
+  id: number;
+  body: string;
+};
+
+// https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+type GHContextPullRequest = {
+  base: {
+    user: {
+      login: string;
+    };
+    repo: {
+      name: string;
+    };
+  };
+  number: number;
+};
+
+// https://docs.github.com/en/rest/reference/pulls
+type GHPullRequest = {
+  title: string;
+  head: {
+    sha: string;
+  };
+};
+
 const client = github.getOctokit(process.env.GITHUB_TOKEN);
-const contextPullRequest = github.context.payload.pull_request;
+
+const contextPullRequest: GHContextPullRequest =
+  github.context.payload.pull_request;
 
 if (!contextPullRequest) {
   throw new Error(
@@ -54,7 +82,7 @@ const owner = contextPullRequest.base.user.login;
 const repo = contextPullRequest.base.repo.name;
 const pullNumber = contextPullRequest.number;
 
-function validateTitle(title) {
+function validateTitle(title: string): boolean {
   const result = title.match(/(.+)\((.+)\): .+/);
   if (!result) {
     return false;
@@ -63,7 +91,13 @@ function validateTitle(title) {
   return TYPES.includes(type) && SCOPES.includes(scope);
 }
 
-async function postValidationResult({ pullRequest, isValid }) {
+async function postValidationResult({
+  pullRequest,
+  isValid,
+}: {
+  pullRequest: GHPullRequest;
+  isValid: boolean;
+}): Promise<void> {
   // https://docs.github.com/en/rest/reference/commits#create-a-commit-status
   await client.request('POST /repos/:owner/:repo/statuses/:sha', {
     owner,
@@ -74,7 +108,7 @@ async function postValidationResult({ pullRequest, isValid }) {
   });
 }
 
-async function getStatusComment({ contextPullRequest }) {
+async function getStatusComment(): Promise<GHComment | null> {
   // https://docs.github.com/en/rest/reference/issues#comments
   const { data: comments } = await client.request(
     'GET /repos/:owner/:repo/issues/:number/comments',
@@ -85,16 +119,18 @@ async function getStatusComment({ contextPullRequest }) {
     }
   );
 
-  return comments.find((comment) =>
+  return (comments as GHComment[]).find((comment) =>
     comment.body.startsWith(STATUS_COMMENT_HEADER)
   );
 }
 
 async function postStatusComment({
   statusComment,
-  contextPullRequest,
   isValid,
-}) {
+}: {
+  statusComment?: GHComment;
+  isValid: boolean;
+}): Promise<void> {
   if (statusComment) {
     // update the existing comment
     await client.request('PATCH /repos/:owner/:repo/issues/comments/:id', {
@@ -114,20 +150,22 @@ async function postStatusComment({
   }
 }
 
-async function main() {
-  const { data: pullRequest } = await client.rest.pulls.get({
+async function main(): Promise<void> {
+  const { data } = await client.rest.pulls.get({
     owner,
     repo,
     pull_number: pullNumber,
   });
+
+  const pullRequest: GHPullRequest = data;
 
   const { title } = pullRequest;
 
   const isValid = validateTitle(title);
   await postValidationResult({ pullRequest, isValid });
 
-  const statusComment = await getStatusComment({ contextPullRequest });
-  await postStatusComment({ statusComment, contextPullRequest, isValid });
+  const statusComment = await getStatusComment();
+  await postStatusComment({ statusComment, isValid });
 }
 
 main();

@@ -15,6 +15,6 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
 
-      - run: ./scripts/ci/validate-pr-title.js
+      - run: yarn ts-node ./scripts/ci/validate-pr-title.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

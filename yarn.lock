@@ -51,6 +51,7 @@ __metadata:
     mustache: 4.2.0
     prettier: 2.5.1
     prettier-plugin-java: 1.6.0
+    ts-node: 10.5.0
     typescript: 4.5.4
   languageName: unknown
   linkType: soft
