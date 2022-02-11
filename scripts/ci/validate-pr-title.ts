@@ -47,7 +47,7 @@ const FAILURE_COMMENT_BODY = `${STATUS_COMMENT_HEADER}
         </ul>    
       </li>
     </ul>
-    <p>To add new type or scope, edit \`scripts/ci/validate-pr-title.js\`</p>.
+    <p>To add new type or scope, edit \`scripts/ci/validate-pr-title.js\`.</p>
   </details>
 </summary>`;
 
