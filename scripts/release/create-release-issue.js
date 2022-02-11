@@ -51,10 +51,9 @@ if (run('git status --porcelain')) {
   );
 }
 
-run(
-  `git rev-parse --verify refs/tags/${RELEASED_TAG}`,
-  '`released` tag is missing in this repository.'
-);
+run(`git rev-parse --verify refs/tags/${RELEASED_TAG}`, {
+  errorMessage: '`released` tag is missing in this repository.',
+});
 
 // Reading versions from `openapitools.json`
 const versions = readVersions();
