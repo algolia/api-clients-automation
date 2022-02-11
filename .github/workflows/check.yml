@@ -3,9 +3,6 @@ name: Checks
 on:
   pull_request:
     types: [opened, synchronize]
-  push:
-    branches:
-      - main
 
 concurrency:
   group: ${{ github.ref }}
@@ -19,6 +16,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: Pull Request title rules
+        uses: deepakputhraya/action-pr-title@v1.0.2
+        with:
+          regex: '^(?:(feat)|(fix)|(docs)|(style)|(refactor)|(perf)|(test)|(build)|(ci)|(chore)|(revert))\((?:(javascript)|(php)|(java)|(cts)|(spec)|(script)|(ci))\): .+'
 
       - name: Setup
         id: setup
