@@ -1,10 +1,10 @@
-import type { FetchUserProfileResponsePredictions } from './fetchUserProfileResponsePredictions';
-import type { FetchUserProfileResponseProperties } from './fetchUserProfileResponseProperties';
-import type { FetchUserProfileResponseSegments } from './fetchUserProfileResponseSegments';
+import type { Predictions } from './predictions';
+import type { Properties } from './properties';
+import type { Segments } from './segments';
 
 export type FetchUserProfileResponse = {
   user: string;
-  predictions?: FetchUserProfileResponsePredictions;
-  properties?: FetchUserProfileResponseProperties;
-  segments?: FetchUserProfileResponseSegments;
+  predictions?: Predictions;
+  properties?: Properties;
+  segments?: Segments;
 };

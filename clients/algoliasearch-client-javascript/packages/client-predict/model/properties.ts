@@ -1,7 +1,7 @@
 /**
  * Properties for the user profile.
  */
-export type FetchUserProfileResponseProperties = {
+export type Properties = {
   /**
    * Raw user properties (key-value pairs).
    */

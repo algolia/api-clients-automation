@@ -49,6 +49,7 @@ post:
                 type: string
               predictions:
                 type: object
+                title: predictions
                 properties:
                   funnel_stage:
                     type: object
@@ -57,6 +58,7 @@ post:
                       value:
                         type: array
                         items:
+                          title: funnel_stage
                           type: object
                           properties:
                             name:
@@ -83,6 +85,7 @@ post:
                       value:
                         type: array
                         items:
+                          title: affinities
                           type: object
                           properties:
                             name:
@@ -97,6 +100,7 @@ post:
                         type: string
               properties:
                 type: object
+                title: properties
                 description: Properties for the user profile
                 properties:
                   raw:
@@ -110,6 +114,7 @@ post:
                     description: Custom user properties (key-value pairs)
               segments:
                 type: object
+                title: segments
                 description: Segments that the user belongs to
                 properties:
                   computed:

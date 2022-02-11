@@ -1,7 +1,7 @@
 /**
  * Segments that the user belongs to.
  */
-export type FetchUserProfileResponseSegments = {
+export type Segments = {
   /**
    * List of computed segments IDs.
    */
