@@ -30,15 +30,26 @@ const FAILURE_COMMENT_BODY = `${STATUS_COMMENT_HEADER}
 
 😱 The title is not valid. The title should follow the format: \`type(scope): message\`
 
-* type
-${TYPES.map((type) => `  * ${type}`).join('\n')}
-  * asdfa
-  * few
-  * fsdf
-* scope
-${SCOPES.map((type) => `  * ${type}`).join('\n')}
-
-To add new type or scope, edit \`scripts/ci/validate-pr-title.js\`.`;
+<summary>
+  <p>Expand for the exhaustive list:</p>
+  <details>
+    <ul>
+      <li>
+        type
+        <ul>
+        ${TYPES.map((type) => `<li>${type}</li>`).join('\n')}
+        </ul>
+      </li>
+      <li>
+        scope
+        <ul>
+        ${SCOPES.map((scope) => `<li>${scope}</li>`).join('\n')}
+        </ul>    
+      </li>
+    </ul>
+    <p>To add new type or scope, edit \`scripts/ci/validate-pr-title.js\`</p>.
+  </details>
+</summary>`;
 
 // https://docs.github.com/en/rest/reference/issues#comments
 type GHComment = {
