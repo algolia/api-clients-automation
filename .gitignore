@@ -18,7 +18,5 @@ target
 build
 
 dist
-!specs/dist
-specs/dist/*.cache
 
 .openapi-generator

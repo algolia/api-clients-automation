@@ -48,10 +48,7 @@ components:
         List of facet attributes used to generate Query Suggestions. The
         resulting suggestions are every combination of the facets in the nested
         list (e.g., (facetA and facetB) and facetC).
-      example:
-        - - facetA
-          - facetB
-        - - facetC
+      example: '[[facetA, facetB], [facetC]]'
     SourceIndexExternal:
       type: object
       additionalProperties: false
