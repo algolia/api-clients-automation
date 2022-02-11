@@ -1,11 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { XhrRequester } from '@algolia/requester-browser-xhr';
+import { HttpRequester } from '@algolia/requester-node-http';
 
 import { createPredictApi } from './src/predictApi';
 import type { PredictApi } from './src/predictApi';
 
 export * from './src/predictApi';
-export * from '@algolia/client-common';
 
 export function predictApi(
   appId: string,
@@ -25,13 +24,12 @@ export function predictApi(
     apiKey,
 
     timeouts: {
-      connect: 1,
-      read: 2,
+      connect: 2,
+      read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new XhrRequester(),
-    userAgents: [{ segment: 'Browser' }],
-    authMode: 'WithinQueryParameters',
+    requester: options?.requester ?? new HttpRequester(),
+    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });
 }

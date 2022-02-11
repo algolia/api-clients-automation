@@ -1,9 +1,4 @@
-import {
-  shuffle,
-  Transporter,
-  createAuth,
-  getUserAgent,
-} from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -16,46 +11,21 @@ import type { Params } from '../model/params';
 
 export const version = '0.0.1';
 
-function getDefaultHosts(appId: string): Host[] {
-  return (
-    [
-      {
-        url: `${appId}-dsn.algolia.net`,
-        accept: 'read',
-        protocol: 'https',
-      },
-      {
-        url: `${appId}.algolia.net`,
-        accept: 'write',
-        protocol: 'https',
-      },
-    ] as Host[]
-  ).concat(
-    shuffle([
-      {
-        url: `${appId}-1.algolianet.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-      {
-        url: `${appId}-2.algolianet.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-      {
-        url: `${appId}-3.algolianet.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-    ])
-  );
+function getDefaultHosts(): Host[] {
+  return [
+    {
+      url: 'predict-api-oslcbws3zq-ew.a.run.app',
+      accept: 'readWrite',
+      protocol: 'https',
+    },
+  ];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createPredictApi = (options: CreateClientOptions) => {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = new Transporter({
-    hosts: options?.hosts ?? getDefaultHosts(options.appId),
+    hosts: options?.hosts ?? getDefaultHosts(),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),

@@ -197,7 +197,7 @@
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
-        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-predict",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-predict",
         "glob": "specs/dist/predict.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
@@ -209,7 +209,8 @@
           "apiName": "predict",
           "capitalizedApiName": "Predict",
           "packageVersion": "0.0.1",
-          "packageName": "@algolia/client-predict"
+          "packageName": "@algolia/client-predict",
+          "experimentalHost": "predict-api-oslcbws3zq-ew.a.run.app"
         }
       },
       "java-search": {

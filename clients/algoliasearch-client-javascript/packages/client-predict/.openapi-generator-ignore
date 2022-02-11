@@ -6,3 +6,4 @@
 
 git_push.sh
 model/models.ts
+.gitignore
