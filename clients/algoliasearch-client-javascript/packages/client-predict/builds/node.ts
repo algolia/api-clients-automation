@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createPredictApi } from './src/predictApi';
-import type { PredictApi } from './src/predictApi';
+import { createPredictApi } from '../src/predictApi';
+import type { PredictApi } from '../src/predictApi';
 
-export * from './src/predictApi';
+export * from '../src/predictApi';
 
 export function predictApi(
   appId: string,
