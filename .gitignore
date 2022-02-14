@@ -1,7 +1,6 @@
 node_modules
 .bash_profile
 .env
-dist
 .pnp.cjs
 .parcel-cache
 
@@ -18,5 +17,7 @@ target
 **/.DS_Store
 .gradle
 build
+
+dist
 
 .openapi-generator

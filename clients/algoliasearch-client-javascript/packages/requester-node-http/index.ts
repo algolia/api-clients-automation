@@ -1,2 +1,2 @@
-export * from './src/EchoRequester';
+export * from './src/echoRequester';
 export * from './src/HttpRequester';

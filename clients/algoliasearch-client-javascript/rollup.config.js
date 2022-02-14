@@ -71,23 +71,27 @@ function initPackagesConfig() {
     ];
   }
 
-  const packages =
-    client === 'all'
-      ? [
-          // We don't have the `algoliasearch` package for now.
-          // 'algoliasearch'
-          'client-abtesting',
-          'client-analytics',
-          'client-insights',
-          'client-personalization',
-          'client-query-suggestions',
-          'client-search',
-          'client-sources',
-          'recommend',
-        ]
-      : [client];
+  const availableClients = [
+    // We don't have the `algoliasearch` package for now.
+    // 'algoliasearch'
+    'client-abtesting',
+    'client-analytics',
+    'client-insights',
+    'client-personalization',
+    'client-query-suggestions',
+    'client-search',
+    'client-sources',
+    'client-predict',
+    'recommend',
+  ].filter((availableClient) =>
+    client === 'all' ? true : availableClient === client
+  );
 
-  return packages.flatMap((packageName) => {
+  if (availableClients.length === 0) {
+    throw new Error(`No clients matching ${client}.`);
+  }
+
+  return availableClients.flatMap((packageName) => {
     const commonConfig = {
       package: packageName,
       name: `@algolia/${packageName}`,
