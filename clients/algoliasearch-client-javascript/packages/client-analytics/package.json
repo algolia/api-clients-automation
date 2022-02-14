@@ -6,15 +6,13 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
-  "module": "dist/analytics.esm.js",
+  "module": "dist/client-analytics.esm.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/analytics.umd.js",
-  "unpkg": "dist/analytics.umd.js",
+  "jsdelivr": "dist/client-analytics.umd.js",
+  "unpkg": "dist/client-analytics.umd.js",
   "browser": {
-    "./dist/index.esm.js": "dist/analytics.umd.js",
-    "./dist/index.js": "dist/analytics.umd.js"
+    "dist/index.js": "dist/client-analytics.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

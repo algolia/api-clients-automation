@@ -4029,7 +4029,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001286":
+"caniuse-lite@npm:^1.0.0":
+  version: 1.0.30001312
+  resolution: "caniuse-lite@npm:1.0.30001312"
+  checksum: 753fb9ea1e02e999430b323a71b5acab5120f3b5fc0161b01669f54a3ef5c5296240b6ae9b79b12a3742e3aed216aa9ee3d5398a23c16d08625ccd376b79545d
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001286":
   version: 1.0.30001311
   resolution: "caniuse-lite@npm:1.0.30001311"
   checksum: a96a2724db91f7d820d7c83d98d6d80f71f4ef5542fd9af49478e6f5057a92d61fbb6c2a2c151e13323c760c7d9f046f422a9b1ac77ab08dc2cacc62bd22f941
@@ -6722,9 +6729,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"javascript-playground@workspace:playground/javascript":
+"javascript-browser-playground@workspace:playground/javascript/browser":
   version: 0.0.0-use.local
-  resolution: "javascript-playground@workspace:playground/javascript"
+  resolution: "javascript-browser-playground@workspace:playground/javascript/browser"
+  dependencies:
+    "@algolia/client-search": 5.0.0
+    dotenv: 10.0.0
+    parcel: 2.3.1
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
+"javascript-playground@workspace:playground/javascript/node":
+  version: 0.0.0-use.local
+  resolution: "javascript-playground@workspace:playground/javascript/node"
   dependencies:
     "@algolia/client-abtesting": 5.0.0
     "@algolia/client-analytics": 5.0.0
@@ -6735,7 +6753,6 @@ __metadata:
     "@algolia/client-sources": 0.0.1
     "@algolia/recommend": 5.0.0
     dotenv: 10.0.0
-    parcel: 2.3.1
     typescript: 4.5.4
   languageName: unknown
   linkType: soft
@@ -6753,6 +6770,7 @@ __metadata:
     "@algolia/client-search": 5.0.0
     "@algolia/client-sources": 0.0.1
     "@algolia/recommend": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/jest": 27.0.3
     "@types/node": 16.11.11
     jest: 27.4.7

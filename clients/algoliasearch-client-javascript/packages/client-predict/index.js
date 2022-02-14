@@ -1,4 +1,2 @@
-// eslint-disable-next-line import/extensions
-import { predictApi, createPredictApi } from './dist/predict.esm.js';
-
-export { predictApi, createPredictApi };
+// eslint-disable-next-line import/no-commonjs,import/extensions
+module.exports = require('./dist/client-predict.cjs.js');

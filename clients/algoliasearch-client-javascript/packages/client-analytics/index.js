@@ -1,4 +1,2 @@
-// eslint-disable-next-line import/extensions
-import { analyticsApi, createAnalyticsApi } from './dist/analytics.esm.js';
-
-export { analyticsApi, createAnalyticsApi };
+// eslint-disable-next-line import/no-commonjs,import/extensions
+module.exports = require('./dist/client-analytics.cjs.js');

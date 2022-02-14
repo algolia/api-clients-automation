@@ -1,4 +1,2 @@
-// eslint-disable-next-line import/extensions
-import { abtestingApi, createAbtestingApi } from './dist/abtesting.esm.js';
-
-export { abtestingApi, createAbtestingApi };
+// eslint-disable-next-line import/no-commonjs,import/extensions
+module.exports = require('./dist/client-abtesting.cjs.js');

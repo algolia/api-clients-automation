@@ -6,15 +6,13 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
-  "module": "dist/sources.esm.js",
+  "module": "dist/client-sources.esm.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/sources.umd.js",
-  "unpkg": "dist/sources.umd.js",
+  "jsdelivr": "dist/client-sources.umd.js",
+  "unpkg": "dist/client-sources.umd.js",
   "browser": {
-    "./dist/index.esm.js": "dist/sources.umd.js",
-    "./dist/index.js": "dist/sources.umd.js"
+    "dist/index.js": "dist/client-sources.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

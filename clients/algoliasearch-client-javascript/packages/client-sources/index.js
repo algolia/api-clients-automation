@@ -1,4 +1,2 @@
-// eslint-disable-next-line import/extensions
-import { sourcesApi, createSourcesApi } from './dist/sources.esm.js';
-
-export { sourcesApi, createSourcesApi };
+// eslint-disable-next-line import/no-commonjs,import/extensions
+module.exports = require('./dist/client-sources.cjs.js');

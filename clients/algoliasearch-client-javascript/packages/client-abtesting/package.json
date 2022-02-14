@@ -6,15 +6,13 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
-  "module": "dist/abtesting.esm.js",
+  "module": "dist/client-abtesting.esm.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/abtesting.umd.js",
-  "unpkg": "dist/abtesting.umd.js",
+  "jsdelivr": "dist/client-abtesting.umd.js",
+  "unpkg": "dist/client-abtesting.umd.js",
   "browser": {
-    "./dist/index.esm.js": "dist/abtesting.umd.js",
-    "./dist/index.js": "dist/abtesting.umd.js"
+    "dist/index.js": "dist/client-abtesting.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

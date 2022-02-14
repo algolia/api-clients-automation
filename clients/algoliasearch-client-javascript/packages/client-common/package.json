@@ -6,22 +6,15 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
-  "main": "dist/client-common.esm.js",
+  "main": "dist/client-common.cjs.js",
   "module": "dist/client-common.esm.js",
   "types": "dist/index.d.ts",
-  "jsdelivr": "dist/client-common.umd.js",
-  "unpkg": "dist/client-common.umd.js",
-  "browser": {
-    "./index.js": "dist/client-common.umd.js"
-  },
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist/"
   },
   "engines": {
-    "node": "^14.0.0",
-    "yarn": "^3.0.0"
+    "node": "^14.0.0"
   },
   "devDependencies": {
     "@types/node": "16.11.11",

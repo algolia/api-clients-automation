@@ -6,15 +6,13 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
-  "module": "dist/insights.esm.js",
+  "module": "dist/client-insights.esm.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/insights.umd.js",
-  "unpkg": "dist/insights.umd.js",
+  "jsdelivr": "dist/client-insights.umd.js",
+  "unpkg": "dist/client-insights.umd.js",
   "browser": {
-    "./dist/index.esm.js": "dist/insights.umd.js",
-    "./dist/index.js": "dist/insights.umd.js"
+    "dist/index.js": "dist/client-insights.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

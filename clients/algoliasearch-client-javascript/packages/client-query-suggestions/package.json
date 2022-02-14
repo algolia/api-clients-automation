@@ -6,15 +6,13 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
-  "module": "dist/query-suggestions.esm.js",
+  "module": "dist/client-query-suggestions.esm.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/query-suggestions.umd.js",
-  "unpkg": "dist/query-suggestions.umd.js",
+  "jsdelivr": "dist/client-query-suggestions.umd.js",
+  "unpkg": "dist/client-query-suggestions.umd.js",
   "browser": {
-    "./dist/index.esm.js": "dist/query-suggestions.umd.js",
-    "./dist/index.js": "dist/query-suggestions.umd.js"
+    "dist/index.js": "dist/client-query-suggestions.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

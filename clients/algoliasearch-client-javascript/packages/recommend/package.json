@@ -6,15 +6,13 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
   "module": "dist/recommend.esm.js",
   "types": "index.d.ts",
   "jsdelivr": "dist/recommend.umd.js",
   "unpkg": "dist/recommend.umd.js",
   "browser": {
-    "./dist/index.esm.js": "dist/recommend.umd.js",
-    "./dist/index.js": "dist/recommend.umd.js"
+    "dist/index.js": "dist/recommend.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

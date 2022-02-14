@@ -13,7 +13,7 @@ const client = process.env.CLIENT?.replace('@algolia/', '');
 const onlyBuildUtils = Boolean(process.env.BUILD_UTILS);
 
 function createLicence(name) {
-  return `/*! ${name} | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
+  return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
 }
 
 function createBundlers({ output, clientPath }) {
@@ -22,49 +22,51 @@ function createBundlers({ output, clientPath }) {
       file: `${clientPath}/dist/${output}.esm.js`,
       format: 'es',
     },
-    'esm-browser': {
-      file: `${clientPath}/dist/${output}.esm.browser.js`,
-      format: `es`,
-    },
     umd: {
       file: `${clientPath}/dist/${output}.umd.js`,
       format: 'umd',
+    },
+    cjs: {
+      file: `${clientPath}/dist/${output}.cjs.js`,
+      format: 'cjs',
     },
   };
 }
 
 function initPackagesConfig() {
   if (onlyBuildUtils) {
+    const commonOptions = {
+      input: 'index.ts',
+      formats: ['cjs', 'esm'],
+      external: [],
+      dependencies: [],
+    };
+
     return [
       // Common
       {
-        input: 'index.ts',
+        ...commonOptions,
         output: 'client-common',
         package: 'client-common',
         name: '@algolia/client-common',
-        external: ['url'],
-        dependencies: [],
-        formats: ['esm', 'esm-browser', 'umd'],
       },
       // Browser requester
       {
-        input: 'index.ts',
+        ...commonOptions,
         output: 'requester-browser-xhr',
         package: 'requester-browser-xhr',
         name: '@algolia/requester-browser-xhr',
         external: ['dom'],
         dependencies: ['@algolia/client-common'],
-        formats: ['esm', 'esm-browser', 'umd'],
       },
       // Node requester
       {
-        input: 'index.ts',
+        ...commonOptions,
         output: 'requester-node-http',
         package: 'requester-node-http',
         name: '@algolia/requester-node-http',
         external: ['https', 'http', 'url'],
         dependencies: ['@algolia/client-common'],
-        formats: ['esm', 'umd'],
       },
     ];
   }
@@ -89,7 +91,7 @@ function initPackagesConfig() {
     const commonConfig = {
       package: packageName,
       name: `@algolia/${packageName}`,
-      output: packageName.replace('client-', ''),
+      output: packageName,
       dependencies: [
         '@algolia/client-common',
         '@algolia/requester-browser-xhr',
@@ -104,17 +106,14 @@ function initPackagesConfig() {
         input: 'builds/browser.ts',
         formats: ['umd'],
         external: ['dom'],
-      },
-      {
-        ...commonConfig,
-        input: 'builds/browser.ts',
-        formats: ['esm-browser'],
-        external: ['dom'],
+        globals: {
+          [packageName]: packageName,
+        },
       },
       {
         ...commonConfig,
         input: 'builds/node.ts',
-        formats: ['esm'],
+        formats: ['cjs', 'esm'],
       },
     ];
   });
@@ -124,7 +123,7 @@ const packagesConfig = initPackagesConfig();
 const rollupConfig = [];
 
 packagesConfig.forEach((packageConfig) => {
-  const clientPath = path.resolve(__dirname, 'packages', packageConfig.package);
+  const clientPath = path.resolve('packages', packageConfig.package);
   const bundlers = createBundlers({
     output: packageConfig.output,
     clientPath,
@@ -133,13 +132,12 @@ packagesConfig.forEach((packageConfig) => {
   packageConfig.formats.forEach((format) => {
     // Avoid generating types multiple times.
     let isTypesGenerated = false;
-
     const output = bundlers[format];
     const isUmdBuild = format === 'umd';
 
     if (isUmdBuild) {
       output.name = packageConfig.name;
-      output.banner = createLicence(output.file);
+      output.banner = createLicence(packageConfig.package);
     }
 
     const externalRuntime = isUmdBuild ? [/@babel\/runtime/] : [];

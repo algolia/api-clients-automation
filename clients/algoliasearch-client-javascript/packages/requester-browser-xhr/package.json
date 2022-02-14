@@ -6,22 +6,15 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
-  "main": "dist/requester-browser-xhr.esm.js",
+  "main": "dist/requester-browser-xhr.cjs.js",
   "module": "dist/requester-browser-xhr.esm.js",
   "types": "dist/index.d.ts",
-  "jsdelivr": "dist/requester-browser-xhr.umd.js",
-  "unpkg": "dist/requester-browser-xhr.umd.js",
-  "browser": {
-    "./index.js": "dist/requester-browser-xhr.umd.js"
-  },
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist/"
   },
   "engines": {
-    "node": "^14.0.0",
-    "yarn": "^3.0.0"
+    "node": "^14.0.0"
   },
   "dependencies": {
     "@algolia/client-common": "5.0.0"

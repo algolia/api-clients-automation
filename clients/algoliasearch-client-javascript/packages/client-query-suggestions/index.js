@@ -1,4 +1,2 @@
-// eslint-disable-next-line import/extensions
-import { querySuggestionsApi, createQuerySuggestionsApi } from './dist/querySuggestions.esm.js';
-
-export { querySuggestionsApi, createQuerySuggestionsApi };
+// eslint-disable-next-line import/no-commonjs,import/extensions
+module.exports = require('./dist/client-query-suggestions.cjs.js');

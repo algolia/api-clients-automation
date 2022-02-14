@@ -1,4 +1,2 @@
-// eslint-disable-next-line import/extensions
-import { recommendApi, createRecommendApi } from './dist/recommend.esm.js';
-
-export { recommendApi, createRecommendApi };
+// eslint-disable-next-line import/no-commonjs,import/extensions
+module.exports = require('./dist/recommend.cjs.js');

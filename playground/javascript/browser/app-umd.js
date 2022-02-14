@@ -1,8 +1,4 @@
-import { searchApi } from '@algolia/client-search/dist/search.umd.js';
-
-import './app.css';
-
-const searchClient = searchApi(
+const searchClient = window['@algolia/client-search'].searchApi(
   'QPBQ67WNIG',
   'b590ae1153bf574215ca1605c19eb1fe'
 );

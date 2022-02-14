@@ -1,31 +1,31 @@
 {
   "files": [
     {
-      "path": "packages/client-abtesting/dist/abtesting.umd.js",
+      "path": "packages/client-abtesting/dist/client-abtesting.umd.js",
       "maxSize": "1.50KB"
     },
     {
-      "path": "packages/client-analytics/dist/analytics.umd.js",
+      "path": "packages/client-analytics/dist/client-analytics.umd.js",
       "maxSize": "2.00KB"
     },
     {
-      "path": "packages/client-insights/dist/insights.umd.js",
+      "path": "packages/client-insights/dist/client-insights.umd.js",
       "maxSize": "1.25KB"
     },
     {
-      "path": "packages/client-personalization/dist/personalization.umd.js",
+      "path": "packages/client-personalization/dist/client-personalization.umd.js",
       "maxSize": "1.50KB"
     },
     {
-      "path": "packages/client-query-suggestions/dist/query-suggestions.umd.js",
+      "path": "packages/client-query-suggestions/dist/client-query-suggestions.umd.js",
       "maxSize": "1.50KB"
     },
     {
-      "path": "packages/client-search/dist/search.umd.js",
+      "path": "packages/client-search/dist/client-search.umd.js",
       "maxSize": "3.50KB"
     },
     {
-      "path": "packages/client-sources/dist/sources.umd.js",
+      "path": "packages/client-sources/dist/client-sources.umd.js",
       "maxSize": "1.25KB"
     },
     {
@@ -33,16 +33,16 @@
       "maxSize": "1.25KB"
     },
     {
-      "path": "packages/client-common/dist/client-common.umd.js",
-      "maxSize": "4.75KB"
+      "path": "packages/client-common/dist/client-common.esm.js",
+      "maxSize": "3.25KB"
     },
     {
-      "path": "packages/requester-browser-xhr/dist/requester-browser-xhr.umd.js",
-      "maxSize": "1.25KB"
+      "path": "packages/requester-browser-xhr/dist/requester-browser-xhr.esm.js",
+      "maxSize": "1.00KB"
     },
     {
-      "path": "packages/requester-node-http/dist/requester-node-http.umd.js",
-      "maxSize": "1.25KB"
+      "path": "packages/requester-node-http/dist/requester-node-http.esm.js",
+      "maxSize": "1.00KB"
     }
   ]
 }

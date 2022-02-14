@@ -6,15 +6,13 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
-  "module": "dist/.esm.js",
+  "module": "dist/client-predict.esm.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/.umd.js",
-  "unpkg": "dist/.umd.js",
+  "jsdelivr": "dist/client-predict.umd.js",
+  "unpkg": "dist/client-predict.umd.js",
   "browser": {
-    "./dist/index.esm.js": "dist/.umd.js",
-    "./dist/index.js": "dist/.umd.js"
+    "dist/index.js": "dist/client-predict.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

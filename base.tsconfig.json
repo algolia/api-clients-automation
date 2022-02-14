@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "ES2015",
+    "module": "commonjs",
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es2015",
+    "target": "esnext",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,

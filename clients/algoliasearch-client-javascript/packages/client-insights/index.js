@@ -1,4 +1,2 @@
-// eslint-disable-next-line import/extensions
-import { insightsApi, createInsightsApi } from './dist/insights.esm.js';
-
-export { insightsApi, createInsightsApi };
+// eslint-disable-next-line import/no-commonjs,import/extensions
+module.exports = require('./dist/client-insights.cjs.js');
