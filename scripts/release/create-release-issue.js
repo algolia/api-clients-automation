@@ -19,6 +19,8 @@ const {
 
 dotenv.config();
 
+const TEXT = require('./text');
+
 function readVersions() {
   const versions = {};
 
@@ -67,8 +69,6 @@ run(`git pull origin ${MAIN_BRANCH}`);
 
 console.log('Pushing to origin...');
 run(`git push origin ${MAIN_BRANCH}`);
-
-const header = `## Summary`;
 
 const commitsWithoutScope = [];
 const commitsWithNonLanguageScope = [];
@@ -148,36 +148,25 @@ LANGS.forEach((lang) => {
   }
 });
 
-const versionChangeHeader = `## Version Changes`;
-
 const versionChanges = LANGS.map((lang) => {
   const { current, next, noCommit, skipRelease, langName } = versions[lang];
 
   if (noCommit) {
-    return `- ~${langName}: v${current} (no commit)~`;
+    return `- ~${langName}: v${current} (${TEXT.noCommit})~`;
   }
 
   if (!current) {
-    return `- ~${langName}: (current version not found)~`;
+    return `- ~${langName}: (${TEXT.currentVersionNotFound})~`;
   }
 
   const checked = skipRelease ? ' ' : 'x';
   return [
     `- [${checked}] ${langName}: v${current} -> v${next}`,
-    skipRelease &&
-      `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
-    `  - **Checked** → Update version, update ${langName} repository, and release the library.`,
-    `  - **Unchecked** → Update ${langName} repository.`,
-    `  - **Line removed** → Do nothing.`,
+    skipRelease && TEXT.descriptionForSkippedLang(langName),
   ]
     .filter(Boolean)
     .join('\n');
 }).join('\n');
-
-const changelogHeader = [
-  `## CHANGELOG`,
-  `Update the following lines. Once merged, it will be reflected to \`docs/changelogs/*.\``,
-].join('\n');
 
 const changelogs = LANGS.filter(
   (lang) => !versions[lang].noCommit && versions[lang].current
@@ -196,20 +185,15 @@ const changelogs = LANGS.filter(
   })
   .join('\n');
 
-const approval = [
-  `## Confirmation`,
-  `To proceed this release, check the box below and close the issue.`,
-  `To skip this release, just close the issue.`,
-  `- [ ] Approved`,
-].join('\n');
-
 const body = [
-  header,
-  versionChangeHeader,
+  TEXT.header,
+  TEXT.versionChangeHeader,
   versionChanges,
-  changelogHeader,
+  TEXT.changelogHeader,
+  TEXT.changelogDescription,
   changelogs,
-  approval,
+  TEXT.approvalHeader,
+  TEXT.approval,
 ].join('\n\n');
 
 const octokit = new Octokit({

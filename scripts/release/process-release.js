@@ -13,6 +13,7 @@ dotenv.config();
 const execa = require('execa');
 
 const { MAIN_BRANCH, OWNER, REPO, run } = require('./common');
+const TEXT = require('./text');
 
 function getMarkdownSection(markdown, title) {
   const levelIndicator = title.split(' ')[0]; // e.g. `##`
@@ -44,16 +45,16 @@ const issueBody = JSON.parse(
 ).body;
 
 if (
-  !getMarkdownSection(issueBody, '## Confirmation')
+  !getMarkdownSection(issueBody, TEXT.approvalHeader)
     .split('\n')
-    .find((line) => line.startsWith('- [x] Approved'))
+    .find((line) => line.startsWith(`- [x] ${TEXT.approved}`))
 ) {
   console.log('The issue was not approved.');
   process.exit(1);
 }
 
 const versionsToRelease = {};
-getMarkdownSection(issueBody, '## Version Changes')
+getMarkdownSection(issueBody, TEXT.versionChangeHeader)
   .split('\n')
   .forEach((line) => {
     const result = line.match(/- \[x\] (.+): v(.+) -> v(.+)/);
@@ -67,7 +68,10 @@ getMarkdownSection(issueBody, '## Version Changes')
     };
   });
 
-const langsToUpdateRepo = getMarkdownSection(issueBody, '## Version Changes')
+const langsToUpdateRepo = getMarkdownSection(
+  issueBody,
+  TEXT.versionChangeHeader
+)
   .split('\n')
   .map((line) => {
     const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);
@@ -95,7 +99,7 @@ new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
       ? `## ${versionsToRelease[lang].next}`
       : `## ${new Date().toISOString().split('T')[0]}`;
     const newChangelog = getMarkdownSection(
-      getMarkdownSection(issueBody, '## CHANGELOG'),
+      getMarkdownSection(issueBody, TEXT.changelogHeader),
       `### ${lang}`
     );
     const existingContent = fs.readFileSync(filePath).toString();
@@ -111,7 +115,7 @@ run('git config user.name "api-clients-bot"');
 run('git config user.email "bot@algolia.com"');
 run('git add openapitools.json');
 run('git add doc/changelogs/*');
-execa.sync('git', ['commit', '-m', 'chore: update versions and changelogs']);
+execa.sync('git', ['commit', '-m', TEXT.commitMessage]);
 run(`git push origin ${MAIN_BRANCH}`);
 
 // generate clients to release
