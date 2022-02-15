@@ -36,8 +36,7 @@ export function {{apiName}}Api(
 
   return create{{capitalizedApiName}}Api({
     appId,
-    apiKey,
-    {{#hasRegionalHost}}region,{{/hasRegionalHost}}
+    apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
     timeouts: {
       connect: 1,
       read: 2,

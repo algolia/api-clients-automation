@@ -22,7 +22,6 @@ export function recommendApi(
   return createRecommendApi({
     appId,
     apiKey,
-
     timeouts: {
       connect: 1,
       read: 2,

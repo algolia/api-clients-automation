@@ -8,7 +8,6 @@ GENERATOR=$2
 
 # Generator does not allow new files, so we use existing ones to generate
 # our `node` and `browser` build files.
-
 destination=$FOLDER/builds
 
 mkdir -p $destination

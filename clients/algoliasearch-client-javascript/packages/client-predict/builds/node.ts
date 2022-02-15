@@ -22,7 +22,6 @@ export function predictApi(
   return createPredictApi({
     appId,
     apiKey,
-
     timeouts: {
       connect: 2,
       read: 5,

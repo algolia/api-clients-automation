@@ -22,7 +22,6 @@ export function searchApi(
   return createSearchApi({
     appId,
     apiKey,
-
     timeouts: {
       connect: 1,
       read: 2,
