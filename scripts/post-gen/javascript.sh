@@ -18,4 +18,4 @@ mv $FOLDER/src/apis.ts $destination/browser.ts
 buildFile=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."generator-cli".generators[$generator].additionalProperties.buildFile' | sed 's/#{cwd}\///g')
 
 echo -e "// eslint-disable-next-line import/no-commonjs,import/extensions\nmodule.exports = require('./dist/$buildFile.cjs.js');" > $FOLDER/index.js
-echo -e "/* eslint-disable import/no-unresolved*/\nexport * from './dist/builds/node';" > $FOLDER/index.d.ts
+echo -e "// eslint-disable-next-line import/no-unresolved\nexport * from './dist/builds/node';" > $FOLDER/index.d.ts

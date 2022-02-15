@@ -12,7 +12,7 @@
   "jsdelivr": "dist/client-insights.umd.js",
   "unpkg": "dist/client-insights.umd.js",
   "browser": {
-    "dist/index.js": "dist/client-insights.umd.js"
+    "./index.js": "dist/client-insights.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"

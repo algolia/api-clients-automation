@@ -12,7 +12,7 @@
   "jsdelivr": "dist/client-abtesting.umd.js",
   "unpkg": "dist/client-abtesting.umd.js",
   "browser": {
-    "dist/index.js": "dist/client-abtesting.umd.js"
+    "./index.js": "dist/client-abtesting.umd.js"
   },
   "scripts": {
     "clean": "rm -rf ./dist"
