@@ -81,7 +81,7 @@ runs:
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_CLIENT::$run"
 
-        if [[ $run == 'false' && steps.diff.outputs.JS_COMMON_CHANGED > 0 ]]; then
+        if [[ $base_changed == 'true' || steps.diff.outputs.JS_COMMON_CHANGED > 0 ]]; then
           echo "::set-output name=RUN_COMMON::true"
         fi
 
