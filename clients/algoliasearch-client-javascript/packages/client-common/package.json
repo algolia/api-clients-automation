@@ -1,7 +1,7 @@
 {
   "name": "@algolia/client-common",
   "version": "5.0.0",
-  "description": "Common package for the Algolia JavaScript API client.",
+  "description": "Common package for the Algolia JavaScript API client. wouhou",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
   "private": true,
