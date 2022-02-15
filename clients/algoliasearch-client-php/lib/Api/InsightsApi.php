@@ -65,7 +65,7 @@ class InsightsApi
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::createForInsights($config->getAppId());
+            $clusterHosts = ClusterHosts::create('insights.'.$config->getRegion().'.algolia.io');
         }
 
         $apiWrapper = new ApiWrapper(
@@ -86,16 +86,11 @@ class InsightsApi
     }
 
     /**
-     * Operation pushEvents
-     *
      * Pushes an array of events.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Insights\InsightEvents $insightEvents insightEvents (required)
+     * @param array $insightEvents insightEvents (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Insights\PushEventsResponse|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase|\Algolia\AlgoliaSearch\Model\Insights\ErrorBase
+     * @return array<string, mixed>
      */
     public function pushEvents($insightEvents)
     {
