@@ -1,0 +1,36 @@
+post:
+  summary: Immediately crawl some URLs and update the live index
+  description: |
+    The passed URLs will be crawled immediately, and the generated records will be pushed to the live index if no reindex is currently running.
+    If a reindex is running, the records will be pushed to the temporary index.
+  parameters:
+    - $ref: '#/components/parameters/CrawlerIdParameter'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          additionalProperties: false
+          properties:
+            urls:
+              type: array
+              items:
+                type: string
+              example: ['https://www.algolia.com/products/crawler/']
+            save:
+              type: boolean
+              description: |
+                If true, the given URLs will be added to the `extraUrls` field of the config (if not already in `startUrls` or `sitemaps`).
+                If false, the URLs will not be saved in the config.
+                If unspecified, the URLs will be saved to the `extraUrls` field of the config only if they haven't been indexed during the last reindex.
+          required:
+            - urls
+  responses:
+    '200':
+      $ref: '#/components/responses/200ActionAcknowledged'
+    '400':
+      $ref: 'shared.yaml#/responses/400InvalidRequest'
+    '401':
+      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+    '403':
+      $ref: '#/components/responses/403NoRightsOnCrawler'

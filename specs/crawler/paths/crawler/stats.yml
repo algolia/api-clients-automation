@@ -1,0 +1,27 @@
+get:
+  summary: Get a summary of the current status of crawled URLs for the specified Crawler
+  parameters:
+    - $ref: '#/components/parameters/CrawlerIdParameter'
+  responses:
+    '200':
+      description: Several metrics to know what the Crawler did during since the last reindex
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              count:
+                type: integer
+                description: The total number of crawled URLs
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UrlsCrawledGroup'
+            required:
+              - count
+              - data
+    '401':
+      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+    '403':
+      $ref: '#/components/responses/403NoRightsOnCrawler'

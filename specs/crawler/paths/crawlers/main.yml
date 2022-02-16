@@ -1,0 +1,97 @@
+get:
+  summary: List available Crawlers
+  parameters:
+    - in: query
+      name: itemsPerPage
+      schema:
+        type: integer
+        minimum: 1
+        default: 20
+        maximum: 100
+      description: Change the number of items per page
+    - in: query
+      name: page
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 100
+      description: Change the page number
+    - in: query
+      name: name
+      schema:
+        type: string
+        example: 'MyCrawlerName'
+      description: Filter by crawler name
+    - in: query
+      name: appId
+      schema:
+        type: string
+        example: 'XXXXXXX123'
+      description: Filter by Application ID
+  responses:
+    '200':
+      description: A list of Crawlers and pagination information
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Pagination'
+              - type: object
+                additionalProperties: false
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        id:
+                          $ref: '#/components/schemas/CrawlerId'
+                        name:
+                          $ref: '#/components/schemas/CrawlerName'
+    '400':
+      $ref: 'shared.yaml#/responses/400InvalidRequest'
+    '401':
+      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+    '403':
+      description: The user doesn't have enough rights to create a Crawler
+    '404':
+      description: The call does not have results for this combinaison of query params
+
+post:
+  summary: Create a new Crawler with the given config
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              $ref: '#/components/schemas/CrawlerName'
+            config:
+              $ref: '#/components/schemas/Configuration'
+          required:
+            - name
+            - config
+  responses:
+    '200':
+      description: A new Crawler has been created with the given configuration
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              id:
+                type: string
+                description: The id of the Crawler created
+            required:
+              - id
+    '400':
+      $ref: 'shared.yaml#/responses/400InvalidRequest'
+    '401':
+      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+    '403':
+      description: The user doesn't have enough rights to create a Crawler

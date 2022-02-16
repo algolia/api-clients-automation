@@ -1,0 +1,2 @@
+403NoRightsOnCrawler:
+  description: The user doesn't have enough rights on the specified Crawler, or it doesn't exists

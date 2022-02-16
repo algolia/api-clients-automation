@@ -1,0 +1,2 @@
+401MissingAuthorization:
+  description: Authorization information is missing or invalid

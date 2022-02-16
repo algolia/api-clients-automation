@@ -192,6 +192,29 @@
           "topLevelDomain": "com"
         }
       },
+      "javascript-crawler": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-crawler",
+        "glob": "specs/bundled/sources.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-crawler",
+          "apiName": "crawler",
+          "capitalizedApiName": "Crawler",
+          "packageVersion": "0.0.1",
+          "packageName": "@algolia/client-crawler",
+          "hasRegionalHost": false,
+          "host": "crawler",
+          "topLevelDomain": "com"
+        }
+      },
       "javascript-predict": {
         "generatorName": "typescript-node",
         "templateDir": "#{cwd}/templates/javascript/",

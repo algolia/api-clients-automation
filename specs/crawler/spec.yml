@@ -1,0 +1,57 @@
+openapi: 3.0.2
+info:
+  title: Crawler API
+  description: API powering the Crawler
+  version: 1.0.0
+servers:
+  - url: https://crawler.algolia.com/api/1
+security:
+  - BasicAuth: []
+
+paths:
+  /crawlers:
+    $ref: paths/crawlers/main.yml
+
+  /crawlers/{id}:
+    $ref: paths/crawler/main.yml
+
+  /crawlers/{id}/config:
+    $ref: paths/crawler/config/patch.yml
+
+  /crawlers/{id}/run:
+    $ref: paths/crawler/run.yml
+
+  /crawlers/{id}/pause:
+    $ref: paths/crawler/pause.yml
+
+  /crawlers/{id}/reindex:
+    $ref: paths/crawler/reindex.yml
+
+  /crawlers/{id}/stats/urls:
+    $ref: paths/crawler/stats.yml
+
+  /crawlers/{id}/test:
+    $ref: paths/crawler/test.yml
+
+  /crawlers/{id}/tasks/{tid}:
+    $ref: paths/crawler/tasks/get.yml
+
+  /crawlers/{id}/tasks/{tid}/cancel:
+    $ref: paths/crawler/tasks/cancel.yml
+
+  /crawlers/{id}/config/versions:
+    $ref: paths/crawler/config/versions.yml
+
+  /crawlers/{id}/config/versions/{version}:
+    $ref: paths/crawler/config/version.yml
+
+  /crawlers/{id}/urls/crawl:
+    $ref: paths/crawler/crawl.yml
+
+components:
+  $ref: common/parameters.yml#/parameters
+
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

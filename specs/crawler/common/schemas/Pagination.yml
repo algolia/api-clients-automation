@@ -1,0 +1,23 @@
+Pagination:
+  type: object
+  description: Represent a group of items and pagination information
+  additionalProperties: false
+  properties:
+    items:
+      type: array
+      items:
+        type: object
+    itemsPerPage:
+      type: integer
+      description: The maximum number of items returned by this request
+      default: 20
+      example: 20
+    page:
+      type: integer
+      description: The current page browsed by this request
+      default: 1
+      example: 1
+    total:
+      type: integer
+      description: The total number of items
+      example: 100

@@ -1,0 +1,6 @@
+400InvalidRequest:
+  description: Invalid request
+  content:
+    application/json:
+      schema:
+        $ref: '#/schemas/ErrorResponse'

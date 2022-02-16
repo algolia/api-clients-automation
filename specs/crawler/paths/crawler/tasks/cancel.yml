@@ -1,0 +1,10 @@
+post:
+  summary: Cancel a blocking action on your Crawler
+  parameters:
+    - $ref: '#/components/parameters/CrawlerIdParameter'
+    - $ref: '#/components/parameters/TaskIdParameter'
+  responses:
+    '200':
+      description: Your request was processed correctly
+    '400':
+      $ref: 'shared.yaml#/responses/400InvalidRequest'

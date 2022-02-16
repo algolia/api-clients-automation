@@ -1,0 +1,28 @@
+get:
+  summary: Get a specific version of the configuration of a crawler
+  parameters:
+    - $ref: '#/components/parameters/CrawlerIdParameter'
+    - $ref: '#/components/parameters/CrawlerVersionParameter'
+  responses:
+    '200':
+      description: A specific revision of the crawler
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              version:
+                type: integer
+                minimum: 1
+              config:
+                $ref: '#/components/schemas/Configuration'
+              createdAt:
+                type: string
+                # format: dateTime
+              authorId:
+                type: string
+            required:
+              - version
+              - config
+              - createdAt

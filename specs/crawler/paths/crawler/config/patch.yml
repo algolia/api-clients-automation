@@ -1,0 +1,27 @@
+patch:
+  summary: Update parts of the Crawler configuration
+  parameters:
+    - $ref: '#/components/parameters/CrawlerIdParameter'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          additionalProperties: false
+          description: A partial config object that will be injected into the current one
+          example:
+            rateLimit: 10
+            startUrls:
+              [
+                'https://www.algolia.com/doc',
+                'https://www.algolia.com/blog',
+              ]
+  responses:
+    '200':
+      $ref: '#/components/responses/200ActionAcknowledged'
+    '400':
+      $ref: 'shared.yaml#/responses/400InvalidRequest'
+    '401':
+      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+    '403':
+      $ref: '#/components/responses/403NoRightsOnCrawler'

@@ -1,0 +1,13 @@
+200ActionAcknowledged:
+  description: The request has been acknowledged by the crawler
+  content:
+    application/json:
+      schema:
+        type: object
+        additionalProperties: false
+        required:
+          - taskId
+        properties:
+          taskId:
+            type: string
+            example: 'e0f6db8a-24f5-4092-83a4-1b2c6cb6d809'

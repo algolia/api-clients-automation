@@ -1,0 +1,37 @@
+crawlerId:
+  type: string
+  description: The unique id of the Crawler
+  example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+
+crawlerName:
+  type: string
+  maxLength: 64
+  description: The name of the Crawler
+  example: My Crawler
+
+parameters:
+  crawlerIdParam:
+    name: id
+    in: path
+    description: The Id of the targeted Crawler
+    required: true
+    schema:
+      type: string
+      # format: uuid
+
+  taskIdParam:
+    name: tid
+    in: path
+    description: The Id of the targeted Task
+    required: true
+    schema:
+      type: string
+      # format: uuid
+
+  crawlerVersionParam:
+    name: version
+    in: path
+    description: The version of the targeted Crawler revision
+    required: true
+    schema:
+      type: integer

@@ -1,0 +1,13 @@
+post:
+  summary: Request the specified Crawler to pause itself
+  parameters:
+    - $ref: '#/components/parameters/CrawlerIdParameter'
+  responses:
+    '200':
+      $ref: '#/components/responses/200ActionAcknowledged'
+    '400':
+      $ref: 'shared.yaml#/responses/400InvalidRequest'
+    '401':
+      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+    '403':
+      $ref: '#/components/responses/403NoRightsOnCrawler'
