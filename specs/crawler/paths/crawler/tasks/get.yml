@@ -1,14 +1,16 @@
 get:
-  summary: Get the status of a specific task
+  tags:
+    - crawler
+  summary: Get the status of a specific task.
   operationId: getAction
   description: |-
-    TODO: complete
+    TODO: complete.
   parameters:
     - $ref: ../../../common/parameters.yml#/crawlerIdPath
     - $ref: ../../../common/parameters.yml#/taskIdPath
   responses:
     '200':
-      description: A response telling you if an action is still pending or not
+      description: A response telling you if an action is still pending or not.
       content:
         application/json:
           schema:

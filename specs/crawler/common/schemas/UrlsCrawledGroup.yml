@@ -1,26 +1,26 @@
 type: object
-description: Represent a group of URLs that have been crawled and have the same final state
+description: Represent a group of URLs that have been crawled and have the same final state.
 properties:
   status:
     type: string
-    description: A string corresponding to the status of the group
+    description: A string corresponding to the status of the group.
     enum:
       - DONE
       - SKIPPED
       - FAILED
   reason:
     type: string
-    description: The code of the reason why when ended up in this status
+    description: The code of the reason why when ended up in this status.
   category:
     type: string
-    description: In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'
+    description: In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'.
     enum: [fetch, extraction, indexing, success]
   count:
     type: integer
-    description: Number of URLs belonging to this group
+    description: Number of URLs belonging to this group.
   readable:
     type: string
-    description: Human redeable version of the error
+    description: Human redeable version of the error.
 example:
   status: SKIPPED
   reason: forbidden_by_robotstxt

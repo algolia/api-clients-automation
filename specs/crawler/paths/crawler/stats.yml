@@ -1,13 +1,15 @@
 get:
-  summary: Get a summary of the current status of crawled URLs for the specified Crawler
+  tags:
+    - crawler
+  summary: Get a summary of the current status of crawled URLs for the specified Crawler.
   operationId: getCrawlerStats
   description: |-
-    TODO: complete
+    TODO: complete.
   parameters:
     - $ref: ../../common/parameters.yml#/crawlerIdPath
   responses:
     '200':
-      description: Several metrics to know what the Crawler did during since the last reindex
+      description: Several metrics to know what the Crawler did during since the last reindex.
       content:
         application/json:
           schema:
@@ -16,7 +18,7 @@ get:
             properties:
               count:
                 type: integer
-                description: The total number of crawled URLs
+                description: The total number of crawled URLs.
               data:
                 type: array
                 items:

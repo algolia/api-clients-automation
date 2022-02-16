@@ -198,7 +198,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-crawler",
-        "glob": "specs/bundled/sources.yml",
+        "glob": "specs/bundled/crawler.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
@@ -210,9 +210,9 @@
           "capitalizedApiName": "Crawler",
           "packageVersion": "0.0.1",
           "packageName": "@algolia/client-crawler",
-          "hasRegionalHost": false,
           "host": "crawler",
-          "topLevelDomain": "com"
+          "topLevelDomain": "com",
+          "experimentalHost": "crawler.algolia.com"
         }
       },
       "javascript-predict": {

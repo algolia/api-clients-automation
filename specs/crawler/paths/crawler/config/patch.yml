@@ -1,8 +1,10 @@
 patch:
-  summary: Update parts of the Crawler configuration
+  tags:
+    - crawler
+  summary: Update parts of the Crawler configuration.
   operationId: patchConfig
   description: |-
-    TODO: complete
+    TODO: complete.
   parameters:
     - $ref: ../../../common/parameters.yml#/crawlerIdPath
   requestBody:
@@ -11,7 +13,7 @@ patch:
         schema:
           type: object
           additionalProperties: false
-          description: A partial config object that will be injected into the current one
+          description: A partial config object that will be injected into the current one.
           example:
             rateLimit: 10
             startUrls:

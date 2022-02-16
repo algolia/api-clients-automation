@@ -1,8 +1,10 @@
 get:
-  summary: List available Crawlers
+  tags:
+    - crawler
+  summary: List available Crawlers.
   operationId: listCrawlers
   description: |-
-    TODO: complete
+    TODO: complete.
   parameters:
     - in: query
       name: itemsPerPage
@@ -11,7 +13,7 @@ get:
         minimum: 1
         default: 20
         maximum: 100
-      description: Change the number of items per page
+      description: Change the number of items per page.
     - in: query
       name: page
       schema:
@@ -19,22 +21,22 @@ get:
         minimum: 1
         default: 1
         maximum: 100
-      description: Change the page number
+      description: Change the page number.
     - in: query
       name: name
       schema:
         type: string
         example: MyCrawlerName
-      description: Filter by crawler name
+      description: Filter by crawler name.
     - in: query
       name: appId
       schema:
         type: string
         example: XXXXXXX123
-      description: Filter by Application ID
+      description: Filter by Application ID.
   responses:
     '200':
-      description: A list of Crawlers and pagination information
+      description: A list of Crawlers and pagination information.
       content:
         application/json:
           schema:
@@ -58,15 +60,17 @@ get:
     '401':
       $ref: ../../responses/401MissingAuthorization.yml
     '403':
-      description: The user doesn't have enough rights to create a Crawler
+      description: The user doesn't have enough rights to create a Crawler.
     '404':
-      description: The call does not have results for this combinaison of query params
+      description: The call does not have results for this combinaison of query params.
 
 post:
-  summary: Create a new Crawler with the given config
+  tags:
+    - crawler
+  summary: Create a new Crawler with the given config.
   operationId: createCrawler
   description: |-
-    TODO: complete
+    TODO: complete.
   requestBody:
     content:
       application/json:
@@ -83,7 +87,7 @@ post:
             - config
   responses:
     '200':
-      description: A new Crawler has been created with the given configuration
+      description: A new Crawler has been created with the given configuration.
       content:
         application/json:
           schema:
@@ -100,4 +104,4 @@ post:
     '401':
       $ref: ../../responses/401MissingAuthorization.yml
     '403':
-      description: The user doesn't have enough rights to create a Crawler
+      description: The user doesn't have enough rights to create a Crawler.

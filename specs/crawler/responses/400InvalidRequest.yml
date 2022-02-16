@@ -1,4 +1,4 @@
-description: Invalid request
+description: Invalid request.
 content:
   application/json:
     schema:

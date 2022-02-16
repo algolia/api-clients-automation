@@ -1,5 +1,7 @@
 post:
-  summary: Immediately crawl some URLs and update the live index
+  tags:
+    - crawler
+  summary: Immediately crawl some URLs and update the live index.
   operationId: createCrawl
   description: |
     The passed URLs will be crawled immediately, and the generated records will be pushed to the live index if no reindex is currently running.

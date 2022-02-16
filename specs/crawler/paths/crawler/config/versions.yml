@@ -1,13 +1,15 @@
 get:
-  summary: Get a specific version of the configuration of a crawler
+  tags:
+    - crawler
+  summary: Get a specific version of the configuration of a crawler.
   operationId: listConfigVersions
   description: |-
-    TODO: complete
+    TODO: complete.
   parameters:
     - $ref: ../../../common/parameters.yml#/crawlerIdPath
   responses:
     '200':
-      description: A specific revision of the crawler
+      description: A specific revision of the crawler.
       content:
         application/json:
           schema:

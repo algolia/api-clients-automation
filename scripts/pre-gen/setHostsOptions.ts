@@ -60,9 +60,9 @@ async function setHostsOptions(): Promise<void> {
 
       const { host } = new URL(url);
 
-      // Edge case for `predict`, we should maybe have a proper way to detect
-      // experimental/staging hosts
-      if (client === 'predict') {
+      // Edge case for `predict` and crawler, we should maybe have a proper way to detect
+      // experimental/staging/otherThanAlgolia hosts
+      if (client === 'predict' || client === 'crawler') {
         additionalProperties.experimentalHost = host;
       }
 

@@ -1,4 +1,4 @@
-description: The request has been acknowledged by the crawler
+description: The request has been acknowledged by the crawler.
 content:
   application/json:
     schema:

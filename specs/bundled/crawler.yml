@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: Crawler API
-  description: API powering the Crawler
+  description: API powering the Crawler.
   version: 1.0.0
 servers:
   - url: https://crawler.algolia.com/api/1
@@ -10,9 +10,11 @@ security:
 paths:
   /crawlers:
     get:
-      summary: List available Crawlers
+      tags:
+        - crawler
+      summary: List available Crawlers.
       operationId: listCrawlers
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - in: query
           name: itemsPerPage
@@ -21,7 +23,7 @@ paths:
             minimum: 1
             default: 20
             maximum: 100
-          description: Change the number of items per page
+          description: Change the number of items per page.
         - in: query
           name: page
           schema:
@@ -29,22 +31,22 @@ paths:
             minimum: 1
             default: 1
             maximum: 100
-          description: Change the page number
+          description: Change the page number.
         - in: query
           name: name
           schema:
             type: string
             example: MyCrawlerName
-          description: Filter by crawler name
+          description: Filter by crawler name.
         - in: query
           name: appId
           schema:
             type: string
             example: XXXXXXX123
-          description: Filter by Application ID
+          description: Filter by Application ID.
       responses:
         '200':
-          description: A list of Crawlers and pagination information
+          description: A list of Crawlers and pagination information.
           content:
             application/json:
               schema:
@@ -68,13 +70,15 @@ paths:
         '401':
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
-          description: The user doesn't have enough rights to create a Crawler
+          description: The user doesn't have enough rights to create a Crawler.
         '404':
-          description: The call does not have results for this combinaison of query params
+          description: The call does not have results for this combinaison of query params.
     post:
-      summary: Create a new Crawler with the given config
+      tags:
+        - crawler
+      summary: Create a new Crawler with the given config.
       operationId: createCrawler
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       requestBody:
         content:
           application/json:
@@ -91,7 +95,7 @@ paths:
                 - config
       responses:
         '200':
-          description: A new Crawler has been created with the given configuration
+          description: A new Crawler has been created with the given configuration.
           content:
             application/json:
               schema:
@@ -108,12 +112,14 @@ paths:
         '401':
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
-          description: The user doesn't have enough rights to create a Crawler
+          description: The user doesn't have enough rights to create a Crawler.
   /crawlers/{id}:
     get:
+      tags:
+        - crawler
       summary: Get information about the specified Crawler and its configuration
       operationId: getCrawler
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
         - in: query
@@ -122,10 +128,10 @@ paths:
             type: boolean
           description: >-
             Whether or not the configuration should be returned in the response
-            (in the 'config' field)
+            (in the 'config' field).
       responses:
         '200':
-          description: Several field with information about the specified Crawler
+          description: Several field with information about the specified Crawler.
           content:
             application/json:
               schema:
@@ -136,31 +142,31 @@ paths:
                     $ref: '#/components/schemas/crawlerName'
                   createdAt:
                     type: string
-                    description: The creation date of this Crawler
+                    description: The creation date of this Crawler.
                     example: 2019-05-10T07:58:41.146Z
                   updatedAt:
                     type: string
-                    description: The date this Crawler was last updated
+                    description: The date this Crawler was last updated.
                     example: 2019-05-10T08:16:47.920Z
                   running:
                     type: boolean
                     description: >-
                       Indicate if this Crawler is running, i.e. will crawl
-                      regularly based on its configuration
+                      regularly based on its configuration.
                   reindexing:
                     type: boolean
                     description: >-
                       Indicate if this Crawler is currently doing a complete
-                      reindex
+                      reindex.
                   blocked:
                     type: boolean
                     description: >-
                       Indicate if this Crawler is currently blocked and need a
-                      manual intervention in the Console
+                      manual intervention in the Console.
                     example: false
                   blockingError:
                     type: string
-                    description: The reason for which the Crawler has been blocked
+                    description: The reason for which the Crawler has been blocked.
                     example: >-
                       Error: Failed to fetch external data for source 'testCSV':
                       404
@@ -172,14 +178,14 @@ paths:
                     nullable: true
                     description: >-
                       The date when the last complete reindex was started. Will
-                      be null if no reindex was ever done
+                      be null if no reindex was ever done.
                     example: 2019-05-10T08:16:47.920Z
                   lastReindexEndedAt:
                     type: string
                     nullable: true
                     description: >-
                       The date when the last complete reindex finished. Can be
-                      null if the reindex is still running
+                      null if the reindex is still running.
                     example: null
                   config:
                     $ref: '#/components/schemas/Config'
@@ -199,9 +205,11 @@ paths:
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
     patch:
-      summary: Update parts of the Crawler, either its name, its config, or both
+      tags:
+        - crawler
+      summary: Update parts of the Crawler, either its name, its config, or both.
       operationId: patchCrawler
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
       requestBody:
@@ -226,9 +234,11 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/config:
     patch:
-      summary: Update parts of the Crawler configuration
+      tags:
+        - crawler
+      summary: Update parts of the Crawler configuration.
       operationId: patchConfig
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
       requestBody:
@@ -239,7 +249,7 @@ paths:
               additionalProperties: false
               description: >-
                 A partial config object that will be injected into the current
-                one
+                one.
               example:
                 rateLimit: 10
                 startUrls:
@@ -256,9 +266,11 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/run:
     post:
-      summary: Request the specified Crawler to run
+      tags:
+        - crawler
+      summary: Request the specified Crawler to run.
       operationId: runCrawler
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
       responses:
@@ -272,9 +284,11 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/pause:
     post:
-      summary: Request the specified Crawler to pause itself
+      tags:
+        - crawler
+      summary: Request the specified Crawler to pause itself.
       operationId: pauseCrawler
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
       responses:
@@ -288,9 +302,11 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/reindex:
     post:
-      summary: Request the specified Crawler to start a reindex
+      tags:
+        - crawler
+      summary: Request the specified Crawler to start a reindex.
       operationId: reindexCrawler
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
       responses:
@@ -304,18 +320,20 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/stats/urls:
     get:
+      tags:
+        - crawler
       summary: >-
         Get a summary of the current status of crawled URLs for the specified
-        Crawler
+        Crawler.
       operationId: getCrawlerStats
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
       responses:
         '200':
           description: >-
             Several metrics to know what the Crawler did during since the last
-            reindex
+            reindex.
           content:
             application/json:
               schema:
@@ -324,7 +342,7 @@ paths:
                 properties:
                   count:
                     type: integer
-                    description: The total number of crawled URLs
+                    description: The total number of crawled URLs.
                   data:
                     type: array
                     items:
@@ -338,7 +356,9 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/test:
     post:
-      summary: Test an URL against the crawler's config
+      tags:
+        - crawler
+      summary: Test an URL against the crawler's config.
       operationId: testURL
       description: >-
         Test an URL against the given Crawler's config and see what will be
@@ -357,7 +377,7 @@ paths:
               properties:
                 url:
                   type: string
-                  description: The URL to test
+                  description: The URL to test.
                   example: https://www.algolia.com/blog
                 config:
                   type: object
@@ -376,7 +396,7 @@ paths:
                 - url
       responses:
         '200':
-          description: Several information to know how the Crawler processed the given URL
+          description: Several information to know how the Crawler processed the given URL.
           content:
             application/json:
               schema:
@@ -385,65 +405,65 @@ paths:
                 properties:
                   startDate:
                     type: string
-                    description: The datetime when the test started
+                    description: The datetime when the test started.
                     example: 2019-05-21T09:04:33.742Z
                   endDate:
                     type: string
-                    description: The datetime when the test ended
+                    description: The datetime when the test ended.
                     example: 2019-05-21T09:04:33.923Z
                   logs:
                     type: array
                     description: >-
                       The list of logs generated by `console.log()` in the
-                      recordExtractors
+                      recordExtractors.
                     items:
                       type: array
                       description: >-
                         Each console.log() accepts many parameter. They will be
-                        returned in an array
+                        returned in an array.
                       items:
                         type: string
                         example: Processing url 'https://www.algolia.com/blog'
                   records:
                     type: array
-                    description: The list of records generated for the given URL
+                    description: The list of records generated for the given URL.
                     items:
                       type: object
                       additionalProperties: false
                       properties:
                         indexName:
                           type: string
-                          description: The name of the targeted index
+                          description: The name of the targeted index.
                           example: testIndex
                         records:
                           type: array
-                          description: The list of records generated by each action
+                          description: The list of records generated by each action.
                           items:
                             type: object
-                            description: An actual Algolia record
+                            description: An actual Algolia record.
                             example:
                               objectID: https://www.algolia.com/blog
                               numberOfLinks: 2
                         recordsPerExtractor:
                           type: array
-                          description: The record's parts generated by each extractor
+                          description: The record's parts generated by each extractor.
                           items:
                             type: object
                             additionalProperties: false
                             properties:
                               index:
                                 type: number
-                                description: Index of the extractor
+                                description: Index of the extractor.
                               type:
                                 type: string
-                                description: Type of the extractor
+                                description: Type of the extractor.
                               records:
                                 type: array
                                 items:
                                   type: object
                                   description: >-
                                     The partial record generated by the
-                                    extractor
+                                    extractor.
                           example:
                             - index: 0
                               type: custom
@@ -453,7 +473,7 @@ paths:
                     type: array
                     description: >-
                       The list of links found on the page, that match the
-                      configuration (and would be processed)
+                      configuration (and would be processed).
                     items:
                       type: string
                     example:
@@ -464,7 +484,7 @@ paths:
                     type: object
                     description: >-
                       The External Data associated to the tested URL. External
-                      data are refreshed at each full reindex
+                      data are refreshed at each full reindex.
                     example: |-
                       dataSourceId1: { data1: val1, data2: val2}
                       dataSourceId2: { data1: val1, data2: val2}
@@ -493,15 +513,17 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/tasks/{tid}:
     get:
-      summary: Get the status of a specific task
+      tags:
+        - crawler
+      summary: Get the status of a specific task.
       operationId: getAction
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
         - $ref: '#/components/parameters/taskIdPath'
       responses:
         '200':
-          description: A response telling you if an action is still pending or not
+          description: A response telling you if an action is still pending or not.
           content:
             application/json:
               schema:
@@ -526,15 +548,22 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/tasks/{tid}/cancel:
     post:
-      summary: Cancel a blocking action on your Crawler
+      tags:
+        - crawler
+      summary: Cancel a blocking action on your Crawler.
       operationId: cancelAction
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
         - $ref: '#/components/parameters/taskIdPath'
       responses:
         '200':
           description: Your request was processed correctly
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
         '400':
           $ref: '#/components/responses/400InvalidRequest'
         '401':
@@ -543,14 +572,16 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/config/versions:
     get:
-      summary: Get a specific version of the configuration of a crawler
+      tags:
+        - crawler
+      summary: Get a specific version of the configuration of a crawler.
       operationId: listConfigVersions
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
       responses:
         '200':
-          description: A specific revision of the crawler
+          description: A specific revision of the crawler.
           content:
             application/json:
               schema:
@@ -578,9 +609,11 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/config/versions/{version}:
     get:
-      summary: List crawler versions
+      tags:
+        - crawler
+      summary: List crawler versions.
       operationId: getConfigVersion
-      description: 'TODO: complete'
+      description: 'TODO: complete.'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
         - $ref: '#/components/parameters/crawlerVersionIdPath'
@@ -591,7 +624,7 @@ paths:
             minimum: 1
             default: 20
             maximum: 100
-          description: Change the number of versions per page
+          description: Change the number of versions per page.
         - in: query
           name: page
           schema:
@@ -599,10 +632,10 @@ paths:
             minimum: 1
             default: 1
             maximum: 5000
-          description: Change the page number
+          description: Change the page number.
       responses:
         '200':
-          description: A list of crawler versions and pagination information
+          description: A list of crawler versions and pagination information.
           content:
             application/json:
               schema:
@@ -635,7 +668,9 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/urls/crawl:
     post:
-      summary: Immediately crawl some URLs and update the live index
+      tags:
+        - crawler
+      summary: Immediately crawl some URLs and update the live index.
       operationId: createCrawl
       description: >
         The passed URLs will be crawled immediately, and the generated records
@@ -689,7 +724,7 @@ components:
   schemas:
     Pagination:
       type: object
-      description: Represent a group of items and pagination information
+      description: Represent a group of items and pagination information.
       additionalProperties: false
       properties:
         items:
@@ -698,26 +733,26 @@ components:
             type: object
         itemsPerPage:
           type: integer
-          description: The maximum number of items returned by this request
+          description: The maximum number of items returned by this request.
           default: 20
           example: 20
         page:
           type: integer
-          description: The current page browsed by this request
+          description: The current page browsed by this request.
           default: 1
           example: 1
         total:
           type: integer
-          description: The total number of items
+          description: The total number of items.
           example: 100
     crawlerId:
       type: string
-      description: The unique id of the Crawler
+      description: The unique id of the Crawler.
       example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
     crawlerName:
       type: string
       maxLength: 64
-      description: The name of the Crawler
+      description: The name of the Crawler.
       example: My Crawler
     Error:
       type: object
@@ -1273,23 +1308,23 @@ components:
       type: object
       description: >-
         Represent a group of URLs that have been crawled and have the same final
-        state
+        state.
       properties:
         status:
           type: string
-          description: A string corresponding to the status of the group
+          description: A string corresponding to the status of the group.
           enum:
             - DONE
             - SKIPPED
             - FAILED
         reason:
           type: string
-          description: The code of the reason why when ended up in this status
+          description: The code of the reason why when ended up in this status.
         category:
           type: string
           description: >-
             In case of error, will be set to the step where the error occurred,
-            otherwise will be set to 'success'
+            otherwise will be set to 'success'.
           enum:
             - fetch
             - extraction
@@ -1297,10 +1332,10 @@ components:
             - success
         count:
           type: integer
-          description: Number of URLs belonging to this group
+          description: Number of URLs belonging to this group.
         readable:
           type: string
-          description: Human redeable version of the error
+          description: Human redeable version of the error.
       example:
         status: SKIPPED
         reason: forbidden_by_robotstxt
@@ -1309,19 +1344,19 @@ components:
         readable: Forbidden by robots.txt
   responses:
     400InvalidRequest:
-      description: Invalid request
+      description: Invalid request.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
     401MissingAuthorization:
-      description: Authorization information is missing or invalid
+      description: Authorization information is missing or invalid.
     403NoRightsOnCrawler:
       description: >-
         The user doesn't have enough rights on the specified Crawler, or it
-        doesn't exists
+        doesn't exists.
     200ActionAcknowledged:
-      description: The request has been acknowledged by the crawler
+      description: The request has been acknowledged by the crawler.
       content:
         application/json:
           schema:
@@ -1337,21 +1372,21 @@ components:
     crawlerIdPath:
       name: id
       in: path
-      description: The Id of the targeted Crawler
+      description: The Id of the targeted Crawler.
       required: true
       schema:
         type: string
     taskIdPath:
       name: tid
       in: path
-      description: The Id of the targeted Task
+      description: The Id of the targeted Task.
       required: true
       schema:
         type: string
     crawlerVersionIdPath:
       name: version
       in: path
-      description: The version of the targeted Crawler revision
+      description: The version of the targeted Crawler revision.
       required: true
       schema:
         type: integer

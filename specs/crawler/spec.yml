@@ -1,13 +1,12 @@
 openapi: 3.0.2
 info:
   title: Crawler API
-  description: API powering the Crawler
+  description: API powering the Crawler.
   version: 1.0.0
 servers:
   - url: https://crawler.algolia.com/api/1
 security:
   - BasicAuth: []
-
 paths:
   /crawlers:
     $ref: paths/crawlers/main.yml

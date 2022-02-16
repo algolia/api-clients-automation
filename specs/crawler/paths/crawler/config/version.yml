@@ -1,8 +1,10 @@
 get:
-  summary: List crawler versions
+  tags:
+    - crawler
+  summary: List crawler versions.
   operationId: getConfigVersion
   description: |-
-    TODO: complete
+    TODO: complete.
   parameters:
     - $ref: ../../../common/parameters.yml#/crawlerIdPath
     - $ref: ../../../common/parameters.yml#/crawlerVersionIdPath
@@ -13,7 +15,7 @@ get:
         minimum: 1
         default: 20
         maximum: 100
-      description: Change the number of versions per page
+      description: Change the number of versions per page.
     - in: query
       name: page
       schema:
@@ -21,10 +23,10 @@ get:
         minimum: 1
         default: 1
         maximum: 5000
-      description: Change the page number
+      description: Change the page number.
   responses:
     '200':
-      description: A list of crawler versions and pagination information
+      description: A list of crawler versions and pagination information.
       content:
         application/json:
           schema:
