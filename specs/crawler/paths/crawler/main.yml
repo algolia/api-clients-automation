@@ -1,7 +1,7 @@
 get:
   summary: Get information about the specified Crawler and its configuration
   parameters:
-    - $ref: '#/components/parameters/CrawlerIdParameter'
+    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
     - in: query
       name: withConfig
       schema:
@@ -17,15 +17,15 @@ get:
             additionalProperties: false
             properties:
               name:
-                $ref: '#/components/schemas/CrawlerName'
+                $ref: ../../common/parameters.yml#/crawlerName
               createdAt:
                 type: string
-                #format: date-time
+                # format: date-time
                 description: The creation date of this Crawler
                 example: '2019-05-10T07:58:41.146Z'
               updatedAt:
                 type: string
-                #format: date-time
+                # format: date-time
                 description: The date this Crawler was last updated
                 example: '2019-05-10T08:16:47.920Z'
               running:
@@ -47,18 +47,18 @@ get:
                 description: The ID of the task that is currently blocking the Crawler.
               lastReindexStartedAt:
                 type: string
-                #format: date-time
+                # format: date-time
                 nullable: true
                 description: The date when the last complete reindex was started. Will be null if no reindex was ever done
                 example: '2019-05-10T08:16:47.920Z'
               lastReindexEndedAt:
                 type: string
-                #format: date-time
+                # format: date-time
                 nullable: true
                 description: The date when the last complete reindex finished. Can be null if the reindex is still running
                 example: null
               config:
-                $ref: '#/components/schemas/Configuration'
+                $ref: ../../common/schemas/Config.yml#/Config
             required:
               - name
               - createdAt
@@ -69,15 +69,16 @@ get:
               - lastReindexStartedAt
               - lastReindexEndedAt
     '400':
-      $ref: 'shared.yaml#/responses/400InvalidRequest'
+      $ref: ../../responses/400InvalidRequest.yml
     '401':
-      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+      $ref: ../../responses/401MissingAuthorization.yml
     '403':
-      $ref: '#/components/responses/403NoRightsOnCrawler'
+      $ref: ../../responses/403NoRightsOnCrawler.yml
+
 patch:
   summary: Update parts of the Crawler, either its name, its config, or both
   parameters:
-    - $ref: '#/components/parameters/CrawlerIdParameter'
+    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
   requestBody:
     content:
       application/json:
@@ -86,15 +87,15 @@ patch:
           additionalProperties: false
           properties:
             name:
-              $ref: '#/components/schemas/CrawlerName'
+              $ref: ../../common/parameters.yml#/crawlerName
             config:
-              $ref: '#/components/schemas/Configuration'
+              $ref: ../../common/schemas/Config.yml#/Config
   responses:
     '200':
-      $ref: '#/components/responses/200ActionAcknowledged'
+      $ref: ../../responses/200ActionAcknowledged.yml
     '400':
-      $ref: 'shared.yaml#/responses/400InvalidRequest'
+      $ref: ../../responses/400InvalidRequest.yml
     '401':
-      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+      $ref: ../../responses/401MissingAuthorization.yml
     '403':
-      $ref: '#/components/responses/403NoRightsOnCrawler'
+      $ref: ../../responses/403NoRightsOnCrawler.yml

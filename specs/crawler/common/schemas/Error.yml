@@ -34,4 +34,4 @@ ErrorResponse:
           items:
             $ref: '#/Error'
       example:
-        code: 'malformed_id'
+        code: malformed_id

@@ -1,8 +1,8 @@
 get:
   summary: Get the status of a specific task
   parameters:
-    - $ref: '#/components/parameters/CrawlerIdParameter'
-    - $ref: '#/components/parameters/TaskIdParameter'
+    - $ref: ../../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../../common/parameters.yml#/parameters/taskIdParam
   responses:
     '200':
       description: A response telling you if an action is still pending or not

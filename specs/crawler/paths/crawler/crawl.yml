@@ -4,7 +4,7 @@ post:
     The passed URLs will be crawled immediately, and the generated records will be pushed to the live index if no reindex is currently running.
     If a reindex is running, the records will be pushed to the temporary index.
   parameters:
-    - $ref: '#/components/parameters/CrawlerIdParameter'
+    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
   requestBody:
     content:
       application/json:
@@ -27,10 +27,10 @@ post:
             - urls
   responses:
     '200':
-      $ref: '#/components/responses/200ActionAcknowledged'
+      $ref: ../../responses/200ActionAcknowledged.yml
     '400':
-      $ref: 'shared.yaml#/responses/400InvalidRequest'
+      $ref: ../../responses/400InvalidRequest.yml
     '401':
-      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+      $ref: ../../responses/401MissingAuthorization.yml
     '403':
-      $ref: '#/components/responses/403NoRightsOnCrawler'
+      $ref: ../../responses/403NoRightsOnCrawler.yml

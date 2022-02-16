@@ -1,4 +1,3 @@
-
 Action:
   type: object
   required:
@@ -14,14 +13,14 @@ Action:
       type: boolean
     schedule:
       type: string
-      description:
+      description: |-
         How often this specific action will run. See root level schedule
         for more details.
     pathsToMatch:
       type: array
       items:
         type: string
-      description:
+      description: |-
         Will determine which webpages will match for this action. This list
         is checked against the url of webpages using
         [micromatch](https://github.com/micromatch/micromatch). Negation,
@@ -32,7 +31,7 @@ Action:
         type: string
       description: Will check for the presence or absence of DOM nodes.
     fileTypesToMatch:
-      description:
+      description: |-
         Override if you want to index documents. Chosen file types will be
         converted to HTML using
         [Tika](https://wiki.apache.org/tika/TikaJAXRS), then treated as a
@@ -41,411 +40,410 @@ Action:
         for a list of available `fileTypes`.
     autoGenerateObjectIDs:
       type: boolean
-      description:
+      description: |-
         Generate an `objectID` for records that don't have one. See the
         [`objectID` definition](#). Setting this parameter to `false` means
         we'll raise an error in case an extracted record doesn't have an
         `objectID`. Note, this parameter is not compatible with `partialUpdate
         = true`.
     recordExtractor:
-      description:
+      description: |-
         An recordExtractor is just a custom Javascript function that let
         you execute your own code and extract what you want from a page.
 
-  Config:
-    type: object
-    required:
-      - appId
-      - apiKey
-      - rateLimit
-      - actions
-    additionalProperties: false
-    description:
-      "Typed Schema used for autocompletion in the Editor of the Admin
-      Console. Note: please keep in sync with
-      crawler-common/src/config/validation."
-    properties:
-      appId:
-        type: string
-      apiKey:
-        type: string
-      rateLimit:
-        type: number
-      schedule:
-        type: string
-        description: >-
-          How often you want to execute a complete recrawl. Expressed using
-          [Later.js' syntax](https://bunkat.github.io/later/).
+Config:
+  type: object
+  required:
+    - appId
+    - apiKey
+    - rateLimit
+    - actions
+  additionalProperties: false
+  description: |-
+    Typed Schema used for autocompletion in the Editor of the Admin
+    Console. Note: please keep in sync with
+    crawler-common/src/config/validation.
+  properties:
+    appId:
+      type: string
+    apiKey:
+      type: string
+    rateLimit:
+      type: number
+    schedule:
+      type: string
+      description: >-
+        How often you want to execute a complete recrawl. Expressed using
+        [Later.js' syntax](https://bunkat.github.io/later/).
 
 
-          If omitted, you will need to manually launch a reindex operation in order to update the crawled records.
+        If omitted, you will need to manually launch a reindex operation in order to update the crawled records.
 
 
-          Important notes: 1. The interval between two scheduled crawls must be equal or higher than 24 hours. 2. Times will be interpreted as UTC (GMT+0 timezone).
-      renderJavaScript:
-        anyOf:
-          - type: array
-            items:
-              type: string
-          - type: boolean
-        description: >-
-          When `true`, all web pages are rendered with a chrome headless
-          browser. You get the rendered HTML result.
-
-
-          Because rendering JavaScript-based web pages is much slower than crawling regular HTML pages, you can apply this setting to a specified list of [micromatch](https://github.com/micromatch/micromatch) URL patterns. These patterns can include negations and wildcards.
-
-           With this setting enabled, JavaScript is executed on the webpage. Because a lot of websites have infinite refreshes and updates, this Chrome headless browser is configured with a timeout (set to a few seconds).
-
-          This can lead to inconsistent records across recrawls, depending on the browser load and the website speed.
-
-
-          Make sure your crawler manages to load the data from JavaScript-based pages interested in fast enough.
-      saveBackup:
-        type: boolean
-        description:
-          Saves a backup of your production index before it is overwritten by
-          the index generated during a recrawl.
-      ignoreRobotsTxtRules:
-        type: boolean
-        description:
-          When set to `true`, this tells the Crawler to ignore rules set in
-          the robots.txt.
-      ignoreNoIndex:
-        type: boolean
-        description: >-
-          Whether the Crawler should extract records from a page whose `robots`
-          meta tag contains `noindex` or `none`.
-
-
-          When `true`, the crawler will ignore the `noindex` directive of the [robots meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names).
-
-
-          Its default value is currently `true`, but it will change to `false` in a near future. If you'd like the crawler to not respect the `noindex` directive, you should set it explicitely.
-      ignoreNoFollowTo:
-        type: boolean
-        description: >-
-          Whether the Crawler should follow links marked as `nofollow`.
-
-
-          This setting applies to both:
-
-          - links which should be ignored because the [`robots` meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names) contains `nofollow`;
-
-          - links whose [rel attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel) contains the `nofollow` directive.
-
-
-          When `true`, the crawler will consider those links as if they weren't marked to be ignored.
-
-
-          The crawler might still ignore links that don't match the patterns of your configuration.
-
-
-          Its default value is currently `true`, but it will change to `false` in a near future. If you'd like the crawler to never respect `nofollow` directives, you should set it explicitely.
-
-
-          Note: The "To" suffix is here for consistency with `ignoreCanonicalTo`. While it only accepts a boolean for now, we plan for it to accept an array of patterns eventually. Please contact us if you need such fine grained control.
-      ignoreCanonicalTo:
-        anyOf:
-          - type: array
-            items:
-              type: string
-          - type: boolean
-        description: >-
-          This tells the Crawler to process a page even if there is a meta
-          canonical URL specified.
-
-
-          When set to `true`, it will ignore all canonical. When set to `string[]`, it will ignore canonical that matches the specified patterns.
-      startUrls:
-        type: array
-        items:
-          type: string
-      sitemaps:
-        type: array
-        items:
-          type: string
-      extraUrls:
-        type: array
-        items:
-          type: string
-        description: >-
-          URLs found in `extraUrls` are treated as `startUrls` for your crawler:
-          they are used as start points for the crawl.
-
-
-          Crawler saves URLs added through the **Add a URL** field of the Admin's Configuration tab to the `extraUrls` array.
-
-
-          Internally `extraUrls` is treated like `startUrls`. The seperate parameter serves to identify which URLs were added directly to the crawler's configuration file vs. Those that were added through the Admin.
-      exclusionPatterns:
-        type: array
-        items:
-          type: string
-        description: >-
-          Determines the webpage patterns ignored or excluded during a crawl.
-
-
-          This list is checked against the url of webpages using [micromatch](https://github.com/micromatch/micromatch). You can use negation, wildcards, and more.
-      ignoreQueryParams:
-        type: array
-        items:
-          type: string
-        description:
-          Filters out specified query parameters from crawled urls. Useful
-          for avoiding duplicate crawls of the same page.
-      indexPrefix:
-        type: string
-        description:
-          Prefix added in front of all indices defined in the crawler's
-          configuration.
-      initialIndexSettings:
-        type: object
-        description: >-
-          Defines the settings for the indices that updated by your crawler.
-
-
-          Index names should be provided as keys. Their values are objects that define Algolia index settings as properties (e.g. `searchableAttributes` `attributesForFaceting`).
-
-
-          Index settings will only be applied on your Algolia's index during the first run (or if the index doesn't exist when launching the reindex). Once an index has been created, settings are never re-applied: this prevents to not override any manual changes you may have done.
-      maxUrls:
-        type: number
-        description: >-
-          Limits the number of URLs your crawler processes.
-
-
-          Useful for demoing and preventing infinite link holes in the website structure.
-
-
-          `maxUrls` does not guarantee consistent indexing accross recrawls. Because of parallel processing, discovered URLs can be processed in different orders for different recrawls.
-
-
-          This parameter is capped at a maximum of  `1,000,000`.
-      maxDepth:
-        type: number
-        description: >-
-          Limits the processing of URLs to a specified depth, inclusively.
-
-
-          _Maximum_: `100`.
-
-
-          URLs added manually (startUrls, sitemaps...) are not checked against this limit.
-
-
-          **How we calculate depth:**.
-      discoveryPatterns:
-        type: array
-        items:
-          type: string
-        description:
-          Defines which webpages will be visited. It is used in combination
-          with the `pathsToMatchs` of your actions. The Crawler will visit all
-          links that match at least one of those paths.
-      hostnameAliases:
-        type: object
-        description: >-
-          Defines a hostname key that will be transformed as the value
-          specified. The keys are exact match only.
-
-
-          Applied to:
-
-          - All URLs found
-
-          - Canonical
-
-          - Redirection.
-
-
-          Not applied to:
-
-          - props: startUrls, extraUrls, pathsToMatch, etc...
-
-          - URLs in your code.
-      pathAliases:
-        type: object
-      linkExtractor:
-        description: >-
-          Determines the function used to extract URLs from pages.
-
-
-          If provided, this function is called on a crawled page. Only the URLs it returns are enqueued for further crawling. By default, all the URLs found while crawling a page are enqueued given that they comply with `pathsToMatch`, `fileTypesToMatch` and `exclusions`.
-
-
-          Expected return value: `array` of `strings` (URLs).
-      requestOptions:
-        type: object
-        properties:
-          proxy:
+        Important notes: 1. The interval between two scheduled crawls must be equal or higher than 24 hours. 2. Times will be interpreted as UTC (GMT+0 timezone).
+    renderJavaScript:
+      anyOf:
+        - type: array
+          items:
             type: string
-          timeout:
-            type: number
-          retries:
-            type: number
-          headers:
-            type: object
-            properties:
-              Accept-Language:
-                type: string
-              Authorization:
-                type: string
-              Cookie:
-                type: string
-            additionalProperties: false
-        additionalProperties: false
-        description: |-
-          Modify all requests behavior.
-
-          Cookie Header will be overriden by the cookie fetched in `login`.
-      login:
-        type: object
-        properties:
-          fetchRequest:
-            type: object
-            properties:
-              url:
-                type: string
-              requestOptions:
-                type: object
-                properties:
-                  method:
-                    type: string
-                  headers:
-                    type: object
-                    properties:
-                      Content-Type:
-                        type: string
-                      Cookie:
-                        type: string
-                      Authorization:
-                        type: string
-                    additionalProperties: false
-                  body:
-                    type: string
-                  timeout:
-                    type: number
-                additionalProperties: false
-            required:
-              - url
-            additionalProperties: false
-          browserRequest:
-            type: object
-            properties:
-              url:
-                type: string
-              username:
-                type: string
-              password:
-                type: string
-              waitTime:
-                type: object
-                properties:
-                  min:
-                    type: number
-                  max:
-                    type: number
-                additionalProperties: false
-            required:
-              - url
-              - username
-              - password
-            additionalProperties: false
-          oauthRequest:
-            type: object
-            properties:
-              accessTokenRequest:
-                type: object
-                properties:
-                  url:
-                    type: string
-                  grant_type:
-                    type: string
-                  client_id:
-                    type: string
-                  client_secret:
-                    type: string
-                  scope:
-                    type: string
-                  extraParameters:
-                    type: object
-                    properties:
-                      resource:
-                        type: string
-                    additionalProperties: false
-                required:
-                  - url
-                  - grant_type
-                  - client_id
-                additionalProperties: false
-            required:
-              - accessTokenRequest
-            additionalProperties: false
-        additionalProperties: false
-        description: >-
-          This property can be set in order to define how the Crawler should
-          login to the website before crawling pages.
+        - type: boolean
+      description: >-
+        When `true`, all web pages are rendered with a chrome headless
+        browser. You get the rendered HTML result.
 
 
-          The Crawler will then extract the `Set-Cookie` response header from the login page and send that Cookie when crawling all pages of the website defined in the configuration.
-      cache:
-        type: object
-        properties:
-          enabled:
-            type: boolean
-        required:
-          - enabled
-        additionalProperties: false
-      externalData:
-        type: array
-        items:
+        Because rendering JavaScript-based web pages is much slower than crawling regular HTML pages, you can apply this setting to a specified list of [micromatch](https://github.com/micromatch/micromatch) URL patterns. These patterns can include negations and wildcards.
+
+          With this setting enabled, JavaScript is executed on the webpage. Because a lot of websites have infinite refreshes and updates, this Chrome headless browser is configured with a timeout (set to a few seconds).
+
+        This can lead to inconsistent records across recrawls, depending on the browser load and the website speed.
+
+
+        Make sure your crawler manages to load the data from JavaScript-based pages interested in fast enough.
+    saveBackup:
+      type: boolean
+      description:
+        Saves a backup of your production index before it is overwritten by
+        the index generated during a recrawl.
+    ignoreRobotsTxtRules:
+      type: boolean
+      description:
+        When set to `true`, this tells the Crawler to ignore rules set in
+        the robots.txt.
+    ignoreNoIndex:
+      type: boolean
+      description: >-
+        Whether the Crawler should extract records from a page whose `robots`
+        meta tag contains `noindex` or `none`.
+
+
+        When `true`, the crawler will ignore the `noindex` directive of the [robots meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names).
+
+
+        Its default value is currently `true`, but it will change to `false` in a near future. If you'd like the crawler to not respect the `noindex` directive, you should set it explicitely.
+    ignoreNoFollowTo:
+      type: boolean
+      description: >-
+        Whether the Crawler should follow links marked as `nofollow`.
+
+
+        This setting applies to both:
+
+        - links which should be ignored because the [`robots` meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names) contains `nofollow`;
+
+        - links whose [rel attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel) contains the `nofollow` directive.
+
+
+        When `true`, the crawler will consider those links as if they weren't marked to be ignored.
+
+
+        The crawler might still ignore links that don't match the patterns of your configuration.
+
+
+        Its default value is currently `true`, but it will change to `false` in a near future. If you'd like the crawler to never respect `nofollow` directives, you should set it explicitely.
+
+
+        Note: The "To" suffix is here for consistency with `ignoreCanonicalTo`. While it only accepts a boolean for now, we plan for it to accept an array of patterns eventually. Please contact us if you need such fine grained control.
+    ignoreCanonicalTo:
+      anyOf:
+        - type: array
+          items:
+            type: string
+        - type: boolean
+      description: >-
+        This tells the Crawler to process a page even if there is a meta
+        canonical URL specified.
+
+
+        When set to `true`, it will ignore all canonical. When set to `string[]`, it will ignore canonical that matches the specified patterns.
+    startUrls:
+      type: array
+      items:
+        type: string
+    sitemaps:
+      type: array
+      items:
+        type: string
+    extraUrls:
+      type: array
+      items:
+        type: string
+      description: >-
+        URLs found in `extraUrls` are treated as `startUrls` for your crawler:
+        they are used as start points for the crawl.
+
+
+        Crawler saves URLs added through the **Add a URL** field of the Admin's Configuration tab to the `extraUrls` array.
+
+
+        Internally `extraUrls` is treated like `startUrls`. The seperate parameter serves to identify which URLs were added directly to the crawler's configuration file vs. Those that were added through the Admin.
+    exclusionPatterns:
+      type: array
+      items:
+        type: string
+      description: >-
+        Determines the webpage patterns ignored or excluded during a crawl.
+
+
+        This list is checked against the url of webpages using [micromatch](https://github.com/micromatch/micromatch). You can use negation, wildcards, and more.
+    ignoreQueryParams:
+      type: array
+      items:
+        type: string
+      description:
+        Filters out specified query parameters from crawled urls. Useful
+        for avoiding duplicate crawls of the same page.
+    indexPrefix:
+      type: string
+      description: |-
+        Prefix added in front of all indices defined in the crawler's
+        configuration.
+    initialIndexSettings:
+      type: object
+      description: >-
+        Defines the settings for the indices that updated by your crawler.
+
+
+        Index names should be provided as keys. Their values are objects that define Algolia index settings as properties (e.g. `searchableAttributes` `attributesForFaceting`).
+
+
+        Index settings will only be applied on your Algolia's index during the first run (or if the index doesn't exist when launching the reindex). Once an index has been created, settings are never re-applied: this prevents to not override any manual changes you may have done.
+    maxUrls:
+      type: number
+      description: >-
+        Limits the number of URLs your crawler processes.
+
+
+        Useful for demoing and preventing infinite link holes in the website structure.
+
+
+        `maxUrls` does not guarantee consistent indexing accross recrawls. Because of parallel processing, discovered URLs can be processed in different orders for different recrawls.
+
+
+        This parameter is capped at a maximum of  `1,000,000`.
+    maxDepth:
+      type: number
+      description: >-
+        Limits the processing of URLs to a specified depth, inclusively.
+
+
+        _Maximum_: `100`.
+
+
+        URLs added manually (startUrls, sitemaps...) are not checked against this limit.
+
+
+        **How we calculate depth:**.
+    discoveryPatterns:
+      type: array
+      items:
+        type: string
+      description:
+        Defines which webpages will be visited. It is used in combination
+        with the `pathsToMatchs` of your actions. The Crawler will visit all
+        links that match at least one of those paths.
+    hostnameAliases:
+      type: object
+      description: >-
+        Defines a hostname key that will be transformed as the value
+        specified. The keys are exact match only.
+
+
+        Applied to:
+
+        - All URLs found
+
+        - Canonical
+
+        - Redirection.
+
+
+        Not applied to:
+
+        - props: startUrls, extraUrls, pathsToMatch, etc...
+
+        - URLs in your code.
+    pathAliases:
+      type: object
+    linkExtractor:
+      description: >-
+        Determines the function used to extract URLs from pages.
+
+
+        If provided, this function is called on a crawled page. Only the URLs it returns are enqueued for further crawling. By default, all the URLs found while crawling a page are enqueued given that they comply with `pathsToMatch`, `fileTypesToMatch` and `exclusions`.
+
+
+        Expected return value: `array` of `strings` (URLs).
+    requestOptions:
+      type: object
+      properties:
+        proxy:
           type: string
-        description: Defines the list of External Data you want to use for this
-          configuration. Every External Data declared here can be accessed in
-          your `recordExtractor` through the `dataSources` object.
-      actions:
-        type: array
-        items:
-          $ref: "#/definitions/Action"
-        description: >-
-          Determines which web pages are translated into Algolia records and in
-          what way.
+        timeout:
+          type: number
+        retries:
+          type: number
+        headers:
+          type: object
+          properties:
+            Accept-Language:
+              type: string
+            Authorization:
+              type: string
+            Cookie:
+              type: string
+          additionalProperties: false
+      additionalProperties: false
+      description: |-
+        Modify all requests behavior.
+
+        Cookie Header will be overriden by the cookie fetched in `login`.
+    login:
+      type: object
+      properties:
+        fetchRequest:
+          type: object
+          properties:
+            url:
+              type: string
+            requestOptions:
+              type: object
+              properties:
+                method:
+                  type: string
+                headers:
+                  type: object
+                  properties:
+                    Content-Type:
+                      type: string
+                    Cookie:
+                      type: string
+                    Authorization:
+                      type: string
+                  additionalProperties: false
+                body:
+                  type: string
+                timeout:
+                  type: number
+              additionalProperties: false
+          required:
+            - url
+          additionalProperties: false
+        browserRequest:
+          type: object
+          properties:
+            url:
+              type: string
+            username:
+              type: string
+            password:
+              type: string
+            waitTime:
+              type: object
+              properties:
+                min:
+                  type: number
+                max:
+                  type: number
+              additionalProperties: false
+          required:
+            - url
+            - username
+            - password
+          additionalProperties: false
+        oauthRequest:
+          type: object
+          properties:
+            accessTokenRequest:
+              type: object
+              properties:
+                url:
+                  type: string
+                grant_type:
+                  type: string
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                scope:
+                  type: string
+                extraParameters:
+                  type: object
+                  properties:
+                    resource:
+                      type: string
+                  additionalProperties: false
+              required:
+                - url
+                - grant_type
+                - client_id
+              additionalProperties: false
+          required:
+            - accessTokenRequest
+          additionalProperties: false
+      additionalProperties: false
+      description: >-
+        This property can be set in order to define how the Crawler should
+        login to the website before crawling pages.
 
 
-          A single action defines: 1. The subset of your crawler's websites it targets, 2. The extraction process for those websites, 3. And the index(es) to which the extracted records are pushed.
+        The Crawler will then extract the `Set-Cookie` response header from the login page and send that Cookie when crawling all pages of the website defined in the configuration.
+    cache:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+      required:
+        - enabled
+      additionalProperties: false
+    externalData:
+      type: array
+      items:
+        type: string
+      description: Defines the list of External Data you want to use for this
+        configuration. Every External Data declared here can be accessed in
+        your `recordExtractor` through the `dataSources` object.
+    actions:
+      type: array
+      items:
+        $ref: '#/Action'
+      description: >-
+        Determines which web pages are translated into Algolia records and in
+        what way.
 
 
-          A single web page can match multiple actions. In this case, your crawler creates a record for each matched actions.
-      safetyChecks:
-        type: object
-        properties:
-          beforeIndexPublishing:
-            type: object
-            properties:
-              maxLostRecordsPercentage:
-                type: number
-                description: >-
-                  Defines the limit of records difference between the new and
-                  the last crawl as a percentage of total records (inclusive).
+        A single action defines: 1. The subset of your crawler's websites it targets, 2. The extraction process for those websites, 3. And the index(es) to which the extracted records are pushed.
 
 
-                  _Default_: `10`.
+        A single web page can match multiple actions. In this case, your crawler creates a record for each matched actions.
+    safetyChecks:
+      type: object
+      properties:
+        beforeIndexPublishing:
+          type: object
+          properties:
+            maxLostRecordsPercentage:
+              type: number
+              description: >-
+                Defines the limit of records difference between the new and
+                the last crawl as a percentage of total records (inclusive).
 
 
-                  _Minimum_: `0`\ _Maximum_: `100`.
+                _Default_: `10`.
 
 
-                  If the new number of records is less than `last number of records * (1 - maxLostRecordsPercentage / 100)`, the process throws a `SafeReindexingError`, blocking the Crawler until manual restart.
-            additionalProperties: false
-            description:
-              Checks triggered after the Crawler is done, and before the records
-              are pushed to Algolia into the final index.
-        additionalProperties: false
-        description: >-
-          A configurable collection of safety checks to make sure the crawl was
-          successful.
+                _Minimum_: `0`\ _Maximum_: `100`.
 
 
-          This configuration describes all the checks the Crawler can perform to ensure data is correct. For example, the number of records from one crawl to another.
+                If the new number of records is less than `last number of records * (1 - maxLostRecordsPercentage / 100)`, the process throws a `SafeReindexingError`, blocking the Crawler until manual restart.
+          additionalProperties: false
+          description:
+            Checks triggered after the Crawler is done, and before the records
+            are pushed to Algolia into the final index.
+      additionalProperties: false
+      description: >-
+        A configurable collection of safety checks to make sure the crawl was
+        successful.
 
+
+        This configuration describes all the checks the Crawler can perform to ensure data is correct. For example, the number of records from one crawl to another.

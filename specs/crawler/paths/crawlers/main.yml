@@ -21,13 +21,13 @@ get:
       name: name
       schema:
         type: string
-        example: 'MyCrawlerName'
+        example: MyCrawlerName
       description: Filter by crawler name
     - in: query
       name: appId
       schema:
         type: string
-        example: 'XXXXXXX123'
+        example: XXXXXXX123
       description: Filter by Application ID
   responses:
     '200':
@@ -36,7 +36,7 @@ get:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/Pagination'
+              - $ref: ../../common/schemas/Pagination.yml
               - type: object
                 additionalProperties: false
                 properties:
@@ -47,13 +47,13 @@ get:
                       additionalProperties: false
                       properties:
                         id:
-                          $ref: '#/components/schemas/CrawlerId'
+                          $ref: ../../common/parameters.yml#/crawlerId
                         name:
-                          $ref: '#/components/schemas/CrawlerName'
+                          $ref: ../../common/parameters.yml#/crawlerName
     '400':
-      $ref: 'shared.yaml#/responses/400InvalidRequest'
+      $ref: ../../responses/400InvalidRequest.yml
     '401':
-      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+      $ref: ../../responses/401MissingAuthorization.yml
     '403':
       description: The user doesn't have enough rights to create a Crawler
     '404':
@@ -69,9 +69,9 @@ post:
           additionalProperties: false
           properties:
             name:
-              $ref: '#/components/schemas/CrawlerName'
+              $ref: ../../common/parameters.yml#/crawlerName
             config:
-              $ref: '#/components/schemas/Configuration'
+              $ref: ../../common/schemas/Config.yml#/Config
           required:
             - name
             - config
@@ -90,8 +90,8 @@ post:
             required:
               - id
     '400':
-      $ref: 'shared.yaml#/responses/400InvalidRequest'
+      $ref: ../../responses/400InvalidRequest.yml
     '401':
-      $ref: 'shared.yaml#/responses/401MissingAuthorization'
+      $ref: ../../responses/401MissingAuthorization.yml
     '403':
       description: The user doesn't have enough rights to create a Crawler

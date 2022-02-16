@@ -1,8 +1,8 @@
 get:
   summary: Get a specific version of the configuration of a crawler
   parameters:
-    - $ref: '#/components/parameters/CrawlerIdParameter'
-    - $ref: '#/components/parameters/CrawlerVersionParameter'
+    - $ref: ../../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../../common/parameters.yml#/parameters/crawlerVersionParam
   responses:
     '200':
       description: A specific revision of the crawler
@@ -16,7 +16,7 @@ get:
                 type: integer
                 minimum: 1
               config:
-                $ref: '#/components/schemas/Configuration'
+                $ref: ../../../common/schemas/Config.yml#/Config
               createdAt:
                 type: string
                 # format: dateTime

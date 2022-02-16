@@ -1,0 +1,1329 @@
+openapi: 3.0.2
+info:
+  title: Crawler API
+  description: API powering the Crawler
+  version: 1.0.0
+servers:
+  - url: https://crawler.algolia.com/api/1
+security:
+  - BasicAuth: []
+paths:
+  /crawlers:
+    get:
+      summary: List available Crawlers
+      parameters:
+        - in: query
+          name: itemsPerPage
+          schema:
+            type: integer
+            minimum: 1
+            default: 20
+            maximum: 100
+          description: Change the number of items per page
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            maximum: 100
+          description: Change the page number
+        - in: query
+          name: name
+          schema:
+            type: string
+            example: MyCrawlerName
+          description: Filter by crawler name
+        - in: query
+          name: appId
+          schema:
+            type: string
+            example: XXXXXXX123
+          description: Filter by Application ID
+      responses:
+        '200':
+          description: A list of Crawlers and pagination information
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagination'
+                  - type: object
+                    additionalProperties: false
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            id:
+                              $ref: '#/components/schemas/crawlerId'
+                            name:
+                              $ref: '#/components/schemas/crawlerName'
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          description: The user doesn't have enough rights to create a Crawler
+        '404':
+          description: The call does not have results for this combinaison of query params
+    post:
+      summary: Create a new Crawler with the given config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  $ref: '#/components/schemas/crawlerName'
+                config:
+                  $ref: '#/components/schemas/Config'
+              required:
+                - name
+                - config
+      responses:
+        '200':
+          description: A new Crawler has been created with the given configuration
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  id:
+                    type: string
+                    description: The id of the Crawler created
+                required:
+                  - id
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          description: The user doesn't have enough rights to create a Crawler
+  /crawlers/{id}:
+    get:
+      summary: Get information about the specified Crawler and its configuration
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+        - in: query
+          name: withConfig
+          schema:
+            type: boolean
+          description: >-
+            Whether or not the configuration should be returned in the response
+            (in the 'config' field)
+      responses:
+        '200':
+          description: Several field with information about the specified Crawler
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  name:
+                    $ref: '#/components/schemas/crawlerName'
+                  createdAt:
+                    type: string
+                    description: The creation date of this Crawler
+                    example: 2019-05-10T07:58:41.146Z
+                  updatedAt:
+                    type: string
+                    description: The date this Crawler was last updated
+                    example: 2019-05-10T08:16:47.920Z
+                  running:
+                    type: boolean
+                    description: >-
+                      Indicate if this Crawler is running, i.e. will crawl
+                      regularly based on its configuration
+                  reindexing:
+                    type: boolean
+                    description: >-
+                      Indicate if this Crawler is currently doing a complete
+                      reindex
+                  blocked:
+                    type: boolean
+                    description: >-
+                      Indicate if this Crawler is currently blocked and need a
+                      manual intervention in the Console
+                    example: false
+                  blockingError:
+                    type: string
+                    description: The reason for which the Crawler has been blocked
+                    example: >-
+                      Error: Failed to fetch external data for source 'testCSV':
+                      404
+                  blockingTaskId:
+                    type: string
+                    description: The ID of the task that is currently blocking the Crawler.
+                  lastReindexStartedAt:
+                    type: string
+                    nullable: true
+                    description: >-
+                      The date when the last complete reindex was started. Will
+                      be null if no reindex was ever done
+                    example: 2019-05-10T08:16:47.920Z
+                  lastReindexEndedAt:
+                    type: string
+                    nullable: true
+                    description: >-
+                      The date when the last complete reindex finished. Can be
+                      null if the reindex is still running
+                    example: null
+                  config:
+                    $ref: '#/components/schemas/Config'
+                required:
+                  - name
+                  - createdAt
+                  - updatedAt
+                  - running
+                  - reindexing
+                  - blocked
+                  - lastReindexStartedAt
+                  - lastReindexEndedAt
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+    patch:
+      summary: Update parts of the Crawler, either its name, its config, or both
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  $ref: '#/components/schemas/crawlerName'
+                config:
+                  $ref: '#/components/schemas/Config'
+      responses:
+        '200':
+          $ref: '#/components/responses/200ActionAcknowledged'
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+  /crawlers/{id}/config:
+    patch:
+      summary: Update parts of the Crawler configuration
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              description: >-
+                A partial config object that will be injected into the current
+                one
+              example:
+                rateLimit: 10
+                startUrls:
+                  - https://www.algolia.com/doc
+                  - https://www.algolia.com/blog
+      responses:
+        '200':
+          $ref: '#/components/responses/200ActionAcknowledged'
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+  /crawlers/{id}/run:
+    post:
+      summary: Request the specified Crawler to run
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/200ActionAcknowledged'
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+  /crawlers/{id}/pause:
+    post:
+      summary: Request the specified Crawler to pause itself
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/200ActionAcknowledged'
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+  /crawlers/{id}/reindex:
+    post:
+      summary: Request the specified Crawler to start a reindex
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/200ActionAcknowledged'
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+  /crawlers/{id}/stats/urls:
+    get:
+      summary: >-
+        Get a summary of the current status of crawled URLs for the specified
+        Crawler
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      responses:
+        '200':
+          description: >-
+            Several metrics to know what the Crawler did during since the last
+            reindex
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  count:
+                    type: integer
+                    description: The total number of crawled URLs
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UrlsCrawledGroup'
+                required:
+                  - count
+                  - data
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+  /crawlers/{id}/test:
+    post:
+      summary: Test an URL against the crawler's config
+      description: >-
+        Test an URL against the given Crawler's config and see what will be
+        processed.
+
+        You can also override parts of the configuration to try your changes
+        before updating the configuration.
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                url:
+                  type: string
+                  description: The URL to test
+                  example: https://www.algolia.com/blog
+                config:
+                  type: object
+                  description: >-
+                    A partial configuration object, that will be merged with the
+                    configuration saved.
+
+                    This allows to tests changes in a configuration before
+                    saving it.
+
+                    Note that it's not a deep merge, we will simply override all
+                    top level fields with the ones that
+
+                    you will pass.
+              required:
+                - url
+      responses:
+        '200':
+          description: Several information to know how the Crawler processed the given URL
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  startDate:
+                    type: string
+                    description: The datetime when the test started
+                    example: 2019-05-21T09:04:33.742Z
+                  endDate:
+                    type: string
+                    description: The datetime when the test ended
+                    example: 2019-05-21T09:04:33.923Z
+                  logs:
+                    type: array
+                    description: >-
+                      The list of logs generated by `console.log()` in the
+                      recordExtractors
+                    items:
+                      type: array
+                      description: >-
+                        Each console.log() accepts many parameter. They will be
+                        returned in an array
+                      items:
+                        type: string
+                        example: Processing url 'https://www.algolia.com/blog'
+                  records:
+                    type: array
+                    description: The list of records generated for the given URL
+                    items:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        indexName:
+                          type: string
+                          description: The name of the targeted index
+                          example: testIndex
+                        records:
+                          type: array
+                          description: The list of records generated by each action
+                          items:
+                            type: object
+                            description: An actual Algolia record
+                            example:
+                              objectID: https://www.algolia.com/blog
+                              numberOfLinks: 2
+                        recordsPerExtractor:
+                          type: array
+                          description: The record's parts generated by each extractor
+                          items:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                              index:
+                                type: number
+                                description: Index of the extractor
+                              type:
+                                type: string
+                                description: Type of the extractor
+                              records:
+                                type: array
+                                items:
+                                  type: object
+                                  description: >-
+                                    The partial record generated by the
+                                    extractor
+                          example:
+                            - index: 0
+                              type: custom
+                              records:
+                                - objectID: https://www.algolia.com/blog
+                  links:
+                    type: array
+                    description: >-
+                      The list of links found on the page, that match the
+                      configuration (and would be processed)
+                    items:
+                      type: string
+                    example:
+                      - >-
+                        https://blog.algolia.com/challenging-migration-heroku-google-kubernetes-engine/
+                      - https://blog.algolia.com/tale-two-engines-algolia-unity/
+                  externalData:
+                    type: object
+                    description: >-
+                      The External Data associated to the tested URL. External
+                      data are refreshed at each full reindex
+                    example: |-
+                      dataSourceId1: { data1: val1, data2: val2}
+                      dataSourceId2: { data1: val1, data2: val2}
+                  error:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      code:
+                        type: string
+                        example: http_internal_server_error
+                      message:
+                        type: string
+                        example: HTTP Internal Server Error (500)
+                    example: {}
+                required:
+                  - startDate
+                  - endDate
+                  - logs
+                  - records
+                  - links
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+  /crawlers/{id}/tasks/{tid}:
+    get:
+      summary: Get the status of a specific task
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/taskIdParam'
+      responses:
+        '200':
+          description: A response telling you if an action is still pending or not
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  pending:
+                    type: boolean
+                    description: >-
+                      A boolean that will be true if the action hasn't been
+                      processed yet,
+
+                      false if it has been processed or if the action doesn't
+                      exists
+                required:
+                  - pending
+  /crawlers/{id}/tasks/{tid}/cancel:
+    post:
+      summary: Cancel a blocking action on your Crawler
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/taskIdParam'
+      responses:
+        '200':
+          description: Your request was processed correctly
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+  /crawlers/{id}/config/versions:
+    get:
+      summary: Get a specific version of the configuration of a crawler
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerVersionParam'
+      responses:
+        '200':
+          description: A specific revision of the crawler
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  version:
+                    type: integer
+                    minimum: 1
+                  config:
+                    $ref: '#/components/schemas/Config'
+                  createdAt:
+                    type: string
+                  authorId:
+                    type: string
+                required:
+                  - version
+                  - config
+                  - createdAt
+  /crawlers/{id}/config/versions/{version}:
+    get:
+      summary: List crawler versions
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+        - in: query
+          name: itemsPerPage
+          schema:
+            type: integer
+            minimum: 1
+            default: 20
+            maximum: 100
+          description: Change the number of versions per page
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            maximum: 5000
+          description: Change the page number
+      responses:
+        '200':
+          description: A list of crawler versions and pagination information
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagination'
+                  - type: object
+                    additionalProperties: false
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            version:
+                              type: integer
+                              minimum: 1
+                            createdAt:
+                              type: string
+                            authorId:
+                              type: string
+                          required:
+                            - version
+                            - createdAt
+  /crawlers/{id}/urls/crawl:
+    post:
+      summary: Immediately crawl some URLs and update the live index
+      description: >
+        The passed URLs will be crawled immediately, and the generated records
+        will be pushed to the live index if no reindex is currently running.
+
+        If a reindex is running, the records will be pushed to the temporary
+        index.
+      parameters:
+        - $ref: '#/components/parameters/crawlerIdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                urls:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - https://www.algolia.com/products/crawler/
+                save:
+                  type: boolean
+                  description: >
+                    If true, the given URLs will be added to the `extraUrls`
+                    field of the config (if not already in `startUrls` or
+                    `sitemaps`).
+
+                    If false, the URLs will not be saved in the config.
+
+                    If unspecified, the URLs will be saved to the `extraUrls`
+                    field of the config only if they haven't been indexed during
+                    the last reindex.
+              required:
+                - urls
+      responses:
+        '200':
+          $ref: '#/components/responses/200ActionAcknowledged'
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Pagination:
+      type: object
+      description: Represent a group of items and pagination information
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        itemsPerPage:
+          type: integer
+          description: The maximum number of items returned by this request
+          default: 20
+          example: 20
+        page:
+          type: integer
+          description: The current page browsed by this request
+          default: 1
+          example: 1
+        total:
+          type: integer
+          description: The total number of items
+          example: 100
+    crawlerId:
+      type: string
+      description: The unique id of the Crawler
+      example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+    crawlerName:
+      type: string
+      maxLength: 64
+      description: The name of the Crawler
+      example: My Crawler
+    Error:
+      type: object
+      required:
+        - message
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        line:
+          type: integer
+        position:
+          type: integer
+      example:
+        message: '''url'' is not defined'
+        line: 5
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      additionalProperties: false
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/Error'
+          example:
+            code: malformed_id
+    Action:
+      type: object
+      required:
+        - indexName
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: Unique name of the action.
+        indexName:
+          type: string
+        partialUpdate:
+          type: boolean
+        schedule:
+          type: string
+          description: |-
+            How often this specific action will run. See root level schedule
+            for more details.
+        pathsToMatch:
+          type: array
+          items:
+            type: string
+          description: |-
+            Will determine which webpages will match for this action. This list
+            is checked against the url of webpages using
+            [micromatch](https://github.com/micromatch/micromatch). Negation,
+            wildcards and more can be used. Check the full documentation.
+        selectorsToMatch:
+          type: array
+          items:
+            type: string
+          description: Will check for the presence or absence of DOM nodes.
+        fileTypesToMatch:
+          description: >-
+            Override if you want to index documents. Chosen file types will be
+
+            converted to HTML using
+
+            [Tika](https://wiki.apache.org/tika/TikaJAXRS), then treated as a
+
+            normal HTML page. See the [documents
+
+            guide](https://www.algolia.com/doc/tools/crawler/guides/extracting-data/how-to/index-documents/)
+
+            for a list of available `fileTypes`.
+        autoGenerateObjectIDs:
+          type: boolean
+          description: >-
+            Generate an `objectID` for records that don't have one. See the
+
+            [`objectID` definition](#). Setting this parameter to `false` means
+
+            we'll raise an error in case an extracted record doesn't have an
+
+            `objectID`. Note, this parameter is not compatible with
+            `partialUpdate
+
+            = true`.
+        recordExtractor:
+          description: |-
+            An recordExtractor is just a custom Javascript function that let
+            you execute your own code and extract what you want from a page.
+    Config:
+      type: object
+      required:
+        - appId
+        - apiKey
+        - rateLimit
+        - actions
+      additionalProperties: false
+      description: |-
+        Typed Schema used for autocompletion in the Editor of the Admin
+        Console. Note: please keep in sync with
+        crawler-common/src/config/validation.
+      properties:
+        appId:
+          type: string
+        apiKey:
+          type: string
+        rateLimit:
+          type: number
+        schedule:
+          type: string
+          description: >-
+            How often you want to execute a complete recrawl. Expressed using
+            [Later.js' syntax](https://bunkat.github.io/later/).
+
+
+            If omitted, you will need to manually launch a reindex operation in
+            order to update the crawled records.
+
+
+            Important notes: 1. The interval between two scheduled crawls must
+            be equal or higher than 24 hours. 2. Times will be interpreted as
+            UTC (GMT+0 timezone).
+        renderJavaScript:
+          anyOf:
+            - type: array
+              items:
+                type: string
+            - type: boolean
+          description: >-
+            When `true`, all web pages are rendered with a chrome headless
+            browser. You get the rendered HTML result.
+
+
+            Because rendering JavaScript-based web pages is much slower than
+            crawling regular HTML pages, you can apply this setting to a
+            specified list of
+            [micromatch](https://github.com/micromatch/micromatch) URL patterns.
+            These patterns can include negations and wildcards.
+
+              With this setting enabled, JavaScript is executed on the webpage. Because a lot of websites have infinite refreshes and updates, this Chrome headless browser is configured with a timeout (set to a few seconds).
+
+            This can lead to inconsistent records across recrawls, depending on
+            the browser load and the website speed.
+
+
+            Make sure your crawler manages to load the data from
+            JavaScript-based pages interested in fast enough.
+        saveBackup:
+          type: boolean
+          description: >-
+            Saves a backup of your production index before it is overwritten by
+            the index generated during a recrawl.
+        ignoreRobotsTxtRules:
+          type: boolean
+          description: >-
+            When set to `true`, this tells the Crawler to ignore rules set in
+            the robots.txt.
+        ignoreNoIndex:
+          type: boolean
+          description: >-
+            Whether the Crawler should extract records from a page whose
+            `robots` meta tag contains `noindex` or `none`.
+
+
+            When `true`, the crawler will ignore the `noindex` directive of the
+            [robots meta
+            tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names).
+
+
+            Its default value is currently `true`, but it will change to `false`
+            in a near future. If you'd like the crawler to not respect the
+            `noindex` directive, you should set it explicitely.
+        ignoreNoFollowTo:
+          type: boolean
+          description: >-
+            Whether the Crawler should follow links marked as `nofollow`.
+
+
+            This setting applies to both:
+
+            - links which should be ignored because the [`robots` meta
+            tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names)
+            contains `nofollow`;
+
+            - links whose [rel
+            attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)
+            contains the `nofollow` directive.
+
+
+            When `true`, the crawler will consider those links as if they
+            weren't marked to be ignored.
+
+
+            The crawler might still ignore links that don't match the patterns
+            of your configuration.
+
+
+            Its default value is currently `true`, but it will change to `false`
+            in a near future. If you'd like the crawler to never respect
+            `nofollow` directives, you should set it explicitely.
+
+
+            Note: The "To" suffix is here for consistency with
+            `ignoreCanonicalTo`. While it only accepts a boolean for now, we
+            plan for it to accept an array of patterns eventually. Please
+            contact us if you need such fine grained control.
+        ignoreCanonicalTo:
+          anyOf:
+            - type: array
+              items:
+                type: string
+            - type: boolean
+          description: >-
+            This tells the Crawler to process a page even if there is a meta
+            canonical URL specified.
+
+
+            When set to `true`, it will ignore all canonical. When set to
+            `string[]`, it will ignore canonical that matches the specified
+            patterns.
+        startUrls:
+          type: array
+          items:
+            type: string
+        sitemaps:
+          type: array
+          items:
+            type: string
+        extraUrls:
+          type: array
+          items:
+            type: string
+          description: >-
+            URLs found in `extraUrls` are treated as `startUrls` for your
+            crawler: they are used as start points for the crawl.
+
+
+            Crawler saves URLs added through the **Add a URL** field of the
+            Admin's Configuration tab to the `extraUrls` array.
+
+
+            Internally `extraUrls` is treated like `startUrls`. The seperate
+            parameter serves to identify which URLs were added directly to the
+            crawler's configuration file vs. Those that were added through the
+            Admin.
+        exclusionPatterns:
+          type: array
+          items:
+            type: string
+          description: >-
+            Determines the webpage patterns ignored or excluded during a crawl.
+
+
+            This list is checked against the url of webpages using
+            [micromatch](https://github.com/micromatch/micromatch). You can use
+            negation, wildcards, and more.
+        ignoreQueryParams:
+          type: array
+          items:
+            type: string
+          description: >-
+            Filters out specified query parameters from crawled urls. Useful for
+            avoiding duplicate crawls of the same page.
+        indexPrefix:
+          type: string
+          description: |-
+            Prefix added in front of all indices defined in the crawler's
+            configuration.
+        initialIndexSettings:
+          type: object
+          description: >-
+            Defines the settings for the indices that updated by your crawler.
+
+
+            Index names should be provided as keys. Their values are objects
+            that define Algolia index settings as properties (e.g.
+            `searchableAttributes` `attributesForFaceting`).
+
+
+            Index settings will only be applied on your Algolia's index during
+            the first run (or if the index doesn't exist when launching the
+            reindex). Once an index has been created, settings are never
+            re-applied: this prevents to not override any manual changes you may
+            have done.
+        maxUrls:
+          type: number
+          description: >-
+            Limits the number of URLs your crawler processes.
+
+
+            Useful for demoing and preventing infinite link holes in the website
+            structure.
+
+
+            `maxUrls` does not guarantee consistent indexing accross recrawls.
+            Because of parallel processing, discovered URLs can be processed in
+            different orders for different recrawls.
+
+
+            This parameter is capped at a maximum of  `1,000,000`.
+        maxDepth:
+          type: number
+          description: >-
+            Limits the processing of URLs to a specified depth, inclusively.
+
+
+            _Maximum_: `100`.
+
+
+            URLs added manually (startUrls, sitemaps...) are not checked against
+            this limit.
+
+
+            **How we calculate depth:**.
+        discoveryPatterns:
+          type: array
+          items:
+            type: string
+          description: >-
+            Defines which webpages will be visited. It is used in combination
+            with the `pathsToMatchs` of your actions. The Crawler will visit all
+            links that match at least one of those paths.
+        hostnameAliases:
+          type: object
+          description: >-
+            Defines a hostname key that will be transformed as the value
+            specified. The keys are exact match only.
+
+
+            Applied to:
+
+            - All URLs found
+
+            - Canonical
+
+            - Redirection.
+
+
+            Not applied to:
+
+            - props: startUrls, extraUrls, pathsToMatch, etc...
+
+            - URLs in your code.
+        pathAliases:
+          type: object
+        linkExtractor:
+          description: >-
+            Determines the function used to extract URLs from pages.
+
+
+            If provided, this function is called on a crawled page. Only the
+            URLs it returns are enqueued for further crawling. By default, all
+            the URLs found while crawling a page are enqueued given that they
+            comply with `pathsToMatch`, `fileTypesToMatch` and `exclusions`.
+
+
+            Expected return value: `array` of `strings` (URLs).
+        requestOptions:
+          type: object
+          properties:
+            proxy:
+              type: string
+            timeout:
+              type: number
+            retries:
+              type: number
+            headers:
+              type: object
+              properties:
+                Accept-Language:
+                  type: string
+                Authorization:
+                  type: string
+                Cookie:
+                  type: string
+              additionalProperties: false
+          additionalProperties: false
+          description: |-
+            Modify all requests behavior.
+
+            Cookie Header will be overriden by the cookie fetched in `login`.
+        login:
+          type: object
+          properties:
+            fetchRequest:
+              type: object
+              properties:
+                url:
+                  type: string
+                requestOptions:
+                  type: object
+                  properties:
+                    method:
+                      type: string
+                    headers:
+                      type: object
+                      properties:
+                        Content-Type:
+                          type: string
+                        Cookie:
+                          type: string
+                        Authorization:
+                          type: string
+                      additionalProperties: false
+                    body:
+                      type: string
+                    timeout:
+                      type: number
+                  additionalProperties: false
+              required:
+                - url
+              additionalProperties: false
+            browserRequest:
+              type: object
+              properties:
+                url:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+                waitTime:
+                  type: object
+                  properties:
+                    min:
+                      type: number
+                    max:
+                      type: number
+                  additionalProperties: false
+              required:
+                - url
+                - username
+                - password
+              additionalProperties: false
+            oauthRequest:
+              type: object
+              properties:
+                accessTokenRequest:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                    grant_type:
+                      type: string
+                    client_id:
+                      type: string
+                    client_secret:
+                      type: string
+                    scope:
+                      type: string
+                    extraParameters:
+                      type: object
+                      properties:
+                        resource:
+                          type: string
+                      additionalProperties: false
+                  required:
+                    - url
+                    - grant_type
+                    - client_id
+                  additionalProperties: false
+              required:
+                - accessTokenRequest
+              additionalProperties: false
+          additionalProperties: false
+          description: >-
+            This property can be set in order to define how the Crawler should
+            login to the website before crawling pages.
+
+
+            The Crawler will then extract the `Set-Cookie` response header from
+            the login page and send that Cookie when crawling all pages of the
+            website defined in the configuration.
+        cache:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+          required:
+            - enabled
+          additionalProperties: false
+        externalData:
+          type: array
+          items:
+            type: string
+          description: >-
+            Defines the list of External Data you want to use for this
+            configuration. Every External Data declared here can be accessed in
+            your `recordExtractor` through the `dataSources` object.
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+          description: >-
+            Determines which web pages are translated into Algolia records and
+            in what way.
+
+
+            A single action defines: 1. The subset of your crawler's websites it
+            targets, 2. The extraction process for those websites, 3. And the
+            index(es) to which the extracted records are pushed.
+
+
+            A single web page can match multiple actions. In this case, your
+            crawler creates a record for each matched actions.
+        safetyChecks:
+          type: object
+          properties:
+            beforeIndexPublishing:
+              type: object
+              properties:
+                maxLostRecordsPercentage:
+                  type: number
+                  description: >-
+                    Defines the limit of records difference between the new and
+                    the last crawl as a percentage of total records (inclusive).
+
+
+                    _Default_: `10`.
+
+
+                    _Minimum_: `0`\ _Maximum_: `100`.
+
+
+                    If the new number of records is less than `last number of
+                    records * (1 - maxLostRecordsPercentage / 100)`, the process
+                    throws a `SafeReindexingError`, blocking the Crawler until
+                    manual restart.
+              additionalProperties: false
+              description: >-
+                Checks triggered after the Crawler is done, and before the
+                records are pushed to Algolia into the final index.
+          additionalProperties: false
+          description: >-
+            A configurable collection of safety checks to make sure the crawl
+            was successful.
+
+
+            This configuration describes all the checks the Crawler can perform
+            to ensure data is correct. For example, the number of records from
+            one crawl to another.
+    UrlsCrawledGroup:
+      UrlsCrawledGroup:
+        type: object
+        description: >-
+          Represent a group of URLs that have been crawled and have the same
+          final state
+        properties:
+          status:
+            type: string
+            description: A string corresponding to the status of the group
+            enum:
+              - DONE
+              - SKIPPED
+              - FAILED
+          reason:
+            type: string
+            description: The code of the reason why when ended up in this status
+          category:
+            type: string
+            description: >-
+              In case of error, will be set to the step where the error
+              occurred, otherwise will be set to 'success'
+            enum:
+              - fetch
+              - extraction
+              - indexing
+              - success
+          count:
+            type: integer
+            description: Number of URLs belonging to this group
+          readable:
+            type: string
+            description: Human redeable version of the error
+        example:
+          status: SKIPPED
+          reason: forbidden_by_robotstxt
+          category: fetch
+          nbUrls: 3
+          readable: Forbidden by robots.txt
+  responses:
+    400InvalidRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    401MissingAuthorization:
+      description: Authorization information is missing or invalid
+    403NoRightsOnCrawler:
+      description: >-
+        The user doesn't have enough rights on the specified Crawler, or it
+        doesn't exists
+    200ActionAcknowledged:
+      description: The request has been acknowledged by the crawler
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            required:
+              - taskId
+            properties:
+              taskId:
+                type: string
+                example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+  parameters:
+    crawlerIdParam:
+      name: id
+      in: path
+      description: The Id of the targeted Crawler
+      required: true
+      schema:
+        type: string
+    taskIdParam:
+      name: tid
+      in: path
+      description: The Id of the targeted Task
+      required: true
+      schema:
+        type: string
+    crawlerVersionParam:
+      name: version
+      in: path
+      description: The version of the targeted Crawler revision
+      required: true
+      schema:
+        type: integer
+  crawlerIdParam:
+    name: id
+    in: path
+    description: The Id of the targeted Crawler
+    required: true
+    schema:
+      type: string
+  taskIdParam:
+    name: tid
+    in: path
+    description: The Id of the targeted Task
+    required: true
+    schema:
+      type: string
+  crawlerVersionParam:
+    name: version
+    in: path
+    description: The version of the targeted Crawler revision
+    required: true
+    schema:
+      type: integer
