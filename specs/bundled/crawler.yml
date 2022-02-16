@@ -790,6 +790,16 @@ components:
                 $ref: '#/components/schemas/Error'
           example:
             code: malformed_id
+    FunctionAsString:
+      type: object
+      properties:
+        __type:
+          type: string
+          enum:
+            - function
+        source:
+          type: string
+          example: () => {}
     Action:
       type: object
       required:
@@ -852,6 +862,7 @@ components:
           description: |-
             An recordExtractor is just a custom Javascript function that let
             you execute your own code and extract what you want from a page.
+          $ref: '#/components/schemas/FunctionAsString'
     Config:
       type: object
       required:
@@ -861,9 +872,15 @@ components:
         - actions
       additionalProperties: false
       description: |-
-        Typed Schema used for autocompletion in the Editor of the Admin
-        Console. Note: please keep in sync with
-        crawler-common/src/config/validation.
+        The crawler configuration object represented as valid JSON.
+
+        Function needs to be espaced as such
+        ```javascript
+        myProp: {
+          "___type": "function"
+          "source": "function() { ... }"
+        }
+        ```
       properties:
         appId:
           type: string
@@ -877,10 +894,8 @@ components:
             How often you want to execute a complete recrawl. Expressed using
             [Later.js' syntax](https://bunkat.github.io/later/).
 
-
             If omitted, you will need to manually launch a reindex operation in
             order to update the crawled records.
-
 
             Important notes: 1. The interval between two scheduled crawls must
             be equal or higher than 24 hours. 2. Times will be interpreted as
@@ -895,18 +910,17 @@ components:
             When `true`, all web pages are rendered with a chrome headless
             browser. You get the rendered HTML result.
 
-
             Because rendering JavaScript-based web pages is much slower than
             crawling regular HTML pages, you can apply this setting to a
             specified list of
             [micromatch](https://github.com/micromatch/micromatch) URL patterns.
             These patterns can include negations and wildcards.
 
-              With this setting enabled, JavaScript is executed on the webpage. Because a lot of websites have infinite refreshes and updates, this Chrome headless browser is configured with a timeout (set to a few seconds).
-
-            This can lead to inconsistent records across recrawls, depending on
-            the browser load and the website speed.
-
+            With this setting enabled, JavaScript is executed on the webpage.
+            Because a lot of websites have infinite refreshes and updates, this
+            Chrome headless browser is configured with a timeout (set to a few
+            seconds). This can lead to inconsistent records across recrawls,
+            depending on the browser load and the website speed.
 
             Make sure your crawler manages to load the data from
             JavaScript-based pages interested in fast enough.
@@ -926,11 +940,9 @@ components:
             Whether the Crawler should extract records from a page whose
             `robots` meta tag contains `noindex` or `none`.
 
-
             When `true`, the crawler will ignore the `noindex` directive of the
             [robots meta
             tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names).
-
 
             Its default value is currently `true`, but it will change to `false`
             in a near future. If you'd like the crawler to not respect the
@@ -940,30 +952,22 @@ components:
           description: >-
             Whether the Crawler should follow links marked as `nofollow`.
 
-
-            This setting applies to both:
-
-            - links which should be ignored because the [`robots` meta
+            This setting applies to both: - links which should be ignored
+            because the [`robots` meta
             tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#Other_metadata_names)
-            contains `nofollow`;
-
-            - links whose [rel
+            contains `nofollow`; - links whose [rel
             attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)
             contains the `nofollow` directive.
-
 
             When `true`, the crawler will consider those links as if they
             weren't marked to be ignored.
 
-
             The crawler might still ignore links that don't match the patterns
             of your configuration.
-
 
             Its default value is currently `true`, but it will change to `false`
             in a near future. If you'd like the crawler to never respect
             `nofollow` directives, you should set it explicitely.
-
 
             Note: The "To" suffix is here for consistency with
             `ignoreCanonicalTo`. While it only accepts a boolean for now, we
@@ -978,7 +982,6 @@ components:
           description: >-
             This tells the Crawler to process a page even if there is a meta
             canonical URL specified.
-
 
             When set to `true`, it will ignore all canonical. When set to
             `string[]`, it will ignore canonical that matches the specified
@@ -999,10 +1002,8 @@ components:
             URLs found in `extraUrls` are treated as `startUrls` for your
             crawler: they are used as start points for the crawl.
 
-
             Crawler saves URLs added through the **Add a URL** field of the
             Admin's Configuration tab to the `extraUrls` array.
-
 
             Internally `extraUrls` is treated like `startUrls`. The seperate
             parameter serves to identify which URLs were added directly to the
@@ -1014,7 +1015,6 @@ components:
             type: string
           description: >-
             Determines the webpage patterns ignored or excluded during a crawl.
-
 
             This list is checked against the url of webpages using
             [micromatch](https://github.com/micromatch/micromatch). You can use
@@ -1036,11 +1036,9 @@ components:
           description: >-
             Defines the settings for the indices that updated by your crawler.
 
-
             Index names should be provided as keys. Their values are objects
             that define Algolia index settings as properties (e.g.
             `searchableAttributes` `attributesForFaceting`).
-
 
             Index settings will only be applied on your Algolia's index during
             the first run (or if the index doesn't exist when launching the
@@ -1052,15 +1050,12 @@ components:
           description: >-
             Limits the number of URLs your crawler processes.
 
-
             Useful for demoing and preventing infinite link holes in the website
             structure.
-
 
             `maxUrls` does not guarantee consistent indexing accross recrawls.
             Because of parallel processing, discovered URLs can be processed in
             different orders for different recrawls.
-
 
             This parameter is capped at a maximum of  `1,000,000`.
         maxDepth:
@@ -1068,15 +1063,17 @@ components:
           description: >-
             Limits the processing of URLs to a specified depth, inclusively.
 
-
             _Maximum_: `100`.
-
 
             URLs added manually (startUrls, sitemaps...) are not checked against
             this limit.
 
-
             **How we calculate depth:**.
+
+            @example ```javascript http://example.com          => 1
+            http://example.com/         => 1 http://example.com/foo      => 1
+            http://example.com/foo/     => 2 http://example.com/foo/bar  => 2
+            http://example.com/foo/bar/ => 3 ... ```
         discoveryPatterns:
           type: array
           items:
@@ -1091,37 +1088,35 @@ components:
             Defines a hostname key that will be transformed as the value
             specified. The keys are exact match only.
 
-
-            Applied to:
-
-            - All URLs found
-
-            - Canonical
-
-            - Redirection.
+            Applied to: - All URLs found - Canonical - Redirection.
 
 
-            Not applied to:
-
-            - props: startUrls, extraUrls, pathsToMatch, etc...
-
+            Not applied to: - props: startUrls, extraUrls, pathsToMatch, etc...
             - URLs in your code.
+
+            @example ```javascript hostnameAliases: {
+               'algolia.com': 'dev.algolia.com'
+            } ```
         pathAliases:
           type: object
         linkExtractor:
           description: >-
             Determines the function used to extract URLs from pages.
 
-
             If provided, this function is called on a crawled page. Only the
             URLs it returns are enqueued for further crawling. By default, all
             the URLs found while crawling a page are enqueued given that they
             comply with `pathsToMatch`, `fileTypesToMatch` and `exclusions`.
 
-
             Expected return value: `array` of `strings` (URLs).
+          $ref: '#/components/schemas/FunctionAsString'
         requestOptions:
           type: object
+          additionalProperties: false
+          description: |-
+            Modify all requests behavior.
+
+            Cookie Header will be overriden by the cookie fetched in `login`.
           properties:
             proxy:
               type: string
@@ -1131,6 +1126,7 @@ components:
               type: number
             headers:
               type: object
+              additionalProperties: false
               properties:
                 Accept-Language:
                   type: string
@@ -1138,27 +1134,34 @@ components:
                   type: string
                 Cookie:
                   type: string
-              additionalProperties: false
-          additionalProperties: false
-          description: |-
-            Modify all requests behavior.
-
-            Cookie Header will be overriden by the cookie fetched in `login`.
         login:
           type: object
+          additionalProperties: false
+          description: >-
+            This property can be set in order to define how the Crawler should
+            login to the website before crawling pages.
+
+            The Crawler will then extract the `Set-Cookie` response header from
+            the login page and send that Cookie when crawling all pages of the
+            website defined in the configuration.
           properties:
             fetchRequest:
               type: object
+              required:
+                - url
+              additionalProperties: false
               properties:
                 url:
                   type: string
                 requestOptions:
                   type: object
+                  additionalProperties: false
                   properties:
                     method:
                       type: string
                     headers:
                       type: object
+                      additionalProperties: false
                       properties:
                         Content-Type:
                           type: string
@@ -1166,17 +1169,17 @@ components:
                           type: string
                         Authorization:
                           type: string
-                      additionalProperties: false
                     body:
                       type: string
                     timeout:
                       type: number
-                  additionalProperties: false
-              required:
-                - url
-              additionalProperties: false
             browserRequest:
               type: object
+              required:
+                - url
+                - username
+                - password
+              additionalProperties: false
               properties:
                 url:
                   type: string
@@ -1186,22 +1189,25 @@ components:
                   type: string
                 waitTime:
                   type: object
+                  additionalProperties: false
                   properties:
                     min:
                       type: number
                     max:
                       type: number
-                  additionalProperties: false
-              required:
-                - url
-                - username
-                - password
-              additionalProperties: false
             oauthRequest:
               type: object
+              required:
+                - accessTokenRequest
+              additionalProperties: false
               properties:
                 accessTokenRequest:
                   type: object
+                  required:
+                    - url
+                    - grant_type
+                    - client_id
+                  additionalProperties: false
                   properties:
                     url:
                       type: string
@@ -1215,43 +1221,33 @@ components:
                       type: string
                     extraParameters:
                       type: object
+                      additionalProperties: false
                       properties:
                         resource:
                           type: string
-                      additionalProperties: false
-                  required:
-                    - url
-                    - grant_type
-                    - client_id
-                  additionalProperties: false
-              required:
-                - accessTokenRequest
-              additionalProperties: false
-          additionalProperties: false
-          description: >-
-            This property can be set in order to define how the Crawler should
-            login to the website before crawling pages.
-
-
-            The Crawler will then extract the `Set-Cookie` response header from
-            the login page and send that Cookie when crawling all pages of the
-            website defined in the configuration.
         cache:
           type: object
-          properties:
-            enabled:
-              type: boolean
           required:
             - enabled
           additionalProperties: false
+          properties:
+            enabled:
+              type: boolean
         externalData:
           type: array
           items:
             type: string
-          description: >-
+          description: |-
             Defines the list of External Data you want to use for this
             configuration. Every External Data declared here can be accessed in
             your `recordExtractor` through the `dataSources` object.
+
+            @example
+            ```javascript
+            {
+              externalData: ['unique_name'],
+            }
+            ```
         actions:
           type: array
           items:
@@ -1260,41 +1256,14 @@ components:
             Determines which web pages are translated into Algolia records and
             in what way.
 
-
             A single action defines: 1. The subset of your crawler's websites it
             targets, 2. The extraction process for those websites, 3. And the
             index(es) to which the extracted records are pushed.
-
 
             A single web page can match multiple actions. In this case, your
             crawler creates a record for each matched actions.
         safetyChecks:
           type: object
-          properties:
-            beforeIndexPublishing:
-              type: object
-              properties:
-                maxLostRecordsPercentage:
-                  type: number
-                  description: >-
-                    Defines the limit of records difference between the new and
-                    the last crawl as a percentage of total records (inclusive).
-
-
-                    _Default_: `10`.
-
-
-                    _Minimum_: `0`\ _Maximum_: `100`.
-
-
-                    If the new number of records is less than `last number of
-                    records * (1 - maxLostRecordsPercentage / 100)`, the process
-                    throws a `SafeReindexingError`, blocking the Crawler until
-                    manual restart.
-              additionalProperties: false
-              description: >-
-                Checks triggered after the Crawler is done, and before the
-                records are pushed to Algolia into the final index.
           additionalProperties: false
           description: >-
             A configurable collection of safety checks to make sure the crawl
@@ -1304,6 +1273,26 @@ components:
             This configuration describes all the checks the Crawler can perform
             to ensure data is correct. For example, the number of records from
             one crawl to another.
+          properties:
+            beforeIndexPublishing:
+              type: object
+              additionalProperties: false
+              description: >-
+                Checks triggered after the Crawler is done, and before the
+                records are pushed to Algolia into the final index.
+              properties:
+                maxLostRecordsPercentage:
+                  type: number
+                  description: >-
+                    Defines the limit of records difference between the new and
+                    the last crawl as a percentage of total records (inclusive).
+
+                    _Default_: `10`. _Minimum_: `0` _Maximum_: `100`.
+
+                    If the new number of records is less than `last number of
+                    records * (1 - maxLostRecordsPercentage / 100)`, the process
+                    throws a `SafeReindexingError`, blocking the Crawler until
+                    manual restart.
     UrlsCrawledGroup:
       type: object
       description: >-
