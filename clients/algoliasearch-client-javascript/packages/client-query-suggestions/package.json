@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/client-query-suggestions.esm.js",
+  "module": "dist/client-query-suggestions.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/client-query-suggestions.umd.js",
-  "unpkg": "dist/client-query-suggestions.umd.js",
-  "browser": {
-    "./index.js": "dist/client-query-suggestions.umd.js"
-  },
+  "jsdelivr": "dist/client-query-suggestions.umd.browser.js",
+  "unpkg": "dist/client-query-suggestions.umd.browser.js",
+  "browser": "dist/client-query-suggestions.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

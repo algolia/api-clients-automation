@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/recommend.esm.js",
+  "module": "dist/recommend.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/recommend.umd.js",
-  "unpkg": "dist/recommend.umd.js",
-  "browser": {
-    "./index.js": "dist/recommend.umd.js"
-  },
+  "jsdelivr": "dist/recommend.umd.browser.js",
+  "unpkg": "dist/recommend.umd.browser.js",
+  "browser": "dist/recommend.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

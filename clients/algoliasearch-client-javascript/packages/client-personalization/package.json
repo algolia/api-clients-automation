@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/client-personalization.esm.js",
+  "module": "dist/client-personalization.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/client-personalization.umd.js",
-  "unpkg": "dist/client-personalization.umd.js",
-  "browser": {
-    "./index.js": "dist/client-personalization.umd.js"
-  },
+  "jsdelivr": "dist/client-personalization.umd.browser.js",
+  "unpkg": "dist/client-personalization.umd.browser.js",
+  "browser": "dist/client-personalization.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

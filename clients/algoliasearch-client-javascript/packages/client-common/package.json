@@ -6,8 +6,8 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "dist/client-common.cjs.js",
-  "module": "dist/client-common.esm.js",
+  "main": "dist/client-common.cjs.node.js",
+  "module": "dist/client-common.esm.node.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",

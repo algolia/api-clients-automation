@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/client-insights.esm.js",
+  "module": "dist/client-insights.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/client-insights.umd.js",
-  "unpkg": "dist/client-insights.umd.js",
-  "browser": {
-    "./index.js": "dist/client-insights.umd.js"
-  },
+  "jsdelivr": "dist/client-insights.umd.browser.js",
+  "unpkg": "dist/client-insights.umd.browser.js",
+  "browser": "dist/client-insights.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

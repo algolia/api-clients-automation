@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/client-analytics.esm.js",
+  "module": "dist/client-analytics.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/client-analytics.umd.js",
-  "unpkg": "dist/client-analytics.umd.js",
-  "browser": {
-    "./index.js": "dist/client-analytics.umd.js"
-  },
+  "jsdelivr": "dist/client-analytics.umd.browser.js",
+  "unpkg": "dist/client-analytics.umd.browser.js",
+  "browser": "dist/client-analytics.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

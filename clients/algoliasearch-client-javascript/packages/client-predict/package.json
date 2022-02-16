@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/client-predict.esm.js",
+  "module": "dist/client-predict.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/client-predict.umd.js",
-  "unpkg": "dist/client-predict.umd.js",
-  "browser": {
-    "./index.js": "dist/client-predict.umd.js"
-  },
+  "jsdelivr": "dist/client-predict.umd.browser.js",
+  "unpkg": "dist/client-predict.umd.browser.js",
+  "browser": "dist/client-predict.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

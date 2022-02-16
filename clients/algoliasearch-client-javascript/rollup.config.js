@@ -1,6 +1,7 @@
 import path from 'path';
 
 import babel from '@rollup/plugin-babel';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import filesize from 'rollup-plugin-filesize';
 import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
@@ -18,16 +19,24 @@ function createLicence(name) {
 
 function createBundlers({ output, clientPath }) {
   return {
-    esm: {
-      file: `${clientPath}/dist/${output}.esm.js`,
+    'esm-node': {
+      file: `${clientPath}/dist/${output}.esm.node.js`,
       format: 'es',
     },
-    umd: {
-      file: `${clientPath}/dist/${output}.umd.js`,
+    'esm-browser': {
+      file: `${clientPath}/dist/${output}.esm.browser.js`,
+      format: 'es',
+    },
+    'umd-browser': {
+      file: `${clientPath}/dist/${output}.umd.browser.js`,
       format: 'umd',
     },
-    cjs: {
-      file: `${clientPath}/dist/${output}.cjs.js`,
+    'cjs-node': {
+      file: `${clientPath}/dist/${output}.cjs.node.js`,
+      format: 'cjs',
+    },
+    'cjs-browser': {
+      file: `${clientPath}/dist/${output}.cjs.browser.js`,
       format: 'cjs',
     },
   };
@@ -37,7 +46,7 @@ function initPackagesConfig() {
   if (onlyBuildUtils) {
     const commonOptions = {
       input: 'index.ts',
-      formats: ['cjs', 'esm'],
+      formats: ['cjs-node', 'esm-node'],
       external: [],
       dependencies: [],
     };
@@ -103,12 +112,14 @@ function initPackagesConfig() {
       ],
       external: [],
     };
+    const browserFormats = ['umd-browser', 'esm-browser', 'cjs-browser'];
+    const nodeFormats = ['cjs-node', 'esm-node'];
 
     return [
       {
         ...commonConfig,
         input: 'builds/browser.ts',
-        formats: ['umd'],
+        formats: browserFormats,
         external: ['dom'],
         globals: {
           [packageName]: packageName,
@@ -117,7 +128,7 @@ function initPackagesConfig() {
       {
         ...commonConfig,
         input: 'builds/node.ts',
-        formats: ['cjs', 'esm'],
+        formats: nodeFormats,
       },
     ];
   });
@@ -137,7 +148,8 @@ packagesConfig.forEach((packageConfig) => {
     // Avoid generating types multiple times.
     let isTypesGenerated = false;
     const output = bundlers[format];
-    const isUmdBuild = format === 'umd';
+    const isUmdBuild = format === 'umd-browser';
+    const isEsmBrowserBuild = format === 'esm-browser';
 
     if (isUmdBuild) {
       output.name = packageConfig.name;
@@ -168,6 +180,11 @@ packagesConfig.forEach((packageConfig) => {
         ]
       : [];
 
+    if (isUmdBuild || isEsmBrowserBuild) {
+      // eslint-disable-next-line no-param-reassign
+      packageConfig.dependencies = [];
+    }
+
     rollupConfig.push({
       input: path.resolve(clientPath, packageConfig.input),
       external: [
@@ -179,6 +196,7 @@ packagesConfig.forEach((packageConfig) => {
         globals({
           global: true,
         }),
+        nodeResolve(),
         ts({
           check: !isTypesGenerated,
           tsconfig: path.resolve(clientPath, 'tsconfig.json'),

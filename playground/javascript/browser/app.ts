@@ -1,4 +1,4 @@
-import { searchApi } from '@algolia/client-search/dist/search.umd.js';
+import { searchApi } from '@algolia/client-search';
 
 import './app.css';
 

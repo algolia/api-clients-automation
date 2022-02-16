@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/client-abtesting.esm.js",
+  "module": "dist/client-abtesting.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/client-abtesting.umd.js",
-  "unpkg": "dist/client-abtesting.umd.js",
-  "browser": {
-    "./index.js": "dist/client-abtesting.umd.js"
-  },
+  "jsdelivr": "dist/client-abtesting.umd.browser.js",
+  "unpkg": "dist/client-abtesting.umd.browser.js",
+  "browser": "dist/client-abtesting.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

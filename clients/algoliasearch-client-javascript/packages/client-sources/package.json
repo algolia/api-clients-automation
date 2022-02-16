@@ -7,13 +7,11 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "module": "dist/client-sources.esm.js",
+  "module": "dist/client-sources.esm.node.js",
   "types": "index.d.ts",
-  "jsdelivr": "dist/client-sources.umd.js",
-  "unpkg": "dist/client-sources.umd.js",
-  "browser": {
-    "./index.js": "dist/client-sources.umd.js"
-  },
+  "jsdelivr": "dist/client-sources.umd.browser.js",
+  "unpkg": "dist/client-sources.umd.browser.js",
+  "browser": "dist/client-sources.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },
