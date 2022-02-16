@@ -23,6 +23,7 @@
   "devDependencies": {
     "@algolia/client-abtesting": "5.0.0",
     "@algolia/client-analytics": "5.0.0",
+    "@algolia/client-crawler": "0.0.1",
     "@algolia/client-personalization": "5.0.0",
     "@algolia/client-predict": "0.0.1",
     "@algolia/client-query-suggestions": "5.0.0",

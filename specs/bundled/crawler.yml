@@ -583,7 +583,7 @@ paths:
       description: 'TODO: complete'
       parameters:
         - $ref: '#/components/parameters/crawlerIdPath'
-        - $ref: '#/components/parameters/crawlerIdPath'
+        - $ref: '#/components/parameters/crawlerVersionIdPath'
         - in: query
           name: itemsPerPage
           schema:
@@ -1348,3 +1348,10 @@ components:
       required: true
       schema:
         type: string
+    crawlerVersionIdPath:
+      name: version
+      in: path
+      description: The version of the targeted Crawler revision
+      required: true
+      schema:
+        type: integer
