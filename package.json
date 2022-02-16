@@ -28,10 +28,9 @@
     "specs:fix": "eslint --ext=yml specs/ --fix",
     "specs:lint": "eslint --ext=yml specs/$0",
     "github-actions:lint": "eslint --ext=yml .github/",
-    "release": "./scripts/release/create-release-issue.js"
+    "release": "yarn workspace scripts release"
   },
   "devDependencies": {
-    "@octokit/rest": "18.12.0",
     "@openapitools/openapi-generator-cli": "2.4.26",
     "@redocly/openapi-cli": "1.0.0-beta.79",
     "@typescript-eslint/eslint-plugin": "5.5.0",
@@ -48,12 +47,10 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
     "eslint-plugin-yml": "0.12.0",
-    "execa": "5.1.1",
     "json": "11.0.0",
     "mustache": "4.2.0",
     "prettier": "2.5.1",
     "prettier-plugin-java": "1.6.0",
-    "semver": "7.3.5",
     "typescript": "4.5.4"
   },
   "engines": {

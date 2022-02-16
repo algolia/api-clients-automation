@@ -1,21 +1,16 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
-/* eslint-disable no-process-exit */
-/* eslint-disable import/no-commonjs */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs');
+import fs from 'fs';
 
-// eslint-disable-next-line import/order
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
+import execa from 'execa';
+
+import { MAIN_BRANCH, OWNER, REPO, run } from './common';
+import TEXT from './text';
 
 dotenv.config();
 
-const execa = require('execa');
-
-const { MAIN_BRANCH, OWNER, REPO, run } = require('./common');
-const TEXT = require('./text');
-
-function getMarkdownSection(markdown, title) {
+function getMarkdownSection(markdown: string, title: string): string {
   const levelIndicator = title.split(' ')[0]; // e.g. `##`
   const lines = markdown.slice(markdown.indexOf(title)).split('\n');
   let endIndex = lines.length;
@@ -49,8 +44,7 @@ if (
     .split('\n')
     .find((line) => line.startsWith(`- [x] ${TEXT.approved}`))
 ) {
-  console.log('The issue was not approved.');
-  process.exit(1);
+  throw new Error('The issue was not approved.');
 }
 
 const versionsToRelease = {};
@@ -95,8 +89,8 @@ fs.writeFileSync('openapitools.json', JSON.stringify(json, null, 2));
 new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
   (lang) => {
     const filePath = `doc/changelogs/${lang}.md`;
-    const header = versionsToRelease[lang]
-      ? `## ${versionsToRelease[lang].next}`
+    const header = versionsToRelease[lang!]
+      ? `## ${versionsToRelease[lang!].next}`
       : `## ${new Date().toISOString().split('T')[0]}`;
     const newChangelog = getMarkdownSection(
       getMarkdownSection(issueBody, TEXT.changelogHeader),
@@ -121,11 +115,13 @@ run(`git push origin ${MAIN_BRANCH}`);
 // generate clients to release
 Object.keys(versionsToRelease).forEach((lang) => {
   console.log(`Generating ${lang} client(s)...`);
+  // @ts-expect-error the library `execa` is not typed correctly
   run(`yarn generate ${lang}`).pipe(process.stdout);
 });
 
 // generate clients to just update the repos
 langsToUpdateRepo.forEach((lang) => {
   console.log(`Generating ${lang} client(s)...`);
+  // @ts-expect-error the library `execa` is not typed correctly
   run(`yarn generate ${lang}`).pipe(process.stdout);
 });

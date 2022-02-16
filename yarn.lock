@@ -9,7 +9,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@octokit/rest": 18.12.0
     "@openapitools/openapi-generator-cli": 2.4.26
     "@redocly/openapi-cli": 1.0.0-beta.79
     "@typescript-eslint/eslint-plugin": 5.5.0
@@ -26,12 +25,10 @@ __metadata:
     eslint-plugin-prettier: 4.0.0
     eslint-plugin-unused-imports: 2.0.0
     eslint-plugin-yml: 0.12.0
-    execa: 5.1.1
     json: 11.0.0
     mustache: 4.2.0
     prettier: 2.5.1
     prettier-plugin-java: 1.6.0
-    semver: 7.3.5
     typescript: 4.5.4
   languageName: unknown
   linkType: soft
@@ -1094,7 +1091,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/rest@npm:18.12.0":
+"@octokit/rest@npm:^18.12.0":
   version: 18.12.0
   resolution: "@octokit/rest@npm:18.12.0"
   dependencies:
@@ -2555,6 +2552,13 @@ __metadata:
   version: 14.3.2
   resolution: "dotenv@npm:14.3.2"
   checksum: 86c06758915d6facc35275f4a7fafc16705b6f3b44befaa8abca91367991efc8ff8db5437d3cc14778231d19fb97610fe82d60f8a53ba723cdb69fe4171439aa
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.0.0":
+  version: 16.0.0
+  resolution: "dotenv@npm:16.0.0"
+  checksum: 664cebb51f0a9a1d1b930f51f0271e72e26d62feaecc9dc03df39453dd494b4e724809ca480fb3ec3213382b1ed3f791aaeb83569a137f9329ce58efd4853dbf
   languageName: node
   linkType: hard
 
@@ -5806,14 +5810,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "scripts@workspace:scripts"
   dependencies:
+    "@octokit/rest": ^18.12.0
     "@types/js-yaml": 4.0.5
     "@types/node": 16.11.11
+    dotenv: ^16.0.0
+    execa: 5.1.1
     js-yaml: 4.1.0
+    semver: ^7.3.5
     typescript: 4.5.4
   languageName: unknown
   linkType: soft
 
-"semver@npm:7.3.5, semver@npm:7.x, semver@npm:^7.2.1, semver@npm:^7.3.2, semver@npm:^7.3.5":
+"semver@npm:7.x, semver@npm:^7.2.1, semver@npm:^7.3.2, semver@npm:^7.3.5":
   version: 7.3.5
   resolution: "semver@npm:7.3.5"
   dependencies:

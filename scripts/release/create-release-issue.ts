@@ -1,27 +1,29 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
-/* eslint-disable import/no-commonjs */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs');
+import fs from 'fs';
 
-const { Octokit } = require('@octokit/rest');
-const dotenv = require('dotenv');
-const semver = require('semver');
+import { Octokit } from '@octokit/rest';
+import dotenv from 'dotenv';
+import semver from 'semver';
 
-const {
-  RELEASED_TAG,
-  MAIN_BRANCH,
-  OWNER,
-  REPO,
-  LANGS,
-  run,
-} = require('./common');
+import { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO, LANGS, run } from './common';
+import TEXT from './text';
 
 dotenv.config();
 
-const TEXT = require('./text');
+type Version = {
+  current: string;
+  langName: string;
+  next?: string;
+  noCommit?: boolean;
+  skipRelease?: boolean;
+};
 
-function readVersions() {
+type Versions = {
+  [lang: string]: Version;
+};
+
+function readVersions(): Versions {
   const versions = {};
 
   const generators = JSON.parse(
@@ -70,9 +72,17 @@ run(`git pull origin ${MAIN_BRANCH}`);
 console.log('Pushing to origin...');
 run(`git push origin ${MAIN_BRANCH}`);
 
-const commitsWithoutScope = [];
-const commitsWithNonLanguageScope = [];
+const commitsWithoutScope: string[] = [];
+const commitsWithNonLanguageScope: string[] = [];
+
 // Reading commits since last release
+type LatestCommit = {
+  hash: string;
+  type: string;
+  lang: string;
+  message: string;
+  raw: string;
+};
 const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
   .split('\n')
   .filter(Boolean)
@@ -102,7 +112,7 @@ const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
       raw: commit,
     };
   })
-  .filter(Boolean);
+  .filter(Boolean) as LatestCommit[];
 
 console.log('[INFO] Skipping these commits due to lack of language scope:');
 console.log(commitsWithoutScope.map((commit) => `  ${commit}`).join('\n'));

@@ -1,11 +1,12 @@
-// eslint-disable-next-line import/no-commonjs
-module.exports = {
+const APPROVED = `Approved`;
+
+export default {
   header: `## Summary`,
 
   versionChangeHeader: `## Version Changes`,
   noCommit: `no commit`,
   currentVersionNotFound: `current version not found`,
-  descriptionForSkippedLang: (langName) =>
+  descriptionForSkippedLang: (langName: string): string =>
     [
       `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
       `  - **Checked** → Update version, update ${langName} repository, and release the library.`,
@@ -17,11 +18,11 @@ module.exports = {
   changelogDescription: `Update the following lines. Once merged, it will be reflected to \`docs/changelogs/*.\``,
 
   approvalHeader: `## Approval`,
-  approved: `Approved`,
+  approved: APPROVED,
   approval: [
     `To proceed this release, check the box below and close the issue.`,
     `To skip this release, just close the issue.`,
-    `- [ ] ${this.approved}`,
+    `- [ ] ${APPROVED}`,
   ].join('\n'),
 
   commitMessage: `chore: update versions and changelogs`,
