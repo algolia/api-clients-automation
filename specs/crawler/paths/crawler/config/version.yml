@@ -1,7 +1,11 @@
 get:
   summary: List crawler versions
+  operationId: getConfigVersion
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../../common/parameters.yml#/crawlerIdPath
+    - $ref: ../../../common/parameters.yml#/crawlerVersionIdPath
     - in: query
       name: itemsPerPage
       schema:
@@ -46,3 +50,9 @@ get:
                       required:
                         - version
                         - createdAt
+    '400':
+      $ref: ../../../responses/400InvalidRequest.yml
+    '401':
+      $ref: ../../../responses/401MissingAuthorization.yml
+    '403':
+      $ref: ../../../responses/403NoRightsOnCrawler.yml

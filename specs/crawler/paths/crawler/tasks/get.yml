@@ -1,8 +1,11 @@
 get:
   summary: Get the status of a specific task
+  operationId: getAction
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../../common/parameters.yml#/parameters/crawlerIdParam
-    - $ref: ../../../common/parameters.yml#/parameters/taskIdParam
+    - $ref: ../../../common/parameters.yml#/crawlerIdPath
+    - $ref: ../../../common/parameters.yml#/taskIdPath
   responses:
     '200':
       description: A response telling you if an action is still pending or not
@@ -19,3 +22,9 @@ get:
                   false if it has been processed or if the action doesn't exists
             required:
               - pending
+    '400':
+      $ref: ../../../responses/400InvalidRequest.yml
+    '401':
+      $ref: ../../../responses/401MissingAuthorization.yml
+    '403':
+      $ref: ../../../responses/403NoRightsOnCrawler.yml

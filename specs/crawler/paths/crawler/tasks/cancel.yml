@@ -1,10 +1,17 @@
 post:
   summary: Cancel a blocking action on your Crawler
+  operationId: cancelAction
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../../common/parameters.yml#/parameters/crawlerIdParam
-    - $ref: ../../../common/parameters.yml#/parameters/taskIdParam
+    - $ref: ../../../common/parameters.yml#/crawlerIdPath
+    - $ref: ../../../common/parameters.yml#/taskIdPath
   responses:
     '200':
       description: Your request was processed correctly
     '400':
       $ref: ../../../responses/400InvalidRequest.yml
+    '401':
+      $ref: ../../../responses/401MissingAuthorization.yml
+    '403':
+      $ref: ../../../responses/403NoRightsOnCrawler.yml

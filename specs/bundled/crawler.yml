@@ -11,6 +11,8 @@ paths:
   /crawlers:
     get:
       summary: List available Crawlers
+      operationId: listCrawlers
+      description: 'TODO: complete'
       parameters:
         - in: query
           name: itemsPerPage
@@ -71,6 +73,8 @@ paths:
           description: The call does not have results for this combinaison of query params
     post:
       summary: Create a new Crawler with the given config
+      operationId: createCrawler
+      description: 'TODO: complete'
       requestBody:
         content:
           application/json:
@@ -108,8 +112,10 @@ paths:
   /crawlers/{id}:
     get:
       summary: Get information about the specified Crawler and its configuration
+      operationId: getCrawler
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
         - in: query
           name: withConfig
           schema:
@@ -194,8 +200,10 @@ paths:
           $ref: '#/components/responses/403NoRightsOnCrawler'
     patch:
       summary: Update parts of the Crawler, either its name, its config, or both
+      operationId: patchCrawler
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       requestBody:
         content:
           application/json:
@@ -219,8 +227,10 @@ paths:
   /crawlers/{id}/config:
     patch:
       summary: Update parts of the Crawler configuration
+      operationId: patchConfig
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       requestBody:
         content:
           application/json:
@@ -247,8 +257,10 @@ paths:
   /crawlers/{id}/run:
     post:
       summary: Request the specified Crawler to run
+      operationId: runCrawler
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       responses:
         '200':
           $ref: '#/components/responses/200ActionAcknowledged'
@@ -261,8 +273,10 @@ paths:
   /crawlers/{id}/pause:
     post:
       summary: Request the specified Crawler to pause itself
+      operationId: pauseCrawler
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       responses:
         '200':
           $ref: '#/components/responses/200ActionAcknowledged'
@@ -275,8 +289,10 @@ paths:
   /crawlers/{id}/reindex:
     post:
       summary: Request the specified Crawler to start a reindex
+      operationId: reindexCrawler
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       responses:
         '200':
           $ref: '#/components/responses/200ActionAcknowledged'
@@ -291,8 +307,10 @@ paths:
       summary: >-
         Get a summary of the current status of crawled URLs for the specified
         Crawler
+      operationId: getCrawlerStats
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       responses:
         '200':
           description: >-
@@ -321,6 +339,7 @@ paths:
   /crawlers/{id}/test:
     post:
       summary: Test an URL against the crawler's config
+      operationId: testURL
       description: >-
         Test an URL against the given Crawler's config and see what will be
         processed.
@@ -328,7 +347,7 @@ paths:
         You can also override parts of the configuration to try your changes
         before updating the configuration.
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       requestBody:
         content:
           application/json:
@@ -475,9 +494,11 @@ paths:
   /crawlers/{id}/tasks/{tid}:
     get:
       summary: Get the status of a specific task
+      operationId: getAction
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
-        - $ref: '#/components/parameters/taskIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
+        - $ref: '#/components/parameters/taskIdPath'
       responses:
         '200':
           description: A response telling you if an action is still pending or not
@@ -497,23 +518,36 @@ paths:
                       exists
                 required:
                   - pending
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/tasks/{tid}/cancel:
     post:
       summary: Cancel a blocking action on your Crawler
+      operationId: cancelAction
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
-        - $ref: '#/components/parameters/taskIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
+        - $ref: '#/components/parameters/taskIdPath'
       responses:
         '200':
           description: Your request was processed correctly
         '400':
           $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/config/versions:
     get:
       summary: Get a specific version of the configuration of a crawler
+      operationId: listConfigVersions
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
-        - $ref: '#/components/parameters/crawlerVersionParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       responses:
         '200':
           description: A specific revision of the crawler
@@ -536,11 +570,20 @@ paths:
                   - version
                   - config
                   - createdAt
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/config/versions/{version}:
     get:
       summary: List crawler versions
+      operationId: getConfigVersion
+      description: 'TODO: complete'
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
+        - $ref: '#/components/parameters/crawlerIdPath'
         - in: query
           name: itemsPerPage
           schema:
@@ -584,9 +627,16 @@ paths:
                           required:
                             - version
                             - createdAt
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403NoRightsOnCrawler'
   /crawlers/{id}/urls/crawl:
     post:
       summary: Immediately crawl some URLs and update the live index
+      operationId: createCrawl
       description: >
         The passed URLs will be crawled immediately, and the generated records
         will be pushed to the live index if no reindex is currently running.
@@ -594,7 +644,7 @@ paths:
         If a reindex is running, the records will be pushed to the temporary
         index.
       parameters:
-        - $ref: '#/components/parameters/crawlerIdParam'
+        - $ref: '#/components/parameters/crawlerIdPath'
       requestBody:
         content:
           application/json:
@@ -1220,44 +1270,43 @@ components:
             to ensure data is correct. For example, the number of records from
             one crawl to another.
     UrlsCrawledGroup:
-      UrlsCrawledGroup:
-        type: object
-        description: >-
-          Represent a group of URLs that have been crawled and have the same
-          final state
-        properties:
-          status:
-            type: string
-            description: A string corresponding to the status of the group
-            enum:
-              - DONE
-              - SKIPPED
-              - FAILED
-          reason:
-            type: string
-            description: The code of the reason why when ended up in this status
-          category:
-            type: string
-            description: >-
-              In case of error, will be set to the step where the error
-              occurred, otherwise will be set to 'success'
-            enum:
-              - fetch
-              - extraction
-              - indexing
-              - success
-          count:
-            type: integer
-            description: Number of URLs belonging to this group
-          readable:
-            type: string
-            description: Human redeable version of the error
-        example:
-          status: SKIPPED
-          reason: forbidden_by_robotstxt
-          category: fetch
-          nbUrls: 3
-          readable: Forbidden by robots.txt
+      type: object
+      description: >-
+        Represent a group of URLs that have been crawled and have the same final
+        state
+      properties:
+        status:
+          type: string
+          description: A string corresponding to the status of the group
+          enum:
+            - DONE
+            - SKIPPED
+            - FAILED
+        reason:
+          type: string
+          description: The code of the reason why when ended up in this status
+        category:
+          type: string
+          description: >-
+            In case of error, will be set to the step where the error occurred,
+            otherwise will be set to 'success'
+          enum:
+            - fetch
+            - extraction
+            - indexing
+            - success
+        count:
+          type: integer
+          description: Number of URLs belonging to this group
+        readable:
+          type: string
+          description: Human redeable version of the error
+      example:
+        status: SKIPPED
+        reason: forbidden_by_robotstxt
+        category: fetch
+        nbUrls: 3
+        readable: Forbidden by robots.txt
   responses:
     400InvalidRequest:
       description: Invalid request
@@ -1285,45 +1334,17 @@ components:
                 type: string
                 example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
   parameters:
-    crawlerIdParam:
+    crawlerIdPath:
       name: id
       in: path
       description: The Id of the targeted Crawler
       required: true
       schema:
         type: string
-    taskIdParam:
+    taskIdPath:
       name: tid
       in: path
       description: The Id of the targeted Task
       required: true
       schema:
         type: string
-    crawlerVersionParam:
-      name: version
-      in: path
-      description: The version of the targeted Crawler revision
-      required: true
-      schema:
-        type: integer
-  crawlerIdParam:
-    name: id
-    in: path
-    description: The Id of the targeted Crawler
-    required: true
-    schema:
-      type: string
-  taskIdParam:
-    name: tid
-    in: path
-    description: The Id of the targeted Task
-    required: true
-    schema:
-      type: string
-  crawlerVersionParam:
-    name: version
-    in: path
-    description: The version of the targeted Crawler revision
-    required: true
-    schema:
-      type: integer

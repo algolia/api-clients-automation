@@ -9,29 +9,28 @@ crawlerName:
   description: The name of the Crawler
   example: My Crawler
 
-parameters:
-  crawlerIdParam:
-    name: id
-    in: path
-    description: The Id of the targeted Crawler
-    required: true
-    schema:
-      type: string
-      # format: uuid
+crawlerIdPath:
+  name: id
+  in: path
+  description: The Id of the targeted Crawler
+  required: true
+  schema:
+    type: string
+    # format: uuid
 
-  taskIdParam:
-    name: tid
-    in: path
-    description: The Id of the targeted Task
-    required: true
-    schema:
-      type: string
-      # format: uuid
+taskIdPath:
+  name: tid
+  in: path
+  description: The Id of the targeted Task
+  required: true
+  schema:
+    type: string
+    # format: uuid
 
-  crawlerVersionParam:
-    name: version
-    in: path
-    description: The version of the targeted Crawler revision
-    required: true
-    schema:
-      type: integer
+crawlerVersionIdPath:
+  name: version
+  in: path
+  description: The version of the targeted Crawler revision
+  required: true
+  schema:
+    type: integer

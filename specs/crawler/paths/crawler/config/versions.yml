@@ -1,8 +1,10 @@
 get:
   summary: Get a specific version of the configuration of a crawler
+  operationId: listConfigVersions
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../../common/parameters.yml#/parameters/crawlerIdParam
-    - $ref: ../../../common/parameters.yml#/parameters/crawlerVersionParam
+    - $ref: ../../../common/parameters.yml#/crawlerIdPath
   responses:
     '200':
       description: A specific revision of the crawler
@@ -26,3 +28,9 @@ get:
               - version
               - config
               - createdAt
+    '400':
+      $ref: ../../../responses/400InvalidRequest.yml
+    '401':
+      $ref: ../../../responses/401MissingAuthorization.yml
+    '403':
+      $ref: ../../../responses/403NoRightsOnCrawler.yml

@@ -1,7 +1,10 @@
 post:
   summary: Request the specified Crawler to start a reindex
+  operationId: reindexCrawler
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../common/parameters.yml#/crawlerIdPath
   responses:
     '200':
       $ref: ../../responses/200ActionAcknowledged.yml

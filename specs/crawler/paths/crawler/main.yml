@@ -1,7 +1,10 @@
 get:
   summary: Get information about the specified Crawler and its configuration
+  operationId: getCrawler
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../common/parameters.yml#/crawlerIdPath
     - in: query
       name: withConfig
       schema:
@@ -77,8 +80,11 @@ get:
 
 patch:
   summary: Update parts of the Crawler, either its name, its config, or both
+  operationId: patchCrawler
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../common/parameters.yml#/crawlerIdPath
   requestBody:
     content:
       application/json:

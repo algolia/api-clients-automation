@@ -1,7 +1,10 @@
 get:
   summary: Get a summary of the current status of crawled URLs for the specified Crawler
+  operationId: getCrawlerStats
+  description: |-
+    TODO: complete
   parameters:
-    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../common/parameters.yml#/crawlerIdPath
   responses:
     '200':
       description: Several metrics to know what the Crawler did during since the last reindex

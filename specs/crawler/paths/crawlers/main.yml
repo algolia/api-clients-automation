@@ -1,5 +1,8 @@
 get:
   summary: List available Crawlers
+  operationId: listCrawlers
+  description: |-
+    TODO: complete
   parameters:
     - in: query
       name: itemsPerPage
@@ -61,6 +64,9 @@ get:
 
 post:
   summary: Create a new Crawler with the given config
+  operationId: createCrawler
+  description: |-
+    TODO: complete
   requestBody:
     content:
       application/json:

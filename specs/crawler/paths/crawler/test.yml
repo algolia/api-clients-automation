@@ -1,10 +1,11 @@
 post:
   summary: Test an URL against the crawler's config
+  operationId: testURL
   description: |-
     Test an URL against the given Crawler's config and see what will be processed.
     You can also override parts of the configuration to try your changes before updating the configuration.
   parameters:
-    - $ref: ../../common/parameters.yml#/parameters/crawlerIdParam
+    - $ref: ../../common/parameters.yml#/crawlerIdPath
   requestBody:
     content:
       application/json:
