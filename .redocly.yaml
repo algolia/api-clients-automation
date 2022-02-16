@@ -1,6 +1,7 @@
 apiDefinitions:
   abtesting: specs/abtesting/spec.yml
   analytics: specs/analytics/spec.yml
+  crawler: specs/crawler/spec.yml
   insights: specs/insights/spec.yml
   personalization: specs/personalization/spec.yml
   query-suggestions: specs/query-suggestions/spec.yml
