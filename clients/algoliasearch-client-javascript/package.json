@@ -13,8 +13,7 @@
     "release": "shipjs prepare",
     "test:size": "bundlesize",
     "test:lint": "eslint . --ext .js,.ts",
-    "test:types": "yarn tsc --noEmit",
-    "update": "rm -rf node_modules yarn.lock && yarn install"
+    "test:types": "yarn tsc --noEmit"
   },
   "dependencies": {
     "@babel/runtime": "7.17.2"
