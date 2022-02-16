@@ -5,6 +5,8 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import execa from 'execa';
 
+import openapitools from '../../openapitools.json';
+
 import { MAIN_BRANCH, OWNER, REPO, run } from './common';
 import TEXT from './text';
 
@@ -74,16 +76,15 @@ const langsToUpdateRepo = getMarkdownSection(
   .filter(Boolean); // e.g. ['javascript', 'php']
 
 // update versions in `openapitools.json`
-const json = JSON.parse(fs.readFileSync('openapitools.json').toString());
-Object.keys(json['generator-cli'].generators).forEach((client) => {
+Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
   const lang = client.split('-')[0];
   if (versionsToRelease[lang]) {
-    json['generator-cli'].generators[
+    openapitools['generator-cli'].generators[
       client
     ].additionalProperties.packageVersion = versionsToRelease[lang].next;
   }
 });
-fs.writeFileSync('openapitools.json', JSON.stringify(json, null, 2));
+fs.writeFileSync('openapitools.json', JSON.stringify(openapitools, null, 2));
 
 // update changelogs
 new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(

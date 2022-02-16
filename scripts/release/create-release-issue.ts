@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
-import fs from 'fs';
-
 import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
 import semver from 'semver';
+
+import openapitools from '../../openapitools.json';
 
 import { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO, LANGS, run } from './common';
 import TEXT from './text';
@@ -26,9 +26,7 @@ type Versions = {
 function readVersions(): Versions {
   const versions = {};
 
-  const generators = JSON.parse(
-    fs.readFileSync('openapitools.json').toString()
-  )['generator-cli'].generators;
+  const generators = openapitools['generator-cli'].generators;
 
   Object.keys(generators).forEach((generator) => {
     const lang = generator.split('-')[0];
