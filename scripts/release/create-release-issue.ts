@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint-disable no-console */
 import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
