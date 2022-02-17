@@ -32,7 +32,7 @@ type AdditionalProperties = Partial<{
 }>;
 
 async function setHostsOptions(): Promise<void> {
-  const openapitoolsPath = path.join(__dirname, '../../openapitools.json');
+  const openapitoolsPath = path.join(process.cwd(), '../openapitools.json');
   const openapitools = JSON.parse(await readFile(openapitoolsPath, 'utf-8'));
 
   const [language, client] = process.argv.slice(2);
@@ -43,7 +43,7 @@ async function setHostsOptions(): Promise<void> {
     throw new Error(`Generator not found: ${generator}`);
   }
 
-  const specPath = path.join(__dirname, `../../specs/bundled/${client}.yml`);
+  const specPath = path.join(process.cwd(), `../specs/bundled/${client}.yml`);
 
   if (!(await stat(specPath))) {
     throw new Error(`File not found ${specPath}`);
