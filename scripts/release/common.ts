@@ -1,12 +1,12 @@
 import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 
-import config from '../../config.json';
 import openapitools from '../../openapitools.json';
+import config from '../../release.config.json';
 
-export const RELEASED_TAG = config.release.releasedTag;
-export const MAIN_BRANCH = config.release.mainBranch;
-export const OWNER = config.release.owner;
-export const REPO = config.release.repo;
+export const RELEASED_TAG = config.releasedTag;
+export const MAIN_BRANCH = config.mainBranch;
+export const OWNER = config.owner;
+export const REPO = config.repo;
 
 type Run = (
   command: string,
