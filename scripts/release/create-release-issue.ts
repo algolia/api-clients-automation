@@ -92,7 +92,7 @@ const latestCommits = run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
       commitsWithoutScope.push(commit);
       return undefined;
     }
-    message = message.slice(message.indexOf(':') + 2);
+    message = message.slice(message.indexOf(':') + 1).trim();
     type = matchResult[1];
     const lang = matchResult[2];
 
