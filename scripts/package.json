@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "tsc",
-    "release": "yarn build && node dist/scripts/release/create-release-issue.js",
+    "createReleaseIssue": "yarn build && node dist/scripts/release/create-release-issue.js",
+    "processRelease": "yarn build && node dist/scripts/release/process-release.js",
     "setHostsOptions": "yarn build && node dist/scripts/pre-gen/setHostsOptions.js"
   },
   "devDependencies": {
