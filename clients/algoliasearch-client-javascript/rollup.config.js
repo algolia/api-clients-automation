@@ -7,6 +7,8 @@ import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
 import ts from 'rollup-plugin-typescript2';
 
+import generatorConfig from '../../openapitools.json';
+
 import { version } from './version';
 
 // Retrieve package to build
@@ -40,6 +42,23 @@ function createBundlers({ output, clientPath }) {
       format: 'cjs',
     },
   };
+}
+
+function getAvailableClients() {
+  const availableClients = [];
+  const generators = Object.entries(
+    generatorConfig['generator-cli'].generators
+  );
+
+  for (const [name, options] of generators) {
+    if (name.startsWith('javascript')) {
+      availableClients.push(options.additionalProperties.buildFile);
+    }
+  }
+
+  return client === 'all'
+    ? availableClients
+    : availableClients.filter((availableClient) => availableClient === client);
 }
 
 function initPackagesConfig() {
@@ -80,21 +99,7 @@ function initPackagesConfig() {
     ];
   }
 
-  const availableClients = [
-    // We don't have the `algoliasearch` package for now.
-    // 'algoliasearch'
-    'client-abtesting',
-    'client-analytics',
-    'client-insights',
-    'client-personalization',
-    'client-query-suggestions',
-    'client-search',
-    'client-sources',
-    'client-predict',
-    'recommend',
-  ].filter((availableClient) =>
-    client === 'all' ? true : availableClient === client
-  );
+  const availableClients = getAvailableClients();
 
   if (availableClients.length === 0) {
     throw new Error(`No clients matching ${client}.`);
@@ -170,7 +175,7 @@ packagesConfig.forEach((packageConfig) => {
                 '@babel/preset-env',
                 {
                   targets: {
-                    browsers: ['last 2 versions', 'ie >= 11'],
+                    browsers: ['> .5%', 'ie >= 11'],
                   },
                 },
               ],
