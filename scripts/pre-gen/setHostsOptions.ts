@@ -32,9 +32,12 @@ type AdditionalProperties = Partial<{
 }>;
 
 async function setHostsOptions(): Promise<void> {
-  // Run this script with `yarn workspace scripts setHostsOptions`, instead of (cd ./scripts ....)
-  // Use `process.cwd()` instead of `__dirname` because this will be transpiled to `dist/`.
   const openapitoolsPath = path.join(process.cwd(), '../openapitools.json');
+  if (!(await stat(openapitoolsPath))) {
+    throw new Error(
+      `File not found ${openapitoolsPath}.\nMake sure your run scripts from the root directory using yarn workspace.`
+    );
+  }
   const openapitools = JSON.parse(await readFile(openapitoolsPath, 'utf-8'));
 
   const [language, client] = process.argv.slice(2);
@@ -48,7 +51,9 @@ async function setHostsOptions(): Promise<void> {
   const specPath = path.join(process.cwd(), `../specs/bundled/${client}.yml`);
 
   if (!(await stat(specPath))) {
-    throw new Error(`File not found ${specPath}`);
+    throw new Error(
+      `File not found ${specPath}.\nMake sure your run scripts from the root directory using yarn workspace.`
+    );
   }
 
   try {
