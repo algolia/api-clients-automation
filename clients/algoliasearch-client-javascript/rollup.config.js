@@ -161,7 +161,6 @@ packagesConfig.forEach((packageConfig) => {
       output.banner = createLicence(packageConfig.package);
     }
 
-    const externalRuntime = isUmdBuild ? [/@babel\/runtime/] : [];
     const compressorPlugins = isUmdBuild ? [terser()] : [];
     const transpilerPlugins = isUmdBuild
       ? [
@@ -192,11 +191,7 @@ packagesConfig.forEach((packageConfig) => {
 
     rollupConfig.push({
       input: path.resolve(clientPath, packageConfig.input),
-      external: [
-        ...packageConfig.dependencies,
-        ...packageConfig.external,
-        ...externalRuntime,
-      ],
+      external: [...packageConfig.dependencies, ...packageConfig.external],
       plugins: [
         globals({
           global: true,
