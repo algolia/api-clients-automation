@@ -65,9 +65,7 @@ jobs:
   client_javascript_common:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
-    needs:
-      - setup
-      - specs
+    needs: setup
     if: ${{ always() && needs.setup.outputs.RUN_JS_COMMON == 'true' }}
     strategy:
       matrix:
@@ -99,6 +97,8 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     needs:
+      - setup
+      - specs
       - client_javascript_common
     if: ${{ always() && needs.setup.outputs.RUN_JS == 'true' }}
     strategy:
@@ -109,7 +109,7 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          job: client
+          job: javascript-client
           spec: ${{ matrix.client.name }}
 
       - name: Cache ${{ matrix.client.name }} client
@@ -207,7 +207,6 @@ jobs:
       - client_javascript
       - client_java
       - client_php
-
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
