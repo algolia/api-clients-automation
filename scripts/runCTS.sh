@@ -13,6 +13,8 @@ LANGUAGE=$1
 run_cts() {
     if [[ $LANGUAGE == 'javascript' ]]; then
         yarn workspace javascript-tests test
+    elif [[ $LANGUAGE == 'php' ]]; then
+        clients/algoliasearch-client-php/vendor/bin/phpunit ./clients/algoliasearch-client-php/phpunit.xml.dist
     elif [[ $LANGUAGE == 'java' ]]; then
         ./gradle/gradlew --no-daemon -p tests/output/java test
     else
