@@ -32,6 +32,8 @@ type AdditionalProperties = Partial<{
 }>;
 
 async function setHostsOptions(): Promise<void> {
+  // Run this script with `yarn workspace scripts setHostsOptions`, instead of (cd ./scripts ....)
+  // Use `process.cwd()` instead of `__dirname` because this will be transpiled to `dist/`.
   const openapitoolsPath = path.join(process.cwd(), '../openapitools.json');
   const openapitools = JSON.parse(await readFile(openapitoolsPath, 'utf-8'));
 
