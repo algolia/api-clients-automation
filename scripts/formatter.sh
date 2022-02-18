@@ -10,16 +10,16 @@ cd ${DIR}/..
 LANGUAGE=$1
 FOLDER=$2
 
-if [[ ! -d "$FOLDER" ]]; then 
+if [[ ! -d "$FOLDER" ]]; then
     echo "Output folder does not exist for $LANGUAGE, skipping..."
-    exit 0 
+    exit 0
 fi
 
 if [[ $LANGUAGE == 'javascript' ]]; then
     # jsdoc/require-hyphen-before-param-description fails to lint more than
     # 6 parameters, we re-run the script if failed to lint the rest
-    CMD="yarn && yarn eslint --ext=ts ${FOLDER} --fix || yarn eslint --ext=ts ${FOLDER} --fix"
-elif [[ $LANGUAGE == 'php' ]]; then  
+    CMD="yarn eslint --ext=ts,js ${FOLDER} --fix || yarn eslint --ext=ts,js ${FOLDER} --fix"
+elif [[ $LANGUAGE == 'php' ]]; then
     if [[ $CI ]]; then
         PHP="php"
     else
