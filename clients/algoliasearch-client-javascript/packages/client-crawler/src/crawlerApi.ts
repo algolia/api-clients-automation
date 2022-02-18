@@ -6,20 +6,20 @@ import type {
   Request,
 } from '@algolia/client-common';
 
+import type { GetCrawlerResponse } from '../model/getCrawlerResponse';
+import type { GetCrawlerStatsResponse } from '../model/getCrawlerStatsResponse';
 import type { InlineObject } from '../model/inlineObject';
 import type { InlineObject1 } from '../model/inlineObject1';
 import type { InlineObject2 } from '../model/inlineObject2';
-import type { InlineObject3 } from '../model/inlineObject3';
 import type { InlineResponse200 } from '../model/inlineResponse200';
 import type { InlineResponse2001 } from '../model/inlineResponse2001';
 import type { InlineResponse2002 } from '../model/inlineResponse2002';
 import type { InlineResponse2003 } from '../model/inlineResponse2003';
-import type { InlineResponse2004 } from '../model/inlineResponse2004';
-import type { InlineResponse2005 } from '../model/inlineResponse2005';
-import type { InlineResponse2006 } from '../model/inlineResponse2006';
 import type { Pagination } from '../model/pagination';
+import type { PatchCrawlerResponse } from '../model/patchCrawlerResponse';
+import type { TestURLResponse } from '../model/testURLResponse';
 
-export const version = '0.0.1';
+export const apiClientVersion = '0.0.1';
 
 function getDefaultHosts(): Host[] {
   return [
@@ -40,7 +40,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Crawler',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,
@@ -93,12 +93,12 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    * @summary Immediately crawl some URLs and update the live index.
    * @param createCrawl - The createCrawl object.
    * @param createCrawl.id - The Id of the targeted Crawler.
-   * @param createCrawl.inlineObject3 - The inlineObject3 object.
+   * @param createCrawl.inlineObject2 - The inlineObject2 object.
    */
   function createCrawl({
     id,
-    inlineObject3,
-  }: CreateCrawlProps): Promise<InlineResponse2002> {
+    inlineObject2,
+  }: CreateCrawlProps): Promise<InlineResponse2001> {
     const path = '/crawlers/{id}/urls/crawl'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -113,7 +113,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
     const request: Request = {
       method: 'POST',
       path,
-      data: inlineObject3,
+      data: inlineObject2,
     };
 
     return transporter.request(request, {
@@ -155,7 +155,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    * @param getAction.id - The Id of the targeted Crawler.
    * @param getAction.tid - The Id of the targeted Task.
    */
-  function getAction({ id, tid }: GetActionProps): Promise<InlineResponse2005> {
+  function getAction({ id, tid }: GetActionProps): Promise<InlineResponse2002> {
     const path = '/crawlers/{id}/tasks/{tid}'
       .replace('{id}', encodeURIComponent(String(id)))
       .replace('{tid}', encodeURIComponent(String(tid)));
@@ -245,7 +245,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
   function getCrawler({
     id,
     withConfig,
-  }: GetCrawlerProps): Promise<InlineResponse2001> {
+  }: GetCrawlerProps): Promise<GetCrawlerResponse> {
     const path = '/crawlers/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -281,7 +281,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    */
   function getCrawlerStats({
     id,
-  }: GetCrawlerStatsProps): Promise<InlineResponse2003> {
+  }: GetCrawlerStatsProps): Promise<GetCrawlerStatsResponse> {
     const path = '/crawlers/{id}/stats/urls'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -315,7 +315,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    */
   function listConfigVersions({
     id,
-  }: ListConfigVersionsProps): Promise<InlineResponse2006> {
+  }: ListConfigVersionsProps): Promise<InlineResponse2003> {
     const path = '/crawlers/{id}/config/versions'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -398,7 +398,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
   function patchConfig({
     id,
     body,
-  }: PatchConfigProps): Promise<InlineResponse2002> {
+  }: PatchConfigProps): Promise<InlineResponse2001> {
     const path = '/crawlers/{id}/config'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -428,12 +428,12 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    * @summary Update parts of the Crawler, either its name, its config, or both.
    * @param patchCrawler - The patchCrawler object.
    * @param patchCrawler.id - The Id of the targeted Crawler.
-   * @param patchCrawler.inlineObject1 - The inlineObject1 object.
+   * @param patchCrawler.patchCrawlerResponse - The patchCrawlerResponse object.
    */
   function patchCrawler({
     id,
-    inlineObject1,
-  }: PatchCrawlerProps): Promise<InlineResponse2002> {
+    patchCrawlerResponse,
+  }: PatchCrawlerProps): Promise<InlineResponse2001> {
     const path = '/crawlers/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -450,7 +450,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
     const request: Request = {
       method: 'PATCH',
       path,
-      data: inlineObject1,
+      data: patchCrawlerResponse,
     };
 
     return transporter.request(request, {
@@ -468,7 +468,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    */
   function pauseCrawler({
     id,
-  }: PauseCrawlerProps): Promise<InlineResponse2002> {
+  }: PauseCrawlerProps): Promise<InlineResponse2001> {
     const path = '/crawlers/{id}/pause'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -502,7 +502,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    */
   function reindexCrawler({
     id,
-  }: ReindexCrawlerProps): Promise<InlineResponse2002> {
+  }: ReindexCrawlerProps): Promise<InlineResponse2001> {
     const path = '/crawlers/{id}/reindex'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -534,7 +534,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    * @param runCrawler - The runCrawler object.
    * @param runCrawler.id - The Id of the targeted Crawler.
    */
-  function runCrawler({ id }: RunCrawlerProps): Promise<InlineResponse2002> {
+  function runCrawler({ id }: RunCrawlerProps): Promise<InlineResponse2001> {
     const path = '/crawlers/{id}/run'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -563,12 +563,12 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    * @summary Test an URL against the crawler\'s config.
    * @param testURL - The testURL object.
    * @param testURL.id - The Id of the targeted Crawler.
-   * @param testURL.inlineObject2 - The inlineObject2 object.
+   * @param testURL.inlineObject1 - The inlineObject1 object.
    */
   function testURL({
     id,
-    inlineObject2,
-  }: TestURLProps): Promise<InlineResponse2004> {
+    inlineObject1,
+  }: TestURLProps): Promise<TestURLResponse> {
     const path = '/crawlers/{id}/test'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -583,7 +583,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
     const request: Request = {
       method: 'POST',
       path,
-      data: inlineObject2,
+      data: inlineObject1,
     };
 
     return transporter.request(request, {
@@ -629,7 +629,7 @@ export type CreateCrawlProps = {
    * The Id of the targeted Crawler.
    */
   id: string;
-  inlineObject3?: InlineObject3;
+  inlineObject2?: InlineObject2;
 };
 
 export type GetActionProps = {
@@ -719,7 +719,7 @@ export type PatchCrawlerProps = {
    * The Id of the targeted Crawler.
    */
   id: string;
-  inlineObject1?: InlineObject1;
+  patchCrawlerResponse?: PatchCrawlerResponse;
 };
 
 export type PauseCrawlerProps = {
@@ -748,5 +748,5 @@ export type TestURLProps = {
    * The Id of the targeted Crawler.
    */
   id: string;
-  inlineObject2?: InlineObject2;
+  inlineObject1?: InlineObject1;
 };

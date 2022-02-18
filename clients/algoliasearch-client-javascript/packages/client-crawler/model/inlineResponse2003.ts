@@ -1,9 +1,8 @@
-import type { UrlsCrawledGroup } from './urlsCrawledGroup';
+import type { Config } from './config';
 
 export type InlineResponse2003 = {
-  /**
-   * The total number of crawled URLs.
-   */
-  count: number;
-  data: UrlsCrawledGroup[];
+  version: number;
+  config: Config;
+  createdAt: string;
+  authorId?: string;
 };

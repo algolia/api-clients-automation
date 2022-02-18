@@ -35,6 +35,7 @@ post:
         application/json:
           schema:
             type: object
+            title: testURLResponse
             additionalProperties: false
             properties:
               startDate:

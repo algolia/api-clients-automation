@@ -1,10 +1,7 @@
 export type InlineObject2 = {
+  urls: string[];
   /**
-   * The URL to test.
+   * If true, the given URLs will be added to the `extraUrls` field of the config (if not already in `startUrls` or `sitemaps`). If false, the URLs will not be saved in the config. If unspecified, the URLs will be saved to the `extraUrls` field of the config only if they haven\'t been indexed during the last reindex.
    */
-  url: string;
-  /**
-   * A partial configuration object, that will be merged with the configuration saved. This allows to tests changes in a configuration before saving it. Note that it\'s not a deep merge, we will simply override all top level fields with the ones that you will pass.
-   */
-  config?: Record<string, any>;
+  save?: boolean;
 };

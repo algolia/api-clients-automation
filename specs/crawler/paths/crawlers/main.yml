@@ -43,6 +43,7 @@ get:
             allOf:
               - $ref: ../../common/schemas/Pagination.yml
               - type: object
+                title: listCrawlersResponse
                 additionalProperties: false
                 properties:
                   items:

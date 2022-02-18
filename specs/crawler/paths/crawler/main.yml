@@ -18,6 +18,7 @@ get:
       content:
         application/json:
           schema:
+            title: getCrawlerResponse
             type: object
             additionalProperties: false
             properties:
@@ -94,6 +95,7 @@ patch:
       application/json:
         schema:
           type: object
+          title: patchCrawlerResponse
           additionalProperties: false
           properties:
             name:

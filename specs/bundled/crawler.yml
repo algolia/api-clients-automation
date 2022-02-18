@@ -53,6 +53,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Pagination'
                   - type: object
+                    title: listCrawlersResponse
                     additionalProperties: false
                     properties:
                       items:
@@ -135,6 +136,7 @@ paths:
           content:
             application/json:
               schema:
+                title: getCrawlerResponse
                 type: object
                 additionalProperties: false
                 properties:
@@ -217,6 +219,7 @@ paths:
           application/json:
             schema:
               type: object
+              title: patchCrawlerResponse
               additionalProperties: false
               properties:
                 name:
@@ -338,6 +341,7 @@ paths:
             application/json:
               schema:
                 type: object
+                title: getCrawlerStatsResponse
                 additionalProperties: false
                 properties:
                   count:
@@ -401,6 +405,7 @@ paths:
             application/json:
               schema:
                 type: object
+                title: testURLResponse
                 additionalProperties: false
                 properties:
                   startDate:
@@ -769,7 +774,7 @@ components:
         position:
           type: integer
       example:
-        message: '''url'' is not defined'
+        message: "'url' is not defined"
         line: 5
     ErrorResponse:
       type: object

@@ -1,3 +1,5 @@
+import type { FunctionAsString } from './functionAsString';
+
 export type Action = {
   /**
    * Unique name of the action.
@@ -25,8 +27,5 @@ export type Action = {
    * Generate an `objectID` for records that don\'t have one. See the [`objectID` definition](#). Setting this parameter to `false` means we\'ll raise an error in case an extracted record doesn\'t have an `objectID`. Note, this parameter is not compatible with `partialUpdate = true`.
    */
   autoGenerateObjectIDs?: boolean;
-  /**
-   * An recordExtractor is just a custom Javascript function that let you execute your own code and extract what you want from a page.
-   */
-  recordExtractor?: any | null;
+  recordExtractor?: FunctionAsString;
 };
