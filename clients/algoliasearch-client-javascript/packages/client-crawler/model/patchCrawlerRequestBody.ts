@@ -1,6 +1,6 @@
 import type { Config } from './config';
 
-export type PatchCrawlerResponse = {
+export type PatchCrawlerRequestBody = {
   /**
    * The name of the Crawler.
    */

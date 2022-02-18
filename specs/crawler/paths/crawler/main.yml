@@ -95,7 +95,7 @@ patch:
       application/json:
         schema:
           type: object
-          title: patchCrawlerResponse
+          title: patchCrawlerRequestBody
           additionalProperties: false
           properties:
             name:

@@ -1,4 +1,4 @@
-export type InlineResponse200 = {
+export type CreateCrawlerResponse = {
   /**
    * The id of the Crawler created.
    */

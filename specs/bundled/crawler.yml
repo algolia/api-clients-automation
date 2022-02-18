@@ -85,6 +85,7 @@ paths:
           application/json:
             schema:
               type: object
+              title: createCrawlerRequestBody
               additionalProperties: false
               properties:
                 name:
@@ -101,11 +102,12 @@ paths:
             application/json:
               schema:
                 type: object
+                title: createCrawlerResponse
                 additionalProperties: false
                 properties:
                   id:
                     type: string
-                    description: The id of the Crawler created
+                    description: The id of the Crawler created.
                 required:
                   - id
         '400':
@@ -219,7 +221,7 @@ paths:
           application/json:
             schema:
               type: object
-              title: patchCrawlerResponse
+              title: patchCrawlerRequestBody
               additionalProperties: false
               properties:
                 name:
@@ -249,7 +251,7 @@ paths:
           application/json:
             schema:
               type: object
-              title: patchConfigResponse
+              title: patchConfigRequestBody
               additionalProperties: false
               description: >-
                 A partial config object that will be injected into the current
@@ -378,6 +380,7 @@ paths:
           application/json:
             schema:
               type: object
+              title: testURLRequestBody
               additionalProperties: false
               properties:
                 url:
@@ -695,6 +698,7 @@ paths:
           application/json:
             schema:
               type: object
+              title: createCrawlRequestBody
               additionalProperties: false
               properties:
                 urls:
@@ -779,7 +783,7 @@ components:
         position:
           type: integer
       example:
-        message: '''url'' is not defined'
+        message: "'url' is not defined"
         line: 5
     ErrorResponse:
       type: object
@@ -1360,6 +1364,7 @@ components:
         application/json:
           schema:
             type: object
+            title: actionAckedResponse
             additionalProperties: false
             required:
               - taskId

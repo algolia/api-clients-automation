@@ -12,7 +12,7 @@ patch:
       application/json:
         schema:
           type: object
-          title: patchConfigResponse
+          title: patchConfigRequestBody
           additionalProperties: false
           description: A partial config object that will be injected into the current one.
           example:

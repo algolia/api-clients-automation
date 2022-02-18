@@ -3,6 +3,7 @@ content:
   application/json:
     schema:
       type: object
+      title: actionAckedResponse
       additionalProperties: false
       required:
         - taskId

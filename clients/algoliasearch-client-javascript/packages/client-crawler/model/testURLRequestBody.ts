@@ -1,4 +1,4 @@
-export type InlineObject1 = {
+export type TestURLRequestBody = {
   /**
    * The URL to test.
    */

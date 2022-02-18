@@ -77,6 +77,7 @@ post:
       application/json:
         schema:
           type: object
+          title: createCrawlerRequestBody
           additionalProperties: false
           properties:
             name:
@@ -93,11 +94,12 @@ post:
         application/json:
           schema:
             type: object
+            title: createCrawlerResponse
             additionalProperties: false
             properties:
               id:
                 type: string
-                description: The id of the Crawler created
+                description: The id of the Crawler created.
             required:
               - id
     '400':

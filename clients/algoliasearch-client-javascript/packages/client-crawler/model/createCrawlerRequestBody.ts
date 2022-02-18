@@ -1,6 +1,6 @@
 import type { Config } from './config';
 
-export type InlineObject = {
+export type CreateCrawlerRequestBody = {
   /**
    * The name of the Crawler.
    */
