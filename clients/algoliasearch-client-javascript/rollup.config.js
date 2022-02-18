@@ -1,5 +1,3 @@
-import path from 'path';
-
 import babel from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import filesize from 'rollup-plugin-filesize';
@@ -143,7 +141,7 @@ const packagesConfig = initPackagesConfig();
 const rollupConfig = [];
 
 packagesConfig.forEach((packageConfig) => {
-  const clientPath = path.resolve('packages', packageConfig.package);
+  const clientPath = `packages/${packageConfig.package}`;
   const bundlers = createBundlers({
     output: packageConfig.output,
     clientPath,
@@ -190,7 +188,7 @@ packagesConfig.forEach((packageConfig) => {
     }
 
     rollupConfig.push({
-      input: path.resolve(clientPath, packageConfig.input),
+      input: `${clientPath}/${packageConfig.input}`,
       external: [...packageConfig.dependencies, ...packageConfig.external],
       plugins: [
         globals({
@@ -199,7 +197,7 @@ packagesConfig.forEach((packageConfig) => {
         nodeResolve(),
         ts({
           check: !isTypesGenerated,
-          tsconfig: path.resolve(clientPath, 'tsconfig.json'),
+          tsconfig: `${clientPath}/tsconfig.json`,
           tsconfigOverride: {
             compilerOptions: {
               declaration: !isTypesGenerated,
