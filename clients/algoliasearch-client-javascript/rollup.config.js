@@ -11,7 +11,7 @@ import { version } from './version';
 
 // Retrieve package to build
 const client = process.env.CLIENT?.replace('@algolia/', '');
-const onlyBuildUtils = Boolean(process.env.BUILD_UTILS);
+const utils = process.env.UTILS;
 
 function createLicence(name) {
   return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
@@ -60,7 +60,7 @@ function getAvailableClients() {
 }
 
 function initPackagesConfig() {
-  if (onlyBuildUtils) {
+  if (utils) {
     const commonOptions = {
       input: 'index.ts',
       formats: ['cjs-node', 'esm-node'],
@@ -68,7 +68,7 @@ function initPackagesConfig() {
       dependencies: [],
     };
 
-    return [
+    const availableUtils = [
       // Common
       {
         ...commonOptions,
@@ -95,6 +95,12 @@ function initPackagesConfig() {
         dependencies: ['@algolia/client-common'],
       },
     ];
+
+    return utils === 'all'
+      ? availableUtils
+      : availableUtils.filter(
+          (availableUtil) => availableUtil.package === utils
+        );
   }
 
   const availableClients = getAvailableClients();
