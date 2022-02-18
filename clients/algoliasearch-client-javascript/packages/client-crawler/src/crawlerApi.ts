@@ -6,6 +6,7 @@ import type {
   Request,
 } from '@algolia/client-common';
 
+import type { GetActionResponse } from '../model/getActionResponse';
 import type { GetCrawlerResponse } from '../model/getCrawlerResponse';
 import type { GetCrawlerStatsResponse } from '../model/getCrawlerStatsResponse';
 import type { InlineObject } from '../model/inlineObject';
@@ -13,8 +14,7 @@ import type { InlineObject1 } from '../model/inlineObject1';
 import type { InlineObject2 } from '../model/inlineObject2';
 import type { InlineResponse200 } from '../model/inlineResponse200';
 import type { InlineResponse2001 } from '../model/inlineResponse2001';
-import type { InlineResponse2002 } from '../model/inlineResponse2002';
-import type { InlineResponse2003 } from '../model/inlineResponse2003';
+import type { ListConfigVersionsResponse } from '../model/listConfigVersionsResponse';
 import type { Pagination } from '../model/pagination';
 import type { PatchCrawlerResponse } from '../model/patchCrawlerResponse';
 import type { TestURLResponse } from '../model/testURLResponse';
@@ -155,7 +155,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    * @param getAction.id - The Id of the targeted Crawler.
    * @param getAction.tid - The Id of the targeted Task.
    */
-  function getAction({ id, tid }: GetActionProps): Promise<InlineResponse2002> {
+  function getAction({ id, tid }: GetActionProps): Promise<GetActionResponse> {
     const path = '/crawlers/{id}/tasks/{tid}'
       .replace('{id}', encodeURIComponent(String(id)))
       .replace('{tid}', encodeURIComponent(String(tid)));
@@ -315,7 +315,7 @@ export const createCrawlerApi = (options: CreateClientOptions) => {
    */
   function listConfigVersions({
     id,
-  }: ListConfigVersionsProps): Promise<InlineResponse2003> {
+  }: ListConfigVersionsProps): Promise<ListConfigVersionsResponse> {
     const path = '/crawlers/{id}/config/versions'.replace(
       '{id}',
       encodeURIComponent(String(id))

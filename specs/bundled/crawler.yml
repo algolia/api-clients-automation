@@ -249,6 +249,7 @@ paths:
           application/json:
             schema:
               type: object
+              title: patchConfigResponse
               additionalProperties: false
               description: >-
                 A partial config object that will be injected into the current
@@ -533,6 +534,7 @@ paths:
             application/json:
               schema:
                 type: object
+                title: getActionResponse
                 additionalProperties: false
                 properties:
                   pending:
@@ -568,6 +570,7 @@ paths:
             application/json:
               schema:
                 type: object
+                title: cancelActionResponse
                 additionalProperties: true
         '400':
           $ref: '#/components/responses/400InvalidRequest'
@@ -591,6 +594,7 @@ paths:
             application/json:
               schema:
                 type: object
+                title: listConfigVersionsResponse
                 additionalProperties: false
                 properties:
                   version:
@@ -647,6 +651,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Pagination'
                   - type: object
+                    title: getConfigVersionResponse
                     additionalProperties: false
                     properties:
                       items:
@@ -774,7 +779,7 @@ components:
         position:
           type: integer
       example:
-        message: "'url' is not defined"
+        message: '''url'' is not defined'
         line: 5
     ErrorResponse:
       type: object

@@ -15,6 +15,7 @@ post:
         application/json:
           schema:
             type: object
+            title: cancelActionResponse
             additionalProperties: true
     '400':
       $ref: ../../../responses/400InvalidRequest.yml

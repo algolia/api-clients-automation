@@ -15,6 +15,7 @@ get:
         application/json:
           schema:
             type: object
+            title: getActionResponse
             additionalProperties: false
             properties:
               pending:

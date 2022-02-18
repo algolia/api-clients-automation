@@ -33,6 +33,7 @@ get:
             allOf:
               - $ref: ../../../common/schemas/Pagination.yml
               - type: object
+                title: getConfigVersionResponse
                 additionalProperties: false
                 properties:
                   items:
