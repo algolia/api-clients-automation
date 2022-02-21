@@ -88,7 +88,7 @@ fs.writeFileSync('openapitools.json', JSON.stringify(openapitools, null, 2));
 // update changelogs
 new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
   (lang) => {
-    const filePath = `doc/changelogs/${lang}.md`;
+    const filePath = `docs/changelogs/${lang}.md`;
     const header = versionsToRelease[lang!]
       ? `## ${versionsToRelease[lang!].next}`
       : `## ${new Date().toISOString().split('T')[0]}`;
@@ -108,7 +108,7 @@ new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
 run('git config user.name "api-clients-bot"');
 run('git config user.email "bot@algolia.com"');
 run('git add openapitools.json');
-run('git add doc/changelogs/*');
+run('git add docs/changelogs/*');
 execa.sync('git', ['commit', '-m', TEXT.commitMessage]);
 run(`git push origin ${MAIN_BRANCH}`);
 

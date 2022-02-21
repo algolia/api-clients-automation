@@ -22,7 +22,7 @@ yarn docker:setup
 
 Build docker image from [Dockerfile](./Dockerfile)
 
-[How to add a new client](./doc/addNewClient.md) | [How to add a new language](./doc/addNewLanguage.md) | [Common Test Suite](./doc/CTS.md) | [Run the playground](./doc/playground.md)
+[How to add a new client](./docs/addNewClient.md) | [How to add a new language](./docs/addNewLanguage.md) | [Common Test Suite](./docs/CTS.md) | [Run the playground](./docs/playground.md)
 
 ```bash
 yarn docker:build
@@ -115,8 +115,8 @@ yarn docker build:clients java recommend
 
 You can test our generated clients by running:
 
-- The playground [`playground`](./playground) ([Playground README](./doc/playground.md))
-- Tests with our [`Common Test Suite`](./tests/) ([CTS README](./doc/CTS.md)).
+- The playground [`playground`](./playground) ([Playground README](./docs/playground.md))
+- Tests with our [`Common Test Suite`](./tests/) ([CTS README](./docs/CTS.md)).
 
 # Troubleshooting
 
