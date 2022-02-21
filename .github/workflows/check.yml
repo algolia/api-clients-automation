@@ -233,6 +233,7 @@ jobs:
 
   scripts:
     runs-on: ubuntu-20.04
+    needs: setup
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v2
