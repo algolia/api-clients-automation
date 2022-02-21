@@ -7,26 +7,13 @@ import execa from 'execa';
 
 import openapitools from '../../openapitools.json';
 
-import { MAIN_BRANCH, OWNER, REPO, run } from './common';
+import { MAIN_BRANCH, OWNER, REPO, run, getMarkdownSection } from './common';
 import TEXT from './text';
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 dotenv.config();
-
-function getMarkdownSection(markdown: string, title: string): string {
-  const levelIndicator = title.split(' ')[0]; // e.g. `##`
-  const lines = markdown.slice(markdown.indexOf(title)).split('\n');
-  let endIndex = lines.length;
-  for (let i = 1; i < lines.length; i++) {
-    if (lines[i].startsWith(`${levelIndicator} `)) {
-      endIndex = i;
-      break;
-    }
-  }
-  return lines.slice(0, endIndex).join('\n');
-}
 
 if (!process.env.GITHUB_TOKEN) {
   throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
