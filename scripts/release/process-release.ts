@@ -7,13 +7,23 @@ import execa from 'execa';
 
 import openapitools from '../../openapitools.json';
 
-import { MAIN_BRANCH, OWNER, REPO, run, getMarkdownSection } from './common';
+import type { Run } from './common';
+import {
+  MAIN_BRANCH,
+  OWNER,
+  REPO,
+  run as runOriginal,
+  getMarkdownSection,
+} from './common';
 import TEXT from './text';
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 dotenv.config();
+
+const run: Run = (command, options = {}) =>
+  runOriginal(command, { cwd: ROOT_DIR, ...options });
 
 if (!process.env.GITHUB_TOKEN) {
   throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
