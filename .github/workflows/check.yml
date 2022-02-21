@@ -83,7 +83,6 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: client
-          spec: ${{ matrix.client }}
 
       - name: Cache ${{ matrix.client }} client
         id: cache
@@ -113,7 +112,6 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: javascript-client
-          spec: ${{ matrix.client.name }}
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
@@ -151,7 +149,6 @@ jobs:
         with:
           job: client
           language: java
-          spec: ${{ matrix.client.name }}
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
@@ -189,7 +186,6 @@ jobs:
         with:
           job: client
           language: php
-          spec: ${{ matrix.client.name }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'

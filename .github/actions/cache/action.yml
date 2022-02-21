@@ -10,9 +10,6 @@ inputs:
     description: The language to retrieve dependencies.
     required: false
     default: javascript
-  spec:
-    description: The spec name to restore.
-    required: false
 
 runs:
   using: composite
