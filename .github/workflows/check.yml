@@ -230,3 +230,16 @@ jobs:
 
       - name: Run CTS
         run: yarn cts:test
+
+  scripts:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        id: restore
+        uses: ./.github/actions/cache
+
+      - name: Test scripts
+        run: yarn workspace scripts test
