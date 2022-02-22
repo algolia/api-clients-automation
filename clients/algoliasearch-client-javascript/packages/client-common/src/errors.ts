@@ -1,40 +1,38 @@
-import type {
-  ApiError,
-  DeserializationError,
-  Response,
-  RetryError,
-  StackFrame,
-} from './types';
+import type { Response, StackFrame } from './types';
 
-export function createRetryError(stackTrace: StackFrame[]): RetryError {
-  return {
-    name: 'RetryError',
-    message:
+class ErrorWithStackTrace extends Error {
+  stackTrace: StackFrame[];
+
+  constructor(message: string, stackTrace: StackFrame[]) {
+    super(message);
+    // the array and object should be frozen to reflect the stackTrace at the time of the error
+    this.stackTrace = stackTrace;
+  }
+}
+
+export class RetryError extends ErrorWithStackTrace {
+  constructor(stackTrace: StackFrame[]) {
+    super(
       'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
-    stackTrace,
-  };
+      stackTrace
+    );
+  }
 }
 
-export function createApiError(
-  message: string,
-  status: number,
-  stackTrace: StackFrame[]
-): ApiError {
-  return {
-    name: 'ApiError',
-    message,
-    status,
-    stackTrace,
-  };
+export class ApiError extends ErrorWithStackTrace {
+  status: number;
+
+  constructor(message: string, status: number, stackTrace: StackFrame[]) {
+    super(message, stackTrace);
+    this.status = status;
+  }
 }
 
-export function createDeserializationError(
-  message: string,
-  response: Response
-): DeserializationError {
-  return {
-    name: 'DeserializationError',
-    message,
-    response,
-  };
+export class DeserializationError extends Error {
+  response: Response;
+
+  constructor(message: string, response: Response) {
+    super(message);
+    this.response = response;
+  }
 }

@@ -1,6 +1,6 @@
 import { isRetryable, isSuccess } from './Response';
 import { createStatefulHost } from './createStatefulHost';
-import { createRetryError } from './errors';
+import { RetryError } from './errors';
 import {
   deserializeFailure,
   deserializeSuccess,
@@ -119,7 +119,7 @@ export function createTransporter({
        */
       const host = retryableHosts.pop();
       if (host === undefined) {
-        throw createRetryError(stackTraceWithoutCredentials(stackTrace));
+        throw new RetryError(stackTraceWithoutCredentials(stackTrace));
       }
 
       let responseTimeout = requestOptions.timeout;

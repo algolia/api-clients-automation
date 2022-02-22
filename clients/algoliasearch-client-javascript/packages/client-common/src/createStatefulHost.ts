@@ -1,15 +1,8 @@
-import type { Host } from './types';
+import type { Host, StatefulHost } from './types';
 
 // By default, API Clients at Algolia have expiration delay of 5 mins.
 // In the JavaScript client, we have 2 mins.
 const EXPIRATION_DELAY = 2 * 60 * 1000;
-
-export type StatefulHost = Host & {
-  status: 'down' | 'timedout' | 'up';
-  lastUpdate: number;
-  isUp: () => boolean;
-  isTimedout: () => boolean;
-};
 
 export function createStatefulHost(
   host: Host,
