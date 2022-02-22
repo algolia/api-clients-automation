@@ -22,13 +22,13 @@ if [[ $LANGUAGE == 'javascript' ]]; then
 elif [[ $LANGUAGE == 'php' ]]; then
     FIXER="clients/algoliasearch-client-php/vendor/bin/php-cs-fixer"
     if [[ $CI ]]; then
-        FIXCMD="PHP_CS_FIXER_IGNORE_ENV=1 php $FIXER fix $FOLDER --using-cache=no --allow-risky=yes"
+        PHP="php"
     else
-        FIXCMD="PHP_CS_FIXER_IGNORE_ENV=1 php8 $FIXER fix $FOLDER --using-cache=no --allow-risky=yes"
+        PHP="php8"
     fi
     CMD="composer update --working-dir=clients/algoliasearch-client-php \
           && composer dump-autoload --working-dir=clients/algoliasearch-client-php \
-          && $FIXCMD"
+          && PHP_CS_FIXER_IGNORE_ENV=1 $PHP $FIXER fix $FOLDER --using-cache=no --allow-risky=yes"
 elif [[ $LANGUAGE == 'java' ]]; then
     CMD="find $FOLDER -type f -name \"*.java\" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
