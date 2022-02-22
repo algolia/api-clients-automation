@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/client-abtesting/dist/client-abtesting.umd.browser.js",
-      "maxSize": "3.00KB"
+      "maxSize": "3.25KB"
     },
     {
       "path": "packages/client-analytics/dist/client-analytics.umd.browser.js",
