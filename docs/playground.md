@@ -1,6 +1,6 @@
 # Playground
 
-> All of the existing clients should have an active playground for you to test generated clients, if it's not the case, consider contributing or letting us know!
+All of the existing clients should have an active playground for you to test generated clients, if it's not the case, consider contributing or letting us know!
 
 ## Usage
 
