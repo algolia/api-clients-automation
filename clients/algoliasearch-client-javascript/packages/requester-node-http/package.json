@@ -6,10 +6,10 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/requester-node-http.cjs.node.js",
+  "module": "dist/requester-node-http.esm.node.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
     "clean": "rm -rf dist/"
   },
   "engines": {

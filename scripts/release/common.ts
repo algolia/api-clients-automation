@@ -8,17 +8,22 @@ export const MAIN_BRANCH = config.mainBranch;
 export const OWNER = config.owner;
 export const REPO = config.repo;
 
-type Run = (
+export type Run = (
   command: string,
-  options?: Partial<{
-    errorMessage: string;
-  }>
+  options?: Partial<
+    execa.SyncOptions & {
+      errorMessage: string;
+    }
+  >
 ) => execa.ExecaReturnBase<string>['stdout'];
 
-export const run: Run = (command, { errorMessage = undefined } = {}) => {
+export const run: Run = (
+  command,
+  { errorMessage = undefined, ...execaOptions } = {}
+) => {
   let result: execa.ExecaSyncReturnValue<string>;
   try {
-    result = execa.commandSync(command);
+    result = execa.commandSync(command, execaOptions);
   } catch (err) {
     if (errorMessage) {
       throw new Error(`[ERROR] ${errorMessage}`);
@@ -36,3 +41,19 @@ export const LANGS = [
     )
   ),
 ];
+
+export function getMarkdownSection(markdown: string, title: string): string {
+  const levelIndicator = title.split(' ')[0]; // e.g. `##`
+  const lines = markdown
+    .slice(markdown.indexOf(title))
+    .split('\n')
+    .map((line) => line.trim());
+  let endIndex = lines.length;
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i].startsWith(`${levelIndicator} `)) {
+      endIndex = i;
+      break;
+    }
+  }
+  return lines.slice(0, endIndex).join('\n');
+}
