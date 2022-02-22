@@ -2,7 +2,7 @@
 
 Adding a client requires a few manual steps in order to setup the tooling, generation scripts and properly generate the code. We recommend getting inspirations from existing clients such as `javascript-recommend`.
 
-> See [README](../README.md) to `setup the repository tooling` and `setup dev environment`.
+> See [README](../README.md) to [`setup the repository tooling`](../README.md#setup-repository-tooling) and [`setup dev environment`](../README.md#setup-dev-environment).
 
 ## 1. Writing specs
 
@@ -12,7 +12,7 @@ We recommend to have a look at [existing spec files](../specs/). The `bundled` f
 
 Properties that are common to Algolia or used in multiple clients.
 
-### <clientName> spec folder
+### `<clientName>` spec folder
 
 > Example with the [search client spec](../specs/search/)
 
@@ -20,11 +20,11 @@ Properties that are common to Algolia or used in multiple clients.
 
 This file is the entry point of the client spec, it contains `servers`, `paths` and other specific imformations of the API. We recommend to copy an existing [`spec.yml` file](../specs/search/spec.yml) to get started.
 
-#### <clientName>/common folder
+#### `<clientName>`/common folder
 
 Properties that are common to the client.
 
-#### <clientName>/paths folder
+#### `<clientName>`/paths folder
 
 Path definition of the paths defined in the [spec file](#specyml-file)
 

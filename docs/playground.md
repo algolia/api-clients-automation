@@ -24,5 +24,5 @@ yarn docker playground java search
 
 To add a new supported language to the playground, you need to:
 
-- Create a new folder with your <languageName> in [the playground folder](../playground/)
+- Create a new folder with your `<languageName>` in [the playground folder](../playground/)
 - Edit the [playground script](../scripts/playground.sh) with the command to run it.

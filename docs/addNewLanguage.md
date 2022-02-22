@@ -2,7 +2,8 @@
 
 This repository leverages [openapi-generator](https://openapi-generator.tech/) to generate API clients.
 
-> See [README](../README.md) to `setup the repository tooling` and `setup dev environment`.
+> See [README](../README.md) to [`setup the repository tooling`](../README.md#setup-repository-tooling) and [`setup dev environment`](../README.md#setup-dev-environment).
+
 > If not done already, [install openapi-generator](https://openapi-generator.tech/docs/installation/)
 
 ## Find a template to start with
