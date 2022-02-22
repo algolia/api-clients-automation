@@ -31,9 +31,9 @@ function getDefaultHosts(region?: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createInsightsApi = (
+export function createInsightsApi(
   options: CreateClientOptions & { region?: Region }
-) => {
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.region),
@@ -51,6 +51,10 @@ export const createInsightsApi = (
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * This command pushes an array of events.
@@ -89,7 +93,7 @@ export const createInsightsApi = (
     });
   }
 
-  return { pushEvents };
-};
+  return { addUserAgent, pushEvents };
+}
 
 export type InsightsApi = ReturnType<typeof createInsightsApi>;

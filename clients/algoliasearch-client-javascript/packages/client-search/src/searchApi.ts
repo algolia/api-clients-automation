@@ -107,7 +107,7 @@ function getDefaultHosts(appId: string): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createSearchApi = (options: CreateClientOptions) => {
+export function createSearchApi(options: CreateClientOptions) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.appId),
@@ -125,6 +125,10 @@ export const createSearchApi = (options: CreateClientOptions) => {
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Add a new API Key with specific permissions/restrictions.
@@ -2395,6 +2399,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
   }
 
   return {
+    addUserAgent,
     addApiKey,
     addOrUpdateObject,
     appendSource,
@@ -2453,7 +2458,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
     setSettings,
     updateApiKey,
   };
-};
+}
 
 export type SearchApi = ReturnType<typeof createSearchApi>;
 
