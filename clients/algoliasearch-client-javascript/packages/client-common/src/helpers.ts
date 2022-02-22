@@ -1,4 +1,4 @@
-import { ApiError, DeserializationError } from './errors';
+import { createApiError, createDeserializationError } from './errors';
 import type {
   Headers,
   Host,
@@ -98,7 +98,7 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   try {
     return JSON.parse(response.content);
   } catch (e) {
-    throw new DeserializationError((e as Error).message, response);
+    throw createDeserializationError((e as Error).message, response);
   }
 }
 
@@ -112,6 +112,5 @@ export function deserializeFailure(
   } catch (e) {
     // ..
   }
-
-  return new ApiError(message, status, stackFrame);
+  return createApiError(message, status, stackFrame);
 }
