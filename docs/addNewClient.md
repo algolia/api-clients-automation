@@ -4,9 +4,33 @@ Adding a client requires a few manual steps in order to setup the tooling, gener
 
 > See [README](../README.md) to `setup the repository tooling` and `setup dev environment`.
 
-## Configuring the environment
+## 1. Writing specs
 
-After setting up the dev environment from [README](../README.md), you need to update the configuration files to properly generate clients that are maintainable.
+We recommend to have a look at [existing spec files](../specs/). The `bundled` folder is automatically generated, manual changes shouldn't be done in these files.
+
+### [common spec folder](../specs/common/)
+
+Properties that are common to Algolia or used in multiple clients.
+
+### <clientName> spec folder
+
+> Example with the [search client spec](../specs/search/)
+
+#### `spec.yml` file
+
+This file is the entry point of the client spec, it contains `servers`, `paths` and other specific imformations of the API. We recommend to copy an existing [`spec.yml` file](../specs/search/spec.yml) to get started.
+
+#### <clientName>/common folder
+
+Properties that are common to the client.
+
+#### <clientName>/paths folder
+
+Path definition of the paths defined in the [spec file](#specyml-file)
+
+## 2. Configuring the environment
+
+After setting up the dev environment from [README](../README.md) and [writing your spec files](#1-writing-specs), you need to update the configuration files to properly generate clients that are maintainable.
 
 ### Generation config
 
@@ -36,7 +60,7 @@ You can copy an existing object of a client and replace the `<clientName>` value
 
 ### GitHub actions
 
-The built clients are cached with the [Cache GitHub Action](../.github/actions/cache/action.yml) to avoid useless CI tasks.
+The built clients are cached with the [Cache GitHub Action](../.github/actions/cache/action.yml) to avoid unnecessary CI tasks.
 
 > TODO: Automate this step
 
@@ -51,26 +75,10 @@ You can copy [an existing client caching step](../.github/actions/cache/action.y
     key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-<LANGUAGE>-<CLIENT_NAME>-${{ hashFiles('clients/<LANGUAGE_FOLDER>/<CLIENT_NAME>/**') }}-${{ hashFiles('specs/bundled/<CLIENT_SPEC>.yml') }}
 ```
 
-## Writing specs
+## 3. Generate new client
 
-We recommend to have a look at [existing spec files](../specs/). The `bundled` folder is automatically generated, manual changes shouldn't be done in these files.
+> You can find more commands in the [README](../README.md#generate-all-clients).
 
-### [common spec folder](../specs/common/)
-
-Properties that are common to Algolia or used in multiple clients.
-
-### [clientName spec folder](../specs/search)
-
-#### [spec file](../specs/search/spec.yml)
-
-We recommend to copy an of existing [spec file](../specs/search/spec.yml) and edit the `paths` and `servers
-
-This file is the entry point of the spec, it contains `servers` and `paths` of the API spec.
-
-#### [spec common folder](../specs/search/common)
-
-Properties that are common to the client.
-
-#### [paths folder](../specs/search/paths)
-
-Path definition of the paths defined in the [spec file](../specs/search/spec.yml)
+```bash
+yarn docker generate <languageName> <clientName>
+```
