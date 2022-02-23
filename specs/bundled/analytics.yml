@@ -118,7 +118,7 @@ components:
       type: integer
       description: Number of hits that the search query matched.
       example: 20
-    getTopSearchesResponse:
+    getTopSearchesResponseSimple:
       type: object
       additionalProperties: false
       required:
@@ -202,6 +202,10 @@ components:
                 $ref: '#/components/schemas/conversionCount'
               nbHits:
                 $ref: '#/components/schemas/nbHits'
+    getTopSearchesResponse:
+      oneOf:
+        - $ref: '#/components/schemas/getTopSearchesResponseSimple'
+        - $ref: '#/components/schemas/getTopSearchesResponseWithAnalytics'
     ErrorBase:
       description: Error.
       type: object
@@ -216,7 +220,7 @@ components:
     hit:
       description: The hit.
       type: string
-    getTopHitsResponse:
+    getTopHitsResponseSimple:
       type: object
       additionalProperties: false
       required:
@@ -271,6 +275,10 @@ components:
                 $ref: '#/components/schemas/clickCount'
               conversionCount:
                 $ref: '#/components/schemas/conversionCount'
+    getTopHitsResponse:
+      oneOf:
+        - $ref: '#/components/schemas/getTopHitsResponseSimple'
+        - $ref: '#/components/schemas/getTopHitsResponseWithAnalytics'
     attribute:
       description: The attribute.
       type: string
@@ -439,9 +447,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/getTopSearchesResponse'
-                  - $ref: '#/components/schemas/getTopSearchesResponseWithAnalytics'
+                $ref: '#/components/schemas/getTopSearchesResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -765,9 +771,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/getTopHitsResponse'
-                  - $ref: '#/components/schemas/getTopHitsResponseWithAnalytics'
+                $ref: '#/components/schemas/getTopHitsResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':

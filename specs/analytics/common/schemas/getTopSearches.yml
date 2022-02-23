@@ -1,4 +1,4 @@
-getTopSearchesResponse:
+getTopSearchesResponseSimple:
   type: object
   additionalProperties: false
   required:
@@ -63,3 +63,8 @@ getTopSearchesResponseWithAnalytics:
             $ref: '../parameters.yml#/conversionCount'
           nbHits:
             $ref: ../../../search/common/schemas/SearchResponse.yml#/nbHits
+
+getTopSearchesResponse:
+  oneOf:
+    - $ref: '#/getTopSearchesResponseSimple'
+    - $ref: '#/getTopSearchesResponseWithAnalytics'

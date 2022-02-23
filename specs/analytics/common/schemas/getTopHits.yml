@@ -1,4 +1,4 @@
-getTopHitsResponse:
+getTopHitsResponseSimple:
   type: object
   additionalProperties: false
   required:
@@ -54,3 +54,8 @@ getTopHitsResponseWithAnalytics:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:
             $ref: '../parameters.yml#/conversionCount'
+
+getTopHitsResponse:
+  oneOf:
+    - $ref: '#/getTopHitsResponseSimple'
+    - $ref: '#/getTopHitsResponseWithAnalytics'
