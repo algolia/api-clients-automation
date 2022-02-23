@@ -9,9 +9,7 @@
     "scripts/"
   ],
   "scripts": {
-    "build:clients": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
-    "build:specs": "./scripts/builds/specs.sh ${0:-all} ${1:-yml}",
-    "build": "yarn build:specs && yarn build:clients",
+    "api": "yarn workspace scripts ts-node ./index.ts",
     "clean": "rm -rf **/dist **/build **/node_modules **/.gradle",
     "cts:generate": "yarn workspace tests build && ./scripts/multiplexer.sh ${2:-nonverbose} yarn workspace tests generate ${0:-all} ${1:-all}",
     "cts:test": "./scripts/multiplexer.sh ${1:-nonverbose} ./scripts/runCTS.sh ${0:-all} all",
@@ -23,8 +21,6 @@
     "docker:setup": "yarn docker:clean && yarn docker:build && yarn docker:mount",
     "docker": "docker exec -it dev yarn $*",
     "lint": "eslint --ext=ts .",
-    "post:generate": "./scripts/post-gen/global.sh",
-    "generate": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate ${0:-all}",
     "playground:browser": "yarn workspace javascript-browser-playground start",
     "playground": "yarn && ./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/playground.sh ${0:-javascript} ${1:-search}",
     "specs:fix": "eslint --ext=yml specs/ --fix",

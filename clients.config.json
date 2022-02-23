@@ -1,0 +1,8 @@
+{
+    "java": {
+        "folder": "clients/algoliasearch-client-java-2"
+    },
+    "javascript": {
+        "folder": "clients/algoliasearch-client-javascript"
+    }
+}
