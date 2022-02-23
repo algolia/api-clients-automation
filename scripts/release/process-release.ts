@@ -108,8 +108,8 @@ new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
   }
 );
 
-run('git config user.name "api-clients-bot"');
-run('git config user.email "bot@algolia.com"');
+run('git config --global user.name "api-clients-bot"');
+run('git config --global user.email "bot@algolia.com"');
 
 // commit openapitools and changelogs
 if (process.env.RELEASE_TEST !== 'true') {
