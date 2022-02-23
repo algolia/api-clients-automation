@@ -73,7 +73,7 @@ const langsToUpdateRepo = getMarkdownSection(
     const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);
     return result?.[1];
   })
-  .filter(Boolean); // e.g. ['javascript', 'php']
+  .filter(Boolean) as string[]; // e.g. ['javascript', 'php']
 
 // update versions in `openapitools.json`
 Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
@@ -121,15 +121,13 @@ if (process.env.RELEASE_TEST !== 'true') {
 // generate clients to release
 Object.keys(versionsToRelease).forEach((lang) => {
   console.log(`Generating ${lang} client(s)...`);
-  // @ts-expect-error the library `execa` is not typed correctly
-  run(`yarn generate ${lang}`).pipe(process.stdout);
+  console.log(run(`yarn generate ${lang}`));
 });
 
 // generate clients to just update the repos
 langsToUpdateRepo.forEach((lang) => {
   console.log(`Generating ${lang} client(s)...`);
-  // @ts-expect-error the library `execa` is not typed correctly
-  run(`yarn generate ${lang}`).pipe(process.stdout);
+  console.log(run(`yarn generate ${lang}`));
 });
 
 const clientPath = path.resolve(
