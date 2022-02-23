@@ -116,7 +116,7 @@ if (process.env.RELEASE_TEST !== 'true') {
   run('git add openapitools.json');
   run('git add doc/changelogs/*');
   execa.sync('git', ['commit', '-m', TEXT.commitMessage]);
-  run(`git push origin ${MAIN_BRANCH}`);
+  run(`git push`);
 }
 
 // generate clients to release
@@ -135,18 +135,17 @@ const clientPath = path.resolve(
   ROOT_DIR,
   'clients/dummy-algoliasearch-client-javascript'
 );
-const runInClient: Run = (command, options = {}) =>
-  runOriginal(command, {
-    cwd: clientPath,
-    ...options,
-  });
 
-runInClient(`git checkout next`);
+run(`git checkout next`, { cwd: clientPath });
 run(
-  `cp -r clients/algoliasearch-client-javascript/ clients/dummy-algoliasearch-client-javascript`
+  `cp -r clients/algoliasearch-client-javascript/ clients/dummy-algoliasearch-client-javascript/`
 );
-runInClient(`git add .`);
+run(`git add .`, { cwd: clientPath });
 execa.sync('git', ['commit', '-m', 'chore: release test'], {
   cwd: clientPath,
 });
-runInClient(`git push origin next`);
+run(`git push origin next`, { cwd: clientPath });
+
+run(`git add clients/dummy-algoliasearch-client-javascript`);
+execa.sync('git', ['commit', '-m', 'chore: update submodules']);
+run(`git push`);
