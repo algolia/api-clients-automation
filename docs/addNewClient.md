@@ -28,6 +28,14 @@ Properties that are common to the client.
 
 Path definition of the paths defined in the [spec file](#specyml-file)
 
+#### Guidelines
+
+- **Endpoints**: Each file should contain `operationId`s for a single endpoint, but multiple methods are allowed.
+- **Name**: If the path file only contain one method, we name the file same as the `operationId`, but we try to make it less specific if there is multiple.
+- **Description/Summary**: `operationId`s must have both description and summary.
+- **Tags**: The `tags` must match the `<clientName>` spec folder.
+- **Complex objects**: Complex objects (nested arrays, nested objects, etc.) must be referenced (`$ref`) in the `operantionId` file and not inlined. This is required to provide a great naming.
+
 ## 2. Configuring the environment
 
 After setting up the dev environment from [README](../README.md) and [writing your spec files](#1-writing-specs), you need to update the configuration files to properly generate clients that are maintainable.
@@ -82,3 +90,7 @@ You can copy [an existing client caching step](../.github/actions/cache/action.y
 ```bash
 yarn docker generate <languageName> <clientName>
 ```
+
+## 4. Implementing the Common Test Suite
+
+See [CTS.md](./CTS.md) for more informations.
