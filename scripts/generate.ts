@@ -62,5 +62,27 @@ export async function generate(
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
     await formatter(lang, getLanguageFolder(lang), verbose);
+
+    if (lang === 'javascript') {
+      const spinner = createSpinner(
+        'Cleaning JavaScript client utils',
+        verbose
+      );
+      await run('yarn workspace algoliasearch-client-javascript clean:utils', {
+        verbose,
+      });
+      spinner.text = 'Building JavaScript client utils';
+      await run('yarn workspace algoliasearch-client-javascript build:utils', {
+        verbose,
+      });
+
+      spinner.succeed();
+    }
+  }
+
+  if (!CI) {
+    const spinner = createSpinner('formatting specs', verbose).start();
+    await run(`yarn specs:fix`, { verbose });
+    spinner.succeed();
   }
 }

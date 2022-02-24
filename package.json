@@ -5,24 +5,23 @@
     "clients/algoliasearch-client-javascript/",
     "playground/javascript/node/",
     "playground/javascript/browser/",
-    "tests/",
     "scripts/"
   ],
   "scripts": {
     "api": "yarn workspace scripts ts-node --transpile-only ./index.ts",
     "clean": "rm -rf **/dist **/build **/node_modules **/.gradle",
-    "cts:test:scripts": "yarn workspace scripts test",
-    "cts:lint:scripts": "eslint --ext=ts scripts/",
     "docker:build": "./scripts/docker/build.sh",
     "docker:clean": "docker stop dev; docker rm -f dev; docker image rm -f api-clients-automation",
     "docker:mount": "./scripts/docker/mount.sh",
     "docker:setup": "yarn docker:clean && yarn docker:build && yarn docker:mount",
     "docker": "docker exec -it dev yarn api $*",
+    "github-actions:lint": "eslint --ext=yml .github/",
+    "lint:scripts": "eslint --ext=ts scripts/",
     "playground:browser": "yarn workspace javascript-browser-playground start",
     "specs:fix": "eslint --ext=yml specs/ --fix",
+    "release": "yarn workspace scripts createReleaseIssue",
     "specs:lint": "eslint --ext=yml specs/$0",
-    "github-actions:lint": "eslint --ext=yml .github/",
-    "release": "yarn workspace scripts createReleaseIssue"
+    "test:scripts": "yarn workspace scripts test"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.26",

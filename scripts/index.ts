@@ -32,6 +32,9 @@ async function promptLanguage(defaut: string | undefined): Promise<string> {
   if (defaut) {
     return defaut;
   }
+  if (CI) {
+    return 'all';
+  }
   const { language } = await inquirer.prompt([
     {
       type: 'list',
@@ -50,6 +53,9 @@ async function promptClient(
 ): Promise<string> {
   if (defaut) {
     return defaut;
+  }
+  if (CI) {
+    return 'all';
   }
   const { client } = await inquirer.prompt([
     {
@@ -165,15 +171,7 @@ buildCommand
       client = await promptClient(client);
 
       if (!outputFormat) {
-        ({ outputFormat } = await inquirer.prompt([
-          {
-            type: 'list',
-            name: 'outputFormat',
-            message: 'Select the output format',
-            default: 'yml',
-            choices: ['yml', 'json'],
-          },
-        ]));
+        outputFormat = 'yml';
       }
 
       let clientsTodo = [client];
