@@ -30,7 +30,7 @@ openapi-generator author template -g typescript-node -o templates/javascript/
 
 ## Update the generator config
 
-Add each client in the file [`openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/Dockerfileopenapitools.json), following the others client structure.
+Add each client in the file [`openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/openapitools.json), following the others client structure.
 
 > See [How to add a new client](/docs/addNewClient) for informations regarding this file
 

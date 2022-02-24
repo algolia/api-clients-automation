@@ -10,19 +10,19 @@ Adding a client requires a few manual steps in order to setup the tooling, gener
 
 ## 1. Writing specs
 
-We recommend to have a look at [existing spec files](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile/specs/). The `bundled` folder is automatically generated, manual changes shouldn't be done in these files.
+We recommend to have a look at [existing spec files](https://github.com/algolia/api-clients-automation/blob/main/specs/). The `bundled` folder is automatically generated, manual changes shouldn't be done in these files.
 
-### [common spec folder](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile/specs/common/)
+### [common spec folder](https://github.com/algolia/api-clients-automation/blob/main/specs/common/)
 
 Properties that are common to Algolia or used in multiple clients.
 
 ### `<clientName>` spec folder
 
-> Example with the [search client spec](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile/specs/search/)
+> Example with the [search client spec](https://github.com/algolia/api-clients-automation/blob/main/specs/search/)
 
 #### `spec.yml` file
 
-This file is the entry point of the client spec, it contains `servers`, `paths` and other specific imformations of the API. We recommend to copy an existing [`spec.yml` file](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile/specs/search/spec.yml) to get started.
+This file is the entry point of the client spec, it contains `servers`, `paths` and other specific imformations of the API. We recommend to copy an existing [`spec.yml` file](https://github.com/algolia/api-clients-automation/blob/main/specs/search/spec.yml) to get started.
 
 #### `<clientName>`/common folder
 
@@ -46,7 +46,7 @@ After setting up the dev environment from [README](/docs/setupRepository) and [w
 
 ### Generation config
 
-[openapitools.json](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile/openapitools.json) hosts the configuration of all of the generated clients with their available languages.
+[openapitools.json](https://github.com/algolia/api-clients-automation/blob/main/openapitools.json) hosts the configuration of all of the generated clients with their available languages.
 
 #### `generators`
 
@@ -72,11 +72,11 @@ You can copy an existing object of a client and replace the `<clientName>` value
 
 ### GitHub actions
 
-The built clients are cached with the [Cache GitHub Action](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile/.github/actions/cache/action.yml) to avoid unnecessary CI tasks.
+The built clients are cached with the [Cache GitHub Action](https://github.com/algolia/api-clients-automation/blob/main/.github/actions/cache/action.yml) to avoid unnecessary CI tasks.
 
 > TODO: Automate this step
 
-You can copy [an existing client caching step](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile/.github/actions/cache/action.yml) or edit the following example:
+You can copy [an existing client caching step](https://github.com/algolia/api-clients-automation/blob/main/.github/actions/cache/action.yml) or edit the following example:
 
 ```yaml
 - name: Restore built <LANGUAGE> <CLIENT_NAME> client
