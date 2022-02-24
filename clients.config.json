@@ -2,15 +2,15 @@
     "java": {
         "folder": "clients/algoliasearch-client-java-2",
         "tests": {
-            "extension": ".test.ts",
-            "outputFolder": "src"
+            "extension": ".test.java",
+            "outputFolder": "src/test/java/com/algolia"
         }
     },
     "javascript": {
         "folder": "clients/algoliasearch-client-javascript",
-        "texts": {
-            "extension": ".test.java",
-            "outputFolder": "src/test/java/com/algolia"
+        "tests": {
+            "extension": ".test.ts",
+            "outputFolder": "src"
         }
     },
     "php": {
