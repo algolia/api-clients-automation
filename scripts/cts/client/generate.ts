@@ -2,12 +2,11 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
-import openapitools from '../../../openapitools.json';
+import { exists } from '../../common';
+import type { Generator } from '../../types';
 import {
   walk,
-  packageNames,
   createClientName,
-  exists,
   createOutputDir,
   getOutputPath,
   loadTemplates,
@@ -57,10 +56,11 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
   return testsBlocks;
 }
 
-export async function generateTests(
-  language: string,
-  client: string
-): Promise<void> {
+export async function generateClientTests({
+  language,
+  client,
+  additionalProperties: { hasRegionalHost, packageName },
+}: Generator): Promise<void> {
   const testsBlocks = await loadTests(client);
 
   if (testsBlocks.length === 0) {
@@ -89,14 +89,10 @@ export async function generateTests(
   const code = Mustache.render(
     template,
     {
-      import: packageNames[language][client],
+      import: packageName,
       client: createClientName(client, language),
       blocks: modifyForMustache(testsBlocks),
-      hasRegionalHost: openapitools['generator-cli'].generators[
-        `${language}-${client}`
-      ].additionalProperties.hasRegionalHost
-        ? true
-        : undefined,
+      hasRegionalHost: hasRegionalHost ? true : undefined,
     },
     partialTemplates
   );

@@ -2,10 +2,9 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
-import openapitools from '../../../../openapitools.json';
+import type { Generator } from '../../../types';
 import {
   createClientName,
-  packageNames,
   capitalize,
   getOutputPath,
   createOutputDir,
@@ -16,10 +15,11 @@ import { loadCTS } from './cts';
 
 const testPath = 'methods/requests';
 
-export async function generateTests(
-  language: string,
-  client: string
-): Promise<void> {
+export async function generateRequestsTests({
+  language,
+  client,
+  additionalProperties: { hasRegionalHost, packageName },
+}: Generator): Promise<void> {
   const { requests: template, ...partialTemplates } = await loadTemplates({
     language,
     testPath,
@@ -34,21 +34,17 @@ export async function generateTests(
   const code = Mustache.render(
     template,
     {
-      import: packageNames[language][client],
+      import: packageName,
       client: createClientName(client, language),
       blocks: cts,
-      hasRegionalHost: openapitools['generator-cli'].generators[
-        `${language}-${client}`
-      ].additionalProperties.hasRegionalHost
-        ? true
-        : undefined,
+      hasRegionalHost: hasRegionalHost ? true : undefined,
       capitalize() {
-        return function (text: string, render: (string) => string): string {
+        return function (text: string, render: (t: string) => string): string {
           return capitalize(render(text));
         };
       },
       escapeQuotes() {
-        return function (text: string, render: (string) => string): string {
+        return function (text: string, render: (t: string) => string): string {
           return render(text).replace(/"/g, '\\"');
         };
       },
