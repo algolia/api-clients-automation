@@ -6,12 +6,12 @@ const sidebars = {
     {
       type: 'category',
       label: 'Getting Started',
-      items: ['introduction', 'setupRepository'],
+      items: ['introduction'],
     },
     {
       type: 'category',
       label: 'Contributing',
-      items: ['addNewClient', 'addNewLanguage'],
+      items: ['setupRepository', 'addNewClient', 'addNewLanguage'],
     },
     {
       type: 'category',
