@@ -9,7 +9,7 @@
     "scripts/"
   ],
   "scripts": {
-    "api": "yarn workspace scripts ts-node ./index.ts",
+    "api": "yarn workspace scripts ts-node --transpile-only ./index.ts",
     "clean": "rm -rf **/dist **/build **/node_modules **/.gradle",
     "cts:test:scripts": "yarn workspace scripts test",
     "cts:lint:scripts": "eslint --ext=ts scripts/",
