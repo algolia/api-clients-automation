@@ -53,19 +53,19 @@ You can make changes locally and run commands through the docker container.
 #### Usage
 
 ```bash
-yarn docker build:specs <client | all>
+yarn docker build specs <client | all>
 ```
 
 #### Build all specs
 
 ```bash
-yarn docker build:specs
+yarn docker build specs all
 ```
 
 #### Build specific spec
 
 ```bash
-yarn docker build:specs recommend
+yarn docker build specs recommend
 ```
 
 #### Fix the specs format
@@ -73,14 +73,14 @@ yarn docker build:specs recommend
 This is used by the build script and should not need to be called manually but if you want to format all specs file do:
 
 ```bash
-yarn docker specs:fix
+yarn specs:fix
 ```
 
 If you just want to check the format (not override the files), run:
 
 ```bash
-yarn docker specs:lint <client>
-yarn docker specs:lint search
+yarn specs:lint <client>
+yarn specs:lint search
 ```
 
 ### Generate clients based on the [`specs`](./specs/)
@@ -94,7 +94,7 @@ yarn docker generate <language | all> <client | all>
 #### Generate all clients
 
 ```bash
-yarn docker generate
+yarn docker generate all all
 ```
 
 ### Generate specific client for specific language
@@ -102,14 +102,18 @@ yarn docker generate
 #### Usage
 
 ```bash
-yarn docker build:clients <language | all> <client | all>
+yarn docker build clients <language | all> <client | all>
 ```
 
 ### Build specific client for specific language
 
 ```bash
-yarn docker build:clients java recommend
+yarn docker build clients java recommend
 ```
+
+### Verbose command
+
+You can add `-v` to almost every command to have a more verbose output.
 
 ## Testing clients
 
