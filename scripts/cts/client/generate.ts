@@ -2,7 +2,8 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
-import { exists } from '../../common';
+import { exists, getAbsolutePath } from '../../common';
+import { createSpinner } from '../../oraLog';
 import type { Generator } from '../../types';
 import {
   walk,
@@ -18,7 +19,7 @@ const testPath = 'client';
 
 async function loadTests(client: string): Promise<TestsBlock[]> {
   const testsBlocks: TestsBlock[] = [];
-  const clientPath = `./CTS/client/${client}`;
+  const clientPath = getAbsolutePath(`tests/CTS/client/${client}`);
 
   if (!(await exists(clientPath))) {
     return [];
@@ -56,20 +57,23 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
   return testsBlocks;
 }
 
-export async function generateClientTests({
-  language,
-  client,
-  additionalProperties: { hasRegionalHost, packageName },
-}: Generator): Promise<void> {
+export async function generateClientTests(
+  {
+    language,
+    client,
+    additionalProperties: { hasRegionalHost, packageName },
+  }: Generator,
+  verbose: boolean
+): Promise<void> {
+  let spinner = createSpinner('generating client tests', verbose).start();
   const testsBlocks = await loadTests(client);
 
   if (testsBlocks.length === 0) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `Skipping because tests dont't exist for CTS > generate:client for ${language}-${client}`
-    );
+    spinner.warn("Skipping because tests doesn' exist");
     return;
   }
+  spinner.info();
+  spinner = createSpinner('loading templates', verbose).start();
 
   await createOutputDir({ language, testPath });
 
@@ -79,13 +83,11 @@ export async function generateClientTests({
   });
 
   if (!template) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `Skipping because template doesn't exist for CTS > generate:client for ${language}-${client}`
-    );
+    spinner.warn("Skipping because template doesn't exist");
     return;
   }
 
+  spinner.text = 'rendering templates';
   const code = Mustache.render(
     template,
     {
@@ -97,6 +99,8 @@ export async function generateClientTests({
     partialTemplates
   );
   await fsp.writeFile(getOutputPath({ language, client, testPath }), code);
+
+  spinner.succeed();
 }
 
 function serializeParameters(parameters: any): string {

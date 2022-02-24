@@ -3,25 +3,22 @@ import { formatter } from '../formatter';
 import { createSpinner } from '../oraLog';
 import type { Generator } from '../types';
 
+import { generateClientTests } from './client/generate';
 import { generateRequestsTests } from './methods/requests/generate';
 
 async function ctsGenerate(
   generator: Generator,
   verbose: boolean
 ): Promise<void> {
-  const { language, key } = generator;
-  const spinner = createSpinner(`generating cts for ${key}`, verbose).start();
-  switch (language) {
+  createSpinner(`generating CTS for ${generator.key}`, verbose).start().info();
+  switch (generator.language) {
     case 'javascript':
-      await generateRequestsTests(generator);
-      break;
     case 'java':
-      break;
-    case 'php':
+      await generateRequestsTests(generator, verbose);
+      await generateClientTests(generator, verbose);
       break;
     default:
   }
-  spinner.succeed();
 }
 
 export async function ctsGenerateMany(

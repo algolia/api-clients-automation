@@ -2,7 +2,7 @@ import fsp from 'fs/promises';
 
 import { hashElement } from 'folder-hash';
 
-import { fileExists, run } from './common';
+import { exists, run } from './common';
 import { createSpinner } from './oraLog';
 
 async function buildSpec(
@@ -18,10 +18,10 @@ async function buildSpec(
       `checking cache for ${client}`,
       verbose
     ).start();
-    if (await fileExists(`../specs/bundled/${client}.yml`)) {
+    if (await exists(`../specs/bundled/${client}.yml`)) {
       const hash = (await hashElement(`../specs/${client}`)).hash;
       // compare with stored cache
-      if (await fileExists(cacheFile)) {
+      if (await exists(cacheFile)) {
         const storedHash = (await fsp.readFile(cacheFile)).toString();
         if (storedHash === hash) {
           spinner.succeed(

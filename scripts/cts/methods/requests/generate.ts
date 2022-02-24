@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
+import { createSpinner } from '../../../oraLog';
 import type { Generator } from '../../../types';
 import {
   createClientName,
@@ -15,15 +16,22 @@ import { loadCTS } from './cts';
 
 const testPath = 'methods/requests';
 
-export async function generateRequestsTests({
-  language,
-  client,
-  additionalProperties: { hasRegionalHost, packageName },
-}: Generator): Promise<void> {
+export async function generateRequestsTests(
+  {
+    language,
+    client,
+    additionalProperties: { hasRegionalHost, packageName },
+  }: Generator,
+  verbose: boolean
+): Promise<void> {
+  createSpinner('generating requests tests', verbose).start().info();
+  const spinner = createSpinner('loading templates', verbose).start();
   const { requests: template, ...partialTemplates } = await loadTemplates({
     language,
     testPath,
   });
+
+  spinner.text = 'loading CTS';
   const cts = (await loadCTS(client)).requests;
   await createOutputDir({ language, testPath });
 
@@ -31,6 +39,7 @@ export async function generateRequestsTests({
     return;
   }
 
+  spinner.text = 'rendering templates';
   const code = Mustache.render(
     template,
     {
@@ -53,4 +62,5 @@ export async function generateRequestsTests({
   );
 
   await fsp.writeFile(getOutputPath({ language, client, testPath }), code);
+  spinner.succeed();
 }

@@ -1,5 +1,6 @@
 import { buildSpecs } from './buildSpecs';
-import { CI, getLanguageFolder, run, runIfExists } from './common';
+import { CI, run, runIfExists } from './common';
+import { getLanguageFolder } from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
 import { setHostsOptions } from './pre-gen/setHostsOptions';
@@ -60,9 +61,6 @@ export async function generate(
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
-    const spinner = createSpinner(`formatting ${lang}`, verbose).start();
     await formatter(lang, getLanguageFolder(lang), verbose);
-
-    spinner.succeed();
   }
 }

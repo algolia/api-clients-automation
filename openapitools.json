@@ -241,7 +241,8 @@
           "sourceFolder": "algoliasearch-core",
           "java8": true,
           "dateLibrary": "java8",
-          "packageName": "algoliasearch-client-java-2"
+          "packageName": "algoliasearch-client-java-2",
+          "packageVersion": "0.0.1"
         }
       },
       "php-search": {

@@ -1,10 +1,12 @@
 import { CI, run } from './common';
+import { createSpinner } from './oraLog';
 
 export async function formatter(
   language: string,
   folder: string,
-  verbose?: boolean
+  verbose = false
 ): Promise<void> {
+  const spinner = createSpinner(`formatting ${language}`, verbose).start();
   let cmd = '';
   switch (language) {
     case 'javascript':
@@ -30,4 +32,5 @@ export async function formatter(
       return;
   }
   await run(cmd, { verbose });
+  spinner.succeed();
 }

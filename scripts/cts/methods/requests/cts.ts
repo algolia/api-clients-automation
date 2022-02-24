@@ -3,6 +3,7 @@ import fsp from 'fs/promises';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import type { OpenAPIV3 } from 'openapi-types';
 
+import { getAbsolutePath } from '../../../common';
 import { removeEnumType, removeObjectName, walk } from '../../utils';
 
 import type {
@@ -143,7 +144,9 @@ function createParamWithDataType({
 
 async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
   // load the list of operations from the spec
-  const spec = await SwaggerParser.validate(`../specs/${client}/spec.yml`);
+  const spec = await SwaggerParser.validate(
+    getAbsolutePath(`specs/${client}/spec.yml`)
+  );
   if (!spec.paths) {
     throw new Error(`No paths found for spec ${client}/spec.yml`);
   }
@@ -154,7 +157,9 @@ async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
 
   const ctsClient: CTSBlock[] = [];
 
-  for await (const file of walk(`./CTS/methods/requests/${client}`)) {
+  for await (const file of walk(
+    getAbsolutePath(`tests/CTS/methods/requests/${client}`)
+  )) {
     if (!file.name.endsWith('json')) {
       continue;
     }

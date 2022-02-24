@@ -1,14 +1,17 @@
 import fsp from 'fs/promises';
+import path from 'path';
 
 import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 
-import clientsConfig from '../clients.config.json';
 import openapitools from '../openapitools.json';
 
 import type { Generator, RunOptions } from './types';
 
 export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);
+
+// This script is run by `yarn workspace ...`, which means the current working directory is `./script`
+export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 export const GENERATORS = Object.fromEntries(
   Object.entries(openapitools['generator-cli'].generators).map(([key, gen]) => {
@@ -39,13 +42,9 @@ export function createGeneratorKey({
   return `${language}-${client}`;
 }
 
-export function getLanguageFolder(language: string): string {
-  return clientsConfig[language].folder;
-}
-
 export async function run(
   command: string,
-  { errorMessage, verbose }: RunOptions = {}
+  { errorMessage, verbose, cwd = ROOT_DIR }: RunOptions = {}
 ): Promise<string> {
   try {
     if (verbose) {
@@ -53,11 +52,11 @@ export async function run(
         await execa.command(command, {
           stdout: 'inherit',
           shell: 'bash',
-          cwd: '../',
+          cwd,
         })
       ).stdout;
     }
-    return (await execa.command(command, { shell: 'bash', cwd: '../' })).stdout;
+    return (await execa.command(command, { shell: 'bash', cwd })).stdout;
   } catch (err) {
     if (errorMessage) {
       throw new Error(`[ERROR] ${errorMessage}`);
@@ -67,21 +66,26 @@ export async function run(
   }
 }
 
-export async function fileExists(path: string): Promise<boolean> {
+export async function exists(ppath: string): Promise<boolean> {
   try {
-    return (await fsp.stat(path)).isFile();
+    await fsp.stat(ppath);
+    return true;
   } catch {
     return false;
   }
 }
 
+export function getAbsolutePath(ppath: string): string {
+  return path.resolve(ROOT_DIR, ppath);
+}
+
 export async function runIfExists(
-  script: string,
+  scriptFile: string,
   args: string,
   opts: RunOptions = {}
 ): Promise<string> {
-  if (await fileExists(`../${script}`)) {
-    return await run(`${script} ${args}`, opts);
+  if (await exists(getAbsolutePath(scriptFile))) {
+    return await run(`${scriptFile} ${args}`, opts);
   }
   return '';
 }

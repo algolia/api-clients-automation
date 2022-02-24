@@ -4,4 +4,8 @@ export type Generator = Record<string, any> & {
   key: string;
 };
 
-export type RunOptions = { errorMessage?: string; verbose?: boolean };
+export type RunOptions = {
+  errorMessage?: string;
+  verbose?: boolean;
+  cwd?: string;
+};
