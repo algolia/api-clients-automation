@@ -137,6 +137,7 @@ const clientPath = path.resolve(
 );
 
 run(`git checkout next`, { cwd: clientPath });
+run(`git pull origin next`, { cwd: clientPath });
 run(
   `cp -r clients/algoliasearch-client-javascript/* clients/dummy-algoliasearch-client-javascript/`,
   { shell: true }
