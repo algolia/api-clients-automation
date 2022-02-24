@@ -75,7 +75,7 @@ export async function exists(ppath: string): Promise<boolean> {
   }
 }
 
-export function getAbsolutePath(ppath: string): string {
+export function toAbsolutePath(ppath: string): string {
   return path.resolve(ROOT_DIR, ppath);
 }
 
@@ -84,7 +84,7 @@ export async function runIfExists(
   args: string,
   opts: RunOptions = {}
 ): Promise<string> {
-  if (await exists(getAbsolutePath(scriptFile))) {
+  if (await exists(toAbsolutePath(scriptFile))) {
     return await run(`${scriptFile} ${args}`, opts);
   }
   return '';

@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import execa from 'execa';
 
 import openapitools from '../../openapitools.json';
-import { getAbsolutePath, run } from '../common';
+import { toAbsolutePath, run } from '../common';
 
 import { MAIN_BRANCH, OWNER, REPO, getMarkdownSection } from './common';
 import TEXT from './text';
@@ -73,14 +73,14 @@ async function processRelease(): Promise<void> {
     }
   });
   fs.writeFileSync(
-    getAbsolutePath('openapitools.json'),
+    toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2)
   );
 
   // update changelogs
   new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
     (lang) => {
-      const filePath = getAbsolutePath(`docs/changelogs/${lang}.md`);
+      const filePath = toAbsolutePath(`docs/changelogs/${lang}.md`);
       const header = versionsToRelease[lang!]
         ? `## ${versionsToRelease[lang!].next}`
         : `## ${new Date().toISOString().split('T')[0]}`;
@@ -118,7 +118,7 @@ async function processRelease(): Promise<void> {
     await run(`yarn api generate ${lang} all`, { verbose: true });
   }
 
-  const clientPath = getAbsolutePath(
+  const clientPath = toAbsolutePath(
     'clients/dummy-algoliasearch-client-javascript'
   );
   const runInClient = (command: string, options = {}): Promise<string> =>

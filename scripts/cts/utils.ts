@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import { exists, getAbsolutePath } from '../common';
+import { exists, toAbsolutePath } from '../common';
 import { getTestExtension, getTestOutputFolder } from '../config';
 
 export async function* walk(
@@ -76,7 +76,7 @@ export async function createOutputDir({
   testPath: string;
 }): Promise<void> {
   await fsp.mkdir(
-    getAbsolutePath(
+    toAbsolutePath(
       `tests/output/${language}/${getTestOutputFolder(language)}/${testPath}`
     ),
     {
@@ -94,7 +94,7 @@ export function getOutputPath({
   client: string;
   testPath: string;
 }): string {
-  return getAbsolutePath(
+  return toAbsolutePath(
     `tests/output/${language}/${getTestOutputFolder(
       language
     )}/${testPath}/${client}${getTestExtension(language)}`
@@ -109,8 +109,8 @@ export async function loadTemplates({
   testPath: string;
 }): Promise<Record<string, string>> {
   const templates: Record<string, string> = {};
-  const templatePath = getAbsolutePath(
-    `./CTS/${testPath}/templates/${language}`
+  const templatePath = toAbsolutePath(
+    `tests/CTS/${testPath}/templates/${language}`
   );
 
   if (!(await exists(templatePath))) {

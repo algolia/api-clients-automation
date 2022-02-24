@@ -12,7 +12,7 @@ import {
   loadTemplates,
 } from '../../utils';
 
-import { loadCTS } from './cts';
+import { loadRequestsCTS } from './cts';
 
 const testPath = 'methods/requests';
 
@@ -24,20 +24,27 @@ export async function generateRequestsTests(
   }: Generator,
   verbose: boolean
 ): Promise<void> {
-  createSpinner('generating requests tests', verbose).start().info();
-  const spinner = createSpinner('loading templates', verbose).start();
+  createSpinner({ text: 'generating requests tests', indent: 4 }, verbose)
+    .start()
+    .info();
+  const spinner = createSpinner(
+    { text: 'loading templates', indent: 8 },
+    verbose
+  ).start();
   const { requests: template, ...partialTemplates } = await loadTemplates({
     language,
     testPath,
   });
 
   spinner.text = 'loading CTS';
-  const cts = (await loadCTS(client)).requests;
-  await createOutputDir({ language, testPath });
+  const cts = await loadRequestsCTS(client);
 
   if (cts.length === 0) {
+    spinner.warn("skipping because tests doesn't exist");
     return;
   }
+
+  await createOutputDir({ language, testPath });
 
   spinner.text = 'rendering templates';
   const code = Mustache.render(

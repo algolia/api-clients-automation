@@ -1,11 +1,17 @@
-/* eslint-disable no-console */
 import ora from 'ora-classic';
 
+type OraLogOptions = { text?: string; indent?: number };
 class OraLog {
   private _text: string;
+  private _indent = 0;
 
-  constructor(text: string) {
-    this._text = text;
+  constructor(options: OraLogOptions | string) {
+    if (typeof options === 'string') {
+      this._text = options;
+    } else {
+      this._text = options.text ?? '';
+      this._indent = options.indent ?? 0;
+    }
   }
 
   private maybeText(text?: string): void {
@@ -16,7 +22,8 @@ class OraLog {
   }
 
   start(): this {
-    console.log(this._text);
+    // eslint-disable-next-line no-console
+    console.log(' '.repeat(this._indent) + this._text);
     return this;
   }
 
@@ -44,17 +51,25 @@ class OraLog {
     this._text = text;
     this.start();
   }
+
+  get indent(): number {
+    return this._indent;
+  }
+
+  set indent(indent: number) {
+    this._indent = indent;
+  }
 }
 
 /**
  * Returns a spinner that will log directly in verbose mode, to avoid conflict with other log.
  */
 export function createSpinner(
-  text: string,
+  options: OraLogOptions | string,
   verbose: boolean
 ): ora.Ora | OraLog {
   if (verbose) {
-    return new OraLog(text);
+    return new OraLog(options);
   }
-  return ora(text);
+  return ora(options);
 }

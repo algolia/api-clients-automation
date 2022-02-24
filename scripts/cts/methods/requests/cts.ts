@@ -3,11 +3,10 @@ import fsp from 'fs/promises';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import type { OpenAPIV3 } from 'openapi-types';
 
-import { getAbsolutePath } from '../../../common';
+import { exists, toAbsolutePath } from '../../../common';
 import { removeEnumType, removeObjectName, walk } from '../../utils';
 
 import type {
-  CTS,
   CTSBlock,
   ParametersWithDataType,
   RequestCTS,
@@ -94,14 +93,6 @@ function transformParam({
       }
       return out;
     }
-
-    if (!objectName) {
-      // throw new Error(`Object ${key} missing property $objectName in test ${testName}`);
-      // eslint-disable-next-line no-console
-      console.log(
-        `Object ${key} missing property $objectName in test ${testName}`
-      );
-    }
   } else if (isArray) {
     // recursive on all value
     out = value.map((v, i) =>
@@ -142,13 +133,17 @@ function createParamWithDataType({
   return [transformed];
 }
 
-async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
+export async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
   // load the list of operations from the spec
   const spec = await SwaggerParser.validate(
-    getAbsolutePath(`specs/${client}/spec.yml`)
+    toAbsolutePath(`specs/${client}/spec.yml`)
   );
   if (!spec.paths) {
     throw new Error(`No paths found for spec ${client}/spec.yml`);
+  }
+  if (!(await exists(toAbsolutePath(`tests/CTS/methods/requests/${client}`)))) {
+    // skip it if no CTS for this client
+    return [];
   }
 
   const operations = Object.values(spec.paths)
@@ -158,7 +153,7 @@ async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
   const ctsClient: CTSBlock[] = [];
 
   for await (const file of walk(
-    getAbsolutePath(`tests/CTS/methods/requests/${client}`)
+    toAbsolutePath(`tests/CTS/methods/requests/${client}`)
   )) {
     if (!file.name.endsWith('json')) {
       continue;
@@ -227,10 +222,4 @@ async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
   return ctsClient.sort((t1, t2) =>
     t1.operationId.localeCompare(t2.operationId)
   );
-}
-
-export async function loadCTS(client: string): Promise<CTS> {
-  return {
-    requests: await loadRequestsCTS(client),
-  };
 }

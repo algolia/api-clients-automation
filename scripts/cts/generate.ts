@@ -1,3 +1,4 @@
+import { toAbsolutePath } from '../common';
 import { getTestOutputFolder } from '../config';
 import { formatter } from '../formatter';
 import { createSpinner } from '../oraLog';
@@ -31,6 +32,10 @@ export async function ctsGenerateMany(
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
-    await formatter(lang, getTestOutputFolder(lang), verbose);
+    await formatter(
+      lang,
+      toAbsolutePath(`tests/output/${lang}/${getTestOutputFolder(lang)}`),
+      verbose
+    );
   }
 }

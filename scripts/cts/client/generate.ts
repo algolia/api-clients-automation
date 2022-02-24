@@ -2,7 +2,7 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
-import { exists, getAbsolutePath } from '../../common';
+import { exists, toAbsolutePath } from '../../common';
 import { createSpinner } from '../../oraLog';
 import type { Generator } from '../../types';
 import {
@@ -19,7 +19,7 @@ const testPath = 'client';
 
 async function loadTests(client: string): Promise<TestsBlock[]> {
   const testsBlocks: TestsBlock[] = [];
-  const clientPath = getAbsolutePath(`tests/CTS/client/${client}`);
+  const clientPath = toAbsolutePath(`tests/CTS/client/${client}`);
 
   if (!(await exists(clientPath))) {
     return [];
@@ -65,15 +65,21 @@ export async function generateClientTests(
   }: Generator,
   verbose: boolean
 ): Promise<void> {
-  let spinner = createSpinner('generating client tests', verbose).start();
+  let spinner = createSpinner(
+    { text: 'generating client tests', indent: 4 },
+    verbose
+  ).start();
   const testsBlocks = await loadTests(client);
 
   if (testsBlocks.length === 0) {
-    spinner.warn("Skipping because tests doesn' exist");
+    spinner.warn("skipping because tests doesn't exist");
     return;
   }
   spinner.info();
-  spinner = createSpinner('loading templates', verbose).start();
+  spinner = createSpinner(
+    { text: 'loading templates', indent: 8 },
+    verbose
+  ).start();
 
   await createOutputDir({ language, testPath });
 
@@ -83,7 +89,7 @@ export async function generateClientTests(
   });
 
   if (!template) {
-    spinner.warn("Skipping because template doesn't exist");
+    spinner.warn("skipping because template doesn't exist");
     return;
   }
 

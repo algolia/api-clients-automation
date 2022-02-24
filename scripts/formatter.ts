@@ -6,7 +6,10 @@ export async function formatter(
   folder: string,
   verbose = false
 ): Promise<void> {
-  const spinner = createSpinner(`formatting ${language}`, verbose).start();
+  const spinner = createSpinner(
+    { text: `formatting ${language}`, indent: 4 },
+    verbose
+  ).start();
   let cmd = '';
   switch (language) {
     case 'javascript':
