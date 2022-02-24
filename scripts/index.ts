@@ -14,7 +14,7 @@ import {
   LANGUAGES,
 } from './common';
 import { ctsGenerateMany } from './cts/generate';
-import { runCts } from './cts/run';
+import { runCts } from './cts/runCts';
 import { generate } from './generate';
 import { playground } from './playground';
 import type { Generator } from './types';

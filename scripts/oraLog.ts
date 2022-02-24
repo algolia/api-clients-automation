@@ -1,5 +1,7 @@
 import ora from 'ora-classic';
 
+import { CI } from './common';
+
 type OraLogOptions = { text?: string; indent?: number };
 class OraLog {
   private _text: string;
@@ -68,7 +70,7 @@ export function createSpinner(
   options: OraLogOptions | string,
   verbose: boolean
 ): ora.Ora | OraLog {
-  if (verbose) {
+  if (verbose || CI) {
     return new OraLog(options);
   }
   return ora(options);
