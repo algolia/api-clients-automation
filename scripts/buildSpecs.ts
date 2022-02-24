@@ -2,7 +2,7 @@ import fsp from 'fs/promises';
 
 import { hashElement } from 'folder-hash';
 
-import { exists, run } from './common';
+import { exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
 
 async function buildSpec(
@@ -11,15 +11,15 @@ async function buildSpec(
   verbose: boolean,
   useCache: boolean
 ): Promise<void> {
-  const cacheFile = `../specs/dist/${client}.cache`;
+  const cacheFile = toAbsolutePath(`specs/dist/${client}.cache`);
   if (useCache) {
     // check if file and cache exist
     const spinner = createSpinner(
       `checking cache for ${client}`,
       verbose
     ).start();
-    if (await exists(`../specs/bundled/${client}.yml`)) {
-      const hash = (await hashElement(`../specs/${client}`)).hash;
+    if (await exists(toAbsolutePath(`specs/bundled/${client}.yml`))) {
+      const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
       // compare with stored cache
       if (await exists(cacheFile)) {
         const storedHash = (await fsp.readFile(cacheFile)).toString();
@@ -50,7 +50,7 @@ async function buildSpec(
   });
 
   spinner.text = `storing ${client} cache`;
-  const hash = (await hashElement(`../specs/${client}`)).hash;
+  const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
   await fsp.writeFile(cacheFile, hash);
 
   spinner.succeed();
@@ -62,7 +62,7 @@ export async function buildSpecs(
   verbose: boolean,
   useCache: boolean
 ): Promise<void> {
-  await fsp.mkdir('../specs/dist', { recursive: true });
+  await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
 
   for (const client of clients) {
     await buildSpec(client, outputFormat, verbose, useCache);

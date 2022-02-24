@@ -1,9 +1,9 @@
 import { readFile, stat, writeFile } from 'fs/promises';
-import path from 'path';
 import { URL } from 'url';
 
 import yaml from 'js-yaml';
 
+import { toAbsolutePath } from '../common';
 import type { Generator } from '../types';
 
 type Server = {
@@ -37,7 +37,7 @@ export async function setHostsOptions({
   client,
   key: generator,
 }: Pick<Generator, 'client' | 'key'>): Promise<void> {
-  const openapitoolsPath = path.join(process.cwd(), '../openapitools.json');
+  const openapitoolsPath = toAbsolutePath('openapitools.json');
   if (!(await stat(openapitoolsPath))) {
     throw new Error(
       `File not found ${openapitoolsPath}.\nMake sure your run scripts from the root directory using yarn workspace.`
@@ -51,7 +51,7 @@ export async function setHostsOptions({
     throw new Error(`Generator not found: ${generator}`);
   }
 
-  const specPath = path.join(process.cwd(), `../specs/bundled/${client}.yml`);
+  const specPath = toAbsolutePath(`specs/bundled/${client}.yml`);
 
   if (!(await stat(specPath))) {
     throw new Error(
