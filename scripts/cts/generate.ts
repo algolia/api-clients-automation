@@ -27,11 +27,17 @@ export async function ctsGenerateMany(
   verbose: boolean
 ): Promise<void> {
   for (const gen of generators) {
+    if (!getTestOutputFolder(gen.language)) {
+      continue;
+    }
     await ctsGenerate(gen, verbose);
   }
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
+    if (!getTestOutputFolder(lang)) {
+      continue;
+    }
     await formatter(
       lang,
       toAbsolutePath(`tests/output/${lang}/${getTestOutputFolder(lang)}`),

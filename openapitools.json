@@ -260,7 +260,8 @@
           "configClassname": "SearchConfig",
           "useCache": true,
           "variableNamingConvention": "camelCase",
-          "packageName": "algoliasearch-client-php"
+          "packageName": "algoliasearch-client-php",
+          "packageVersion": "0.0.1"
         }
       },
       "php-recommend": {
@@ -278,7 +279,8 @@
           "configClassname": "RecommendConfig",
           "useCache": true,
           "variableNamingConvention": "camelCase",
-          "packageName": "algoliasearch-client-php"
+          "packageName": "algoliasearch-client-php",
+          "packageVersion": "0.0.1"
         }
       },
       "php-personalization": {
@@ -298,6 +300,7 @@
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
+          "packageVersion": "0.0.1",
           "isEuHost": true,
           "host": "personalization",
           "topLevelDomain": "com"
@@ -320,6 +323,7 @@
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
+          "packageVersion": "0.0.1",
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "analytics",
@@ -343,6 +347,7 @@
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
+          "packageVersion": "0.0.1",
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "insights",
@@ -366,6 +371,7 @@
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
+          "packageVersion": "0.0.1",
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "analytics",
@@ -389,6 +395,7 @@
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
+          "packageVersion": "0.0.1",
           "isEuHost": true,
           "host": "query-suggestions",
           "topLevelDomain": "com"
