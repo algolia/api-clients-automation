@@ -138,7 +138,8 @@ const clientPath = path.resolve(
 
 run(`git checkout next`, { cwd: clientPath });
 run(
-  `cp -r clients/algoliasearch-client-javascript/ clients/dummy-algoliasearch-client-javascript/`
+  `cp -r clients/algoliasearch-client-javascript/* clients/dummy-algoliasearch-client-javascript/`,
+  { shell: true }
 );
 run(`git add .`, { cwd: clientPath });
 execa.sync('git', ['commit', '-m', 'chore: release test'], {
