@@ -25,7 +25,7 @@ async function buildSpec(
         const storedHash = (await fsp.readFile(cacheFile)).toString();
         if (storedHash === hash) {
           spinner.succeed(
-            'skipped building spec because the files did not change'
+            `skipped building ${client} spec because the files did not change`
           );
           return;
         }
