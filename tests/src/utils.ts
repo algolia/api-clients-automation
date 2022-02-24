@@ -164,7 +164,7 @@ export function getOutputPath({
   client: string;
   testPath: string;
 }): string {
-  return `output/${language}/${ctsConfig[language].outputFolder}/${testPath}/${client}.${ctsConfig[language].extension}`;
+  return `output/${language}/${ctsConfig[language].outputFolder}/${testPath}/${client}${ctsConfig[language].extension}`;
 }
 
 export async function loadTemplates({
