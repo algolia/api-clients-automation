@@ -50,24 +50,30 @@ export async function generate(
     const spinner = createSpinner(`pre-gen ${gen.key}`, verbose).start();
     await preGen(gen, verbose);
 
-    spinner.text = `generation ${gen.key}`;
+    spinner.text = `generating ${gen.key}`;
     await generateClient(gen, verbose);
 
     spinner.text = `post-gen ${gen.key}`;
     await postGen(gen, verbose);
+
+    if (gen.language === 'javascript' && CI) {
+      // because the CI is parallelized, run the formatter for each client
+      await formatter(gen.language, gen.output, verbose);
+    }
 
     spinner.succeed();
   }
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
-    await formatter(lang, getLanguageFolder(lang), verbose);
-
+    if (!CI || lang !== 'javascript') {
+      await formatter(lang, getLanguageFolder(lang), verbose);
+    }
     if (lang === 'javascript') {
       const spinner = createSpinner(
         'Cleaning JavaScript client utils',
         verbose
-      );
+      ).start();
       await run('yarn workspace algoliasearch-client-javascript clean:utils', {
         verbose,
       });
