@@ -1,3 +1,7 @@
+---
+title: How to setup the repository
+---
+
 # api-clients-automation
 
 **Make sure to have Docker installed so you don't have to install the tooling for every API clients.**
@@ -20,9 +24,9 @@ yarn docker:setup
 
 #### Build
 
-Build docker image from [Dockerfile](./Dockerfile)
+Build docker image from [Dockerfile](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile)
 
-[How to add a new client](https://api-clients-automation.netlify.app/docs/addNewClient) | [How to add a new language](https://api-clients-automation.netlify.app/docs/addNewLanguage) | [Common Test Suite](https://api-clients-automation.netlify.app/docs/CTS) | [Run the playground](https://api-clients-automation.netlify.app/docs/playground)
+[How to add a new client](/docs/addNewClient) | [How to add a new language](/docs/addNewLanguage) | [Common Test Suite](/docs/CTS) | [Run the playground](/docs/playground)
 
 ```bash
 yarn docker:build
@@ -83,7 +87,7 @@ yarn docker specs:lint <client>
 yarn docker specs:lint search
 ```
 
-### Generate clients based on the [`specs`](./specs/)
+### Generate clients based on the [`specs`](https://github.com/algolia/api-clients-automation/blob/main/specs/)
 
 #### Usage
 
@@ -115,8 +119,8 @@ yarn docker build:clients java recommend
 
 You can test our generated clients by running:
 
-- The playground [`playground`](./playground) ([Playground README](./docs/playground.md))
-- Tests with our [`Common Test Suite`](./tests/) ([CTS README](./docs/CTS.md)).
+- The playground [`playground`](https://github.com/algolia/api-clients-automation/blob/main/playground) ([Playground README](/docs/playground))
+- Tests with our [`Common Test Suite`](https://github.com/algolia/api-clients-automation/blob/main/tests) ([CTS README](/docs/CTS)).
 
 # Troubleshooting
 
