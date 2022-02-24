@@ -65,7 +65,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-insights@workspace:clients/algoliasearch-client-javascript/packages/client-insights":
+"@algolia/client-insights@5.0.0, @algolia/client-insights@workspace:clients/algoliasearch-client-javascript/packages/client-insights":
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@workspace:clients/algoliasearch-client-javascript/packages/client-insights"
   dependencies:
@@ -3131,6 +3131,16 @@ __metadata:
   dependencies:
     "@types/istanbul-lib-report": "*"
   checksum: f1ad54bc68f37f60b30c7915886b92f86b847033e597f9b34f2415acdbe5ed742fa559a0a40050d74cdba3b6a63c342cac1f3a64dba5b68b66a6941f4abd7903
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:27.0.3":
+  version: 27.0.3
+  resolution: "@types/jest@npm:27.0.3"
+  dependencies:
+    jest-diff: ^27.0.0
+    pretty-format: ^27.0.0
+  checksum: 3683a9945821966f6dccddf337219a5d682633687c9d30df859223db553589f63e9b2c34e69f0cc845c86ffcf115742f25c12ea03c8d33d2244890fdc0af61e2
   languageName: node
   linkType: hard
 
@@ -7103,6 +7113,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"javascript-tests@workspace:tests/output/javascript":
+  version: 0.0.0-use.local
+  resolution: "javascript-tests@workspace:tests/output/javascript"
+  dependencies:
+    "@algolia/client-abtesting": 5.0.0
+    "@algolia/client-analytics": 5.0.0
+    "@algolia/client-common": 5.0.0
+    "@algolia/client-insights": 5.0.0
+    "@algolia/client-personalization": 5.0.0
+    "@algolia/client-query-suggestions": 5.0.0
+    "@algolia/client-search": 5.0.0
+    "@algolia/client-sources": 0.0.1
+    "@algolia/recommend": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
+    "@types/jest": 27.0.3
+    "@types/node": 16.11.11
+    jest: 27.4.7
+    ts-jest: 27.1.2
+    ts-node: 10.5.0
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
 "jest-changed-files@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-changed-files@npm:27.5.1"
@@ -10866,6 +10899,40 @@ __metadata:
   bin:
     tree-kill: cli.js
   checksum: 49117f5f410d19c84b0464d29afb9642c863bc5ba40fcb9a245d474c6d5cc64d1b177a6e6713129eb346b40aebb9d4631d967517f9fbe8251c35b21b13cd96c7
+  languageName: node
+  linkType: hard
+
+"ts-jest@npm:27.1.2":
+  version: 27.1.2
+  resolution: "ts-jest@npm:27.1.2"
+  dependencies:
+    bs-logger: 0.x
+    fast-json-stable-stringify: 2.x
+    jest-util: ^27.0.0
+    json5: 2.x
+    lodash.memoize: 4.x
+    make-error: 1.x
+    semver: 7.x
+    yargs-parser: 20.x
+  peerDependencies:
+    "@babel/core": ">=7.0.0-beta.0 <8"
+    "@types/jest": ^27.0.0
+    babel-jest: ">=27.0.0 <28"
+    esbuild: ~0.14.0
+    jest: ^27.0.0
+    typescript: ">=3.8 <5.0"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    "@types/jest":
+      optional: true
+    babel-jest:
+      optional: true
+    esbuild:
+      optional: true
+  bin:
+    ts-jest: cli.js
+  checksum: 2e7275f8a3545ec1340b37c458ace9244b5903e86861eb108beffff97d433f296c1254f76a41b573b1fe6245110b21bb62150bb88d55159f1dc7a929886535cb
   languageName: node
   linkType: hard
 

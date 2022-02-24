@@ -1,9 +1,8 @@
 import { CI, run } from '../common';
+import { createSpinner } from '../oraLog';
 
-export async function runCts(
-  language: string,
-  verbose: boolean
-): Promise<void> {
+async function runCtsOne(language: string, verbose: boolean): Promise<void> {
+  const spinner = createSpinner(`running cts for ${language}`, verbose).start();
   switch (language) {
     case 'javascript':
       await run('yarn workspace javascript-tests test', { verbose });
@@ -18,12 +17,23 @@ export async function runCts(
       if (CI) php = 'php';
 
       await run(
-        `${php} ./clients/algoliasearch-client-php/vendor/bin/phpunit ./`,
+        `${php} ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`,
         { verbose }
       );
       break;
     }
     default:
-    // echo "Skipping unknown language $LANGUAGE to run the CTS"
+      spinner.warn(`skipping unknown language ${language} to run the CTS`);
+      return;
+  }
+  spinner.succeed();
+}
+
+export async function runCts(
+  languages: string[],
+  verbose: boolean
+): Promise<void> {
+  for (const lang of languages) {
+    await runCtsOne(lang, verbose);
   }
 }

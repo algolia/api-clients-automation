@@ -224,7 +224,11 @@ ctsCommand
   .action(async (language: string | undefined, { verbose }) => {
     language = await promptLanguage(language);
 
-    await runCts(language, Boolean(verbose));
+    let langsTodo = [language];
+    if (language === 'all') {
+      langsTodo = LANGUAGES;
+    }
+    await runCts(langsTodo, Boolean(verbose));
   });
 
 program

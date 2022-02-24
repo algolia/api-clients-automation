@@ -5,7 +5,8 @@
     "clients/algoliasearch-client-javascript/",
     "playground/javascript/node/",
     "playground/javascript/browser/",
-    "scripts/"
+    "scripts/",
+    "tests/output/javascript"
   ],
   "scripts": {
     "api": "yarn workspace scripts ts-node --transpile-only ./index.ts",
