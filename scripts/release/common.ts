@@ -1,4 +1,4 @@
-import config from '../../release.config.json';
+import config from '../../config/release.config.json';
 
 export const RELEASED_TAG = config.releasedTag;
 export const MAIN_BRANCH = config.mainBranch;
