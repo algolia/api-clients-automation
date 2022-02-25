@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
-import fs from 'fs';
+import fsp from 'fs/promises';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
 
+import clientsConfig from '../../clients.config.json';
 import openapitools from '../../openapitools.json';
-import { toAbsolutePath, run } from '../common';
+import { toAbsolutePath, run, exists, getGitHubUrl } from '../common';
 
-import { MAIN_BRANCH, OWNER, REPO, getMarkdownSection } from './common';
+import { OWNER, REPO, getMarkdownSection, getTargetBranch } from './common';
 import TEXT from './text';
 
 dotenv.config();
@@ -37,7 +38,12 @@ async function processRelease(): Promise<void> {
     throw new Error('The issue was not approved.');
   }
 
-  const versionsToRelease = {};
+  const versionsToRelease: {
+    [lang: string]: {
+      current: string;
+      next: string;
+    };
+  } = {};
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .forEach((line) => {
@@ -72,70 +78,84 @@ async function processRelease(): Promise<void> {
       ].additionalProperties.packageVersion = versionsToRelease[lang].next;
     }
   });
-  fs.writeFileSync(
+  await fsp.writeFile(
     toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2)
-  );
-
-  // update changelogs
-  new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
-    (lang) => {
-      const filePath = toAbsolutePath(`docs/changelogs/${lang}.md`);
-      const header = versionsToRelease[lang!]
-        ? `## ${versionsToRelease[lang!].next}`
-        : `## ${new Date().toISOString().split('T')[0]}`;
-      const newChangelog = getMarkdownSection(
-        getMarkdownSection(issueBody, TEXT.changelogHeader),
-        `### ${lang}`
-      );
-      const existingContent = fs.readFileSync(filePath).toString();
-      fs.writeFileSync(
-        filePath,
-        [header, newChangelog, existingContent].join('\n\n')
-      );
-    }
   );
 
   await run('git config user.name "api-clients-bot"');
   await run('git config user.email "bot@algolia.com"');
 
   // commit openapitools and changelogs
-  if (process.env.RELEASE_TEST !== 'true') {
-    await run('git add openapitools.json');
-    await run('git add doc/changelogs/*');
-    execa.sync('git', ['commit', '-m', TEXT.commitMessage]);
-    await run(`git push`);
-  }
+  await run('git add openapitools.json');
 
-  // generate clients to release
-  for (const lang of Object.keys(versionsToRelease)) {
+  const langsToReleaseOrUpdate = [
+    ...Object.keys(versionsToRelease),
+    ...langsToUpdateRepo,
+  ];
+
+  for (const lang of langsToReleaseOrUpdate) {
+    const goal = versionsToRelease[lang] ? 'release' : 'update';
+
+    // prepare the submodule
+    const clientPath = toAbsolutePath(`clients/${clientsConfig[lang].folder}`);
+    const targetBranch = getTargetBranch(lang);
+    await run(`git checkout ${targetBranch}`, { cwd: clientPath });
+    await run(`git pull origin ${targetBranch}`, { cwd: clientPath });
+
     console.log(`Generating ${lang} client(s)...`);
     await run(`yarn cli generate ${lang}`);
+
+    const dateStamp = new Date().toISOString().split('T')[0];
+    const currentVersion = versionsToRelease[lang].current;
+    const nextVersion = versionsToRelease[lang].next;
+
+    // update changelog
+    const changelogPath = toAbsolutePath(
+      `clients/${clientsConfig[lang].folder}/CHANGELOG.md`
+    );
+    const existingContent = (await exists(changelogPath))
+      ? (await fsp.readFile(changelogPath)).toString()
+      : '';
+    const changelogHeader =
+      goal === 'release'
+        ? `## [v${nextVersion}](${getGitHubUrl(
+            lang
+          )}/compare/v${currentVersion}...v${nextVersion})`
+        : `## ${dateStamp}`;
+    const newChangelog = getMarkdownSection(
+      getMarkdownSection(issueBody, TEXT.changelogHeader),
+      `### ${lang}`
+    );
+    await fsp.writeFile(
+      changelogPath,
+      [changelogHeader, newChangelog, existingContent].join('\n\n')
+    );
+
+    // commit changelog and the generated client
+    await run(`git add .`, { cwd: clientPath });
+    if (goal === 'release') {
+      await execa('git', ['commit', '-m', `chore: release ${nextVersion}`], {
+        cwd: clientPath,
+      });
+      await execa('git', ['tag', `v${nextVersion}`], { cwd: clientPath });
+    } else {
+      await execa('git', ['commit', '-m', `chore: update repo ${dateStamp}`], {
+        cwd: clientPath,
+      });
+    }
+
+    // push the commit to the submodule
+    await run(`git push origin ${targetBranch}`, { cwd: clientPath });
+    if (goal === 'release') {
+      await execa('git', ['push', '--tags'], { cwd: clientPath });
+    }
+
+    // add the new reference of the submodule in the monorepo
+    await run(`git add clients/${clientsConfig[lang].folder}`);
   }
 
-  // generate clients to just update the repos
-  for (const lang of langsToUpdateRepo) {
-    console.log(`Generating ${lang} client(s)...`);
-    await run(`yarn cli generate ${lang}`, { verbose: true });
-  }
-
-  const clientPath = toAbsolutePath(
-    'clients/dummy-algoliasearch-client-javascript'
-  );
-
-  await run(`git checkout next`, { cwd: clientPath });
-  await run(`git pull origin next`, { cwd: clientPath });
-  await run(
-    `cp -r clients/algoliasearch-client-javascript/ clients/dummy-algoliasearch-client-javascript`
-  );
-  await run(`git add .`, { cwd: clientPath });
-  execa.sync('git', ['commit', '-m', 'chore: release test'], {
-    cwd: clientPath,
-  });
-  await run(`git push origin next`, { cwd: clientPath });
-
-  await run(`git add clients/dummy-algoliasearch-client-javascript`);
-  execa.sync('git', ['commit', '-m', 'chore: update submodules']);
+  await execa('git', ['commit', '-m', TEXT.commitMessage]);
   await run(`git push`);
 }
 

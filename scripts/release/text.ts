@@ -25,5 +25,5 @@ export default {
     `- [ ] ${APPROVED}`,
   ].join('\n'),
 
-  commitMessage: `chore: update versions and changelogs`,
+  commitMessage: `chore: update versions and submodules`,
 };
