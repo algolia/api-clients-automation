@@ -8,7 +8,13 @@ import clientsConfig from '../../clients.config.json';
 import openapitools from '../../openapitools.json';
 import { toAbsolutePath, run, exists, getGitHubUrl } from '../common';
 
-import { OWNER, REPO, getMarkdownSection, getTargetBranch } from './common';
+import {
+  RELEASED_TAG,
+  OWNER,
+  REPO,
+  getMarkdownSection,
+  getTargetBranch,
+} from './common';
 import TEXT from './text';
 
 dotenv.config();
@@ -148,7 +154,7 @@ async function processRelease(): Promise<void> {
     // push the commit to the submodule
     await run(`git push origin ${targetBranch}`, { cwd: clientPath });
     if (goal === 'release') {
-      await execa('git', ['push', '--tags'], { cwd: clientPath });
+      await run('git push --tags', { cwd: clientPath });
     }
 
     // add the new reference of the submodule in the monorepo
@@ -157,6 +163,14 @@ async function processRelease(): Promise<void> {
 
   await execa('git', ['commit', '-m', TEXT.commitMessage]);
   await run(`git push`);
+
+  // remove old `released` tag
+  await run(`git tag -d ${RELEASED_TAG}`);
+  await run(`git push --delete origin ${RELEASED_TAG}`);
+
+  // create new `released` tag
+  await run(`git tag released`);
+  await run(`git push --tags`);
 }
 
 processRelease();
