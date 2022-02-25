@@ -61,7 +61,7 @@ async function processRelease(): Promise<void> {
       const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);
       return result?.[1];
     })
-    .filter(Boolean); // e.g. ['javascript', 'php']
+    .filter(Boolean) as string[]; // e.g. ['javascript', 'php']
 
   // update versions in `openapitools.json`
   Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
@@ -96,14 +96,15 @@ async function processRelease(): Promise<void> {
     }
   );
 
+  await run('git config user.name "api-clients-bot"');
+  await run('git config user.email "bot@algolia.com"');
+
   // commit openapitools and changelogs
   if (process.env.RELEASE_TEST !== 'true') {
-    await run('git config user.name "api-clients-bot"');
-    await run('git config user.email "bot@algolia.com"');
     await run('git add openapitools.json');
     await run('git add doc/changelogs/*');
     execa.sync('git', ['commit', '-m', TEXT.commitMessage]);
-    await run(`git push origin ${MAIN_BRANCH}`);
+    await run(`git push`);
   }
 
   // generate clients to release
@@ -121,21 +122,21 @@ async function processRelease(): Promise<void> {
   const clientPath = toAbsolutePath(
     'clients/dummy-algoliasearch-client-javascript'
   );
-  const runInClient = (command: string, options = {}): Promise<string> =>
-    run(command, {
-      cwd: clientPath,
-      ...options,
-    });
 
-  await runInClient(`git checkout next`);
+  await run(`git checkout next`, { cwd: clientPath });
+  await run(`git pull origin next`, { cwd: clientPath });
   await run(
     `cp -r clients/algoliasearch-client-javascript/ clients/dummy-algoliasearch-client-javascript`
   );
-  await runInClient(`git add .`);
+  await run(`git add .`, { cwd: clientPath });
   execa.sync('git', ['commit', '-m', 'chore: release test'], {
     cwd: clientPath,
   });
-  await runInClient(`git push origin next`);
+  await run(`git push origin next`, { cwd: clientPath });
+
+  await run(`git add clients/dummy-algoliasearch-client-javascript`);
+  execa.sync('git', ['commit', '-m', 'chore: update submodules']);
+  await run(`git push`);
 }
 
 processRelease();
