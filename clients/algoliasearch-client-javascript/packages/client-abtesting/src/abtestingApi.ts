@@ -67,7 +67,7 @@ export function createAbtestingApi(
   function addABTests(
     addABTestsRequest: AddABTestsRequest
   ): Promise<ABTestResponse> {
-    const path = '/2/abtests';
+    const requestPath = '/2/abtests';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -95,7 +95,7 @@ export function createAbtestingApi(
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: addABTestsRequest,
     };
 
@@ -113,7 +113,7 @@ export function createAbtestingApi(
    * @param deleteABTest.id - The A/B test ID.
    */
   function deleteABTest({ id }: DeleteABTestProps): Promise<ABTestResponse> {
-    const path = '/2/abtests/{id}'.replace(
+    const requestPath = '/2/abtests/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
     );
@@ -128,7 +128,44 @@ export function createAbtestingApi(
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param deleteCustomRequest - The deleteCustomRequest object.
+   * @param deleteCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param deleteCustomRequest.body - The parameters to send with the custom request.
+   */
+  function deleteCustomRequest({
+    path,
+    body,
+  }: DeleteCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `deleteCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path: requestPath,
+      data: body,
     };
 
     return transporter.request(request, {
@@ -145,7 +182,7 @@ export function createAbtestingApi(
    * @param getABTest.id - The A/B test ID.
    */
   function getABTest({ id }: GetABTestProps): Promise<ABTest> {
-    const path = '/2/abtests/{id}'.replace(
+    const requestPath = '/2/abtests/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
     );
@@ -158,7 +195,44 @@ export function createAbtestingApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param getCustomRequest - The getCustomRequest object.
+   * @param getCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param getCustomRequest.body - The parameters to send with the custom request.
+   */
+  function getCustomRequest({
+    path,
+    body,
+  }: GetCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `getCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path: requestPath,
+      data: body,
     };
 
     return transporter.request(request, {
@@ -179,7 +253,7 @@ export function createAbtestingApi(
     offset,
     limit,
   }: ListABTestsProps): Promise<ListABTestsResponse> {
-    const path = '/2/abtests';
+    const requestPath = '/2/abtests';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -193,7 +267,81 @@ export function createAbtestingApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param postCustomRequest - The postCustomRequest object.
+   * @param postCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param postCustomRequest.body - The parameters to send with the custom request.
+   */
+  function postCustomRequest({
+    path,
+    body,
+  }: PostCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `postCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param putCustomRequest - The putCustomRequest object.
+   * @param putCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param putCustomRequest.body - The parameters to send with the custom request.
+   */
+  function putCustomRequest({
+    path,
+    body,
+  }: PutCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `putCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path: requestPath,
+      data: body,
     };
 
     return transporter.request(request, {
@@ -210,7 +358,7 @@ export function createAbtestingApi(
    * @param stopABTest.id - The A/B test ID.
    */
   function stopABTest({ id }: StopABTestProps): Promise<ABTestResponse> {
-    const path = '/2/abtests/{id}/stop'.replace(
+    const requestPath = '/2/abtests/{id}/stop'.replace(
       '{id}',
       encodeURIComponent(String(id))
     );
@@ -223,7 +371,7 @@ export function createAbtestingApi(
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -236,8 +384,12 @@ export function createAbtestingApi(
     addUserAgent,
     addABTests,
     deleteABTest,
+    deleteCustomRequest,
     getABTest,
+    getCustomRequest,
     listABTests,
+    postCustomRequest,
+    putCustomRequest,
     stopABTest,
   };
 }
@@ -251,11 +403,33 @@ export type DeleteABTestProps = {
   id: number;
 };
 
+export type DeleteCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
 export type GetABTestProps = {
   /**
    * The A/B test ID.
    */
   id: number;
+};
+
+export type GetCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
 };
 
 export type ListABTestsProps = {
@@ -267,6 +441,28 @@ export type ListABTestsProps = {
    * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
+};
+
+export type PostCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+export type PutCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
 };
 
 export type StopABTestProps = {

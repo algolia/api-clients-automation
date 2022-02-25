@@ -412,6 +412,33 @@ public class EchoResponse {
     }
   }
 
+  public static class DeleteCustomRequest
+    extends Object
+    implements EchoResponseInterface {
+
+    private Request request;
+
+    public DeleteCustomRequest(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
   public static class DeleteIndex
     extends DeletedAtResponse
     implements EchoResponseInterface {
@@ -552,6 +579,33 @@ public class EchoResponse {
     private Request request;
 
     public GetApiKey(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
+  public static class GetCustomRequest
+    extends Object
+    implements EchoResponseInterface {
+
+    private Request request;
+
+    public GetCustomRequest(Request request) {
       this.request = request;
     }
 
@@ -1117,6 +1171,60 @@ public class EchoResponse {
     private Request request;
 
     public PartialUpdateObject(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
+  public static class PostCustomRequest
+    extends Object
+    implements EchoResponseInterface {
+
+    private Request request;
+
+    public PostCustomRequest(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
+  public static class PutCustomRequest
+    extends Object
+    implements EchoResponseInterface {
+
+    private Request request;
+
+    public PutCustomRequest(Request request) {
       this.request = request;
     }
 

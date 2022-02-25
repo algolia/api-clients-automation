@@ -13,101 +13,15 @@ components:
       type: apiKey
       in: header
       name: X-Algolia-API-Key
-  parameters:
-    Index:
-      in: query
-      name: index
-      description: The index name to target.
-      required: true
-      schema:
-        type: string
-    ClickAnalytics:
-      in: query
-      name: clickAnalytics
-      description: Whether to include the click-through and conversion rates for a search.
-      schema:
-        type: boolean
-        default: false
-    StartDate:
-      in: query
-      name: startDate
-      description: >-
-        The lower bound timestamp (a date, a string like "2006-01-02") of the
-        period to analyze.
-      schema:
-        type: string
-        example: 1999-09-19
-        pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
-    EndDate:
-      in: query
-      name: endDate
-      description: >-
-        The upper bound timestamp (a date, a string like "2006-01-02") of the
-        period to analyze.
-      schema:
-        type: string
-        example: 2000-01-21
-        pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
-    OrderBy:
-      in: query
-      name: orderBy
-      description: Reorder the results.
-      schema:
-        type: string
-        enum:
-          - searchCount
-          - clickThroughRate
-          - conversionRate
-          - averageClickPosition
-        default: searchCount
-    Direction:
-      in: query
-      name: direction
-      description: The sorting of the result.
-      schema:
-        type: string
-        enum:
-          - asc
-          - desc
-        default: asc
-    Limit:
-      in: query
-      name: limit
-      description: Number of records to return. Limit is the size of the page.
-      schema:
-        type: integer
-        default: 10
-    Offset:
-      in: query
-      name: offset
-      description: Position of the starting record. Used for paging. 0 is the first record.
-      schema:
-        type: integer
-        default: 0
-    Tags:
-      name: tags
-      in: query
-      description: >-
-        Filter metrics on the provided tags. Each tag must correspond to an
-        analyticsTags set at search time. Multiple tags can be combined with the
-        operators OR and AND. If a tag contains characters like spaces or
-        parentheses, it should be URL encoded.
-      schema:
-        type: string
-    Search:
-      in: query
-      name: search
-      description: The query term to search for. Must match the exact user input.
-      schema:
-        type: string
-    Attribute:
-      in: path
-      name: attribute
-      description: The exact name of the attribute.
-      required: true
-      schema:
-        type: string
   schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     search:
       description: The search query.
       type: string
@@ -202,14 +116,6 @@ components:
                 $ref: '#/components/schemas/conversionCount'
               nbHits:
                 $ref: '#/components/schemas/nbHits'
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
     date:
       type: string
       description: Date of the event.
@@ -401,6 +307,100 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  parameters:
+    Index:
+      in: query
+      name: index
+      description: The index name to target.
+      required: true
+      schema:
+        type: string
+    ClickAnalytics:
+      in: query
+      name: clickAnalytics
+      description: Whether to include the click-through and conversion rates for a search.
+      schema:
+        type: boolean
+        default: false
+    StartDate:
+      in: query
+      name: startDate
+      description: >-
+        The lower bound timestamp (a date, a string like "2006-01-02") of the
+        period to analyze.
+      schema:
+        type: string
+        example: 1999-09-19T00:00:00.000Z
+        pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+    EndDate:
+      in: query
+      name: endDate
+      description: >-
+        The upper bound timestamp (a date, a string like "2006-01-02") of the
+        period to analyze.
+      schema:
+        type: string
+        example: 2000-01-21T00:00:00.000Z
+        pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+    OrderBy:
+      in: query
+      name: orderBy
+      description: Reorder the results.
+      schema:
+        type: string
+        enum:
+          - searchCount
+          - clickThroughRate
+          - conversionRate
+          - averageClickPosition
+        default: searchCount
+    Direction:
+      in: query
+      name: direction
+      description: The sorting of the result.
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+        default: asc
+    Limit:
+      in: query
+      name: limit
+      description: Number of records to return. Limit is the size of the page.
+      schema:
+        type: integer
+        default: 10
+    Offset:
+      in: query
+      name: offset
+      description: Position of the starting record. Used for paging. 0 is the first record.
+      schema:
+        type: integer
+        default: 0
+    Tags:
+      name: tags
+      in: query
+      description: >-
+        Filter metrics on the provided tags. Each tag must correspond to an
+        analyticsTags set at search time. Multiple tags can be combined with the
+        operators OR and AND. If a tag contains characters like spaces or
+        parentheses, it should be URL encoded.
+      schema:
+        type: string
+    Search:
+      in: query
+      name: search
+      description: The query term to search for. Must match the exact user input.
+      schema:
+        type: string
+    Attribute:
+      in: path
+      name: attribute
+      description: The exact name of the attribute.
+      required: true
+      schema:
+        type: string
 servers:
   - url: https://analytics.{region}.algolia.com
     variables:
@@ -413,11 +413,169 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: analytics
+    description: Analytics API reference
 paths:
-  /2/searches:
+  /1{path}:
     get:
+      operationId: getCustomRequest
+      summary: Send requests to the Algolia REST API.
+      description: >-
+        The customRequest method allow you to send requests to the Algolia REST
+        API.
+      parameters:
+        - name: path
+          in: path
+          description: >-
+            The path of the API endpoint to target, anything after the /1 needs
+            to be specified.
+          required: true
+          schema:
+            type: string
+            example: /keys
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
+    post:
+      operationId: postCustomRequest
+      summary: Send requests to the Algolia REST API.
+      description: >-
+        The customRequest method allow you to send requests to the Algolia REST
+        API.
+      parameters:
+        - name: path
+          in: path
+          description: >-
+            The path of the API endpoint to target, anything after the /1 needs
+            to be specified.
+          required: true
+          schema:
+            type: string
+            example: /keys
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics
+    put:
+      operationId: putCustomRequest
+      summary: Send requests to the Algolia REST API.
+      description: >-
+        The customRequest method allow you to send requests to the Algolia REST
+        API.
+      parameters:
+        - name: path
+          in: path
+          description: >-
+            The path of the API endpoint to target, anything after the /1 needs
+            to be specified.
+          required: true
+          schema:
+            type: string
+            example: /keys
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics
+    delete:
+      operationId: deleteCustomRequest
+      summary: Send requests to the Algolia REST API.
+      description: >-
+        The customRequest method allow you to send requests to the Algolia REST
+        API.
+      parameters:
+        - name: path
+          in: path
+          description: >-
+            The path of the API endpoint to target, anything after the /1 needs
+            to be specified.
+          required: true
+          schema:
+            type: string
+            example: /keys
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics
+  /2/searches:
+    get:
       operationId: getTopSearches
       description: >-
         Returns top searches. Limited to the 1000 most frequent ones. For each
@@ -450,10 +608,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/count:
-    get:
       tags:
         - analytics
+  /2/searches/count:
+    get:
       operationId: getSearchesCount
       description: >-
         Returns the number of searches across the given time range. The endpoint
@@ -502,10 +660,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noResults:
-    get:
       tags:
         - analytics
+  /2/searches/noResults:
+    get:
       operationId: getSearchesNoResults
       description: >-
         Returns top searches that didn't return any results. Limited to the 1000
@@ -555,10 +713,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noClicks:
-    get:
       tags:
         - analytics
+  /2/searches/noClicks:
+    get:
       operationId: getSearchesNoClicks
       description: >-
         Returns top searches that didn't lead to any clicks. Limited to the 1000
@@ -609,10 +767,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noResultRate:
-    get:
       tags:
         - analytics
+  /2/searches/noResultRate:
+    get:
       operationId: getNoResultsRate
       description: >-
         Returns the rate at which searches didn't return any results. The
@@ -676,10 +834,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noClickRate:
-    get:
       tags:
         - analytics
+  /2/searches/noClickRate:
+    get:
       operationId: getNoClickRate
       description: >-
         Returns the rate at which searches didn't lead to any clicks. The
@@ -743,10 +901,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/hits:
-    get:
       tags:
         - analytics
+  /2/hits:
+    get:
       operationId: getTopHits
       description: Returns top hits. Limited to the 1000 most frequent ones.
       summary: Returns top hits.
@@ -776,10 +934,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/users/count:
-    get:
       tags:
         - analytics
+  /2/users/count:
+    get:
       operationId: getUsersCount
       description: >-
         Returns the distinct count of users across the given time range. The
@@ -828,10 +986,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/filters:
-    get:
       tags:
         - analytics
+  /2/filters:
+    get:
       operationId: getTopFilterAttributes
       description: Returns top filter attributes. Limited to the 1000 most used filters.
       summary: Returns top filter attributes.
@@ -858,10 +1016,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/filters/{attribute}:
-    get:
       tags:
         - analytics
+  /2/filters/{attribute}:
+    get:
       operationId: getTopFilterForAttribute
       description: >-
         Returns top filters for the given attribute. Limited to the 1000 most
@@ -891,10 +1049,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/filters/noResults:
-    get:
       tags:
         - analytics
+  /2/filters/noResults:
+    get:
       operationId: getTopFiltersNoResults
       description: >-
         Returns top filters with no results. Limited to the 1000 most used
@@ -923,10 +1081,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/countries:
-    get:
       tags:
         - analytics
+  /2/countries:
+    get:
       operationId: getTopCountries
       description: Returns top countries. Limited to the 1000 most frequent ones.
       summary: Returns top countries.
@@ -972,10 +1130,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/clicks/averageClickPosition:
-    get:
       tags:
         - analytics
+  /2/clicks/averageClickPosition:
+    get:
       operationId: getAverageClickPosition
       description: >-
         Returns the average click position. The endpoint returns a value for the
@@ -1029,10 +1187,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/clicks/positions:
-    get:
       tags:
         - analytics
+  /2/clicks/positions:
+    get:
       operationId: getClickPositions
       description: Returns the distribution of clicks per range of positions.
       summary: Returns the distribution of clicks per range of positions.
@@ -1086,10 +1244,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/clicks/clickThroughRate:
-    get:
       tags:
         - analytics
+  /2/clicks/clickThroughRate:
+    get:
       operationId: getClickThroughRate
       description: >-
         Returns a click-through rate (CTR). The endpoint returns a value for the
@@ -1150,10 +1308,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/conversions/conversionRate:
-    get:
       tags:
         - analytics
+  /2/conversions/conversionRate:
+    get:
       operationId: getConversationRate
       description: >-
         Returns a conversion rate (CR). The endpoint returns a value for the
@@ -1214,10 +1372,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/status:
-    get:
       tags:
         - analytics
+  /2/status:
+    get:
       operationId: getStatus
       description: >-
         Returns the latest update time of the analytics API for a given index.
@@ -1248,3 +1406,5 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics

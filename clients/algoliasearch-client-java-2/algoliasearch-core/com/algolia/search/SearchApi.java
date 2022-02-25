@@ -40,7 +40,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = apiKey;
 
     // create path and map variables
-    String path = "/1/keys";
+    String requestPath = "/1/keys";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -49,7 +49,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -125,7 +125,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = body;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -142,7 +142,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "PUT",
         queryParams,
         bodyObj,
@@ -257,7 +257,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = source;
 
     // create path and map variables
-    String path = "/1/security/sources/append";
+    String requestPath = "/1/security/sources/append";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -266,7 +266,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -341,7 +341,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = assignUserIdParams;
 
     // create path and map variables
-    String path = "/1/clusters/mapping";
+    String requestPath = "/1/clusters/mapping";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -356,7 +356,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -459,7 +459,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = batchWriteParams;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/batch".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -472,7 +472,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -561,7 +561,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = batchAssignUserIdsParams;
 
     // create path and map variables
-    String path = "/1/clusters/mapping/batch";
+    String requestPath = "/1/clusters/mapping/batch";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -576,7 +576,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -682,7 +682,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = batchDictionaryEntriesParams;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/dictionaries/{dictionaryName}/batch".replaceAll(
           "\\{" + "dictionaryName" + "\\}",
           this.escapeString(dictionaryName.toString())
@@ -695,7 +695,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -802,7 +802,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = rule;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/rules/batch".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -827,7 +827,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -953,7 +953,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = browseRequest;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/browse".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -966,7 +966,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -1061,7 +1061,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/synonyms/clear".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -1080,7 +1080,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -1176,7 +1176,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/clear".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -1189,7 +1189,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -1265,7 +1265,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/rules/clear".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -1284,7 +1284,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -1375,7 +1375,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/keys/{key}".replaceAll(
           "\\{" + "key" + "\\}",
           this.escapeString(key.toString())
@@ -1388,7 +1388,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "DELETE",
         queryParams,
         bodyObj,
@@ -1463,7 +1463,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = searchParams;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/deleteByQuery".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -1476,7 +1476,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -1555,6 +1555,105 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for deleteCustomRequest
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   */
+  private Call deleteCustomRequestCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath =
+      "/1{path}".replaceAll(
+          "\\{" + "path" + "\\}",
+          this.escapeString(path.toString())
+        );
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "DELETE",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
+  }
+
+  private Call deleteCustomRequestValidateBeforeCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    // verify the required parameter 'path' is set
+    if (path == null) {
+      throw new ApiException(
+        "Missing the required parameter 'path' when calling deleteCustomRequest(Async)"
+      );
+    }
+
+    return deleteCustomRequestCall(path, body, _callback);
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @return Object
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   */
+  public Object deleteCustomRequest(String path, Object body)
+    throws ApiException {
+    Call req = deleteCustomRequestValidateBeforeCall(path, body, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.DeleteCustomRequest(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<Object>() {}.getType();
+    ApiResponse<Object> res = this.execute(call, returnType);
+    return res.getData();
+  }
+
+  public Object deleteCustomRequest(String path) throws ApiException {
+    return this.deleteCustomRequest(path, null);
+  }
+
+  /**
+   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call deleteCustomRequestAsync(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Call call = deleteCustomRequestValidateBeforeCall(path, body, _callback);
+    Type returnType = new TypeToken<Object>() {}.getType();
+    this.executeAsync(call, returnType, _callback);
+    return call;
+  }
+
+  /**
    * Build call for deleteIndex
    *
    * @param _callback Callback for upload/download progress
@@ -1568,7 +1667,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -1581,7 +1680,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "DELETE",
         queryParams,
         bodyObj,
@@ -1656,7 +1755,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -1673,7 +1772,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "DELETE",
         queryParams,
         bodyObj,
@@ -1761,7 +1860,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/rules/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -1784,7 +1883,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "DELETE",
         queryParams,
         bodyObj,
@@ -1894,7 +1993,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/security/sources/{source}".replaceAll(
           "\\{" + "source" + "\\}",
           this.escapeString(source.toString())
@@ -1907,7 +2006,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "DELETE",
         queryParams,
         bodyObj,
@@ -1983,7 +2082,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/synonyms/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -2006,7 +2105,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "DELETE",
         queryParams,
         bodyObj,
@@ -2114,7 +2213,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/keys/{key}".replaceAll(
           "\\{" + "key" + "\\}",
           this.escapeString(key.toString())
@@ -2127,7 +2226,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2186,6 +2285,104 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for getCustomRequest
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   */
+  private Call getCustomRequestCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath =
+      "/1{path}".replaceAll(
+          "\\{" + "path" + "\\}",
+          this.escapeString(path.toString())
+        );
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
+  }
+
+  private Call getCustomRequestValidateBeforeCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    // verify the required parameter 'path' is set
+    if (path == null) {
+      throw new ApiException(
+        "Missing the required parameter 'path' when calling getCustomRequest(Async)"
+      );
+    }
+
+    return getCustomRequestCall(path, body, _callback);
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @return Object
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   */
+  public Object getCustomRequest(String path, Object body) throws ApiException {
+    Call req = getCustomRequestValidateBeforeCall(path, body, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.GetCustomRequest(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<Object>() {}.getType();
+    ApiResponse<Object> res = this.execute(call, returnType);
+    return res.getData();
+  }
+
+  public Object getCustomRequest(String path) throws ApiException {
+    return this.getCustomRequest(path, null);
+  }
+
+  /**
+   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call getCustomRequestAsync(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Call call = getCustomRequestValidateBeforeCall(path, body, _callback);
+    Type returnType = new TypeToken<Object>() {}.getType();
+    this.executeAsync(call, returnType, _callback);
+    return call;
+  }
+
+  /**
    * Build call for getDictionaryLanguages
    *
    * @param _callback Callback for upload/download progress
@@ -2198,7 +2395,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/dictionaries/*/languages";
+    String requestPath = "/1/dictionaries/*/languages";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2207,7 +2404,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2271,7 +2468,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/dictionaries/*/settings";
+    String requestPath = "/1/dictionaries/*/settings";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2280,7 +2477,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2350,7 +2547,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/logs";
+    String requestPath = "/1/logs";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2375,7 +2572,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2479,7 +2676,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -2502,7 +2699,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2612,7 +2809,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = getObjectsParams;
 
     // create path and map variables
-    String path = "/1/indexes/*/objects";
+    String requestPath = "/1/indexes/*/objects";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2621,7 +2818,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -2698,7 +2895,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/rules/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -2715,7 +2912,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2800,7 +2997,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/settings".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -2813,7 +3010,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2885,7 +3082,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/security/sources";
+    String requestPath = "/1/security/sources";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2894,7 +3091,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -2957,7 +3154,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/synonyms/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -2974,7 +3171,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3061,7 +3258,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/task/{taskID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -3078,7 +3275,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3163,7 +3360,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/clusters/mapping/top";
+    String requestPath = "/1/clusters/mapping/top";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3172,7 +3369,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3241,7 +3438,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/clusters/mapping/{userID}".replaceAll(
           "\\{" + "userID" + "\\}",
           this.escapeString(userID.toString())
@@ -3254,7 +3451,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3334,7 +3531,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/clusters/mapping/pending";
+    String requestPath = "/1/clusters/mapping/pending";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3347,7 +3544,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3426,7 +3623,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/keys";
+    String requestPath = "/1/keys";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3435,7 +3632,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3497,7 +3694,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/clusters";
+    String requestPath = "/1/clusters";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3506,7 +3703,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3571,7 +3768,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/indexes";
+    String requestPath = "/1/indexes";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3584,7 +3781,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3660,7 +3857,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path = "/1/clusters/mapping";
+    String requestPath = "/1/clusters/mapping";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3677,7 +3874,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "GET",
         queryParams,
         bodyObj,
@@ -3763,7 +3960,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = batchParams;
 
     // create path and map variables
-    String path = "/1/indexes/*/batch";
+    String requestPath = "/1/indexes/*/batch";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3772,7 +3969,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -3849,7 +4046,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = multipleQueriesParams;
 
     // create path and map variables
-    String path = "/1/indexes/*/queries";
+    String requestPath = "/1/indexes/*/queries";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3858,7 +4055,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -3939,7 +4136,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = operationIndexParams;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/operation".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -3952,7 +4149,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -4052,7 +4249,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = oneOfstringbuiltInOperation;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/{objectID}/partial".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -4075,7 +4272,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -4210,6 +4407,203 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for postCustomRequest
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   */
+  private Call postCustomRequestCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath =
+      "/1{path}".replaceAll(
+          "\\{" + "path" + "\\}",
+          this.escapeString(path.toString())
+        );
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
+  }
+
+  private Call postCustomRequestValidateBeforeCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    // verify the required parameter 'path' is set
+    if (path == null) {
+      throw new ApiException(
+        "Missing the required parameter 'path' when calling postCustomRequest(Async)"
+      );
+    }
+
+    return postCustomRequestCall(path, body, _callback);
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @return Object
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   */
+  public Object postCustomRequest(String path, Object body)
+    throws ApiException {
+    Call req = postCustomRequestValidateBeforeCall(path, body, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.PostCustomRequest(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<Object>() {}.getType();
+    ApiResponse<Object> res = this.execute(call, returnType);
+    return res.getData();
+  }
+
+  public Object postCustomRequest(String path) throws ApiException {
+    return this.postCustomRequest(path, null);
+  }
+
+  /**
+   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call postCustomRequestAsync(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Call call = postCustomRequestValidateBeforeCall(path, body, _callback);
+    Type returnType = new TypeToken<Object>() {}.getType();
+    this.executeAsync(call, returnType, _callback);
+    return call;
+  }
+
+  /**
+   * Build call for putCustomRequest
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   */
+  private Call putCustomRequestCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath =
+      "/1{path}".replaceAll(
+          "\\{" + "path" + "\\}",
+          this.escapeString(path.toString())
+        );
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
+  }
+
+  private Call putCustomRequestValidateBeforeCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    // verify the required parameter 'path' is set
+    if (path == null) {
+      throw new ApiException(
+        "Missing the required parameter 'path' when calling putCustomRequest(Async)"
+      );
+    }
+
+    return putCustomRequestCall(path, body, _callback);
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @return Object
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   */
+  public Object putCustomRequest(String path, Object body) throws ApiException {
+    Call req = putCustomRequestValidateBeforeCall(path, body, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.PutCustomRequest(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<Object>() {}.getType();
+    ApiResponse<Object> res = this.execute(call, returnType);
+    return res.getData();
+  }
+
+  public Object putCustomRequest(String path) throws ApiException {
+    return this.putCustomRequest(path, null);
+  }
+
+  /**
+   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call putCustomRequestAsync(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Call call = putCustomRequestValidateBeforeCall(path, body, _callback);
+    Type returnType = new TypeToken<Object>() {}.getType();
+    this.executeAsync(call, returnType, _callback);
+    return call;
+  }
+
+  /**
    * Build call for removeUserId
    *
    * @param _callback Callback for upload/download progress
@@ -4223,7 +4617,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/clusters/mapping/{userID}".replaceAll(
           "\\{" + "userID" + "\\}",
           this.escapeString(userID.toString())
@@ -4236,7 +4630,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "DELETE",
         queryParams,
         bodyObj,
@@ -4312,7 +4706,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = source;
 
     // create path and map variables
-    String path = "/1/security/sources";
+    String requestPath = "/1/security/sources";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -4321,7 +4715,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "PUT",
         queryParams,
         bodyObj,
@@ -4396,7 +4790,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/keys/{key}/restore".replaceAll(
           "\\{" + "key" + "\\}",
           this.escapeString(key.toString())
@@ -4409,7 +4803,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -4484,7 +4878,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = body;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -4497,7 +4891,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -4586,7 +4980,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = rule;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/rules/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -4609,7 +5003,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "PUT",
         queryParams,
         bodyObj,
@@ -4745,7 +5139,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = synonymHit;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/synonyms/{objectID}".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -4768,7 +5162,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "PUT",
         queryParams,
         bodyObj,
@@ -4905,7 +5299,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = synonymHit;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/synonyms/batch".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -4930,7 +5324,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -5060,7 +5454,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = searchParams;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/query".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -5073,7 +5467,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -5160,7 +5554,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = searchDictionaryEntriesParams;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/dictionaries/{dictionaryName}/search".replaceAll(
           "\\{" + "dictionaryName" + "\\}",
           this.escapeString(dictionaryName.toString())
@@ -5173,7 +5567,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -5279,7 +5673,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = searchForFacetValuesRequest;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/facets/{facetName}/query".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -5296,7 +5690,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -5417,7 +5811,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = searchRulesParams;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/rules/search".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -5430,7 +5824,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -5530,7 +5924,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/synonyms/search".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -5559,7 +5953,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -5685,7 +6079,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = searchUserIdsParams;
 
     // create path and map variables
-    String path = "/1/clusters/mapping/search";
+    String requestPath = "/1/clusters/mapping/search";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -5694,7 +6088,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "POST",
         queryParams,
         bodyObj,
@@ -5782,7 +6176,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = dictionarySettingsParams;
 
     // create path and map variables
-    String path = "/1/dictionaries/*/settings";
+    String requestPath = "/1/dictionaries/*/settings";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -5791,7 +6185,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "PUT",
         queryParams,
         bodyObj,
@@ -5876,7 +6270,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = indexSettings;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/indexes/{indexName}/settings".replaceAll(
           "\\{" + "indexName" + "\\}",
           this.escapeString(indexName.toString())
@@ -5895,7 +6289,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "PUT",
         queryParams,
         bodyObj,
@@ -6016,7 +6410,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = apiKey;
 
     // create path and map variables
-    String path =
+    String requestPath =
       "/1/keys/{key}".replaceAll(
           "\\{" + "key" + "\\}",
           this.escapeString(key.toString())
@@ -6029,7 +6423,7 @@ public class SearchApi extends ApiClient {
     headers.put("Content-Type", "application/json");
 
     return this.buildCall(
-        path,
+        requestPath,
         "PUT",
         queryParams,
         bodyObj,

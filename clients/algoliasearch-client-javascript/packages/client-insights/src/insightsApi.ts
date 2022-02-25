@@ -57,6 +57,117 @@ export function createInsightsApi(
   }
 
   /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param deleteCustomRequest - The deleteCustomRequest object.
+   * @param deleteCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param deleteCustomRequest.body - The parameters to send with the custom request.
+   */
+  function deleteCustomRequest({
+    path,
+    body,
+  }: DeleteCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `deleteCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param getCustomRequest - The getCustomRequest object.
+   * @param getCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param getCustomRequest.body - The parameters to send with the custom request.
+   */
+  function getCustomRequest({
+    path,
+    body,
+  }: GetCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `getCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param postCustomRequest - The postCustomRequest object.
+   * @param postCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param postCustomRequest.body - The parameters to send with the custom request.
+   */
+  function postCustomRequest({
+    path,
+    body,
+  }: PostCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `postCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
    * This command pushes an array of events.
    *
    * @summary Pushes an array of events.
@@ -65,7 +176,7 @@ export function createInsightsApi(
   function pushEvents(
     insightEvents: InsightEvents
   ): Promise<PushEventsResponse> {
-    const path = '/1/events';
+    const requestPath = '/1/events';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -83,7 +194,7 @@ export function createInsightsApi(
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: insightEvents,
     };
 
@@ -93,7 +204,95 @@ export function createInsightsApi(
     });
   }
 
-  return { addUserAgent, pushEvents };
+  /**
+   * The customRequest method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param putCustomRequest - The putCustomRequest object.
+   * @param putCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param putCustomRequest.body - The parameters to send with the custom request.
+   */
+  function putCustomRequest({
+    path,
+    body,
+  }: PutCustomRequestProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error(
+        'Parameter `path` is required when calling `putCustomRequest`.'
+      );
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  return {
+    addUserAgent,
+    deleteCustomRequest,
+    getCustomRequest,
+    postCustomRequest,
+    pushEvents,
+    putCustomRequest,
+  };
 }
 
 export type InsightsApi = ReturnType<typeof createInsightsApi>;
+
+export type DeleteCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+export type GetCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+export type PostCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+export type PutCustomRequestProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};

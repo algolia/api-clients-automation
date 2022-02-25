@@ -145,6 +145,42 @@ class AbtestingApi
     }
 
     /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function deleteCustomRequest($path, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling deleteCustomRequest'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
      * Returns metadata and metrics for A/B test id.
      *
      * @param int $id The A/B test ID. (required)
@@ -170,6 +206,42 @@ class AbtestingApi
                 ObjectSerializer::toPathValue($id),
                 $resourcePath
             );
+        }
+
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function getCustomRequest($path, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling getCustomRequest'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
         }
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
@@ -210,6 +282,78 @@ class AbtestingApi
         }
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function postCustomRequest($path, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling postCustomRequest'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function putCustomRequest($path, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling putCustomRequest'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
 
     /**
