@@ -3,6 +3,11 @@ import { getLanguageFolder } from './config';
 import { createSpinner } from './oraLog';
 import type { Generator } from './types';
 
+const multiBuildLanguage = new Set(['javascript']);
+
+/**
+ * Build only a specific client for one language, used by javascript for example.
+ */
 async function buildPerClient(
   { language, key, additionalProperties: { packageName } }: Generator,
   verbose: boolean
@@ -21,6 +26,9 @@ async function buildPerClient(
   spinner.succeed();
 }
 
+/**
+ * Build all client for a language at the same time, for those who live in the same folder.
+ */
 async function buildAllClients(
   language: string,
   verbose: boolean
@@ -48,21 +56,17 @@ export async function buildClients(
   generators: Generator[],
   verbose: boolean
 ): Promise<void> {
-  // For javascript, we build each client individually,
-  // we should detect this from the config file, for example `isMutliBuild`
-
-  // for other languages, we can mutualize the build
   const langs = [...new Set(generators.map((gen) => gen.language))];
 
   await Promise.all([
     Promise.all(
       generators
-        .filter(({ language }) => language === 'javascript')
+        .filter(({ language }) => multiBuildLanguage.has(language))
         .map((gen) => buildPerClient(gen, verbose))
     ),
     Promise.all(
       langs
-        .filter((lang) => lang !== 'javascript')
+        .filter((lang) => !multiBuildLanguage.has(lang))
         .map((lang) => buildAllClients(lang, verbose))
     ),
   ]);
