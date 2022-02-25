@@ -59,7 +59,7 @@ yarn docker build specs <client | all>
 #### Build all specs
 
 ```bash
-yarn docker build specs all
+yarn docker build specs
 ```
 
 #### Build specific spec
@@ -94,7 +94,7 @@ yarn docker generate <language | all> <client | all>
 #### Generate all clients
 
 ```bash
-yarn docker generate all all
+yarn docker generate
 ```
 
 ### Generate specific client for specific language

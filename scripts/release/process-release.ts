@@ -109,13 +109,13 @@ async function processRelease(): Promise<void> {
   // generate clients to release
   for (const lang of Object.keys(versionsToRelease)) {
     console.log(`Generating ${lang} client(s)...`);
-    await run(`yarn api generate ${lang} all`);
+    await run(`yarn cli generate ${lang}`);
   }
 
   // generate clients to just update the repos
   for (const lang of langsToUpdateRepo) {
     console.log(`Generating ${lang} client(s)...`);
-    await run(`yarn api generate ${lang} all`, { verbose: true });
+    await run(`yarn cli generate ${lang}`, { verbose: true });
   }
 
   const clientPath = toAbsolutePath(

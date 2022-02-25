@@ -11,16 +11,17 @@ async function buildSpec(
   verbose: boolean,
   useCache: boolean
 ): Promise<void> {
+  createSpinner(`${client} spec`, verbose).start().info();
   const cacheFile = toAbsolutePath(`specs/dist/${client}.cache`);
   if (useCache) {
-    // check if file and cache exist
     const spinner = createSpinner(
       `checking cache for ${client}`,
       verbose
     ).start();
+    // check if file and cache exist
     if (await exists(toAbsolutePath(`specs/bundled/${client}.yml`))) {
-      const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
       // compare with stored cache
+      const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
       if (await exists(cacheFile)) {
         const storedHash = (await fsp.readFile(cacheFile)).toString();
         if (storedHash === hash) {
@@ -44,16 +45,20 @@ async function buildSpec(
     { verbose }
   );
 
-  spinner.text = `validate ${client} spec`;
+  spinner.text = `validating ${client} spec`;
   await run(`yarn openapi lint specs/bundled/${client}.${outputFormat}`, {
     verbose,
   });
 
-  spinner.text = `storing ${client} cache`;
+  spinner.text = `storing ${client} spec cache`;
   const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
   await fsp.writeFile(cacheFile, hash);
 
   spinner.succeed();
+
+  createSpinner(`building complete for ${client} spec`, verbose)
+    .start()
+    .succeed();
 }
 
 export async function buildSpecs(
@@ -64,7 +69,7 @@ export async function buildSpecs(
 ): Promise<void> {
   await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
 
-  for (const client of clients) {
-    await buildSpec(client, outputFormat, verbose, useCache);
-  }
+  await Promise.all(
+    clients.map((client) => buildSpec(client, outputFormat, verbose, useCache))
+  );
 }

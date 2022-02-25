@@ -48,18 +48,22 @@ export async function buildClients(
   generators: Generator[],
   verbose: boolean
 ): Promise<void> {
-  for (const gen of generators) {
-    // we should detect this from the config file, for example `isMutliBuild`
-    if (gen.language === 'javascript') {
-      await buildPerClient(gen, verbose);
-    }
-  }
+  // For javascript, we build each client individually,
+  // we should detect this from the config file, for example `isMutliBuild`
 
   // for other languages, we can mutualize the build
   const langs = [...new Set(generators.map((gen) => gen.language))];
-  for (const lang of langs) {
-    if (lang !== 'javascript') {
-      await buildAllClients(lang, verbose);
-    }
-  }
+
+  await Promise.all([
+    Promise.all(
+      generators
+        .filter(({ language }) => language === 'javascript')
+        .map((gen) => buildPerClient(gen, verbose))
+    ),
+    Promise.all(
+      langs
+        .filter((lang) => lang !== 'javascript')
+        .map((lang) => buildAllClients(lang, verbose))
+    ),
+  ]);
 }

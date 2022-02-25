@@ -60,7 +60,7 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Building ${{ matrix.client }} specs
-        run: yarn api build specs ${{ matrix.client }}
+        run: yarn cli build specs ${{ matrix.client }}
 
       - name: Check diff with pushed spec
         run: exit $(git status --porcelain specs/bundled/${{ matrix.client }}.yml | wc -l)
@@ -123,7 +123,7 @@ jobs:
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn api generate javascript ${{ matrix.client.name }}
+        run: yarn cli generate javascript ${{ matrix.client.name }}
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -131,7 +131,7 @@ jobs:
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn api build clients javascript ${{ matrix.client.name }}
+        run: yarn cli build clients javascript ${{ matrix.client.name }}
 
   client_java:
     runs-on: ubuntu-20.04
@@ -160,7 +160,7 @@ jobs:
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn api generate java ${{ matrix.client.name }}
+        run: yarn cli generate java ${{ matrix.client.name }}
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -168,7 +168,7 @@ jobs:
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn api build clients java ${{ matrix.client.name }}
+        run: yarn cli build clients java ${{ matrix.client.name }}
 
   client_php:
     runs-on: ubuntu-20.04
@@ -190,7 +190,7 @@ jobs:
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn api generate php ${{ matrix.client.name }}
+        run: yarn cli generate php ${{ matrix.client.name }}
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -198,7 +198,7 @@ jobs:
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn api build clients php ${{ matrix.client.name }}
+        run: yarn cli build clients php ${{ matrix.client.name }}
 
   cts:
     runs-on: ubuntu-20.04
@@ -218,13 +218,13 @@ jobs:
           job: cts
 
       - name: Generate CTS
-        run: yarn api cts generate
+        run: yarn cli cts generate
 
       - name: Check diff with pushed CTS
         run: exit $(git status --porcelain ./tests/output | wc -l)
 
       - name: Run CTS
-        run: yarn api cts run
+        run: yarn cli cts run
 
   scripts:
     runs-on: ubuntu-20.04

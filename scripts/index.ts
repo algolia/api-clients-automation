@@ -26,13 +26,16 @@ if (!CI && !DOCKER) {
   process.exit(1);
 }
 
-program.name('api');
+program.name('cli');
 
-async function promptLanguage(defaut: string | undefined): Promise<string> {
+async function promptLanguage(
+  defaut: string | undefined,
+  interactive: boolean
+): Promise<string> {
   if (defaut) {
     return defaut;
   }
-  if (CI) {
+  if (!interactive) {
     return 'all';
   }
   const { language } = await inquirer.prompt([
@@ -49,12 +52,13 @@ async function promptLanguage(defaut: string | undefined): Promise<string> {
 
 async function promptClient(
   defaut: string | undefined,
+  interactive: boolean,
   clientList = CLIENTS
 ): Promise<string> {
   if (defaut) {
     return defaut;
   }
-  if (CI) {
+  if (!interactive) {
     return 'all';
   }
   const { client } = await inquirer.prompt([
@@ -106,14 +110,15 @@ program
     new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
   )
   .option('-v, --verbose', 'make the generation verbose')
+  .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
       language: string | undefined,
       client: string | undefined,
-      { verbose }
+      { verbose, interactive }
     ) => {
-      language = await promptLanguage(language);
-      client = await promptClient(client);
+      language = await promptLanguage(language, interactive);
+      client = await promptClient(client, interactive);
 
       await generate(generatorList({ language, client }), Boolean(verbose));
     }
@@ -133,14 +138,15 @@ buildCommand
     new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS_JS))
   )
   .option('-v, --verbose', 'make the compilation verbose')
+  .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
       language: string | undefined,
       client: string | undefined,
-      { verbose }
+      { verbose, interactive }
     ) => {
-      language = await promptLanguage(language);
-      client = await promptClient(client, CLIENTS_JS);
+      language = await promptLanguage(language, interactive);
+      client = await promptClient(client, interactive, CLIENTS_JS);
 
       await buildClients(
         generatorList({ language, client, clientList: CLIENTS_JS }),
@@ -162,13 +168,14 @@ buildCommand
     ])
   )
   .option('-v, --verbose', 'make the verification verbose')
+  .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
       client: string | undefined,
       outputFormat: 'json' | 'yml' | undefined,
-      { verbose }
+      { verbose, interactive }
     ) => {
-      client = await promptClient(client);
+      client = await promptClient(client, interactive);
 
       if (!outputFormat) {
         outputFormat = 'yml';
@@ -178,7 +185,8 @@ buildCommand
       if (client === 'all') {
         clientsTodo = CLIENTS;
       }
-      await buildSpecs(clientsTodo, outputFormat!, Boolean(verbose), true);
+      // ignore cache when building from cli
+      await buildSpecs(clientsTodo, outputFormat!, Boolean(verbose), false);
     }
   );
 
@@ -196,14 +204,15 @@ ctsCommand
     new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
   )
   .option('-v, --verbose', 'make the generation verbose')
+  .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
       language: string | undefined,
       client: string | undefined,
-      { verbose }
+      { verbose, interactive }
     ) => {
-      language = await promptLanguage(language);
-      client = await promptClient(client);
+      language = await promptLanguage(language, interactive);
+      client = await promptClient(client, interactive);
 
       await ctsGenerateMany(
         generatorList({ language, client }),
@@ -221,8 +230,9 @@ ctsCommand
     )
   )
   .option('-v, --verbose', 'make the generation verbose')
-  .action(async (language: string | undefined, { verbose }) => {
-    language = await promptLanguage(language);
+  .option('-i, --interactive', 'open prompt to query parameters')
+  .action(async (language: string | undefined, { verbose, interactive }) => {
+    language = await promptLanguage(language, interactive);
 
     let langsTodo = [language];
     if (language === 'all') {
@@ -238,15 +248,22 @@ program
   .addArgument(
     new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
   )
-  .action(async (language: string | undefined, client: string | undefined) => {
-    language = await promptLanguage(language);
-    client = await promptClient(client);
+  .option('-i, --interactive', 'open prompt to query parameters')
+  .action(
+    async (
+      language: string | undefined,
+      client: string | undefined,
+      { interactive }
+    ) => {
+      language = await promptLanguage(language, interactive);
+      client = await promptClient(client, interactive);
 
-    await playground({
-      language,
-      client,
-      key: createGeneratorKey({ language, client }),
-    });
-  });
+      await playground({
+        language,
+        client,
+        key: createGeneratorKey({ language, client }),
+      });
+    }
+  );
 
 program.parse();

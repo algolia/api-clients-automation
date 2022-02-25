@@ -9,13 +9,13 @@
     "tests/output/javascript"
   ],
   "scripts": {
-    "api": "yarn workspace scripts ts-node --transpile-only ./index.ts",
+    "cli": "yarn workspace scripts ts-node --transpile-only ./index.ts",
     "clean": "rm -rf **/dist **/build **/node_modules **/.gradle",
     "docker:build": "./scripts/docker/build.sh",
     "docker:clean": "docker stop dev; docker rm -f dev; docker image rm -f api-clients-automation",
     "docker:mount": "./scripts/docker/mount.sh",
     "docker:setup": "yarn docker:clean && yarn docker:build && yarn docker:mount",
-    "docker": "docker exec -it dev yarn api $*",
+    "docker": "docker exec -it dev yarn cli $*",
     "github-actions:lint": "eslint --ext=yml .github/",
     "playground:browser": "yarn workspace javascript-browser-playground start",
     "release": "yarn workspace scripts createReleaseIssue",

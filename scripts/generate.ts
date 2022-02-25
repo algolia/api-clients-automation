@@ -71,13 +71,13 @@ export async function generate(
     }
     if (lang === 'javascript') {
       const spinner = createSpinner(
-        'Cleaning JavaScript client utils',
+        'cleaning JavaScript client utils',
         verbose
       ).start();
       await run('yarn workspace algoliasearch-client-javascript clean:utils', {
         verbose,
       });
-      spinner.text = 'Building JavaScript client utils';
+      spinner.text = 'building JavaScript client utils';
       await run('yarn workspace algoliasearch-client-javascript build:utils', {
         verbose,
       });
