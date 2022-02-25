@@ -17,12 +17,12 @@
     "docker:setup": "yarn docker:clean && yarn docker:build && yarn docker:mount",
     "docker": "docker exec -it dev yarn api $*",
     "github-actions:lint": "eslint --ext=yml .github/",
-    "lint:scripts": "eslint --ext=ts scripts/",
     "playground:browser": "yarn workspace javascript-browser-playground start",
-    "specs:fix": "eslint --ext=yml specs/ --fix",
     "release": "yarn workspace scripts createReleaseIssue",
-    "specs:lint": "eslint --ext=yml specs/$0",
-    "test:scripts": "yarn workspace scripts test"
+    "scripts:lint": "eslint --ext=ts scripts/",
+    "scripts:test": "yarn workspace scripts test",
+    "specs:fix": "eslint --ext=yml specs/ --fix",
+    "specs:lint": "eslint --ext=yml specs/$0"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.26",

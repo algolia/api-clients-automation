@@ -238,7 +238,7 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Check script linting
-        run: yarn lint:scripts
+        run: yarn scripts:lint
 
       - name: Test scripts
-        run: yarn test:scripts
+        run: yarn scripts:test
