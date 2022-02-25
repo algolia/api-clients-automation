@@ -63,16 +63,16 @@ class {{clientRawName}}Test extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         {{#hasParameters}}
-        $params = json_decode('{{{parameters}}}', true);
+        $params = json_decode("{{#escapeQuotes}}{{{parameters}}}{{/escapeQuotes}}", true);
         {{/hasParameters}}
 
         $client->{{{method}}}({{#hasParameters}}$params{{/hasParameters}});
 
         $this->assertRequests([
             [
-                'path' => '{{{request.path}}}',
-                'method' => '{{{request.method}}}',
-                'body' => '{{{request.data}}}',
+                "path" => "{{{request.path}}}",
+                "method" => "{{{request.method}}}",
+                "body" => "{{#escapeQuotes}}{{{request.data}}}{{/escapeQuotes}}",
             ],
         ]);
     }

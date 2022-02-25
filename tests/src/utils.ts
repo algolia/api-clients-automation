@@ -49,7 +49,7 @@ export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function createClientName(client: string, language: string): string {
+export function camelizeClientName(client: string, language: string): string {
   const clientName = client
     .split('-')
     .map((part, i) => {
@@ -60,6 +60,12 @@ export function createClientName(client: string, language: string): string {
       return capitalize(part);
     })
     .join('');
+
+  return `${clientName}`;
+}
+
+export function createClientName(client: string, language: string): string {
+  const clientName = camelizeClientName(client, language);
 
   return `${clientName}Api`;
 }
@@ -164,7 +170,11 @@ export function getOutputPath({
   client: string;
   testPath: string;
 }): string {
-  return `output/${language}/${ctsConfig[language].outputFolder}/${testPath}/${client}${ctsConfig[language].extension}`;
+  const clientName =
+    language === 'php'
+      ? capitalize(camelizeClientName(client, language))
+      : client;
+  return `output/${language}/${ctsConfig[language].outputFolder}/${testPath}/${clientName}${ctsConfig[language].extension}`;
 }
 
 export async function loadTemplates({
