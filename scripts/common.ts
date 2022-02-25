@@ -29,10 +29,13 @@ export const CLIENTS = [
 
 export const CLIENTS_JS = CLIENTS.concat([]);
 
-export function splitGeneratorKey(key: string): Generator {
-  const language = key.slice(0, key.indexOf('-'));
-  const client = key.slice(key.indexOf('-') + 1);
-  return { language, client, key };
+/**
+ * Takes a generator key in the form 'language-client' and returns the Generator object.
+ */
+export function splitGeneratorKey(generatorKey: string): Generator {
+  const language = generatorKey.slice(0, generatorKey.indexOf('-'));
+  const client = generatorKey.slice(generatorKey.indexOf('-') + 1);
+  return { language, client, key: generatorKey };
 }
 
 export function createGeneratorKey({

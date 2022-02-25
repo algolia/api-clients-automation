@@ -11,11 +11,11 @@ async function buildSpec(
   verbose: boolean,
   useCache: boolean
 ): Promise<void> {
-  createSpinner(`${client} spec`, verbose).start().info();
+  createSpinner(`'${client}' spec`, verbose).start().info();
   const cacheFile = toAbsolutePath(`specs/dist/${client}.cache`);
   if (useCache) {
     const spinner = createSpinner(
-      `checking cache for ${client}`,
+      `checking cache for '${client}'`,
       verbose
     ).start();
     // check if file and cache exist
@@ -33,19 +33,19 @@ async function buildSpec(
       }
     }
 
-    spinner.info(`cache not found for ${client} spec`);
+    spinner.info(`cache not found for ${client}' spec`);
   }
 
-  const spinner = createSpinner(`linting ${client} spec`, verbose).start();
+  const spinner = createSpinner(`linting '${client}' spec`, verbose).start();
   await run(`yarn specs:lint ${client}`, { verbose });
 
-  spinner.text = `building ${client} spec`;
+  spinner.text = `building '${client}' spec`;
   await run(
     `yarn openapi bundle specs/${client}/spec.yml -o specs/bundled/${client}.${outputFormat} --ext ${outputFormat}`,
     { verbose }
   );
 
-  spinner.text = `validating ${client} spec`;
+  spinner.text = `validating '${client}' spec`;
   await run(`yarn openapi lint specs/bundled/${client}.${outputFormat}`, {
     verbose,
   });
@@ -54,11 +54,7 @@ async function buildSpec(
   const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
   await fsp.writeFile(cacheFile, hash);
 
-  spinner.succeed();
-
-  createSpinner(`building complete for ${client} spec`, verbose)
-    .start()
-    .succeed();
+  spinner.succeed(`building complete for '${client}' spec`);
 }
 
 export async function buildSpecs(

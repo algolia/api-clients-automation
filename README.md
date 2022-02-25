@@ -115,6 +115,10 @@ yarn docker build clients java recommend
 
 You can add `-v` to almost every command to have a more verbose output.
 
+### Interactive command
+
+If you want to choose the language and client from a list you can add the `--interactive` option, or `-i`.
+
 ## Testing clients
 
 You can test our generated clients by running:

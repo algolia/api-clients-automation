@@ -7,7 +7,7 @@ export async function formatter(
   verbose = false
 ): Promise<void> {
   const spinner = createSpinner(
-    { text: `formatting ${language}`, indent: 4 },
+    { text: `formatting '${language}'`, indent: 4 },
     verbose
   ).start();
   let cmd = '';

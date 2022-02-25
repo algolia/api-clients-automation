@@ -33,7 +33,7 @@ async function buildAllClients(
   language: string,
   verbose: boolean
 ): Promise<void> {
-  const spinner = createSpinner(`building ${language}`, verbose).start();
+  const spinner = createSpinner(`building '${language}'`, verbose).start();
   switch (language) {
     case 'java':
       await run(

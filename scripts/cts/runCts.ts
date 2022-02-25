@@ -2,7 +2,10 @@ import { run } from '../common';
 import { createSpinner } from '../oraLog';
 
 async function runCtsOne(language: string, verbose: boolean): Promise<void> {
-  const spinner = createSpinner(`running cts for ${language}`, verbose).start();
+  const spinner = createSpinner(
+    `running cts for '${language}'`,
+    verbose
+  ).start();
   switch (language) {
     case 'javascript':
       await run('yarn workspace javascript-tests test', { verbose });
@@ -23,7 +26,7 @@ async function runCtsOne(language: string, verbose: boolean): Promise<void> {
       break;
     }*/
     default:
-      spinner.warn(`skipping unknown language ${language} to run the CTS`);
+      spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;
   }
   spinner.succeed();
