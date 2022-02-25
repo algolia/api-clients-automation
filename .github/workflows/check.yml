@@ -8,7 +8,7 @@ on:
       - main
 
 env:
-  CACHE_VERSION: '5'
+  CACHE_VERSION: '6'
 
 concurrency:
   group: ${{ github.ref }}
@@ -76,7 +76,6 @@ jobs:
           - client-common
           - requester-browser-xhr
           - requester-node-http
-          - algoliasearch
     steps:
       - uses: actions/checkout@v2
 
@@ -122,7 +121,7 @@ jobs:
           key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/bundled/{0}.yml', matrix.client.name)) }}
 
       - name: Generate ${{ matrix.client.name }} client
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true' && matrix.client.name != 'algoliasearch'
         run: yarn cli generate javascript ${{ matrix.client.name }}
 
       - name: Check diff with pushed client

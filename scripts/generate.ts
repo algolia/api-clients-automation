@@ -69,7 +69,7 @@ export async function generate(
     if (!CI || lang !== 'javascript') {
       await formatter(lang, getLanguageFolder(lang), verbose);
     }
-    if (lang === 'javascript') {
+    if (!CI && lang === 'javascript') {
       const spinner = createSpinner(
         'cleaning JavaScript client utils',
         verbose
