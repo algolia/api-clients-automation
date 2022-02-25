@@ -1,8 +1,6 @@
-import type { GetSearchesNoResultsResponseSearches } from './getSearchesNoResultsResponseSearches';
+import type { GetTopSearchesResponseSimple } from './getTopSearchesResponseSimple';
+import type { GetTopSearchesResponseWithAnalytics } from './getTopSearchesResponseWithAnalytics';
 
-export type GetTopSearchesResponse = {
-  /**
-   * A list of top searches with their count.
-   */
-  searches: GetSearchesNoResultsResponseSearches[];
-};
+export type GetTopSearchesResponse =
+  | GetTopSearchesResponseSimple
+  | GetTopSearchesResponseWithAnalytics;

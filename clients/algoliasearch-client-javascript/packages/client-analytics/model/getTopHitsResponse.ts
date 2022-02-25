@@ -1,8 +1,6 @@
-import type { GetTopHitsResponseHits } from './getTopHitsResponseHits';
+import type { GetTopHitsResponseSimple } from './getTopHitsResponseSimple';
+import type { GetTopHitsResponseWithAnalytics } from './getTopHitsResponseWithAnalytics';
 
-export type GetTopHitsResponse = {
-  /**
-   * A list of top hits with their count.
-   */
-  hits: GetTopHitsResponseHits[];
-};
+export type GetTopHitsResponse =
+  | GetTopHitsResponseSimple
+  | GetTopHitsResponseWithAnalytics;
