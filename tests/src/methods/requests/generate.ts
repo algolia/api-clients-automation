@@ -7,6 +7,7 @@ import {
   createClientName,
   packageNames,
   capitalize,
+  camelizeClientName,
   getOutputPath,
   createOutputDir,
   loadTemplates,
@@ -36,7 +37,7 @@ export async function generateTests(
     {
       import: packageNames[language][client],
       client: createClientName(client, language),
-      clientRawName: capitalize(client),
+      clientRawName: camelizeClientName(client, language),
       blocks: cts,
       hasRegionalHost: openapitools['generator-cli'].generators[
         `${language}-${client}`
