@@ -4,19 +4,12 @@
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
-        "$objectName": "BatchWriteParams",
         "requests": [
           {
-            "$objectName": "Operation",
-            "action": {
-              "$enumType": "Action",
-              "value": "delete"
-            },
+            "action": "delete",
             "body": {
-              "$objectName": "Object",
               "key": "value"
-            },
-            "indexName": "otherIndexName"
+            }
           }
         ]
       }
@@ -30,8 +23,7 @@
             "action": "delete",
             "body": {
               "key": "value"
-            },
-            "indexName": "otherIndexName"
+            }
           }
         ]
       }
