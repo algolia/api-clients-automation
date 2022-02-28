@@ -93,7 +93,7 @@ jobs:
 
       - name: Build ${{ matrix.client }} client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn workspace algoliasearch-client-javascript build:utils ${{ matrix.client }}
+        run: yarn workspace algoliasearch-client-javascript build ${{ matrix.client }}
 
   client_javascript:
     timeout-minutes: 10

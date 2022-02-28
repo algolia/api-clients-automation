@@ -27,7 +27,12 @@ export const CLIENTS = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
 ];
 
-export const CLIENTS_JS = CLIENTS.concat([]);
+export const CLIENTS_JS_UTILS = [
+  'client-common',
+  'requester-browser-xhr',
+  'requester-node-http',
+];
+export const CLIENTS_JS = ['algoliasearch', ...CLIENTS];
 
 /**
  * Takes a generator key in the form 'language-client' and returns the Generator object.

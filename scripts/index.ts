@@ -2,12 +2,13 @@
 import { Argument, program } from 'commander';
 import inquirer from 'inquirer';
 
-import { buildClients } from './buildClients';
+import { buildClients, buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
 import {
   CI,
   CLIENTS,
   CLIENTS_JS,
+  CLIENTS_JS_UTILS,
   createGeneratorKey,
   DOCKER,
   GENERATORS,
@@ -91,9 +92,22 @@ function generatorList({
 
   return langsTodo
     .flatMap((lang) =>
-      clientsTodo.map(
-        (cli) => GENERATORS[createGeneratorKey({ language: lang, client: cli })]
-      )
+      clientsTodo.map((cli) => {
+        // Edge case for `algoliasearch`, which is not a generated client but
+        // use the same build system
+        if (cli === 'algoliasearch') {
+          return {
+            language: 'javascript',
+            client: cli,
+            key: `javascript-${cli}`,
+            additionalProperties: {
+              packageName: cli,
+            },
+          };
+        }
+
+        return GENERATORS[createGeneratorKey({ language: lang, client: cli })];
+      })
     )
     .filter(Boolean);
 }
@@ -135,7 +149,9 @@ buildCommand
     )
   )
   .addArgument(
-    new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS_JS))
+    new Argument('[client]', 'The client').choices(
+      ['all'].concat([...CLIENTS_JS_UTILS, ...CLIENTS_JS])
+    )
   )
   .option('-v, --verbose', 'make the compilation verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
@@ -146,10 +162,26 @@ buildCommand
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      client = await promptClient(client, interactive, CLIENTS_JS);
+      client = await promptClient(client, interactive, [
+        ...CLIENTS_JS_UTILS,
+        ...CLIENTS_JS,
+      ]);
+
+      // We build the JavaScript utils before generated clients as they
+      // rely on them
+      if (
+        language === 'javascript' &&
+        (!client || client === 'all' || CLIENTS_JS_UTILS.includes(client))
+      ) {
+        await buildJSClientUtils(Boolean(verbose), client);
+      }
 
       await buildClients(
-        generatorList({ language, client, clientList: CLIENTS_JS }),
+        generatorList({
+          language,
+          client,
+          clientList: CLIENTS_JS,
+        }),
         Boolean(verbose)
       );
     }
