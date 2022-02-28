@@ -7,7 +7,7 @@ import openapitools from '../openapitools.json';
 
 import type { Generator, RunOptions } from './types';
 
-export const CI = true; // Boolean(process.env.CI);
+export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
