@@ -22,6 +22,8 @@ jobs:
 
       - run: git checkout chore/release
 
+      - run: git submodule update
+
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
