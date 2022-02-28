@@ -62,6 +62,9 @@ runs:
           run="true"
         fi
 
+        echo "Running spec matrix: $run"
+        echo "Spec matrix: $(echo $matrix | jq .)"
+
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_SPECS::$run"
 
@@ -90,10 +93,14 @@ runs:
           run="true"
         fi
 
+        echo "Running javascript matrix: $run"
+        echo "Javascript matrix: $(echo $matrix | jq .)"
+
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_CLIENT::$run"
 
         if [[ $base_changed == 'true' || steps.diff.outputs.JS_COMMON_CHANGED > 0 ]]; then
+          echo "Running common javascript: true"
           echo "::set-output name=RUN_COMMON::true"
         fi
 
@@ -111,6 +118,9 @@ runs:
           run="true"
         fi
 
+        echo "Running java matrix: $run"
+        echo "Java matrix: $(echo $matrix | jq .)"
+
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_CLIENT::$run"
 
@@ -127,6 +137,9 @@ runs:
         else
           run="true"
         fi
+
+        echo "Running php matrix: $run"
+        echo "PHP matrix: $(echo $matrix | jq .)"
 
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_CLIENT::$run"
