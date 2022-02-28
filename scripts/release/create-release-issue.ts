@@ -62,10 +62,10 @@ async function createReleaseIssue(): Promise<void> {
   const versions = readVersions();
 
   console.log('Pulling from origin...');
-  run(`git pull origin ${MAIN_BRANCH}`);
+  run(`git pull`);
 
   console.log('Pushing to origin...');
-  run(`git push origin ${MAIN_BRANCH}`);
+  run(`git push`);
 
   const commitsWithoutScope: string[] = [];
   const commitsWithNonLanguageScope: string[] = [];
