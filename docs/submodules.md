@@ -65,3 +65,9 @@ cd clients/algoliasearch-client-javascript
 git reset --hard HEAD
 git checkout next
 ```
+
+## Troubleshootings
+
+### When something is weird,
+
+Try `git submodule update` first.
