@@ -8,7 +8,7 @@ export default {
   currentVersionNotFound: `current version not found`,
   descriptionVersionChanges: [
     `**Checked** → Update version, update repository, and release the library.`,
-    `**Unchecked** → Update repository.`,
+    `**Un-checked** → Update repository.`,
     `**Line removed** → Do nothing.`,
   ].join('\n'),
   descriptionForSkippedLang: `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
