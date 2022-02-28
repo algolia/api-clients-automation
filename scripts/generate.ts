@@ -1,3 +1,4 @@
+import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
 import { CI, run, runIfExists } from './common';
 import { getLanguageFolder } from './config';
@@ -67,21 +68,11 @@ export async function generate(
     if (!(CI && lang === 'javascript')) {
       await formatter(lang, getLanguageFolder(lang), verbose);
     }
+
+    // JavaScript utils are tested independently, we only build them
+    // during dev to ease the process
     if (!CI && lang === 'javascript') {
-      const spinner = createSpinner(
-        'cleaning JavaScript client utils',
-        verbose
-      ).start();
-      await run('yarn workspace algoliasearch-client-javascript clean:utils', {
-        verbose,
-      });
-
-      spinner.text = 'building JavaScript client utils';
-      await run('yarn workspace algoliasearch-client-javascript build:utils', {
-        verbose,
-      });
-
-      spinner.succeed();
+      await buildJSClientUtils(verbose, 'all');
     }
   }
 

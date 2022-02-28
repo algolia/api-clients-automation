@@ -92,22 +92,9 @@ function generatorList({
 
   return langsTodo
     .flatMap((lang) =>
-      clientsTodo.map((cli) => {
-        // Edge case for `algoliasearch`, which is not a generated client but
-        // use the same build system
-        if (cli === 'algoliasearch') {
-          return {
-            language: 'javascript',
-            client: cli,
-            key: `javascript-${cli}`,
-            additionalProperties: {
-              packageName: cli,
-            },
-          };
-        }
-
-        return GENERATORS[createGeneratorKey({ language: lang, client: cli })];
-      })
+      clientsTodo.map(
+        (cli) => GENERATORS[createGeneratorKey({ language: lang, client: cli })]
+      )
     )
     .filter(Boolean);
 }
@@ -170,7 +157,7 @@ buildCommand
       // We build the JavaScript utils before generated clients as they
       // rely on them
       if (
-        language === 'javascript' &&
+        (language === 'javascript' || language === 'all') &&
         (!client || client === 'all' || CLIENTS_JS_UTILS.includes(client))
       ) {
         await buildJSClientUtils(Boolean(verbose), client);
