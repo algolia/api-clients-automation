@@ -111,9 +111,14 @@ export function createAbtestingApi(
    * @summary Send requests to the Algolia REST API.
    * @param del - The del object.
    * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param del.body - The parameters to send with the custom request.
    */
-  function del({ path, body }: DelProps): Promise<Record<string, any>> {
+  function del({
+    path,
+    parameters,
+    body,
+  }: DelProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -123,6 +128,10 @@ export function createAbtestingApi(
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `del`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
     }
 
     const request: Request = {
@@ -172,7 +181,7 @@ export function createAbtestingApi(
   /**
    * This method allow you to send requests to the Algolia REST API.
    *
-   * @summary Send GET requests to the Algolia REST API.
+   * @summary Send requests to the Algolia REST API.
    * @param get - The get object.
    * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
    * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
@@ -275,9 +284,14 @@ export function createAbtestingApi(
    * @summary Send requests to the Algolia REST API.
    * @param post - The post object.
    * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param post.body - The parameters to send with the custom request.
    */
-  function post({ path, body }: PostProps): Promise<Record<string, any>> {
+  function post({
+    path,
+    parameters,
+    body,
+  }: PostProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -287,6 +301,10 @@ export function createAbtestingApi(
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `post`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
     }
 
     const request: Request = {
@@ -307,9 +325,14 @@ export function createAbtestingApi(
    * @summary Send requests to the Algolia REST API.
    * @param put - The put object.
    * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param put.body - The parameters to send with the custom request.
    */
-  function put({ path, body }: PutProps): Promise<Record<string, any>> {
+  function put({
+    path,
+    parameters,
+    body,
+  }: PutProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -319,6 +342,10 @@ export function createAbtestingApi(
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `put`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
     }
 
     const request: Request = {
@@ -385,6 +412,10 @@ export type DelProps = {
    */
   path: string;
   /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
    * The parameters to send with the custom request.
    */
   body?: Record<string, any>;
@@ -432,6 +463,10 @@ export type PostProps = {
    */
   path: string;
   /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
    * The parameters to send with the custom request.
    */
   body?: Record<string, any>;
@@ -442,6 +477,10 @@ export type PutProps = {
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */
   path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
   /**
    * The parameters to send with the custom request.
    */

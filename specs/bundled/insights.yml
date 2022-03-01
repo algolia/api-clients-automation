@@ -24,6 +24,15 @@ components:
       schema:
         type: string
         example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: >-
+        URL-encoded query string. Force some query parameters to be applied for
+        each query made with this API key.
+      schema:
+        type: string
+        example: '?query=mySearchQuery&hitsPerPage=10'
   schemas:
     ErrorBase:
       description: Error.
@@ -77,18 +86,11 @@ paths:
   /1{path}:
     get:
       operationId: get
-      summary: Send GET requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API.
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
-        - name: parameters
-          in: query
-          description: >-
-            URL-encoded query string. Force some query parameters to be applied
-            for each query made with this API key.
-          schema:
-            type: string
-            example: '?query=mySearchQuery&hitsPerPage=10'
+        - $ref: '#/components/parameters/Parameters'
       responses:
         '200':
           description: OK
@@ -108,16 +110,17 @@ paths:
         - insights
     post:
       operationId: post
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:
           application/json:
             schema:
               type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
       responses:
         '200':
           description: OK
@@ -137,16 +140,17 @@ paths:
         - insights
     put:
       operationId: put
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:
           application/json:
             schema:
               type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
       responses:
         '200':
           description: OK
@@ -166,16 +170,17 @@ paths:
         - insights
     delete:
       operationId: del
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:
           application/json:
             schema:
               type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
       responses:
         '200':
           description: OK

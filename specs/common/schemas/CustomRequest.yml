@@ -3,27 +3,7 @@ customRequest:
   description: This method allow you to send requests to the Algolia REST API.
   parameters:
     - $ref: '#/PathInPath'
-  requestBody:
-    description: The parameters to send with the custom request.
-    content:
-      application/json:
-        schema:
-          type: object
-  responses:
-    $ref: '#/Responses'
-
-getCustomRequest:
-  operationId: get
-  summary: Send GET requests to the Algolia REST API.
-  description: This method allow you to send requests to the Algolia REST API.
-  parameters:
-    - $ref: '#/PathInPath'
-    - name: parameters
-      in: query
-      description: URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
-      schema:
-        type: string
-        example: '?query=mySearchQuery&hitsPerPage=10'
+    - $ref: '#/Parameters'
   responses:
     $ref: '#/Responses'
 
@@ -51,3 +31,11 @@ PathInPath:
   schema:
     type: string
     example: /keys
+
+Parameters:
+  name: parameters
+  in: query
+  description: URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+  schema:
+    type: string
+    example: '?query=mySearchQuery&hitsPerPage=10'

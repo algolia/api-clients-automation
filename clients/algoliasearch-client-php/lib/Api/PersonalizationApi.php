@@ -90,11 +90,12 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>
      */
-    public function del($path, $body = null)
+    public function del($path, $parameters = null, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -106,6 +107,16 @@ class PersonalizationApi
         $resourcePath = '/1{path}';
         $queryParams = [];
         $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
@@ -154,7 +165,7 @@ class PersonalizationApi
     }
 
     /**
-     * Send GET requests to the Algolia REST API.
+     * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
@@ -245,11 +256,12 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>
      */
-    public function post($path, $body = null)
+    public function post($path, $parameters = null, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -261,6 +273,16 @@ class PersonalizationApi
         $resourcePath = '/1{path}';
         $queryParams = [];
         $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
@@ -281,11 +303,12 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>
      */
-    public function put($path, $body = null)
+    public function put($path, $parameters = null, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -297,6 +320,16 @@ class PersonalizationApi
         $resourcePath = '/1{path}';
         $queryParams = [];
         $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(

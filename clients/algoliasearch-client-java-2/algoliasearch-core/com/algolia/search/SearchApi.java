@@ -1370,6 +1370,7 @@ public class SearchApi extends ApiClient {
    */
   private Call delCall(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
@@ -1384,6 +1385,10 @@ public class SearchApi extends ApiClient {
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      queryParams.addAll(this.parameterToPair("parameters", parameters));
+    }
 
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
@@ -1400,6 +1405,7 @@ public class SearchApi extends ApiClient {
 
   private Call delValidateBeforeCall(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
@@ -1410,7 +1416,7 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    return delCall(path, body, _callback);
+    return delCall(path, parameters, body, _callback);
   }
 
   /**
@@ -1418,13 +1424,16 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Object del(String path, Object body) throws ApiException {
-    Call req = delValidateBeforeCall(path, body, null);
+  public Object del(String path, String parameters, Object body)
+    throws ApiException {
+    Call req = delValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.Del(((CallEcho) req).request());
     }
@@ -1435,7 +1444,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object del(String path) throws ApiException {
-    return this.del(path, null);
+    return this.del(path, null, null);
   }
 
   /**
@@ -1443,6 +1452,8 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -1450,10 +1461,11 @@ public class SearchApi extends ApiClient {
    */
   public Call delAsync(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
-    Call call = delValidateBeforeCall(path, body, _callback);
+    Call call = delValidateBeforeCall(path, parameters, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -4420,6 +4432,7 @@ public class SearchApi extends ApiClient {
    */
   private Call postCall(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
@@ -4434,6 +4447,10 @@ public class SearchApi extends ApiClient {
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      queryParams.addAll(this.parameterToPair("parameters", parameters));
+    }
 
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
@@ -4450,6 +4467,7 @@ public class SearchApi extends ApiClient {
 
   private Call postValidateBeforeCall(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
@@ -4460,7 +4478,7 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    return postCall(path, body, _callback);
+    return postCall(path, parameters, body, _callback);
   }
 
   /**
@@ -4468,13 +4486,16 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Object post(String path, Object body) throws ApiException {
-    Call req = postValidateBeforeCall(path, body, null);
+  public Object post(String path, String parameters, Object body)
+    throws ApiException {
+    Call req = postValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.Post(((CallEcho) req).request());
     }
@@ -4485,7 +4506,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object post(String path) throws ApiException {
-    return this.post(path, null);
+    return this.post(path, null, null);
   }
 
   /**
@@ -4493,6 +4514,8 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -4500,10 +4523,11 @@ public class SearchApi extends ApiClient {
    */
   public Call postAsync(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
-    Call call = postValidateBeforeCall(path, body, _callback);
+    Call call = postValidateBeforeCall(path, parameters, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -4518,6 +4542,7 @@ public class SearchApi extends ApiClient {
    */
   private Call putCall(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
@@ -4532,6 +4557,10 @@ public class SearchApi extends ApiClient {
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      queryParams.addAll(this.parameterToPair("parameters", parameters));
+    }
 
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
@@ -4548,6 +4577,7 @@ public class SearchApi extends ApiClient {
 
   private Call putValidateBeforeCall(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
@@ -4558,7 +4588,7 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    return putCall(path, body, _callback);
+    return putCall(path, parameters, body, _callback);
   }
 
   /**
@@ -4566,13 +4596,16 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Object put(String path, Object body) throws ApiException {
-    Call req = putValidateBeforeCall(path, body, null);
+  public Object put(String path, String parameters, Object body)
+    throws ApiException {
+    Call req = putValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.Put(((CallEcho) req).request());
     }
@@ -4583,7 +4616,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object put(String path) throws ApiException {
-    return this.put(path, null);
+    return this.put(path, null, null);
   }
 
   /**
@@ -4591,6 +4624,8 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -4598,10 +4633,11 @@ public class SearchApi extends ApiClient {
    */
   public Call putAsync(
     String path,
+    String parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
-    Call call = putValidateBeforeCall(path, body, _callback);
+    Call call = putValidateBeforeCall(path, parameters, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
