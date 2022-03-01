@@ -1,10 +1,6 @@
 ---
-title: Introduction
+title: API Reference
 ---
-
-# Introduction
-
-API Clients Automation by Algolia
 
 ## Available specs
 

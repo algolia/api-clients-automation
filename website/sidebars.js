@@ -6,7 +6,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Getting Started',
-      items: ['introduction'],
+      items: ['introduction', 'apiReference'],
     },
     {
       type: 'category',
