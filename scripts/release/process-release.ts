@@ -109,6 +109,21 @@ async function processRelease(): Promise<void> {
     console.log('log#2', await run(`ls -al ${clientPath}`));
     console.log('log#3', await run(`cd ${clientPath} && git branch -r`));
     console.log('log#4', await run(`cat .git/config`));
+    console.log(
+      'log#5',
+      await run(`cd clients/algoliasearch-client-php && git branch -r`)
+    );
+    console.log('log#6', await run(`cat .gitmodules`));
+
+    console.log(
+      'log#7',
+      await run(
+        `git submodule add https://${process.env.GITHUB_TOKEN}:${process.env.GITHUB_TOKEN}@github.com/algolia/api-clients-automation.git`
+      )
+    );
+    console.log('log#8', await run(`cat .git/config`));
+    console.log('log#9', await run(`cd ${clientPath} && git branch -r`));
+
     const targetBranch = getTargetBranch(lang);
     await run(`git checkout ${targetBranch}`, { cwd: clientPath });
     await run(`git pull origin ${targetBranch}`, { cwd: clientPath });
