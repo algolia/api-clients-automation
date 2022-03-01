@@ -11,12 +11,20 @@ const sidebars = {
     {
       type: 'category',
       label: 'Contributing',
-      items: ['setupRepository', 'addNewClient', 'addNewLanguage'],
+      items: [
+        {
+          type: 'category',
+          label: 'Setup and CLI commands',
+          items: ['setupRepository', 'specsCommands', 'generationCommands'],
+        },
+        'addNewClient',
+        'addNewLanguage',
+      ],
     },
     {
       type: 'category',
       label: 'Testing',
-      items: ['CTS', 'playground'],
+      items: ['commonTestSuite', 'playground'],
     },
   ],
 };

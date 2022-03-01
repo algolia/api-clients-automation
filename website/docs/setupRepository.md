@@ -1,20 +1,20 @@
 ---
-title: How to setup the repository
+title: Setup the repository tooling
 ---
 
-# api-clients-automation
+# Setup the repository tooling
 
 **Make sure to have Docker installed so you don't have to install the tooling for every API clients.**
 
-## Setup repository tooling
+## Install the dependencies
 
 ```bash
 nvm use && yarn
 ```
 
-## Setup dev environment
+## Mounting the docker image
 
-You can also execute docker commands one by one, see [Docker commands](#docker)
+> You can also execute docker commands one by one, see [Docker commands](#docker)
 
 ```bash
 yarn docker:setup
@@ -50,79 +50,26 @@ yarn docker:clean
 
 ## Contributing
 
+To contribute to the repository, take a look at our guidelines and recommendations:
+
+- [Add a new client](/docs/addNewClient): to add a new client spec to generate.
+- [Support a new language](/docs/addNewLanguage): to add a new supported language to the API clients.
+
+CLI commands can be found at [CLI > specs commands](/docs/specsCommands) and [CLI > generation commands](/docs/generationCommands)
+
+## Testing
+
+Generated clients can be tested via the [Common Test Suite](/docs/CTS) or the [playground](/docs/playground)
+
 You can make changes locally and run commands through the docker container.
 
-### Build and validate specs
+## Troubleshooting
 
-#### Usage
+:::caution
 
-```bash
-yarn docker build:specs <client | all>
-```
+You should run the commands via the [Docker container](#mounting-the-docker-image) to avoid Java issues.
 
-#### Build all specs
-
-```bash
-yarn docker build:specs
-```
-
-#### Build specific spec
-
-```bash
-yarn docker build:specs recommend
-```
-
-#### Fix the specs format
-
-This is used by the build script and should not need to be called manually but if you want to format all specs file do:
-
-```bash
-yarn docker specs:fix
-```
-
-If you just want to check the format (not override the files), run:
-
-```bash
-yarn docker specs:lint <client>
-yarn docker specs:lint search
-```
-
-### Generate clients based on the [`specs`](https://github.com/algolia/api-clients-automation/blob/main/specs/)
-
-#### Usage
-
-```bash
-yarn docker generate <language | all> <client | all>
-```
-
-#### Generate all clients
-
-```bash
-yarn docker generate
-```
-
-### Generate specific client for specific language
-
-#### Usage
-
-```bash
-yarn docker build:clients <language | all> <client | all>
-```
-
-### Build specific client for specific language
-
-```bash
-yarn docker build:clients java recommend
-```
-
-## Testing clients
-
-You can test our generated clients by running:
-
-- The playground [`playground`](https://github.com/algolia/api-clients-automation/blob/main/playground) ([Playground README](/docs/playground))
-- Tests with our [`Common Test Suite`](https://github.com/algolia/api-clients-automation/blob/main/tests) ([CTS README](/docs/CTS)).
-
-# Troubleshooting
+:::
 
 > `Error: The operation couldn't be completed. Unable to locate a Java Runtime.`
 

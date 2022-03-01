@@ -1,12 +1,12 @@
 ---
-title: How to add a new client?
+title: Add a new client
 ---
 
-# How to add a new client
+# Add a new client
 
 Adding a client requires a few manual steps in order to setup the tooling, generation scripts and properly generate the code. We recommend getting inspirations from existing clients such as `javascript-recommend`.
 
-> See [README](/docs/setupRepository) to [`setup the repository tooling`](/docs/setupRepository#setup-repository-tooling) and [`setup dev environment`](/docs/setupRepository#setup-dev-environment).
+> See the [Setup repository guide](/docs/setupRepository) to [`setup the repository tooling`](/docs/setupRepository#setup-the-repository-tooling).
 
 ## 1. Writing specs
 
@@ -89,7 +89,7 @@ You can copy [an existing client caching step](https://github.com/algolia/api-cl
 
 ## 3. Generate new client
 
-> You can find more commands in the [README](/docs/setupRepository#generate-all-clients).
+> You can find more commands in the [CLI > generation commands page](/docs/generationCommands) and [CLI > specs commands page](/docs/specsCommands).
 
 ```bash
 yarn docker generate <languageName> <clientName>

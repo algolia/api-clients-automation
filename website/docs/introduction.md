@@ -6,7 +6,7 @@ title: Introduction
 
 API Clients Automation by Algolia
 
-## Specs doc
+## Available specs
 
 - [A/B Testing specs](/specs/abtesting)
 - [analytics specs](/specs/analytics)
