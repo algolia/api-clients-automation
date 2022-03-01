@@ -1,4 +1,4 @@
-getTopSearchesResponseSimple:
+topSearchesResponse:
   type: object
   additionalProperties: false
   required:
@@ -22,7 +22,7 @@ getTopSearchesResponseSimple:
           nbHits:
             $ref: ../../../search/common/schemas/SearchResponse.yml#/nbHits
 
-getTopSearchesResponseWithAnalytics:
+topSearchesResponseWithAnalytics:
   type: object
   additionalProperties: false
   required:
@@ -66,5 +66,5 @@ getTopSearchesResponseWithAnalytics:
 
 getTopSearchesResponse:
   oneOf:
-    - $ref: '#/getTopSearchesResponseSimple'
-    - $ref: '#/getTopSearchesResponseWithAnalytics'
+    - $ref: '#/topSearchesResponse'
+    - $ref: '#/topSearchesResponseWithAnalytics'
