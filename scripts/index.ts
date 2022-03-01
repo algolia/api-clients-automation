@@ -188,11 +188,12 @@ buildCommand
   )
   .option('-v, --verbose', 'make the verification verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
+  .option('-s, --skip-cache', 'skip cache checking to force building specs')
   .action(
     async (
       client: string | undefined,
       outputFormat: 'json' | 'yml' | undefined,
-      { verbose, interactive }
+      { verbose, interactive, skipCache }
     ) => {
       client = await promptClient(client, interactive);
 
@@ -205,7 +206,12 @@ buildCommand
         clientsTodo = CLIENTS;
       }
       // ignore cache when building from cli
-      await buildSpecs(clientsTodo, outputFormat!, Boolean(verbose), false);
+      await buildSpecs(
+        clientsTodo,
+        outputFormat!,
+        Boolean(verbose),
+        !skipCache
+      );
     }
   );
 
