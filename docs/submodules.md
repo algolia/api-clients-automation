@@ -66,6 +66,10 @@ git reset --hard HEAD
 git checkout next
 ```
 
+## How to remove a submodule from the monorepo
+
+https://stackoverflow.com/a/1260982
+
 ## Troubleshootings
 
 ### When something is weird,
