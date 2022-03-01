@@ -13,18 +13,32 @@ export const DOCKER = Boolean(process.env.DOCKER);
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
-export const GENERATORS: Record<string, Generator> = {
-  // Default `algoliasearch` package as it's built similarly to generated clients
-  'javascript-algoliasearch': {
-    language: 'javascript',
-    client: 'algoliasearch',
-    key: 'javascript-algoliasearch',
-    additionalProperties: {
-      packageName: 'algoliasearch',
-      packageVersion: '0',
-    },
+const generators = {};
+
+// Build `GENERATORS` from the openapitools file
+Object.entries(openapitools['generator-cli'].generators).forEach(
+  ([key, gen]) => {
+    generators[key] = {
+      ...gen,
+      output: gen.output.replace('#{cwd}/', ''),
+      ...splitGeneratorKey(key),
+    };
+  }
+);
+
+// Default `algoliasearch` package as it's built similarly to generated clients
+generators['javascript-algoliasearch'] = {
+  language: 'javascript',
+  client: 'algoliasearch',
+  key: 'javascript-algoliasearch',
+  additionalProperties: {
+    packageName: 'algoliasearch',
+    packageVersion:
+      generators['javascript-search'].additionalProperties.packageVersion, // follow the version of `search` package
   },
 };
+
+export const GENERATORS: Record<string, Generator> = generators;
 
 // Build `GENERATORS` from the openapitools file
 Object.entries(openapitools['generator-cli'].generators).forEach(
