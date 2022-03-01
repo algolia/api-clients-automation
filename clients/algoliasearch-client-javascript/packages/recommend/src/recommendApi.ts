@@ -114,16 +114,16 @@ export function createRecommendApi(options: CreateClientOptions) {
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * The getCustomRequest method allow you to send requests to the Algolia REST API.
    *
-   * @summary Send requests to the Algolia REST API.
+   * @summary Send GET requests to the Algolia REST API.
    * @param getCustomRequest - The getCustomRequest object.
    * @param getCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param getCustomRequest.body - The parameters to send with the custom request.
+   * @param getCustomRequest.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
   function getCustomRequest({
     path,
-    body,
+    parameters,
   }: GetCustomRequestProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
@@ -138,10 +138,13 @@ export function createRecommendApi(options: CreateClientOptions) {
       );
     }
 
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
     const request: Request = {
       method: 'GET',
       path: requestPath,
-      data: body,
     };
 
     return transporter.request(request, {
@@ -290,9 +293,9 @@ export type GetCustomRequestProps = {
    */
   path: string;
   /**
-   * The parameters to send with the custom request.
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  body?: Record<string, any>;
+  parameters?: string;
 };
 
 export type PostCustomRequestProps = {

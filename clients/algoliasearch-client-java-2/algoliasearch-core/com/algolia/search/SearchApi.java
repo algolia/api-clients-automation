@@ -2293,10 +2293,10 @@ public class SearchApi extends ApiClient {
    */
   private Call getCustomRequestCall(
     String path,
-    Object body,
+    String parameters,
     final ApiCallback<Object> _callback
   ) throws ApiException {
-    Object bodyObj = body;
+    Object bodyObj = null;
 
     // create path and map variables
     String requestPath =
@@ -2307,6 +2307,10 @@ public class SearchApi extends ApiClient {
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      queryParams.addAll(this.parameterToPair("parameters", parameters));
+    }
 
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
@@ -2323,7 +2327,7 @@ public class SearchApi extends ApiClient {
 
   private Call getCustomRequestValidateBeforeCall(
     String path,
-    Object body,
+    String parameters,
     final ApiCallback<Object> _callback
   ) throws ApiException {
     // verify the required parameter 'path' is set
@@ -2333,21 +2337,23 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    return getCustomRequestCall(path, body, _callback);
+    return getCustomRequestCall(path, parameters, _callback);
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * The getCustomRequest method allow you to send requests to the Algolia REST API.
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param body The parameters to send with the custom request. (optional)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @return Object
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Object getCustomRequest(String path, Object body) throws ApiException {
-    Call req = getCustomRequestValidateBeforeCall(path, body, null);
+  public Object getCustomRequest(String path, String parameters)
+    throws ApiException {
+    Call req = getCustomRequestValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.GetCustomRequest(((CallEcho) req).request());
     }
@@ -2362,21 +2368,23 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
+   * (asynchronously) The getCustomRequest method allow you to send requests to the Algolia REST
+   * API.
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param body The parameters to send with the custom request. (optional)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call getCustomRequestAsync(
     String path,
-    Object body,
+    String parameters,
     final ApiCallback<Object> _callback
   ) throws ApiException {
-    Call call = getCustomRequestValidateBeforeCall(path, body, _callback);
+    Call call = getCustomRequestValidateBeforeCall(path, parameters, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;

@@ -13,6 +13,133 @@ components:
       type: apiKey
       in: header
       name: X-Algolia-API-Key
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: >-
+        The path of the API endpoint to target, anything after the /1 needs to
+        be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    IndexName:
+      name: indexName
+      in: path
+      description: The index in which to perform the request.
+      required: true
+      schema:
+        type: string
+        example: myIndexName
+    ObjectID:
+      name: objectID
+      in: path
+      description: Unique identifier of an object.
+      required: true
+      schema:
+        type: string
+        example: '123'
+    ForwardToReplicas:
+      in: query
+      name: forwardToReplicas
+      description: >-
+        When true, changes are also propagated to replicas of the given
+        indexName.
+      schema:
+        type: boolean
+    ReplaceExistingSynonyms:
+      in: query
+      name: replaceExistingSynonyms
+      schema:
+        type: boolean
+      description: Replace all synonyms of the index with the ones sent with this request.
+    Query:
+      in: query
+      name: query
+      description: Search for specific synonyms matching this string.
+      schema:
+        type: string
+        default: ''
+    Type:
+      in: query
+      name: type
+      description: Only search for specific types of synonyms.
+      schema:
+        $ref: '#/components/schemas/SynonymType'
+    PageDefault0:
+      in: query
+      name: page
+      description: >-
+        Requested page (zero-based). When specified, will retrieve a specific
+        page; the page size is implicitly set to 100. When null, will retrieve
+        all indices (no pagination).
+      schema:
+        type: integer
+        nullable: true
+        default: 0
+    HitsPerPage:
+      in: query
+      name: hitsPerPage
+      description: Maximum number of objects to retrieve.
+      schema:
+        type: integer
+        default: 100
+    KeyString:
+      in: path
+      name: key
+      required: true
+      schema:
+        type: string
+        example: myAPIKey
+      description: API Key string.
+    ClearExistingRules:
+      in: query
+      name: clearExistingRules
+      required: false
+      schema:
+        type: boolean
+      description: >-
+        When true, existing Rules are cleared before adding this batch. When
+        false, existing Rules are kept.
+    DictionaryName:
+      in: path
+      name: dictionaryName
+      description: The dictionary to search in.
+      required: true
+      schema:
+        enum:
+          - plurals
+          - stopwords
+          - compounds
+        type: string
+    Page:
+      in: query
+      name: page
+      description: >-
+        Requested page (zero-based). When specified, will retrieve a specific
+        page; the page size is implicitly set to 100. When null, will retrieve
+        all indices (no pagination).
+      schema:
+        type: integer
+        nullable: true
+        default: null
+    UserIDInQuery:
+      name: X-Algolia-User-ID
+      description: userID to assign.
+      in: query
+      required: true
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9 \-*.]+$
+    UserIDInPath:
+      name: userID
+      description: userID to assign.
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9 \-*.]+$
   schemas:
     ErrorBase:
       description: Error.
@@ -1707,123 +1834,6 @@ components:
             properties:
               createdAt:
                 $ref: '#/components/schemas/createdAt'
-  parameters:
-    IndexName:
-      name: indexName
-      in: path
-      description: The index in which to perform the request.
-      required: true
-      schema:
-        type: string
-        example: myIndexName
-    ObjectID:
-      name: objectID
-      in: path
-      description: Unique identifier of an object.
-      required: true
-      schema:
-        type: string
-        example: '123'
-    ForwardToReplicas:
-      in: query
-      name: forwardToReplicas
-      description: >-
-        When true, changes are also propagated to replicas of the given
-        indexName.
-      schema:
-        type: boolean
-    ReplaceExistingSynonyms:
-      in: query
-      name: replaceExistingSynonyms
-      schema:
-        type: boolean
-      description: Replace all synonyms of the index with the ones sent with this request.
-    Query:
-      in: query
-      name: query
-      description: Search for specific synonyms matching this string.
-      schema:
-        type: string
-        default: ''
-    Type:
-      in: query
-      name: type
-      description: Only search for specific types of synonyms.
-      schema:
-        $ref: '#/components/schemas/SynonymType'
-    PageDefault0:
-      in: query
-      name: page
-      description: >-
-        Requested page (zero-based). When specified, will retrieve a specific
-        page; the page size is implicitly set to 100. When null, will retrieve
-        all indices (no pagination).
-      schema:
-        type: integer
-        nullable: true
-        default: 0
-    HitsPerPage:
-      in: query
-      name: hitsPerPage
-      description: Maximum number of objects to retrieve.
-      schema:
-        type: integer
-        default: 100
-    KeyString:
-      in: path
-      name: key
-      required: true
-      schema:
-        type: string
-        example: myAPIKey
-      description: API Key string.
-    ClearExistingRules:
-      in: query
-      name: clearExistingRules
-      required: false
-      schema:
-        type: boolean
-      description: >-
-        When true, existing Rules are cleared before adding this batch. When
-        false, existing Rules are kept.
-    DictionaryName:
-      in: path
-      name: dictionaryName
-      description: The dictionary to search in.
-      required: true
-      schema:
-        enum:
-          - plurals
-          - stopwords
-          - compounds
-        type: string
-    Page:
-      in: query
-      name: page
-      description: >-
-        Requested page (zero-based). When specified, will retrieve a specific
-        page; the page size is implicitly set to 100. When null, will retrieve
-        all indices (no pagination).
-      schema:
-        type: integer
-        nullable: true
-        default: null
-    UserIDInQuery:
-      name: X-Algolia-User-ID
-      description: userID to assign.
-      in: query
-      required: true
-      schema:
-        type: string
-        pattern: ^[a-zA-Z0-9 \-*.]+$
-    UserIDInPath:
-      name: userID
-      description: userID to assign.
-      in: path
-      required: true
-      schema:
-        type: string
-        pattern: ^[a-zA-Z0-9 \-*.]+$
 servers:
   - url: https://{appId}.algolianet.com
     variables:
@@ -1855,26 +1865,20 @@ paths:
   /1{path}:
     get:
       operationId: getCustomRequest
-      summary: Send requests to the Algolia REST API.
+      summary: Send GET requests to the Algolia REST API.
       description: >-
-        The customRequest method allow you to send requests to the Algolia REST
-        API.
+        The getCustomRequest method allow you to send requests to the Algolia
+        REST API.
       parameters:
-        - name: path
-          in: path
+        - $ref: '#/components/parameters/PathInPath'
+        - name: parameters
+          in: query
           description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
+            URL-encoded query string. Force some query parameters to be applied
+            for each query made with this API key.
           schema:
             type: string
-            example: /keys
-      requestBody:
-        description: The parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
+            example: '?query=mySearchQuery&hitsPerPage=10'
       responses:
         '200':
           description: OK
@@ -1899,15 +1903,7 @@ paths:
         The customRequest method allow you to send requests to the Algolia REST
         API.
       parameters:
-        - name: path
-          in: path
-          description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
-          schema:
-            type: string
-            example: /keys
+        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:
@@ -1938,15 +1934,7 @@ paths:
         The customRequest method allow you to send requests to the Algolia REST
         API.
       parameters:
-        - name: path
-          in: path
-          description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
-          schema:
-            type: string
-            example: /keys
+        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:
@@ -1977,15 +1965,7 @@ paths:
         The customRequest method allow you to send requests to the Algolia REST
         API.
       parameters:
-        - name: path
-          in: path
-          description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
-          schema:
-            type: string
-            example: /keys
+        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:

@@ -13,6 +13,26 @@ components:
       type: apiKey
       in: header
       name: X-Algolia-API-Key
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: >-
+        The path of the API endpoint to target, anything after the /1 needs to
+        be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    userID:
+      name: userID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        User ID for authenticated users or cookie ID for non-authenticated
+        repeated users (visitors).
   schemas:
     ErrorBase:
       description: Error.
@@ -53,16 +73,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-  parameters:
-    userID:
-      name: userID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: >-
-        User ID for authenticated users or cookie ID for non-authenticated
-        repeated users (visitors).
 servers:
   - url: https://predict-api-oslcbws3zq-ew.a.run.app
 security:
@@ -75,26 +85,20 @@ paths:
   /1{path}:
     get:
       operationId: getCustomRequest
-      summary: Send requests to the Algolia REST API.
+      summary: Send GET requests to the Algolia REST API.
       description: >-
-        The customRequest method allow you to send requests to the Algolia REST
-        API.
+        The getCustomRequest method allow you to send requests to the Algolia
+        REST API.
       parameters:
-        - name: path
-          in: path
+        - $ref: '#/components/parameters/PathInPath'
+        - name: parameters
+          in: query
           description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
+            URL-encoded query string. Force some query parameters to be applied
+            for each query made with this API key.
           schema:
             type: string
-            example: /keys
-      requestBody:
-        description: The parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
+            example: '?query=mySearchQuery&hitsPerPage=10'
       responses:
         '200':
           description: OK
@@ -119,15 +123,7 @@ paths:
         The customRequest method allow you to send requests to the Algolia REST
         API.
       parameters:
-        - name: path
-          in: path
-          description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
-          schema:
-            type: string
-            example: /keys
+        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:
@@ -158,15 +154,7 @@ paths:
         The customRequest method allow you to send requests to the Algolia REST
         API.
       parameters:
-        - name: path
-          in: path
-          description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
-          schema:
-            type: string
-            example: /keys
+        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:
@@ -197,15 +185,7 @@ paths:
         The customRequest method allow you to send requests to the Algolia REST
         API.
       parameters:
-        - name: path
-          in: path
-          description: >-
-            The path of the API endpoint to target, anything after the /1 needs
-            to be specified.
-          required: true
-          schema:
-            type: string
-            example: /keys
+        - $ref: '#/components/parameters/PathInPath'
       requestBody:
         description: The parameters to send with the custom request.
         content:

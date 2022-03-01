@@ -1,15 +1,14 @@
 get:
-  operationId: getCustomRequest
-  $ref: ../schemas/CustomRequest.yml
+  $ref: ../schemas/CustomRequest.yml#/getCustomRequest
 
 post:
   operationId: postCustomRequest
-  $ref: ../schemas/CustomRequest.yml
+  $ref: ../schemas/CustomRequest.yml#/customRequest
 
 put:
   operationId: putCustomRequest
-  $ref: ../schemas/CustomRequest.yml
+  $ref: ../schemas/CustomRequest.yml#/customRequest
 
 delete:
   operationId: deleteCustomRequest
-  $ref: ../schemas/CustomRequest.yml
+  $ref: ../schemas/CustomRequest.yml#/customRequest
