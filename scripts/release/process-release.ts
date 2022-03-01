@@ -118,7 +118,7 @@ async function processRelease(): Promise<void> {
     console.log(
       'log#7',
       await run(
-        `git submodule add https://${process.env.GITHUB_TOKEN}:${process.env.GITHUB_TOKEN}@github.com/algolia/api-clients-automation.git`
+        `git submodule add https://${process.env.GITHUB_TOKEN}:${process.env.GITHUB_TOKEN}@github.com/algolia/algoliasearch-client-javascript.git clients/algoliasearch-client-javascript`
       )
     );
     console.log('log#8', await run(`cat .git/config`));
