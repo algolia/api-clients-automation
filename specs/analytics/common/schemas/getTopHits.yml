@@ -1,4 +1,4 @@
-getTopHitsResponseSimple:
+topHitsResponse:
   type: object
   additionalProperties: false
   required:
@@ -19,7 +19,7 @@ getTopHitsResponseSimple:
           count:
             $ref: ../../../common/parameters.yml#/count
 
-getTopHitsResponseWithAnalytics:
+topHitsResponseWithAnalytics:
   type: object
   additionalProperties: false
   required:
@@ -57,5 +57,5 @@ getTopHitsResponseWithAnalytics:
 
 getTopHitsResponse:
   oneOf:
-    - $ref: '#/getTopHitsResponseSimple'
-    - $ref: '#/getTopHitsResponseWithAnalytics'
+    - $ref: '#/topHitsResponse'
+    - $ref: '#/topHitsResponseWithAnalytics'
