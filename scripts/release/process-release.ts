@@ -106,6 +106,8 @@ async function processRelease(): Promise<void> {
     // prepare the submodule
     const clientPath = toAbsolutePath(`clients/${clientsConfig[lang].folder}`);
     const targetBranch = getTargetBranch(lang);
+    console.log('# debug', { clientPath });
+    console.log(await run(`ls -al ${clientPath}`));
     await run(`git checkout ${targetBranch}`, { cwd: clientPath });
     await run(`git pull origin ${targetBranch}`, { cwd: clientPath });
 
