@@ -1,10 +1,6 @@
 ---
-title: Introduction
+title: Getting started
 ---
-
-# Introduction
-
-API Clients Automation by Algolia
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -20,7 +16,7 @@ import TabItem from '@theme/TabItem';
 
 ## Installation
 
-To get started with with the clients, the first step is to install the `algoliasearch` package
+To get started, you first need to install `algoliasearch` (or any other available API client package)
 
 ```bash
 yarn add @experimental-api-clients-automation/algoliasearch
@@ -32,12 +28,14 @@ Or use a specific package to reduce bundle size:
 yarn add @experimental-api-clients-automation/client-search
 ```
 
+You can find the full list of available packages [here](https://www.npmjs.com/org/experimental-api-clients-automation).
+
 ### Without a package manager
 
 Add the JavaScript to your `<head>`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@experimental-api-clients-automation/algoliasearch@0.0.1/dist/algoliasearch.umd.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@experimental-api-clients-automation/algoliasearch@0.0.1/dist/algoliasearch.umd.browser.js"></script>
 ```
 
 ## Using the client
@@ -49,8 +47,9 @@ import { algoliasearch } from 'algoliasearch';
 
 const client = algoliasearch(appId, apiKey);
 
-// And access other clients from here
+// And access analytics or personalization client
 const analyticsClient = algoliaClient.initAnalytics(analyticsAppId, analyticsApiKey);
+const personalizationCilent = client.initPersonalization(personalizationAppId, personalizationApiKey, 'eu');
 ```
 
 ```js
@@ -81,6 +80,17 @@ const res = await client.search({
 });
 
 console.log('Search result', res.hits);
+```
+
+
+Or with the `personalization` client
+
+```js
+const res = await personalizationCilent.getUserTokenProfile({
+    userToken: 'token',
+});
+
+console.log('User scores', res.scores);
 ```
 
 </TabItem>

@@ -48,21 +48,6 @@ Stops `dev` container and clean the built image
 yarn docker:clean
 ```
 
-## Contributing
-
-To contribute to the repository, take a look at our guidelines and recommendations:
-
-- [Add a new client](/docs/addNewClient): to add a new client spec to generate.
-- [Support a new language](/docs/addNewLanguage): to add a new supported language to the API clients.
-
-CLI commands can be found at [CLI > specs commands](/docs/specsCommands) and [CLI > generation commands](/docs/generationCommands)
-
-## Testing
-
-Generated clients can be tested via the [Common Test Suite](/docs/commonTestSuite) or the [playground](/docs/playground)
-
-You can make changes locally and run commands through the docker container.
-
 ## Troubleshooting
 
 :::caution
