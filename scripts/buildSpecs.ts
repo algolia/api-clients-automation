@@ -50,6 +50,8 @@ async function buildSpec(
 ): Promise<void> {
   createSpinner(`'${client}' spec`, verbose).start().info();
   const cacheFile = toAbsolutePath(`specs/dist/${client}.cache`);
+  let hash = '';
+
   if (useCache) {
     const spinner = createSpinner(
       `checking cache for '${client}'`,
@@ -58,7 +60,11 @@ async function buildSpec(
     // check if file and cache exist
     if (await exists(toAbsolutePath(`specs/bundled/${client}.yml`))) {
       // compare with stored cache
-      const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
+      const specHash = (await hashElement(toAbsolutePath(`specs/${client}`)))
+        .hash;
+      const commonHash = (await hashElement(toAbsolutePath(`specs/common`)))
+        .hash;
+      hash = `${specHash}-${commonHash}`;
       if (await exists(cacheFile)) {
         const storedHash = (await fsp.readFile(cacheFile)).toString();
         if (storedHash === hash) {
@@ -97,9 +103,13 @@ async function buildSpec(
     verbose,
   });
 
-  spinner.text = `storing ${client} spec cache`;
-  const hash = (await hashElement(toAbsolutePath(`specs/${client}`))).hash;
-  await fsp.writeFile(cacheFile, hash);
+  spinner.text = `linting '${client}' bundled spec`;
+  await run(`yarn specs:lint bundled/${client}.${outputFormat}`, { verbose });
+
+  if (hash) {
+    spinner.text = `storing ${client} spec cache`;
+    await fsp.writeFile(cacheFile, hash);
+  }
 
   spinner.succeed(`building complete for '${client}' spec`);
 }
