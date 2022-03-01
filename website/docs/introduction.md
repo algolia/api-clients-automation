@@ -4,20 +4,22 @@ title: Introduction
 
 # Introduction
 
-API Clients Automation by Algolia
+This documentation hosts informations about the [Generated Algolia API clients](https://github.com/algolia/api-clients-automation)
 
-## Available specs
+## Contributing
 
-- [A/B Testing specs](/specs/abtesting)
-- [analytics specs](/specs/analytics)
-- [insights specs](/specs/insights)
-- [personalization specs](/specs/personalization)
-- [query-suggestions specs](/specs/query-suggestions)
-- [recommend specs](/specs/recommend)
-- [search specs](/specs/search)
-- [sources specs](/specs/sources)
-- [predict specs](/specs/predict)
+To contribute to the repository, make sure to take a look at our guidelines and recommendations:
 
-## Repository
+- [Setup the repository tooling](/docs/setupRepository): to install our tooling.
+- [Add a new client](/docs/addNewClient): to add a new client spec to generate.
+- [Support a new language](/docs/addNewLanguage): to add a new supported language to the API clients.
 
-[API Clients Automation](https://github.com/algolia/api-clients-automation)
+CLI commands can be found at [CLI > specs commands](/docs/specsCommands) and [CLI > generation commands](/docs/generationCommands)
+
+## Testing
+
+Generated clients can be tested via the [Common Test Suite](/docs/commonTestSuite) or the [playground](/docs/playground)
+
+## Feedbacks
+
+Any feedbacks can be reported using [GitHub issues](https://github.com/algolia/api-clients-automation/issues)
