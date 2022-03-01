@@ -57,17 +57,14 @@ export function createPersonalizationApi(
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @summary Send requests to the Algolia REST API.
-   * @param deleteCustomRequest - The deleteCustomRequest object.
-   * @param deleteCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param deleteCustomRequest.body - The parameters to send with the custom request.
+   * @param del - The del object.
+   * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param del.body - The parameters to send with the custom request.
    */
-  function deleteCustomRequest({
-    path,
-    body,
-  }: DeleteCustomRequestProps): Promise<Record<string, any>> {
+  function del({ path, body }: DelProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -76,9 +73,7 @@ export function createPersonalizationApi(
     const queryParameters: Record<string, string> = {};
 
     if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `deleteCustomRequest`.'
-      );
+      throw new Error('Parameter `path` is required when calling `del`.');
     }
 
     const request: Request = {
@@ -128,17 +123,14 @@ export function createPersonalizationApi(
   }
 
   /**
-   * The getCustomRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @summary Send GET requests to the Algolia REST API.
-   * @param getCustomRequest - The getCustomRequest object.
-   * @param getCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param getCustomRequest.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * @param get - The get object.
+   * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function getCustomRequest({
-    path,
-    parameters,
-  }: GetCustomRequestProps): Promise<Record<string, any>> {
+  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -147,9 +139,7 @@ export function createPersonalizationApi(
     const queryParameters: Record<string, string> = {};
 
     if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `getCustomRequest`.'
-      );
+      throw new Error('Parameter `path` is required when calling `get`.');
     }
 
     if (parameters !== undefined) {
@@ -223,17 +213,14 @@ export function createPersonalizationApi(
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @summary Send requests to the Algolia REST API.
-   * @param postCustomRequest - The postCustomRequest object.
-   * @param postCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param postCustomRequest.body - The parameters to send with the custom request.
+   * @param post - The post object.
+   * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param post.body - The parameters to send with the custom request.
    */
-  function postCustomRequest({
-    path,
-    body,
-  }: PostCustomRequestProps): Promise<Record<string, any>> {
+  function post({ path, body }: PostProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -242,9 +229,7 @@ export function createPersonalizationApi(
     const queryParameters: Record<string, string> = {};
 
     if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `postCustomRequest`.'
-      );
+      throw new Error('Parameter `path` is required when calling `post`.');
     }
 
     const request: Request = {
@@ -260,17 +245,14 @@ export function createPersonalizationApi(
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @summary Send requests to the Algolia REST API.
-   * @param putCustomRequest - The putCustomRequest object.
-   * @param putCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param putCustomRequest.body - The parameters to send with the custom request.
+   * @param put - The put object.
+   * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param put.body - The parameters to send with the custom request.
    */
-  function putCustomRequest({
-    path,
-    body,
-  }: PutCustomRequestProps): Promise<Record<string, any>> {
+  function put({ path, body }: PutProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -279,9 +261,7 @@ export function createPersonalizationApi(
     const queryParameters: Record<string, string> = {};
 
     if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `putCustomRequest`.'
-      );
+      throw new Error('Parameter `path` is required when calling `put`.');
     }
 
     const request: Request = {
@@ -345,20 +325,20 @@ export function createPersonalizationApi(
 
   return {
     addUserAgent,
-    deleteCustomRequest,
+    del,
     deleteUserProfile,
-    getCustomRequest,
+    get,
     getPersonalizationStrategy,
     getUserTokenProfile,
-    postCustomRequest,
-    putCustomRequest,
+    post,
+    put,
     setPersonalizationStrategy,
   };
 }
 
 export type PersonalizationApi = ReturnType<typeof createPersonalizationApi>;
 
-export type DeleteCustomRequestProps = {
+export type DelProps = {
   /**
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */
@@ -376,7 +356,7 @@ export type DeleteUserProfileProps = {
   userToken: string;
 };
 
-export type GetCustomRequestProps = {
+export type GetProps = {
   /**
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */
@@ -394,7 +374,7 @@ export type GetUserTokenProfileProps = {
   userToken: string;
 };
 
-export type PostCustomRequestProps = {
+export type PostProps = {
   /**
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */
@@ -405,7 +385,7 @@ export type PostCustomRequestProps = {
   body?: Record<string, any>;
 };
 
-export type PutCustomRequestProps = {
+export type PutProps = {
   /**
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */

@@ -114,6 +114,42 @@ class QuerySuggestionsApi
     }
 
     /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function del($path, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling del'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
      * Delete a configuration of a Query Suggestion&#39;s index.
      *
      * @param string $indexName The index in which to perform the request. (required)
@@ -145,25 +181,35 @@ class QuerySuggestionsApi
     }
 
     /**
-     * Send requests to the Algolia REST API.
+     * Send GET requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param array $body The parameters to send with the custom request. (optional)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
      *
      * @return array<string, mixed>
      */
-    public function deleteCustomRequest($path, $body = null)
+    public function get($path, $parameters = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling deleteCustomRequest'
+                'Missing the required parameter $path when calling get'
             );
         }
 
         $resourcePath = '/1{path}';
         $queryParams = [];
         $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
@@ -173,11 +219,7 @@ class QuerySuggestionsApi
             );
         }
 
-        if (isset($body)) {
-            $httpBody = $body;
-        }
-
-        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
 
     /**
@@ -258,48 +300,6 @@ class QuerySuggestionsApi
     }
 
     /**
-     * Send GET requests to the Algolia REST API.
-     *
-     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     *
-     * @return array<string, mixed>
-     */
-    public function getCustomRequest($path, $parameters = null)
-    {
-        // verify the required parameter 'path' is set
-        if ($path === null || (is_array($path) && count($path) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling getCustomRequest'
-            );
-        }
-
-        $resourcePath = '/1{path}';
-        $queryParams = [];
-        $httpBody = [];
-
-        if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
-                foreach ($parameters as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            } else {
-                $queryParams['parameters'] = $parameters;
-            }
-        }
-        // path params
-        if ($path !== null) {
-            $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
-                $resourcePath
-            );
-        }
-
-        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
-    }
-
-    /**
      * Get the log file of the last build of a single Query Suggestion index.
      *
      * @param string $indexName The index in which to perform the request. (required)
@@ -338,12 +338,12 @@ class QuerySuggestionsApi
      *
      * @return array<string, mixed>
      */
-    public function postCustomRequest($path, $body = null)
+    public function post($path, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling postCustomRequest'
+                'Missing the required parameter $path when calling post'
             );
         }
 
@@ -374,12 +374,12 @@ class QuerySuggestionsApi
      *
      * @return array<string, mixed>
      */
-    public function putCustomRequest($path, $body = null)
+    public function put($path, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling putCustomRequest'
+                'Missing the required parameter $path when calling put'
             );
         }
 

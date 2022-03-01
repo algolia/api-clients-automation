@@ -268,11 +268,9 @@ tags:
 paths:
   /1{path}:
     get:
-      operationId: getCustomRequest
+      operationId: get
       summary: Send GET requests to the Algolia REST API.
-      description: >-
-        The getCustomRequest method allow you to send requests to the Algolia
-        REST API.
+      description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - name: parameters
@@ -301,11 +299,9 @@ paths:
       tags:
         - abtesting
     post:
-      operationId: postCustomRequest
+      operationId: post
       summary: Send requests to the Algolia REST API.
-      description: >-
-        The customRequest method allow you to send requests to the Algolia REST
-        API.
+      description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
       requestBody:
@@ -332,11 +328,9 @@ paths:
       tags:
         - abtesting
     put:
-      operationId: putCustomRequest
+      operationId: put
       summary: Send requests to the Algolia REST API.
-      description: >-
-        The customRequest method allow you to send requests to the Algolia REST
-        API.
+      description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
       requestBody:
@@ -363,11 +357,9 @@ paths:
       tags:
         - abtesting
     delete:
-      operationId: deleteCustomRequest
+      operationId: del
       summary: Send requests to the Algolia REST API.
-      description: >-
-        The customRequest method allow you to send requests to the Algolia REST
-        API.
+      description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
       requestBody:

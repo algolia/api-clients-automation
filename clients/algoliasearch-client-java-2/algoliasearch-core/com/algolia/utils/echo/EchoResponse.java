@@ -358,6 +358,31 @@ public class EchoResponse {
     }
   }
 
+  public static class Del extends Object implements EchoResponseInterface {
+
+    private Request request;
+
+    public Del(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
   public static class DeleteApiKey
     extends DeleteApiKeyResponse
     implements EchoResponseInterface {
@@ -392,33 +417,6 @@ public class EchoResponse {
     private Request request;
 
     public DeleteBy(Request request) {
-      this.request = request;
-    }
-
-    public String getPath() {
-      return request.url().encodedPath();
-    }
-
-    public String getMethod() {
-      return request.method();
-    }
-
-    public String getBody() {
-      return parseRequestBody(request);
-    }
-
-    public List<Pair> getQueryParams() {
-      return buildQueryParams(request);
-    }
-  }
-
-  public static class DeleteCustomRequest
-    extends Object
-    implements EchoResponseInterface {
-
-    private Request request;
-
-    public DeleteCustomRequest(Request request) {
       this.request = request;
     }
 
@@ -574,11 +572,11 @@ public class EchoResponse {
     }
   }
 
-  public static class GetApiKey extends Key implements EchoResponseInterface {
+  public static class Get extends Object implements EchoResponseInterface {
 
     private Request request;
 
-    public GetApiKey(Request request) {
+    public Get(Request request) {
       this.request = request;
     }
 
@@ -599,13 +597,11 @@ public class EchoResponse {
     }
   }
 
-  public static class GetCustomRequest
-    extends Object
-    implements EchoResponseInterface {
+  public static class GetApiKey extends Key implements EchoResponseInterface {
 
     private Request request;
 
-    public GetCustomRequest(Request request) {
+    public GetApiKey(Request request) {
       this.request = request;
     }
 
@@ -1191,13 +1187,11 @@ public class EchoResponse {
     }
   }
 
-  public static class PostCustomRequest
-    extends Object
-    implements EchoResponseInterface {
+  public static class Post extends Object implements EchoResponseInterface {
 
     private Request request;
 
-    public PostCustomRequest(Request request) {
+    public Post(Request request) {
       this.request = request;
     }
 
@@ -1218,13 +1212,11 @@ public class EchoResponse {
     }
   }
 
-  public static class PutCustomRequest
-    extends Object
-    implements EchoResponseInterface {
+  public static class Put extends Object implements EchoResponseInterface {
 
     private Request request;
 
-    public PutCustomRequest(Request request) {
+    public Put(Request request) {
       this.request = request;
     }
 

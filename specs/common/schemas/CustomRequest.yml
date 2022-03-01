@@ -1,6 +1,6 @@
 customRequest:
   summary: Send requests to the Algolia REST API.
-  description: The customRequest method allow you to send requests to the Algolia REST API.
+  description: This method allow you to send requests to the Algolia REST API.
   parameters:
     - $ref: '#/PathInPath'
   requestBody:
@@ -13,9 +13,9 @@ customRequest:
     $ref: '#/Responses'
 
 getCustomRequest:
-  operationId: getCustomRequest
+  operationId: get
   summary: Send GET requests to the Algolia REST API.
-  description: The getCustomRequest method allow you to send requests to the Algolia REST API.
+  description: This method allow you to send requests to the Algolia REST API.
   parameters:
     - $ref: '#/PathInPath'
     - name: parameters

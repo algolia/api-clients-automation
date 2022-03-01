@@ -1362,6 +1362,104 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for del
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   */
+  private Call delCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath =
+      "/1{path}".replaceAll(
+          "\\{" + "path" + "\\}",
+          this.escapeString(path.toString())
+        );
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "DELETE",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
+  }
+
+  private Call delValidateBeforeCall(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    // verify the required parameter 'path' is set
+    if (path == null) {
+      throw new ApiException(
+        "Missing the required parameter 'path' when calling del(Async)"
+      );
+    }
+
+    return delCall(path, body, _callback);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @return Object
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   */
+  public Object del(String path, Object body) throws ApiException {
+    Call req = delValidateBeforeCall(path, body, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.Del(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<Object>() {}.getType();
+    ApiResponse<Object> res = this.execute(call, returnType);
+    return res.getData();
+  }
+
+  public Object del(String path) throws ApiException {
+    return this.del(path, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call delAsync(
+    String path,
+    Object body,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Call call = delValidateBeforeCall(path, body, _callback);
+    Type returnType = new TypeToken<Object>() {}.getType();
+    this.executeAsync(call, returnType, _callback);
+    return call;
+  }
+
+  /**
    * Build call for deleteApiKey
    *
    * @param _callback Callback for upload/download progress
@@ -1550,105 +1648,6 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     Call call = deleteByValidateBeforeCall(indexName, searchParams, _callback);
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
-    this.executeAsync(call, returnType, _callback);
-    return call;
-  }
-
-  /**
-   * Build call for deleteCustomRequest
-   *
-   * @param _callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
-   */
-  private Call deleteCustomRequestCall(
-    String path,
-    Object body,
-    final ApiCallback<Object> _callback
-  ) throws ApiException {
-    Object bodyObj = body;
-
-    // create path and map variables
-    String requestPath =
-      "/1{path}".replaceAll(
-          "\\{" + "path" + "\\}",
-          this.escapeString(path.toString())
-        );
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "DELETE",
-        queryParams,
-        bodyObj,
-        headers,
-        _callback
-      );
-  }
-
-  private Call deleteCustomRequestValidateBeforeCall(
-    String path,
-    Object body,
-    final ApiCallback<Object> _callback
-  ) throws ApiException {
-    // verify the required parameter 'path' is set
-    if (path == null) {
-      throw new ApiException(
-        "Missing the required parameter 'path' when calling deleteCustomRequest(Async)"
-      );
-    }
-
-    return deleteCustomRequestCall(path, body, _callback);
-  }
-
-  /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param body The parameters to send with the custom request. (optional)
-   * @return Object
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
-   */
-  public Object deleteCustomRequest(String path, Object body)
-    throws ApiException {
-    Call req = deleteCustomRequestValidateBeforeCall(path, body, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponse.DeleteCustomRequest(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  public Object deleteCustomRequest(String path) throws ApiException {
-    return this.deleteCustomRequest(path, null);
-  }
-
-  /**
-   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param body The parameters to send with the custom request. (optional)
-   * @param _callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   */
-  public Call deleteCustomRequestAsync(
-    String path,
-    Object body,
-    final ApiCallback<Object> _callback
-  ) throws ApiException {
-    Call call = deleteCustomRequestValidateBeforeCall(path, body, _callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
   }
@@ -2202,6 +2201,110 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for get
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   */
+  private Call getCall(
+    String path,
+    String parameters,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath =
+      "/1{path}".replaceAll(
+          "\\{" + "path" + "\\}",
+          this.escapeString(path.toString())
+        );
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      queryParams.addAll(this.parameterToPair("parameters", parameters));
+    }
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
+  }
+
+  private Call getValidateBeforeCall(
+    String path,
+    String parameters,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    // verify the required parameter 'path' is set
+    if (path == null) {
+      throw new ApiException(
+        "Missing the required parameter 'path' when calling get(Async)"
+      );
+    }
+
+    return getCall(path, parameters, _callback);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
+   * @return Object
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   */
+  public Object get(String path, String parameters) throws ApiException {
+    Call req = getValidateBeforeCall(path, parameters, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponse.Get(((CallEcho) req).request());
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<Object>() {}.getType();
+    ApiResponse<Object> res = this.execute(call, returnType);
+    return res.getData();
+  }
+
+  public Object get(String path) throws ApiException {
+    return this.get(path, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
+   *     query made with this API key. (optional)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call getAsync(
+    String path,
+    String parameters,
+    final ApiCallback<Object> _callback
+  ) throws ApiException {
+    Call call = getValidateBeforeCall(path, parameters, _callback);
+    Type returnType = new TypeToken<Object>() {}.getType();
+    this.executeAsync(call, returnType, _callback);
+    return call;
+  }
+
+  /**
    * Build call for getApiKey
    *
    * @param _callback Callback for upload/download progress
@@ -2280,112 +2383,6 @@ public class SearchApi extends ApiClient {
     throws ApiException {
     Call call = getApiKeyValidateBeforeCall(key, _callback);
     Type returnType = new TypeToken<Key>() {}.getType();
-    this.executeAsync(call, returnType, _callback);
-    return call;
-  }
-
-  /**
-   * Build call for getCustomRequest
-   *
-   * @param _callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
-   */
-  private Call getCustomRequestCall(
-    String path,
-    String parameters,
-    final ApiCallback<Object> _callback
-  ) throws ApiException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath =
-      "/1{path}".replaceAll(
-          "\\{" + "path" + "\\}",
-          this.escapeString(path.toString())
-        );
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      queryParams.addAll(this.parameterToPair("parameters", parameters));
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        _callback
-      );
-  }
-
-  private Call getCustomRequestValidateBeforeCall(
-    String path,
-    String parameters,
-    final ApiCallback<Object> _callback
-  ) throws ApiException {
-    // verify the required parameter 'path' is set
-    if (path == null) {
-      throw new ApiException(
-        "Missing the required parameter 'path' when calling getCustomRequest(Async)"
-      );
-    }
-
-    return getCustomRequestCall(path, parameters, _callback);
-  }
-
-  /**
-   * The getCustomRequest method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
-   * @return Object
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
-   */
-  public Object getCustomRequest(String path, String parameters)
-    throws ApiException {
-    Call req = getCustomRequestValidateBeforeCall(path, parameters, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponse.GetCustomRequest(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  public Object getCustomRequest(String path) throws ApiException {
-    return this.getCustomRequest(path, null);
-  }
-
-  /**
-   * (asynchronously) The getCustomRequest method allow you to send requests to the Algolia REST
-   * API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
-   * @param _callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   */
-  public Call getCustomRequestAsync(
-    String path,
-    String parameters,
-    final ApiCallback<Object> _callback
-  ) throws ApiException {
-    Call call = getCustomRequestValidateBeforeCall(path, parameters, _callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
   }
@@ -4415,13 +4412,13 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Build call for postCustomRequest
+   * Build call for post
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call postCustomRequestCall(
+  private Call postCall(
     String path,
     Object body,
     final ApiCallback<Object> _callback
@@ -4451,7 +4448,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  private Call postCustomRequestValidateBeforeCall(
+  private Call postValidateBeforeCall(
     String path,
     Object body,
     final ApiCallback<Object> _callback
@@ -4459,15 +4456,15 @@ public class SearchApi extends ApiClient {
     // verify the required parameter 'path' is set
     if (path == null) {
       throw new ApiException(
-        "Missing the required parameter 'path' when calling postCustomRequest(Async)"
+        "Missing the required parameter 'path' when calling post(Async)"
       );
     }
 
-    return postCustomRequestCall(path, body, _callback);
+    return postCall(path, body, _callback);
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
@@ -4476,11 +4473,10 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Object postCustomRequest(String path, Object body)
-    throws ApiException {
-    Call req = postCustomRequestValidateBeforeCall(path, body, null);
+  public Object post(String path, Object body) throws ApiException {
+    Call req = postValidateBeforeCall(path, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponse.PostCustomRequest(((CallEcho) req).request());
+      return new EchoResponse.Post(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -4488,12 +4484,12 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public Object postCustomRequest(String path) throws ApiException {
-    return this.postCustomRequest(path, null);
+  public Object post(String path) throws ApiException {
+    return this.post(path, null);
   }
 
   /**
-   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
@@ -4502,25 +4498,25 @@ public class SearchApi extends ApiClient {
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
-  public Call postCustomRequestAsync(
+  public Call postAsync(
     String path,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
-    Call call = postCustomRequestValidateBeforeCall(path, body, _callback);
+    Call call = postValidateBeforeCall(path, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
   }
 
   /**
-   * Build call for putCustomRequest
+   * Build call for put
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call putCustomRequestCall(
+  private Call putCall(
     String path,
     Object body,
     final ApiCallback<Object> _callback
@@ -4550,7 +4546,7 @@ public class SearchApi extends ApiClient {
       );
   }
 
-  private Call putCustomRequestValidateBeforeCall(
+  private Call putValidateBeforeCall(
     String path,
     Object body,
     final ApiCallback<Object> _callback
@@ -4558,15 +4554,15 @@ public class SearchApi extends ApiClient {
     // verify the required parameter 'path' is set
     if (path == null) {
       throw new ApiException(
-        "Missing the required parameter 'path' when calling putCustomRequest(Async)"
+        "Missing the required parameter 'path' when calling put(Async)"
       );
     }
 
-    return putCustomRequestCall(path, body, _callback);
+    return putCall(path, body, _callback);
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
@@ -4575,10 +4571,10 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public Object putCustomRequest(String path, Object body) throws ApiException {
-    Call req = putCustomRequestValidateBeforeCall(path, body, null);
+  public Object put(String path, Object body) throws ApiException {
+    Call req = putValidateBeforeCall(path, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponse.PutCustomRequest(((CallEcho) req).request());
+      return new EchoResponse.Put(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -4586,12 +4582,12 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public Object putCustomRequest(String path) throws ApiException {
-    return this.putCustomRequest(path, null);
+  public Object put(String path) throws ApiException {
+    return this.put(path, null);
   }
 
   /**
-   * (asynchronously) The customRequest method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
@@ -4600,12 +4596,12 @@ public class SearchApi extends ApiClient {
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
-  public Call putCustomRequestAsync(
+  public Call putAsync(
     String path,
     Object body,
     final ApiCallback<Object> _callback
   ) throws ApiException {
-    Call call = putCustomRequestValidateBeforeCall(path, body, _callback);
+    Call call = putValidateBeforeCall(path, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;

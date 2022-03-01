@@ -94,12 +94,12 @@ class InsightsApi
      *
      * @return array<string, mixed>
      */
-    public function deleteCustomRequest($path, $body = null)
+    public function del($path, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling deleteCustomRequest'
+                'Missing the required parameter $path when calling del'
             );
         }
 
@@ -130,12 +130,12 @@ class InsightsApi
      *
      * @return array<string, mixed>
      */
-    public function getCustomRequest($path, $parameters = null)
+    public function get($path, $parameters = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling getCustomRequest'
+                'Missing the required parameter $path when calling get'
             );
         }
 
@@ -172,12 +172,12 @@ class InsightsApi
      *
      * @return array<string, mixed>
      */
-    public function postCustomRequest($path, $body = null)
+    public function post($path, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling postCustomRequest'
+                'Missing the required parameter $path when calling post'
             );
         }
 
@@ -235,12 +235,12 @@ class InsightsApi
      *
      * @return array<string, mixed>
      */
-    public function putCustomRequest($path, $body = null)
+    public function put($path, $body = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $path when calling putCustomRequest'
+                'Missing the required parameter $path when calling put'
             );
         }
 

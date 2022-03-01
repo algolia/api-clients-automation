@@ -90,6 +90,38 @@ export function createQuerySuggestionsApi(
   }
 
   /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param del - The del object.
+   * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param del.body - The parameters to send with the custom request.
+   */
+  function del({ path, body }: DelProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `del`.');
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
    * Delete a configuration of a Query Suggestion\'s index. By deleting a configuraton, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
    *
    * @summary Delete a configuration of a Query Suggestion\'s index.
@@ -124,17 +156,14 @@ export function createQuerySuggestionsApi(
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
-   * @summary Send requests to the Algolia REST API.
-   * @param deleteCustomRequest - The deleteCustomRequest object.
-   * @param deleteCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param deleteCustomRequest.body - The parameters to send with the custom request.
+   * @summary Send GET requests to the Algolia REST API.
+   * @param get - The get object.
+   * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function deleteCustomRequest({
-    path,
-    body,
-  }: DeleteCustomRequestProps): Promise<Record<string, any>> {
+  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -143,15 +172,16 @@ export function createQuerySuggestionsApi(
     const queryParameters: Record<string, string> = {};
 
     if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `deleteCustomRequest`.'
-      );
+      throw new Error('Parameter `path` is required when calling `get`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
     }
 
     const request: Request = {
-      method: 'DELETE',
+      method: 'GET',
       path: requestPath,
-      data: body,
     };
 
     return transporter.request(request, {
@@ -250,46 +280,6 @@ export function createQuerySuggestionsApi(
   }
 
   /**
-   * The getCustomRequest method allow you to send requests to the Algolia REST API.
-   *
-   * @summary Send GET requests to the Algolia REST API.
-   * @param getCustomRequest - The getCustomRequest object.
-   * @param getCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param getCustomRequest.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
-   */
-  function getCustomRequest({
-    path,
-    parameters,
-  }: GetCustomRequestProps): Promise<Record<string, any>> {
-    const requestPath = '/1{path}'.replace(
-      '{path}',
-      encodeURIComponent(String(path))
-    );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
-
-    if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `getCustomRequest`.'
-      );
-    }
-
-    if (parameters !== undefined) {
-      queryParameters.parameters = parameters.toString();
-    }
-
-    const request: Request = {
-      method: 'GET',
-      path: requestPath,
-    };
-
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
-  }
-
-  /**
    * Get the log file of the last build of a single Query Suggestion index.
    *
    * @summary Get the log file of the last build of a single Query Suggestion index.
@@ -322,17 +312,14 @@ export function createQuerySuggestionsApi(
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @summary Send requests to the Algolia REST API.
-   * @param postCustomRequest - The postCustomRequest object.
-   * @param postCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param postCustomRequest.body - The parameters to send with the custom request.
+   * @param post - The post object.
+   * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param post.body - The parameters to send with the custom request.
    */
-  function postCustomRequest({
-    path,
-    body,
-  }: PostCustomRequestProps): Promise<Record<string, any>> {
+  function post({ path, body }: PostProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -341,9 +328,7 @@ export function createQuerySuggestionsApi(
     const queryParameters: Record<string, string> = {};
 
     if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `postCustomRequest`.'
-      );
+      throw new Error('Parameter `path` is required when calling `post`.');
     }
 
     const request: Request = {
@@ -359,17 +344,14 @@ export function createQuerySuggestionsApi(
   }
 
   /**
-   * The customRequest method allow you to send requests to the Algolia REST API.
+   * This method allow you to send requests to the Algolia REST API.
    *
    * @summary Send requests to the Algolia REST API.
-   * @param putCustomRequest - The putCustomRequest object.
-   * @param putCustomRequest.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-   * @param putCustomRequest.body - The parameters to send with the custom request.
+   * @param put - The put object.
+   * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param put.body - The parameters to send with the custom request.
    */
-  function putCustomRequest({
-    path,
-    body,
-  }: PutCustomRequestProps): Promise<Record<string, any>> {
+  function put({ path, body }: PutProps): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
@@ -378,9 +360,7 @@ export function createQuerySuggestionsApi(
     const queryParameters: Record<string, string> = {};
 
     if (!path) {
-      throw new Error(
-        'Parameter `path` is required when calling `putCustomRequest`.'
-      );
+      throw new Error('Parameter `path` is required when calling `put`.');
     }
 
     const request: Request = {
@@ -447,29 +427,22 @@ export function createQuerySuggestionsApi(
   return {
     addUserAgent,
     createConfig,
+    del,
     deleteConfig,
-    deleteCustomRequest,
+    get,
     getAllConfigs,
     getConfig,
     getConfigStatus,
-    getCustomRequest,
     getLogFile,
-    postCustomRequest,
-    putCustomRequest,
+    post,
+    put,
     updateConfig,
   };
 }
 
 export type QuerySuggestionsApi = ReturnType<typeof createQuerySuggestionsApi>;
 
-export type DeleteConfigProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-};
-
-export type DeleteCustomRequestProps = {
+export type DelProps = {
   /**
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */
@@ -478,6 +451,24 @@ export type DeleteCustomRequestProps = {
    * The parameters to send with the custom request.
    */
   body?: Record<string, any>;
+};
+
+export type DeleteConfigProps = {
+  /**
+   * The index in which to perform the request.
+   */
+  indexName: string;
+};
+
+export type GetProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
 };
 
 export type GetConfigProps = {
@@ -494,17 +485,6 @@ export type GetConfigStatusProps = {
   indexName: string;
 };
 
-export type GetCustomRequestProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
-   */
-  parameters?: string;
-};
-
 export type GetLogFileProps = {
   /**
    * The index in which to perform the request.
@@ -512,7 +492,7 @@ export type GetLogFileProps = {
   indexName: string;
 };
 
-export type PostCustomRequestProps = {
+export type PostProps = {
   /**
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */
@@ -523,7 +503,7 @@ export type PostCustomRequestProps = {
   body?: Record<string, any>;
 };
 
-export type PutCustomRequestProps = {
+export type PutProps = {
   /**
    * The path of the API endpoint to target, anything after the /1 needs to be specified.
    */
