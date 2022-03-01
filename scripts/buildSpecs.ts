@@ -1,4 +1,4 @@
-import fsp, { readFile, writeFile } from 'fs/promises';
+import fsp from 'fs/promises';
 
 import { hashElement } from 'folder-hash';
 import yaml from 'js-yaml';
@@ -14,7 +14,9 @@ async function propagateTagsToOperations(
     throw new Error(`Bundled file not found ${bundledPath}.`);
   }
 
-  const bundledSpec = yaml.load(await readFile(bundledPath, 'utf8')) as Spec;
+  const bundledSpec = yaml.load(
+    await fsp.readFile(bundledPath, 'utf8')
+  ) as Spec;
 
   if (bundledSpec.tags.length === 0) {
     throw new Error(
@@ -30,7 +32,7 @@ async function propagateTagsToOperations(
     }
   }
 
-  await writeFile(
+  await fsp.writeFile(
     bundledPath,
     yaml.dump(bundledSpec, {
       noRefs: true,
@@ -81,6 +83,7 @@ async function buildSpec(
   if (
     (await propagateTagsToOperations(toAbsolutePath(bundledPath))) === false
   ) {
+    spinner.fail();
     throw new Error(
       `Unable to propage tags to operations for \`${client}\` spec.`
     );
