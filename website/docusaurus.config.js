@@ -1,8 +1,53 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-commonjs */
 
+const fs = require('fs');
+const path = require('path');
+
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
+
+function getSpecFiles() {
+  const ROOT_DIR = path.resolve(process.cwd(), '..');
+  const bundledSpecsPath = path.resolve(ROOT_DIR, 'specs/bundled');
+  const specFiles = [];
+
+  fs.readdirSync(bundledSpecsPath).forEach((file) => {
+    if (file.endsWith('.yml')) {
+      const fileName = file.replace('.yml', '');
+
+      specFiles.push({
+        fileName,
+        path: `${bundledSpecsPath}/${file}`,
+      });
+    }
+  });
+
+  if (specFiles.length === 0) {
+    throw new Error('Unable to find spec files');
+  }
+
+  return specFiles;
+}
+
+function getSpecsForPlugin() {
+  return getSpecFiles().map((specFile) => {
+    return {
+      id: specFile.fileName,
+      spec: specFile.path,
+      routePath: `/specs/${specFile.fileName}`,
+    };
+  });
+}
+
+function getSpecsForNavBar() {
+  return getSpecFiles().map((specFile) => {
+    return {
+      label: specFile.fileName,
+      href: `/specs/${specFile.fileName}`,
+    };
+  });
+}
 
 /** @type {import('@docusaurus/types').Config} */
 (
@@ -21,53 +66,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
       [
         'redocusaurus',
         {
-          specs: [
-            {
-              id: 'abtesting',
-              spec: '../specs/bundled/abtesting.yml',
-              routePath: '/specs/abtesting',
-            },
-            {
-              id: 'analytics',
-              spec: '../specs/bundled/analytics.yml',
-              routePath: '/specs/analytics',
-            },
-            {
-              id: 'insights',
-              spec: '../specs/bundled/insights.yml',
-              routePath: '/specs/insights',
-            },
-            {
-              id: 'personalization',
-              spec: '../specs/bundled/personalization.yml',
-              routePath: '/specs/personalization',
-            },
-            {
-              id: 'predict',
-              spec: '../specs/bundled/predict.yml',
-              routePath: '/specs/predict',
-            },
-            {
-              id: 'query-suggestions',
-              spec: '../specs/bundled/query-suggestions.yml',
-              routePath: '/specs/query-suggestions',
-            },
-            {
-              id: 'recommend',
-              spec: '../specs/bundled/recommend.yml',
-              routePath: '/specs/recommend',
-            },
-            {
-              id: 'search',
-              spec: '../specs/bundled/search.yml',
-              routePath: '/specs/search',
-            },
-            {
-              id: 'sources',
-              spec: '../specs/bundled/sources.yml',
-              routePath: '/specs/sources',
-            },
-          ],
+          specs: getSpecsForPlugin(),
         },
       ],
       [
@@ -112,44 +111,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
               label: 'Specs',
               position: 'left',
               type: 'dropdown',
-              items: [
-                {
-                  label: 'A/B Testing',
-                  href: '/specs/abtesting',
-                },
-                {
-                  label: 'Analytics',
-                  href: '/specs/analytics',
-                },
-                {
-                  label: 'Insights',
-                  href: '/specs/insights',
-                },
-                {
-                  label: 'Personalization',
-                  href: '/specs/personalization',
-                },
-                {
-                  label: 'Predict',
-                  href: '/specs/predict',
-                },
-                {
-                  label: 'Query Suggestions',
-                  href: '/specs/query-suggestions',
-                },
-                {
-                  label: 'Recommend',
-                  href: '/specs/recommend',
-                },
-                {
-                  label: 'Search',
-                  href: '/specs/search',
-                },
-                {
-                  label: 'Sources',
-                  href: '/specs/sources',
-                },
-              ],
+              items: getSpecsForNavBar(),
             },
             // right
             {
