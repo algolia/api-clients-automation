@@ -1,6 +1,4 @@
-import type { GetTopHitsResponseSimple } from './getTopHitsResponseSimple';
-import type { GetTopHitsResponseWithAnalytics } from './getTopHitsResponseWithAnalytics';
+import type { TopHitsResponse } from './topHitsResponse';
+import type { TopHitsResponseWithAnalytics } from './topHitsResponseWithAnalytics';
 
-export type GetTopHitsResponse =
-  | GetTopHitsResponseSimple
-  | GetTopHitsResponseWithAnalytics;
+export type GetTopHitsResponse = TopHitsResponse | TopHitsResponseWithAnalytics;

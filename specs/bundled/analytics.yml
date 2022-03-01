@@ -118,7 +118,7 @@ components:
       type: integer
       description: Number of hits that the search query matched.
       example: 20
-    getTopSearchesResponseSimple:
+    topSearchesResponse:
       type: object
       additionalProperties: false
       required:
@@ -161,7 +161,7 @@ components:
     conversionCount:
       type: integer
       description: The number of converted clicks.
-    getTopSearchesResponseWithAnalytics:
+    topSearchesResponseWithAnalytics:
       type: object
       additionalProperties: false
       required:
@@ -204,8 +204,8 @@ components:
                 $ref: '#/components/schemas/nbHits'
     getTopSearchesResponse:
       oneOf:
-        - $ref: '#/components/schemas/getTopSearchesResponseSimple'
-        - $ref: '#/components/schemas/getTopSearchesResponseWithAnalytics'
+        - $ref: '#/components/schemas/topSearchesResponse'
+        - $ref: '#/components/schemas/topSearchesResponseWithAnalytics'
     ErrorBase:
       description: Error.
       type: object
@@ -220,7 +220,7 @@ components:
     hit:
       description: The hit.
       type: string
-    getTopHitsResponseSimple:
+    topHitsResponse:
       type: object
       additionalProperties: false
       required:
@@ -240,7 +240,7 @@ components:
                 $ref: '#/components/schemas/hit'
               count:
                 $ref: '#/components/schemas/count'
-    getTopHitsResponseWithAnalytics:
+    topHitsResponseWithAnalytics:
       type: object
       additionalProperties: false
       required:
@@ -277,8 +277,8 @@ components:
                 $ref: '#/components/schemas/conversionCount'
     getTopHitsResponse:
       oneOf:
-        - $ref: '#/components/schemas/getTopHitsResponseSimple'
-        - $ref: '#/components/schemas/getTopHitsResponseWithAnalytics'
+        - $ref: '#/components/schemas/topHitsResponse'
+        - $ref: '#/components/schemas/topHitsResponseWithAnalytics'
     attribute:
       description: The attribute.
       type: string

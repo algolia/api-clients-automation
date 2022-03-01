@@ -1,6 +1,6 @@
-import type { GetTopSearchesResponseSimple } from './getTopSearchesResponseSimple';
-import type { GetTopSearchesResponseWithAnalytics } from './getTopSearchesResponseWithAnalytics';
+import type { TopSearchesResponse } from './topSearchesResponse';
+import type { TopSearchesResponseWithAnalytics } from './topSearchesResponseWithAnalytics';
 
 export type GetTopSearchesResponse =
-  | GetTopSearchesResponseSimple
-  | GetTopSearchesResponseWithAnalytics;
+  | TopSearchesResponse
+  | TopSearchesResponseWithAnalytics;
