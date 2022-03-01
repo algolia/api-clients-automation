@@ -64,7 +64,7 @@ You can copy an existing object of a client and replace the `<clientName>` value
 | apiName            | string  | JavaScript |            `search`             | The lowercase name of the exported API.                                                                                                         |
 | capitalizedApiName | string  | JavaScript |            `Search`             | The capitalized name of the exported API.                                                                                                       |
 | packageVersion     | string  | JavaScript |             `1.2.3`             | The version you'd like to publish the first iteration of the generated client. It will be automatically incremented.                            |
-| packageName        | string  |   common   |         `AlgoliaSearch`         | Name of the API package, used in [CTS](/docs/CTS).                                                                                              |
+| packageName        | string  |   common   |         `AlgoliaSearch`         | Name of the API package, used in [CTS](/docs/commonTestSuite).                                                                                  |
 | hasRegionalHost    | boolean |   common   |             `false`             | Automatically guessed from `servers` in spec. `undefined` implies that hosts used will required the `appId`, regional hosts are used otherwise. |
 | isDeHost           | boolean |   common   |             `false`             | Automatically guessed from `servers` in spec. `undefined` implies that `eu` is the regional host, `de` otherwise.                               |
 | host               | string  |   common   |            `crawler`            | Automatically guessed from `servers` in spec.                                                                                                   |
@@ -97,4 +97,4 @@ yarn docker generate <languageName> <clientName>
 
 ## 4. Implementing the Common Test Suite
 
-See [CTS.md](/docs/CTS) for more informations.
+See [CTS.md](/docs/commonTestSuite) for more informations.

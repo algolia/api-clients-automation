@@ -26,7 +26,7 @@ yarn docker:setup
 
 Build docker image from [Dockerfile](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile)
 
-[How to add a new client](/docs/addNewClient) | [How to add a new language](/docs/addNewLanguage) | [Common Test Suite](/docs/CTS) | [Run the playground](/docs/playground)
+[How to add a new client](/docs/addNewClient) | [How to add a new language](/docs/addNewLanguage) | [Common Test Suite](/docs/commonTestSuite) | [Run the playground](/docs/playground)
 
 ```bash
 yarn docker:build
@@ -59,7 +59,7 @@ CLI commands can be found at [CLI > specs commands](/docs/specsCommands) and [CL
 
 ## Testing
 
-Generated clients can be tested via the [Common Test Suite](/docs/CTS) or the [playground](/docs/playground)
+Generated clients can be tested via the [Common Test Suite](/docs/commonTestSuite) or the [playground](/docs/playground)
 
 You can make changes locally and run commands through the docker container.
 
