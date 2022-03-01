@@ -108,6 +108,7 @@ async function processRelease(): Promise<void> {
     console.log('log#1', { clientPath });
     console.log('log#2', await run(`ls -al ${clientPath}`));
     console.log('log#3', await run(`cd ${clientPath} && git branch -r`));
+    console.log('log#4', await run(`cat .git/config`));
     const targetBranch = getTargetBranch(lang);
     await run(`git checkout ${targetBranch}`, { cwd: clientPath });
     await run(`git pull origin ${targetBranch}`, { cwd: clientPath });
