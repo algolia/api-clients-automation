@@ -9,11 +9,11 @@ import ts from 'rollup-plugin-typescript2';
 
 import generatorConfig from '../../openapitools.json';
 
-import { version } from './packages/algoliasearch/package.json';
+import { version } from './version';
 
 // Retrieve package to build
 const client = process.env.CLIENT?.replace('@algolia/', '');
-const utils = process.env.UTILS;
+const UTILS = ['client-common', 'requester-browser-xhr', 'requester-node-http'];
 
 function createLicence(name) {
   return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
@@ -64,7 +64,7 @@ function getAvailableClients() {
 }
 
 function initPackagesConfig() {
-  if (utils) {
+  if (UTILS.includes(client)) {
     const commonOptions = {
       input: 'index.ts',
       formats: ['cjs-node', 'esm-node'],
@@ -100,10 +100,10 @@ function initPackagesConfig() {
       },
     ];
 
-    return utils === 'all'
+    return client === 'all'
       ? availableUtils
       : availableUtils.filter(
-          (availableUtil) => availableUtil.package === utils
+          (availableUtil) => availableUtil.package === client
         );
   }
 
