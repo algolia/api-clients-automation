@@ -48,7 +48,7 @@ import { algoliasearch } from 'algoliasearch';
 const client = algoliasearch(appId, apiKey);
 
 // And access analytics or personalization client
-const analyticsClient = algoliaClient.initAnalytics(analyticsAppId, analyticsApiKey);
+const analyticsClient = client.initAnalytics(analyticsAppId, analyticsApiKey);
 const personalizationCilent = client.initPersonalization(personalizationAppId, personalizationApiKey, 'eu');
 ```
 
