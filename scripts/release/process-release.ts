@@ -165,7 +165,7 @@ async function processRelease(): Promise<void> {
     }
 
     // add the new reference of the submodule in the monorepo
-    await run(`git add clients/${clientsConfig[lang].folder}`);
+    await run(`git add ${clientsConfig[lang].folder}`);
   }
 
   await execa('git', ['commit', '-m', TEXT.commitMessage]);
