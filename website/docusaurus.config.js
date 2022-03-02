@@ -94,7 +94,6 @@ function getSpecsForNavBar() {
       ({
         navbar: {
           title: 'API Clients Automation',
-          hideOnScroll: true,
           logo: {
             alt: 'Algolia',
             src: 'img/algolia-logo.svg',
