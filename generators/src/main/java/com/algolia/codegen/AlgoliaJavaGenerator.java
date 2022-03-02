@@ -6,27 +6,14 @@ import org.openapitools.codegen.utils.ModelUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.util.*;
+import java.util.Map.Entry;
 import java.io.FileInputStream;
 import java.net.URL;
 
 import io.swagger.v3.oas.models.media.Schema;
 
+@SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
-
-  // source folder where to write the files
-  protected String sourceFolder = "src";
-  protected String apiVersion = "1.0.0";
-
-  /**
-   * Configures the type of generator.
-   *
-   * @return the CodegenType for this generator
-   * @see org.openapitools.codegen.CodegenType
-   */
-  public CodegenType getTag() {
-    return CodegenType.CLIENT;
-  }
-
   /**
    * Configures a friendly name for the generator. This will be used by the
    * generator
@@ -34,6 +21,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
    *
    * @return the friendly name for the generator
    */
+  @Override
   public String getName() {
     return "algolia-java";
   }
@@ -41,13 +29,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   /**
    * Inject server info into the client to generate the right URL
    */
-  @SuppressWarnings("unchecked")
   private void generateServer(Map<String, Object> client) {
     String clientName = (String) client.get("pathPrefix");
     Yaml yaml = new Yaml();
     try {
-      Map<String, Object> spec = (Map<String, Object>) yaml
-          .load(new FileInputStream("specs/" + clientName + "/spec.yml"));
+      Map<String, Object> spec = yaml.load(new FileInputStream("specs/" + clientName + "/spec.yml"));
       List<Map<String, Object>> servers = (List<Map<String, Object>>) spec.get("servers");
 
       boolean hasRegionalHost = false;
@@ -60,7 +46,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
       for (Map<String, Object> server : servers) {
         if (!server.containsKey("url")) {
-          throw new Exception("Invalid server");
+          throw new GenerationException("Invalid server, does not contains 'url'");
         }
 
         if (!server.containsKey("variables")) {
@@ -92,7 +78,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         }
 
         // This is used for hosts like `insights` that uses `.io`
-        String[] hostParts = url.getHost().split(".");
+        String[] hostParts = url.getHost().split("\\.");
         host = hostParts[0];
         topLevelDomain = hostParts[hostParts.length - 1];
       }
@@ -111,7 +97,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
    * Provides an opportunity to inspect and modify operation data before the code
    * is generated.
    */
-  @SuppressWarnings("unchecked")
   @Override
   public Map<String, Object> postProcessOperationsWithModels(Map<String, Object> objs, List<Object> allModels) {
     Map<String, Object> results = super.postProcessOperationsWithModels(objs, allModels);
@@ -126,11 +111,10 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
     Map<String, Object> models = super.postProcessAllModels(objs);
 
-    for (String name : models.keySet()) {
-      Map<String, Object> inner = (Map<String, Object>) models.get(name);
-      CodegenModel model = ((List<Map<String, CodegenModel>>) inner.get("models")).get(0)
+    for (Object modelContainer : models.values()) {
+      CodegenModel model = ((Map<String, List<Map<String, CodegenModel>>>) modelContainer).get("models").get(0)
           .get("model");
-      if (model.oneOf.size() > 0) {
+      if (!model.oneOf.isEmpty()) {
         model.vendorExtensions.put("x-is-one-of-interface", true);
       }
     }
@@ -159,6 +143,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
    *
    * @return A string value for the help message
    */
+  @Override
   public String getHelp() {
     return "Generates an algolia-java client library.";
   }
@@ -180,9 +165,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   @Override
   public String toDefaultValue(Schema schema) {
     // Replace the {} from openapi with new Object()
-    if (ModelUtils.isObjectSchema(schema)) {
-      if (schema.getDefault() != null)
-        return "new Object()";
+    if (ModelUtils.isObjectSchema(schema) && schema.getDefault() != null) {
+      return "new Object()";
     }
     return super.toDefaultValue(schema);
   }
