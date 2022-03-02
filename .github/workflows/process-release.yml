@@ -20,15 +20,6 @@ jobs:
           submodules: recursive
           token: ${{ secrets.TOKEN_RELEASE_BOT }}
 
-      - run: git checkout chore/release
-
-      - run: |
-          git config --file .gitmodules --get-regexp url | while read url; do
-            git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/${{ secrets.TOKEN_RELEASE_BOT }}:${{ secrets.TOKEN_RELEASE_BOT }}@github.com\//")
-          done
-          git submodule sync
-          git submodule update --init --recursive
-
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
