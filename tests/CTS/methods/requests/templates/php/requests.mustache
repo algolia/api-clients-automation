@@ -62,11 +62,32 @@ class {{clientRawName}}Test extends TestCase implements HttpClientInterface
     public function test{{#capitalize}}{{method}}{{/capitalize}}{{testIndex}}()
     {
         $client = $this->getClient();
-        {{#hasParameters}}
-        $params = json_decode("{{#escapeQuotes}}{{{parameters}}}{{/escapeQuotes}}", true);
-        {{/hasParameters}}
 
-        $client->{{{method}}}({{#hasParameters}}$params{{/hasParameters}});
+        {{#hasParameters}}
+            {{{parametersWithDataType}}}
+
+            {{#parametersWithDataType}}
+                key      => "{{{key}}}"
+                value    => "{{{value}}}"
+                isDate   => "{{{isDate}}}"
+                isArray  => "{{{isArray}}}"
+                isObject => "{{{isObject}}}"
+                isString => "{{{isString}}}"
+                last     => "{{{-last}}}"
+
+            {{/parametersWithDataType}}
+
+        $client->{{{method}}}(
+        {{#parametersWithDataType}}
+            {{#isArray}}["{{{key}}}" => json_decode("{{#escapeQuotes}}{{{value}}}{{/escapeQuotes}}", true)]{{^-last}},{{/-last}}{{/isArray}}
+            {{#isInteger}}{{{value}}}{{^-last}},{{/-last}}{{/isInteger}}
+            {{^isArray}}{{^isInteger}}"{{{value}}}"{{^-last}},{{/-last}}{{/isInteger}}{{/isArray}}
+        {{/parametersWithDataType}}
+        );
+        {{/hasParameters}}
+        {{^hasParameters}}
+        $client->{{{method}}}();
+        {{/hasParameters}}
 
         $this->assertRequests([
             [
