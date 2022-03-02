@@ -8,6 +8,7 @@ inputs:
     required: true
 
 runs:
+  using: composite
   steps:
     - name: Update submodules
       id: update-submodules
