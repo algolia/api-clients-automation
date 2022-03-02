@@ -14,7 +14,7 @@ export default {
   descriptionForSkippedLang: `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
 
   changelogHeader: `## CHANGELOG`,
-  changelogDescription: `Update the following lines. Once merged, it will be reflected to \`docs/changelogs/*.\``,
+  changelogDescription: `Update the following lines. Once merged, it will be reflected to \`changelogs/*.\``,
 
   approvalHeader: `## Approval`,
   approved: APPROVED,
