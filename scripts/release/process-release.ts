@@ -118,7 +118,7 @@ async function processRelease(): Promise<void> {
 
     // update changelog
     const changelogPath = toAbsolutePath(
-      `clients/${clientsConfig[lang].folder}/CHANGELOG.md`
+      `${clientsConfig[lang].folder}/CHANGELOG.md`
     );
     const existingContent = (await exists(changelogPath))
       ? (await fsp.readFile(changelogPath)).toString()
