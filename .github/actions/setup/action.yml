@@ -6,6 +6,8 @@ runs:
   using: composite
   steps:
     - name: Update submodules
+      id: update-submodule
+      shell: bash
       run: |
         git config --file .gitmodules --get-regexp url | while read url; do
           git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/${{ secrets.TOKEN_RELEASE_BOT }}:${{ secrets.TOKEN_RELEASE_BOT }}@github.com\//")
