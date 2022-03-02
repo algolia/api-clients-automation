@@ -42,16 +42,18 @@ if (!process.env.GITHUB_TOKEN) {
 }
 
 async function createReleaseIssue(): Promise<void> {
-  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
-    throw new Error(
-      `You can run this script only from \`${MAIN_BRANCH}\` branch.`
-    );
-  }
+  if (process.env.SKIP_VALIDATION !== 'true') {
+    if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
+      throw new Error(
+        `You can run this script only from \`${MAIN_BRANCH}\` branch.`
+      );
+    }
 
-  if (await run('git status --porcelain')) {
-    throw new Error(
-      'Working directory is not clean. Commit all the changes first.'
-    );
+    if (await run('git status --porcelain')) {
+      throw new Error(
+        'Working directory is not clean. Commit all the changes first.'
+      );
+    }
   }
 
   await run(`git rev-parse --verify refs/tags/${RELEASED_TAG}`, {
