@@ -12,6 +12,8 @@ runs:
     - name: Update submodules
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
+      id: update-submodules
+      shell: bash
       run: |
         git config --file .gitmodules --get-regexp url | while read url; do
           git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/$GITHUB_TOKEN:$GITHUB_TOKEN@github.com\//")
