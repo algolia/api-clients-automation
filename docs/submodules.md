@@ -1,11 +1,11 @@
 ## Add a submodule
 
 ```sh
-git submodule add git@github.com:algolia/algoliasearch-client-javascript.git clients/algoliasearch-client-javascript
+git submodule add git@github.com:algolia/<YOUR_API_CLIENT_REPOSITORY>.git clients/<YOUR_API_CLIENT_REPOSITORY>
 
-(cd clients/algoliasearch-client-javascript && git checkout -b next)
+(cd clients/<YOUR_API_CLIENT_REPOSITORY> && git checkout -b next)
 
-git add clients/algoliasearch-client-javascript
+git add clients/<YOUR_API_CLIENT_REPOSITORY>
 git commit -m "chore: add submodule"
 ```
 
@@ -14,7 +14,7 @@ git commit -m "chore: add submodule"
 This repository does not include the actual repository of the submodule. It's just a reference.
 
 ```sh
-cd clients/algoliasearch-client-javascript
+cd clients/<YOUR_API_CLIENT_REPOSITORY>
 ```
 
 You need to checkout to a specific branch, because it's normally detached.
