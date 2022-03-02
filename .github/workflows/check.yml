@@ -23,13 +23,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Update submodules
-        run: |
-          git config --file .gitmodules --get-regexp url | while read url; do
-            git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/${{ secrets.TOKEN_RELEASE_BOT }}:${{ secrets.TOKEN_RELEASE_BOT }}@github.com\//")
-          done
-          git submodule sync
-          git submodule update --init --recursive
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
 
       - name: Setup
         id: setup
@@ -64,6 +60,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
+
       - name: Restore cache
         uses: ./.github/actions/cache
 
@@ -88,6 +88,10 @@ jobs:
           - requester-node-http
     steps:
       - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
 
       - name: Restore cache
         uses: ./.github/actions/cache
@@ -117,6 +121,10 @@ jobs:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
 
       - name: Restore cache
         uses: ./.github/actions/cache
@@ -155,6 +163,10 @@ jobs:
       matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
 
       - name: Restore cache
         uses: ./.github/actions/cache
@@ -195,6 +207,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
+
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
@@ -226,6 +242,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
+
       - name: Restore cache
         id: restore
         uses: ./.github/actions/cache
@@ -249,6 +269,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/submodule
+        with:
+          token: $${{ secrets.TOKEN_RELEASE_BOT }}
 
       - name: Restore cache
         id: restore

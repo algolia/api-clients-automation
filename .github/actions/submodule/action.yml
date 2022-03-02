@@ -1,0 +1,20 @@
+name: Submodule
+
+description: Update submodules
+
+inputs:
+  token:
+    description: GitHub Token
+    required: true
+
+runs:
+  steps:
+    - name: Update submodules
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        git config --file .gitmodules --get-regexp url | while read url; do
+          git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/$GITHUB_TOKEN:$GITHUB_TOKEN@github.com\//")
+        done
+        git submodule sync
+        git submodule update --init --recursive
