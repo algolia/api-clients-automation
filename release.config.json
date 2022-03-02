@@ -8,5 +8,9 @@
     "php": "next",
     "java": "next"
   },
-  "defaultTargetBranch": "next"
+  "defaultTargetBranch": "next",
+  "gitAuthor": {
+    "name": "api-clients-bot",
+    "email": "bot@algolia.com"
+  }
 }

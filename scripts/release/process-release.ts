@@ -6,6 +6,7 @@ import execa from 'execa';
 
 import clientsConfig from '../../clients.config.json';
 import openapitools from '../../openapitools.json';
+import releaseConfig from '../../release.config.json';
 import { toAbsolutePath, run, exists, getGitHubUrl } from '../common';
 
 import {
@@ -89,8 +90,8 @@ async function processRelease(): Promise<void> {
     JSON.stringify(openapitools, null, 2)
   );
 
-  await run('git config user.name "api-clients-bot"');
-  await run('git config user.email "bot@algolia.com"');
+  await run(`git config user.name "${releaseConfig.gitAuthor.name}"`);
+  await run(`git config user.email "${releaseConfig.gitAuthor.email}"`);
 
   // commit openapitools and changelogs
   await run('git add openapitools.json');
@@ -139,6 +140,12 @@ async function processRelease(): Promise<void> {
     );
 
     // commit changelog and the generated client
+    await run(`git config user.name "${releaseConfig.gitAuthor.name}"`, {
+      cwd: clientPath,
+    });
+    await run(`git config user.email "${releaseConfig.gitAuthor.email}"`, {
+      cwd: clientPath,
+    });
     await run(`git add .`, { cwd: clientPath });
     if (goal === 'release') {
       await execa('git', ['commit', '-m', `chore: release ${nextVersion}`], {
