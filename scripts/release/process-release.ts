@@ -28,29 +28,25 @@ if (!process.env.EVENT_NUMBER) {
   throw new Error('Environment variable `EVENT_NUMBER` does not exist.');
 }
 
-async function processRelease(): Promise<void> {
-  const issueBody = JSON.parse(
+function getIssueBody(): string {
+  return JSON.parse(
     execa.sync('curl', [
       '-H',
       `Authorization: token ${process.env.GITHUB_TOKEN}`,
       `https://api.github.com/repos/${OWNER}/${REPO}/issues/${process.env.EVENT_NUMBER}`,
     ]).stdout
   ).body;
+}
 
-  if (
-    !getMarkdownSection(issueBody, TEXT.approvalHeader)
-      .split('\n')
-      .find((line) => line.startsWith(`- [x] ${TEXT.approved}`))
-  ) {
-    throw new Error('The issue was not approved.');
-  }
+type VersionsToRelease = {
+  [lang: string]: {
+    current: string;
+    next: string;
+  };
+};
 
-  const versionsToRelease: {
-    [lang: string]: {
-      current: string;
-      next: string;
-    };
-  } = {};
+function getVersionsToRelease(issueBody: string): VersionsToRelease {
+  const versionsToRelease: VersionsToRelease = {};
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .forEach((line) => {
@@ -65,18 +61,22 @@ async function processRelease(): Promise<void> {
       };
     });
 
-  const langsToUpdateRepo = getMarkdownSection(
-    issueBody,
-    TEXT.versionChangeHeader
-  )
+  return versionsToRelease;
+}
+
+function getLangsToUpdateRepo(issueBody: string): string[] {
+  return getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .map((line) => {
       const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);
       return result?.[1];
     })
-    .filter(Boolean) as string[]; // e.g. ['javascript', 'php']
+    .filter(Boolean) as string[];
+}
 
-  // update versions in `openapitools.json`
+async function updateOpenApiTools(
+  versionsToRelease: VersionsToRelease
+): Promise<void> {
   Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
     const lang = client.split('-')[0];
     if (versionsToRelease[lang]) {
@@ -89,9 +89,32 @@ async function processRelease(): Promise<void> {
     toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2)
   );
+}
 
-  await run(`git config user.name "${releaseConfig.gitAuthor.name}"`);
-  await run(`git config user.email "${releaseConfig.gitAuthor.email}"`);
+async function configureGitHubAuthor(cwd?: string): Promise<void> {
+  await run(`git config user.name "${releaseConfig.gitAuthor.name}"`, { cwd });
+  await run(`git config user.email "${releaseConfig.gitAuthor.email}"`, {
+    cwd,
+  });
+}
+
+async function processRelease(): Promise<void> {
+  const issueBody = getIssueBody();
+
+  if (
+    !getMarkdownSection(issueBody, TEXT.approvalHeader)
+      .split('\n')
+      .find((line) => line.startsWith(`- [x] ${TEXT.approved}`))
+  ) {
+    throw new Error('The issue was not approved.');
+  }
+
+  const versionsToRelease = getVersionsToRelease(issueBody);
+  const langsToUpdateRepo = getLangsToUpdateRepo(issueBody); // e.g. ['javascript', 'php']
+
+  await updateOpenApiTools(versionsToRelease);
+
+  await configureGitHubAuthor();
 
   // commit openapitools and changelogs
   await run('git add openapitools.json');
@@ -101,9 +124,10 @@ async function processRelease(): Promise<void> {
     ...langsToUpdateRepo,
   ];
 
-  for (const lang of langsToReleaseOrUpdate) {
-    const goal = versionsToRelease[lang] ? 'release' : 'update';
+  const willReleaseLibrary = (lang: string): boolean =>
+    Boolean(versionsToRelease[lang]);
 
+  for (const lang of langsToReleaseOrUpdate) {
     // prepare the submodule
     const clientPath = toAbsolutePath(clientsConfig[lang].folder);
     const targetBranch = getTargetBranch(lang);
@@ -111,7 +135,7 @@ async function processRelease(): Promise<void> {
     await run(`git pull origin ${targetBranch}`, { cwd: clientPath });
 
     console.log(`Generating ${lang} client(s)...`);
-    await run(`yarn cli generate ${lang}`);
+    console.log(await run(`yarn cli generate ${lang}`));
 
     const dateStamp = new Date().toISOString().split('T')[0];
     const currentVersion = versionsToRelease[lang].current;
@@ -124,12 +148,11 @@ async function processRelease(): Promise<void> {
     const existingContent = (await exists(changelogPath))
       ? (await fsp.readFile(changelogPath)).toString()
       : '';
-    const changelogHeader =
-      goal === 'release'
-        ? `## [v${nextVersion}](${getGitHubUrl(
-            lang
-          )}/compare/v${currentVersion}...v${nextVersion})`
-        : `## ${dateStamp}`;
+    const changelogHeader = willReleaseLibrary(lang)
+      ? `## [v${nextVersion}](${getGitHubUrl(
+          lang
+        )}/compare/v${currentVersion}...v${nextVersion})`
+      : `## ${dateStamp}`;
     const newChangelog = getMarkdownSection(
       getMarkdownSection(issueBody, TEXT.changelogHeader),
       `### ${lang}`
@@ -140,14 +163,9 @@ async function processRelease(): Promise<void> {
     );
 
     // commit changelog and the generated client
-    await run(`git config user.name "${releaseConfig.gitAuthor.name}"`, {
-      cwd: clientPath,
-    });
-    await run(`git config user.email "${releaseConfig.gitAuthor.email}"`, {
-      cwd: clientPath,
-    });
+    await configureGitHubAuthor(clientPath);
     await run(`git add .`, { cwd: clientPath });
-    if (goal === 'release') {
+    if (willReleaseLibrary(lang)) {
       await execa('git', ['commit', '-m', `chore: release ${nextVersion}`], {
         cwd: clientPath,
       });
@@ -158,16 +176,23 @@ async function processRelease(): Promise<void> {
       });
     }
 
-    // push the commit to the submodule
-    await run(`git push origin ${targetBranch}`, { cwd: clientPath });
-    if (goal === 'release') {
-      await run('git push --tags', { cwd: clientPath });
-    }
-
     // add the new reference of the submodule in the monorepo
     await run(`git add ${clientsConfig[lang].folder}`);
   }
 
+  // We push commits from submodules AFTER all the generations are done.
+  // Otherwise, we will end up having broken release.
+  for (const lang of langsToReleaseOrUpdate) {
+    const clientPath = toAbsolutePath(clientsConfig[lang].folder);
+    const targetBranch = getTargetBranch(lang);
+
+    await run(`git push origin ${targetBranch}`, { cwd: clientPath });
+    if (willReleaseLibrary(lang)) {
+      await run('git push --tags', { cwd: clientPath });
+    }
+  }
+
+  // Commit and push from the monorepo level.
   await execa('git', ['commit', '-m', TEXT.commitMessage]);
   await run(`git push`);
 
