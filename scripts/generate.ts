@@ -10,8 +10,7 @@ async function preGen(
   { language, client, key, output }: Generator,
   verbose?: boolean
 ): Promise<void> {
-  const folder = output.replace('#{cwd}/', '');
-  await runIfExists(`./scripts/pre-gen/${language}.sh`, `${folder} ${key}`, {
+  await runIfExists(`./scripts/pre-gen/${language}.sh`, `${output} ${key}`, {
     verbose,
   });
 
@@ -41,8 +40,7 @@ async function postGen(
   { language, key, output }: Generator,
   verbose?: boolean
 ): Promise<void> {
-  const folder = output.replace('#{cwd}/', '');
-  await runIfExists(`./scripts/post-gen/${language}.sh`, `${folder} ${key}`, {
+  await runIfExists(`./scripts/post-gen/${language}.sh`, `${output} ${key}`, {
     verbose,
   });
 }
@@ -66,7 +64,7 @@ export async function generate(
     spinner.text = `post-gen ${gen.key}`;
     await postGen(gen, verbose);
 
-    if (gen.language === 'javascript' && CI) {
+    if (CI && gen.language === 'javascript') {
       // because the CI is parallelized, run the formatter for each client
       await formatter(gen.language, gen.output, verbose);
     }
@@ -76,9 +74,11 @@ export async function generate(
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
-    if (!CI || lang !== 'javascript') {
+    if (!(CI && lang === 'javascript')) {
       await formatter(lang, getLanguageFolder(lang), verbose);
     }
+
+    // build common packages
     if (lang === 'javascript') {
       const spinner = createSpinner(
         'cleaning JavaScript client utils',

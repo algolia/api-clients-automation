@@ -1,3 +1,5 @@
+import type { Acl } from './acl';
+
 /**
  * Api Key object.
  */
@@ -5,7 +7,7 @@ export type ApiKey = {
   /**
    * Set of permissions associated with the key.
    */
-  acl: ApiKeyAcl[];
+  acl: Acl[];
   /**
    * A comment used to identify a key more easily in the dashboard. It is not interpreted by the API.
    */
@@ -35,19 +37,3 @@ export type ApiKey = {
    */
   validity?: number;
 };
-
-export type ApiKeyAcl =
-  | 'addObject'
-  | 'analytics'
-  | 'browse'
-  | 'deleteIndex'
-  | 'deleteObject'
-  | 'editSettings'
-  | 'listIndexes'
-  | 'logs'
-  | 'personalization'
-  | 'recommendation'
-  | 'search'
-  | 'seeUnretrievableAttributes'
-  | 'settings'
-  | 'usage';

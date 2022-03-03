@@ -15,6 +15,7 @@ import type {
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
 import type { AssignUserIdParams } from '../model/assignUserIdParams';
+import type { AttributeOrBuiltInOperation } from '../model/attributeOrBuiltInOperation';
 import type { BatchAssignUserIdsParams } from '../model/batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from '../model/batchDictionaryEntriesParams';
 import type { BatchParams } from '../model/batchParams';
@@ -22,12 +23,12 @@ import type { BatchResponse } from '../model/batchResponse';
 import type { BatchWriteParams } from '../model/batchWriteParams';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
-import type { BuiltInOperation } from '../model/builtInOperation';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsParams } from '../model/dictionarySettingsParams';
+import type { DictionaryType } from '../model/dictionaryType';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
 import type { GetObjectsParams } from '../model/getObjectsParams';
@@ -41,6 +42,7 @@ import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
+import type { LogType } from '../model/logType';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
 import type { MultipleQueriesParams } from '../model/multipleQueriesParams';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
@@ -1614,13 +1616,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param partialUpdateObject - The partialUpdateObject object.
    * @param partialUpdateObject.indexName - The index in which to perform the request.
    * @param partialUpdateObject.objectID - Unique identifier of an object.
-   * @param partialUpdateObject.stringBuiltInOperation - List of attributes to update.
+   * @param partialUpdateObject.attributeOrBuiltInOperation - List of attributes to update.
    * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
    */
   function partialUpdateObject({
     indexName,
     objectID,
-    stringBuiltInOperation,
+    attributeOrBuiltInOperation,
     createIfNotExists,
   }: PartialUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
     const path = '/1/indexes/{indexName}/{objectID}/partial'
@@ -1641,9 +1643,9 @@ export function createSearchApi(options: CreateClientOptions) {
       );
     }
 
-    if (!stringBuiltInOperation) {
+    if (!attributeOrBuiltInOperation) {
       throw new Error(
-        'Parameter `stringBuiltInOperation` is required when calling `partialUpdateObject`.'
+        'Parameter `attributeOrBuiltInOperation` is required when calling `partialUpdateObject`.'
       );
     }
 
@@ -1654,7 +1656,7 @@ export function createSearchApi(options: CreateClientOptions) {
     const request: Request = {
       method: 'POST',
       path,
-      data: stringBuiltInOperation,
+      data: attributeOrBuiltInOperation,
     };
 
     return transporter.request(request, {
@@ -2505,7 +2507,7 @@ export type BatchDictionaryEntriesProps = {
   /**
    * The dictionary to search in.
    */
-  dictionaryName: 'compounds' | 'plurals' | 'stopwords';
+  dictionaryName: DictionaryType;
   batchDictionaryEntriesParams: BatchDictionaryEntriesParams;
 };
 
@@ -2655,7 +2657,7 @@ export type GetLogsProps = {
   /**
    * Type of log entries to retrieve. When omitted, all log entries are retrieved.
    */
-  type?: 'all' | 'build' | 'error' | 'query';
+  type?: LogType;
 };
 
 export type GetObjectProps = {
@@ -2765,7 +2767,9 @@ export type PartialUpdateObjectProps = {
   /**
    * List of attributes to update.
    */
-  stringBuiltInOperation: Array<{ [key: string]: BuiltInOperation | string }>;
+  attributeOrBuiltInOperation: Array<{
+    [key: string]: AttributeOrBuiltInOperation;
+  }>;
   /**
    * Creates the record if it does not exist yet.
    */
@@ -2864,7 +2868,7 @@ export type SearchDictionaryEntriesProps = {
   /**
    * The dictionary to search in.
    */
-  dictionaryName: 'compounds' | 'plurals' | 'stopwords';
+  dictionaryName: DictionaryType;
   searchDictionaryEntriesParams: SearchDictionaryEntriesParams;
 };
 
