@@ -1,3 +1,5 @@
+import type { AroundRadius } from './aroundRadius';
+
 export type BaseSearchParams = {
   /**
    * Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results.
@@ -63,10 +65,7 @@ export type BaseSearchParams = {
    * Search for entries around a given location automatically computed from the requester\'s IP address.
    */
   aroundLatLngViaIP?: boolean;
-  /**
-   * Define the maximum radius for a geo search (in meters).
-   */
-  aroundRadius?: number | string | null;
+  aroundRadius?: AroundRadius;
   /**
    * Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
    */

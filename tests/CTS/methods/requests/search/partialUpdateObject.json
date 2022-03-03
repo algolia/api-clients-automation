@@ -4,12 +4,10 @@
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
-      "stringBuiltInOperation": [
+      "attributeOrBuiltInOperation": [
         {
-          "$objectName": "Object",
           "id1": "test",
           "id2": {
-            "$objectName": "OneOfstringbuiltInOperation",
             "_operation": "AddUnique",
             "value": "test2"
           }

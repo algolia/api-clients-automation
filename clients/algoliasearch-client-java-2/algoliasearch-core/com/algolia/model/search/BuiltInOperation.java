@@ -1,11 +1,6 @@
 package com.algolia.model.search;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -13,88 +8,28 @@ import java.util.Objects;
  */
 public class BuiltInOperation {
 
-  /** The operation to apply on the attribute. */
-  @JsonAdapter(OperationEnum.Adapter.class)
-  public enum OperationEnum {
-    INCREMENT("Increment"),
-
-    DECREMENT("Decrement"),
-
-    ADD("Add"),
-
-    REMOVE("Remove"),
-
-    ADDUNIQUE("AddUnique"),
-
-    INCREMENTFROM("IncrementFrom"),
-
-    INCREMENTSET("IncrementSet");
-
-    private String value;
-
-    OperationEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static OperationEnum fromValue(String value) {
-      for (OperationEnum b : OperationEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<OperationEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final OperationEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public OperationEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return OperationEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("_operation")
-  private OperationEnum operation;
+  private BuiltInOperationType operation;
 
   @SerializedName("value")
   private String value;
 
-  public BuiltInOperation operation(OperationEnum operation) {
+  public BuiltInOperation operation(BuiltInOperationType operation) {
     this.operation = operation;
     return this;
   }
 
   /**
-   * The operation to apply on the attribute.
+   * Get operation
    *
    * @return operation
    */
   @javax.annotation.Nonnull
-  public OperationEnum getOperation() {
+  public BuiltInOperationType getOperation() {
     return operation;
   }
 
-  public void setOperation(OperationEnum operation) {
+  public void setOperation(BuiltInOperationType operation) {
     this.operation = operation;
   }
 

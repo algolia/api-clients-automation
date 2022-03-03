@@ -81,26 +81,14 @@ describe('batch', () => {
     const req = (await client.batch({
       indexName: 'theIndexName',
       batchWriteParams: {
-        requests: [
-          {
-            action: 'delete',
-            body: { key: 'value' },
-            indexName: 'otherIndexName',
-          },
-        ],
+        requests: [{ action: 'delete', body: { key: 'value' } }],
       },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          action: 'delete',
-          body: { key: 'value' },
-          indexName: 'otherIndexName',
-        },
-      ],
+      requests: [{ action: 'delete', body: { key: 'value' } }],
     });
     expect(req.searchParams).toEqual(undefined);
   });
@@ -160,9 +148,9 @@ describe('batchDictionaryEntries', () => {
             body: {
               objectID: '1',
               language: 'en',
-              word: 'yo',
-              words: ['yo', 'algolia'],
-              decomposition: ['yo', 'algolia'],
+              word: 'fancy',
+              words: ['believe', 'algolia'],
+              decomposition: ['trust', 'algolia'],
               state: 'enabled',
             },
           },
@@ -171,9 +159,9 @@ describe('batchDictionaryEntries', () => {
             body: {
               objectID: '2',
               language: 'fr',
-              word: 'salut',
-              words: ['salut', 'algolia'],
-              decomposition: ['salut', 'algolia'],
+              word: 'humility',
+              words: ['candor', 'algolia'],
+              decomposition: ['grit', 'algolia'],
               state: 'enabled',
             },
           },
@@ -191,9 +179,9 @@ describe('batchDictionaryEntries', () => {
           body: {
             objectID: '1',
             language: 'en',
-            word: 'yo',
-            words: ['yo', 'algolia'],
-            decomposition: ['yo', 'algolia'],
+            word: 'fancy',
+            words: ['believe', 'algolia'],
+            decomposition: ['trust', 'algolia'],
             state: 'enabled',
           },
         },
@@ -202,9 +190,9 @@ describe('batchDictionaryEntries', () => {
           body: {
             objectID: '2',
             language: 'fr',
-            word: 'salut',
-            words: ['salut', 'algolia'],
-            decomposition: ['salut', 'algolia'],
+            word: 'humility',
+            words: ['candor', 'algolia'],
+            decomposition: ['grit', 'algolia'],
             state: 'enabled',
           },
         },
@@ -759,7 +747,7 @@ describe('partialUpdateObject', () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
-      stringBuiltInOperation: [
+      attributeOrBuiltInOperation: [
         { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
       ],
       createIfNotExists: true,
