@@ -10,6 +10,8 @@ import org.openapitools.codegen.CodegenProperty;
 import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.IJsonSchemaValidationProperties;
 
+import io.swagger.v3.core.util.Json;
+
 @SuppressWarnings("unchecked")
 public class ParametersWithDataType {
   private final Map<String, CodegenModel> models;
@@ -149,7 +151,8 @@ public class ParametersWithDataType {
       // find a discriminator to handle oneOf
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
-      testOutput = traverseParams(paramName, param, match, parent, suffix);
+      testOutput.clear();
+      testOutput.putAll(traverseParams(paramName, param, match, parent, suffix));
       testOutput.put("oneOfModel", baseType);
       return;
     }
@@ -277,7 +280,6 @@ public class ParametersWithDataType {
   private IJsonSchemaValidationProperties findMatchingOneOf(Object param, CodegenModel model) throws CTSException {
     if (param instanceof Map) {
       // for object, check which has the most of property in common
-
       int maxCount = 0;
       CodegenModel bestOneOf = model.interfaceModels.get(0);
       for (CodegenModel oneOf : model.interfaceModels) {
