@@ -20,12 +20,7 @@
       "method": "POST",
       "data": [
         {
-          "id1": {
-            "_operation": "AddUnique",
-            "value": "test1"
-          }
-        },
-        {
+          "id1": "test",
           "id2": {
             "_operation": "AddUnique",
             "value": "test2"

@@ -756,8 +756,7 @@ describe('partialUpdateObject', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
-      { id1: { _operation: 'AddUnique', value: 'test1' } },
-      { id2: { _operation: 'AddUnique', value: 'test2' } },
+      { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
     ]);
     expect(req.searchParams).toEqual({ createIfNotExists: 'true' });
   });
