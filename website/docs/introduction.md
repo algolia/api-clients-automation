@@ -13,9 +13,9 @@ To contribute to the repository, make sure to take a look at our guidelines and 
 - [Setup the repository tooling](/docs/setupRepository): to install our tooling.
 - [Add a new client](/docs/addNewClient): to add a new client spec to generate.
 - [Support a new language](/docs/addNewLanguage): to add a new supported language to the API clients.
-- [Release process](/docs/releaseProcess): to see how to release API clients
-- [How to send PRs](/docs/commitAndPR): to see how to send PRs
-- [Submodules](/docs/submodules): to learn more about git submodules
+- [Release process](/docs/releaseProcess): to see how to release API clients.
+- [How to send PRs](/docs/commitAndPR): to see how to send PRs.
+- [Submodules](/docs/submodules): to learn more about git submodules.
 
 CLI commands can be found at [CLI > specs commands](/docs/specsCommands) and [CLI > generation commands](/docs/generationCommands)
 
