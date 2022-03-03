@@ -1,4 +1,9 @@
-import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
+import {
+  createAuth,
+  createMemoryCache,
+  createTransporter,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -28,12 +33,13 @@ function getDefaultHosts(region: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createQuerySuggestionsApi = (
+export function createQuerySuggestionsApi(
   options: CreateClientOptions & { region: Region }
-) => {
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
-  const transporter = new Transporter({
+  const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.region),
+    hostsCache: createMemoryCache(),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),
@@ -47,6 +53,10 @@ export const createQuerySuggestionsApi = (
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
@@ -284,6 +294,7 @@ export const createQuerySuggestionsApi = (
   }
 
   return {
+    addUserAgent,
     createConfig,
     deleteConfig,
     getAllConfigs,
@@ -292,7 +303,7 @@ export const createQuerySuggestionsApi = (
     getLogFile,
     updateConfig,
   };
-};
+}
 
 export type QuerySuggestionsApi = ReturnType<typeof createQuerySuggestionsApi>;
 

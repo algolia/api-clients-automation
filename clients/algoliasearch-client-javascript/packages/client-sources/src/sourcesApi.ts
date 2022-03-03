@@ -1,4 +1,9 @@
-import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
+import {
+  createAuth,
+  createMemoryCache,
+  createTransporter,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -24,12 +29,13 @@ function getDefaultHosts(region: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createSourcesApi = (
+export function createSourcesApi(
   options: CreateClientOptions & { region: Region }
-) => {
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
-  const transporter = new Transporter({
+  const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.region),
+    hostsCache: createMemoryCache(),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),
@@ -43,6 +49,10 @@ export const createSourcesApi = (
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Add an ingestion job that will fetch data from an URL.
@@ -91,7 +101,7 @@ export const createSourcesApi = (
     });
   }
 
-  return { postIngestUrl };
-};
+  return { addUserAgent, postIngestUrl };
+}
 
 export type SourcesApi = ReturnType<typeof createSourcesApi>;

@@ -1,4 +1,9 @@
-import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
+import {
+  createAuth,
+  createMemoryCache,
+  createTransporter,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -28,12 +33,13 @@ function getDefaultHosts(region?: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createAbtestingApi = (
+export function createAbtestingApi(
   options: CreateClientOptions & { region?: Region }
-) => {
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
-  const transporter = new Transporter({
+  const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.region),
+    hostsCache: createMemoryCache(),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),
@@ -47,6 +53,10 @@ export const createAbtestingApi = (
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Creates a new A/B test with provided configuration. You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
@@ -222,8 +232,15 @@ export const createAbtestingApi = (
     });
   }
 
-  return { addABTests, deleteABTest, getABTest, listABTests, stopABTest };
-};
+  return {
+    addUserAgent,
+    addABTests,
+    deleteABTest,
+    getABTest,
+    listABTests,
+    stopABTest,
+  };
+}
 
 export type AbtestingApi = ReturnType<typeof createAbtestingApi>;
 
