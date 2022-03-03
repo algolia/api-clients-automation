@@ -94,22 +94,11 @@ export async function buildClients(
   // We exclude `javascript-algoliasearch` from the build batch because it
   // is made of built generated clients and can cause race issue when executed
   // together.
-  const { generators, jsAlgoliasearch } = allGenerators.reduce(
-    (prev, curr) => {
-      const gens = prev;
-
-      if (curr.key === 'javascript-algoliasearch') {
-        gens.jsAlgoliasearch = curr;
-      } else {
-        prev.generators.push(curr);
-      }
-
-      return gens;
-    },
-    { generators: [], jsAlgoliasearch: undefined } as {
-      generators: Generator[];
-      jsAlgoliasearch?: Generator;
-    }
+  const jsAlgoliasearch = allGenerators.find(
+    (gen) => gen.key === 'javascript-algoliasearch'
+  );
+  const generators = allGenerators.filter(
+    (gen) => gen.key !== 'javascript-algoliasearch'
   );
 
   await Promise.all([
