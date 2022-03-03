@@ -6,11 +6,11 @@ title: How to send PRs
 
 Since submodules introduced, the way we make changes and send PRs is different.
 
-**Ground rule**: we do not commit the generated clients anymore. You can run `yarn docker generate <LANG>` locally to see the outcome, but you don't need to commit them, because it will be done automatically during the release process.
+**Ground rule**: we do not commit the generated clients. You can run `yarn docker generate <LANG>` locally to see the outcome, but you don't need to commit them, because it will be done automatically during the release process.
 
 ## If you changed only on the monorepo level,
 
-If you changed files only on the monorepo level (not under `clients/`), then it's the same. You can create a PR as usual.
+If you changed files only on the monorepo level (not under `clients/`), then it's the same. You can directly create a PR.
 
 ## If you need to change something under `clients/`,
 
