@@ -77,6 +77,14 @@ https://stackoverflow.com/a/1260982
 
 ## Troubleshootings
 
+### If your `clients/` are empty after `git clone`,
+
+It shouldn't be like that normally, but if it is, you can run this:
+
+```bash
+git submodule update --init --recursive
+```
+
 ### When something is weird,
 
 Try `git submodule update` first.
