@@ -1,6 +1,6 @@
 package com.algolia.playground;
 
-import com.algolia.model.*;
+import com.algolia.model.search.*;
 import com.algolia.search.SearchApi;
 import com.algolia.ApiException;
 
