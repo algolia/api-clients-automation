@@ -242,7 +242,7 @@
           "java8": true,
           "dateLibrary": "java8",
           "packageName": "algoliasearch-client-java-2",
-          "packageVersion": "0.0.4"
+          "packageVersion": "0.0.1"
         }
       },
       "php-search": {
@@ -261,7 +261,7 @@
           "useCache": true,
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
-          "packageVersion": "0.0.4"
+          "packageVersion": "0.0.1"
         }
       },
       "php-recommend": {
@@ -280,7 +280,7 @@
           "useCache": true,
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
-          "packageVersion": "0.0.4"
+          "packageVersion": "0.0.1"
         }
       },
       "php-personalization": {
@@ -300,7 +300,7 @@
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.1",
           "isEuHost": true,
           "host": "personalization",
           "topLevelDomain": "com"
@@ -323,7 +323,7 @@
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.1",
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "analytics",
@@ -347,7 +347,7 @@
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.1",
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "insights",
@@ -371,7 +371,7 @@
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.1",
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "analytics",
@@ -395,7 +395,7 @@
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.1",
           "isEuHost": true,
           "host": "query-suggestions",
           "topLevelDomain": "com"
