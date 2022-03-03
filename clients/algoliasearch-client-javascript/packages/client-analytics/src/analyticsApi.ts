@@ -26,9 +26,7 @@ import type { GetTopFilterAttributesResponse } from '../model/getTopFilterAttrib
 import type { GetTopFilterForAttributeResponse } from '../model/getTopFilterForAttributeResponse';
 import type { GetTopFiltersNoResultsResponse } from '../model/getTopFiltersNoResultsResponse';
 import type { GetTopHitsResponse } from '../model/getTopHitsResponse';
-import type { GetTopHitsResponseWithAnalytics } from '../model/getTopHitsResponseWithAnalytics';
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
-import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
 export const apiClientVersion = '5.0.0';
@@ -919,9 +917,7 @@ export function createAnalyticsApi(
     limit,
     offset,
     tags,
-  }: GetTopHitsProps): Promise<
-    GetTopHitsResponse | GetTopHitsResponseWithAnalytics
-  > {
+  }: GetTopHitsProps): Promise<GetTopHitsResponse> {
     const path = '/2/hits';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1000,9 +996,7 @@ export function createAnalyticsApi(
     limit,
     offset,
     tags,
-  }: GetTopSearchesProps): Promise<
-    GetTopSearchesResponse | GetTopSearchesResponseWithAnalytics
-  > {
+  }: GetTopSearchesProps): Promise<GetTopSearchesResponse> {
     const path = '/2/searches';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};

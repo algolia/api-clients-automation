@@ -23,15 +23,12 @@ public class ApiClient {
 
   private DateFormat dateFormat;
 
-  private JSON json;
-
   private Requester requester;
 
   /*
    * Constructor for ApiClient with custom Requester
    */
   public ApiClient(String appId, String apiKey, Requester requester) {
-    json = new JSON();
     setUserAgent("OpenAPI-Generator/0.1.0/java");
 
     this.basePath = "https://" + appId + "-1.algolianet.com";
@@ -40,38 +37,8 @@ public class ApiClient {
     this.requester = requester;
   }
 
-  /**
-   * Get JSON
-   *
-   * @return JSON object
-   */
-  public JSON getJSON() {
-    return json;
-  }
-
-  /**
-   * Set JSON
-   *
-   * @param json JSON object
-   * @return Api client
-   */
-  public ApiClient setJSON(JSON json) {
-    this.json = json;
-    return this;
-  }
-
   public DateFormat getDateFormat() {
     return dateFormat;
-  }
-
-  public ApiClient setDateFormat(DateFormat dateFormat) {
-    this.json.setDateFormat(dateFormat);
-    return this;
-  }
-
-  public ApiClient setLenientOnJson(boolean lenientOnJson) {
-    this.json.setLenientOnJson(lenientOnJson);
-    return this;
   }
 
   /**
@@ -195,7 +162,7 @@ public class ApiClient {
       param instanceof LocalDate
     ) {
       // Serialize to json string and remove the " enclosing characters
-      String jsonStr = json.serialize(param);
+      String jsonStr = JSON.serialize(param);
       return jsonStr.substring(1, jsonStr.length() - 1);
     } else if (param instanceof Collection) {
       StringBuilder b = new StringBuilder();
@@ -399,7 +366,7 @@ public class ApiClient {
       contentType = "application/json";
     }
     if (isJsonMime(contentType)) {
-      return json.deserialize(respBody, returnType);
+      return JSON.deserialize(respBody, returnType);
     } else if (returnType.equals(String.class)) {
       // Expecting string, return the raw response body.
       return (T) respBody;
@@ -433,7 +400,7 @@ public class ApiClient {
     } else if (isJsonMime(contentType)) {
       String content;
       if (obj != null) {
-        content = json.serialize(obj);
+        content = JSON.serialize(obj);
       } else {
         content = null;
       }

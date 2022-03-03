@@ -1,11 +1,6 @@
 package com.algolia.model.search;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,79 +8,8 @@ import java.util.Objects;
 /** Key */
 public class Key {
 
-  /** Gets or Sets acl */
-  @JsonAdapter(AclEnum.Adapter.class)
-  public enum AclEnum {
-    ADDOBJECT("addObject"),
-
-    ANALYTICS("analytics"),
-
-    BROWSE("browse"),
-
-    DELETEOBJECT("deleteObject"),
-
-    DELETEINDEX("deleteIndex"),
-
-    EDITSETTINGS("editSettings"),
-
-    LISTINDEXES("listIndexes"),
-
-    LOGS("logs"),
-
-    PERSONALIZATION("personalization"),
-
-    RECOMMENDATION("recommendation"),
-
-    SEARCH("search"),
-
-    SEEUNRETRIEVABLEATTRIBUTES("seeUnretrievableAttributes"),
-
-    SETTINGS("settings"),
-
-    USAGE("usage");
-
-    private String value;
-
-    AclEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static AclEnum fromValue(String value) {
-      for (AclEnum b : AclEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<AclEnum> {
-
-      @Override
-      public void write(final JsonWriter jsonWriter, final AclEnum enumeration)
-        throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public AclEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return AclEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("acl")
-  private List<AclEnum> acl = new ArrayList<>();
+  private List<Acl> acl = new ArrayList<>();
 
   @SerializedName("description")
   private String description = "";
@@ -111,12 +35,12 @@ public class Key {
   @SerializedName("createdAt")
   private String createdAt;
 
-  public Key acl(List<AclEnum> acl) {
+  public Key acl(List<Acl> acl) {
     this.acl = acl;
     return this;
   }
 
-  public Key addAclItem(AclEnum aclItem) {
+  public Key addAclItem(Acl aclItem) {
     this.acl.add(aclItem);
     return this;
   }
@@ -127,11 +51,11 @@ public class Key {
    * @return acl
    */
   @javax.annotation.Nonnull
-  public List<AclEnum> getAcl() {
+  public List<Acl> getAcl() {
     return acl;
   }
 
-  public void setAcl(List<AclEnum> acl) {
+  public void setAcl(List<Acl> acl) {
     this.acl = acl;
   }
 

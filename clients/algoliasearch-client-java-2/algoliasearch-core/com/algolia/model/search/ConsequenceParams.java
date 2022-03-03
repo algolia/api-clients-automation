@@ -72,7 +72,7 @@ public class ConsequenceParams {
   private Boolean aroundLatLngViaIP = false;
 
   @SerializedName("aroundRadius")
-  private OneOfintegerstring aroundRadius;
+  private AroundRadius aroundRadius;
 
   @SerializedName("aroundPrecision")
   private Integer aroundPrecision = 10;
@@ -1005,22 +1005,22 @@ public class ConsequenceParams {
     this.aroundLatLngViaIP = aroundLatLngViaIP;
   }
 
-  public ConsequenceParams aroundRadius(OneOfintegerstring aroundRadius) {
+  public ConsequenceParams aroundRadius(AroundRadius aroundRadius) {
     this.aroundRadius = aroundRadius;
     return this;
   }
 
   /**
-   * Define the maximum radius for a geo search (in meters).
+   * Get aroundRadius
    *
    * @return aroundRadius
    */
   @javax.annotation.Nullable
-  public OneOfintegerstring getAroundRadius() {
+  public AroundRadius getAroundRadius() {
     return aroundRadius;
   }
 
-  public void setAroundRadius(OneOfintegerstring aroundRadius) {
+  public void setAroundRadius(AroundRadius aroundRadius) {
     this.aroundRadius = aroundRadius;
   }
 
