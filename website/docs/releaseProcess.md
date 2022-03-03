@@ -8,7 +8,7 @@ The most of the release process is automated.
 
 ## Part 1
 
-You need `GITHUB_TOKEN` in your `.env` file. You can generate one from [Personal access token](https://github.com/settings/tokens/new).
+You need `GITHUB_TOKEN` in your `.env` file. You can generate one from [Personal access token](https://github.com/settings/tokens/new) with `Repo (Full control of private repositories)` scope.
 
 ```
 GITHUB_TOKEN=<YOUR-PERSONAL-ACCESS-TOKEN>
