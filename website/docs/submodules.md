@@ -1,3 +1,9 @@
+---
+title: Submodules
+---
+
+# Submodules
+
 ## Add a submodule
 
 ```sh
@@ -61,9 +67,8 @@ If you generated API clients locally and want to remove the change from `git sta
 go to the directory, clean up, and check out to the proper branch.
 
 ```sh
-cd clients/algoliasearch-client-javascript
-git reset --hard HEAD
-git checkout next
+cd clients/<YOUR_API_CLIENT_REPOSITORY>
+git reset --hard origin/next
 ```
 
 ## How to remove a submodule from the monorepo

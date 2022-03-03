@@ -19,6 +19,9 @@ const sidebars = {
         },
         'addNewClient',
         'addNewLanguage',
+        'releaseProcess',
+        'commitAndPR',
+        'submodules',
       ],
     },
     {
