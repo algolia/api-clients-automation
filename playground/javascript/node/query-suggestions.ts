@@ -12,7 +12,7 @@ const apiKey =
 // Init client with appId and apiKey
 const client = querySuggestionsApi(appId, apiKey, 'us');
 
-async function testABTesting() {
+async function testQuerySuggestions() {
   try {
     const res = await client.getAllConfigs();
 
@@ -26,4 +26,4 @@ async function testABTesting() {
   }
 }
 
-testABTesting();
+testQuerySuggestions();
