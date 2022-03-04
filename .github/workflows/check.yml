@@ -142,6 +142,12 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true' && matrix.client.name != 'algoliasearch'
         run: yarn cli generate javascript ${{ matrix.client.name }}
 
+      - name: Check diff with pushed client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git status
+          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
+
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients javascript ${{ matrix.client.name }}
@@ -179,6 +185,12 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate java ${{ matrix.client.name }}
 
+      - name: Check diff with pushed client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git status
+          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
+
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients java ${{ matrix.client.name }}
@@ -208,6 +220,12 @@ jobs:
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate php ${{ matrix.client.name }}
+
+      - name: Check diff with pushed client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git status
+          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
