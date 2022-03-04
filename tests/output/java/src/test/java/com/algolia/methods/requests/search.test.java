@@ -1357,7 +1357,7 @@ class SearchApiTests {
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
-        "[{\"id1\":{\"_operation\":\"AddUnique\",\"value\":\"test1\"}},{\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}]",
+        "[{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}]",
         req.getBody(),
         JSONCompareMode.STRICT_ORDER
       );
