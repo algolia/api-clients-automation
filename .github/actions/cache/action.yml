@@ -110,7 +110,7 @@ runs:
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2
         key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}-${{ hashFiles('specs/bundled/search.yml') }}
 
     # setup yarn
