@@ -13,7 +13,6 @@ import {
   OWNER,
   REPO,
   getMarkdownSection,
-  getTargetBranch,
   getGitAuthor,
 } from './common';
 import TEXT from './text';
@@ -42,11 +41,18 @@ type VersionsToRelease = {
   [lang: string]: {
     current: string;
     next: string;
+    dateStamp: string;
   };
 };
 
+function getDateStamp(): string {
+  return new Date().toISOString().split('T')[0];
+}
+
 function getVersionsToRelease(issueBody: string): VersionsToRelease {
   const versionsToRelease: VersionsToRelease = {};
+  const dateStamp = getDateStamp();
+
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .forEach((line) => {
@@ -58,6 +64,7 @@ function getVersionsToRelease(issueBody: string): VersionsToRelease {
       versionsToRelease[lang] = {
         current,
         next,
+        dateStamp,
       };
     });
 
@@ -129,17 +136,10 @@ async function processRelease(): Promise<void> {
 
   for (const lang of langsToReleaseOrUpdate) {
     // prepare the submodule
-    const clientPath = toAbsolutePath(getLanguageFolder(lang));
-    const targetBranch = getTargetBranch(lang);
-    await run(`git checkout ${targetBranch}`, { cwd: clientPath });
-    await run(`git pull origin ${targetBranch}`, { cwd: clientPath });
-
     console.log(`Generating ${lang} client(s)...`);
     console.log(await run(`yarn cli generate ${lang}`));
 
-    const dateStamp = new Date().toISOString().split('T')[0];
-    const currentVersion = versionsToRelease[lang].current;
-    const nextVersion = versionsToRelease[lang].next;
+    const { current, next, dateStamp } = versionsToRelease[lang];
 
     // update changelog
     const changelogPath = toAbsolutePath(
@@ -149,9 +149,7 @@ async function processRelease(): Promise<void> {
       ? (await fsp.readFile(changelogPath)).toString()
       : '';
     const changelogHeader = willReleaseLibrary(lang)
-      ? `## [v${nextVersion}](${getGitHubUrl(
-          lang
-        )}/compare/v${currentVersion}...v${nextVersion})`
+      ? `## [v${next}](${getGitHubUrl(lang)}/compare/v${current}...v${next})`
       : `## ${dateStamp}`;
     const newChangelog = getMarkdownSection(
       getMarkdownSection(issueBody, TEXT.changelogHeader),
@@ -162,38 +160,40 @@ async function processRelease(): Promise<void> {
       [changelogHeader, newChangelog, existingContent].join('\n\n')
     );
 
-    // commit changelog and the generated client
-    await configureGitHubAuthor(clientPath);
-    await run(`git add .`, { cwd: clientPath });
-    if (willReleaseLibrary(lang)) {
-      await execa('git', ['commit', '-m', `chore: release ${nextVersion}`], {
-        cwd: clientPath,
-      });
-      await execa('git', ['tag', `v${nextVersion}`], { cwd: clientPath });
-    } else {
-      await execa('git', ['commit', '-m', `chore: update repo ${dateStamp}`], {
-        cwd: clientPath,
-      });
-    }
-
-    // add the new reference of the submodule in the monorepo
-    await run(`git add ${getLanguageFolder(lang)}`);
+    await run(`git add ${changelogPath}`);
   }
 
   // We push commits from submodules AFTER all the generations are done.
   // Otherwise, we will end up having broken release.
   for (const lang of langsToReleaseOrUpdate) {
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
-    const targetBranch = getTargetBranch(lang);
 
-    await run(`git push origin ${targetBranch}`, { cwd: clientPath });
+    const gitHubUrl = getGitHubUrl(lang, { token: process.env.GITHUB_TOKEN });
+    const tempGitDir = `${process.env.RUNNER_TEMP}/${lang}`;
+    await run(`rm -rf ${tempGitDir}`);
+    await run(`git clone --depth 1 ${gitHubUrl} ${tempGitDir}`);
+
+    await run(`cp -r ${clientPath}/ ${tempGitDir}`);
+    await run(`git add .`, { cwd: tempGitDir });
+
+    const { next, dateStamp } = versionsToRelease[lang];
+
     if (willReleaseLibrary(lang)) {
-      await run('git push --tags', { cwd: clientPath });
+      await execa('git', ['commit', '-m', `chore: release ${next}`], {
+        cwd: tempGitDir,
+      });
+      await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
+      await run(`git push --tags`, { cwd: tempGitDir });
+    } else {
+      await execa('git', ['commit', '-m', `chore: update repo ${dateStamp}`], {
+        cwd: tempGitDir,
+      });
     }
+    await run(`git push`, { cwd: tempGitDir });
   }
 
   // Commit and push from the monorepo level.
-  await execa('git', ['commit', '-m', TEXT.commitMessage]);
+  await execa('git', ['commit', '-m', `chore: release ${getDateStamp()}`]);
   await run(`git push`);
 
   // remove old `released` tag
