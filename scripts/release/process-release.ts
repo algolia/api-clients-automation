@@ -180,6 +180,7 @@ async function processRelease(): Promise<void> {
     await run(`git clone --depth 1 ${gitHubUrl} ${tempGitDir}`);
 
     await run(`cp -r ${clientPath}/ ${tempGitDir}`);
+    await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
 
     const { next, dateStamp } = versionsToRelease[lang];
