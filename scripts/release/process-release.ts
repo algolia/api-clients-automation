@@ -5,7 +5,13 @@ import dotenv from 'dotenv';
 import execa from 'execa';
 
 import openapitools from '../../openapitools.json';
-import { toAbsolutePath, run, exists, getGitHubUrl } from '../common';
+import {
+  ROOT_ENV_PATH,
+  toAbsolutePath,
+  run,
+  exists,
+  getGitHubUrl,
+} from '../common';
 import { getLanguageFolder } from '../config';
 
 import {
@@ -17,7 +23,7 @@ import {
 } from './common';
 import TEXT from './text';
 
-dotenv.config();
+dotenv.config({ path: ROOT_ENV_PATH });
 
 if (!process.env.GITHUB_TOKEN) {
   throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');

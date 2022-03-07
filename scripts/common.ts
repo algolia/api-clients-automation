@@ -13,6 +13,8 @@ export const DOCKER = Boolean(process.env.DOCKER);
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
+export const ROOT_ENV_PATH = path.resolve(process.cwd(), '..', '.env');
+
 export const GENERATORS: Record<string, Generator> = {
   // Default `algoliasearch` package as it's built similarly to generated clients
   'javascript-algoliasearch': {
