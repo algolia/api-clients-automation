@@ -20,6 +20,7 @@ import {
   REPO,
   getMarkdownSection,
   getGitAuthor,
+  getTargetBranch,
 } from './common';
 import TEXT from './text';
 
@@ -173,11 +174,13 @@ async function processRelease(): Promise<void> {
   // Otherwise, we will end up having broken release.
   for (const lang of langsToReleaseOrUpdate) {
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
+    const targetBranch = getTargetBranch(lang);
 
     const gitHubUrl = getGitHubUrl(lang, { token: process.env.GITHUB_TOKEN });
     const tempGitDir = `${process.env.RUNNER_TEMP}/${lang}`;
     await run(`rm -rf ${tempGitDir}`);
     await run(`git clone --depth 1 ${gitHubUrl} ${tempGitDir}`);
+    await run(`git checkout ${targetBranch}`);
 
     await run(`cp -r ${clientPath}/ ${tempGitDir}`);
     await configureGitHubAuthor(tempGitDir);
