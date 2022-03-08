@@ -46,6 +46,22 @@ jobs:
 
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
 
+  scripts:
+    runs-on: ubuntu-20.04
+    needs: setup
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Check script linting
+        run: yarn scripts:lint
+
+      - name: Test scripts
+        run: yarn scripts:test
+
   specs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
@@ -62,10 +78,12 @@ jobs:
       - name: Building ${{ matrix.client }} specs
         run: yarn cli build specs ${{ matrix.client }}
 
-      - name: Check diff with pushed spec
-        run: |
-          git status
-          exit $(git status --porcelain specs/bundled/${{ matrix.client }}.yml | wc -l)
+      - name: Cache ${{ matrix.client }} bundled specs
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/specs/bundled/${{ matrix.client }}.yml'
+          key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-specs-${{ matrix.client }}-${{ hashFiles(format('specs/bundled/{0}.yml', matrix.client)) }}
 
   client_javascript_common:
     timeout-minutes: 10
@@ -83,8 +101,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          job: client
 
       - name: Cache ${{ matrix.client }} client
         id: cache
@@ -113,7 +129,8 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          job: javascript-client
+          job: client
+          language: javascript
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
@@ -125,12 +142,6 @@ jobs:
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true' && matrix.client.name != 'algoliasearch'
         run: yarn cli generate javascript ${{ matrix.client.name }}
-
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -165,12 +176,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate java ${{ matrix.client.name }}
 
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
-
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients java ${{ matrix.client.name }}
@@ -197,12 +202,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate php ${{ matrix.client.name }}
 
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
-
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients php ${{ matrix.client.name }}
@@ -216,10 +215,12 @@ jobs:
       - client_php
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
+      - name: skip CTS
+        run: exit 0
+
       - uses: actions/checkout@v2
 
       - name: Restore cache
-        id: restore
         uses: ./.github/actions/cache
         with:
           job: cts
@@ -235,19 +236,21 @@ jobs:
       - name: Run CTS
         run: yarn cli cts run
 
-  scripts:
+  codegen:
     runs-on: ubuntu-20.04
-    needs: setup
-    timeout-minutes: 20
+    timeout-minutes: 10
+    needs: cts
+    if: ${{ always() }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Restore cache
-        id: restore
         uses: ./.github/actions/cache
+        with:
+          job: codegen
 
-      - name: Check script linting
-        run: yarn scripts:lint
-
-      - name: Test scripts
-        run: yarn scripts:test
+      - name: Push code to generated branch
+        run: yarn workspace scripts pushGeneratedCode
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}

@@ -5,6 +5,7 @@
     "build": "tsc",
     "createReleaseIssue": "yarn build && node dist/scripts/release/create-release-issue.js",
     "processRelease": "yarn build && node dist/scripts/release/process-release.js",
+    "pushGeneratedCode": "yarn build && node dist/scripts/ci/pushGeneratedCode.js",
     "test": "jest"
   },
   "devDependencies": {
