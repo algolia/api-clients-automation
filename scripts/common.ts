@@ -13,6 +13,8 @@ export const DOCKER = Boolean(process.env.DOCKER);
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
+export const ROOT_ENV_PATH = path.resolve(process.cwd(), '..', '.env');
+
 export const GENERATORS: Record<string, Generator> = {
   // Default `algoliasearch` package as it's built similarly to generated clients
   'javascript-algoliasearch': {
@@ -65,7 +67,17 @@ export function splitGeneratorKey(generatorKey: string): Generator {
   return { language, client, key: generatorKey };
 }
 
-export function getGitHubUrl(lang: string): string {
+type GitHubUrl = (
+  lang: string,
+  options?: {
+    token?: string;
+  }
+) => string;
+
+export const getGitHubUrl: GitHubUrl = (
+  lang: string,
+  { token } = {}
+): string => {
   const entry = Object.entries(openapitools['generator-cli'].generators).find(
     (_entry) => _entry[0].startsWith(`${lang}-`)
   );
@@ -74,8 +86,11 @@ export function getGitHubUrl(lang: string): string {
     throw new Error(`\`${lang}\` is not found from \`openapitools.json\`.`);
   }
   const { gitHost, gitRepoId } = entry[1];
-  return `https://github.com/${gitHost}/${gitRepoId}`;
-}
+
+  return token
+    ? `https://${token}:${token}@github.com/${gitHost}/${gitRepoId}`
+    : `https://github.com/${gitHost}/${gitRepoId}`;
+};
 
 export function createGeneratorKey({
   language,
