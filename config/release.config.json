@@ -1,7 +1,7 @@
 {
   "releasedTag": "released",
   "mainBranch": "main",
-  "owner": "eunjae-lee",
+  "owner": "algolia",
   "repo": "api-clients-automation",
   "targetBranch": {
     "javascript": "next",
