@@ -4,8 +4,6 @@ title: Release process
 
 # Release process
 
-The most of the release process is automated.
-
 ## Part 1
 
 You need a `GITHUB_TOKEN` in your [`.env`](https://github.com/algolia/api-clients-automation/blob/main/.env.example) file at the root of the repository. You can generate one from the [personal access token page](https://github.com/settings/tokens/new) with `Repo (Full control of private repositories)` scope.
@@ -35,7 +33,7 @@ Clicking "Approved" to approve the release, and closing it, will trigger the [Pa
 
 ## Part 3
 
-The [GitHub action release](https://github.com/algolia/api-clients-automation/blob/main/.github/workflows/process-release.yml) is triggered. It generates clients and push changes to the submodules. All the submodules will have new commits on their base branch (`next`).
+The [GitHub action release](https://github.com/algolia/api-clients-automation/blob/main/.github/workflows/process-release.yml) is triggered. It generates clients and push changes to each language repository on their `next` branch.
 
 This Part 3 runs conditionally according to what has been done in Part 2. Under "Version Changes" section of the release issue, if a language is checked, this Part 3 will creates a commit like `chore: release v<NEXT-VERSION>` in the submodule. If it is not checked, it will create a commit like `chore: update repo <DATE-STAMP>`.
 
