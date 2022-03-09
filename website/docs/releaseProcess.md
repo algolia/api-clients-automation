@@ -8,13 +8,13 @@ The most of the release process is automated.
 
 ## Part 1
 
-You need `GITHUB_TOKEN` in your `.env` file. You can generate one from [Personal access token](https://github.com/settings/tokens/new) with `Repo (Full control of private repositories)` scope.
+You need a `GITHUB_TOKEN` in your [`.env`](https://github.com/algolia/api-clients-automation/blob/main/.env.example) file at the root of the repository. You can generate one from the [personal access token page](https://github.com/settings/tokens/new) with `Repo (Full control of private repositories)` scope.
 
 ```
 GITHUB_TOKEN=<YOUR-PERSONAL-ACCESS-TOKEN>
 ```
 
-Once it's prepared, you can run
+Once setup, you can run
 
 ```bash
 yarn release
@@ -31,7 +31,7 @@ You need to review the release issue, in two parts:
 
 Any changes applied in the issue will be taken into account by the release process.
 
-You can click "Approved" to approve the release, and close it, which will trigger the Part 3.
+Clicking "Approved" to approve the release, and closing it, will trigger the [Part 3](#part-3).
 
 ## Part 3
 
