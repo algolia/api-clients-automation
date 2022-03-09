@@ -20,14 +20,6 @@ import TEXT from './text';
 
 dotenv.config();
 
-if (!process.env.GITHUB_TOKEN) {
-  throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
-}
-
-if (!process.env.EVENT_NUMBER) {
-  throw new Error('Environment variable `EVENT_NUMBER` does not exist.');
-}
-
 function getIssueBody(): string {
   return JSON.parse(
     execa.sync('curl', [
@@ -45,7 +37,7 @@ type VersionsToRelease = {
   };
 };
 
-function getVersionsToRelease(issueBody: string): VersionsToRelease {
+export function getVersionsToRelease(issueBody: string): VersionsToRelease {
   const versionsToRelease: VersionsToRelease = {};
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
@@ -64,7 +56,7 @@ function getVersionsToRelease(issueBody: string): VersionsToRelease {
   return versionsToRelease;
 }
 
-function getLangsToUpdateRepo(issueBody: string): string[] {
+export function getLangsToUpdateRepo(issueBody: string): string[] {
   return getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .map((line) => {
@@ -99,6 +91,14 @@ async function configureGitHubAuthor(cwd?: string): Promise<void> {
 }
 
 async function processRelease(): Promise<void> {
+  if (!process.env.GITHUB_TOKEN) {
+    throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
+  }
+
+  if (!process.env.EVENT_NUMBER) {
+    throw new Error('Environment variable `EVENT_NUMBER` does not exist.');
+  }
+
   const issueBody = getIssueBody();
 
   if (
@@ -206,4 +206,6 @@ async function processRelease(): Promise<void> {
   await run(`git push --tags`);
 }
 
-processRelease();
+if (require.main === module) {
+  processRelease();
+}
