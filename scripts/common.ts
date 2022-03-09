@@ -87,6 +87,11 @@ export const getGitHubUrl: GitHubUrl = (
   }
   const { gitHost, gitRepoId } = entry[1];
 
+  // GitHub Action provides a default token for authentication
+  // https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+  // But it has access to only the self repository.
+  // If we want to do something like pushing commits to other repositories,
+  // we need to specify a token with more access.
   return token
     ? `https://${token}:${token}@github.com/${gitHost}/${gitRepoId}`
     : `https://github.com/${gitHost}/${gitRepoId}`;
