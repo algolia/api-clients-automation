@@ -1,4 +1,5 @@
 import config from '../../config/release.config.json';
+import { run } from '../common';
 
 export const RELEASED_TAG = config.releasedTag;
 export const MAIN_BRANCH = config.mainBranch;
@@ -27,4 +28,11 @@ export function getMarkdownSection(markdown: string, title: string): string {
     }
   }
   return lines.slice(0, endIndex).join('\n');
+}
+
+export async function configureGitHubAuthor(cwd?: string): Promise<void> {
+  await run(`git config user.name "${getGitAuthor().name}"`, { cwd });
+  await run(`git config user.email "${getGitAuthor().email}"`, {
+    cwd,
+  });
 }
