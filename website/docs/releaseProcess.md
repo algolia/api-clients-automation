@@ -35,6 +35,6 @@ Clicking "Approved" to approve the release, and closing it, will trigger the [Pa
 
 The [GitHub action release](https://github.com/algolia/api-clients-automation/blob/main/.github/workflows/process-release.yml) is triggered. It generates clients and push changes to each language repository on their `next` branch.
 
-This Part 3 runs conditionally according to what has been done in Part 2. Under "Version Changes" section of the release issue, if a language is checked, this Part 3 will creates a commit like `chore: release v<NEXT-VERSION>` in the submodule. If it is not checked, it will create a commit like `chore: update repo <DATE-STAMP>`.
+This Part 3 runs conditionally according to what has been done in Part 2. Under "Version Changes" section of the release issue, if a language is checked, this Part 3 will creates a commit like `chore: release v<NEXT-VERSION>` in each repository. If it is not checked, it will create a commit like `chore: update repo <DATE-STAMP>`.
 
 Each language repository should have their own release process, and should run only when the latest commit starts with `chore: release`. By doing so, we have a way to just update the repository, for example READMEs, without having to release.
