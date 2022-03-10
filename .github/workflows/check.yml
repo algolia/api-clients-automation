@@ -95,7 +95,7 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ always () && needs.setup.outputs.RUN_JS_COMMON == 'true' }}
+    if: ${{ always() && needs.setup.outputs.RUN_JS_COMMON == 'true' }}
     strategy:
       matrix:
         client:
@@ -272,6 +272,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs: cts
+    if: ${{ always() }}
     steps:
       - uses: actions/checkout@v2
         with:
