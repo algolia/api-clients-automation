@@ -2,7 +2,7 @@
 import { Octokit } from '@octokit/rest';
 
 import { run } from '../../common';
-import { configureGitHubAuthor } from '../../release/common';
+import { configureGitHubAuthor, OWNER, REPO } from '../../release/common';
 
 import { cleanGeneratedBranch } from './cleanGeneratedBranch';
 
@@ -12,7 +12,6 @@ if (!process.env.GITHUB_TOKEN) {
 
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const FOLDERS_TO_CHECK = ['clients', 'specs/bundled'];
-const REPOSITORY_URL = `https://github.com/algolia/api-clients-automation`;
 // this should be changed to the bot name once we have the logs
 const BOT_NAME = 'shortcuts';
 
@@ -21,9 +20,10 @@ const octokit = new Octokit({
 });
 
 async function getCommentBody(commit: string, branch: string): Promise<string> {
+  const repoUrl = `https://github.com/${OWNER}/${REPO}`;
   const generatedCommit = await run('git show -s --format=%H');
-  const header = `✔️ codegen triggered on commit [${commit}](${REPOSITORY_URL}/pull/${PR_NUMBER}/commits/${commit}).`;
-  const body = `🔍 Browse the generated code on branch [${branch}](${REPOSITORY_URL}/tree/${branch}): [${generatedCommit}](${REPOSITORY_URL}/commit/${generatedCommit}).`;
+  const header = `✔️ codegen triggered on commit [${commit}](${repoUrl}/pull/${PR_NUMBER}/commits/${commit}).`;
+  const body = `🔍 Browse the generated code on branch [${branch}](${repoUrl}/tree/${branch}): [${generatedCommit}](${repoUrl}/commit/${generatedCommit}).`;
 
   return `${header}
 
@@ -33,13 +33,13 @@ ${body}`;
 /**
  * Add or update comment to the current `PR_NUMBER`.
  */
-async function addCommentToPullRequest(
+async function upsertCommentToPullRequest(
   baseCommit: string,
   generatedCodeBranch: string
 ): Promise<void> {
   const baseOctokitConfig = {
-    owner: 'algolia',
-    repo: 'api-clients-automation',
+    owner: OWNER,
+    repo: REPO,
     issue_number: PR_NUMBER,
   };
 
@@ -126,7 +126,7 @@ Co-authored-by: %an <%ae>"`);
   await run(`git push origin ${generatedCodeBranch}`);
 
   if (PR_NUMBER) {
-    await addCommentToPullRequest(baseCommit, generatedCodeBranch);
+    await upsertCommentToPullRequest(baseCommit, generatedCodeBranch);
   }
 }
 
