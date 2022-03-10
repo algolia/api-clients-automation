@@ -1,6 +1,6 @@
 post:
   operationId: search
-  description: Get search results.
+  description: REGEN Get search results.
   summary: Get search results.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
