@@ -8,7 +8,7 @@ on:
       - main
 
 env:
-  CACHE_VERSION: '8'
+  CACHE_VERSION: '9'
 
 concurrency:
   group: ${{ github.ref }}
