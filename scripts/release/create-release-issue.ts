@@ -54,7 +54,7 @@ export function getVersionChangesText(versions: Versions): string {
     const next = semver.inc(current, releaseType!);
     const checked = skipRelease ? ' ' : 'x';
     return [
-      `- [${checked}] ${lang}: v${current} -> v${next}`,
+      `- [${checked}] ${lang}: v${current} -> \`${releaseType}\` _(e.g. v${next})_`,
       skipRelease && TEXT.descriptionForSkippedLang,
     ]
       .filter(Boolean)
@@ -258,6 +258,7 @@ async function createReleaseIssue(): Promise<void> {
     TEXT.versionChangeHeader,
     versionChanges,
     TEXT.descriptionVersionChanges,
+    TEXT.indenpendentVersioning,
     TEXT.changelogHeader,
     TEXT.changelogDescription,
     changelogs,

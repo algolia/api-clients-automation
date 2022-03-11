@@ -5,9 +5,9 @@ describe('process release', () => {
     const versions = getVersionsToRelease(`
     ## Version Changes
     
-    - [x] javascript: v1.0.0 -> v1.1.0
-    - [x] php: v2.0.0 -> v2.0.1
-    - [ ] java: v3.0.0 -> v3.0.1
+    - [x] javascript: v1.0.0 -> \`minor\` (e.g. v1.1.0)
+    - [x] php: v2.0.0 -> \`patch\` (e.g. v2.0.1)
+    - [ ] java: v3.0.0 -> \`patch\` (e.g. v3.0.1)
     `);
 
     expect(Object.keys(versions)).toEqual(['javascript', 'php']);
@@ -22,9 +22,9 @@ describe('process release', () => {
       getLangsToUpdateRepo(`
 ## Version Changes
 
-- [ ] javascript: v1.0.0 -> v1.1.0
-- [x] php: v2.0.0 -> v2.0.1
-- [ ] java: v3.0.0 -> v3.0.1
+- [ ] javascript: v1.0.0 -> \`minor\` (e.g. v1.1.0)
+- [x] php: v2.0.0 -> \`patch\` (e.g. v2.0.1)
+- [ ] java: v3.0.0 -> \`patch\` (e.g. v3.0.1)
 `)
     ).toEqual(['javascript', 'java']);
   });

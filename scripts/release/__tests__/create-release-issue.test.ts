@@ -44,9 +44,9 @@ describe('create release issue', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      "- [x] javascript: v0.0.1 -> v0.0.2
-      - [x] java: v0.0.1 -> v0.0.2
-      - [x] php: v0.0.1 -> v0.0.2"
+      "- [x] javascript: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
+      - [x] java: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
+      - [x] php: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_"
     `);
   });
 
@@ -68,8 +68,8 @@ describe('create release issue', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      "- [x] javascript: v0.0.1 -> v0.0.2
-      - [x] java: v0.0.1 -> v0.0.2
+      "- [x] javascript: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
+      - [x] java: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
       - ~php: v0.0.1 (no commit)~"
     `);
   });
@@ -92,10 +92,10 @@ describe('create release issue', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      "- [x] javascript: v0.0.1 -> v0.0.2
-      - [ ] java: v0.0.1 -> v0.0.2
+      "- [x] javascript: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
+      - [ ] java: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
         - No \`feat\` or \`fix\` commit, thus unchecked by default.
-      - [x] php: v0.0.1 -> v0.1.0"
+      - [x] php: v0.0.1 -> \`minor\` _(e.g. v0.1.0)_"
     `);
   });
 

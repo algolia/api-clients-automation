@@ -3,6 +3,7 @@ import fsp from 'fs/promises';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
+import semver from 'semver';
 
 import openapitools from '../../openapitools.json';
 import {
@@ -55,11 +56,17 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .forEach((line) => {
-      const result = line.match(/- \[x\] (.+): v(.+) -> v(.+)/);
+      const result = line.match(/- \[x\] (.+): v(.+) -> `(.+)`/);
       if (!result) {
         return;
       }
-      const [, lang, current, next] = result;
+      const [, lang, current, releaseType] = result;
+      const next = semver.inc(current, releaseType as semver.ReleaseType);
+      if (!next) {
+        throw new Error(
+          `Failed to increase version ${current} in ${releaseType}.`
+        );
+      }
       versionsToRelease[lang] = {
         current,
         next,
@@ -74,7 +81,7 @@ export function getLangsToUpdateRepo(issueBody: string): string[] {
   return getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .map((line) => {
-      const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);
+      const result = line.match(/- \[ \] (.+): v(.+) -> `(.+)`/);
       return result?.[1];
     })
     .filter(Boolean) as string[];
