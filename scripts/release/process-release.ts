@@ -219,6 +219,7 @@ async function processRelease(): Promise<void> {
   await run(`git push --tags`);
 }
 
+// JS version of `if __name__ == '__main__'`
 if (require.main === module) {
   processRelease();
 }

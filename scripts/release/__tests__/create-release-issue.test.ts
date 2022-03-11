@@ -32,15 +32,15 @@ describe('create release issue', () => {
       getVersionChangesText({
         javascript: {
           current: '0.0.1',
-          next: '0.0.2',
+          releaseType: 'patch',
         },
         php: {
           current: '0.0.1',
-          next: '0.0.2',
+          releaseType: 'patch',
         },
         java: {
           current: '0.0.1',
-          next: '0.0.2',
+          releaseType: 'patch',
         },
       })
     ).toMatchInlineSnapshot(`
@@ -55,16 +55,16 @@ describe('create release issue', () => {
       getVersionChangesText({
         javascript: {
           current: '0.0.1',
-          next: '0.0.2',
+          releaseType: 'patch',
         },
         php: {
           current: '0.0.1',
-          next: '0.0.1',
+          releaseType: null,
           noCommit: true,
         },
         java: {
           current: '0.0.1',
-          next: '0.0.2',
+          releaseType: 'patch',
         },
       })
     ).toMatchInlineSnapshot(`
@@ -79,15 +79,15 @@ describe('create release issue', () => {
       getVersionChangesText({
         javascript: {
           current: '0.0.1',
-          next: '0.0.2',
+          releaseType: 'patch',
         },
         php: {
           current: '0.0.1',
-          next: '0.0.1',
+          releaseType: 'minor',
         },
         java: {
           current: '0.0.1',
-          next: '0.0.2',
+          releaseType: 'patch',
           skipRelease: true,
         },
       })
@@ -95,7 +95,7 @@ describe('create release issue', () => {
       "- [x] javascript: v0.0.1 -> v0.0.2
       - [ ] java: v0.0.1 -> v0.0.2
         - No \`feat\` or \`fix\` commit, thus unchecked by default.
-      - [x] php: v0.0.1 -> v0.0.1"
+      - [x] php: v0.0.1 -> v0.1.0"
     `);
   });
 
@@ -123,7 +123,7 @@ describe('create release issue', () => {
       ],
     });
 
-    expect(versions.javascript.next).toEqual('1.0.0');
+    expect(versions.javascript.releaseType).toEqual('major');
   });
 
   it('bumps minor version for feat', () => {
@@ -150,7 +150,7 @@ describe('create release issue', () => {
       ],
     });
 
-    expect(versions.php.next).toEqual('0.1.0');
+    expect(versions.php.releaseType).toEqual('minor');
   });
 
   it('bumps patch version for fix', () => {
@@ -177,7 +177,7 @@ describe('create release issue', () => {
       ],
     });
 
-    expect(versions.java.next).toEqual('0.0.2');
+    expect(versions.java.releaseType).toEqual('patch');
   });
 
   it('marks noCommit for languages without any commit', () => {
