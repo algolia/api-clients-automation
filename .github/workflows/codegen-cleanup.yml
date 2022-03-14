@@ -22,6 +22,4 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Clean previously generated branch
-        run: yarn workspace scripts cleanGeneratedBranch
-        env:
-          HEAD_REF: ${{ github.head_ref }}
+        run: yarn workspace scripts cleanGeneratedBranch ${{ github.head_ref }}

@@ -4,8 +4,6 @@ import { Octokit } from '@octokit/rest';
 import { run } from '../../common';
 import { configureGitHubAuthor, OWNER, REPO } from '../../release/common';
 
-import { cleanGeneratedBranch } from './cleanGeneratedBranch';
-
 if (!process.env.GITHUB_TOKEN) {
   throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
 }
@@ -103,7 +101,7 @@ async function pushGeneratedCode(): Promise<void> {
     return;
   }
 
-  await cleanGeneratedBranch(baseBranch);
+  await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
 
   const baseCommit = await run(`git show ${baseBranch} -s --format=%H`);
   console.log(

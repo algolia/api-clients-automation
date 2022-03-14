@@ -2,16 +2,10 @@
 import { run } from '../../common';
 
 /**
- * Deletes a branch for it's `generated/${headRef}` name on origin.
- *
- * @param headRef - The name of the branch to search for.
+ * Deletes a branch for its `generated/${headRef}` name on origin.
  */
-export async function cleanGeneratedBranch(headRef?: string): Promise<void> {
-  if (!process.env.HEAD_REF && !headRef) {
-    throw new Error('Unable to run cleanup, HEAD_REF is missing.');
-  }
-
-  const generatedCodeBranch = `generated/${process.env.HEAD_REF || headRef}`;
+async function cleanGeneratedBranch(headRef: string): Promise<void> {
+  const generatedCodeBranch = `generated/${headRef}`;
 
   if (!(await run(`git ls-remote --heads origin ${generatedCodeBranch}`))) {
     console.log(`No branch named '${generatedCodeBranch}' was found.`);
@@ -26,6 +20,12 @@ export async function cleanGeneratedBranch(headRef?: string): Promise<void> {
   await run(`git push -d origin ${generatedCodeBranch}`);
 }
 
-if (process.env.HEAD_REF) {
-  cleanGeneratedBranch();
+const args = process.argv.slice(2);
+
+if (!args || args.length === 0) {
+  throw new Error(
+    'The base branch should be passed as a cli parameter of the `cleanGeneratedBranch` script.'
+  );
 }
+
+cleanGeneratedBranch(args[0]);
