@@ -262,7 +262,7 @@ jobs:
 
       - name: Check diff with pushed CTS
         run: |
-          git status
+          git --no-pager diff
           exit $(git status --porcelain ./tests/output | wc -l)
 
       - name: Run
