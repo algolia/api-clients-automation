@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/algoliasearch",
-  "version": "0.0.4",
+  "version": "0.0.5-beta.0",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
