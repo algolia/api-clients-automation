@@ -4,9 +4,15 @@ import dotenv from 'dotenv';
 import semver from 'semver';
 import type { ReleaseType } from 'semver';
 
-import { GENERATORS, LANGUAGES, ROOT_ENV_PATH, run } from '../common';
+import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
 
-import { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO } from './common';
+import {
+  RELEASED_TAG,
+  MAIN_BRANCH,
+  OWNER,
+  REPO,
+  MAIN_GENERATOR,
+} from './common';
 import TEXT from './text';
 
 dotenv.config({ path: ROOT_ENV_PATH });
@@ -27,16 +33,13 @@ type VersionsWithoutReleaseType = {
 };
 
 function readVersions(): VersionsWithoutReleaseType {
-  const versions: VersionsWithoutReleaseType = {};
-
-  Object.values(GENERATORS).forEach((gen) => {
-    if (!versions[gen.language]) {
-      versions[gen.language] = {
-        current: gen.additionalProperties?.packageVersion,
-      };
-    }
-  });
-  return versions;
+  return Object.keys(MAIN_GENERATOR).reduce((acc, lang) => {
+    // eslint-disable-next-line no-param-reassign
+    acc[lang] = {
+      current: getPackageVersion(lang),
+    };
+    return acc;
+  }, {});
 }
 
 export function getVersionChangesText(versions: Versions): string {

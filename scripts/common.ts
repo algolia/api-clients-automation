@@ -39,6 +39,11 @@ Object.entries(openapitools['generator-cli'].generators).forEach(
   }
 );
 
+export function getPackageVersion(generator: string): string {
+  return openapitools['generator-cli'].generators[generator]
+    .additionalProperties.packageVersion;
+}
+
 export const LANGUAGES = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.language)),
 ];

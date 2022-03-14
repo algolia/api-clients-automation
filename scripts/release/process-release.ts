@@ -4,6 +4,7 @@ import fsp from 'fs/promises';
 import dotenv from 'dotenv';
 import execa from 'execa';
 import semver from 'semver';
+import type { ReleaseType } from 'semver';
 
 import openapitools from '../../openapitools.json';
 import {
@@ -27,6 +28,17 @@ import TEXT from './text';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
+type BeforeCommitCommand = (params: {
+  releaseType: ReleaseType;
+  tempGitDir: string;
+}) => Promise<void>;
+
+const BEFORE_RELEASE_COMMIT: { [lang: string]: BeforeCommitCommand } = {
+  javascript: async ({ releaseType, tempGitDir }) => {
+    await run(`yarn release:bump_non_gen ${releaseType}`, { cwd: tempGitDir });
+  },
+};
+
 function getIssueBody(): string {
   return JSON.parse(
     execa.sync('curl', [
@@ -40,7 +52,7 @@ function getIssueBody(): string {
 type VersionsToRelease = {
   [lang: string]: {
     current: string;
-    next: string;
+    releaseType: ReleaseType;
     dateStamp: string;
   };
 };
@@ -61,15 +73,9 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
         return;
       }
       const [, lang, current, releaseType] = result;
-      const next = semver.inc(current, releaseType as semver.ReleaseType);
-      if (!next) {
-        throw new Error(
-          `Failed to increase version ${current} in ${releaseType}.`
-        );
-      }
       versionsToRelease[lang] = {
         current,
-        next,
+        releaseType: releaseType as ReleaseType,
         dateStamp,
       };
     });
@@ -93,9 +99,19 @@ async function updateOpenApiTools(
   Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
     const lang = client.split('-')[0];
     if (versionsToRelease[lang]) {
-      openapitools['generator-cli'].generators[
-        client
-      ].additionalProperties.packageVersion = versionsToRelease[lang].next;
+      const additionalProperties =
+        openapitools['generator-cli'].generators[client].additionalProperties;
+
+      const newVersion = semver.inc(
+        additionalProperties.packageVersion,
+        versionsToRelease[lang].releaseType
+      );
+      if (!newVersion) {
+        throw new Error(
+          `Failed to bump version ${additionalProperties.packageVersion} by ${versionsToRelease[lang].releaseType}.`
+        );
+      }
+      additionalProperties.packageVersion = newVersion;
     }
   });
   await fsp.writeFile(
@@ -153,8 +169,8 @@ async function processRelease(): Promise<void> {
     console.log(`Generating ${lang} client(s)...`);
     console.log(await run(`yarn cli generate ${lang}`));
 
-    const { current, next, dateStamp } = versionsToRelease[lang];
-
+    const { current, releaseType, dateStamp } = versionsToRelease[lang];
+    const next = semver.inc(current, releaseType);
     // update changelog
     const changelogPath = toAbsolutePath(
       `${getLanguageFolder(lang)}/CHANGELOG.md`
@@ -194,9 +210,13 @@ async function processRelease(): Promise<void> {
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
 
-    const { next, dateStamp } = versionsToRelease[lang];
+    const { current, dateStamp, releaseType } = versionsToRelease[lang];
+    const next = semver.inc(current, releaseType);
 
     if (willReleaseLibrary(lang)) {
+      // TODO: most of generated clients already have the new versions in package.json
+      // how can I avoid double-bump versions???
+      await BEFORE_RELEASE_COMMIT[lang]?.({ releaseType, tempGitDir });
       await execa('git', ['commit', '-m', `chore: release ${next}`], {
         cwd: tempGitDir,
       });
