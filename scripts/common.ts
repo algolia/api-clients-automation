@@ -62,7 +62,9 @@ export const CLIENTS = CLIENTS_JS.filter(
 /**
  * Takes a generator key in the form 'language-client' and returns the Generator object.
  */
-export function splitGeneratorKey(generatorKey: string): Generator {
+export function splitGeneratorKey(
+  generatorKey: string
+): Pick<Generator, 'client' | 'key' | 'language'> {
   const language = generatorKey.slice(0, generatorKey.indexOf('-'));
   const client = generatorKey.slice(generatorKey.indexOf('-') + 1);
   return { language, client, key: generatorKey };
