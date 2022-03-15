@@ -21,8 +21,8 @@ import {
   OWNER,
   REPO,
   getMarkdownSection,
-  getGitAuthor,
   getTargetBranch,
+  configureGitHubAuthor,
 } from './common';
 import TEXT from './text';
 
@@ -125,13 +125,6 @@ async function updateOpenApiTools(
     toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2)
   );
-}
-
-async function configureGitHubAuthor(cwd?: string): Promise<void> {
-  await run(`git config user.name "${getGitAuthor().name}"`, { cwd });
-  await run(`git config user.email "${getGitAuthor().email}"`, {
-    cwd,
-  });
 }
 
 async function updateChangelog({

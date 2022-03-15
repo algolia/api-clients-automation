@@ -7,9 +7,6 @@ on:
     branches:
       - main
 
-env:
-  CACHE_VERSION: '8'
-
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -31,6 +28,8 @@ jobs:
         run: yarn github-actions:lint
 
     outputs:
+      RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
+
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
@@ -46,10 +45,13 @@ jobs:
 
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
 
+      RUN_CODEGEN: ${{ steps.setup.outputs.RUN_CODEGEN }}
+
   scripts:
     runs-on: ubuntu-20.04
-    needs: setup
     timeout-minutes: 20
+    needs: setup
+    if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
@@ -80,16 +82,16 @@ jobs:
         uses: actions/cache@v2
         with:
           path: specs/bundled/${{ matrix.client }}.yml
-          key: ${{ env.CACHE_VERSION }}-${{ hashFiles(format('specs/{0}/**', matrix.client), 'specs/common/**') }}
+          key: |
+            ${{ env.CACHE_VERSION }}-${{
+            hashFiles(
+              format('specs/{0}/**', matrix.client),
+              'specs/common/**'
+            )}}
 
       - name: Building '${{ matrix.client }}' specs
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build specs ${{ matrix.client }}
-
-      - name: Check diff with pushed spec
-        run: |
-          git status
-          exit $(git status --porcelain specs/bundled/${{ matrix.client }}.yml | wc -l)
 
   client_javascript_common:
     timeout-minutes: 10
@@ -131,7 +133,11 @@ jobs:
       - setup
       - specs
       - client_javascript_common
-    if: ${{ needs.setup.outputs.RUN_JS == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JS == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
     steps:
@@ -160,12 +166,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true' && matrix.client.name != 'algoliasearch'
         run: yarn cli generate javascript ${{ matrix.client.name }}
 
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
-
       - name: Build '${{ matrix.client.name }}' client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients javascript ${{ matrix.client.name }}
@@ -176,7 +176,11 @@ jobs:
     needs:
       - setup
       - specs
-    if: ${{ needs.setup.outputs.RUN_JAVA == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JAVA == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
     steps:
@@ -205,12 +209,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate java ${{ matrix.client.name }}
 
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
-
       - name: Build '${{ matrix.client.name }}' client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients java ${{ matrix.client.name }}
@@ -221,7 +219,11 @@ jobs:
     needs:
       - setup
       - specs
-    if: ${{ needs.setup.outputs.RUN_PHP == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_PHP == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
     steps:
@@ -233,15 +235,21 @@ jobs:
           job: client
           language: php
 
+      - name: Cache '${{ matrix.client.name }}' client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ matrix.client.folder }}
+          key: |
+            ${{ env.CACHE_VERSION }}-${{
+            hashFiles(
+              format('{0}/**', matrix.client.folder),
+              format('specs/bundled/{0}.yml', matrix.client.name)
+            )}}
+
       - name: Generate '${{ matrix.client.name }}' client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate php ${{ matrix.client.name }}
-
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build '${{ matrix.client.name }}' client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -254,7 +262,11 @@ jobs:
       - client_javascript
       - client_java
       - client_php
-    if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_CTS == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     steps:
       - uses: actions/checkout@v2
 
@@ -268,8 +280,33 @@ jobs:
 
       - name: Check diff with pushed CTS
         run: |
-          git status
+          git --no-pager diff
           exit $(git status --porcelain ./tests/output | wc -l)
 
       - name: Run
         run: yarn cli cts run
+
+  codegen:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    needs: cts
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_CODEGEN == 'true' &&
+      needs.cts.result == 'success'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: codegen
+
+      - name: Push generated code
+        run: yarn workspace scripts pushGeneratedCode
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GENERATE_BOT }}
+          PR_NUMBER: ${{ github.event.number }}
