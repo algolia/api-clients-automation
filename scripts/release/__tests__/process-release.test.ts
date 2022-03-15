@@ -12,9 +12,9 @@ describe('process release', () => {
 
     expect(Object.keys(versions)).toEqual(['javascript', 'php']);
     expect(versions.javascript.current).toEqual('1.0.0');
-    expect(versions.javascript.next).toEqual('1.1.0');
+    expect(versions.javascript.releaseType).toEqual('minor');
     expect(versions.php.current).toEqual('2.0.0');
-    expect(versions.php.next).toEqual('2.0.1');
+    expect(versions.php.releaseType).toEqual('patch');
   });
 
   it('gets langs to update', () => {
