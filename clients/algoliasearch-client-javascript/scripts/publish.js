@@ -22,7 +22,7 @@ async function publish() {
     )
   );
   // Get tag like `alpha`, `beta`, ...
-  const tag = semver.prerelease(version) ? semver.prerelease(version)[0] : null;
+  const tag = semver.prerelease(version)?.[0];
 
   await execa.command(
     `lerna exec --no-bail npm publish --access public ${
