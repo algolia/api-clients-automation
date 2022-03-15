@@ -5,6 +5,7 @@ import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 
 import openapitools from '../openapitools.json';
 
+import { createSpinner } from './oraLog';
 import type { Generator, RunOptions } from './types';
 
 export const CI = Boolean(process.env.CI);
@@ -150,4 +151,12 @@ export async function runIfExists(
     return await run(`${scriptFile} ${args}`, opts);
   }
   return '';
+}
+
+export async function buildCustomGenerators(verbose: boolean): Promise<void> {
+  const spinner = createSpinner('building custom generators', verbose).start();
+  await run('./gradle/gradlew --no-daemon -p generators assemble', {
+    verbose,
+  });
+  spinner.succeed();
 }
