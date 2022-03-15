@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
+import { execaCommand } from 'execa';
 
 import openapitools from '../openapitools.json';
 
@@ -111,14 +111,14 @@ export async function run(
   try {
     if (verbose) {
       return (
-        await execa.command(command, {
+        await execaCommand(command, {
           stdout: 'inherit',
           shell: 'bash',
           cwd,
         })
       ).stdout;
     }
-    return (await execa.command(command, { shell: 'bash', cwd })).stdout;
+    return (await execaCommand(command, { shell: 'bash', cwd })).stdout;
   } catch (err) {
     if (errorMessage) {
       throw new Error(`[ERROR] ${errorMessage}`);

@@ -2,7 +2,7 @@
 import fsp from 'fs/promises';
 
 import dotenv from 'dotenv';
-import execa from 'execa';
+import { execa, execaSync } from 'execa';
 
 import openapitools from '../../openapitools.json';
 import {
@@ -28,7 +28,7 @@ dotenv.config({ path: ROOT_ENV_PATH });
 
 function getIssueBody(): string {
   return JSON.parse(
-    execa.sync('curl', [
+    execaSync('curl', [
       '-H',
       `Authorization: token ${process.env.GITHUB_TOKEN}`,
       `https://api.github.com/repos/${OWNER}/${REPO}/issues/${process.env.EVENT_NUMBER}`,
