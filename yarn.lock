@@ -2366,21 +2366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@experimental-api-clients-automation/algoliasearch@npm:0.0.4":
-  version: 0.0.4
-  resolution: "@experimental-api-clients-automation/algoliasearch@npm:0.0.4"
-  dependencies:
-    "@experimental-api-clients-automation/client-analytics": 0.0.4
-    "@experimental-api-clients-automation/client-common": 0.0.4
-    "@experimental-api-clients-automation/client-personalization": 0.0.4
-    "@experimental-api-clients-automation/client-search": 0.0.4
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.0.4
-    "@experimental-api-clients-automation/requester-node-http": 0.0.4
-  checksum: 8e75b65a683fb375b68eb7daf8e4aa74ef83bf072039376d0dedbcd769fb2ee15e8131f8734b9e562b25b74838f3320d806c2e1d9500c5033c015990dc339124
-  languageName: node
-  linkType: hard
-
-"@experimental-api-clients-automation/algoliasearch@workspace:clients/algoliasearch-client-javascript/packages/algoliasearch":
+"@experimental-api-clients-automation/algoliasearch@0.0.4, @experimental-api-clients-automation/algoliasearch@workspace:clients/algoliasearch-client-javascript/packages/algoliasearch":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/algoliasearch@workspace:clients/algoliasearch-client-javascript/packages/algoliasearch"
   dependencies:
@@ -6207,7 +6193,7 @@ __metadata:
     "@types/rollup-plugin-node-globals": 1.4.1
     bundlesize2: 0.0.31
     execa: 5.1.0
-    lerna: ^4.0.0
+    lerna: 4.0.0
     rollup: 2.67.1
     rollup-plugin-filesize: 9.1.2
     rollup-plugin-node-globals: 1.4.0
@@ -13486,7 +13472,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lerna@npm:^4.0.0":
+"lerna@npm:4.0.0":
   version: 4.0.0
   resolution: "lerna@npm:4.0.0"
   dependencies:

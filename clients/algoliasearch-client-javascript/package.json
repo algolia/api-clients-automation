@@ -28,7 +28,7 @@
     "@types/rollup-plugin-node-globals": "1.4.1",
     "bundlesize2": "0.0.31",
     "execa": "5.1.0",
-    "lerna": "^4.0.0",
+    "lerna": "4.0.0",
     "rollup": "2.67.1",
     "rollup-plugin-filesize": "9.1.2",
     "rollup-plugin-node-globals": "1.4.0",
