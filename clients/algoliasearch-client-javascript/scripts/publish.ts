@@ -1,30 +1,38 @@
 #!/usr/bin/env node
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/no-commonjs */
 
-const fs = require('fs');
-const path = require('path');
+import fsp from 'fs/promises';
+import path from 'path';
 
-const execa = require('execa');
-const semver = require('semver');
+import { execaCommand } from 'execa';
+import semver from 'semver';
 
-async function publish() {
-  await execa.command(
+async function publish(): Promise<void> {
+  await execaCommand(
     `npm config set "registry.npmjs.org/:_authToken=${process.env.NPM_AUTH_TOKEN}"`,
     {
       shell: 'bash',
     }
   );
+
   // Read the local version of `algoliasearch/package.json`
   const { version } = JSON.parse(
-    fs.readFileSync(
-      path.resolve(__dirname, '..', 'packages', 'algoliasearch', 'package.json')
-    )
+    (
+      await fsp.readFile(
+        path.resolve(
+          __dirname,
+          '..',
+          'packages',
+          'algoliasearch',
+          'package.json'
+        )
+      )
+    ).toString()
   );
+
   // Get tag like `alpha`, `beta`, ...
   const tag = semver.prerelease(version)?.[0];
 
-  await execa.command(
+  await execaCommand(
     `lerna exec --no-bail npm publish --access public ${
       tag ? `--tag ${tag}` : ''
     }`,
