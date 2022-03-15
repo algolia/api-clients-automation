@@ -1,4 +1,6 @@
+import { getVersionChangesText } from '../create-release-issue';
 import { getVersionsToRelease, getLangsToUpdateRepo } from '../process-release';
+import TEXT from '../text';
 
 describe('process release', () => {
   it('gets versions to release', () => {
@@ -27,5 +29,34 @@ describe('process release', () => {
 - [ ] java: v3.0.0 -> \`patch\` (e.g. v3.0.1)
 `)
     ).toEqual(['javascript', 'java']);
+  });
+
+  it('parses parses issue body correctly', () => {
+    // This test is a glue between create-release-issue and process-release.
+    const issueBody = [
+      TEXT.versionChangeHeader,
+      getVersionChangesText({
+        javascript: {
+          current: '0.0.1',
+          releaseType: 'patch',
+        },
+        php: {
+          current: '0.0.1',
+          releaseType: 'minor',
+        },
+        java: {
+          current: '0.0.1',
+          releaseType: 'patch',
+          skipRelease: true,
+        },
+      }),
+    ].join('\n');
+
+    const versions = getVersionsToRelease(issueBody);
+    expect(Object.keys(versions)).toEqual(['javascript', 'php']);
+    expect(versions.javascript.current).toEqual('0.0.1');
+    expect(versions.javascript.releaseType).toEqual('patch');
+    expect(versions.php.current).toEqual('0.0.1');
+    expect(versions.php.releaseType).toEqual('minor');
   });
 });
