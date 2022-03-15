@@ -1,5 +1,6 @@
 import config from '../../config/release.config.json';
-import { run } from '../common';
+import { getGitHubUrl, run, toAbsolutePath } from '../common';
+import { getLanguageFolder } from '../config';
 
 export const RELEASED_TAG = config.releasedTag;
 export const MAIN_BRANCH = config.mainBranch;
@@ -35,4 +36,30 @@ export async function configureGitHubAuthor(cwd?: string): Promise<void> {
 
   await run(`git config user.name "${name}"`, { cwd });
   await run(`git config user.email "${email}"`, { cwd });
+}
+
+export async function cloneAndApplyGeneration({
+  lang,
+  githubToken,
+  tempDir,
+}: {
+  lang: string;
+  githubToken: string;
+  tempDir: string;
+}): Promise<{ tempGitDir: string }> {
+  const clientPath = toAbsolutePath(getLanguageFolder(lang));
+  const targetBranch = getTargetBranch(lang);
+
+  const gitHubUrl = getGitHubUrl(lang, { token: githubToken });
+  const tempGitDir = `${tempDir}/${lang}`;
+  await run(`rm -rf ${tempGitDir}`);
+  await run(
+    `git clone --depth 1 --branch ${targetBranch} ${gitHubUrl} ${tempGitDir}`
+  );
+
+  await run(`cp -r ${clientPath}/ ${tempGitDir}`);
+
+  return {
+    tempGitDir,
+  };
 }

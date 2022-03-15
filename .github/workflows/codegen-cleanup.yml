@@ -17,5 +17,10 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
+      - name: Spread generation to each repository
+        run: yarn workspace scripts spreadGeneration $${{ github.head_ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
+
       - name: Clean previously generated branch
         run: yarn workspace scripts cleanGeneratedBranch ${{ github.head_ref }}

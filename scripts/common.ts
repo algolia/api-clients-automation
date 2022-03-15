@@ -151,3 +151,15 @@ export async function runIfExists(
   }
   return '';
 }
+
+export async function gitCommit({
+  message,
+  cwd = ROOT_DIR,
+}: {
+  message: string;
+  cwd?: string;
+}): Promise<void> {
+  await execa('git', ['commit', '-m', message], {
+    cwd,
+  });
+}
