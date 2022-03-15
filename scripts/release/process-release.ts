@@ -28,14 +28,16 @@ import TEXT from './text';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
-type BeforeCommitCommand = (params: {
+type BeforeClientGenerationCommand = (params: {
   releaseType: ReleaseType;
-  tempGitDir: string;
+  dir: string;
 }) => Promise<void>;
 
-const BEFORE_RELEASE_COMMIT: { [lang: string]: BeforeCommitCommand } = {
-  javascript: async ({ releaseType, tempGitDir }) => {
-    await run(`yarn release:bump_non_gen ${releaseType}`, { cwd: tempGitDir });
+const BEFORE_CLIENT_GENERATION: {
+  [lang: string]: BeforeClientGenerationCommand;
+} = {
+  javascript: async ({ releaseType, dir }) => {
+    await run(`yarn release:bump ${releaseType}`, { cwd: dir });
   },
 };
 
@@ -73,6 +75,11 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
         return;
       }
       const [, lang, current, releaseType] = result;
+      if (!['major', 'minor', 'patch', 'prerelease'].includes(releaseType)) {
+        throw new Error(
+          `\`${releaseType}\` is unknown release type. Allowed: major, minor, patch, prerelease`
+        );
+      }
       versionsToRelease[lang] = {
         current,
         releaseType: releaseType as ReleaseType,
@@ -127,6 +134,40 @@ async function configureGitHubAuthor(cwd?: string): Promise<void> {
   });
 }
 
+async function updateChangelog({
+  lang,
+  issueBody,
+  current,
+  next,
+  dateStamp,
+  willReleaseLibrary,
+}: {
+  lang: string;
+  issueBody: string;
+  current: string;
+  next: string;
+  dateStamp: string;
+  willReleaseLibrary: boolean;
+}): Promise<void> {
+  const changelogPath = toAbsolutePath(
+    `${getLanguageFolder(lang)}/CHANGELOG.md`
+  );
+  const existingContent = (await exists(changelogPath))
+    ? (await fsp.readFile(changelogPath)).toString()
+    : '';
+  const changelogHeader = willReleaseLibrary
+    ? `## [v${next}](${getGitHubUrl(lang)}/compare/v${current}...v${next})`
+    : `## ${dateStamp}`;
+  const newChangelog = getMarkdownSection(
+    getMarkdownSection(issueBody, TEXT.changelogHeader),
+    `### ${lang}`
+  );
+  await fsp.writeFile(
+    changelogPath,
+    [changelogHeader, newChangelog, existingContent].join('\n\n')
+  );
+}
+
 async function processRelease(): Promise<void> {
   if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
@@ -151,11 +192,6 @@ async function processRelease(): Promise<void> {
 
   await updateOpenApiTools(versionsToRelease);
 
-  await configureGitHubAuthor();
-
-  // commit openapitools and changelogs
-  await run('git add openapitools.json');
-
   const langsToReleaseOrUpdate = [
     ...Object.keys(versionsToRelease),
     ...langsToUpdateRepo,
@@ -165,32 +201,36 @@ async function processRelease(): Promise<void> {
     Boolean(versionsToRelease[lang]);
 
   for (const lang of langsToReleaseOrUpdate) {
-    // prepare the submodule
+    const { current, releaseType, dateStamp } = versionsToRelease[lang];
+    /*
+    About bumping versions of JS clients:
+
+    There are generated clients in JS repo, and non-generated clients like `algoliasearch`, `client-common`, etc.
+    Now that the versions of generated clients are updated in `openapitools.json`,
+    the generation output will have correct new versions.
+    
+    However, we need to manually update versions of the non-generated (a.k.a. manually written) clients.
+    In order to do that, we run `yarn release:bump <releaseType>` in this monorepo first.
+    It will update the versions of the non-generated clients which exists in this monorepo.
+    After that, we generate clients with new versions. And then, we copy all of them over to JS repository.
+    */
+    await BEFORE_CLIENT_GENERATION[lang]?.({
+      releaseType,
+      dir: toAbsolutePath(getLanguageFolder(lang)),
+    });
+
     console.log(`Generating ${lang} client(s)...`);
     console.log(await run(`yarn cli generate ${lang}`));
 
-    const { current, releaseType, dateStamp } = versionsToRelease[lang];
     const next = semver.inc(current, releaseType);
-    // update changelog
-    const changelogPath = toAbsolutePath(
-      `${getLanguageFolder(lang)}/CHANGELOG.md`
-    );
-    const existingContent = (await exists(changelogPath))
-      ? (await fsp.readFile(changelogPath)).toString()
-      : '';
-    const changelogHeader = willReleaseLibrary(lang)
-      ? `## [v${next}](${getGitHubUrl(lang)}/compare/v${current}...v${next})`
-      : `## ${dateStamp}`;
-    const newChangelog = getMarkdownSection(
-      getMarkdownSection(issueBody, TEXT.changelogHeader),
-      `### ${lang}`
-    );
-    await fsp.writeFile(
-      changelogPath,
-      [changelogHeader, newChangelog, existingContent].join('\n\n')
-    );
-
-    await run(`git add ${changelogPath}`);
+    await updateChangelog({
+      lang,
+      issueBody,
+      current,
+      next: next!,
+      dateStamp,
+      willReleaseLibrary: willReleaseLibrary(lang),
+    });
   }
 
   // We push commits from submodules AFTER all the generations are done.
@@ -214,9 +254,6 @@ async function processRelease(): Promise<void> {
     const next = semver.inc(current, releaseType);
 
     if (willReleaseLibrary(lang)) {
-      // TODO: most of generated clients already have the new versions in package.json
-      // how can I avoid double-bump versions???
-      await BEFORE_RELEASE_COMMIT[lang]?.({ releaseType, tempGitDir });
       await execa('git', ['commit', '-m', `chore: release ${next}`], {
         cwd: tempGitDir,
       });
@@ -233,6 +270,8 @@ async function processRelease(): Promise<void> {
   }
 
   // Commit and push from the monorepo level.
+  await configureGitHubAuthor();
+  await run(`git add .`);
   await execa('git', ['commit', '-m', `chore: release ${getDateStamp()}`]);
   await run(`git push`);
 
