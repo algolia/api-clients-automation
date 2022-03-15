@@ -5,6 +5,10 @@ description: Setup CI environment.
 runs:
   using: composite
   steps:
+    - name: Read current GitHub Actions cache version
+      shell: bash
+      run: echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
+
     - name: Install Java
       uses: actions/setup-java@v2
       with:
@@ -28,33 +32,41 @@ runs:
       id: diff
       shell: bash
       run: |
-        echo "::set-output name=GITHUB_ACTIONS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- .github/actions .github/workflows | wc -l)"
+        previousCommit=${{ github.event.before }}
+        baseRef=${{ github.base_ref }}
+        origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
 
-        echo "::set-output name=SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs | wc -l)"
-        echo "::set-output name=COMMON_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/common | wc -l)"
+        echo "Checking diff with branch: $origin"
 
-        echo "::set-output name=TESTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- tests | wc -l)"
+        echo "::set-output name=GITHUB_ACTIONS_CHANGED::$(git diff --shortstat $origin..HEAD -- .github/actions .github/workflows | wc -l)"
 
-        echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- scripts | wc -l)"
+        echo "::set-output name=SPECS_CHANGED::$(git diff --shortstat $origin..HEAD -- specs | wc -l)"
+        echo "::set-output name=COMMON_SPECS_CHANGED::$(git diff --shortstat $origin..HEAD -- specs/common | wc -l)"
 
-        echo "::set-output name=JS_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript | wc -l)"
-        echo "::set-output name=JS_ALGOLIASEARCH_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript/packages/algoliasearch clients/algoliasearch-client-javascript/packages/client-search clients/algoliasearch-client-javascript/packages/client-analytics clients/algoliasearch-client-javascript/packages/client-personalization | wc -l)"
-        echo "::set-output name=JS_COMMON_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript/packages/client-common clients/algoliasearch-client-javascript/packages/requester-browser-xhr clients/algoliasearch-client-javascript/packages/requester-node-http | wc -l)"
-        echo "::set-output name=JS_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/javascript | wc -l)"
+        echo "::set-output name=TESTS_CHANGED::$(git diff --shortstat $origin..HEAD -- tests | wc -l)"
 
-        echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
-        echo "::set-output name=JAVA_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/java | wc -l)"
+        echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat $origin..HEAD -- scripts | wc -l)"
 
-        echo "::set-output name=PHP_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-php | wc -l)"
-        echo "::set-output name=PHP_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/php | wc -l)"
+        echo "::set-output name=JS_CLIENT_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript | wc -l)"
+        echo "::set-output name=JS_ALGOLIASEARCH_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript/packages/algoliasearch clients/algoliasearch-client-javascript/packages/client-search clients/algoliasearch-client-javascript/packages/client-analytics clients/algoliasearch-client-javascript/packages/client-personalization | wc -l)"
+        echo "::set-output name=JS_COMMON_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript/packages/client-common clients/algoliasearch-client-javascript/packages/requester-browser-xhr clients/algoliasearch-client-javascript/packages/requester-node-http | wc -l)"
+        echo "::set-output name=JS_TEMPLATE_CHANGED::$(git diff --shortstat $origin..HEAD -- templates/javascript | wc -l)"
+
+        echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
+        echo "::set-output name=JAVA_TEMPLATE_CHANGED::$(git diff --shortstat $origin..HEAD -- templates/java | wc -l)"
+
+        echo "::set-output name=PHP_CLIENT_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-php | wc -l)"
+        echo "::set-output name=PHP_TEMPLATE_CHANGED::$(git diff --shortstat $origin..HEAD -- templates/php | wc -l)"
+
+        echo "::set-output name=ORIGIN_BRANCH::$origin"
 
     - name: Compute specs matrix
       id: spec-matrix
       shell: bash
       run: |
-        base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-spec-matrix.sh $base_changed ${{ github.base_ref }})
+        matrix=$(./scripts/ci/create-spec-matrix.sh $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
@@ -72,18 +84,18 @@ runs:
       id: js-matrix
       shell: bash
       run: |
-        base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
         algoliasearch_changed=${{ steps.diff.outputs.JS_ALGOLIASEARCH_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-client-matrix.sh javascript $base_changed ${{ github.base_ref }})
+        matrix=$(./scripts/ci/create-client-matrix.sh javascript $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
         if [[ $algoliasearch_changed == 'true' || $base_changed == 'true' ]]; then
           algoliasearch_client='{"name": "algoliasearch","folder": "clients/algoliasearch-client-javascript/packages/algoliasearch"}'
 
           if [[ $matrix == '{"client":["no-run"]}' ]]; then
-            matrix="{'client': [$algoliasearch_client]}"
+            matrix="{\"client\": [$algoliasearch_client]}"
           else
-            matrix="{'client': $(echo $matrix | jq ".client + [$algoliasearch_client]" -c)}"
+            matrix="{\"client\": $(echo $matrix | jq ".client + [$algoliasearch_client]" -c)}"
           fi
         fi
 
@@ -108,9 +120,9 @@ runs:
       id: java-matrix
       shell: bash
       run: |
-        base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-client-matrix.sh java $base_changed ${{ github.base_ref }})
+        matrix=$(./scripts/ci/create-client-matrix.sh java $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
@@ -128,9 +140,9 @@ runs:
       id: php-matrix
       shell: bash
       run: |
-        base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-client-matrix.sh php $base_changed ${{ github.base_ref }})
+        matrix=$(./scripts/ci/create-client-matrix.sh php $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
@@ -146,15 +158,19 @@ runs:
 
 outputs:
   RUN_SPECS:
-    description: Whether to run specs or not
+    description: Determine if the `specs` job should run
     value: ${{ steps.spec-matrix.outputs.RUN_SPECS }}
 
+  RUN_SCRIPTS:
+    description: Determine if the `scripts` job should run
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
+
   SPECS_MATRIX:
-    description: Generate the matrix for specs
+    description: The generated `specs` matrix
     value: ${{ steps.spec-matrix.outputs.MATRIX }}
 
   RUN_JS:
-    description: Whether to run js client or not
+    description: Determine if the `client-javascript` job should run
     value: ${{ steps.js-matrix.outputs.RUN_CLIENT }}
 
   RUN_JS_COMMON:
@@ -162,25 +178,41 @@ outputs:
     value: ${{ steps.js-matrix.outputs.RUN_COMMON }}
 
   JS_MATRIX:
-    description: Generate the matrix for the Javascript client
+    description: The generated `client-javascript` matrix
     value: ${{ steps.js-matrix.outputs.MATRIX }}
 
   RUN_JAVA:
-    description: Whether to run java client or not
+    description: Determine if the `client-java` job should run
     value: ${{ steps.java-matrix.outputs.RUN_CLIENT }}
 
   JAVA_MATRIX:
-    description: Generate the matrix for the Java client
+    description: The generated `client-java` matrix
     value: ${{ steps.java-matrix.outputs.MATRIX }}
 
   RUN_PHP:
-    description: Whether to run php client or not
+    description: Determine if the `client-php` job should run
     value: ${{ steps.php-matrix.outputs.RUN_CLIENT }}
 
   PHP_MATRIX:
-    description: Generate the matrix for the PHP client
+    description: The generated `client-php` matrix
     value: ${{ steps.php-matrix.outputs.MATRIX }}
 
   RUN_CTS:
     description: Determine if the `cts` job should run
-    value: ${{ github.ref_name == 'main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.TESTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+    value: ${{
+      steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 ||
+      steps.diff.outputs.SCRIPTS_CHANGED > 0 ||
+      steps.diff.outputs.SPECS_CHANGED > 0 ||
+      steps.diff.outputs.TESTS_CHANGED > 0 ||
+      steps.diff.outputs.JS_CLIENT_CHANGED > 0 ||
+      steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 ||
+      steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 ||
+      steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+
+  RUN_CODEGEN:
+    description: Determine if the `codegen` job should run
+    value: ${{
+      steps.spec-matrix.outputs.RUN_SPECS == 'true' ||
+      steps.js-matrix.outputs.RUN_CLIENT == 'true' ||
+      steps.java-matrix.outputs.RUN_CLIENT == 'true' ||
+      steps.php-matrix.outputs.RUN_CLIENT == 'true' }}

@@ -5,9 +5,6 @@ on:
     types:
       - closed
 
-env:
-  CACHE_VERSION: '8'
-
 jobs:
   build:
     name: Release
