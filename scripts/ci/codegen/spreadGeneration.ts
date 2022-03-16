@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { gitCommit, LANGUAGES, run } from '../../common';
 import {
   cloneAndApplyGeneration,
