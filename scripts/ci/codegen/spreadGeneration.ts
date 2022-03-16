@@ -5,6 +5,8 @@ import {
   configureGitHubAuthor,
 } from '../../release/common';
 
+const GENERATED_MAIN_BRANCH = `generated/main`;
+
 export function decideWhereToSpread(commitMessage: string): string[] {
   if (commitMessage.startsWith('chore: release')) {
     return [];
@@ -25,22 +27,16 @@ export function cleanUpCommitMessage(commitMessage: string): string {
   return result?.[1] ?? commitMessage;
 }
 
-async function spreadGeneration(headRef: string): Promise<void> {
+async function spreadGeneration(): Promise<void> {
   if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }
 
-  const generatedCodeBranch = `generated/${headRef}`;
-
-  if (!(await run(`git ls-remote --heads origin ${generatedCodeBranch}`))) {
-    console.log(`No branch named '${generatedCodeBranch}' was found.`);
-    return;
-  }
-
-  await run(`git checkout ${generatedCodeBranch}`);
   const lastCommitMessage = await run(`git log -1 --format="%s"`);
   const commitMessage = cleanUpCommitMessage(lastCommitMessage);
   const langs = decideWhereToSpread(lastCommitMessage);
+
+  await run(`git checkout ${GENERATED_MAIN_BRANCH}`);
 
   for (const lang of langs) {
     const { tempGitDir } = await cloneAndApplyGeneration({
@@ -57,13 +53,5 @@ async function spreadGeneration(headRef: string): Promise<void> {
 }
 
 if (require.main === module) {
-  const args = process.argv.slice(2);
-
-  if (!args || args.length === 0) {
-    throw new Error(
-      'The base branch should be passed as a cli parameter of the `spreadGeneration` script.'
-    );
-  }
-
-  spreadGeneration(args[0]);
+  spreadGeneration();
 }
