@@ -9,7 +9,7 @@ export default {
   },
   noGen: {
     header: '✗ No code generated.',
-    body: `_If you believe this is an issue on our side, please [open an issue](${REPO_URL}/issues/new)_`,
+    body: `_If you believe this is an issue on our side, please [open an issue](${REPO_URL}/issues/new?template=Bug_report.md)_`,
   },
   codegen: {
     header: '✔️ Code generated!',

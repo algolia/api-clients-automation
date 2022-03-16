@@ -16,7 +16,7 @@ const octokit = new Octokit({
 const args = process.argv.slice(2);
 const allowedTriggers = ['notification', 'codegen', 'noGen'];
 
-type Trigger = 'codegen' | 'noGen' | 'notification';
+type Trigger = keyof typeof commentText;
 
 export async function getCommentBody(trigger: Trigger): Promise<string> {
   if (trigger === 'notification' || trigger === 'noGen') {

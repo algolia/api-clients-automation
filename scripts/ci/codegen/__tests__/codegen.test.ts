@@ -58,7 +58,7 @@ describe('codegen', () => {
       expect(await getCommentBody('noGen')).toMatchInlineSnapshot(`
         "✗ No code generated.
 
-        _If you believe this is an issue on our side, please [open an issue](https://github.com/algolia/api-clients-automation/issues/new)_"
+        _If you believe this is an issue on our side, please [open an issue](https://github.com/algolia/api-clients-automation/issues/new?template=Bug_report.md)_"
       `);
     });
 
