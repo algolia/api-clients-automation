@@ -7,7 +7,8 @@
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
     "cleanGeneratedBranch": "ts-node ci/codegen/cleanGeneratedBranch.ts",
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts",
-    "test": "jest"
+    "test": "jest",
+    "nochange": "testgen"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "10.0.3",
