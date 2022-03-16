@@ -94,4 +94,6 @@ export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
   }
 }
 
-upsertGenerationComment(args[0] as Trigger);
+if (require.main === module) {
+  upsertGenerationComment(args[0] as Trigger);
+}

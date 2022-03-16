@@ -58,4 +58,6 @@ Co-authored-by: %an <%ae>"`);
   }
 }
 
-pushGeneratedCode();
+if (require.main === module) {
+  pushGeneratedCode();
+}
