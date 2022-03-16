@@ -9,7 +9,11 @@ export default {
   },
   noGen: {
     header: '✗ No code generated.',
-    body: `_If you believe this is an issue on our side, please [open an issue](${REPO_URL}/issues/new?template=Bug_report.md)_`,
+    body: `_If you believe this is an issue on our side, please [open an issue](${REPO_URL}/issues/new?template=Bug_report.md)._`,
+  },
+  cleanup: {
+    header: '✗ The generated branch has been deleted.',
+    body: `If the PR has been merged, you can check the generated code on the [\`generated/main\` branch](${REPO_URL}/tree/generated/main).`,
   },
   codegen: {
     header: '✔️ Code generated!',

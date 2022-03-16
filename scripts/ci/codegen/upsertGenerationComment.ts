@@ -14,12 +14,16 @@ const octokit = new Octokit({
 });
 
 const args = process.argv.slice(2);
-const allowedTriggers = ['notification', 'codegen', 'noGen'];
+const allowedTriggers = ['notification', 'codegen', 'noGen', 'cleanup'];
 
 type Trigger = keyof typeof commentText;
 
 export async function getCommentBody(trigger: Trigger): Promise<string> {
-  if (trigger === 'notification' || trigger === 'noGen') {
+  if (
+    trigger === 'notification' ||
+    trigger === 'noGen' ||
+    trigger === 'cleanup'
+  ) {
     return `${commentText[trigger].header}
 
 ${commentText[trigger].body}`;

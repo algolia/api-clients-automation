@@ -58,7 +58,15 @@ describe('codegen', () => {
       expect(await getCommentBody('noGen')).toMatchInlineSnapshot(`
         "✗ No code generated.
 
-        _If you believe this is an issue on our side, please [open an issue](https://github.com/algolia/api-clients-automation/issues/new?template=Bug_report.md)_"
+        _If you believe this is an issue on our side, please [open an issue](https://github.com/algolia/api-clients-automation/issues/new?template=Bug_report.md)._"
+      `);
+    });
+
+    it('returns the right comment for a `cleanup` trigger', async () => {
+      expect(await getCommentBody('cleanup')).toMatchInlineSnapshot(`
+        "✗ The generated branch has been deleted.
+
+        If the PR has been merged, you can check the generated code on the [\`generated/main\` branch](https://github.com/algolia/api-clients-automation/tree/generated/main)."
       `);
     });
 
