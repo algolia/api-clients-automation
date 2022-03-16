@@ -51,7 +51,6 @@ Co-authored-by: %an <%ae>"`);
   await run(`git add ${FOLDERS_TO_CHECK}`);
   await run(`git commit -m "${commitMessage}"`);
   await run(`git push origin ${generatedCodeBranch}`);
-  await run(`git checkout ${baseBranch}`);
 
   if (PR_NUMBER) {
     await run(`yarn workspace scripts upsertGenerationComment codegen`);

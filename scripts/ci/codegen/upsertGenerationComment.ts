@@ -31,8 +31,8 @@ ${commentText[trigger].body}`;
 
   const baseBranch = await run('git branch --show-current');
   const commit = await run(`git show ${baseBranch} -s --format=%H`);
-  const generatedCommit = await run('git show -s --format=%H');
   const branch = `generated/${baseBranch}`;
+  const generatedCommit = await run(`git show ${branch} -s --format=%H`);
 
   return `${commentText.codegen.header}
 
