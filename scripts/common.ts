@@ -5,6 +5,7 @@ import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 
 import openapitools from '../openapitools.json';
 
+import { createSpinner } from './oraLog';
 import type { Generator, RunOptions } from './types';
 
 export const CI = Boolean(process.env.CI);
@@ -12,6 +13,8 @@ export const DOCKER = Boolean(process.env.DOCKER);
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
+
+export const ROOT_ENV_PATH = path.resolve(ROOT_DIR, '.env');
 
 export const GENERATORS: Record<string, Generator> = {
   // Default `algoliasearch` package as it's built similarly to generated clients
@@ -59,13 +62,25 @@ export const CLIENTS = CLIENTS_JS.filter(
 /**
  * Takes a generator key in the form 'language-client' and returns the Generator object.
  */
-export function splitGeneratorKey(generatorKey: string): Generator {
+export function splitGeneratorKey(
+  generatorKey: string
+): Pick<Generator, 'client' | 'key' | 'language'> {
   const language = generatorKey.slice(0, generatorKey.indexOf('-'));
   const client = generatorKey.slice(generatorKey.indexOf('-') + 1);
   return { language, client, key: generatorKey };
 }
 
-export function getGitHubUrl(lang: string): string {
+type GitHubUrl = (
+  lang: string,
+  options?: {
+    token?: string;
+  }
+) => string;
+
+export const getGitHubUrl: GitHubUrl = (
+  lang: string,
+  { token } = {}
+): string => {
   const entry = Object.entries(openapitools['generator-cli'].generators).find(
     (_entry) => _entry[0].startsWith(`${lang}-`)
   );
@@ -74,8 +89,16 @@ export function getGitHubUrl(lang: string): string {
     throw new Error(`\`${lang}\` is not found from \`openapitools.json\`.`);
   }
   const { gitHost, gitRepoId } = entry[1];
-  return `https://github.com/${gitHost}/${gitRepoId}`;
-}
+
+  // GitHub Action provides a default token for authentication
+  // https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+  // But it has access to only the self repository.
+  // If we want to do something like pushing commits to other repositories,
+  // we need to specify a token with more access.
+  return token
+    ? `https://${token}:${token}@github.com/${gitHost}/${gitRepoId}`
+    : `https://github.com/${gitHost}/${gitRepoId}`;
+};
 
 export function createGeneratorKey({
   language,
@@ -130,4 +153,12 @@ export async function runIfExists(
     return await run(`${scriptFile} ${args}`, opts);
   }
   return '';
+}
+
+export async function buildCustomGenerators(verbose: boolean): Promise<void> {
+  const spinner = createSpinner('building custom generators', verbose).start();
+  await run('./gradle/gradlew --no-daemon -p generators assemble', {
+    verbose,
+  });
+  spinner.succeed();
 }
