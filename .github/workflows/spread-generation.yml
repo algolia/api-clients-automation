@@ -1,4 +1,4 @@
-name: Codegen cleanup
+name: Spread generations
 
 on:
   push:
