@@ -195,7 +195,13 @@ runs:
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
-            '!clients/algoliasearch-client-javascript/packages/algoliasearch/dist'
+            '!clients/algoliasearch-client-javascript/packages/algoliasearch/dist',
+            'clients/algoliasearch-client-javascript/packages/client-search/**',
+            '!clients/algoliasearch-client-javascript/packages/client-search/dist',
+            'clients/algoliasearch-client-javascript/packages/client-analytics/**',
+            '!clients/algoliasearch-client-javascript/packages/client-analytics/dist',
+            'clients/algoliasearch-client-javascript/packages/client-personalization/**',
+            '!clients/algoliasearch-client-javascript/packages/client-personalization/dist'
           )}}
 
     - name: Restore built JavaScript search client
