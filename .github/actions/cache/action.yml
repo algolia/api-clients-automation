@@ -29,10 +29,6 @@ runs:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
         key: node-cache-${{ env.CACHE_VERSION }}-yarn-${{ hashFiles('yarn.lock') }}
 
-    - name: Install JavaScript dependencies
-      shell: bash
-      run: yarn install
-
     # Java setup: used during 'java' generation or 'cts'
     - name: Download Java formatter
       if: ${{ inputs.language == 'java' || inputs.job == 'cts' }}
@@ -347,3 +343,7 @@ runs:
             'clients/algoliasearch-client-php/*',
             'specs/bundled/search.yml'
           )}}
+
+    - name: Install JavaScript dependencies
+      shell: bash
+      run: yarn install
