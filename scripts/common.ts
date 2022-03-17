@@ -40,8 +40,7 @@ Object.entries(openapitools['generator-cli'].generators).forEach(
 );
 
 export function getPackageVersion(generator: string): string {
-  return openapitools['generator-cli'].generators[generator]
-    .additionalProperties.packageVersion;
+  return GENERATORS[generator].additionalProperties.packageVersion;
 }
 
 export const LANGUAGES = [
