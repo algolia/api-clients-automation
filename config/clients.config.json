@@ -2,6 +2,7 @@
   "java": {
     "folder": "clients/algoliasearch-client-java-2",
     "mainGenerator": "javascript-search",
+    "customGenerator": "algolia-java",
     "tests": {
       "extension": ".test.java",
       "outputFolder": "src/test/java/com/algolia"
