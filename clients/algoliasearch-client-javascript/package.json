@@ -1,6 +1,5 @@
 {
   "name": "algoliasearch-client-javascript",
-  "version": "5.0.0",
   "workspaces": [
     "packages/*"
   ],
