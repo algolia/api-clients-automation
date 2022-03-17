@@ -92,9 +92,9 @@ class RecommendApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
+     * @param array|object $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -140,7 +140,7 @@ class RecommendApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function get($path, $parameters = null)
     {
@@ -179,9 +179,9 @@ class RecommendApi
     /**
      * Returns recommendations for a specific model and objectID.
      *
-     * @param array $getRecommendationsParams getRecommendationsParams (required)
+     * @param array|\Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsParams $getRecommendationsParams getRecommendationsParams (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsResponse
      */
     public function getRecommendations($getRecommendationsParams)
     {
@@ -208,9 +208,9 @@ class RecommendApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
+     * @param array|object $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -255,9 +255,9 @@ class RecommendApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
+     * @param array|object $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function put($path, $parameters = null, $body = null)
     {

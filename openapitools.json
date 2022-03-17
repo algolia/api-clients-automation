@@ -274,7 +274,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\Recommend",
         "additionalProperties": {
           "configClassname": "RecommendConfig",
           "useCache": true,
