@@ -21,7 +21,7 @@ import {
   REPO,
   getMarkdownSection,
   configureGitHubAuthor,
-  cloneAndApplyGeneration,
+  cloneRepository,
 } from './common';
 import TEXT from './text';
 
@@ -167,11 +167,14 @@ async function processRelease(): Promise<void> {
   // We push commits to each repository AFTER all the generations are done.
   // Otherwise, we will end up having broken release.
   for (const lang of langsToReleaseOrUpdate) {
-    const { tempGitDir } = await cloneAndApplyGeneration({
+    const { tempGitDir } = await cloneRepository({
       lang,
       githubToken: process.env.GITHUB_TOKEN,
       tempDir: process.env.RUNNER_TEMP!,
     });
+
+    const clientPath = toAbsolutePath(getLanguageFolder(lang));
+    await run(`cp -r ${clientPath}/ ${tempGitDir}`);
 
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });

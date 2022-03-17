@@ -1,8 +1,6 @@
-import { gitCommit, LANGUAGES, run } from '../../common';
-import {
-  cloneAndApplyGeneration,
-  configureGitHubAuthor,
-} from '../../release/common';
+import { gitCommit, LANGUAGES, run, toAbsolutePath } from '../../common';
+import { getLanguageFolder } from '../../config';
+import { cloneRepository, configureGitHubAuthor } from '../../release/common';
 
 const GENERATED_MAIN_BRANCH = `generated/main`;
 
@@ -38,11 +36,14 @@ async function spreadGeneration(): Promise<void> {
   await run(`git checkout ${GENERATED_MAIN_BRANCH}`);
 
   for (const lang of langs) {
-    const { tempGitDir } = await cloneAndApplyGeneration({
+    const { tempGitDir } = await cloneRepository({
       lang,
       githubToken: process.env.GITHUB_TOKEN,
       tempDir: process.env.RUNNER_TEMP!,
     });
+
+    const clientPath = toAbsolutePath(getLanguageFolder(lang));
+    await run(`cp -r ${clientPath}/ ${tempGitDir}`);
 
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
