@@ -100,7 +100,8 @@ runs:
         matrix=$(./scripts/ci/create-client-matrix.sh javascript $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
         if [[ $algoliasearch_changed == 'true' || $base_changed == 'true' ]]; then
-          echo "::set-output name=RUN_ALGOLIASEARCH::'true'"
+          echo "Running algoliasearch: true"
+          echo "::set-output name=RUN_ALGOLIASEARCH::true"
         fi
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
