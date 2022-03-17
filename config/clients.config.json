@@ -1,6 +1,7 @@
 {
   "java": {
     "folder": "clients/algoliasearch-client-java-2",
+    "mainGenerator": "javascript-search",
     "tests": {
       "extension": ".test.java",
       "outputFolder": "src/test/java/com/algolia"
@@ -8,12 +9,14 @@
   },
   "javascript": {
     "folder": "clients/algoliasearch-client-javascript",
+    "mainGenerator": "java-search",
     "tests": {
       "extension": ".test.ts",
       "outputFolder": "src"
     }
   },
   "php": {
-    "folder": "clients/algoliasearch-client-php"
+    "folder": "clients/algoliasearch-client-php",
+    "mainGenerator": "php-search"
   }
 }

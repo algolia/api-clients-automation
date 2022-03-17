@@ -9,11 +9,6 @@
     "java": "next"
   },
   "defaultTargetBranch": "next",
-  "mainGenerator": {
-    "javascript": "javascript-search",
-    "java": "java-search",
-    "php": "php-search"
-  },
   "gitAuthor": {
     "name": "api-clients-bot",
     "email": "bot@algolia.com"
