@@ -113,56 +113,59 @@ export function decideReleaseStrategy({
   versions: VersionsWithoutReleaseType;
   commits: PassedCommit[];
 }): Versions {
-  return Object.entries(versions).reduce((acc: Versions, [lang, version]) => {
-    const commitsPerLang = commits.filter((commit) => commit.lang === lang);
-    const currentVersion = versions[lang].current;
+  return Object.entries(versions).reduce(
+    (versionsWithReleaseType: Versions, [lang, version]) => {
+      const commitsPerLang = commits.filter((commit) => commit.lang === lang);
+      const currentVersion = versions[lang].current;
 
-    if (commitsPerLang.length === 0) {
-      acc[lang] = {
+      if (commitsPerLang.length === 0) {
+        versionsWithReleaseType[lang] = {
+          ...version,
+          noCommit: true,
+          releaseType: null,
+        };
+        return versionsWithReleaseType;
+      }
+
+      if (semver.prerelease(currentVersion)) {
+        // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
+        versionsWithReleaseType[lang] = {
+          ...version,
+          releaseType: 'prerelease',
+        };
+        return versionsWithReleaseType;
+      }
+
+      if (
+        commitsPerLang.some((commit) =>
+          commit.message.includes('BREAKING CHANGE')
+        )
+      ) {
+        versionsWithReleaseType[lang] = {
+          ...version,
+          releaseType: 'major',
+        };
+        return versionsWithReleaseType;
+      }
+
+      const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
+      if (commitTypes.has('feat')) {
+        versionsWithReleaseType[lang] = {
+          ...version,
+          releaseType: 'minor',
+        };
+        return versionsWithReleaseType;
+      }
+
+      versionsWithReleaseType[lang] = {
         ...version,
-        noCommit: true,
-        releaseType: null,
+        releaseType: 'patch',
+        ...(commitTypes.has('fix') ? undefined : { skipRelease: true }),
       };
-      return acc;
-    }
-
-    if (semver.prerelease(currentVersion)) {
-      // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
-      acc[lang] = {
-        ...version,
-        releaseType: 'prerelease',
-      };
-      return acc;
-    }
-
-    if (
-      commitsPerLang.some((commit) =>
-        commit.message.includes('BREAKING CHANGE')
-      )
-    ) {
-      acc[lang] = {
-        ...version,
-        releaseType: 'major',
-      };
-      return acc;
-    }
-
-    const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
-    if (commitTypes.has('feat')) {
-      acc[lang] = {
-        ...version,
-        releaseType: 'minor',
-      };
-      return acc;
-    }
-
-    acc[lang] = {
-      ...version,
-      releaseType: 'patch',
-      ...(commitTypes.has('fix') ? undefined : { skipRelease: true }),
-    };
-    return acc;
-  }, {});
+      return versionsWithReleaseType;
+    },
+    {}
+  );
 }
 /* eslint-enable no-param-reassign */
 

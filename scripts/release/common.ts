@@ -7,10 +7,10 @@ export const MAIN_BRANCH = config.mainBranch;
 export const OWNER = config.owner;
 export const REPO = config.repo;
 export const MAIN_GENERATOR = Object.keys(clientsConfig).reduce(
-  (acc: { [lang: string]: string }, lang: string) => {
+  (mainGenerator: { [lang: string]: string }, lang: string) => {
     // eslint-disable-next-line no-param-reassign
-    acc[lang] = clientsConfig[lang].mainGenerator;
-    return acc;
+    mainGenerator[lang] = clientsConfig[lang].mainGenerator;
+    return mainGenerator;
   },
   {}
 );
