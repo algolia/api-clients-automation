@@ -25,6 +25,7 @@ import {
   configureGitHubAuthor,
 } from './common';
 import TEXT from './text';
+import type { VersionsToRelease } from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
@@ -50,14 +51,6 @@ function getIssueBody(): string {
     ]).stdout
   ).body;
 }
-
-type VersionsToRelease = {
-  [lang: string]: {
-    current: string;
-    releaseType: ReleaseType;
-    dateStamp: string;
-  };
-};
 
 function getDateStamp(): string {
   return new Date().toISOString().split('T')[0];

@@ -2,7 +2,6 @@
 import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
 import semver from 'semver';
-import type { ReleaseType } from 'semver';
 
 import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
 
@@ -14,23 +13,14 @@ import {
   MAIN_GENERATOR,
 } from './common';
 import TEXT from './text';
+import type {
+  Versions,
+  VersionsWithoutReleaseType,
+  PassedCommit,
+  Commit,
+} from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
-
-type Version = {
-  current: string;
-  releaseType: ReleaseType | null;
-  skipRelease?: boolean;
-  noCommit?: boolean;
-};
-
-type Versions = {
-  [lang: string]: Version;
-};
-
-type VersionsWithoutReleaseType = {
-  [lang: string]: Omit<Version, 'releaseType'>;
-};
 
 function readVersions(): VersionsWithoutReleaseType {
   return Object.keys(MAIN_GENERATOR).reduce((acc, lang) => {
@@ -64,19 +54,6 @@ export function getVersionChangesText(versions: Versions): string {
       .join('\n');
   }).join('\n');
 }
-
-type PassedCommit = {
-  hash: string;
-  type: string;
-  lang: string;
-  message: string;
-  raw: string;
-};
-
-type Commit =
-  | PassedCommit
-  | { error: 'missing-language-scope' }
-  | { error: 'unknown-language-scope' };
 
 export function parseCommit(commit: string): Commit {
   const hash = commit.slice(0, 7);
