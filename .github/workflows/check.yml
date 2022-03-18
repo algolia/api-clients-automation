@@ -119,8 +119,7 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client),
-              format('!clients/algoliasearch-client-javascript/packages/{0}/dist', matrix.client)
+              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client)
             )}}
 
       - name: Build '${{ matrix.client }}' client
@@ -158,9 +157,12 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/**', matrix.client.folder),
-              format('!{0}/dist', matrix.client.folder),
-              'openapitools.json'
+              format('{0}/src/**', matrix.client.folder),
+              format('{0}/model/**', matrix.client.folder),
+              format('{0}/builds/**', matrix.client.folder),
+              format('{0}/package.json', matrix.client.folder),
+              format('specs/bundled/{0}.yml', matrix.client.name),
+              'templates/javascript/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -202,13 +204,10 @@ jobs:
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
-              '!clients/algoliasearch-client-javascript/packages/algoliasearch/dist',
               'clients/algoliasearch-client-javascript/packages/client-search/**',
-              '!clients/algoliasearch-client-javascript/packages/client-search/dist',
               'clients/algoliasearch-client-javascript/packages/client-analytics/**',
-              '!clients/algoliasearch-client-javascript/packages/client-analytics/dist',
               'clients/algoliasearch-client-javascript/packages/client-personalization/**',
-              '!clients/algoliasearch-client-javascript/packages/client-personalization/dist'
+              'templates/javascript/**'
             )}}
 
       - name: Build 'algoliasearch' client
@@ -245,10 +244,9 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/**', matrix.client.folder),
               format('!{0}/target', matrix.client.folder),
-              format('specs/bundled/{0}.yml', matrix.client.name),
-              'openapitools.json'
+              format('{0}/**', matrix.client.folder),
+              format('specs/bundled/{0}.yml', matrix.client.name)
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -290,8 +288,7 @@ jobs:
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('{0}/**', matrix.client.folder),
-              format('specs/bundled/{0}.yml', matrix.client.name),
-              'openapitools.json'
+              format('specs/bundled/{0}.yml', matrix.client.name)
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
