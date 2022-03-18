@@ -33,7 +33,7 @@ export function cleanUpCommitMessage(commitMessage: string): string {
   return [
     result[1],
     `https://github.com/${OWNER}/${REPO}/pull/${result[2]}`,
-  ].join('\n');
+  ].join('\n\n');
 }
 
 async function spreadGeneration(): Promise<void> {
@@ -42,6 +42,8 @@ async function spreadGeneration(): Promise<void> {
   }
 
   const lastCommitMessage = await run(`git log -1 --format="%s"`);
+  const name = (await run(`git log -1 --format="%an"`)).trim();
+  const email = (await run(`git log -1 --format="%ae"`)).trim();
   const commitMessage = cleanUpCommitMessage(lastCommitMessage);
   const langs = decideWhereToSpread(lastCommitMessage);
 
@@ -57,7 +59,7 @@ async function spreadGeneration(): Promise<void> {
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
     await run(`cp -r ${clientPath}/ ${tempGitDir}`);
 
-    await configureGitHubAuthor(tempGitDir);
+    await configureGitHubAuthor({ name, email, cwd: tempGitDir });
     await run(`git add .`, { cwd: tempGitDir });
     await gitCommit({ message: commitMessage, cwd: tempGitDir });
     await run(`git push`, { cwd: tempGitDir });

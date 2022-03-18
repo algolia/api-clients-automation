@@ -30,11 +30,19 @@ export function getMarkdownSection(markdown: string, title: string): string {
   return lines.slice(0, endIndex).join('\n');
 }
 
-export async function configureGitHubAuthor(cwd?: string): Promise<void> {
-  const { name, email } = getGitAuthor();
+export async function configureGitHubAuthor({
+  name,
+  email,
+  cwd,
+}: {
+  name?: string;
+  email?: string;
+  cwd?: string;
+} = {}): Promise<void> {
+  const bot = getGitAuthor();
 
-  await run(`git config user.name "${name}"`, { cwd });
-  await run(`git config user.email "${email}"`, { cwd });
+  await run(`git config user.name "${name || bot.name}"`, { cwd });
+  await run(`git config user.email "${email || bot.email}"`, { cwd });
 }
 
 export async function cloneRepository({

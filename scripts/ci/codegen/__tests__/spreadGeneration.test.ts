@@ -28,7 +28,7 @@ describe('spread generation', () => {
     expect(
       cleanUpCommitMessage(`feat(ci): make ci push generated code (#244)`)
     ).toEqual(
-      `feat(ci): make ci push generated code\nhttps://github.com/algolia/api-clients-automation/pull/244`
+      `feat(ci): make ci push generated code\n\nhttps://github.com/algolia/api-clients-automation/pull/244`
     );
   });
 });

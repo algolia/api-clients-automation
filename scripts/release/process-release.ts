@@ -176,7 +176,7 @@ async function processRelease(): Promise<void> {
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
     await run(`cp -r ${clientPath}/ ${tempGitDir}`);
 
-    await configureGitHubAuthor(tempGitDir);
+    await configureGitHubAuthor({ cwd: tempGitDir });
     await run(`git add .`, { cwd: tempGitDir });
 
     const { next, dateStamp } = versionsToRelease[lang];
