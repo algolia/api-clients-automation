@@ -306,29 +306,16 @@ jobs:
           job: codegen
 
       - name: Push generated code
+        id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GENERATE_BOT }}
           PR_NUMBER: ${{ github.event.number }}
 
-  spread_generation:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    needs: codegen
-    if: |
-      always() &&
-      needs.codegen.result == 'success' &&
-      github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: main
-
-      - name: Restore cache
-        uses: ./.github/actions/cache
-
       - name: Spread generation to each repository
+        if: |
+          steps.pushGeneratedCode.exitcode == 0 &&
+          github.ref == 'refs/heads/main'
         run: yarn workspace scripts spreadGeneration
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
