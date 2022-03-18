@@ -157,14 +157,30 @@ export async function runIfExists(
 
 export async function gitCommit({
   message,
+  coauthor,
   cwd = ROOT_DIR,
 }: {
   message: string;
+  coauthor?: {
+    name: string;
+    email: string;
+  };
   cwd?: string;
 }): Promise<void> {
-  await execa('git', ['commit', '-m', message], {
-    cwd,
-  });
+  await execa(
+    'git',
+    [
+      'commit',
+      '-m',
+      message +
+        (coauthor
+          ? `\n\n\nCo-authored-by: ${coauthor.name} <${coauthor.email}>`
+          : ''),
+    ],
+    {
+      cwd,
+    }
+  );
 }
 
 export async function buildCustomGenerators(verbose: boolean): Promise<void> {

@@ -59,9 +59,13 @@ async function spreadGeneration(): Promise<void> {
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
     await run(`cp -r ${clientPath}/ ${tempGitDir}`);
 
-    await configureGitHubAuthor({ name, email, cwd: tempGitDir });
+    await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
-    await gitCommit({ message: commitMessage, cwd: tempGitDir });
+    await gitCommit({
+      message: commitMessage,
+      coauthor: { name, email },
+      cwd: tempGitDir,
+    });
     await run(`git push`, { cwd: tempGitDir });
   }
 }
