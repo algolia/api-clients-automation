@@ -27,6 +27,8 @@ describe('spread generation', () => {
   it('removes pull-request number from commit message', () => {
     expect(
       cleanUpCommitMessage(`feat(ci): make ci push generated code (#244)`)
-    ).toEqual(`feat(ci): make ci push generated code`);
+    ).toEqual(
+      `feat(ci): make ci push generated code\nhttps://github.com/algolia/api-clients-automation/pull/244`
+    );
   });
 });

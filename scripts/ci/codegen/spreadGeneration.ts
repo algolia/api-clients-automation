@@ -1,6 +1,11 @@
 import { gitCommit, LANGUAGES, run, toAbsolutePath } from '../../common';
 import { getLanguageFolder } from '../../config';
-import { cloneRepository, configureGitHubAuthor } from '../../release/common';
+import {
+  cloneRepository,
+  configureGitHubAuthor,
+  OWNER,
+  REPO,
+} from '../../release/common';
 
 const GENERATED_MAIN_BRANCH = `generated/main`;
 
@@ -20,8 +25,15 @@ export function decideWhereToSpread(commitMessage: string): string[] {
 }
 
 export function cleanUpCommitMessage(commitMessage: string): string {
-  const result = commitMessage.match(/(.+)\s\(#\d+\)$/);
-  return result?.[1] ?? commitMessage;
+  const result = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
+  if (!result) {
+    return commitMessage;
+  }
+
+  return [
+    result[1],
+    `https://github.com/${OWNER}/${REPO}/pull/${result[2]}`,
+  ].join('\n');
 }
 
 async function spreadGeneration(): Promise<void> {
