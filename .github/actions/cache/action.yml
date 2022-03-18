@@ -355,6 +355,13 @@ runs:
             'openapitools.json'
           )}}
 
+    - name: Show restored fields
+      shell: bash
+      if: ${{ inputs.language == 'javascript' && inputs.job == 'codegen' }}
+      run: |
+        find clients/algoliasearch-client-javascript -type f
+        cat clients/algoliasearch-client-javascript/packages/client-search/package.json
+
     - name: Install JavaScript dependencies
       shell: bash
       run: yarn install
