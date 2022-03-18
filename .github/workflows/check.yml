@@ -317,6 +317,7 @@ jobs:
     needs: codegen
     if: |
       always() &&
+      needs.codegen.result == 'success' &&
       github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
