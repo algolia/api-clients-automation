@@ -316,7 +316,8 @@ jobs:
     timeout-minutes: 10
     needs: codegen
     if: |
-      always()
+      always() &&
+      github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
         with:
