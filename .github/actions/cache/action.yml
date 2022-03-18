@@ -210,7 +210,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-search/**',
             '!clients/algoliasearch-client-javascript/packages/client-search/dist',
-            'specs/bundled/search.yml',
             'openapitools.json'
           )}}
 
@@ -224,7 +223,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/recommend/**',
             '!clients/algoliasearch-client-javascript/packages/recommend/dist',
-            'specs/bundled/recommend.yml',
             'openapitools.json'
           )}}
 
@@ -238,7 +236,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-query-suggestions/**',
             '!clients/algoliasearch-client-javascript/packages/client-query-suggestions/dist',
-            'specs/bundled/query-suggestions.yml',
             'openapitools.json'
           )}}
 
@@ -252,7 +249,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-personalization/**',
             '!clients/algoliasearch-client-javascript/packages/client-personalization/dist',
-            'specs/bundled/personalization.yml',
             'openapitools.json'
           )}}
 
@@ -266,7 +262,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-analytics/**',
             '!clients/algoliasearch-client-javascript/packages/client-analytics/dist',
-            'specs/bundled/analytics.yml',
             'openapitools.json'
           )}}
 
@@ -280,7 +275,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-abtesting/**',
             '!clients/algoliasearch-client-javascript/packages/client-abtesting/dist',
-            'specs/bundled/abtesting.yml',
             'openapitools.json'
           )}}
 
@@ -294,7 +288,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-insights/**',
             '!clients/algoliasearch-client-javascript/packages/client-insights/dist',
-            'specs/bundled/insights.yml',
             'openapitools.json'
           )}}
 
@@ -308,7 +301,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-sources/**',
             '!clients/algoliasearch-client-javascript/packages/client-sources/dist',
-            'specs/bundled/sources.yml',
             'openapitools.json'
           )}}
 
@@ -322,7 +314,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-predict/**',
             '!clients/algoliasearch-client-javascript/packages/client-predict/dist',
-            'specs/bundled/predict.yml',
             'openapitools.json'
           )}}
 

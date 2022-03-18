@@ -160,7 +160,6 @@ jobs:
             hashFiles(
               format('{0}/**', matrix.client.folder),
               format('!{0}/dist', matrix.client.folder),
-              format('specs/bundled/{0}.yml', matrix.client.name),
               'openapitools.json'
             )}}
 
