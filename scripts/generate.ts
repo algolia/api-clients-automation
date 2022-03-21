@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
 import {
@@ -7,40 +9,58 @@ import {
   runIfExists,
   toAbsolutePath,
 } from './common';
-import { getCustomGenerator, getLanguageFolder } from './config';
+import {
+  getCustomGenerator,
+  getLanguageFolder,
+  getLanguageModelFolder,
+} from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
 import { setHostsOptions } from './pre-gen/setHostsOptions';
 import type { Generator } from './types';
 
-async function preGen(
-  { language, client, key, output }: Generator,
+/**
+ * Remove `model` folder for the current language and client.
+ */
+async function removeExistingModel(
+  { language, client, output }: Generator,
   verbose?: boolean
 ): Promise<void> {
-  await runIfExists(`./scripts/pre-gen/${language}.sh`, `${output} ${key}`, {
-    verbose,
-  });
+  const baseModelFolder = getLanguageModelFolder(language);
 
-  // We clean models to avoid outdated files.
-  let modelPath = '';
+  let clientModel = '';
   switch (language) {
-    case 'javascript':
-      modelPath = 'model';
-      break;
     case 'java':
-      modelPath = `algoliasearch-core/com/algolia/model/${client}`;
+      clientModel = `/${client}`;
       break;
     default:
-      return;
+      break;
   }
 
-  if (modelPath) {
-    await run(`rm -rf ${toAbsolutePath(`${output}/${modelPath}`)}`, {
+  await run(
+    `rm -rf ${toAbsolutePath(
+      path.resolve(output, `/${baseModelFolder}`, clientModel)
+    )}`,
+    {
       verbose,
-    });
-  }
+    }
+  );
+}
 
-  await setHostsOptions({ client, key });
+async function preGen(gen: Generator, verbose?: boolean): Promise<void> {
+  // Run bash pre-gen script
+  await runIfExists(
+    `./scripts/pre-gen/${gen.language}.sh`,
+    `${gen.output} ${gen.key}`,
+    {
+      verbose,
+    }
+  );
+
+  await removeExistingModel(gen);
+
+  // Updates `openapitools.json` file based on the spec `servers`
+  await setHostsOptions({ client: gen.client, key: gen.key });
 }
 
 async function generateClient(
