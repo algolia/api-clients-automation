@@ -5,13 +5,6 @@ import { execaCommand } from 'execa';
 import semver from 'semver';
 
 async function publish(): Promise<void> {
-  await execaCommand(
-    `npm config set "registry.npmjs.org/:_authToken=${process.env.NPM_AUTH_TOKEN}"`,
-    {
-      shell: 'bash',
-    }
-  );
-
   // Read the local version of `algoliasearch/package.json`
   const { version } = JSON.parse(
     (
