@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import fsp from 'fs/promises';
 import path from 'path';
 
