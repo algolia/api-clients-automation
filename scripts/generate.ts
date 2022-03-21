@@ -1,6 +1,12 @@
 import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
-import { buildCustomGenerators, CI, run, runIfExists } from './common';
+import {
+  buildCustomGenerators,
+  CI,
+  run,
+  runIfExists,
+  toAbsolutePath,
+} from './common';
 import { getCustomGenerator, getLanguageFolder } from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
@@ -14,6 +20,25 @@ async function preGen(
   await runIfExists(`./scripts/pre-gen/${language}.sh`, `${output} ${key}`, {
     verbose,
   });
+
+  // We clean models to avoid outdated files.
+  let modelPath = '';
+  switch (language) {
+    case 'javascript':
+      modelPath = 'model';
+      break;
+    case 'java':
+      modelPath = `algoliasearch-core/com/algolia/model/${client}`;
+      break;
+    default:
+      return;
+  }
+
+  if (modelPath) {
+    await run(`rm -rf ${toAbsolutePath(`${output}/${modelPath}`)}`, {
+      verbose,
+    });
+  }
 
   await setHostsOptions({ client, key });
 }
