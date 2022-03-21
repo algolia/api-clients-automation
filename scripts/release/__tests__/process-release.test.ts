@@ -31,7 +31,7 @@ describe('process release', () => {
     ).toEqual(['javascript', 'java']);
   });
 
-  it('parses parses issue body correctly', () => {
+  it('parses issue body correctly', () => {
     // This test is a glue between create-release-issue and process-release.
     const issueBody = [
       TEXT.versionChangeHeader,
