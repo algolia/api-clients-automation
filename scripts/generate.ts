@@ -31,7 +31,7 @@ async function removeExistingModel(
   let clientModel = '';
   switch (language) {
     case 'java':
-      clientModel = `/${client}`;
+      clientModel = client;
       break;
     default:
       break;
@@ -39,7 +39,7 @@ async function removeExistingModel(
 
   await run(
     `rm -rf ${toAbsolutePath(
-      path.resolve(output, `/${baseModelFolder}`, clientModel)
+      path.resolve('..', output, baseModelFolder, clientModel)
     )}`,
     {
       verbose,
