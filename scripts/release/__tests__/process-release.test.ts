@@ -53,10 +53,15 @@ describe('process release', () => {
     ].join('\n');
 
     const versions = getVersionsToRelease(issueBody);
-    expect(Object.keys(versions)).toEqual(['javascript', 'php']);
-    expect(versions.javascript.current).toEqual('0.0.1');
-    expect(versions.javascript.releaseType).toEqual('patch');
-    expect(versions.php.current).toEqual('0.0.1');
-    expect(versions.php.releaseType).toEqual('minor');
+    expect(versions).toEqual({
+      javascript: expect.objectContaining({
+        current: '0.0.1',
+        releaseType: 'patch',
+      }),
+      php: expect.objectContaining({
+        current: '0.0.1',
+        releaseType: 'minor',
+      }),
+    });
   });
 });
