@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import semver from 'semver';
 
 import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
+import type { Language } from '../types';
 
 import {
   RELEASED_TAG,
@@ -67,7 +68,7 @@ export function parseCommit(commit: string): Commit {
   }
   message = message.slice(message.indexOf(':') + 1).trim();
   type = matchResult[1];
-  const lang = matchResult[2];
+  const lang = matchResult[2] as Language;
 
   if (!LANGUAGES.includes(lang)) {
     return { error: 'unknown-language-scope' };

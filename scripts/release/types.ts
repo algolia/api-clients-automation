@@ -1,5 +1,7 @@
 import type { ReleaseType } from 'semver';
 
+import type { Language } from '../types';
+
 export type Version = {
   current: string;
   releaseType: ReleaseType | null;
@@ -18,7 +20,7 @@ export type VersionsWithoutReleaseType = {
 export type PassedCommit = {
   hash: string;
   type: string;
-  lang: string;
+  lang: Language;
   message: string;
   raw: string;
 };
