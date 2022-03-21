@@ -347,8 +347,8 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            '!clients/algoliasearch-client-java-2/target',
             'clients/algoliasearch-client-java-2/**',
+            'templates/java/**',
             'specs/bundled/search.yml'
           )}}
 
