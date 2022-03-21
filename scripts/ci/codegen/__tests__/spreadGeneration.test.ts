@@ -31,4 +31,18 @@ describe('spread generation', () => {
       `feat(ci): make ci push generated code\n\nhttps://github.com/algolia/api-clients-automation/pull/244`
     );
   });
+
+  it('keeps the commit message even if it does not have PR number', () => {
+    const commitMessage = `feat(ci): make ci push generated code`;
+    expect(cleanUpCommitMessage(commitMessage)).toEqual(commitMessage);
+  });
+
+  it('cleans up correctly even if the title contains a url', () => {
+    const commitMessage = `fix(java): solve oneOf using a custom generator https://algolia.atlassian.net/browse/APIC-123 (#200)`;
+    expect(cleanUpCommitMessage(commitMessage)).toMatchInlineSnapshot(`
+      "fix(java): solve oneOf using a custom generator https://algolia.atlassian.net/browse/APIC-123
+
+      https://github.com/algolia/api-clients-automation/pull/200"
+    `);
+  });
 });
