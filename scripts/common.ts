@@ -193,3 +193,7 @@ export async function buildCustomGenerators(verbose: boolean): Promise<void> {
   });
   spinner.succeed();
 }
+
+export async function gitBranchExists(branchName: string): Promise<boolean> {
+  return Boolean(await run(`git ls-remote --heads origin ${branchName}`));
+}
