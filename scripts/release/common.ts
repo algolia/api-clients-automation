@@ -8,9 +8,10 @@ export const OWNER = config.owner;
 export const REPO = config.repo;
 export const MAIN_GENERATOR = Object.keys(clientsConfig).reduce(
   (mainGenerator: { [lang: string]: string }, lang: string) => {
-    // eslint-disable-next-line no-param-reassign
-    mainGenerator[lang] = clientsConfig[lang].mainGenerator;
-    return mainGenerator;
+    return {
+      ...mainGenerator,
+      [lang]: clientsConfig[lang].mainGenerator,
+    };
   },
   {}
 );
