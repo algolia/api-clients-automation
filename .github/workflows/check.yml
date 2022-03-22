@@ -119,7 +119,7 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client)
+              format('clients/algoliasearch-client-javascript/packages/{0}/src/**', matrix.client)
             )}}
 
       - name: Build '${{ matrix.client }}' client
