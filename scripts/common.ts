@@ -191,10 +191,5 @@ export async function buildCustomGenerators(verbose: boolean): Promise<void> {
 }
 
 export async function gitBranchExists(branchName: string): Promise<boolean> {
-  try {
-    await run(`git rev-parse --verify ${branchName}`);
-    return true;
-  } catch {
-    return false;
-  }
+  return Boolean(await run(`git ls-remote --heads origin ${branchName}`));
 }
