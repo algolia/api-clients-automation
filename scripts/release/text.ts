@@ -12,10 +12,11 @@ export default {
     `**Line removed** → Do nothing.`,
   ].join('\n'),
   indenpendentVersioning: `
-  <summary>
-    <i>The JavaScript repository consists of several packages with independent versioning. Release type is applied to each version.</i>
+  <details>
+    <summary>
+      <i>The JavaScript repository consists of several packages with independent versioning. Release type is applied to each version.</i>
+    </summary>
 
-    <details>
     For example, if the release type is \`patch\`,
 
     * algoliasearch@5.0.0 -> 5.0.1
@@ -25,8 +26,7 @@ export default {
     * @algolia/client-predict@0.0.1 -> 0.0.2
     * ...
     * @algolia/requester-browser-xhr@0.0.5 -> 0.0.6.
-    </details>
-  </summary>
+  </details>
   `,
   descriptionForSkippedLang: `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
 
