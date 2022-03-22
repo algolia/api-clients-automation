@@ -25,11 +25,12 @@ dotenv.config({ path: ROOT_ENV_PATH });
 
 function readVersions(): VersionsWithoutReleaseType {
   return Object.keys(MAIN_GENERATOR).reduce((acc, lang) => {
-    // eslint-disable-next-line no-param-reassign
-    acc[lang] = {
-      current: getPackageVersion(lang),
+    return {
+      ...acc,
+      [lang]: {
+        current: getPackageVersion(lang),
+      },
     };
-    return acc;
   }, {});
 }
 
