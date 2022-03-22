@@ -18,13 +18,13 @@ export default {
     <details>
     For example, if the release type is \`patch\`,
 
-    * \`algoliasearch\`@5.0.0 -> 5.0.1
-    * \`@algolia/client-search\`@5.0.0 -> 5.0.1
-    * \`@algolia/client-abtesting\`@5.0.0 -> 5.0.1
+    * algoliasearch@5.0.0 -> 5.0.1
+    * @algolia/client-search@5.0.0 -> 5.0.1
+    * @algolia/client-abtesting@5.0.0 -> 5.0.1
     * ...
-    * \`@algolia/client-predict\`@0.0.1 -> 0.0.2
+    * @algolia/client-predict@0.0.1 -> 0.0.2
     * ...
-    * \`@algolia/requester-browser-xhr\`@0.0.5 -> 0.0.6.
+    * @algolia/requester-browser-xhr@0.0.5 -> 0.0.6.
     </details>
   </summary>
   `,
