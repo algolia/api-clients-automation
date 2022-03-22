@@ -40,6 +40,10 @@ Object.entries(openapitools['generator-cli'].generators).forEach(
   }
 );
 
+export function getPackageVersion(generator: string): string {
+  return GENERATORS[generator].additionalProperties.packageVersion;
+}
+
 export const LANGUAGES = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.language)),
 ];
@@ -188,4 +192,8 @@ export async function buildCustomGenerators(verbose: boolean): Promise<void> {
     verbose,
   });
   spinner.succeed();
+}
+
+export async function gitBranchExists(branchName: string): Promise<boolean> {
+  return Boolean(await run(`git ls-remote --heads origin ${branchName}`));
 }
