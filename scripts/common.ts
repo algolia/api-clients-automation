@@ -189,3 +189,12 @@ export async function buildCustomGenerators(verbose: boolean): Promise<void> {
   });
   spinner.succeed();
 }
+
+export async function gitBranchExists(branchName: string): Promise<boolean> {
+  try {
+    await run(`git rev-parse --verify ${branchName}`);
+    return true;
+  } catch {
+    return false;
+  }
+}
