@@ -217,10 +217,8 @@ async function processRelease(): Promise<void> {
       message: `chore: release ${next}`,
       cwd: tempGitDir,
     });
-    if (process.env.VERSION_TAG_ON_RELEASE === 'true') {
-      await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
-      await run(`git push --tags`, { cwd: tempGitDir });
-    }
+    await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
+    await run(`git push --tags`, { cwd: tempGitDir });
     await run(`git push`, { cwd: tempGitDir });
   }
 
