@@ -218,8 +218,7 @@ async function processRelease(): Promise<void> {
       cwd: tempGitDir,
     });
     await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
-    await run(`git push --tags`, { cwd: tempGitDir });
-    await run(`git push`, { cwd: tempGitDir });
+    await run(`git push --follow-tags`, { cwd: tempGitDir });
   }
 
   // Commit and push from the monorepo level.
