@@ -36,6 +36,7 @@ jobs:
       RUN_JS: ${{ steps.setup.outputs.RUN_JS }}
       RUN_JS_ALGOLIASEARCH: ${{ steps.setup.outputs.RUN_JS_ALGOLIASEARCH }}
       RUN_JS_COMMON: ${{ steps.setup.outputs.RUN_JS_COMMON }}
+      RUN_JS_TESTS: ${{ steps.setup.outputs.RUN_JS_TESTS }}
       JS_MATRIX: ${{ steps.setup.outputs.JS_MATRIX }}
 
       RUN_JAVA: ${{ steps.setup.outputs.RUN_JAVA }}
@@ -307,7 +308,7 @@ jobs:
       - client_javascript_algoliasearch
     if: |
       always() &&
-      needs.setup.outputs.RUN_CTS == 'true' &&
+      needs.setup.outputs.RUN_JS_TESTS == 'true' &&
       contains(needs.*.result, 'success') &&
       !contains(needs.*.result, 'failure')
     steps:
@@ -320,9 +321,6 @@ jobs:
 
       - name: Run client-common tests
         run: yarn workspace @experimental-api-clients-automation/client-common test
-
-      - name: Check JavaScript client size
-        run: exit $(yarn workspace algoliasearch-client-javascript test:size | echo $?)
 
   cts:
     runs-on: ubuntu-20.04
@@ -344,6 +342,9 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
+
+      - name: Check JavaScript client size
+        run: exit $(yarn workspace algoliasearch-client-javascript test:size | echo $?)
 
       - name: Generate
         run: yarn cli cts generate
