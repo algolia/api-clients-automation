@@ -1,4 +1,4 @@
-import type { Cache, CacheEvents } from './types';
+import type { Cache, CacheEvents } from '../types';
 
 export function createNullCache(): Cache {
   return {

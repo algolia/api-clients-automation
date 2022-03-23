@@ -1,4 +1,4 @@
-import { createMemoryCache } from '../createMemoryCache';
+import { createMemoryCache } from '../../cache';
 
 type DefaultValue = Promise<{ bar: number }>;
 

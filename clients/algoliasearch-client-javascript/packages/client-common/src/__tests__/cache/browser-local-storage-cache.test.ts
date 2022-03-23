@@ -1,4 +1,4 @@
-import { createBrowserLocalStorageCache } from '../createBrowserLocalStorageCache';
+import { createBrowserLocalStorageCache } from '../../cache';
 
 const version = 'foobar';
 const notAvailableStorage = new Proxy(window.localStorage, {

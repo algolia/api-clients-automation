@@ -1,9 +1,4 @@
-/* eslint-disable jsdoc/check-tag-names */
-/**
- * @jest-environment jsdom
- */
-
-import type { BrowserLocalStorageOptions, Cache, CacheEvents } from './types';
+import type { BrowserLocalStorageOptions, Cache, CacheEvents } from '../types';
 
 export function createBrowserLocalStorageCache(
   options: BrowserLocalStorageOptions

@@ -1,4 +1,4 @@
-import { createNullCache } from '../createNullCache';
+import { createNullCache } from '../../cache';
 
 type DefaultValue = Promise<{ bar: number }>;
 

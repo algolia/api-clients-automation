@@ -1,4 +1,4 @@
-import type { Cache, CacheEvents, MemoryCacheOptions } from './types';
+import type { Cache, CacheEvents, MemoryCacheOptions } from '../types';
 
 export function createMemoryCache(
   options: MemoryCacheOptions = { serializable: true }
