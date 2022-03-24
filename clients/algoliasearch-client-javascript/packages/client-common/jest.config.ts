@@ -2,7 +2,7 @@ import type { Config } from '@jest/types';
 
 const baseConfig: Config.InitialOptions = {
   preset: 'ts-jest',
-  roots: ['src/__tests__/cache'],
+  roots: ['src/__tests__'],
 };
 
 const config: Config.InitialOptions = {
