@@ -38,16 +38,6 @@ describe('create release issue', () => {
     });
   });
 
-  it('asdfa', () => {
-    expect(parseCommit(`5b70cadc feat(java): CTS APIC-253 (#102)`)).toEqual({
-      hash: '5b70cadc',
-      lang: 'java',
-      message: 'CTS APIC-253 (#102)',
-      raw: '5b70cadc feat(java): CTS APIC-253 (#102)',
-      type: 'feat',
-    });
-  });
-
   it('generates text for version changes', () => {
     expect(
       getVersionChangesText({
