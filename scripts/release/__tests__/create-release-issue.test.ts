@@ -17,24 +17,34 @@ describe('create release issue', () => {
   });
 
   it('parses commit', () => {
-    expect(parseCommit(`abcdefg fix(javascript): fix the thing`)).toEqual({
-      hash: 'abcdefg',
+    expect(parseCommit(`b2501882 fix(javascript): fix the thing`)).toEqual({
+      hash: 'b2501882',
       lang: 'javascript',
       message: 'fix the thing',
-      raw: 'abcdefg fix(javascript): fix the thing',
+      raw: 'b2501882 fix(javascript): fix the thing',
       type: 'fix',
     });
   });
 
   it('returns error when language scope is missing', () => {
-    expect(parseCommit(`abcdefg fix: fix the thing`)).toEqual({
+    expect(parseCommit(`b2501882 fix: fix the thing`)).toEqual({
       error: 'missing-language-scope',
     });
   });
 
   it('returns error when language scope is unknown', () => {
-    expect(parseCommit(`abcdefg fix(basic): fix the thing`)).toEqual({
+    expect(parseCommit(`b2501882 fix(basic): fix the thing`)).toEqual({
       error: 'unknown-language-scope',
+    });
+  });
+
+  it('asdfa', () => {
+    expect(parseCommit(`5b70cadc feat(java): CTS APIC-253 (#102)`)).toEqual({
+      hash: '5b70cadc',
+      lang: 'java',
+      message: 'CTS APIC-253 (#102)',
+      raw: '5b70cadc feat(java): CTS APIC-253 (#102)',
+      type: 'feat',
     });
   });
 
@@ -125,11 +135,11 @@ describe('create release issue', () => {
       },
       commits: [
         {
-          hash: 'abcdefg',
+          hash: 'b2501882',
           type: 'feat',
           lang: 'javascript',
           message: 'update the API (BREAKING CHANGE)',
-          raw: 'abcdefg feat(javascript): update the API (BREAKING CHANGE)',
+          raw: 'b2501882 feat(javascript): update the API (BREAKING CHANGE)',
         },
       ],
     });
@@ -152,11 +162,11 @@ describe('create release issue', () => {
       },
       commits: [
         {
-          hash: 'abcdefg',
+          hash: 'b2501882',
           type: 'feat',
           lang: 'php',
           message: 'update the API',
-          raw: 'abcdefg feat(php): update the API',
+          raw: 'b2501882 feat(php): update the API',
         },
       ],
     });
@@ -179,11 +189,11 @@ describe('create release issue', () => {
       },
       commits: [
         {
-          hash: 'abcdefg',
+          hash: 'b2501882',
           type: 'fix',
           lang: 'java',
           message: 'fix some bug',
-          raw: 'abcdefg fix(java): fix some bug',
+          raw: 'b2501882 fix(java): fix some bug',
         },
       ],
     });
@@ -206,11 +216,11 @@ describe('create release issue', () => {
       },
       commits: [
         {
-          hash: 'abcdefg',
+          hash: 'b2501882',
           type: 'fix',
           lang: 'java',
           message: 'fix some bug',
-          raw: 'abcdefg fix(java): fix some bug',
+          raw: 'b2501882 fix(java): fix some bug',
         },
       ],
     });
@@ -235,11 +245,11 @@ describe('create release issue', () => {
       },
       commits: [
         {
-          hash: 'abcdefg',
+          hash: 'b2501882',
           type: 'chore',
           lang: 'javascript',
           message: 'update devDevpendencies',
-          raw: 'abcdefg chore(javascript): update devDevpendencies',
+          raw: 'b2501882 chore(javascript): update devDevpendencies',
         },
       ],
     });
