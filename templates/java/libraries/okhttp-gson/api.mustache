@@ -37,14 +37,18 @@ public class {{classname}} extends ApiClient {
     public {{classname}}(String appId, String apiKey) {
         super(appId, apiKey, new HttpRequester(getDefaultHosts(".")));
     }
+    
     {{/fallbackToAliasHost}}
     public {{classname}}(String appId, String apiKey, String region) {
         super(appId, apiKey, new HttpRequester(getDefaultHosts(region)));
     }
     {{/hasRegionalHost}}
+
+    {{^hasRegionalHost}}
     public {{classname}}(String appId, String apiKey) {
         super(appId, apiKey, new HttpRequester(getDefaultHosts(appId)));
     }
+    {{/hasRegionalHost}}
     
     public {{classname}}(String appId, String apiKey, Requester requester) {
         super(appId, apiKey, requester);

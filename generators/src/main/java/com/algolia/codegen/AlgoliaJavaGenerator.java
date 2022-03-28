@@ -168,14 +168,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         "algoliasearch-core/com/algolia/utils/echo",
         "EchoResponse.java"));
 
-    // remove ApiException.java
-    for (int i = 0; i < supportingFiles.size(); i++) {
-      if (supportingFiles.get(i).getTemplateFile().equals("apiException.mustache")) {
-        supportingFiles.remove(i);
-        break;
-      }
-    }
-
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
