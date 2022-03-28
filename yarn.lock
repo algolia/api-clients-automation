@@ -24,7 +24,6 @@ __metadata:
     eslint-plugin-prettier: 4.0.0
     eslint-plugin-unused-imports: 2.0.0
     eslint-plugin-yml: 0.12.0
-    fs-extra: 10.0.1
     json: 11.0.0
     mustache: 4.2.0
     prettier: 2.5.1
@@ -18299,6 +18298,7 @@ __metadata:
     eslint: 8.6.0
     execa: 5.1.1
     folder-hash: 4.0.2
+    fs-extra: 10.0.1
     inquirer: 8.2.0
     jest: 27.4.7
     js-yaml: 4.1.0
