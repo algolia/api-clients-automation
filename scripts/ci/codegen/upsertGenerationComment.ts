@@ -6,7 +6,6 @@ import { OWNER, REPO } from '../../release/common';
 
 import commentText from './text';
 
-// this should be changed to the bot name once we have the logs
 const BOT_NAME = 'algolia-api-client-bot';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const octokit = new Octokit({
