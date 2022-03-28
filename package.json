@@ -22,8 +22,8 @@
     "release": "yarn workspace scripts createReleaseIssue",
     "scripts:lint": "eslint --ext=ts scripts/",
     "scripts:test": "yarn workspace scripts test",
-    "specs:fix": "eslint --ext=yml specs/ --fix",
-    "specs:lint": "eslint --ext=yml specs/$0 --fix",
+    "specs:fix": "eslint --ext=yml specs/$0 --fix",
+    "specs:lint": "eslint --ext=yml specs/$0",
     "website:build": "yarn workspace website build",
     "website": "yarn workspace website start --host 0.0.0.0"
   },
