@@ -6,7 +6,7 @@ import { OWNER, REPO } from '../../release/common';
 
 import commentText from './text';
 
-const BOT_NAME = 'algolia-api-client-bot';
+const BOT_NAME = 'algolia-bot';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const octokit = new Octokit({
   auth: `token ${process.env.GITHUB_TOKEN}`,
