@@ -112,7 +112,7 @@ async function updateOpenApiTools(
 }
 
 async function emptyDirExceptForDotGit(dir: string): Promise<void> {
-  for await (const file of await fsp.readdir(dir)) {
+  for (const file of await fsp.readdir(dir)) {
     if (file !== '.git') {
       await remove(path.resolve(dir, file));
     }
