@@ -3,7 +3,7 @@ import fsp from 'fs/promises';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
-import { emptyDir, copy } from 'fs-extra';
+import { copy, remove } from 'fs-extra';
 import semver from 'semver';
 import type { ReleaseType } from 'semver';
 
@@ -28,6 +28,7 @@ import {
 } from './common';
 import TEXT from './text';
 import type { VersionsToRelease } from './types';
+import path from 'path';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
@@ -108,6 +109,14 @@ async function updateOpenApiTools(
     toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2)
   );
+}
+
+async function emptyDirExceptForDotGit(dir: string): Promise<void> {
+  for await (const file of await fsp.readdir(dir)) {
+    if (file !== '.git') {
+      await remove(path.resolve(dir, file));
+    }
+  }
 }
 
 async function updateChangelog({
@@ -206,7 +215,7 @@ async function processRelease(): Promise<void> {
     });
 
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
-    await emptyDir(tempGitDir);
+    await emptyDirExceptForDotGit(tempGitDir);
     await copy(clientPath, tempGitDir, { preserveTimestamps: true });
 
     await configureGitHubAuthor(tempGitDir);
