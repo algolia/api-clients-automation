@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import fsp from 'fs/promises';
+import path from 'path';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
@@ -28,7 +29,6 @@ import {
 } from './common';
 import TEXT from './text';
 import type { VersionsToRelease } from './types';
-import path from 'path';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
