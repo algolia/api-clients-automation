@@ -28,20 +28,26 @@ import {
   cloneRepository,
 } from './common';
 import TEXT from './text';
-import type { VersionsToRelease } from './types';
+import type {
+  VersionsToRelease,
+  BeforeClientGenerationCommand,
+  BeforeClientCommitCommand,
+} from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
-
-type BeforeClientGenerationCommand = (params: {
-  releaseType: ReleaseType;
-  dir: string;
-}) => Promise<void>;
 
 const BEFORE_CLIENT_GENERATION: {
   [lang: string]: BeforeClientGenerationCommand;
 } = {
   javascript: async ({ releaseType, dir }) => {
     await run(`yarn release:bump ${releaseType}`, { cwd: dir });
+  },
+};
+
+const BEFORE_CLIENT_COMMIT: { [lang: string]: BeforeClientCommitCommand } = {
+  javascript: async ({ dir }) => {
+    await run(`yarn`, { cwd: dir }); // generate `yarn.lock` file
+    await run(`git add yarn.lock`, { cwd: dir });
   },
 };
 
@@ -224,6 +230,9 @@ async function processRelease(): Promise<void> {
     const { current, releaseType } = versionsToRelease[lang];
     const next = semver.inc(current, releaseType);
 
+    await BEFORE_CLIENT_COMMIT[lang]?.({
+      dir: tempGitDir,
+    });
     await gitCommit({
       message: `chore: release v${next}`,
       cwd: tempGitDir,
