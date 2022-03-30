@@ -218,7 +218,7 @@ export async function checkForCache(
   const generatedFilesExists = (
     await Promise.all(
       generatedFiles.map((generatedFile) =>
-        exists(`${folder}/${generatedFile}`).then((res) => res)
+        exists(`${folder}/${generatedFile}`)
       )
     )
   ).every((exist) => exist);
