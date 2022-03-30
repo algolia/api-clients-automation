@@ -30,12 +30,12 @@ export type Commit =
   | { error: 'missing-language-scope' }
   | { error: 'unknown-language-scope' };
 
-export type VersionsToRelease = {
-  [lang: string]: {
+export type VersionsToRelease = Partial<{
+  [lang in Language]: {
     current: string;
     releaseType: ReleaseType;
   };
-};
+}>;
 
 export type BeforeClientGenerationCommand = (params: {
   releaseType: ReleaseType;
