@@ -56,7 +56,7 @@ async function buildSpec(
       {
         job: `'${client}' specs`,
         folder: toAbsolutePath('specs/'),
-        buildFiles: [`bundled/${client}.yml`],
+        generatedFiles: [`bundled/${client}.yml`],
         filesToCache: [client, 'common'],
         cacheFile,
       },

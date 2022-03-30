@@ -7,7 +7,12 @@ import { hashElement } from 'folder-hash';
 import openapitools from '../openapitools.json';
 
 import { createSpinner } from './oraLog';
-import type { Generator, RunOptions } from './types';
+import type {
+  CheckForCache,
+  CheckForCacheOptions,
+  Generator,
+  RunOptions,
+} from './types';
 
 export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);
@@ -199,30 +204,23 @@ export async function checkForCache(
   {
     job,
     folder,
-    buildFiles,
+    generatedFiles,
     filesToCache,
     cacheFile,
-  }: {
-    job: string;
-    folder: string;
-    buildFiles: string[];
-    filesToCache: string[];
-    cacheFile: string;
-  },
+  }: CheckForCacheOptions,
   verbose: boolean
-): Promise<{ cacheExists: boolean; hash: string }> {
+): Promise<CheckForCache> {
   const spinner = createSpinner(`checking cache for ${job}`, verbose).start();
-  const buildFilesExists = buildFiles.every((buildFile) =>
-    exists(`${folder}/${buildFile}`).then((res) => res)
-  );
-  const cache = {
+  const cache: CheckForCache = {
     cacheExists: false,
     hash: '',
   };
 
-  if (!buildFilesExists) {
-    spinner.info(`cache not found for ${job}`);
-    return cache;
+  for (const buildFile of generatedFiles) {
+    if ((await exists(`${folder}/${buildFile}`)) === false) {
+      spinner.info(`cache not found for ${job}`);
+      return cache;
+    }
   }
 
   for (const fileToCache of filesToCache) {
@@ -253,7 +251,7 @@ export async function buildCustomGenerators(verbose: boolean): Promise<void> {
     {
       job: 'custom generators',
       folder: toAbsolutePath('generators/'),
-      buildFiles: ['build', '.gradle'],
+      generatedFiles: ['build'],
       filesToCache: ['src', 'build.gradle', 'settings.gradle'],
       cacheFile,
     },
