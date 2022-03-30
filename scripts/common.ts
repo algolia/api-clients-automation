@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
+import { hashElement } from 'folder-hash';
 
 import openapitools from '../openapitools.json';
 
@@ -194,11 +195,86 @@ export async function gitCommit({
   );
 }
 
+export async function checkForCache(
+  {
+    job,
+    folder,
+    buildFiles,
+    filesToCache,
+    cacheFile,
+  }: {
+    job: string;
+    folder: string;
+    buildFiles: string[];
+    filesToCache: string[];
+    cacheFile: string;
+  },
+  verbose: boolean
+): Promise<{ cacheExists: boolean; hash: string }> {
+  const spinner = createSpinner(`checking cache for ${job}`, verbose).start();
+  const buildFilesExists = buildFiles.every((buildFile) =>
+    exists(`${folder}/${buildFile}`).then((res) => res)
+  );
+  const cache = {
+    cacheExists: false,
+    hash: '',
+  };
+
+  if (!buildFilesExists) {
+    spinner.info(`cache not found for ${job}`);
+    return cache;
+  }
+
+  for (const fileToCache of filesToCache) {
+    const fileHash = (await hashElement(`${folder}/${fileToCache}`)).hash;
+
+    cache.hash = `${cache.hash}-${fileHash}`;
+  }
+
+  if (await exists(cacheFile)) {
+    const storedHash = (await fsp.readFile(cacheFile)).toString();
+    if (storedHash === cache.hash) {
+      spinner.succeed(`job skipped, cache found for ${job}`);
+      return {
+        cacheExists: true,
+        hash: cache.hash,
+      };
+    }
+  }
+
+  spinner.info(`cache not found for ${job}`);
+
+  return cache;
+}
+
 export async function buildCustomGenerators(verbose: boolean): Promise<void> {
+  const cacheFile = toAbsolutePath('generators/.cache');
+  const { cacheExists, hash } = await checkForCache(
+    {
+      job: 'custom generators',
+      folder: toAbsolutePath('generators/'),
+      buildFiles: ['build', '.gradle'],
+      filesToCache: ['src', 'build.gradle', 'settings.gradle'],
+      cacheFile,
+    },
+    verbose
+  );
+
+  if (cacheExists) {
+    return;
+  }
+
   const spinner = createSpinner('building custom generators', verbose).start();
+
   await run('./gradle/gradlew --no-daemon -p generators assemble', {
     verbose,
   });
+
+  if (hash) {
+    spinner.text = 'storing custom generators cache';
+    await fsp.writeFile(cacheFile, hash);
+  }
+
   spinner.succeed();
 }
 
