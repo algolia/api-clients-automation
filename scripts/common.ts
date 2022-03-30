@@ -215,13 +215,13 @@ export async function checkForCache(
     cacheExists: false,
     hash: '',
   };
-
-  for (const buildFile of generatedFiles) {
-    if ((await exists(`${folder}/${buildFile}`)) === false) {
-      spinner.info(`cache not found for ${job}`);
-      return cache;
-    }
-  }
+  const generatedFilesExists = (
+    await Promise.all(
+      generatedFiles.map((generatedFile) =>
+        exists(`${folder}/${generatedFile}`).then((res) => res)
+      )
+    )
+  ).every((exist) => exist);
 
   for (const fileToCache of filesToCache) {
     const fileHash = (await hashElement(`${folder}/${fileToCache}`)).hash;
@@ -229,7 +229,8 @@ export async function checkForCache(
     cache.hash = `${cache.hash}-${fileHash}`;
   }
 
-  if (await exists(cacheFile)) {
+  // We only skip if both the cache and the generated file exists
+  if (generatedFilesExists && (await exists(cacheFile))) {
     const storedHash = (await fsp.readFile(cacheFile)).toString();
     if (storedHash === cache.hash) {
       spinner.succeed(`job skipped, cache found for ${job}`);
