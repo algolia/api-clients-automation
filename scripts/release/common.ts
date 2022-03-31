@@ -1,5 +1,7 @@
 import path from 'path';
 
+import { Octokit } from '@octokit/rest';
+
 import clientsConfig from '../../config/clients.config.json';
 import config from '../../config/release.config.json';
 import { getGitHubUrl, run } from '../common';
@@ -18,6 +20,12 @@ export const MAIN_PACKAGE = Object.keys(clientsConfig).reduce(
   },
   {}
 );
+
+export function getOctokit(githubToken: string): Octokit {
+  return new Octokit({
+    auth: `token ${githubToken}`,
+  });
+}
 
 export function getTargetBranch(language: string): string {
   return config.targetBranch[language] || config.defaultTargetBranch;

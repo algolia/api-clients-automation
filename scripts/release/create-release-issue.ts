@@ -6,7 +6,14 @@ import semver from 'semver';
 import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
 import type { Language } from '../types';
 
-import { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO, MAIN_PACKAGE } from './common';
+import {
+  RELEASED_TAG,
+  MAIN_BRANCH,
+  OWNER,
+  REPO,
+  MAIN_PACKAGE,
+  getOctokit,
+} from './common';
 import TEXT from './text';
 import type {
   Versions,
@@ -246,9 +253,7 @@ async function createReleaseIssue(): Promise<void> {
     TEXT.approval,
   ].join('\n\n');
 
-  const octokit = new Octokit({
-    auth: `token ${process.env.GITHUB_TOKEN}`,
-  });
+  const octokit = getOctokit(process.env.GITHUB_TOKEN!);
 
   octokit.rest.issues
     .create({
