@@ -289,6 +289,7 @@ jobs:
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('{0}/**', matrix.client.folder),
+              'templates/php/**',
               format('specs/bundled/{0}.yml', matrix.client.name)
             )}}
 

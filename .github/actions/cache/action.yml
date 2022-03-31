@@ -362,6 +362,7 @@ runs:
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/*',
+            'templates/php/**',
             'specs/bundled/search.yml'
           )}}
 
