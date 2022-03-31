@@ -12,7 +12,7 @@ export const MAIN_PACKAGE = Object.keys(clientsConfig).reduce(
   (mainPackage: { [lang: string]: string }, lang: string) => {
     return {
       ...mainPackage,
-      [lang]: clientsConfig[lang].mainGenerator,
+      [lang]: clientsConfig[lang].mainPackage,
     };
   },
   {}
