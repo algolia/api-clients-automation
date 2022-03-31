@@ -34,6 +34,10 @@ import type { VersionsToRelease } from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
+const octokit = new Octokit({
+  auth: `token ${process.env.GITHUB_TOKEN}`,
+});
+
 type BeforeClientGenerationCommand = (params: {
   releaseType: ReleaseType;
   dir: string;
@@ -48,10 +52,6 @@ const BEFORE_CLIENT_GENERATION: {
 };
 
 async function getIssueBody(): Promise<string> {
-  const octokit = new Octokit({
-    auth: `token ${process.env.GITHUB_TOKEN}`,
-  });
-
   const {
     data: { body },
   } = await octokit.rest.issues.get({
@@ -158,10 +158,6 @@ async function updateChangelog({
 }
 
 async function isAuthorizedRelease(): Promise<boolean> {
-  const octokit = new Octokit({
-    auth: `token ${process.env.GITHUB_TOKEN}`,
-  });
-
   const { data: members } = await octokit.rest.teams.listMembersInOrg({
     org: OWNER,
     team_slug: TEAM_SLUG,
