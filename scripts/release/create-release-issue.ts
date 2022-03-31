@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
 import semver from 'semver';
 

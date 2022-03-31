@@ -2,7 +2,6 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
 import execa from 'execa';
 import { copy, remove } from 'fs-extra';

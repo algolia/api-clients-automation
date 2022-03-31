@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import { Octokit } from '@octokit/rest';
-
 import { run } from '../../common';
 import { getOctokit, OWNER, REPO } from '../../release/common';
 
