@@ -60,7 +60,12 @@ async function getIssueBody(): Promise<string> {
     issue_number: Number(process.env.EVENT_NUMBER),
   });
 
-  return body ?? '';
+  if (!body) {
+    throw new Error(
+      `Unexpected \`body\` of the release issue: ${JSON.stringify(body)}`
+    );
+  }
+  return body;
 }
 
 function getDateStamp(): string {
