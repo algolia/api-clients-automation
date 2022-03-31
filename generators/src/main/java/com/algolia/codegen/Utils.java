@@ -13,6 +13,10 @@ public class Utils {
     return str.substring(0, 1).toUpperCase() + str.substring(1);
   }
 
+  /**
+   * Will add the boolean `vendorExtensions.x-is-custom-request` to operations if
+   * they should not escape '/' in the path variable
+   */
   public static CodegenOperation specifyCustomRequest(CodegenOperation ope) {
     if (CUSTOM_METHOD.contains(ope.nickname)) {
       ope.vendorExtensions.put("x-is-custom-request", true);

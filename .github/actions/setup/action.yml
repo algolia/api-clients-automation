@@ -151,7 +151,7 @@ runs:
       id: php-matrix
       shell: bash
       run: |
-        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.GENERATORS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
 
         matrix=$(./scripts/ci/create-client-matrix.sh php $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 

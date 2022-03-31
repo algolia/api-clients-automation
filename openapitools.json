@@ -246,7 +246,7 @@
         }
       },
       "php-search": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -265,7 +265,7 @@
         }
       },
       "php-recommend": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -284,7 +284,7 @@
         }
       },
       "php-personalization": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -307,7 +307,7 @@
         }
       },
       "php-analytics": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -331,7 +331,7 @@
         }
       },
       "php-insights": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -355,7 +355,7 @@
         }
       },
       "php-abtesting": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -379,7 +379,7 @@
         }
       },
       "php-query-suggestions": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
