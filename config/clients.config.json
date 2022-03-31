@@ -13,6 +13,7 @@
     "folder": "clients/algoliasearch-client-javascript",
     "mainGenerator": "javascript-search",
     "modelFolder": "model",
+    "customGenerator": "algolia-javascript",
     "tests": {
       "extension": ".test.ts",
       "outputFolder": "src"
