@@ -9,11 +9,11 @@ export const MAIN_BRANCH = config.mainBranch;
 export const OWNER = config.owner;
 export const REPO = config.repo;
 export const TEAM_SLUG = config.teamSlug;
-export const MAIN_GENERATOR = Object.keys(clientsConfig).reduce(
-  (mainGenerator: { [lang: string]: string }, lang: string) => {
+export const MAIN_PACKAGE = Object.keys(clientsConfig).reduce(
+  (mainPackage: { [lang: string]: string }, lang: string) => {
     return {
-      ...mainGenerator,
-      [lang]: clientsConfig[lang].mainGenerator,
+      ...mainPackage,
+      [lang]: clientsConfig[lang].mainPackage,
     };
   },
   {}
