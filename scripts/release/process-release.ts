@@ -18,7 +18,6 @@ import {
   gitCommit,
 } from '../common';
 import { getLanguageFolder } from '../config';
-import type { Language } from '../types';
 
 import {
   RELEASED_TAG,
@@ -37,17 +36,15 @@ import type {
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
-const BEFORE_CLIENT_GENERATION: Partial<{
-  [lang in Language]: BeforeClientGenerationCommand;
-}> = {
+const BEFORE_CLIENT_GENERATION: {
+  [lang: string]: BeforeClientGenerationCommand;
+} = {
   javascript: async ({ releaseType, dir }) => {
     await run(`yarn release:bump ${releaseType}`, { cwd: dir });
   },
 };
 
-const BEFORE_CLIENT_COMMIT: Partial<{
-  [lang in Language]: BeforeClientCommitCommand;
-}> = {
+const BEFORE_CLIENT_COMMIT: { [lang: string]: BeforeClientCommitCommand } = {
   javascript: async ({ dir }) => {
     await run(`yarn`, { cwd: dir }); // generate `yarn.lock` file
     await run(`git add yarn.lock`, { cwd: dir });
@@ -134,7 +131,7 @@ async function updateChangelog({
   current,
   next,
 }: {
-  lang: Language;
+  lang: string;
   issueBody: string;
   current: string;
   next: string;
@@ -181,10 +178,10 @@ async function processRelease(): Promise<void> {
 
   await updateOpenApiTools(versionsToRelease);
 
-  const langsToRelease = Object.keys(versionsToRelease) as Language[];
+  const langsToRelease = Object.keys(versionsToRelease);
 
   for (const lang of langsToRelease) {
-    const { current, releaseType } = versionsToRelease[lang]!;
+    const { current, releaseType } = versionsToRelease[lang];
     /*
     About bumping versions of JS clients:
 
@@ -230,7 +227,7 @@ async function processRelease(): Promise<void> {
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
 
-    const { current, releaseType } = versionsToRelease[lang]!;
+    const { current, releaseType } = versionsToRelease[lang];
     const next = semver.inc(current, releaseType);
 
     await BEFORE_CLIENT_COMMIT[lang]?.({
