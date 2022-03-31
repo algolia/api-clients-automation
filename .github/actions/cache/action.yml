@@ -339,7 +339,7 @@ runs:
           )}}
 
     # Restore Java clients: used during 'cts' or 'codegen'
-    - name: Restore built Java client
+    - name: Restore built Java search client
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
@@ -347,13 +347,14 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/**',
+            'clients/algoliasearch-client-java-2/search/**',
+            'clients/algoliasearch-client-java-2/model/search/**',
             'templates/java/**',
             'specs/bundled/search.yml'
           )}}
 
     # Restore PHP clients: used during 'cts' or 'codegen'
-    - name: Restore built PHP client
+    - name: Restore built PHP search client
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
@@ -361,8 +362,94 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/*',
+            'clients/algoliasearch-client-php/lib/Api/SearchApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/SearchConfig.php',
+            'templates/php/**',
             'specs/bundled/search.yml'
+          )}}
+
+    - name: Restore built PHP recommend client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-php
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/RecommendApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/RecommendConfig.php',
+            'templates/php/**',
+            'specs/bundled/recommend.yml'
+          )}}
+
+    - name: Restore built PHP personalization client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-php
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/PersonalizationConfig.php',
+            'templates/php/**',
+            'specs/bundled/personalization.yml'
+          )}}
+
+    - name: Restore built PHP analytics client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-php
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/AnalyticsConfig.php',
+            'templates/php/**',
+            'specs/bundled/analytics.yml'
+          )}}
+
+    - name: Restore built PHP insights client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-php
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/InsightsApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/InsightsConfig.php',
+            'templates/php/**',
+            'specs/bundled/insights.yml'
+          )}}
+
+    - name: Restore built PHP abtesting client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-php
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/AbTestingApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/AbTestingConfig.php',
+            'templates/php/**',
+            'specs/bundled/abtesting.yml'
+          )}}
+
+    - name: Restore built PHP query-suggestions client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-php
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/QuerySuggestionsConfig.php',
+            'templates/php/**',
+            'specs/bundled/query-suggestions.yml'
           )}}
 
     - name: Install JavaScript dependencies

@@ -2,6 +2,8 @@
   "name": "scripts",
   "version": "1.0.0",
   "scripts": {
+    "createClientMatrix": "ts-node ci/createClientMatrix.ts",
+    "createSpecMatrix": "ts-node ci/createSpecMatrix.ts",
     "createReleaseIssue": "ts-node release/create-release-issue.ts",
     "processRelease": "ts-node release/process-release.ts",
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
