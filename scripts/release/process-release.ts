@@ -171,7 +171,7 @@ async function isAuthorizedRelease(): Promise<boolean> {
 
   return comments.some(
     (comment) =>
-      comment.body?.toLowerCase().includes('approved') &&
+      comment.body?.toLowerCase().trim() === 'approved' &&
       members.find((member) => member.login === comment.user?.login)
   );
 }
