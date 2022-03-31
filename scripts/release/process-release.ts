@@ -47,7 +47,6 @@ const BEFORE_CLIENT_GENERATION: {
 const BEFORE_CLIENT_COMMIT: { [lang: string]: BeforeClientCommitCommand } = {
   javascript: async ({ dir }) => {
     await run(`yarn`, { cwd: dir }); // generate `yarn.lock` file
-    await run(`git add yarn.lock`, { cwd: dir });
   },
 };
 
@@ -225,14 +224,13 @@ async function processRelease(): Promise<void> {
     await copy(clientPath, tempGitDir, { preserveTimestamps: true });
 
     await configureGitHubAuthor(tempGitDir);
+    await BEFORE_CLIENT_COMMIT[lang]?.({
+      dir: tempGitDir,
+    });
     await run(`git add .`, { cwd: tempGitDir });
 
     const { current, releaseType } = versionsToRelease[lang];
     const next = semver.inc(current, releaseType);
-
-    await BEFORE_CLIENT_COMMIT[lang]?.({
-      dir: tempGitDir,
-    });
     await gitCommit({
       message: `chore: release v${next}`,
       cwd: tempGitDir,
