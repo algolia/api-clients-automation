@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.core.util.Json;
+import io.swagger.v3.oas.models.media.Schema;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -170,6 +171,9 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
         System.out.println(e.getMessage());
         System.exit(0);
       }
+
+      System.out.println(e.getMessage());
+      System.exit(1);
     } catch (Exception e) {
       e.printStackTrace();
       System.exit(1);
@@ -181,10 +185,23 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     throws JsonParseException, JsonMappingException, IOException, CTSException {
     TreeMap<String, Request[]> cts = new TreeMap<>();
     File dir = new File("tests/CTS/methods/requests/" + client);
+    File commonTestDir = new File("tests/CTS/methods/requests/common");
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
     }
+    if (!commonTestDir.exists()) {
+      throw new CTSException(
+        "CTS not found at " + commonTestDir.getAbsolutePath(),
+        true
+      );
+    }
     for (File f : dir.listFiles()) {
+      cts.put(
+        f.getName().replace(".json", ""),
+        Json.mapper().readValue(f, Request[].class)
+      );
+    }
+    for (File f : commonTestDir.listFiles()) {
       cts.put(
         f.getName().replace(".json", ""),
         Json.mapper().readValue(f, Request[].class)
