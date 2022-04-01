@@ -32,6 +32,10 @@ export const descriptionDot: Rule.RuleModule = {
           value.value.trim().endsWith('.') ||
           !value.value.trim().includes(' ')
         ) {
+          // The rule is respected if:
+          // the description is not a string
+          // or it ends with a dot
+          // or it's a single word (like 'OK' or 'Success', it's not a sentence)
           return;
         }
 
