@@ -17,11 +17,11 @@ export const descriptionDot: Rule.RuleModule = {
     }
 
     return {
-      YAMLScalar(node): void {
-        if (node.value !== 'description') {
+      YAMLPair(node): void {
+        if (node.key.value !== 'description') {
           return;
         }
-        const value: AST.YAMLScalar = node.parent.value;
+        const value: AST.YAMLScalar = node.value.value;
         if (typeof value.value !== 'string' || value.value.endsWith('.')) {
           return;
         }

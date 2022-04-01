@@ -67,9 +67,7 @@ jobs:
         run: yarn scripts:test
 
       - name: Test custom eslint plugin
-        run: |
-          yarn build:eslint
-          yarn workspace eslint test
+        run: yarn workspace eslint test
 
   specs:
     runs-on: ubuntu-20.04
@@ -95,9 +93,6 @@ jobs:
               format('specs/{0}/**', matrix.client),
               'specs/common/**'
             )}}
-
-      - name: Install custom eslint plugin
-        run: yarn build:eslint
 
       - name: Building '${{ matrix.client }}' specs
         if: steps.cache.outputs.cache-hit != 'true'

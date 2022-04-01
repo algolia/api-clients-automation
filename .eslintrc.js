@@ -32,11 +32,14 @@ module.exports = {
           },
         ],
         'yml/require-string-key': 2,
-
-        // Should be removed once the specs are finished
-        'yml/no-empty-document': 0,
-        "automation-custom/description-dot": "error",
       },
+      overrides: [{
+        files: ['specs/**/*.yml'],
+        rules: {
+          "automation-custom/description-dot": "error",
+        }
+      }
+      ]
     },
   ],
 
