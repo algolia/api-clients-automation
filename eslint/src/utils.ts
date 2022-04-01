@@ -11,13 +11,10 @@ export function isBLockScalar(
 }
 
 export function isPairWithKey(
-  node: AST.YAMLPair | null,
+  node: AST.YAMLNode | null,
   key: string
 ): node is AST.YAMLPair {
-  return (
-    node !== null &&
-    node.type === 'YAMLPair' &&
-    isScalar(node.key) &&
-    node.key.value === key
-  );
+  if (node === null || node.type !== 'YAMLPair' || node.key === null)
+    return false;
+  return isScalar(node.key) && node.key.value === key;
 }
