@@ -8,7 +8,7 @@ import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
 import ts from 'rollup-plugin-typescript2';
 
-import generatorConfig from '../../openapitools.json';
+import generatorConfig from './openapitools.json';
 
 // Retrieve package to build
 const client = process.env.CLIENT?.replace(
