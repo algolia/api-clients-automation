@@ -14,11 +14,6 @@ simple:
   description: a number.
     `,
     `
-single:
-  can: have
-  description: simple.
-    `,
-    `
 multi:
   description: >
     Creates a new A/B test with provided configuration.
@@ -47,17 +42,6 @@ simple:
       output: `
 simple:
   description: a number.
-    `,
-    },
-    {
-      code: `
-single:
-  description: simple
-    `,
-      errors: [{ messageId: 'descriptionNoDot' }],
-      output: `
-single:
-  description: simple.
     `,
     },
     {
