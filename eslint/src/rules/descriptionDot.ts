@@ -1,5 +1,6 @@
 import type { Rule } from 'eslint';
-import type { AST } from 'yaml-eslint-parser';
+
+import { isPairWithKey, isScalar } from '../utils';
 
 export const descriptionDot: Rule.RuleModule = {
   meta: {
@@ -18,15 +19,18 @@ export const descriptionDot: Rule.RuleModule = {
 
     return {
       YAMLPair(node): void {
-        if (node.key.value !== 'description') {
+        if (!isPairWithKey(node, 'description')) {
           return;
         }
-        const value: AST.YAMLScalar = node.value.value;
+        if (!isScalar(node.value)) {
+          return;
+        }
+        const value = node.value;
         if (typeof value.value !== 'string' || value.value.endsWith('.')) {
           return;
         }
         context.report({
-          node,
+          node: node as any,
           messageId: 'descriptionNoDot',
           fix(fixer) {
             return fixer.insertTextAfterRange(value.range, '.');
