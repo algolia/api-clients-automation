@@ -43,7 +43,6 @@ const BEFORE_CLIENT_GENERATION: {
 } = {
   javascript: async ({ releaseType, dir }) => {
     await run(`yarn release:bump ${releaseType}`, { cwd: dir });
-    await run(`cp openapitools.json clients/algoliasearch-client-javascript/`);
   },
 };
 
