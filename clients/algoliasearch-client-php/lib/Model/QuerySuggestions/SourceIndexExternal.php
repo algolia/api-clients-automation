@@ -201,7 +201,7 @@ class SourceIndexExternal implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets query
      *
-     * @param string $query The suggestion you would like to add
+     * @param string $query the suggestion you would like to add
      *
      * @return self
      */
@@ -225,7 +225,7 @@ class SourceIndexExternal implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets count
      *
-     * @param int $count The measure of the suggestion relative popularity
+     * @param int $count the measure of the suggestion relative popularity
      *
      * @return self
      */
