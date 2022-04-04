@@ -190,8 +190,7 @@ runs:
             'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
             'clients/algoliasearch-client-javascript/packages/client-search/**',
             'clients/algoliasearch-client-javascript/packages/client-analytics/**',
-            'clients/algoliasearch-client-javascript/packages/client-personalization/**',
-            'templates/javascript/**'
+            'clients/algoliasearch-client-javascript/packages/client-personalization/**'
           )}}
 
     - name: Restore built JavaScript search client
@@ -207,7 +206,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-search/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-search/package.json',
             'specs/bundled/search.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript recommend client
@@ -223,7 +224,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/recommend/builds/**',
             'clients/algoliasearch-client-javascript/packages/recommend/package.json',
             'specs/bundled/recommend.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript query-suggestions client
@@ -239,7 +242,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-query-suggestions/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-query-suggestions/package.json',
             'specs/bundled/query-suggestions.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript personalization client
@@ -255,7 +260,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-personalization/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-personalization/package.json',
             'specs/bundled/personalization.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript analytics client
@@ -271,7 +278,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-analytics/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-analytics/package.json',
             'specs/bundled/analytics.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript abtesting client
@@ -287,7 +296,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-abtesting/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-abtesting/package.json',
             'specs/bundled/abtesting.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript insights client
@@ -303,7 +314,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-insights/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-insights/package.json',
             'specs/bundled/insights.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript sources client
@@ -319,7 +332,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-sources/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-sources/package.json',
             'specs/bundled/sources.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built JavaScript predict client
@@ -335,7 +350,9 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-predict/builds/**',
             'clients/algoliasearch-client-javascript/packages/client-predict/package.json',
             'specs/bundled/predict.yml',
-            'templates/javascript/**'
+            'templates/javascript/**',
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     # Restore Java clients: used during 'cts' or 'codegen'
@@ -349,8 +366,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-java-2/search/**',
             'clients/algoliasearch-client-java-2/model/search/**',
+            'specs/bundled/search.yml',
             'templates/java/**',
-            'specs/bundled/search.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     # Restore PHP clients: used during 'cts' or 'codegen'
@@ -364,8 +383,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/SearchApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/SearchConfig.php',
+            'specs/bundled/search.yml',
             'templates/php/**',
-            'specs/bundled/search.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built PHP recommend client
@@ -378,8 +399,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/RecommendApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/RecommendConfig.php',
+            'specs/bundled/recommend.yml',
             'templates/php/**',
-            'specs/bundled/recommend.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built PHP personalization client
@@ -392,8 +415,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/PersonalizationConfig.php',
+            'specs/bundled/personalization.yml',
             'templates/php/**',
-            'specs/bundled/personalization.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built PHP analytics client
@@ -406,8 +431,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/AnalyticsConfig.php',
+            'specs/bundled/analytics.yml',
             'templates/php/**',
-            'specs/bundled/analytics.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built PHP insights client
@@ -420,8 +447,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/InsightsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/InsightsConfig.php',
+            'specs/bundled/insights.yml',
             'templates/php/**',
-            'specs/bundled/insights.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built PHP abtesting client
@@ -434,8 +463,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/AbTestingApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/AbTestingConfig.php',
+            'specs/bundled/abtesting.yml',
             'templates/php/**',
-            'specs/bundled/abtesting.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Restore built PHP query-suggestions client
@@ -448,8 +479,10 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/QuerySuggestionsConfig.php',
+            'specs/bundled/query-suggestions.yml',
             'templates/php/**',
-            'specs/bundled/query-suggestions.yml'
+            'generators/src/**',
+            'scripts/**'
           )}}
 
     - name: Install JavaScript dependencies

@@ -7,7 +7,7 @@ type CreateMatrix = {
   baseBranch: string;
 };
 
-type Client = {
+type ClientMatrix = {
   name: string;
   folder: string;
   config?: string;
@@ -18,49 +18,62 @@ type Matrix<TMatrix> = {
   client: TMatrix[];
 };
 
+// This empty matrix is required by the CI, otherwise it throws
+const EMPTY_MATRIX = JSON.stringify({ client: ['no-run'] });
+
+/**
+ * Returns the number of diff between a `branch` and the current HEAD for the given `path`.
+ */
+async function getNbGitDiff(branch: string, path: string): Promise<number> {
+  return parseInt(
+    (
+      await run(`git diff --shortstat ${branch}..HEAD -- ${path} | wc -l`)
+    ).trim(),
+    10
+  );
+}
+
 async function getClientMatrix({
   language,
   baseBranch,
   baseChanged,
-}: CreateMatrix): Promise<Matrix<Client>> {
-  const matrix: Matrix<Client> = { client: [] };
+}: CreateMatrix): Promise<Matrix<ClientMatrix>> {
+  const matrix: Matrix<ClientMatrix> = { client: [] };
 
-  for (const [generatorKey, generatorOptions] of Object.entries(GENERATORS)) {
+  for (const {
+    client,
+    output,
+    additionalProperties,
+    ...options
+  } of Object.values(GENERATORS)) {
     if (
-      generatorKey.startsWith(`${language}-`) === false ||
+      options.language !== language ||
       // `algoliasearch` is an aggregation of clients
-      generatorOptions.client === 'algoliasearch'
+      client === 'algoliasearch'
     ) {
       continue;
     }
 
-    const folder = generatorOptions.output.replace('#{cwd}', '');
-    const specChanges = await run(
-      `git diff --shortstat ${baseBranch}..HEAD -- specs/${generatorOptions.client} | wc -l | tr -d ' '`
-    );
-    const clientChanges = await run(
-      `git diff --shortstat ${baseBranch}..HEAD -- ${folder} | wc -l | tr -d ' '`
-    );
+    const specChanges = await getNbGitDiff(baseBranch, `specs/${client}`);
+    const clientChanges = await getNbGitDiff(baseBranch, output);
 
-    if (clientChanges === '0' && specChanges === '0' && baseChanged === false) {
+    if (clientChanges === 0 && specChanges === 0 && !baseChanged) {
       continue;
     }
 
-    const matchedGenerator: Client = {
-      name: generatorOptions.client,
-      folder,
+    const matchedGenerator: ClientMatrix = {
+      name: client,
+      folder: output,
     };
 
     // Extra informations for the PHP matrix in order to properly scope the
     // GitHub action cache
     if (language === 'php') {
-      matchedGenerator.config =
-        generatorOptions.additionalProperties.configClassname;
-      matchedGenerator.api =
-        generatorOptions.additionalProperties.configClassname.replace(
-          'Config',
-          'Api'
-        );
+      matchedGenerator.config = additionalProperties.configClassname;
+      matchedGenerator.api = additionalProperties.configClassname.replace(
+        'Config',
+        'Api'
+      );
     }
 
     matrix.client.push(matchedGenerator);
@@ -76,11 +89,9 @@ async function getSpecMatrix({
   const matrix: Matrix<string> = { client: [] };
 
   for (const client of CLIENTS) {
-    const specChanges = await run(
-      `git diff --shortstat ${baseBranch}..HEAD -- specs/${client} | wc -l | tr -d ' '`
-    );
+    const specChanges = await getNbGitDiff(baseBranch, `specs/${client}`);
 
-    if (specChanges === '0' && baseChanged === false) {
+    if (specChanges === 0 && !baseChanged) {
       continue;
     }
 
@@ -90,7 +101,7 @@ async function getSpecMatrix({
   return matrix;
 }
 
-export async function createMatrix(
+async function createMatrix(
   job: 'client' | 'spec',
   opts: CreateMatrix
 ): Promise<void> {
@@ -99,16 +110,13 @@ export async function createMatrix(
 
   // eslint-disable-next-line no-console
   console.log(
-    // client cannot be empty or the matrix will fail
-    matrix.client.length === 0
-      ? '{"client":["no-run"]}'
-      : JSON.stringify(matrix)
+    matrix.client.length === 0 ? EMPTY_MATRIX : JSON.stringify(matrix)
   );
 }
 
-const [job, ...args] = process.argv.slice(2);
-
 if (require.main === module) {
+  const [job, ...args] = process.argv.slice(2);
+
   switch (job) {
     case 'spec':
       createMatrix(job, {
