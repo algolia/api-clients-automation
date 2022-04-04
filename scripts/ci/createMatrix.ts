@@ -2,9 +2,9 @@ import { CLIENTS, GENERATORS, run } from '../common';
 import type { Language } from '../types';
 
 type CreateMatrix = {
-  language?: Language;
   baseChanged: boolean;
   baseBranch: string;
+  language?: Language;
 };
 
 type ClientMatrix = {
@@ -101,12 +101,10 @@ async function getSpecMatrix({
   return matrix;
 }
 
-async function createMatrix(
-  job: 'client' | 'spec',
-  opts: CreateMatrix
-): Promise<void> {
-  const matrix =
-    job === 'spec' ? await getSpecMatrix(opts) : await getClientMatrix(opts);
+async function createMatrix(opts: CreateMatrix): Promise<void> {
+  const matrix = opts.language
+    ? await getClientMatrix(opts)
+    : await getSpecMatrix(opts);
 
   // eslint-disable-next-line no-console
   console.log(
@@ -115,23 +113,11 @@ async function createMatrix(
 }
 
 if (require.main === module) {
-  const [job, ...args] = process.argv.slice(2);
+  const args = process.argv.slice(2);
 
-  switch (job) {
-    case 'spec':
-      createMatrix(job, {
-        baseChanged: args[0] === 'true',
-        baseBranch: args[1],
-      });
-      break;
-    case 'client':
-      createMatrix(job, {
-        language: args[0] as Language,
-        baseChanged: args[1] === 'true',
-        baseBranch: args[2],
-      });
-      break;
-    default:
-      throw new Error(`Unknown job: ${job}`);
-  }
+  createMatrix({
+    baseChanged: args[0] === 'true',
+    baseBranch: args[1],
+    language: args[2] as Language,
+  });
 }

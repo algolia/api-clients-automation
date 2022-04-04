@@ -164,8 +164,7 @@ jobs:
               format('{0}/package.json', matrix.client.folder),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/javascript/**',
-              'generators/src/**',
-              'scripts/**'
+              'generators/src/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -250,8 +249,7 @@ jobs:
               format('{0}/model/{1}/**', matrix.client.folder, matrix.client.name),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/java/**',
-              'generators/src/**',
-              'scripts/**'
+              'generators/src/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -296,8 +294,7 @@ jobs:
               format('{0}/lib/Configuration/{1}.php', matrix.client.folder, matrix.client.config),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/php/**',
-              'generators/src/**',
-              'scripts/**'
+              'generators/src/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
