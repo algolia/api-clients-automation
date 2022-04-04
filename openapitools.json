@@ -366,7 +366,7 @@
         "invokerPackage": "Algolia\\AlgoliaSearch",
         "modelPackage": "Model\\Abtesting",
         "additionalProperties": {
-          "configClassname": "AbTestingConfig",
+          "configClassname": "AbtestingConfig",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
