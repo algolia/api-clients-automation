@@ -54,7 +54,7 @@ class InsightsApi
     }
 
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param InsightsConfig $config Configuration
      */
@@ -91,9 +91,9 @@ class InsightsApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
+     * @param array|object $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -139,7 +139,7 @@ class InsightsApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function get($path, $parameters = null)
     {
@@ -180,9 +180,9 @@ class InsightsApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
+     * @param array|object $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -225,9 +225,10 @@ class InsightsApi
     /**
      * Pushes an array of events.
      *
-     * @param array $insightEvents insightEvents (required)
+     * @param array|\Algolia\AlgoliaSearch\Model\Insights\InsightEvents $insightEvents insightEvents (required)
+     * - $insightEvents['events'] => (array) Array of events sent. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Insights\PushEventsResponse
      */
     public function pushEvents($insightEvents)
     {
@@ -254,9 +255,9 @@ class InsightsApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
+     * @param array|object $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function put($path, $parameters = null, $body = null)
     {
