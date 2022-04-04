@@ -6,7 +6,7 @@ use Psr\SimpleCache\CacheInterface;
 
 final class FileCacheDriver implements CacheInterface
 {
-    const PREFIX = 'algolia-client-';
+    public const PREFIX = 'algolia-client-';
 
     private $directory;
 

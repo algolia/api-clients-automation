@@ -15,7 +15,7 @@ final class Host
 
     private $lastCheck;
 
-    const TTL = 300; // 5 minutes
+    public const TTL = 300; // 5 minutes
 
     public function __construct($url, $priority = 0)
     {
