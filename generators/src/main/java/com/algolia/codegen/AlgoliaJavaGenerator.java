@@ -6,11 +6,12 @@ import org.openapitools.codegen.utils.ModelUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.util.*;
-import java.util.Map.Entry;
 import java.io.FileInputStream;
 import java.net.URL;
 
+import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.servers.Server;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
@@ -93,6 +94,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     }
   }
 
+  @Override
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+  }
+
   /**
    * Provides an opportunity to inspect and modify operation data before the code
    * is generated.
@@ -115,7 +121,19 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       CodegenModel model = ((Map<String, List<Map<String, CodegenModel>>>) modelContainer).get("models").get(0)
           .get("model");
       if (!model.oneOf.isEmpty()) {
+        List<HashMap<String, String>> listOneOf = new ArrayList();
+
+        for (String iterateModel : model.oneOf) {
+          HashMap<String, String> hashMapOneOf = new HashMap();
+
+          hashMapOneOf.put("type", iterateModel);
+          hashMapOneOf.put("name", iterateModel.replace("<", "").replace(">", ""));
+
+          listOneOf.add(hashMapOneOf);
+        }
+
         model.vendorExtensions.put("x-is-one-of-interface", true);
+        model.vendorExtensions.put("x-is-one-of-list", listOneOf);
       }
     }
 
@@ -148,8 +166,9 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     return "Generates an algolia-java client library.";
   }
 
-  public AlgoliaJavaGenerator() {
-    super();
+  @Override
+  public void processOpts() {
+    super.processOpts();
 
     supportingFiles.add(new SupportingFile("EchoResponse.mustache",
         "algoliasearch-core/com/algolia/utils/echo",

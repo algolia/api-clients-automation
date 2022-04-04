@@ -1,6 +1,7 @@
-import type {
-  Host,
-  Requester,
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createNullCache,
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
@@ -13,7 +14,7 @@ export function abtestingApi(
   appId: string,
   apiKey: string,
   region?: Region,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): AbtestingApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -34,6 +35,9 @@ export function abtestingApi(
     },
     requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    responsesCache: options?.responsesCache ?? createNullCache(),
+    requestsCache: options?.requestsCache ?? createNullCache(),
+    hostsCache: options?.hostsCache ?? createMemoryCache(),
     ...options,
   });
 }

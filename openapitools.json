@@ -4,7 +4,7 @@
     "version": "5.4.0",
     "generators": {
       "javascript-search": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -21,12 +21,12 @@
           "buildFile": "client-search",
           "apiName": "search",
           "capitalizedApiName": "Search",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-search"
         }
       },
       "javascript-recommend": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -43,12 +43,12 @@
           "buildFile": "recommend",
           "apiName": "recommend",
           "capitalizedApiName": "Recommend",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/recommend"
         }
       },
       "javascript-personalization": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -64,7 +64,7 @@
           "buildFile": "client-personalization",
           "apiName": "personalization",
           "capitalizedApiName": "Personalization",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-personalization",
           "hasRegionalHost": true,
           "isEuHost": true,
@@ -73,7 +73,7 @@
         }
       },
       "javascript-analytics": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -89,7 +89,7 @@
           "buildFile": "client-analytics",
           "apiName": "analytics",
           "capitalizedApiName": "Analytics",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-analytics",
           "fallbackToAliasHost": true,
           "hasRegionalHost": true,
@@ -99,7 +99,7 @@
         }
       },
       "javascript-insights": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -115,7 +115,7 @@
           "buildFile": "client-insights",
           "apiName": "insights",
           "capitalizedApiName": "Insights",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-insights",
           "fallbackToAliasHost": true,
           "hasRegionalHost": true,
@@ -125,7 +125,7 @@
         }
       },
       "javascript-abtesting": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -141,7 +141,7 @@
           "buildFile": "client-abtesting",
           "apiName": "abtesting",
           "capitalizedApiName": "Abtesting",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-abtesting",
           "hasRegionalHost": true,
           "fallbackToAliasHost": true,
@@ -151,7 +151,7 @@
         }
       },
       "javascript-query-suggestions": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -167,7 +167,7 @@
           "buildFile": "client-query-suggestions",
           "apiName": "querySuggestions",
           "capitalizedApiName": "QuerySuggestions",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-query-suggestions",
           "hasRegionalHost": true,
           "isEuHost": true,
@@ -176,7 +176,7 @@
         }
       },
       "javascript-sources": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -192,7 +192,7 @@
           "buildFile": "client-sources",
           "apiName": "sources",
           "capitalizedApiName": "Sources",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-sources",
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -201,7 +201,7 @@
         }
       },
       "javascript-predict": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -217,7 +217,7 @@
           "buildFile": "client-predict",
           "apiName": "predict",
           "capitalizedApiName": "Predict",
-          "packageVersion": "0.0.4",
+          "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-predict",
           "experimentalHost": "predict-api-oslcbws3zq-ew.a.run.app"
         }
@@ -246,7 +246,7 @@
         }
       },
       "php-search": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -265,7 +265,7 @@
         }
       },
       "php-recommend": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -284,7 +284,7 @@
         }
       },
       "php-personalization": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -307,7 +307,7 @@
         }
       },
       "php-analytics": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -331,7 +331,7 @@
         }
       },
       "php-insights": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -355,7 +355,7 @@
         }
       },
       "php-abtesting": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -379,7 +379,7 @@
         }
       },
       "php-query-suggestions": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",

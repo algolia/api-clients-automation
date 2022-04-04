@@ -2,11 +2,17 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
+import { hashElement } from 'folder-hash';
 
 import openapitools from '../openapitools.json';
 
 import { createSpinner } from './oraLog';
-import type { Generator, RunOptions } from './types';
+import type {
+  CheckForCache,
+  CheckForCacheOptions,
+  Generator,
+  RunOptions,
+} from './types';
 
 export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);
@@ -24,7 +30,7 @@ export const GENERATORS: Record<string, Generator> = {
     key: 'javascript-algoliasearch',
     additionalProperties: {
       packageName: '@experimental-api-clients-automation/algoliasearch',
-      packageVersion: '0.0.4',
+      packageVersion: '0.0.5',
     },
   },
 };
@@ -40,6 +46,10 @@ Object.entries(openapitools['generator-cli'].generators).forEach(
   }
 );
 
+export function getPackageVersion(generator: string): string {
+  return GENERATORS[generator].additionalProperties.packageVersion;
+}
+
 export const LANGUAGES = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.language)),
 ];
@@ -51,7 +61,6 @@ export const CLIENTS_JS_UTILS = [
 ];
 
 export const CLIENTS_JS = [
-  'algoliasearch',
   ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
 ];
 
@@ -114,14 +123,22 @@ export async function run(
   try {
     if (verbose) {
       return (
-        await execa.command(command, {
-          stdout: 'inherit',
-          shell: 'bash',
-          cwd,
-        })
-      ).stdout;
+        (
+          await execa.command(command, {
+            stdout: 'inherit',
+            stderr: 'inherit',
+            stdin: 'inherit',
+            all: true,
+            shell: 'bash',
+            cwd,
+          })
+        ).all ?? ''
+      );
     }
-    return (await execa.command(command, { shell: 'bash', cwd })).stdout;
+    return (
+      (await execa.command(command, { shell: 'bash', all: true, cwd })).all ??
+      ''
+    );
   } catch (err) {
     if (errorMessage) {
       throw new Error(`[ERROR] ${errorMessage}`);
@@ -155,10 +172,111 @@ export async function runIfExists(
   return '';
 }
 
+export async function gitCommit({
+  message,
+  coauthor,
+  cwd = ROOT_DIR,
+}: {
+  message: string;
+  coauthor?: {
+    name: string;
+    email: string;
+  };
+  cwd?: string;
+}): Promise<void> {
+  await execa(
+    'git',
+    [
+      'commit',
+      '-m',
+      message +
+        (coauthor
+          ? `\n\n\nCo-authored-by: ${coauthor.name} <${coauthor.email}>`
+          : ''),
+    ],
+    {
+      cwd,
+    }
+  );
+}
+
+export async function checkForCache(
+  {
+    job,
+    folder,
+    generatedFiles,
+    filesToCache,
+    cacheFile,
+  }: CheckForCacheOptions,
+  verbose: boolean
+): Promise<CheckForCache> {
+  const spinner = createSpinner(`checking cache for ${job}`, verbose).start();
+  const cache: CheckForCache = {
+    cacheExists: false,
+    hash: '',
+  };
+  const generatedFilesExists = (
+    await Promise.all(
+      generatedFiles.map((generatedFile) =>
+        exists(`${folder}/${generatedFile}`)
+      )
+    )
+  ).every((exist) => exist);
+
+  for (const fileToCache of filesToCache) {
+    const fileHash = (await hashElement(`${folder}/${fileToCache}`)).hash;
+
+    cache.hash = `${cache.hash}-${fileHash}`;
+  }
+
+  // We only skip if both the cache and the generated file exists
+  if (generatedFilesExists && (await exists(cacheFile))) {
+    const storedHash = (await fsp.readFile(cacheFile)).toString();
+    if (storedHash === cache.hash) {
+      spinner.succeed(`job skipped, cache found for ${job}`);
+      return {
+        cacheExists: true,
+        hash: cache.hash,
+      };
+    }
+  }
+
+  spinner.info(`cache not found for ${job}`);
+
+  return cache;
+}
+
 export async function buildCustomGenerators(verbose: boolean): Promise<void> {
+  const cacheFile = toAbsolutePath('generators/.cache');
+  const { cacheExists, hash } = await checkForCache(
+    {
+      job: 'custom generators',
+      folder: toAbsolutePath('generators/'),
+      generatedFiles: ['build'],
+      filesToCache: ['src', 'build.gradle', 'settings.gradle'],
+      cacheFile,
+    },
+    verbose
+  );
+
+  if (cacheExists) {
+    return;
+  }
+
   const spinner = createSpinner('building custom generators', verbose).start();
+
   await run('./gradle/gradlew --no-daemon -p generators assemble', {
     verbose,
   });
+
+  if (hash) {
+    spinner.text = 'storing custom generators cache';
+    await fsp.writeFile(cacheFile, hash);
+  }
+
   spinner.succeed();
+}
+
+export async function gitBranchExists(branchName: string): Promise<boolean> {
+  return Boolean(await run(`git ls-remote --heads origin ${branchName}`));
 }

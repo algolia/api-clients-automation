@@ -1,10 +1,31 @@
+import path from 'path';
+
+import { Octokit } from '@octokit/rest';
+
+import clientsConfig from '../../config/clients.config.json';
 import config from '../../config/release.config.json';
-import { run } from '../common';
+import { getGitHubUrl, run } from '../common';
 
 export const RELEASED_TAG = config.releasedTag;
 export const MAIN_BRANCH = config.mainBranch;
 export const OWNER = config.owner;
 export const REPO = config.repo;
+export const TEAM_SLUG = config.teamSlug;
+export const MAIN_PACKAGE = Object.keys(clientsConfig).reduce(
+  (mainPackage: { [lang: string]: string }, lang: string) => {
+    return {
+      ...mainPackage,
+      [lang]: clientsConfig[lang].mainPackage,
+    };
+  },
+  {}
+);
+
+export function getOctokit(githubToken: string): Octokit {
+  return new Octokit({
+    auth: `token ${githubToken}`,
+  });
+}
 
 export function getTargetBranch(language: string): string {
   return config.targetBranch[language] || config.defaultTargetBranch;
@@ -35,4 +56,27 @@ export async function configureGitHubAuthor(cwd?: string): Promise<void> {
 
   await run(`git config user.name "${name}"`, { cwd });
   await run(`git config user.email "${email}"`, { cwd });
+}
+
+export async function cloneRepository({
+  lang,
+  githubToken,
+  tempDir,
+}: {
+  lang: string;
+  githubToken: string;
+  tempDir: string;
+}): Promise<{ tempGitDir: string }> {
+  const targetBranch = getTargetBranch(lang);
+
+  const gitHubUrl = getGitHubUrl(lang, { token: githubToken });
+  const tempGitDir = path.resolve(tempDir, lang);
+  await run(`rm -rf ${tempGitDir}`);
+  await run(
+    `git clone --depth 1 --branch ${targetBranch} ${gitHubUrl} ${tempGitDir}`
+  );
+
+  return {
+    tempGitDir,
+  };
 }
