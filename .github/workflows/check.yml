@@ -66,6 +66,9 @@ jobs:
       - name: Test scripts
         run: yarn scripts:test
 
+      - name: Test custom eslint plugin
+        run: yarn workspace eslint-plugin-automation-custom test
+
   specs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
@@ -163,7 +166,8 @@ jobs:
               format('{0}/builds/**', matrix.client.folder),
               format('{0}/package.json', matrix.client.folder),
               format('specs/bundled/{0}.yml', matrix.client.name),
-              'templates/javascript/**'
+              'templates/javascript/**',
+              'generators/src/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -207,8 +211,7 @@ jobs:
               'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
               'clients/algoliasearch-client-javascript/packages/client-search/**',
               'clients/algoliasearch-client-javascript/packages/client-analytics/**',
-              'clients/algoliasearch-client-javascript/packages/client-personalization/**',
-              'templates/javascript/**'
+              'clients/algoliasearch-client-javascript/packages/client-personalization/**'
             )}}
 
       - name: Build 'algoliasearch' client
@@ -245,9 +248,11 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/**', matrix.client.folder),
+              format('{0}/{1}/**', matrix.client.folder, matrix.client.name),
+              format('{0}/model/{1}/**', matrix.client.folder, matrix.client.name),
+              format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/java/**',
-              format('specs/bundled/{0}.yml', matrix.client.name)
+              'generators/src/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -288,9 +293,11 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/**', matrix.client.folder),
+              format('{0}/lib/Api/{1}.php', matrix.client.folder, matrix.client.api),
+              format('{0}/lib/Configuration/{1}.php', matrix.client.folder, matrix.client.config),
+              format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/php/**',
-              format('specs/bundled/{0}.yml', matrix.client.name)
+              'generators/src/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
