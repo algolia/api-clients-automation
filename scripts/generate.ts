@@ -30,18 +30,15 @@ async function removeExistingModel(
   const baseModelFolder = getLanguageModelFolder(language);
 
   let clientModel = '';
-  let cased = '';
   switch (language) {
     case 'java':
       clientModel = client;
       break;
     case 'php':
-      cased = client
+      clientModel = client
         .split('-')
         .map((part) => capitalize(part))
         .join('');
-
-      clientModel = cased;
       break;
     default:
       break;
