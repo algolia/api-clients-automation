@@ -364,7 +364,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "modelPackage": "Model\\AbTesting",
+        "modelPackage": "Model\\Abtesting",
         "additionalProperties": {
           "configClassname": "AbTestingConfig",
           "hasRegionalHost": true,
