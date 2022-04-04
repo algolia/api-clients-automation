@@ -49,7 +49,7 @@ class RecommendApi
     }
 
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param RecommendConfig $config Configuration
      */
@@ -181,6 +181,7 @@ class RecommendApi
      * Returns recommendations for a specific model and objectID.
      *
      * @param array|\Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsParams $getRecommendationsParams getRecommendationsParams (required)
+     * - $getRecommendationsParams['requests'] => (array) The `getRecommendations` requests. (required)
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsResponse
      */

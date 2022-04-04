@@ -75,7 +75,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     {{/hasRegionalHost}}
     
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param {{configClassname}} $config Configuration
      */
@@ -134,7 +134,12 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
      *
 {{/description}}
 {{#allParams}}
-     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{^isString}}{{^isInteger}}array|{{{dataType}}}{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isInteger}}{{^isBoolean}}array|{{{dataType}}}{{/isBoolean}}{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+{{#isModel}}
+    {{#vars}}
+     * - ${{paramName}}{{> arrayParam}}
+    {{/vars}}
+{{/isModel}}
 {{/allParams}}
      *
      * @return {{#returnType}}{{#responses}}{{#dataType}}{{#-first}}array<string, mixed>|{{{dataType}}}{{/-first}}{{/dataType}}{{/responses}}{{/returnType}}{{^returnType}}void{{/returnType}}
