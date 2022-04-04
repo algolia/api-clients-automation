@@ -27,3 +27,32 @@ dist
 tests/output/*/.openapi-generator-ignore
 
 generators/bin
+
+# Ignore all the generated code (/!\ DO NOT ADD ANYTHING AFTER THIS)
+# Ignore the roots and go down the tree by negating hand written files
+clients/
+!clients/README.md
+!clients/**/.openapi-generator-ignore
+
+
+# Java
+!clients/algoliasearch-client-java-2/algoliasearch-core/com/algolia/exceptions
+!clients/algoliasearch-client-java-2/algoliasearch-core/com/algolia/utils
+clients/algoliasearch-client-java-2/algoliasearch-core/com/algolia/utils/echo/EchoResponse.java
+
+# Javascript
+!clients/algoliasearch-client-javascript/*.*
+clients/algoliasearch-client-javascript/package.json
+clients/algoliasearch-client-javascript/tsconfig.json
+!clients/algoliasearch-client-javascript/.github
+!clients/algoliasearch-client-javascript/.yarn
+!clients/algoliasearch-client-javascript/scripts
+!clients/algoliasearch-client-javascript/packages/algoliasearch
+!clients/algoliasearch-client-javascript/packages/requester-*
+!clients/algoliasearch-client-javascript/packages/client-common
+
+# PHP
+!clients/algoliasearch-client-php/lib
+clients/algoliasearch-client-php/lib/*.php
+clients/algoliasearch-client-php/lib/Api/
+clients/algoliasearch-client-php/lib/Configuration/Configuration.php

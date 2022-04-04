@@ -17,6 +17,10 @@ runs:
       shell: bash
       run: echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
 
+    - name: Edit .gitignore to include clients
+      shell: bash
+      run: ./scripts/ci/gitignore-for-ci.sh
+
     # JavaScript setup
     - name: Get yarn cache directory path
       shell: bash
