@@ -9,7 +9,7 @@ use \ArrayAccess;
  * SynonymHitHighlightResult Class Doc Comment
  *
  * @category Class
- * @description Highlighted results
+ * @description Highlighted results.
  *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>

@@ -234,7 +234,7 @@ class GetUserTokenResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets lastEventAt
      *
-     * @param string $lastEventAt Date of last event update. (ISO-8601 format)
+     * @param string $lastEventAt Date of last event update. (ISO-8601 format).
      *
      * @return self
      */

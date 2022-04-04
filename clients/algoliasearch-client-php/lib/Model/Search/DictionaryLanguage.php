@@ -9,7 +9,7 @@ use \ArrayAccess;
  * DictionaryLanguage Class Doc Comment
  *
  * @category Class
- * @description Custom entries for a dictionary
+ * @description Custom entries for a dictionary.
  *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>

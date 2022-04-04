@@ -417,7 +417,7 @@ class Indice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets lastBuildTimeS
      *
-     * @param int $lastBuildTimeS Last build time
+     * @param int $lastBuildTimeS last build time
      *
      * @return self
      */

@@ -206,7 +206,7 @@ class Condition implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets pattern
      *
-     * @param string|null $pattern Query pattern syntax
+     * @param string|null $pattern query pattern syntax
      *
      * @return self
      */

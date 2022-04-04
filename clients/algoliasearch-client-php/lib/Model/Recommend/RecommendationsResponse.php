@@ -491,7 +491,7 @@ class RecommendationsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets exhaustiveNbHits
      *
-     * @param bool $exhaustiveNbHits Indicate if the nbHits count was exhaustive or approximate
+     * @param bool $exhaustiveNbHits indicate if the nbHits count was exhaustive or approximate
      *
      * @return self
      */
@@ -515,7 +515,7 @@ class RecommendationsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets exhaustiveTypo
      *
-     * @param bool $exhaustiveTypo Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled)
+     * @param bool $exhaustiveTypo indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled)
      *
      * @return self
      */
@@ -707,7 +707,7 @@ class RecommendationsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets nbPages
      *
-     * @param int $nbPages Number of pages available for the current query
+     * @param int $nbPages number of pages available for the current query
      *
      * @return self
      */
@@ -731,7 +731,7 @@ class RecommendationsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets nbSortedHits
      *
-     * @param int|null $nbSortedHits The number of hits selected and sorted by the relevant sort algorithm
+     * @param int|null $nbSortedHits the number of hits selected and sorted by the relevant sort algorithm
      *
      * @return self
      */
