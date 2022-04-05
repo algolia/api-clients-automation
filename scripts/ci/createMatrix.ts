@@ -1,4 +1,5 @@
 import { CLIENTS, GENERATORS, run } from '../common';
+import { capitalize } from '../cts/utils';
 import type { Language } from '../types';
 
 type CreateMatrix = {
@@ -12,6 +13,7 @@ type ClientMatrix = {
   folder: string;
   config?: string;
   api?: string;
+  capitalizedName?: string;
 };
 
 type Matrix<TMatrix> = {
@@ -74,6 +76,10 @@ async function getClientMatrix({
         'Config',
         'Api'
       );
+      matchedGenerator.capitalizedName = client
+        .split('-')
+        .map((part) => capitalize(part))
+        .join('');
     }
 
     matrix.client.push(matchedGenerator);
