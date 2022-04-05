@@ -30,21 +30,9 @@ import {
   getOctokit,
 } from './common';
 import TEXT from './text';
-import type {
-  VersionsToRelease,
-  BeforeClientGenerationCommand,
-  BeforeClientCommitCommand,
-} from './types';
+import type { VersionsToRelease, BeforeClientCommitCommand } from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
-
-const BEFORE_CLIENT_GENERATION: {
-  [lang: string]: BeforeClientGenerationCommand;
-} = {
-  javascript: async ({ releaseType, dir }) => {
-    await run(`yarn release:bump ${releaseType}`, { cwd: dir });
-  },
-};
 
 const BEFORE_CLIENT_COMMIT: { [lang: string]: BeforeClientCommitCommand } = {
   javascript: async ({ dir }) => {
@@ -194,29 +182,10 @@ async function processRelease(): Promise<void> {
 
   const issueBody = await getIssueBody();
   const versionsToRelease = getVersionsToRelease(issueBody);
-
-  await updateOpenApiTools(versionsToRelease);
-
   const langsToRelease = Object.keys(versionsToRelease);
 
-  for (const lang of langsToRelease) {
+  const generateAndUpdateChangelog = async (lang: string): Promise<void> => {
     const { current, releaseType } = versionsToRelease[lang];
-    /*
-    About bumping versions of JS clients:
-
-    There are generated clients in JS repo, and non-generated clients like `algoliasearch`, `client-common`, etc.
-    Now that the versions of generated clients are updated in `openapitools.json`,
-    the generation output will have correct new versions.
-    
-    However, we need to manually update versions of the non-generated (a.k.a. manually written) clients.
-    In order to do that, we run `yarn release:bump <releaseType>` in this monorepo first.
-    It will update the versions of the non-generated clients which exists in this monorepo.
-    After that, we generate clients with new versions. And then, we copy all of them over to JS repository.
-    */
-    await BEFORE_CLIENT_GENERATION[lang]?.({
-      releaseType,
-      dir: toAbsolutePath(getLanguageFolder(lang)),
-    });
 
     console.log(`Generating ${lang} client(s)...`);
     console.log(await run(`yarn cli generate ${lang}`));
@@ -228,8 +197,34 @@ async function processRelease(): Promise<void> {
       current,
       next: next!,
     });
+  };
+
+  // 1. Generate JS clients first
+  // We generate javascript packages BEFORE updating the versions in `openapitools.json`,
+  // because we bump the versions with lerna after the generation.
+  // The reason behind this is that it's hard to update the versions of packages
+  // and the dependencies correctly, due to the limitation of templating.
+  if (langsToRelease.includes('javascript')) {
+    const lang = 'javascript';
+    const { releaseType } = versionsToRelease[lang];
+
+    await generateAndUpdateChangelog(lang);
+
+    console.log(`Bumping versions of ${lang} client(s)...`);
+    await run(`yarn release:bump ${releaseType}`, {
+      cwd: toAbsolutePath(getLanguageFolder(lang)),
+    });
   }
 
+  // 2. Update the versions in `openapitools.json`
+  await updateOpenApiTools(versionsToRelease);
+
+  // 3. Generate the rest of languages
+  for (const lang of langsToRelease.filter((l) => l !== 'javascript')) {
+    await generateAndUpdateChangelog(lang);
+  }
+
+  // 4. Push to each repository
   // We push commits to each repository AFTER all the generations are done.
   // Otherwise, we will end up having broken release.
   for (const lang of langsToRelease) {
@@ -259,8 +254,9 @@ async function processRelease(): Promise<void> {
     await run(`git push --follow-tags`, { cwd: tempGitDir });
   }
 
-  // Commit and push from the monorepo level.
+  // 5. Commit and push from the monorepo level.
   await configureGitHubAuthor();
+  await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install`);
   await run(`git add .`);
   const dateStamp = getDateStamp();
   await gitCommit({
@@ -268,12 +264,12 @@ async function processRelease(): Promise<void> {
   });
   await run(`git push`);
 
-  // remove old `released` tag
+  // 6. remove old `released` tag
   await run(`git fetch origin refs/tags/released:refs/tags/released`);
   await run(`git tag -d ${RELEASED_TAG}`);
   await run(`git push --delete origin ${RELEASED_TAG}`);
 
-  // create new `released` tag
+  // 7. create new `released` tag
   await run(`git tag released`);
   await run(`git push --tags`);
 }
