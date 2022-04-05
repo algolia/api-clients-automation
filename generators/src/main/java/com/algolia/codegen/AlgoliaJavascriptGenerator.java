@@ -1,12 +1,8 @@
 package com.algolia.codegen;
 
 import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import io.swagger.v3.oas.models.parameters.Parameter;
-import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
 import org.openapitools.codegen.CodegenOperation;
