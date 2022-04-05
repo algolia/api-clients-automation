@@ -54,7 +54,7 @@ class PersonalizationApi
     }
 
     /**
-     * Instantiate the client with configuration
+     * Instantiate the client with congiguration
      *
      * @param PersonalizationConfig $config Configuration
      */
@@ -90,10 +90,10 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -139,7 +139,7 @@ class PersonalizationApi
      *
      * @param string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\DeleteUserProfileResponse
+     * @return array<string, mixed>
      */
     public function deleteUserProfile($userToken)
     {
@@ -172,7 +172,7 @@ class PersonalizationApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function get($path, $parameters = null)
     {
@@ -213,7 +213,7 @@ class PersonalizationApi
      * Get the current personalization strategy.
      *
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams
+     * @return array<string, mixed>
      */
     public function getPersonalizationStrategy()
     {
@@ -229,7 +229,7 @@ class PersonalizationApi
      *
      * @param string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\GetUserTokenResponse
+     * @return array<string, mixed>
      */
     public function getUserTokenProfile($userToken)
     {
@@ -260,10 +260,10 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -308,10 +308,10 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function put($path, $parameters = null, $body = null)
     {
@@ -355,12 +355,9 @@ class PersonalizationApi
     /**
      * Set a new personalization strategy.
      *
-     * @param array|\Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams $personalizationStrategyParams personalizationStrategyParams (required)
-     * - $personalizationStrategyParams['eventScoring'] => (array) Scores associated with the events. (required)
-     * - $personalizationStrategyParams['facetScoring'] => (array) Scores associated with the facets. (required)
-     * - $personalizationStrategyParams['personalizationImpact'] => (int) The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled). (required)
+     * @param array $personalizationStrategyParams personalizationStrategyParams (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\SetPersonalizationStrategyResponse
+     * @return array<string, mixed>
      */
     public function setPersonalizationStrategy($personalizationStrategyParams)
     {

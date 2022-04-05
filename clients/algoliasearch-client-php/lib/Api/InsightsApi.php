@@ -53,7 +53,7 @@ class InsightsApi
     }
 
     /**
-     * Instantiate the client with configuration
+     * Instantiate the client with congiguration
      *
      * @param InsightsConfig $config Configuration
      */
@@ -89,10 +89,10 @@ class InsightsApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -139,7 +139,7 @@ class InsightsApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function get($path, $parameters = null)
     {
@@ -180,10 +180,10 @@ class InsightsApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -227,10 +227,9 @@ class InsightsApi
     /**
      * Pushes an array of events.
      *
-     * @param array|\Algolia\AlgoliaSearch\Model\Insights\InsightEvents $insightEvents insightEvents (required)
-     * - $insightEvents['events'] => (array) Array of events sent. (required)
+     * @param array $insightEvents insightEvents (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Insights\PushEventsResponse
+     * @return array<string, mixed>
      */
     public function pushEvents($insightEvents)
     {
@@ -256,10 +255,10 @@ class InsightsApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function put($path, $parameters = null, $body = null)
     {

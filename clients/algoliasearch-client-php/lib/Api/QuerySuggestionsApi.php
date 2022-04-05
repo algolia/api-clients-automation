@@ -54,7 +54,7 @@ class QuerySuggestionsApi
     }
 
     /**
-     * Instantiate the client with configuration
+     * Instantiate the client with congiguration
      *
      * @param QuerySuggestionsConfig $config Configuration
      */
@@ -89,9 +89,9 @@ class QuerySuggestionsApi
     /**
      * Create a configuration of a Query Suggestions index.
      *
-     * @param array|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexWithIndexParam $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
+     * @param array $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
+     * @return array<string, mixed>
      */
     public function createConfig($querySuggestionsIndexWithIndexParam)
     {
@@ -117,10 +117,10 @@ class QuerySuggestionsApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -166,7 +166,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
+     * @return array<string, mixed>
      */
     public function deleteConfig($indexName)
     {
@@ -199,7 +199,7 @@ class QuerySuggestionsApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function get($path, $parameters = null)
     {
@@ -240,7 +240,7 @@ class QuerySuggestionsApi
      * Get all the configurations of Query Suggestions.
      *
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex[]
+     * @return array<string, mixed>
      */
     public function getAllConfigs()
     {
@@ -256,7 +256,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex
+     * @return array<string, mixed>
      */
     public function getConfig($indexName)
     {
@@ -288,7 +288,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\Status
+     * @return array<string, mixed>
      */
     public function getConfigStatus($indexName)
     {
@@ -320,7 +320,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\LogFile[]
+     * @return array<string, mixed>
      */
     public function getLogFile($indexName)
     {
@@ -351,10 +351,10 @@ class QuerySuggestionsApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -399,10 +399,10 @@ class QuerySuggestionsApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
-     * @param array|object $body The parameters to send with the custom request. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>|object
+     * @return array<string, mixed>
      */
     public function put($path, $parameters = null, $body = null)
     {
@@ -447,12 +447,9 @@ class QuerySuggestionsApi
      * Update the configuration of a Query Suggestions index.
      *
      * @param string $indexName The index in which to perform the request. (required)
-     * @param array|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexParam $querySuggestionsIndexParam querySuggestionsIndexParam (required)
-     * - $querySuggestionsIndexParam['sourceIndices'] => (array) List of source indices used to generate a Query Suggestions index. (required)
-     * - $querySuggestionsIndexParam['languages'] => (array) De-duplicate singular and plural suggestions. For example, let's say your index contains English content, and that two suggestions “shoe” and “shoes” end up in your Query Suggestions index. If the English language is configured, only the most popular of those two suggestions would remain.
-     * - $querySuggestionsIndexParam['exclude'] => (array) List of words and patterns to exclude from the Query Suggestions index.
+     * @param array $querySuggestionsIndexParam querySuggestionsIndexParam (required)
      *
-     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
+     * @return array<string, mixed>
      */
     public function updateConfig($indexName, $querySuggestionsIndexParam)
     {
