@@ -38,3 +38,4 @@ Parameters:
   description: Query parameters to be applied to the current query.
   schema:
     type: object
+    additionalProperties: true
