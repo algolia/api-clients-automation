@@ -125,12 +125,10 @@ public class {{classname}} extends ApiClient {
             queryParams.addAll(this.parameterToPair("{{baseName}}", {{paramName}}));
           {{/x-is-custom-request}}
           {{#x-is-custom-request}}
-            if (parameters instanceof Map) {
-              Map<String, Object> mapParameters = (Map<String, Object>) parameters;
+            Map<String, Object> mapParameters = (Map<String, Object>) parameters;
 
-              for (Map.Entry<String, Object> parameter : mapParameters.entrySet()) {
-                queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue().toString()));
-              } 
+            for (Map.Entry<String, Object> parameter : mapParameters.entrySet()) {
+              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue().toString()));
             }
           {{/x-is-custom-request}}
         }
