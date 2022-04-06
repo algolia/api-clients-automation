@@ -71,7 +71,6 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_GENERATORS == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
