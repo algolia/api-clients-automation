@@ -27,9 +27,17 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
+      - name: Lint generators
+        run: |
+          yarn cli format java generators
+          diff=$(git status --porcelain ./generators | wc -l)
+          if [[ $diff > 0 ]]; then
+            echo "Format the generators folder by running 'yarn docker format java generators'"
+          fi
+          exit $diff
+
     outputs:
       RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
-      RUN_GENERATORS: ${{ steps.setup.outputs.RUN_GENERATORS }}
 
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
@@ -69,30 +77,6 @@ jobs:
 
       - name: Test custom eslint plugin
         run: yarn workspace eslint-plugin-automation-custom test
-
-  generators:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 5
-    needs: setup
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Restore cache
-        uses: ./.github/actions/cache
-        with:
-          language: java
-
-      - name: Check generators linting
-        run: |
-          yarn cli format java generators
-
-      - name: Check diff with pushed generators
-        run: |
-          diff=$(git status --porcelain ./generators | wc -l)
-          if [[ $diff > 0 ]]; then
-            echo "Format the generators folder by running 'yarn docker format java generators'"
-          fi
-          exit $diff
 
   specs:
     runs-on: ubuntu-20.04
