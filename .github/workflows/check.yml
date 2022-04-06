@@ -58,6 +58,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
       - name: Check script linting
         run: yarn scripts:lint
 
@@ -73,6 +76,9 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
 
       - name: Check generators linting
         run: |
