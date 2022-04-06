@@ -231,4 +231,16 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     }
     return super.toDefaultValue(schema);
   }
+
+  @Override
+  public String toEnumVarName(String value, String datatype) {
+    if ("String".equals(datatype)) {
+      // convert camelCase77String to CAMEL_CASE_77_STRING
+      return value
+        .replaceAll("\\W+", "_")
+        .replaceAll("(\\b[a-z]+|\\G(?!^))((?:[A-Z]|\\d+)[a-z]*)", "$1_$2")
+        .toUpperCase(Locale.ROOT);
+    }
+    return super.toEnumVarName(value, datatype);
+  }
 }
