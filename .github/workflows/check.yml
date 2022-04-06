@@ -79,6 +79,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          language: java
 
       - name: Check generators linting
         run: |
