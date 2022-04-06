@@ -256,6 +256,7 @@ async function processRelease(): Promise<void> {
 
   // 5. Commit and push from the monorepo level.
   await configureGitHubAuthor();
+  // After bumping the versions, we need to call this to update the root yarn.lock.
   await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install`);
   await run(`git add .`);
   const dateStamp = getDateStamp();
