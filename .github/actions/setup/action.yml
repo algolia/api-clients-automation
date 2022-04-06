@@ -176,6 +176,10 @@ outputs:
     description: Determine if the `scripts` job should run
     value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
 
+  RUN_GENERATORS:
+    description: Determine if the `generators` job should run
+    value: ${{ steps.diff.outputs.GENERATORS_CHANGED > 0 }}
+
   SPECS_MATRIX:
     description: The generated `specs` matrix
     value: ${{ steps.spec-matrix.outputs.MATRIX }}

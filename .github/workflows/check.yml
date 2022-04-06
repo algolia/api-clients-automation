@@ -29,6 +29,7 @@ jobs:
 
     outputs:
       RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
+      RUN_GENERATORS: ${{ steps.setup.outputs.RUN_GENERATORS }}
 
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
@@ -51,14 +52,11 @@ jobs:
 
   scripts:
     runs-on: ubuntu-20.04
-    timeout-minutes: 20
+    timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
-
-      - name: Restore cache
-        uses: ./.github/actions/cache
 
       - name: Check script linting
         run: yarn scripts:lint
@@ -68,6 +66,25 @@ jobs:
 
       - name: Test custom eslint plugin
         run: yarn workspace eslint-plugin-automation-custom test
+
+  generators:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    needs: setup
+    if: ${{ needs.setup.outputs.RUN_GENERATORS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check generators linting
+        run: |
+          yarn cli format java generators
+
+      - name: Check diff with pushed generators
+        run: |
+          diff=$(git status --porcelain ./generators | wc -l)
+          if [[ $diff > 0 ]]; then
+            echo "Format the generators folder by running 'yarn docker format java generators'"
+          exit $diff
 
   specs:
     runs-on: ubuntu-20.04
