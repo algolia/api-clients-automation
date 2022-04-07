@@ -1,0 +1,6 @@
+403Forbidden:
+  description: Invalid credentials
+  content:
+    application/json:
+      schema:
+        $ref: ../common/schemas/Error.yml#/ErrorResponse

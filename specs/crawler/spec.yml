@@ -47,6 +47,9 @@ paths:
   /crawlers/{id}/urls/crawl:
     $ref: paths/crawler/crawl.yml
 
+  /domains:
+    $ref: paths/domains/list.yml
+
 components:
   securitySchemes:
     BasicAuth:
