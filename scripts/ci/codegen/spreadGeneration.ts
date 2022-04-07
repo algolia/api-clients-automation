@@ -5,6 +5,7 @@ import {
   emptyDirExceptForDotGit,
   gitBranchExists,
   gitCommit,
+  isWorkingDirectoryClean,
   LANGUAGES,
   run,
   toAbsolutePath,
@@ -69,14 +70,18 @@ async function spreadGeneration(): Promise<void> {
     await emptyDirExceptForDotGit(tempGitDir);
     await copy(clientPath, tempGitDir, { preserveTimestamps: true });
 
-    await configureGitHubAuthor(tempGitDir);
-    await run(`git add .`, { cwd: tempGitDir });
-    await gitCommit({
-      message: commitMessage,
-      coauthor: { name, email },
-      cwd: tempGitDir,
-    });
-    await run(`git push`, { cwd: tempGitDir });
+    if (await isWorkingDirectoryClean(tempGitDir)) {
+      console.log(`Skipping ${lang} repository, because there is no change.`);
+    } else {
+      await configureGitHubAuthor(tempGitDir);
+      await run(`git add .`, { cwd: tempGitDir });
+      await gitCommit({
+        message: commitMessage,
+        coauthor: { name, email },
+        cwd: tempGitDir,
+      });
+      await run(`git push`, { cwd: tempGitDir });
+    }
   }
 }
 

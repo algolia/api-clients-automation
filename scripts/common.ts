@@ -293,3 +293,7 @@ export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
     }
   }
 }
+
+export async function isWorkingDirectoryClean(cwd?: string): Promise<boolean> {
+  return !(await run('git status --porcelain', { cwd }));
+}

@@ -2,7 +2,13 @@
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
+import {
+  LANGUAGES,
+  ROOT_ENV_PATH,
+  run,
+  getPackageVersion,
+  isWorkingDirectoryClean,
+} from '../common';
 import type { Language } from '../types';
 
 import {
@@ -160,7 +166,7 @@ async function createReleaseIssue(): Promise<void> {
     );
   }
 
-  if (await run('git status --porcelain')) {
+  if (await isWorkingDirectoryClean()) {
     throw new Error(
       'Working directory is not clean. Commit all the changes first.'
     );
