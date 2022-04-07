@@ -237,8 +237,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     if ("String".equals(datatype)) {
       // convert camelCase77String to CAMEL_CASE_77_STRING
       return value
-        .replaceAll("\\W+", "_")
-        .replaceAll("(\\b[a-z]+|\\G(?!^))((?:[A-Z]|\\d+)[a-z]*)", "$1_$2")
+        .replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2")
         .toUpperCase(Locale.ROOT);
     }
     return super.toEnumVarName(value, datatype);
