@@ -108,17 +108,25 @@ async function updateOpenApiTools(
     if (versionsToRelease[lang]) {
       const additionalProperties =
         openapitools['generator-cli'].generators[client].additionalProperties;
+      const releaseType = versionsToRelease[lang].releaseType;
 
       const newVersion = semver.inc(
         additionalProperties.packageVersion,
-        versionsToRelease[lang].releaseType
+        releaseType
       );
       if (!newVersion) {
         throw new Error(
-          `Failed to bump version ${additionalProperties.packageVersion} by ${versionsToRelease[lang].releaseType}.`
+          `Failed to bump version ${additionalProperties.packageVersion} by ${releaseType}.`
         );
       }
       additionalProperties.packageVersion = newVersion;
+
+      if (additionalProperties.utilsPackageVersion) {
+        additionalProperties.utilsPackageVersion = semver.inc(
+          additionalProperties.utilsPackageVersion,
+          releaseType
+        );
+      }
     }
   });
   await fsp.writeFile(
