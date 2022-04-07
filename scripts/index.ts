@@ -93,9 +93,15 @@ function generatorList({
 
   return langsTodo
     .flatMap((lang) =>
-      clientsTodo.map(
-        (cli) => GENERATORS[createGeneratorKey({ language: lang, client: cli })]
-      )
+      clientsTodo.map((cli) => {
+        const generator =
+          GENERATORS[createGeneratorKey({ language: lang, client: cli })];
+
+        return {
+          ...generator,
+          client: generator.client === 'algoliasearchLite' ? 'search' : cli,
+        };
+      })
     )
     .filter(Boolean);
 }
@@ -109,7 +115,9 @@ program
     )
   )
   .addArgument(
-    new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
+    new Argument('[client]', 'The client').choices(
+      ['all'].concat([...CLIENTS, 'algoliasearchLite'])
+    )
   )
   .option('-v, --verbose', 'make the generation verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
@@ -120,9 +128,16 @@ program
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      client = await promptClient(client, interactive);
+      const clientList =
+        language === 'javascript' || language === 'client'
+          ? [...CLIENTS, 'algoliasearchLite']
+          : CLIENTS;
+      client = await promptClient(client, interactive, clientList);
 
-      await generate(generatorList({ language, client }), Boolean(verbose));
+      await generate(
+        generatorList({ language, client, clientList }),
+        Boolean(verbose)
+      );
     }
   );
 
@@ -150,10 +165,12 @@ buildCommand
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      client = await promptClient(client, interactive, [
-        ...CLIENTS_JS_UTILS,
-        ...CLIENTS_JS,
-      ]);
+      const clientList =
+        language === 'javascript' || language === 'client'
+          ? [...CLIENTS_JS_UTILS, ...CLIENTS_JS]
+          : CLIENTS;
+      client = await promptClient(client, interactive, clientList);
+      client = await promptClient(client, interactive, clientList);
 
       // We build the JavaScript utils before generated clients as they
       // rely on them

@@ -6,8 +6,16 @@ import { checkForCache, exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
 import type { Spec } from './pre-gen/setHostsOptions';
 
+const SEARCH_LITE_PATHS = [
+  'search',
+  'multipleQueries',
+  'searchForFacetValues',
+  'post',
+];
+
 async function propagateTagsToOperations(
-  bundledPath: string
+  bundledPath: string,
+  client: string
 ): Promise<boolean> {
   if (!(await exists(bundledPath))) {
     throw new Error(`Bundled file not found ${bundledPath}.`);
@@ -23,7 +31,10 @@ async function propagateTagsToOperations(
     );
   }
 
-  const tagsName = bundledSpec.tags.map((tag) => tag.name);
+  const tagsName =
+    client === 'search_lite'
+      ? ['algoliasearchLite']
+      : bundledSpec.tags.map((tag) => tag.name);
 
   for (const pathMethods of Object.values(bundledSpec.paths)) {
     for (const specMethod of Object.values(pathMethods)) {
@@ -78,7 +89,8 @@ async function buildSpec(
   );
 
   if (
-    (await propagateTagsToOperations(toAbsolutePath(bundledPath))) === false
+    (await propagateTagsToOperations(toAbsolutePath(bundledPath), client)) ===
+    false
   ) {
     spinner.fail();
     throw new Error(
@@ -102,31 +114,49 @@ async function buildSpec(
     await fsp.writeFile(cacheFile, hash);
   }
 
+  // We create a lite bundled spec to generate the algoliasearch/lite client
+  // for JavaScript
   if (client === 'search') {
+    const liteClient = 'search_lite';
     const searchSpec = yaml.load(
       await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')
     ) as Spec;
 
-    searchSpec.paths = Object.entries(searchSpec.paths)
-      .filter(([_path, operations]) =>
-        // filter only these operations with `post` method
-        ['search', 'multipleQueries', 'searchForFacetValues'].includes(
-          operations.post?.operationId
-        )
-      )
-      .map(([path, operations]) => {
-        // return only `post` operation, because it's all we need.
-        return { path, operations: { post: operations.post } };
-      })
-      .reduce((acc: Spec['paths'], { path, operations }) => {
-        return {
-          ...acc,
-          [path]: operations,
-        };
-      }, {});
+    searchSpec.paths = Object.entries(searchSpec.paths).reduce(
+      (acc, [path, operations]) => {
+        for (const [method, operation] of Object.entries(operations)) {
+          if (
+            method === 'post' &&
+            SEARCH_LITE_PATHS.includes(operation.operationId)
+          ) {
+            return { ...acc, [path]: { post: operation } };
+          }
+        }
 
-    const liteBundledPath = `specs/bundled/${client}_lite.${outputFormat}`;
-    fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(searchSpec));
+        return acc;
+      },
+      {} as Spec['paths']
+    );
+
+    const liteBundledPath = `specs/bundled/${liteClient}.${outputFormat}`;
+    await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(searchSpec));
+
+    if (
+      (await propagateTagsToOperations(
+        toAbsolutePath(liteBundledPath),
+        liteClient
+      )) === false
+    ) {
+      spinner.fail();
+      throw new Error(
+        `Unable to propage tags to operations for \`${liteClient}\` spec.`
+      );
+    }
+
+    spinner.text = `linting '${liteClient}' bundled spec`;
+    await run(`yarn specs:fix bundled/${liteClient}.${outputFormat}`, {
+      verbose,
+    });
   }
 
   spinner.succeed(`building complete for '${client}' spec`);

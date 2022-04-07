@@ -26,6 +26,29 @@
           "utilsPackageVersion": "0.0.5"
         }
       },
+      "javascript-algoliasearchLite": {
+        "generatorName": "algolia-javascript",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/algoliasearchLite",
+        "glob": "specs/bundled/search_lite.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@experimental-api-clients-automation/algoliasearchLite",
+          "buildFile": "algoliasearchLite",
+          "apiName": "algoliasearchLite",
+          "capitalizedApiName": "AlgoliasearchLite",
+          "packageVersion": "0.0.5",
+          "packageName": "@experimental-api-clients-automation/algoliasearchLite",
+          "utilsPackageVersion": "0.0.5"
+        }
+      },
       "javascript-recommend": {
         "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",

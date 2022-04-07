@@ -70,7 +70,7 @@ export const CLIENTS_JS = [
 ];
 
 export const CLIENTS = CLIENTS_JS.filter(
-  (client) => client !== 'algoliasearch'
+  (client) => !client.startsWith('algoliasearch')
 );
 
 /**
