@@ -128,6 +128,9 @@ async function updateOpenApiTools(
       }
       additionalProperties.packageVersion = newVersion;
 
+      // In case we're not releasing javascript package,
+      // we shouldn't bump the utils version.
+      // At that time `nextUtilsPackageVersion` is undefined, and the following branch is skipped.
       if (lang === 'javascript' && nextUtilsPackageVersion) {
         additionalProperties.utilsPackageVersion = nextUtilsPackageVersion;
       }
