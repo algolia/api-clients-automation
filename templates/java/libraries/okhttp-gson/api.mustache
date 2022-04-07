@@ -58,6 +58,10 @@ public class {{classname}} extends ApiClient {
     }
     {{/hasRegionalHost}}
 
+    public {{classname}}(String appId, String apiKey, Requester requester) {
+        this(appId, apiKey, requester, null);
+    }
+
     public {{classname}}(String appId, String apiKey, Requester requester, UserAgent.Segment[] userAgentSegments) {
         super(appId, apiKey, requester, "{{{baseName}}}", userAgentSegments);
     }
