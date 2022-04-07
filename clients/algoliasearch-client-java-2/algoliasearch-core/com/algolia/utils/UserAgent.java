@@ -17,7 +17,9 @@ public class UserAgent {
 
   public String addSegment(Segment seg) {
     String segment = seg.toString();
-    if (segments.contains(segment)) return finalValue;
+    if (segments.contains(segment)) {
+      return finalValue;
+    }
     segments.add(segment);
     finalValue += segment;
     return finalValue;
