@@ -68,6 +68,17 @@ Some Algolia clients (search and recommend) targets the default appId host (`${a
 
 As the generator does not support reading `servers` in a spec file, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/addNewClient#generators).
 
+### User Agent
+
+The header 'User-Agent' must respect a strict pattern of a base, plus additional user defined segments:
+base: `Algolia for <language> (<apiVersion>)`
+client: `; <clientName> (<clientVersion>)`
+segment: `; <Description> ([version])`
+
+The version is optional for segments.
+
+The resulting User Agent is the concatenation of `base`, `client`, and all the `segments`.
+
 ### Requesters
 
 > TODO: informations
