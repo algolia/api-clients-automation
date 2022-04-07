@@ -134,11 +134,12 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
      *
 {{/description}}
 {{#allParams}}
-     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isInteger}}{{^isBoolean}}array|{{{dataType}}}{{/isBoolean}}{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isInteger}}{{^isBoolean}}array{{/isBoolean}}{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
 {{#isModel}}
     {{#vars}}
      * - ${{paramName}}{{> arrayParam}}
     {{/vars}}
+     * @see {{{dataType}}}
 {{/isModel}}
 {{/allParams}}
      *
@@ -246,7 +247,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         if (${{paramName}} !== null) {
             $resourcePath = str_replace(
                 {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,
-                {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
+                {{#x-is-custom-request}}${{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
                 $resourcePath
             );
         }

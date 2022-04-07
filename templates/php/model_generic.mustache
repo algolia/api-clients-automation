@@ -1,14 +1,5 @@
-class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^parentSchema}}implements ModelInterface, ArrayAccess, \JsonSerializable{{/parentSchema}}
+class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^parentSchema}}implements ModelInterface, \ArrayAccess, \JsonSerializable{{/parentSchema}}
 {
-    public const DISCRIMINATOR = {{#discriminator}}'{{discriminatorName}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
-
-    /**
-      * The original name of the model.
-      *
-      * @var string
-      */
-    protected static $openAPIModelName = '{{name}}';
-
     /**
       * Array of property to type mappings. Used for (de)serialization
       *
@@ -23,8 +14,6 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
       * Array of property to format mappings. Used for (de)serialization
       *
       * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
         {{#vars}}'{{name}}' => {{#dataFormat}}'{{{.}}}'{{/dataFormat}}{{^dataFormat}}null{{/dataFormat}}{{^-last}},
@@ -113,16 +102,6 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
         return {{#parentSchema}}parent::getters() + {{/parentSchema}}self::$getters;
     }
 
-    /**
-     * The original name of the model.
-     *
-     * @return string
-     */
-    public function getModelName()
-    {
-        return self::$openAPIModelName;
-    }
-
     {{#vars}}
     {{#isEnum}}
     {{#allowableValues}}
@@ -163,7 +142,6 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
      * Constructor
      *
      * @param mixed[] $data Associated array of property values
-     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -172,13 +150,10 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
 
         {{/parentSchema}}
         {{#vars}}
-        $this->container['{{name}}'] = $data['{{name}}'] ?? {{{defaultValue}}}{{^defaultValue}}null{{/defaultValue}};
+        if (isset($data['{{name}}'])) {
+            $this->container['{{name}}'] = $data['{{name}}'];
+        }
         {{/vars}}
-        {{#discriminator}}
-
-        // Initialize discriminator property with the model name.
-        $this->container['{{discriminatorName}}'] = static::$openAPIModelName;
-        {{/discriminator}}
     }
 
     /**
@@ -197,14 +172,14 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
 
         {{#vars}}
         {{#required}}
-        if ($this->container['{{name}}'] === null) {
+        if (!isset($this->container['{{name}}']) || $this->container['{{name}}'] === null) {
             $invalidProperties[] = "'{{name}}' can't be null";
         }
         {{/required}}
         {{#isEnum}}
         {{^isContainer}}
         $allowedValues = $this->{{getter}}AllowableValues();
-        if (!is_null($this->container['{{name}}']) && !in_array($this->container['{{name}}'], $allowedValues, true)) {
+        if (isset($this->container['{{name}}']) && !in_array($this->container['{{name}}'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
                 "invalid value '%s' for '{{name}}', must be one of '%s'",
                 $this->container['{{name}}'],
@@ -216,43 +191,43 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
         {{/isEnum}}
         {{#hasValidation}}
         {{#maxLength}}
-        if ({{^required}}!is_null($this->container['{{name}}']) && {{/required}}(mb_strlen($this->container['{{name}}']) > {{maxLength}})) {
+        if ({{^required}}isset($this->container['{{name}}']) && {{/required}}(mb_strlen($this->container['{{name}}']) > {{maxLength}})) {
             $invalidProperties[] = "invalid value for '{{name}}', the character length must be smaller than or equal to {{{maxLength}}}.";
         }
 
         {{/maxLength}}
         {{#minLength}}
-        if ({{^required}}!is_null($this->container['{{name}}']) && {{/required}}(mb_strlen($this->container['{{name}}']) < {{minLength}})) {
+        if ({{^required}}isset($this->container['{{name}}']) && {{/required}}(mb_strlen($this->container['{{name}}']) < {{minLength}})) {
             $invalidProperties[] = "invalid value for '{{name}}', the character length must be bigger than or equal to {{{minLength}}}.";
         }
 
         {{/minLength}}
         {{#maximum}}
-        if ({{^required}}!is_null($this->container['{{name}}']) && {{/required}}($this->container['{{name}}'] >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}})) {
+        if ({{^required}}isset($this->container['{{name}}']) && {{/required}}($this->container['{{name}}'] >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}})) {
             $invalidProperties[] = "invalid value for '{{name}}', must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{maximum}}.";
         }
 
         {{/maximum}}
         {{#minimum}}
-        if ({{^required}}!is_null($this->container['{{name}}']) && {{/required}}($this->container['{{name}}'] <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}})) {
+        if ({{^required}}isset($this->container['{{name}}']) && {{/required}}($this->container['{{name}}'] <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}})) {
             $invalidProperties[] = "invalid value for '{{name}}', must be bigger than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{minimum}}.";
         }
 
         {{/minimum}}
         {{#pattern}}
-        if ({{^required}}!is_null($this->container['{{name}}']) && {{/required}}!preg_match("{{{pattern}}}", $this->container['{{name}}'])) {
+        if ({{^required}}isset($this->container['{{name}}']) && {{/required}}!preg_match("{{{pattern}}}", $this->container['{{name}}'])) {
             $invalidProperties[] = "invalid value for '{{name}}', must be conform to the pattern {{{pattern}}}.";
         }
 
         {{/pattern}}
         {{#maxItems}}
-        if ({{^required}}!is_null($this->container['{{name}}']) && {{/required}}(count($this->container['{{name}}']) > {{maxItems}})) {
+        if ({{^required}}isset($this->container['{{name}}']) && {{/required}}(count($this->container['{{name}}']) > {{maxItems}})) {
             $invalidProperties[] = "invalid value for '{{name}}', number of items must be less than or equal to {{{maxItems}}}.";
         }
 
         {{/maxItems}}
         {{#minItems}}
-        if ({{^required}}!is_null($this->container['{{name}}']) && {{/required}}(count($this->container['{{name}}']) < {{minItems}})) {
+        if ({{^required}}isset($this->container['{{name}}']) && {{/required}}(count($this->container['{{name}}']) < {{minItems}})) {
             $invalidProperties[] = "invalid value for '{{name}}', number of items must be greater than or equal to {{{minItems}}}.";
         }
 
@@ -285,7 +260,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
      */
     public function {{getter}}()
     {
-        return $this->container['{{name}}'];
+        return $this->container['{{name}}'] ?? null;
     }
 
     /**

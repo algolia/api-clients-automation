@@ -1,21 +1,14 @@
 <?php
 
-namespace Algolia\AlgoliaSearch\Model;
+namespace {{modelPackage}};
 
 /**
  * Interface abstracting model access.
  *
- * @package Algolia\AlgoliaSearch\Model
+ * @package {{modelPackage}}
  */
 interface ModelInterface
 {
-    /**
-     * The original name of the model.
-     *
-     * @return string
-     */
-    public function getModelName();
-
     /**
      * Array of property to type mappings. Used for (de)serialization
      *
