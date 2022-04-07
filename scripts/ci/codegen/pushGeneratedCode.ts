@@ -25,7 +25,7 @@ export async function pushGeneratedCode(): Promise<void> {
   if (
     (await getNbGitDiff({
       branch: baseBranch,
-      head: 'noHead',
+      head: null,
       path: FOLDERS_TO_CHECK,
     })) === 0
   ) {

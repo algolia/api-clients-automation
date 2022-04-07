@@ -2,7 +2,7 @@ import { run } from '../common';
 
 /**
  * Returns the number of diff between a `branch` and its `HEAD` for the given `path`.
- * Head defaults to `HEAD`, providing `noHead` will check unstaged changes.
+ * Head defaults to `HEAD`, providing `null` will check unstaged changes.
  */
 export async function getNbGitDiff({
   branch,
@@ -10,10 +10,10 @@ export async function getNbGitDiff({
   path,
 }: {
   branch: string;
-  head?: string;
+  head?: string | null;
   path: string;
 }): Promise<number> {
-  const checkHead = head === 'noHead' ? '' : `...${head}`;
+  const checkHead = head === null ? '' : `...${head}`;
 
   return parseInt(
     (
