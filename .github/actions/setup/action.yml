@@ -47,7 +47,7 @@ runs:
         baseRef=${{ github.base_ref }}
         origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
 
-        yarn workspace scripts setRunVariables $origin
+        yarn workspace scripts setRunVariables "$origin"
 
     - name: Compute specs matrix
       if: inputs.type != 'minimal'
