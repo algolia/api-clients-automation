@@ -28,7 +28,7 @@ export default {
 |  Name | Link |
 |---------------------------------|------------------------|
 | 🔨 Triggered by | [\`${commit}\`](${REPO_URL}/pull/${eventNumber}/commits/${commit}) |
-| 🔍 Generated code | [\`${generatedCommit}\`](${REPO_URL}/commit/${generatedCommit}) |
+| 🔍 Generated code | [\`${generatedCommit}\`](${REPO_URL}/compare/${GENERATED_MAIN_BRANCH}...${generatedCommit}) |
 | 🌲 Generated branch | [\`${branch}\`](${REPO_URL}/tree/${branch}) |
 `;
     },
