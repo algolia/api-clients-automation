@@ -102,13 +102,31 @@ async function buildSpec(
     await fsp.writeFile(cacheFile, hash);
   }
 
-  // TODO: do this
-  // We need to bundle search-lite spec, for algoliasearch-lite package in JS.
   if (client === 'search') {
-    // const searchSpec = yaml.load(
-    //   await fsp.readFile(bundledPath, 'utf8')
-    // ) as Spec;
-    console.log('# hey', { client, outputFormat });
+    const searchSpec = yaml.load(
+      await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')
+    ) as Spec;
+
+    searchSpec.paths = Object.entries(searchSpec.paths)
+      .filter(([_path, operations]) =>
+        // filter only these operations with `post` method
+        ['search', 'multipleQueries', 'searchForFacetValues'].includes(
+          operations.post?.operationId
+        )
+      )
+      .map(([path, operations]) => {
+        // return only `post` operation, because it's all we need.
+        return { path, operations: { post: operations.post } };
+      })
+      .reduce((acc: Spec['paths'], { path, operations }) => {
+        return {
+          ...acc,
+          [path]: operations,
+        };
+      }, {});
+
+    const liteBundledPath = `specs/bundled/${client}_lite.${outputFormat}`;
+    fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(searchSpec));
   }
 
   spinner.succeed(`building complete for '${client}' spec`);
