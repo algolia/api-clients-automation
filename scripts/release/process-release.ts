@@ -28,6 +28,7 @@ import {
   configureGitHubAuthor,
   cloneRepository,
   getOctokit,
+  MAIN_PACKAGE,
 } from './common';
 import TEXT from './text';
 import type {
@@ -103,6 +104,12 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
 async function updateOpenApiTools(
   versionsToRelease: VersionsToRelease
 ): Promise<void> {
+  const nextUtilsPackageVersion = semver.inc(
+    openapitools['generator-cli'].generators[MAIN_PACKAGE.javascript]
+      .additionalProperties.utilsPackageVersion,
+    versionsToRelease.javascript?.releaseType
+  );
+
   Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
     const lang = client.split('-')[0];
     if (versionsToRelease[lang]) {
@@ -121,11 +128,8 @@ async function updateOpenApiTools(
       }
       additionalProperties.packageVersion = newVersion;
 
-      if (additionalProperties.utilsPackageVersion) {
-        additionalProperties.utilsPackageVersion = semver.inc(
-          additionalProperties.utilsPackageVersion,
-          releaseType
-        );
+      if (lang === 'javascript' && nextUtilsPackageVersion) {
+        additionalProperties.utilsPackageVersion = nextUtilsPackageVersion;
       }
     }
   });
