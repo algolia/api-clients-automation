@@ -23,7 +23,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   const nbDiff = await getNbGitDiff({
     branch: baseBranch,
-    head: 'noHead',
+    head: null,
     path: FOLDERS_TO_CHECK,
   });
 
