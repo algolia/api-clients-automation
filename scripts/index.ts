@@ -170,7 +170,6 @@ buildCommand
           ? [...CLIENTS_JS_UTILS, ...CLIENTS_JS]
           : CLIENTS;
       client = await promptClient(client, interactive, clientList);
-      client = await promptClient(client, interactive, clientList);
 
       // We build the JavaScript utils before generated clients as they
       // rely on them
