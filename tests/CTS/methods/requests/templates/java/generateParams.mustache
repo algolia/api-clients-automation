@@ -1,5 +1,6 @@
 {{#isString}}String {{{key}}}{{suffix}} = "{{{value}}}";{{/isString}}
 {{#isInteger}}int {{{key}}}{{suffix}} = {{{value}}};{{/isInteger}}
+{{#isLong}}long {{{key}}}{{suffix}} = {{{value}}}L;{{/isLong}}
 {{#isDouble}}double {{{key}}}{{suffix}} = {{{value}}};{{/isDouble}}
 {{#isBoolean}}boolean {{{key}}}{{suffix}} = {{{value}}};{{/isBoolean}}
 {{#isEnum}}{{{objectName}}} {{{key}}}{{suffix}} = {{{objectName}}}.fromValue("{{{value}}}");{{/isEnum}}

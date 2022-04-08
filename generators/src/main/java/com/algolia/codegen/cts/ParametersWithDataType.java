@@ -153,6 +153,7 @@ public class ParametersWithDataType {
     testOutput.put("isFreeFormObject", false);
     testOutput.put("isString", false);
     testOutput.put("isInteger", false);
+    testOutput.put("isLong", false);
     testOutput.put("isDouble", false);
     testOutput.put("isBoolean", false);
     testOutput.put("isEnum", false);
@@ -373,7 +374,7 @@ public class ParametersWithDataType {
         return "Integer";
       case "Long":
         if (spec != null) spec.setIsNumber(true);
-        if (output != null) output.put("isInteger", true);
+        if (output != null) output.put("isLong", true);
         return "Long";
       case "Double":
         if (spec != null) spec.setIsNumber(true);
