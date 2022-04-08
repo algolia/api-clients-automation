@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
-import { run } from '../../common';
+import { run, GENERATED_MAIN_BRANCH } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
-
-import { GENERATED_MAIN_BRANCH } from './text';
 
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const FOLDERS_TO_CHECK = 'yarn.lock openapitools.json clients specs/bundled';

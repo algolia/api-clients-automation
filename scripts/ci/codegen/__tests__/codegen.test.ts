@@ -1,6 +1,7 @@
+import { GENERATED_MAIN_BRANCH } from '../../../common';
 import { cleanGeneratedBranch } from '../cleanGeneratedBranch';
 import { pushGeneratedCode } from '../pushGeneratedCode';
-import commentText, { GENERATED_MAIN_BRANCH } from '../text';
+import commentText from '../text';
 import {
   getCommentBody,
   upsertGenerationComment,
