@@ -165,7 +165,7 @@ async function createReleaseIssue(): Promise<void> {
   if (
     (await getNbGitDiff({
       head: null,
-    })) === 0
+    })) !== 0
   ) {
     throw new Error(
       'Working directory is not clean. Commit all the changes first.'
