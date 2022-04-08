@@ -20,7 +20,7 @@ export async function pushGeneratedCode(): Promise<void> {
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
   const nbDiff = await getNbGitDiff({
-    branch: baseBranch,
+    branch: 'origin/generated/main',
     head: null,
     path: FOLDERS_TO_CHECK,
   });
