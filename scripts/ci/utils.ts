@@ -2,10 +2,15 @@ import { run } from '../common';
 
 /**
  * Returns the number of diff between a `branch` and its `HEAD` for the given `path`.
- * Head defaults to `HEAD`, providing `null` will check unstaged changes.
+ *
+ * @param opts - Parameters of the method.
+ * @param opts.branch - The branch to trigger the operation, defaults to '' (current branch).
+ * @param opts.head - The head to compare the operation, defaults to 'HEAD', providing 'null' will check for unstaged changes.
+ * @param opts.path - The path to look for changes in, defaults to '.' (current directory).
+ * @param opts.cwd - The path to run the command, defaults to current directory.
  */
 export async function getNbGitDiff({
-  branch,
+  branch = '',
   head = 'HEAD',
   path = '.',
   cwd,
