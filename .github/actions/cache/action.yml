@@ -132,6 +132,18 @@ runs:
             'specs/common/**'
           )}}
 
+    - name: Restore built search-lite spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/search-lite.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/search/**',
+            'specs/common/**'
+          )}}
+
     - name: Restore built sources spec
       if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
@@ -191,6 +203,23 @@ runs:
             'clients/algoliasearch-client-javascript/packages/client-search/**',
             'clients/algoliasearch-client-javascript/packages/client-analytics/**',
             'clients/algoliasearch-client-javascript/packages/client-personalization/**'
+          )}}
+
+    - name: Restore built JavaScript algoliasearchLite client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/algoliasearchLite
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/algoliasearchLite/src/**',
+            'clients/algoliasearch-client-javascript/packages/algoliasearchLite/model/**',
+            'clients/algoliasearch-client-javascript/packages/algoliasearchLite/builds/**',
+            'clients/algoliasearch-client-javascript/packages/algoliasearchLite/package.json',
+            'specs/bundled/search-lite.yml',
+            'templates/javascript/**',
+            'generators/src/**'
           )}}
 
     - name: Restore built JavaScript search client

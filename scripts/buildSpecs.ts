@@ -6,7 +6,7 @@ import { checkForCache, exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
 import type { Spec } from './pre-gen/setHostsOptions';
 
-const SEARCH_LITE_PATHS = [
+const SEARCH_LITE_OPERATIONS = [
   'search',
   'multipleQueries',
   'searchForFacetValues',
@@ -32,7 +32,7 @@ async function propagateTagsToOperations(
   }
 
   const tagsName =
-    client === 'search_lite'
+    client === 'search-lite'
       ? ['algoliasearchLite']
       : bundledSpec.tags.map((tag) => tag.name);
 
@@ -61,13 +61,21 @@ async function buildSpec(
   createSpinner(`'${client}' spec`, verbose).start().info();
   const cacheFile = toAbsolutePath(`specs/dist/${client}.cache`);
   let hash = '';
+  // The lite search spec exists to generated the search lite client for JavaScript
+  const isSearchLiteClient = client === 'search';
 
   if (useCache) {
+    const generatedFiles = [`bundled/${client}.yml`];
+
+    if (isSearchLiteClient) {
+      generatedFiles.push(`bundled/${client}-lite.yml`);
+    }
+
     const { cacheExists, hash: newCache } = await checkForCache(
       {
         job: `'${client}' specs`,
         folder: toAbsolutePath('specs/'),
-        generatedFiles: [`bundled/${client}.yml`],
+        generatedFiles,
         filesToCache: [client, 'common'],
         cacheFile,
       },
@@ -116,8 +124,8 @@ async function buildSpec(
 
   // We create a lite bundled spec to generate the algoliasearch/lite client
   // for JavaScript
-  if (client === 'search') {
-    const liteClient = 'search_lite';
+  if (isSearchLiteClient) {
+    const liteClient = 'search-lite';
     const searchSpec = yaml.load(
       await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')
     ) as Spec;
@@ -127,7 +135,7 @@ async function buildSpec(
         for (const [method, operation] of Object.entries(operations)) {
           if (
             method === 'post' &&
-            SEARCH_LITE_PATHS.includes(operation.operationId)
+            SEARCH_LITE_OPERATIONS.includes(operation.operationId)
           ) {
             return { ...acc, [path]: { post: operation } };
           }
