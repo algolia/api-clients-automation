@@ -91,19 +91,25 @@ function generatorList({
     clientsTodo = clientList;
   }
 
-  return langsTodo
+  const generators: Generator[] = [];
+
+  langsTodo
     .flatMap((lang) =>
-      clientsTodo.map((cli) => {
+      clientsTodo.forEach((cli) => {
         const generator =
           GENERATORS[createGeneratorKey({ language: lang, client: cli })];
 
-        return {
-          ...generator,
-          client: generator.client === 'algoliasearchLite' ? 'search' : cli,
-        };
+        if (generator) {
+          generators.push({
+            ...generator,
+            client: generator.client === 'algoliasearchLite' ? 'search' : cli,
+          });
+        }
       })
     )
     .filter(Boolean);
+
+  return generators;
 }
 
 program
