@@ -1,4 +1,4 @@
-import { CLIENTS, GENERATORS, run } from '../common';
+import { CLIENTS, GENERATORS } from '../common';
 import { capitalize } from '../cts/utils';
 import type { Language } from '../types';
 
