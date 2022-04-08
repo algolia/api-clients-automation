@@ -8,7 +8,7 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
  * Abstract class extended by each models
  *
  * @category Class
- * @package  Algolia\AlgoliaSearch
+ * @package Algolia\AlgoliaSearch
  */
 abstract class AbstractModel
 {
