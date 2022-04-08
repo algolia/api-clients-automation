@@ -59,7 +59,7 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const commitMessage =
-    await run(`git show -s ${baseBranch} --format="Generated code for commit %H.
+    await run(`git show -s ${baseBranch} --format="chore: generated code for commit %H.
 
 Co-authored-by: %an <%ae>"`);
 
