@@ -7,17 +7,22 @@ import { run } from '../common';
 export async function getNbGitDiff({
   branch,
   head = 'HEAD',
-  path,
-}: {
+  path = '.',
+  cwd,
+}: Partial<{
   branch: string;
-  head?: string | null;
+  head: string | null;
   path: string;
-}): Promise<number> {
+  cwd: string;
+}>): Promise<number> {
   const checkHead = head === null ? '' : `...${head}`;
 
   return parseInt(
     (
-      await run(`git diff --shortstat ${branch}${checkHead} -- ${path} | wc -l`)
+      await run(
+        `git diff --shortstat ${branch}${checkHead} -- ${path} | wc -l`,
+        { cwd }
+      )
     ).trim(),
     10
   );

@@ -5,13 +5,13 @@ import {
   emptyDirExceptForDotGit,
   gitBranchExists,
   gitCommit,
-  isWorkingDirectoryClean,
   LANGUAGES,
   run,
   toAbsolutePath,
 } from '../../common';
 import { getLanguageFolder } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
+import { getNbGitDiff } from '../utils';
 
 import { GENERATED_MAIN_BRANCH, REPO_URL } from './text';
 
@@ -70,7 +70,12 @@ async function spreadGeneration(): Promise<void> {
     await emptyDirExceptForDotGit(tempGitDir);
     await copy(clientPath, tempGitDir, { preserveTimestamps: true });
 
-    if (await isWorkingDirectoryClean(tempGitDir)) {
+    if (
+      (await getNbGitDiff({
+        head: null,
+        cwd: tempGitDir,
+      })) === 0
+    ) {
       console.log(`Skipping ${lang} repository, because there is no change.`);
     } else {
       await configureGitHubAuthor(tempGitDir);

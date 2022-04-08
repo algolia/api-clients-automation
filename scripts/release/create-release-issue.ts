@@ -2,13 +2,8 @@
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import {
-  LANGUAGES,
-  ROOT_ENV_PATH,
-  run,
-  getPackageVersion,
-  isWorkingDirectoryClean,
-} from '../common';
+import { getNbGitDiff } from '../ci/utils';
+import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
 import type { Language } from '../types';
 
 import {
@@ -166,7 +161,11 @@ async function createReleaseIssue(): Promise<void> {
     );
   }
 
-  if (await isWorkingDirectoryClean()) {
+  if (
+    (await getNbGitDiff({
+      head: null,
+    })) === 0
+  ) {
     throw new Error(
       'Working directory is not clean. Commit all the changes first.'
     );
