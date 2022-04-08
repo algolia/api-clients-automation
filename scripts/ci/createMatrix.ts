@@ -1,4 +1,5 @@
 import { CLIENTS, GENERATORS } from '../common';
+import { createClientName } from '../cts/utils';
 import type { Language } from '../types';
 
 import { getNbGitDiff } from './utils';
@@ -18,6 +19,7 @@ type ClientMatrix = BaseMatrix & {
   spec: string;
   config?: string;
   api?: string;
+  capitalizedName?: string;
 };
 
 type SpecMatrix = BaseMatrix & {
@@ -79,6 +81,7 @@ async function getClientMatrix({
         'Config',
         'Api'
       );
+      matchedGenerator.capitalizedName = createClientName(client, 'php');
     }
 
     matrix.client.push(matchedGenerator);
