@@ -122,7 +122,7 @@ export async function generate(
     ) {
       spinner.text = `First time generating ${gen.client}, linking to workspaces`;
 
-      await run('yarn', { verbose });
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn', { verbose });
     }
 
     spinner.text = `post-gen ${gen.key}`;
