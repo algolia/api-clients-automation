@@ -1,7 +1,4 @@
-import { MAIN_BRANCH, OWNER, REPO } from '../../release/common';
-
-export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
-export const GENERATED_MAIN_BRANCH = `generated/${MAIN_BRANCH}`;
+import { REPO_URL, GENERATED_MAIN_BRANCH } from '../../common';
 
 export default {
   notification: {
