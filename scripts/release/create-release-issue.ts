@@ -2,17 +2,19 @@
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
-import type { Language } from '../types';
-
+import { getNbGitDiff } from '../ci/utils';
 import {
-  RELEASED_TAG,
+  LANGUAGES,
+  ROOT_ENV_PATH,
+  run,
+  getPackageVersion,
   MAIN_BRANCH,
   OWNER,
   REPO,
-  MAIN_PACKAGE,
-  getOctokit,
-} from './common';
+} from '../common';
+import type { Language } from '../types';
+
+import { RELEASED_TAG, MAIN_PACKAGE, getOctokit } from './common';
 import TEXT from './text';
 import type {
   Versions,
@@ -160,7 +162,11 @@ async function createReleaseIssue(): Promise<void> {
     );
   }
 
-  if (await run('git status --porcelain')) {
+  if (
+    (await getNbGitDiff({
+      head: null,
+    })) !== 0
+  ) {
     throw new Error(
       'Working directory is not clean. Commit all the changes first.'
     );
