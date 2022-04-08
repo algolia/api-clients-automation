@@ -1,5 +1,5 @@
 import { CLIENTS, GENERATORS } from '../common';
-import { capitalize } from '../cts/utils';
+import { createClientName } from '../cts/utils';
 import type { Language } from '../types';
 
 import { getNbGitDiff } from './utils';
@@ -72,10 +72,7 @@ async function getClientMatrix({
         'Config',
         'Api'
       );
-      matchedGenerator.capitalizedName = client
-        .split('-')
-        .map((part) => capitalize(part))
-        .join('');
+      matchedGenerator.capitalizedName = createClientName(client, 'php');
     }
 
     matrix.client.push(matchedGenerator);

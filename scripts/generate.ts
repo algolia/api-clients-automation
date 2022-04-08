@@ -14,7 +14,7 @@ import {
   getLanguageFolder,
   getLanguageModelFolder,
 } from './config';
-import { capitalize } from './cts/utils';
+import { capitalize, createClientName } from './cts/utils';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
 import { setHostsOptions } from './pre-gen/setHostsOptions';
@@ -35,10 +35,7 @@ async function removeExistingModel(
       clientModel = client;
       break;
     case 'php':
-      clientModel = client
-        .split('-')
-        .map((part) => capitalize(part))
-        .join('');
+      clientModel = createClientName(client, 'php');
       break;
     default:
       break;
