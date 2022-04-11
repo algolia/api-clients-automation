@@ -36,6 +36,9 @@ jobs:
           fi
           exit $diff
 
+      - name: Test custom eslint plugin
+        run: yarn test:eslint
+
     outputs:
       RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
 

@@ -22,6 +22,7 @@
     "playground:browser": "yarn workspace javascript-browser-playground start",
     "postinstall": "yarn workspace eslint-plugin-automation-custom build",
     "build:eslint": "yarn workspace eslint-plugin-automation-custom build && yarn install",
+    "test:eslint": "yarn workspace eslint-plugin-automation-custom test",
     "release": "yarn workspace scripts createReleaseIssue",
     "scripts:lint": "eslint --ext=ts scripts/",
     "scripts:test": "yarn workspace scripts test",
