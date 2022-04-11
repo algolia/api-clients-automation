@@ -20,7 +20,7 @@ export async function pushGeneratedCode(): Promise<void> {
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
   const nbDiff = await getNbGitDiff({
-    branch: 'origin/generated/main',
+    branch: baseBranch,
     head: null,
     path: FOLDERS_TO_CHECK,
   });
@@ -40,20 +40,11 @@ export async function pushGeneratedCode(): Promise<void> {
   // determine generated branch name based on current branch
   const generatedCodeBranch = `generated/${baseBranch}`;
 
-  // We don't re-create GENERATED_MAIN_BRANCH
   if (baseBranch !== 'main') {
     await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
 
     console.log(`Creating branch for generated code: '${generatedCodeBranch}'`);
-    await run(`git branch ${generatedCodeBranch}`);
-  }
-
-  await run(`git checkout ${generatedCodeBranch}`);
-
-  // For the GENERATED_MAIN_BRANCH, we take the latest commit on main and generate code
-  if (baseBranch === 'main') {
-    console.log(`Merging '${baseBranch}' in '${generatedCodeBranch}'`);
-    await run(`git merge --no-commit ${baseBranch}`);
+    await run(`git checkout -b ${generatedCodeBranch}`);
   }
 
   const commitMessage =
