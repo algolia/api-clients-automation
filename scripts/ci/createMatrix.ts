@@ -70,7 +70,7 @@ async function getClientMatrix({
     const matchedGenerator: ClientMatrix = {
       name: client,
       path: output,
-      spec: client === 'algoliasearchLite' ? 'search-lite' : client,
+      spec: client,
     };
 
     // Extra informations for the PHP matrix in order to properly scope the
@@ -106,20 +106,22 @@ async function getSpecMatrix({
       continue;
     }
 
+    // The `algoliasearchLite` spec is created by the `search` spec
+    if (client === 'algoliasearchLite') {
+      matrix.client.push({
+        name: 'search',
+        path: 'specs/search',
+        bundledPath: `specs/bundled/${client}.yml`,
+      });
+
+      continue;
+    }
+
     matrix.client.push({
       name: client,
       path: `specs/${client}`,
       bundledPath: `specs/bundled/${client}.yml`,
     });
-
-    // We push an extra entry for the search-lite version
-    if (client === 'search') {
-      matrix.client.push({
-        name: client,
-        path: `specs/${client}`,
-        bundledPath: `specs/bundled/${client}-lite.yml`,
-      });
-    }
   }
 
   return matrix;

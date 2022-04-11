@@ -2639,7 +2639,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/algoliasearchLite@workspace:clients/algoliasearch-client-javascript/packages/algoliasearchLite":
+"@experimental-api-clients-automation/algoliasearchLite@0.0.5, @experimental-api-clients-automation/algoliasearchLite@workspace:clients/algoliasearch-client-javascript/packages/algoliasearchLite":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/algoliasearchLite@workspace:clients/algoliasearch-client-javascript/packages/algoliasearchLite"
   dependencies:
@@ -13159,6 +13159,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "javascript-tests@workspace:tests/output/javascript"
   dependencies:
+    "@experimental-api-clients-automation/algoliasearchLite": 0.0.5
     "@experimental-api-clients-automation/client-abtesting": 0.0.5
     "@experimental-api-clients-automation/client-analytics": 0.0.5
     "@experimental-api-clients-automation/client-common": 0.0.5

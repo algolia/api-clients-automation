@@ -6,7 +6,7 @@ import { checkForCache, exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
 import type { Spec } from './pre-gen/setHostsOptions';
 
-const SEARCH_LITE_OPERATIONS = [
+const ALGOLIASEARCHLITE_OPERATIONS = [
   'search',
   'multipleQueries',
   'searchForFacetValues',
@@ -25,20 +25,9 @@ async function propagateTagsToOperations(
     await fsp.readFile(bundledPath, 'utf8')
   ) as Spec;
 
-  if (bundledSpec.tags.length === 0) {
-    throw new Error(
-      `No tags defined for ${bundledPath}, tags are required to properly generate a client.`
-    );
-  }
-
-  const tagsName =
-    client === 'search-lite'
-      ? ['algoliasearchLite']
-      : bundledSpec.tags.map((tag) => tag.name);
-
   for (const pathMethods of Object.values(bundledSpec.paths)) {
     for (const specMethod of Object.values(pathMethods)) {
-      specMethod.tags = tagsName;
+      specMethod.tags = [client];
     }
   }
 
@@ -53,22 +42,23 @@ async function propagateTagsToOperations(
 }
 
 async function buildSpec(
-  client: string,
+  spec: string,
   outputFormat: string,
   verbose: boolean,
   useCache: boolean
 ): Promise<void> {
-  createSpinner(`'${client}' spec`, verbose).start().info();
+  const shouldBundleLiteSpec = spec === 'algoliasearchLite';
+  const client = shouldBundleLiteSpec ? 'search' : spec;
   const cacheFile = toAbsolutePath(`specs/dist/${client}.cache`);
   let hash = '';
-  // The lite search spec exists to generated the search lite client for JavaScript
-  const isSearchLiteClient = client === 'search';
+
+  createSpinner(`'${client}' spec`, verbose).start().info();
 
   if (useCache) {
     const generatedFiles = [`bundled/${client}.yml`];
 
-    if (isSearchLiteClient) {
-      generatedFiles.push(`bundled/${client}-lite.yml`);
+    if (shouldBundleLiteSpec) {
+      generatedFiles.push(`bundled/${spec}.yml`);
     }
 
     const { cacheExists, hash: newCache } = await checkForCache(
@@ -96,10 +86,7 @@ async function buildSpec(
     { verbose }
   );
 
-  if (
-    (await propagateTagsToOperations(toAbsolutePath(bundledPath), client)) ===
-    false
-  ) {
+  if (!(await propagateTagsToOperations(toAbsolutePath(bundledPath), client))) {
     spinner.fail();
     throw new Error(
       `Unable to propage tags to operations for \`${client}\` spec.`
@@ -117,15 +104,9 @@ async function buildSpec(
   spinner.text = `linting '${client}' bundled spec`;
   await run(`yarn specs:fix bundled/${client}.${outputFormat}`, { verbose });
 
-  if (hash) {
-    spinner.text = `storing ${client} spec cache`;
-    await fsp.writeFile(cacheFile, hash);
-  }
-
-  // We create a lite bundled spec to generate the algoliasearch/lite client
-  // for JavaScript
-  if (isSearchLiteClient) {
-    const liteClient = 'search-lite';
+  // This part creates an algoliasearchLite bundled spec based on the search spec
+  // which allow us to generated a JavaScript lite client.
+  if (shouldBundleLiteSpec) {
     const searchSpec = yaml.load(
       await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')
     ) as Spec;
@@ -135,7 +116,7 @@ async function buildSpec(
         for (const [method, operation] of Object.entries(operations)) {
           if (
             method === 'post' &&
-            SEARCH_LITE_OPERATIONS.includes(operation.operationId)
+            ALGOLIASEARCHLITE_OPERATIONS.includes(operation.operationId)
           ) {
             return { ...acc, [path]: { post: operation } };
           }
@@ -146,25 +127,27 @@ async function buildSpec(
       {} as Spec['paths']
     );
 
-    const liteBundledPath = `specs/bundled/${liteClient}.${outputFormat}`;
+    const liteBundledPath = `specs/bundled/${spec}.${outputFormat}`;
     await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(searchSpec));
 
     if (
-      (await propagateTagsToOperations(
-        toAbsolutePath(liteBundledPath),
-        liteClient
-      )) === false
+      !(await propagateTagsToOperations(toAbsolutePath(liteBundledPath), spec))
     ) {
       spinner.fail();
       throw new Error(
-        `Unable to propage tags to operations for \`${liteClient}\` spec.`
+        `Unable to propage tags to operations for \`${spec}\` spec.`
       );
     }
 
-    spinner.text = `linting '${liteClient}' bundled spec`;
-    await run(`yarn specs:fix bundled/${liteClient}.${outputFormat}`, {
+    spinner.text = `linting '${spec}' bundled spec`;
+    await run(`yarn specs:fix bundled/${spec}.${outputFormat}`, {
       verbose,
     });
+  }
+
+  if (hash) {
+    spinner.text = `storing ${client} spec cache`;
+    await fsp.writeFile(cacheFile, hash);
   }
 
   spinner.succeed(`building complete for '${client}' spec`);

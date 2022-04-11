@@ -32,7 +32,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/algoliasearchLite",
-        "glob": "specs/bundled/search-lite.yml",
+        "glob": "specs/bundled/algoliasearchLite.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",

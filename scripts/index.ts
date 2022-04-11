@@ -91,25 +91,13 @@ function generatorList({
     clientsTodo = clientList;
   }
 
-  const generators: Generator[] = [];
-
-  langsTodo
+  return langsTodo
     .flatMap((lang) =>
-      clientsTodo.forEach((cli) => {
-        const generator =
-          GENERATORS[createGeneratorKey({ language: lang, client: cli })];
-
-        if (generator) {
-          generators.push({
-            ...generator,
-            client: generator.client === 'algoliasearchLite' ? 'search' : cli,
-          });
-        }
-      })
+      clientsTodo.map(
+        (cli) => GENERATORS[createGeneratorKey({ language: lang, client: cli })]
+      )
     )
     .filter(Boolean);
-
-  return generators;
 }
 
 program
@@ -121,9 +109,7 @@ program
     )
   )
   .addArgument(
-    new Argument('[client]', 'The client').choices(
-      ['all'].concat([...CLIENTS, 'algoliasearchLite'])
-    )
+    new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
   )
   .option('-v, --verbose', 'make the generation verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
@@ -134,16 +120,9 @@ program
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      const clientList =
-        language === 'javascript' || language === 'client'
-          ? [...CLIENTS, 'algoliasearchLite']
-          : CLIENTS;
-      client = await promptClient(client, interactive, clientList);
+      client = await promptClient(client, interactive);
 
-      await generate(
-        generatorList({ language, client, clientList }),
-        Boolean(verbose)
-      );
+      await generate(generatorList({ language, client }), Boolean(verbose));
     }
   );
 
@@ -171,16 +150,17 @@ buildCommand
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      const clientList =
-        language === 'javascript' || language === 'client'
-          ? [...CLIENTS_JS_UTILS, ...CLIENTS_JS]
-          : CLIENTS;
+
+      const shouldBuildJs = language === 'javascript' || language === 'all';
+      const clientList = shouldBuildJs
+        ? [...CLIENTS_JS_UTILS, ...CLIENTS_JS]
+        : CLIENTS;
       client = await promptClient(client, interactive, clientList);
 
       // We build the JavaScript utils before generated clients as they
       // rely on them
       if (
-        (language === 'javascript' || language === 'all') &&
+        shouldBuildJs &&
         (!client || client === 'all' || CLIENTS_JS_UTILS.includes(client))
       ) {
         await buildJSClientUtils(Boolean(verbose), client);
