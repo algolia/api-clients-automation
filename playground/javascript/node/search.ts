@@ -1,5 +1,5 @@
-import { searchApi } from '@algolia/client-search';
-import { ApiError } from '@algolia/client-common';
+import { searchApi } from '@experimental-api-clients-automation/client-search';
+import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });
@@ -12,6 +12,8 @@ const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
 const client = searchApi(appId, apiKey);
+
+client.addUserAgent('Node playground', '0.0.1');
 
 async function testSearch() {
   try {

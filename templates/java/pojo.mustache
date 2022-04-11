@@ -4,7 +4,7 @@
  */{{#isDeprecated}}
 @Deprecated{{/isDeprecated}}
 {{>additionalModelTypeAnnotations}}
-public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{
+public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtens
   {{#vars}}
 
   {{^isReadOnly}}
-  public {{classname}} {{name}}({{{datatypeWithEnum}}} {{name}}) {
+  public {{classname}} {{setter}}({{{datatypeWithEnum}}} {{name}}) {
     this.{{name}} = {{name}};
     return this;
   }
@@ -123,12 +123,6 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtens
   public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};
   }
-
-  {{^isReadOnly}}
-  public void {{setter}}({{{datatypeWithEnum}}} {{name}}) {
-    this.{{name}} = {{name}};
-  }
-  {{/isReadOnly}}
 
   {{/vars}}
 

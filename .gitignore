@@ -17,7 +17,13 @@ target
 **/.DS_Store
 .gradle
 build
+pom.xml
 
 dist
+.cache
 
 .openapi-generator
+
+tests/output/*/.openapi-generator-ignore
+
+generators/bin

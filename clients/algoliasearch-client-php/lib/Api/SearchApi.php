@@ -147,18 +147,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -272,10 +274,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/batch';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -339,7 +342,7 @@ class SearchApi
     /**
      * Send a batch of dictionary entries.
      *
-     * @param string $dictionaryName The dictionary to search in. (required)
+     * @param array $dictionaryName The dictionary to search in. (required)
      * @param array $batchDictionaryEntriesParams batchDictionaryEntriesParams (required)
      *
      * @return array<string, mixed>
@@ -362,10 +365,11 @@ class SearchApi
         $resourcePath = '/1/dictionaries/{dictionaryName}/batch';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($dictionaryName !== null) {
             $resourcePath = str_replace(
-                '{' . 'dictionaryName' . '}',
+                '{dictionaryName}',
                 ObjectSerializer::toPathValue($dictionaryName),
                 $resourcePath
             );
@@ -426,10 +430,11 @@ class SearchApi
                 $queryParams['clearExistingRules'] = $clearExistingRules;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -462,10 +467,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/browse';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -508,10 +514,11 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -539,10 +546,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/clear';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -581,16 +589,65 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function del($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling del'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
 
     /**
@@ -612,10 +669,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );
@@ -650,10 +708,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/deleteByQuery';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -685,10 +744,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -723,18 +783,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -780,18 +842,20 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -819,10 +883,11 @@ class SearchApi
         $resourcePath = '/1/security/sources/{source}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($source !== null) {
             $resourcePath = str_replace(
-                '{' . 'source' . '}',
+                '{source}',
                 ObjectSerializer::toPathValue($source),
                 $resourcePath
             );
@@ -868,24 +933,69 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
         }
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function get($path, $parameters = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling get'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
 
     /**
@@ -907,10 +1017,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );
@@ -954,12 +1065,12 @@ class SearchApi
      *
      * @param int $offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
      * @param int $length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
-     * @param string $indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional, default to 'null')
-     * @param string $type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to 'all')
+     * @param string $indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional)
+     * @param array $type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)
      *
      * @return array<string, mixed>
      */
-    public function getLogs($offset = 0, $length = 10, $indexName = 'null', $type = 'all')
+    public function getLogs($offset = 0, $length = 10, $indexName = null, $type = null)
     {
         if ($length !== null && $length > 1000) {
             throw new \InvalidArgumentException('invalid value for "$length" when calling SearchApi.getLogs, must be smaller than or equal to 1000.');
@@ -1049,18 +1160,20 @@ class SearchApi
                 $queryParams['attributesToRetrieve'] = $attributesToRetrieve;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1122,18 +1235,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/rules/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1161,10 +1276,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/settings';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1214,18 +1330,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/synonyms/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1238,7 +1356,7 @@ class SearchApi
      * Check the current status of a given task.
      *
      * @param string $indexName The index in which to perform the request. (required)
-     * @param int $taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+     * @param int $taskID Unique identifier of an task. Numeric value (up to 64bits). (required)
      *
      * @return array<string, mixed>
      */
@@ -1260,18 +1378,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/task/{taskID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($taskID !== null) {
             $resourcePath = str_replace(
-                '{' . 'taskID' . '}',
+                '{taskID}',
                 ObjectSerializer::toPathValue($taskID),
                 $resourcePath
             );
@@ -1317,10 +1437,11 @@ class SearchApi
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($userID !== null) {
             $resourcePath = str_replace(
-                '{' . 'userID' . '}',
+                '{userID}',
                 ObjectSerializer::toPathValue($userID),
                 $resourcePath
             );
@@ -1528,10 +1649,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/operation';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1549,12 +1671,12 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
-     * @param array $oneOfStringBuiltInOperation List of attributes to update. (required)
+     * @param array $attributeOrBuiltInOperation List of attributes to update. (required)
      * @param array $createIfNotExists Creates the record if it does not exist yet. (optional, default to true)
      *
      * @return array<string, mixed>
      */
-    public function partialUpdateObject($indexName, $objectID, $oneOfStringBuiltInOperation, $createIfNotExists = true)
+    public function partialUpdateObject($indexName, $objectID, $attributeOrBuiltInOperation, $createIfNotExists = true)
     {
         // verify the required parameter 'indexName' is set
         if ($indexName === null || (is_array($indexName) && count($indexName) === 0)) {
@@ -1568,10 +1690,10 @@ class SearchApi
                 'Missing the required parameter $objectID when calling partialUpdateObject'
             );
         }
-        // verify the required parameter 'oneOfStringBuiltInOperation' is set
-        if ($oneOfStringBuiltInOperation === null || (is_array($oneOfStringBuiltInOperation) && count($oneOfStringBuiltInOperation) === 0)) {
+        // verify the required parameter 'attributeOrBuiltInOperation' is set
+        if ($attributeOrBuiltInOperation === null || (is_array($attributeOrBuiltInOperation) && count($attributeOrBuiltInOperation) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $oneOfStringBuiltInOperation when calling partialUpdateObject'
+                'Missing the required parameter $attributeOrBuiltInOperation when calling partialUpdateObject'
             );
         }
 
@@ -1588,28 +1710,126 @@ class SearchApi
                 $queryParams['createIfNotExists'] = $createIfNotExists;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
         }
 
-        if (isset($oneOfStringBuiltInOperation)) {
-            $httpBody = $oneOfStringBuiltInOperation;
+        if (isset($attributeOrBuiltInOperation)) {
+            $httpBody = $attributeOrBuiltInOperation;
         }
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function post($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling post'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function put($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling put'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
 
     /**
@@ -1634,10 +1854,11 @@ class SearchApi
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($userID !== null) {
             $resourcePath = str_replace(
-                '{' . 'userID' . '}',
+                '{userID}',
                 ObjectSerializer::toPathValue($userID),
                 $resourcePath
             );
@@ -1692,10 +1913,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}/restore';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );
@@ -1730,10 +1952,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1790,18 +2013,20 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1858,18 +2083,20 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1930,10 +2157,11 @@ class SearchApi
                 $queryParams['replaceExistingSynonyms'] = $replaceExistingSynonyms;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1972,10 +2200,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/query';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1991,7 +2220,7 @@ class SearchApi
     /**
      * Search the dictionary entries.
      *
-     * @param string $dictionaryName The dictionary to search in. (required)
+     * @param array $dictionaryName The dictionary to search in. (required)
      * @param array $searchDictionaryEntriesParams searchDictionaryEntriesParams (required)
      *
      * @return array<string, mixed>
@@ -2014,10 +2243,11 @@ class SearchApi
         $resourcePath = '/1/dictionaries/{dictionaryName}/search';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($dictionaryName !== null) {
             $resourcePath = str_replace(
-                '{' . 'dictionaryName' . '}',
+                '{dictionaryName}',
                 ObjectSerializer::toPathValue($dictionaryName),
                 $resourcePath
             );
@@ -2057,18 +2287,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/facets/{facetName}/query';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($facetName !== null) {
             $resourcePath = str_replace(
-                '{' . 'facetName' . '}',
+                '{facetName}',
                 ObjectSerializer::toPathValue($facetName),
                 $resourcePath
             );
@@ -2107,10 +2339,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/rules/search';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2186,10 +2419,11 @@ class SearchApi
                 $queryParams['hitsPerPage'] = $hitsPerPage;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2289,10 +2523,11 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2331,10 +2566,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );

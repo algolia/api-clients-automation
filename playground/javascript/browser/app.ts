@@ -1,4 +1,4 @@
-import { searchApi } from '@algolia/client-search';
+import { searchApi } from '@experimental-api-clients-automation/client-search';
 
 import './app.css';
 
@@ -6,6 +6,8 @@ const searchClient = searchApi(
   'QPBQ67WNIG',
   'b590ae1153bf574215ca1605c19eb1fe'
 );
+
+searchClient.addUserAgent('Browser playground', '0.0.1');
 
 const searchButton = document.querySelector('#search');
 

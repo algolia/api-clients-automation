@@ -1,10 +1,23 @@
-import { shuffle, Transporter, createAuth, getUserAgent } from '@algolia/client-common';
-import type { CreateClientOptions, Headers, Host, Request } from '@algolia/client-common';
+import {
+  createAuth,
+  createTransporter,
+  getUserAgent,
+  shuffle,
+} from '@experimental-api-clients-automation/client-common';
+import type {
+  CreateClientOptions,
+  Headers,
+  Host,
+  Request,
+  RequestOptions,
+  QueryParameters,
+} from '@experimental-api-clients-automation/client-common';
 
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
 
+export * from '../model/models';
 export const apiClientVersion = '{{packageVersion}}';
 
 {{#operations}}
@@ -70,10 +83,13 @@ function getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}
 {{/hasRegionalHost}}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) => {
+export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
-  const transporter = new Transporter({
+  const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}{{^experimentalHost}}options.appId{{/experimentalHost}}{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
+    hostsCache: options.hostsCache,
+    requestsCache: options.requestsCache,
+    responsesCache: options.responsesCache,
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),
@@ -88,149 +104,154 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
     requester: options.requester,
   });
 
-  {{#operation}}
-  /**
-  {{#notes}}
-  * {{&notes}}
-  {{/notes}}
-  {{#summary}}
-  * @summary {{&summary}}
-  {{/summary}}
-  {{#allParams.0}}
-    {{^bodyParams.0}}
-      * @param {{nickname}} - The {{nickname}} object.
-        {{#allParams}}
-          * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
-        {{/allParams}}
-    {{/bodyParams.0}}
-    {{#bodyParams.0}}
-      {{^queryParams.0}}
-        {{^pathParams.0}}
-          {{#bodyParams.0.isArray}}
-            {{^bodyParams.1}}
-              * @param {{nickname}} - The {{nickname}} object.
-                {{#allParams}}
-                  * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
-                {{/allParams}}
-            {{/bodyParams.1}}
-          {{/bodyParams.0.isArray}}
-          {{^bodyParams.0.isArray}}
-            * @param {{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
-          {{/bodyParams.0.isArray}}
-        {{/pathParams.0}}
-        {{#pathParams.0}}
-          * @param {{nickname}} - The {{nickname}} object.
-            {{#allParams}}
-              * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
-            {{/allParams}}
-        {{/pathParams.0}}
-      {{/queryParams.0}}
-      {{#queryParams.0}}
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
+
+  return {
+    addUserAgent,
+    {{#operation}}
+    /**
+    {{#notes}}
+    * {{&notes}}
+    {{/notes}}
+    {{#summary}}
+    * @summary {{&summary}}
+    {{/summary}}
+    {{#allParams.0}}
+      {{^bodyParams.0}}
         * @param {{nickname}} - The {{nickname}} object.
           {{#allParams}}
             * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
           {{/allParams}}
-      {{/queryParams.0}}
-    {{/bodyParams.0}}
-  {{/allParams.0}}
-  */
-  function {{nickname}}(
-    {{#allParams.0}}
-      {{^bodyParams.0}}
-        {
-          {{#allParams}}
-            {{paramName}},
-          {{/allParams}}
-        }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
       {{/bodyParams.0}}
       {{#bodyParams.0}}
         {{^queryParams.0}}
           {{^pathParams.0}}
             {{#bodyParams.0.isArray}}
               {{^bodyParams.1}}
-              {
-                {{#allParams}}
-                  {{paramName}},
-                {{/allParams}}
-              }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+                * @param {{nickname}} - The {{nickname}} object.
+                  {{#allParams}}
+                    * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+                  {{/allParams}}
               {{/bodyParams.1}}
             {{/bodyParams.0.isArray}}
             {{^bodyParams.0.isArray}}
-              {{#bodyParams}}
-                {{paramName}}: {{{dataType}}},
-              {{/bodyParams}}
+              * @param {{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
             {{/bodyParams.0.isArray}}
           {{/pathParams.0}}
           {{#pathParams.0}}
-            {
+            * @param {{nickname}} - The {{nickname}} object.
               {{#allParams}}
-                {{paramName}},
+                * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
               {{/allParams}}
-            }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
           {{/pathParams.0}}
         {{/queryParams.0}}
         {{#queryParams.0}}
+          * @param {{nickname}} - The {{nickname}} object.
+            {{#allParams}}
+              * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+            {{/allParams}}
+        {{/queryParams.0}}
+      {{/bodyParams.0}}
+    {{/allParams.0}}
+    */
+    {{nickname}}(
+      {{#allParams.0}}
+        {{^bodyParams.0}}
           {
             {{#allParams}}
               {{paramName}},
             {{/allParams}}
-          }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
-        {{/queryParams.0}}
-      {{/bodyParams.0}}
-    {{/allParams.0}}
-      ) : Promise<{{{returnType}}}> {
-    const path = '{{{path}}}'{{#pathParams}}.replace(
-    {{=<% %>=}}
-      '{<%baseName%>}',
-    <%={{ }}=%>
-      encodeURIComponent(String({{paramName}}))
-    ){{/pathParams}};
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+          }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
+        {{/bodyParams.0}}
+        {{#bodyParams.0}}
+          {{^queryParams.0}}
+            {{^pathParams.0}}
+              {{#bodyParams.0.isArray}}
+                {{^bodyParams.1}}
+                {
+                  {{#allParams}}
+                    {{paramName}},
+                  {{/allParams}}
+                }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
+                {{/bodyParams.1}}
+              {{/bodyParams.0.isArray}}
+              {{^bodyParams.0.isArray}}
+                {{#bodyParams}}
+                  {{paramName}}: {{{dataType}}},
+                {{/bodyParams}}
+              {{/bodyParams.0.isArray}}
+            {{/pathParams.0}}
+            {{#pathParams.0}}
+              {
+                {{#allParams}}
+                  {{paramName}},
+                {{/allParams}}
+              }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
+            {{/pathParams.0}}
+          {{/queryParams.0}}
+          {{#queryParams.0}}
+            {
+              {{#allParams}}
+                {{paramName}},
+              {{/allParams}}
+            }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
+          {{/queryParams.0}}
+        {{/bodyParams.0}}
+      {{/allParams.0}}
+      requestOptions?: RequestOptions
+        ) : Promise<{{{returnType}}}> {
+      {{#allParams}}
+      {{#required}}
+      if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
+        throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}`.');
+      }
 
-    {{#allParams}}
-    {{#required}}
-    if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
-      throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}`.');
-    }
+      {{#vars}}
+      {{#required}}
+      if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
+        throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}`.');
+      }
+      {{/required}}
+      {{/vars}}
 
-    {{#vars}}
-    {{#required}}
-    if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
-      throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}`.');
-    }
-    {{/required}}
-    {{/vars}}
+      {{/required}}
+      {{/allParams}}
 
-    {{/required}}
-    {{/allParams}}
-    {{#queryParams}}
-    if ({{paramName}} !== undefined) {
-      queryParameters['{{baseName}}'] = {{paramName}}.toString();
-    }
+      const requestPath = '{{{path}}}'{{#vendorExtensions}}{{#pathParams}}.replace(
+      {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent({{paramName}}){{/x-is-custom-request}}
+      ){{/pathParams}}{{/vendorExtensions}};
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {{#vendorExtensions.x-is-custom-request}}parameters || {{/vendorExtensions.x-is-custom-request}}{};
 
-    {{/queryParams}}
-    {{#headerParams}}
-    headers['{{baseName}}'] = {{paramName}};
-    {{/headerParams}}
+      {{^vendorExtensions.x-is-custom-request}}{{#queryParams}}
+      if ({{paramName}} !== undefined) {
+        queryParameters['{{baseName}}'] = {{paramName}}.toString();
+      }
 
-    const request: Request = {
-      method: '{{httpMethod}}',
-      path,
-      {{#bodyParam}}
-      data: {{paramName}},
-      {{/bodyParam}}
-    };
+      {{/queryParams}}{{/vendorExtensions.x-is-custom-request}}
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
-  }
+      {{#headerParams}}
+      headers['{{baseName}}'] = {{paramName}};
+      {{/headerParams}}
 
-  {{/operation}}
+      const request: Request = {
+        method: '{{httpMethod}}',
+        path: requestPath,
+        {{#bodyParam}}
+        data: {{paramName}},
+        {{/bodyParam}}
+      };
 
-  return { {{#operation}}{{nickname}},{{/operation}} };
+      return transporter.request(request, {
+        queryParameters,
+        headers,
+      }, requestOptions);
+    },
+
+    {{/operation}}
+  };
 }
 
 export type {{capitalizedApiName}}Api = ReturnType<typeof create{{capitalizedApiName}}Api>;

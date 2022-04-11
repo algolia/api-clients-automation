@@ -1,5 +1,9 @@
-import type { Host, Requester } from '@algolia/client-common';
-import { HttpRequester } from '@algolia/requester-node-http';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createNullCache,
+} from '@experimental-api-clients-automation/client-common';
+import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 import { createSearchApi } from '../src/searchApi';
 import type { SearchApi } from '../src/searchApi';
@@ -9,7 +13,7 @@ export * from '../src/searchApi';
 export function searchApi(
   appId: string,
   apiKey: string,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): SearchApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -27,8 +31,11 @@ export function searchApi(
       read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new HttpRequester(),
+    requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    responsesCache: options?.responsesCache ?? createNullCache(),
+    requestsCache: options?.requestsCache ?? createNullCache(),
+    hostsCache: options?.hostsCache ?? createMemoryCache(),
     ...options,
   });
 }

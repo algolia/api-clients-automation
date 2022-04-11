@@ -75,7 +75,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     {{/hasRegionalHost}}
     
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param {{configClassname}} $config Configuration
      */
@@ -134,10 +134,16 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
      *
 {{/description}}
 {{#allParams}}
-     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{^isString}}{{^isInteger}}array{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isInteger}}{{^isBoolean}}array{{/isBoolean}}{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+{{#isModel}}
+    {{#vars}}
+     * - ${{paramName}}{{> arrayParam}}
+    {{/vars}}
+     * @see {{{dataType}}}
+{{/isModel}}
 {{/allParams}}
      *
-     * @return array<string, mixed>
+     * @return {{#returnType}}{{#responses}}{{#dataType}}{{#-first}}array<string, mixed>|{{{dataType}}}{{/-first}}{{/dataType}}{{/responses}}{{/returnType}}{{^returnType}}void{{/returnType}}
   {{#isDeprecated}}
      * @deprecated
   {{/isDeprecated}}
@@ -203,7 +209,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $resourcePath = '{{{path}}}';
         $queryParams = [];
         $httpBody = [];
-        {{#queryParams}}
+        {{#vendorExtensions}}{{#queryParams}}
 
         {{#isExplode}}
         if (${{paramName}} !== null) {
@@ -214,7 +220,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
                 }
             }
             else {
-                $queryParams['{{baseName}}'] = ${{paramName}};
+                $queryParams{{^x-is-custom-request}}['{{baseName}}']{{/x-is-custom-request}} = ${{paramName}};
             }
         {{/style}}
         {{^style}}
@@ -230,8 +236,8 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             $queryParams['{{baseName}}'] = ${{paramName}};
         }
         {{/isExplode}}
-        {{/queryParams}}
-        {{#pathParams}}
+        {{/queryParams}}{{/vendorExtensions}}
+        {{#vendorExtensions}}{{#pathParams}}
         // path params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
@@ -240,12 +246,12 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $resourcePath = str_replace(
-                '{' . '{{baseName}}' . '}',
-                ObjectSerializer::toPathValue(${{paramName}}),
+                {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,
+                {{#x-is-custom-request}}${{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
                 $resourcePath
             );
         }
-        {{/pathParams}}
+        {{/pathParams}}{{/vendorExtensions}}
 
         {{#bodyParams}}
         if (isset(${{paramName}})) { 

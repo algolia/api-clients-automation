@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getTopHits
   description: Returns top hits. Limited to the 1000 most frequent ones.
   summary: Returns top hits.
@@ -19,9 +17,7 @@ get:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../../common/schemas/getTopHits.yml#/getTopHitsResponse'
-              - $ref: '../../common/schemas/getTopHits.yml#/getTopHitsResponseWithAnalytics'
+            $ref: '../../common/schemas/getTopHits.yml#/getTopHitsResponse'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

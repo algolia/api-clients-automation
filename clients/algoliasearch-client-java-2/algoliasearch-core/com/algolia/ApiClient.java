@@ -1,5 +1,6 @@
 package com.algolia;
 
+import com.algolia.exceptions.*;
 import com.algolia.utils.Requester;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,12 +19,9 @@ public class ApiClient {
   private boolean debugging = false;
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
 
-  private String basePath;
   private String appId, apiKey;
 
   private DateFormat dateFormat;
-
-  private JSON json;
 
   private Requester requester;
 
@@ -31,47 +29,15 @@ public class ApiClient {
    * Constructor for ApiClient with custom Requester
    */
   public ApiClient(String appId, String apiKey, Requester requester) {
-    json = new JSON();
     setUserAgent("OpenAPI-Generator/0.1.0/java");
 
-    this.basePath = "https://" + appId + "-1.algolianet.com";
     this.appId = appId;
     this.apiKey = apiKey;
     this.requester = requester;
   }
 
-  /**
-   * Get JSON
-   *
-   * @return JSON object
-   */
-  public JSON getJSON() {
-    return json;
-  }
-
-  /**
-   * Set JSON
-   *
-   * @param json JSON object
-   * @return Api client
-   */
-  public ApiClient setJSON(JSON json) {
-    this.json = json;
-    return this;
-  }
-
   public DateFormat getDateFormat() {
     return dateFormat;
-  }
-
-  public ApiClient setDateFormat(DateFormat dateFormat) {
-    this.json.setDateFormat(dateFormat);
-    return this;
-  }
-
-  public ApiClient setLenientOnJson(boolean lenientOnJson) {
-    this.json.setLenientOnJson(lenientOnJson);
-    return this;
   }
 
   /**
@@ -195,7 +161,7 @@ public class ApiClient {
       param instanceof LocalDate
     ) {
       // Serialize to json string and remove the " enclosing characters
-      String jsonStr = json.serialize(param);
+      String jsonStr = JSON.serialize(param);
       return jsonStr.substring(1, jsonStr.length() - 1);
     } else if (param instanceof Collection) {
       StringBuilder b = new StringBuilder();
@@ -363,11 +329,11 @@ public class ApiClient {
    * @param response HTTP response
    * @param returnType The type of the Java object
    * @return The deserialized Java object
-   * @throws ApiException If fail to deserialize response body, i.e. cannot read response body or
-   *     the Content-Type of the response is not supported.
+   * @throws AlgoliaRuntimeException If fail to deserialize response body, i.e. cannot read response
+   *     body or the Content-Type of the response is not supported.
    */
   public <T> T deserialize(Response response, Type returnType)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     if (response == null || returnType == null) {
       return null;
     }
@@ -377,7 +343,7 @@ public class ApiClient {
       try {
         return (T) response.body().bytes();
       } catch (IOException e) {
-        throw new ApiException(e);
+        throw new AlgoliaRuntimeException(e);
       }
     }
 
@@ -386,7 +352,7 @@ public class ApiClient {
       if (response.body() != null) respBody =
         response.body().string(); else respBody = null;
     } catch (IOException e) {
-      throw new ApiException(e);
+      throw new AlgoliaRuntimeException(e);
     }
 
     if (respBody == null || "".equals(respBody)) {
@@ -399,19 +365,17 @@ public class ApiClient {
       contentType = "application/json";
     }
     if (isJsonMime(contentType)) {
-      return json.deserialize(respBody, returnType);
+      return JSON.deserialize(respBody, returnType);
     } else if (returnType.equals(String.class)) {
       // Expecting string, return the raw response body.
       return (T) respBody;
     } else {
-      throw new ApiException(
+      throw new AlgoliaApiException(
         "Content type \"" +
         contentType +
         "\" is not supported for type: " +
         returnType,
-        response.code(),
-        response.headers().toMultimap(),
-        respBody
+        response.code()
       );
     }
   }
@@ -423,23 +387,23 @@ public class ApiClient {
    * @param obj The Java object
    * @param contentType The request Content-Type
    * @return The serialized request body
-   * @throws ApiException If fail to serialize the given object
+   * @throws AlgoliaRuntimeException If fail to serialize the given object
    */
   public RequestBody serialize(Object obj, String contentType)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     if (obj instanceof byte[]) {
       // Binary (byte array) body parameter support.
       return RequestBody.create((byte[]) obj, MediaType.parse(contentType));
     } else if (isJsonMime(contentType)) {
       String content;
       if (obj != null) {
-        content = json.serialize(obj);
+        content = JSON.serialize(obj);
       } else {
         content = null;
       }
       return RequestBody.create(content, MediaType.parse(contentType));
     } else {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Content type \"" + contentType + "\" is not supported"
       );
     }
@@ -451,9 +415,9 @@ public class ApiClient {
    * @param <T> Type
    * @param call An instance of the Call object
    * @return ApiResponse&lt;T&gt;
-   * @throws ApiException If fail to execute the call
+   * @throws AlgoliaRuntimeException If fail to execute the call
    */
-  public <T> ApiResponse<T> execute(Call call) throws ApiException {
+  public <T> ApiResponse<T> execute(Call call) throws AlgoliaRuntimeException {
     return execute(call, null);
   }
 
@@ -465,10 +429,10 @@ public class ApiClient {
    * @param call Call
    * @return ApiResponse object containing response status, headers and data, which is a Java object
    *     deserialized from response body and would be null when returnType is null.
-   * @throws ApiException If fail to execute the call
+   * @throws AlgoliaRuntimeException If fail to execute the call
    */
   public <T> ApiResponse<T> execute(Call call, Type returnType)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     try {
       Response response = call.execute();
       T data = handleResponse(response, returnType);
@@ -478,7 +442,7 @@ public class ApiClient {
         data
       );
     } catch (IOException e) {
-      throw new ApiException(e);
+      throw new AlgoliaRuntimeException(e);
     }
   }
 
@@ -511,7 +475,7 @@ public class ApiClient {
       new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
-          callback.onFailure(new ApiException(e), 0, null);
+          callback.onFailure(new AlgoliaRuntimeException(e), 0, null);
         }
 
         @Override
@@ -520,7 +484,7 @@ public class ApiClient {
           T result;
           try {
             result = (T) handleResponse(response, returnType);
-          } catch (ApiException e) {
+          } catch (AlgoliaRuntimeException e) {
             callback.onFailure(
               e,
               response.code(),
@@ -529,7 +493,7 @@ public class ApiClient {
             return;
           } catch (Exception e) {
             callback.onFailure(
-              new ApiException(e),
+              new AlgoliaRuntimeException(e),
               response.code(),
               response.headers().toMultimap()
             );
@@ -552,11 +516,11 @@ public class ApiClient {
    * @param response Response
    * @param returnType Return type
    * @return Type
-   * @throws ApiException If the response has an unsuccessful status code or fail to deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If the response has an unsuccessful status code or fail to
+   *     deserialize the response body
    */
   public <T> T handleResponse(Response response, Type returnType)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     if (response.isSuccessful()) {
       if (returnType == null || response.code() == 204) {
         // returning null if the returnType is not defined,
@@ -565,11 +529,10 @@ public class ApiClient {
           try {
             response.body().close();
           } catch (Exception e) {
-            throw new ApiException(
+            throw new AlgoliaApiException(
               response.message(),
               e,
-              response.code(),
-              response.headers().toMultimap()
+              response.code()
             );
           }
         }
@@ -578,25 +541,14 @@ public class ApiClient {
         return deserialize(response, returnType);
       }
     } else {
-      String respBody = null;
       if (response.body() != null) {
         try {
-          respBody = response.body().string();
+          response.body().string();
         } catch (IOException e) {
-          throw new ApiException(
-            response.message(),
-            e,
-            response.code(),
-            response.headers().toMultimap()
-          );
+          throw new AlgoliaApiException(response.message(), e, response.code());
         }
       }
-      throw new ApiException(
-        response.message(),
-        response.code(),
-        response.headers().toMultimap(),
-        respBody
-      );
+      throw new AlgoliaApiException(response.message(), response.code());
     }
   }
 
@@ -611,7 +563,7 @@ public class ApiClient {
    * @param headerParams The header parameters
    * @param callback Callback for upload/download progress
    * @return The HTTP call
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   public Call buildCall(
     String path,
@@ -620,7 +572,7 @@ public class ApiClient {
     Object body,
     Map<String, String> headerParams,
     ApiCallback callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Request request = buildRequest(
       path,
       method,
@@ -644,7 +596,7 @@ public class ApiClient {
    * @param headerParams The header parameters
    * @param callback Callback for upload/download progress
    * @return The HTTP request
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   public Request buildRequest(
     String path,
@@ -653,7 +605,7 @@ public class ApiClient {
     Object body,
     Map<String, String> headerParams,
     ApiCallback callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     headerParams.put("X-Algolia-Application-Id", this.appId);
     headerParams.put("X-Algolia-API-Key", this.apiKey);
 
@@ -710,7 +662,9 @@ public class ApiClient {
    */
   public String buildUrl(String path, List<Pair> queryParams) {
     final StringBuilder url = new StringBuilder();
-    url.append(basePath).append(path);
+
+    // The real host will be assigned by the retry strategy
+    url.append("http://temp.path").append(path);
 
     if (queryParams != null && !queryParams.isEmpty()) {
       // support (constant) query string in `path`, e.g. "/posts?draft=1"

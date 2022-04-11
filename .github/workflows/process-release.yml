@@ -5,9 +5,6 @@ on:
     types:
       - closed
 
-env:
-  CACHE_VERSION: '5'
-
 jobs:
   build:
     name: Release
@@ -17,12 +14,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          token: ${{ secrets.TOKEN_RELEASE_BOT }}
 
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
+        with:
+          workflow_name: process-release
 
       - run: yarn workspace scripts processRelease
         env:
           EVENT_NUMBER: ${{ github.event.issue.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
+          VERSION_TAG_ON_RELEASE: $${{ secrets.VERSION_TAG_ON_RELEASE }}

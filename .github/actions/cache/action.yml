@@ -9,104 +9,15 @@ inputs:
   language:
     description: The language to retrieve dependencies.
     required: false
-    default: javascript
 
 runs:
   using: composite
   steps:
-    # restore clients
-    - name: Restore built JavaScript common client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'javascript-client' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-common/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-common-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-common/**') }}
+    - name: Read current GitHub Actions cache version
+      shell: bash
+      run: echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
 
-    - name: Restore built JavaScript node requester
-      if: ${{ inputs.job == 'cts' || inputs.job == 'javascript-client' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/requester-node-http/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-requester-node-http-${{ hashFiles('clients/algoliasearch-client-javascript/packages/requester-node-http/**') }}
-
-    - name: Restore built JavaScript browser requester
-      if: ${{ inputs.job == 'cts' || inputs.job == 'javascript-client' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/requester-browser-xhr/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-requester-browser-xhr-${{ hashFiles('clients/algoliasearch-client-javascript/packages/requester-browser-xhr/**') }}
-
-    - name: Restore built JavaScript search client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-search/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-search/**') }}-${{ hashFiles('specs/bundled/search.yml') }}
-
-    - name: Restore built JavaScript recommend client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/recommend/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/packages/recommend/**') }}-${{ hashFiles('specs/bundled/recommend.yml') }}
-
-    - name: Restore built JavaScript query-suggestions client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-query-suggestions/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-query-suggestions-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-query-suggestions/**') }}-${{ hashFiles('specs/bundled/query-suggestions.yml') }}
-
-    - name: Restore built JavaScript personalization client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-personalization/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-personalization/**') }}-${{ hashFiles('specs/bundled/personalization.yml') }}
-
-    - name: Restore built JavaScript analytics client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-analytics/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-analytics/**') }}-${{ hashFiles('specs/bundled/analytics.yml') }}
-
-    - name: Restore built JavaScript abtesting client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-abtesting/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-abtesting-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-abtesting/**') }}-${{ hashFiles('specs/bundled/abtesting.yml') }}
-
-    - name: Restore built JavaScript insights client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-insights/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-insights/**') }}-${{ hashFiles('specs/bundled/insights.yml') }}
-
-    - name: Restore built JavaScript sources client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-sources/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-sources-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-sources/**') }}-${{ hashFiles('specs/bundled/sources.yml') }}
-
-    - name: Restore built JavaScript predict client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-predict/dist
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-js-client-predict-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-predict/**') }}-${{ hashFiles('specs/dist/predict.yml') }}
-
-    - name: Restore built Java client
-      if: ${{ inputs.job == 'cts' }}
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
-        key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}-${{ hashFiles('specs/bundled/search.yml') }}
-
-    # setup yarn
+    # JavaScript setup
     - name: Get yarn cache directory path
       shell: bash
       id: yarn-cache-dir
@@ -115,15 +26,469 @@ runs:
     - name: Restore Yarn
       uses: actions/cache@v2
       with:
-        path: ${{ steps.yarn-cache-dir.outputs.dir || '/home/runner/work/api-clients-automation/api-clients-automation/.yarn/cache' }}
-        key: node-cache-${{ env.CACHE_VERSION }}-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
+        key: node-cache-${{ env.CACHE_VERSION }}-yarn-${{ hashFiles('yarn.lock') }}
 
-    - name: Install JavaScript dependencies
-      shell: bash
-      run: yarn install
-
-    # Java setup
+    # Java setup: used during 'java' generation or 'cts'
     - name: Download Java formatter
       if: ${{ inputs.language == 'java' || inputs.job == 'cts' }}
       shell: bash
       run: curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar" > /tmp/java-formatter.jar
+
+    # Restore bundled specs: used during 'client' generation or pushing the 'codegen'
+    - name: Restore built abtesting spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/abtesting.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/abtesting/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built analytics spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/analytics.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/analytics/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built insights spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/insights.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/insights/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built personalization spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/personalization.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/personalization/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built predict spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/predict.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/predict/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built query-suggestions spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/query-suggestions.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/query-suggestions/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built recommend spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/recommend.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/recommend/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built search spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/search.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/search/**',
+            'specs/common/**'
+          )}}
+
+    - name: Restore built sources spec
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: specs/bundled/sources.yml
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/sources/**',
+            'specs/common/**'
+          )}}
+
+    # Restore JavaScript clients utils: used during 'javascript' generation or 'cts'
+    - name: Restore built JavaScript common client
+      if: ${{ inputs.language == 'javascript' || inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-common
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-common/src/**'
+          )}}
+
+    - name: Restore built JavaScript node requester
+      if: ${{ inputs.language == 'javascript' || inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/requester-node-http
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/requester-node-http/src/**'
+          )}}
+
+    - name: Restore built JavaScript browser requester
+      if: ${{ inputs.language == 'javascript' || inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/requester-browser-xhr
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/requester-browser-xhr/src/**'
+          )}}
+
+    # Restore JavaScript clients: used during 'cts' or 'codegen'
+    - name: Restore built JavaScript algoliasearch client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/algoliasearch
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
+            'clients/algoliasearch-client-javascript/packages/client-search/**',
+            'clients/algoliasearch-client-javascript/packages/client-analytics/**',
+            'clients/algoliasearch-client-javascript/packages/client-personalization/**'
+          )}}
+
+    - name: Restore built JavaScript search client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-search
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-search/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-search/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-search/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-search/package.json',
+            'specs/bundled/search.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript recommend client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/recommend
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/recommend/src/**',
+            'clients/algoliasearch-client-javascript/packages/recommend/model/**',
+            'clients/algoliasearch-client-javascript/packages/recommend/builds/**',
+            'clients/algoliasearch-client-javascript/packages/recommend/package.json',
+            'specs/bundled/recommend.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript query-suggestions client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-query-suggestions
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-query-suggestions/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-query-suggestions/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-query-suggestions/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-query-suggestions/package.json',
+            'specs/bundled/query-suggestions.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript personalization client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-personalization
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-personalization/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-personalization/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-personalization/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-personalization/package.json',
+            'specs/bundled/personalization.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript analytics client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-analytics
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-analytics/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-analytics/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-analytics/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-analytics/package.json',
+            'specs/bundled/analytics.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript abtesting client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-abtesting
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-abtesting/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-abtesting/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-abtesting/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-abtesting/package.json',
+            'specs/bundled/abtesting.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript insights client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-insights
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-insights/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-insights/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-insights/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-insights/package.json',
+            'specs/bundled/insights.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript sources client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-sources
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-sources/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-sources/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-sources/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-sources/package.json',
+            'specs/bundled/sources.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built JavaScript predict client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-javascript/packages/client-predict
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-javascript/packages/client-predict/src/**',
+            'clients/algoliasearch-client-javascript/packages/client-predict/model/**',
+            'clients/algoliasearch-client-javascript/packages/client-predict/builds/**',
+            'clients/algoliasearch-client-javascript/packages/client-predict/package.json',
+            'specs/bundled/predict.yml',
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    # Restore Java clients: used during 'cts' or 'codegen'
+    - name: Restore built Java search client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/search/**',
+            'clients/algoliasearch-client-java-2/model/search/**',
+            'specs/bundled/search.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    # Restore PHP clients: used during 'cts' or 'codegen'
+    - name: Restore built PHP search client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          clients/algoliasearch-client-php/lib/Api/SearchApi.php
+          clients/algoliasearch-client-php/lib/Model/Search/**
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/SearchApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/SearchConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Search/**',
+            'specs/bundled/search.yml',
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built PHP recommend client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          clients/algoliasearch-client-php/lib/Api/RecommendApi.php
+          clients/algoliasearch-client-php/lib/Model/Recommend/**
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/RecommendApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/RecommendConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Recommend/**',
+            'specs/bundled/recommend.yml',
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built PHP personalization client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php
+          clients/algoliasearch-client-php/lib/Model/Personalization/**
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/PersonalizationConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Personalization/**',
+            'specs/bundled/personalization.yml',
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built PHP analytics client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php
+          clients/algoliasearch-client-php/lib/Model/Analytics/**
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/AnalyticsConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Analytics/**',
+            'specs/bundled/analytics.yml',
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built PHP insights client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          clients/algoliasearch-client-php/lib/Api/InsightsApi.php
+          clients/algoliasearch-client-php/lib/Model/Insights/**
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/InsightsApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/InsightsConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Insights/**',
+            'specs/bundled/insights.yml',
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built PHP abtesting client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          clients/algoliasearch-client-php/lib/Api/AbtestingApi.php
+          clients/algoliasearch-client-php/lib/Model/Abtesting/**
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/AbtestingApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/AbtestingConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Abtesting/**',
+            'specs/bundled/abtesting.yml',
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built PHP query-suggestions client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php
+          clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php',
+            'clients/algoliasearch-client-php/lib/Configuration/QuerySuggestionsConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**',
+            'specs/bundled/query-suggestions.yml',
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Install JavaScript dependencies
+      shell: bash
+      run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install

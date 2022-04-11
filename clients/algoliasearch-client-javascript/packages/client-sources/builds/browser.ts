@@ -1,7 +1,12 @@
-import type { Host, Requester } from '@algolia/client-common';
-import { XhrRequester } from '@algolia/requester-browser-xhr';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createFallbackableCache,
+  createBrowserLocalStorageCache,
+} from '@experimental-api-clients-automation/client-common';
+import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createSourcesApi } from '../src/sourcesApi';
+import { createSourcesApi, apiClientVersion } from '../src/sourcesApi';
 import type { SourcesApi, Region } from '../src/sourcesApi';
 
 export * from '../src/sourcesApi';
@@ -10,7 +15,7 @@ export function sourcesApi(
   appId: string,
   apiKey: string,
   region: Region,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): SourcesApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -33,9 +38,22 @@ export function sourcesApi(
       read: 2,
       write: 30,
     },
-    requester: options?.requester ?? new XhrRequester(),
+    requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
+    responsesCache: options?.responsesCache ?? createMemoryCache(),
+    requestsCache:
+      options?.requestsCache ?? createMemoryCache({ serializable: false }),
+    hostsCache:
+      options?.hostsCache ??
+      createFallbackableCache({
+        caches: [
+          createBrowserLocalStorageCache({
+            key: `${apiClientVersion}-${appId}`,
+          }),
+          createMemoryCache(),
+        ],
+      }),
     ...options,
   });
 }

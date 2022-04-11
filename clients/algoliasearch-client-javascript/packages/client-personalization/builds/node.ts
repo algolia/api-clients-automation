@@ -1,5 +1,9 @@
-import type { Host, Requester } from '@algolia/client-common';
-import { HttpRequester } from '@algolia/requester-node-http';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createNullCache,
+} from '@experimental-api-clients-automation/client-common';
+import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 import { createPersonalizationApi } from '../src/personalizationApi';
 import type { PersonalizationApi, Region } from '../src/personalizationApi';
@@ -10,7 +14,7 @@ export function personalizationApi(
   appId: string,
   apiKey: string,
   region: Region,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): PersonalizationApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -33,8 +37,11 @@ export function personalizationApi(
       read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new HttpRequester(),
+    requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    responsesCache: options?.responsesCache ?? createNullCache(),
+    requestsCache: options?.requestsCache ?? createNullCache(),
+    hostsCache: options?.hostsCache ?? createMemoryCache(),
     ...options,
   });
 }

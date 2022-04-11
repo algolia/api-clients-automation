@@ -3,7 +3,7 @@
 namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
-use Algolia\AlgoliaSearch\Configuration\AbTestingConfig;
+use Algolia\AlgoliaSearch\Configuration\AbtestingConfig;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
@@ -23,15 +23,15 @@ class AbtestingApi
     protected $api;
 
     /**
-     * @var AbTestingConfig
+     * @var AbtestingConfig
      */
     protected $config;
 
     /**
-     * @param AbTestingConfig $config
+     * @param AbtestingConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
-    public function __construct(ApiWrapperInterface $apiWrapper, AbTestingConfig $config)
+    public function __construct(ApiWrapperInterface $apiWrapper, AbtestingConfig $config)
     {
         $this->config = $config;
 
@@ -48,7 +48,7 @@ class AbtestingApi
     public static function create($appId = null, $apiKey = null, $region = null)
     {
         $allowedRegions = explode('-', 'us-de');
-        $config = AbTestingConfig::create($appId, $apiKey, $region, $allowedRegions);
+        $config = AbtestingConfig::create($appId, $apiKey, $region, $allowedRegions);
 
         return static::createWithConfig($config);
     }
@@ -56,9 +56,9 @@ class AbtestingApi
     /**
      * Instantiate the client with congiguration
      *
-     * @param AbTestingConfig $config Configuration
+     * @param AbtestingConfig $config Configuration
      */
-    public static function createWithConfig(AbTestingConfig $config)
+    public static function createWithConfig(AbtestingConfig $config)
     {
         $config = clone $config;
 
@@ -79,7 +79,7 @@ class AbtestingApi
     }
 
     /**
-     * @return AbTestingConfig
+     * @return AbtestingConfig
      */
     public function getClientConfig()
     {
@@ -114,6 +114,54 @@ class AbtestingApi
     }
 
     /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function del($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling del'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
      * Deletes the A/B Test.
      *
      * @param int $id The A/B test ID. (required)
@@ -132,16 +180,60 @@ class AbtestingApi
         $resourcePath = '/2/abtests/{id}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($id !== null) {
             $resourcePath = str_replace(
-                '{' . 'id' . '}',
+                '{id}',
                 ObjectSerializer::toPathValue($id),
                 $resourcePath
             );
         }
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function get($path, $parameters = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling get'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
 
     /**
@@ -163,10 +255,11 @@ class AbtestingApi
         $resourcePath = '/2/abtests/{id}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($id !== null) {
             $resourcePath = str_replace(
-                '{' . 'id' . '}',
+                '{id}',
                 ObjectSerializer::toPathValue($id),
                 $resourcePath
             );
@@ -213,6 +306,102 @@ class AbtestingApi
     }
 
     /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function post($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling post'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function put($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling put'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams = $parameters;
+            }
+        }
+
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{path}',
+                path,
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
      * Marks the A/B test as stopped.
      *
      * @param int $id The A/B test ID. (required)
@@ -231,10 +420,11 @@ class AbtestingApi
         $resourcePath = '/2/abtests/{id}/stop';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($id !== null) {
             $resourcePath = str_replace(
-                '{' . 'id' . '}',
+                '{id}',
                 ObjectSerializer::toPathValue($id),
                 $resourcePath
             );

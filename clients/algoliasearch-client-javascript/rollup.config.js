@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 
 import babel from '@rollup/plugin-babel';
@@ -7,15 +8,14 @@ import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
 import ts from 'rollup-plugin-typescript2';
 
-import generatorConfig from '../../openapitools.json';
-
-import { version } from './version';
-
 // Retrieve package to build
-const client = process.env.CLIENT?.replace('@algolia/', '');
-const utils = process.env.UTILS;
+const client = process.env.CLIENT?.replace(
+  '@experimental-api-clients-automation/',
+  ''
+);
+const UTILS = ['client-common', 'requester-browser-xhr', 'requester-node-http'];
 
-function createLicence(name) {
+function createLicence(name, version) {
   return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
 }
 
@@ -45,16 +45,16 @@ function createBundlers({ output, clientPath }) {
 }
 
 function getAvailableClients() {
-  const availableClients = [];
-  const generators = Object.entries(
-    generatorConfig['generator-cli'].generators
-  );
+  const exception = new Set([
+    'client-common',
+    'requester-browser-xhr',
+    'requester-node-http',
+  ]);
 
-  for (const [name, options] of generators) {
-    if (name.startsWith('javascript')) {
-      availableClients.push(options.additionalProperties.buildFile);
-    }
-  }
+  // ['algoliasearch', 'client-abtesting', ... ]
+  const availableClients = fs
+    .readdirSync('packages/')
+    .filter((_client) => !exception.has(_client));
 
   return client === 'all'
     ? availableClients
@@ -62,7 +62,7 @@ function getAvailableClients() {
 }
 
 function initPackagesConfig() {
-  if (utils) {
+  if (UTILS.includes(client)) {
     const commonOptions = {
       input: 'index.ts',
       formats: ['cjs-node', 'esm-node'],
@@ -76,51 +76,57 @@ function initPackagesConfig() {
         ...commonOptions,
         output: 'client-common',
         package: 'client-common',
-        name: '@algolia/client-common',
+        name: '@experimental-api-clients-automation/client-common',
       },
       // Browser requester
       {
         ...commonOptions,
         output: 'requester-browser-xhr',
         package: 'requester-browser-xhr',
-        name: '@algolia/requester-browser-xhr',
+        name: '@experimental-api-clients-automation/requester-browser-xhr',
         external: ['dom'],
-        dependencies: ['@algolia/client-common'],
+        dependencies: ['@experimental-api-clients-automation/client-common'],
       },
       // Node requester
       {
         ...commonOptions,
         output: 'requester-node-http',
         package: 'requester-node-http',
-        name: '@algolia/requester-node-http',
+        name: '@experimental-api-clients-automation/requester-node-http',
         external: ['https', 'http', 'url'],
-        dependencies: ['@algolia/client-common'],
+        dependencies: ['@experimental-api-clients-automation/client-common'],
       },
     ];
 
-    return utils === 'all'
+    return client === 'all'
       ? availableUtils
       : availableUtils.filter(
-          (availableUtil) => availableUtil.package === utils
+          (availableUtil) => availableUtil.package === client
         );
   }
 
   const availableClients = getAvailableClients();
 
   if (availableClients.length === 0) {
-    throw new Error(`No clients matching ${client}.`);
+    throw new Error(`No clients matches '${client}'.`);
   }
 
   return availableClients.flatMap((packageName) => {
+    const isAlgoliasearchClient = packageName.startsWith('algoliasearch');
     const commonConfig = {
       package: packageName,
-      name: `@algolia/${packageName}`,
+      name: isAlgoliasearchClient
+        ? packageName
+        : `@experimental-api-clients-automation/${packageName}`,
       output: packageName,
-      dependencies: [
-        '@algolia/client-common',
-        '@algolia/requester-browser-xhr',
-        '@algolia/requester-node-http',
-      ],
+      dependencies: isAlgoliasearchClient
+        ? [
+            '@experimental-api-clients-automation/client-analytics',
+            '@experimental-api-clients-automation/client-common',
+            '@experimental-api-clients-automation/client-personalization',
+            '@experimental-api-clients-automation/client-search',
+          ]
+        : ['@experimental-api-clients-automation/client-common'],
       external: [],
     };
     const browserFormats = ['umd-browser', 'esm-browser', 'cjs-browser'];
@@ -132,6 +138,10 @@ function initPackagesConfig() {
         input: 'builds/browser.ts',
         formats: browserFormats,
         external: ['dom'],
+        dependencies: [
+          ...commonConfig.dependencies,
+          '@experimental-api-clients-automation/requester-browser-xhr',
+        ],
         globals: {
           [packageName]: packageName,
         },
@@ -139,6 +149,10 @@ function initPackagesConfig() {
       {
         ...commonConfig,
         input: 'builds/node.ts',
+        dependencies: [
+          ...commonConfig.dependencies,
+          '@experimental-api-clients-automation/requester-node-http',
+        ],
         formats: nodeFormats,
       },
     ];
@@ -150,6 +164,14 @@ const rollupConfig = [];
 
 packagesConfig.forEach((packageConfig) => {
   const clientPath = path.resolve('packages', packageConfig.package);
+  const clientPackage = JSON.parse(
+    fs.readFileSync(path.resolve(clientPath, 'package.json'))
+  );
+
+  if (!clientPackage) {
+    throw new Error(`No package.json found for '${packageConfig.name}'`);
+  }
+
   const bundlers = createBundlers({
     output: packageConfig.output,
     clientPath,
@@ -157,14 +179,17 @@ packagesConfig.forEach((packageConfig) => {
 
   packageConfig.formats.forEach((format) => {
     // Avoid generating types multiple times.
-    let isTypesGenerated = false;
+    let areTypesGenerated = false;
     const output = bundlers[format];
     const isUmdBuild = format === 'umd-browser';
     const isEsmBrowserBuild = format === 'esm-browser';
 
     if (isUmdBuild) {
       output.name = packageConfig.name;
-      output.banner = createLicence(packageConfig.package);
+      output.banner = createLicence(
+        packageConfig.package,
+        clientPackage.version
+      );
     }
 
     const compressorPlugins = isUmdBuild ? [terser()] : [];
@@ -189,6 +214,17 @@ packagesConfig.forEach((packageConfig) => {
           }),
         ]
       : [];
+    const clientCommonPlugins =
+      packageConfig.package === 'client-common'
+        ? [
+            babel({
+              babelrc: false,
+              extensions: ['.ts'],
+              exclude: 'node_modules/**',
+              plugins: ['@babel/plugin-proposal-class-properties'],
+            }),
+          ]
+        : [];
 
     if (isUmdBuild || isEsmBrowserBuild) {
       // eslint-disable-next-line no-param-reassign
@@ -204,15 +240,16 @@ packagesConfig.forEach((packageConfig) => {
         }),
         nodeResolve(),
         ts({
-          check: !isTypesGenerated,
+          check: !areTypesGenerated,
           tsconfig: path.resolve(clientPath, 'tsconfig.json'),
           tsconfigOverride: {
             compilerOptions: {
-              declaration: !isTypesGenerated,
-              declarationMap: !isTypesGenerated,
+              declaration: !areTypesGenerated,
+              declarationMap: !areTypesGenerated,
             },
           },
         }),
+        ...clientCommonPlugins,
         ...transpilerPlugins,
         ...compressorPlugins,
         filesize({
@@ -228,7 +265,7 @@ packagesConfig.forEach((packageConfig) => {
       },
     });
 
-    isTypesGenerated = true;
+    areTypesGenerated = true;
   });
 });
 

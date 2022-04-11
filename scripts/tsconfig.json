@@ -1,9 +1,10 @@
 {
-  "extends": "../base.tsconfig.json",
+  "extends": "../config/base.tsconfig.json",
   "compilerOptions": {
     "typeRoots": ["../node_modules/@types"],
+    "types": ["node", "jest"],
     "outDir": "dist"
   },
-  "include": ["pre-gen/setHostsOptions.ts", "release/*"],
-  "exclude": ["dist", "*.json"]
+  "include": ["**/*.ts"],
+  "exclude": ["dist", "*.json", "node_modules", "**/*.test.ts"]
 }

@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: Event & Records Connection API
-  description: API powering the ingestion of Events and Records
+  description: API powering the ingestion of Events and Records.
   version: 0.1.0
 components:
   securitySchemes:
@@ -20,6 +20,15 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: sources
+    description: Sources API reference.
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   /1/ingest/url:
     $ref: paths/ingest/postUrl.yml

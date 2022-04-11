@@ -1,5 +1,9 @@
-import type { Host, Requester } from '@algolia/client-common';
-import { HttpRequester } from '@algolia/requester-node-http';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createNullCache,
+} from '@experimental-api-clients-automation/client-common';
+import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 import { createAnalyticsApi } from '../src/analyticsApi';
 import type { AnalyticsApi, Region } from '../src/analyticsApi';
@@ -10,7 +14,7 @@ export function analyticsApi(
   appId: string,
   apiKey: string,
   region?: Region,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): AnalyticsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -29,8 +33,11 @@ export function analyticsApi(
       read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new HttpRequester(),
+    requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    responsesCache: options?.responsesCache ?? createNullCache(),
+    requestsCache: options?.requestsCache ?? createNullCache(),
+    hostsCache: options?.hostsCache ?? createMemoryCache(),
     ...options,
   });
 }
