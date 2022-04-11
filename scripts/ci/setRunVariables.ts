@@ -109,7 +109,7 @@ async function setRunVariables({
 }
 
 if (require.main === module) {
-  const [originBranch = 'origin/main'] = process.argv.slice(2);
+  const [originBranch] = process.argv.slice(2);
 
   if (!originBranch) {
     throw new Error(
