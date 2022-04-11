@@ -1,6 +1,4 @@
 get:
-  tags:
-    - crawler
   summary: Get a summary of the current status of crawled URLs for the specified Crawler.
   operationId: getCrawlerStats
   description: |-

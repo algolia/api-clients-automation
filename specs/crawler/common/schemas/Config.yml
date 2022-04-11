@@ -74,13 +74,13 @@ Config:
   description: |-
     The crawler configuration object represented as valid JSON.
 
-    Function needs to be espaced as such
+    Function needs to be espaced as such:
     ```javascript
     myProp: {
       "___type": "function"
       "source": "function() { ... }"
     }
-    ```
+    ```.
   properties:
     appId:
       type: string
@@ -236,12 +236,12 @@ Config:
         http://example.com/foo/bar  => 2
         http://example.com/foo/bar/ => 3
         ...
-        ```
+        ```.
     discoveryPatterns:
       type: array
       items:
         type: string
-      description:
+      description: |
         Defines which webpages will be visited. It is used in combination
         with the `pathsToMatchs` of your actions. The Crawler will visit all
         links that match at least one of those paths.
@@ -266,7 +266,7 @@ Config:
         hostnameAliases: {
            'algolia.com': 'dev.algolia.com'
         }
-        ```
+        ```.
     pathAliases:
       type: object
     linkExtractor:
@@ -402,7 +402,7 @@ Config:
       type: array
       items:
         type: string
-      description: |-
+      description: >-
         Defines the list of External Data you want to use for this
         configuration. Every External Data declared here can be accessed in
         your `recordExtractor` through the `dataSources` object.
@@ -412,7 +412,7 @@ Config:
         {
           externalData: ['unique_name'],
         }
-        ```
+        ```.
     actions:
       type: array
       items:

@@ -1,6 +1,4 @@
 post:
-  tags:
-    - crawler
   summary: Cancel a blocking action on your Crawler.
   operationId: cancelAction
   description: |-
@@ -10,7 +8,7 @@ post:
     - $ref: ../../../common/parameters.yml#/taskIdPath
   responses:
     '200':
-      description: Your request was processed correctly
+      description: Your request was processed correctly.
       content:
         application/json:
           schema:

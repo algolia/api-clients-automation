@@ -1,6 +1,4 @@
 patch:
-  tags:
-    - crawler
   summary: Update parts of the Crawler configuration.
   operationId: patchConfig
   description: |-

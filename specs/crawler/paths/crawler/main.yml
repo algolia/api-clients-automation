@@ -1,6 +1,4 @@
 get:
-  tags:
-    - crawler
   summary: Get information about the specified Crawler and its configuration
   operationId: getCrawler
   description: |-
@@ -82,8 +80,6 @@ get:
       $ref: ../../responses/403NoRightsOnCrawler.yml
 
 patch:
-  tags:
-    - crawler
   summary: Update parts of the Crawler, either its name, its config, or both.
   operationId: patchCrawler
   description: |-

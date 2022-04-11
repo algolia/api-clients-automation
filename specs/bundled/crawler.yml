@@ -7,11 +7,12 @@ servers:
   - url: https://crawler.algolia.com/api/1
 security:
   - BasicAuth: []
+tags:
+  - name: crawler
+    description: Crawler API reference.
 paths:
   /crawlers:
     get:
-      tags:
-        - crawler
       summary: List available Crawlers.
       operationId: listCrawlers
       description: 'TODO: complete.'
@@ -74,9 +75,9 @@ paths:
           description: The user doesn't have enough rights to create a Crawler.
         '404':
           description: The call does not have results for this combinaison of query params.
-    post:
       tags:
         - crawler
+    post:
       summary: Create a new Crawler with the given config.
       operationId: createCrawler
       description: 'TODO: complete.'
@@ -116,10 +117,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           description: The user doesn't have enough rights to create a Crawler.
-  /crawlers/{id}:
-    get:
       tags:
         - crawler
+  /crawlers/{id}:
+    get:
       summary: Get information about the specified Crawler and its configuration
       operationId: getCrawler
       description: 'TODO: complete.'
@@ -147,11 +148,11 @@ paths:
                   createdAt:
                     type: string
                     description: The creation date of this Crawler.
-                    example: 2019-05-10T07:58:41.146Z
+                    example: '2019-05-10T07:58:41.146Z'
                   updatedAt:
                     type: string
                     description: The date this Crawler was last updated.
-                    example: 2019-05-10T08:16:47.920Z
+                    example: '2019-05-10T08:16:47.920Z'
                   running:
                     type: boolean
                     description: >-
@@ -183,7 +184,7 @@ paths:
                     description: >-
                       The date when the last complete reindex was started. Will
                       be null if no reindex was ever done.
-                    example: 2019-05-10T08:16:47.920Z
+                    example: '2019-05-10T08:16:47.920Z'
                   lastReindexEndedAt:
                     type: string
                     nullable: true
@@ -208,9 +209,9 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-    patch:
       tags:
         - crawler
+    patch:
       summary: Update parts of the Crawler, either its name, its config, or both.
       operationId: patchCrawler
       description: 'TODO: complete.'
@@ -237,10 +238,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/config:
-    patch:
       tags:
         - crawler
+  /crawlers/{id}/config:
+    patch:
       summary: Update parts of the Crawler configuration.
       operationId: patchConfig
       description: 'TODO: complete.'
@@ -270,10 +271,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/run:
-    post:
       tags:
         - crawler
+  /crawlers/{id}/run:
+    post:
       summary: Request the specified Crawler to run.
       operationId: runCrawler
       description: 'TODO: complete.'
@@ -288,10 +289,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/pause:
-    post:
       tags:
         - crawler
+  /crawlers/{id}/pause:
+    post:
       summary: Request the specified Crawler to pause itself.
       operationId: pauseCrawler
       description: 'TODO: complete.'
@@ -306,10 +307,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/reindex:
-    post:
       tags:
         - crawler
+  /crawlers/{id}/reindex:
+    post:
       summary: Request the specified Crawler to start a reindex.
       operationId: reindexCrawler
       description: 'TODO: complete.'
@@ -324,10 +325,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/stats/urls:
-    get:
       tags:
         - crawler
+  /crawlers/{id}/stats/urls:
+    get:
       summary: >-
         Get a summary of the current status of crawled URLs for the specified
         Crawler.
@@ -361,10 +362,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/test:
-    post:
       tags:
         - crawler
+  /crawlers/{id}/test:
+    post:
       summary: Test an URL against the crawler's config.
       operationId: testURL
       description: >-
@@ -415,11 +416,11 @@ paths:
                   startDate:
                     type: string
                     description: The datetime when the test started.
-                    example: 2019-05-21T09:04:33.742Z
+                    example: '2019-05-21T09:04:33.742Z'
                   endDate:
                     type: string
                     description: The datetime when the test ended.
-                    example: 2019-05-21T09:04:33.923Z
+                    example: '2019-05-21T09:04:33.923Z'
                   logs:
                     type: array
                     description: >-
@@ -520,10 +521,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/tasks/{tid}:
-    get:
       tags:
         - crawler
+  /crawlers/{id}/tasks/{tid}:
+    get:
       summary: Get the status of a specific task.
       operationId: getAction
       description: 'TODO: complete.'
@@ -556,10 +557,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/tasks/{tid}/cancel:
-    post:
       tags:
         - crawler
+  /crawlers/{id}/tasks/{tid}/cancel:
+    post:
       summary: Cancel a blocking action on your Crawler.
       operationId: cancelAction
       description: 'TODO: complete.'
@@ -581,10 +582,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/config/versions:
-    get:
       tags:
         - crawler
+  /crawlers/{id}/config/versions:
+    get:
       summary: Get a specific version of the configuration of a crawler.
       operationId: listConfigVersions
       description: 'TODO: complete.'
@@ -619,10 +620,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/config/versions/{version}:
-    get:
       tags:
         - crawler
+  /crawlers/{id}/config/versions/{version}:
+    get:
       summary: List crawler versions.
       operationId: getConfigVersion
       description: 'TODO: complete.'
@@ -679,10 +680,10 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
-  /crawlers/{id}/urls/crawl:
-    post:
       tags:
         - crawler
+  /crawlers/{id}/urls/crawl:
+    post:
       summary: Immediately crawl some URLs and update the live index.
       operationId: createCrawl
       description: >
@@ -730,6 +731,66 @@ paths:
           $ref: '#/components/responses/401MissingAuthorization'
         '403':
           $ref: '#/components/responses/403NoRightsOnCrawler'
+      tags:
+        - crawler
+  /domains:
+    get:
+      summary: List registered Domains
+      parameters:
+        - in: query
+          name: itemsPerPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          description: Change the number of items per page
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 1
+          description: Change the page number
+        - in: query
+          name: appId
+          schema:
+            type: string
+            example: XXXXXXX123
+          description: Filter by Application ID
+      responses:
+        '200':
+          description: A list of Domains and pagination information
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagination'
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            appId:
+                              type: string
+                              description: The app for which the domain is registered
+                            domain:
+                              type: string
+                              description: The registered domain name
+                            validated:
+                              type: boolean
+                              description: Indicates whether the domain is validated or not
+        '400':
+          $ref: '#/components/responses/400InvalidRequest'
+        '401':
+          $ref: '#/components/responses/401MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+      tags:
+        - crawler
 components:
   securitySchemes:
     BasicAuth:
@@ -783,7 +844,7 @@ components:
         position:
           type: integer
       example:
-        message: "'url' is not defined"
+        message: '''url'' is not defined'
         line: 5
     ErrorResponse:
       type: object
@@ -1372,6 +1433,13 @@ components:
               taskId:
                 type: string
                 example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+    403Forbidden:
+      403Forbidden:
+        description: Invalid credentials
+        content:
+          application/json:
+            schema:
+              $ref: ../common/schemas/Error.yml#/ErrorResponse
   parameters:
     crawlerIdPath:
       name: id

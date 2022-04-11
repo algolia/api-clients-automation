@@ -1,6 +1,4 @@
 post:
-  tags:
-    - crawler
   summary: Request the specified Crawler to run.
   operationId: runCrawler
   description: |-

@@ -1,6 +1,4 @@
 post:
-  tags:
-    - crawler
   summary: Test an URL against the crawler's config.
   operationId: testURL
   description: |-

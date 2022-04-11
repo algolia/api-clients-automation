@@ -1,6 +1,4 @@
 get:
-  tags:
-    - crawler
   summary: List crawler versions.
   operationId: getConfigVersion
   description: |-

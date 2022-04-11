@@ -7,6 +7,9 @@ servers:
   - url: https://crawler.algolia.com/api/1
 security:
   - BasicAuth: []
+tags:
+  - name: crawler
+    description: Crawler API reference.
 paths:
   /crawlers:
     $ref: paths/crawlers/main.yml

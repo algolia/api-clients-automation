@@ -1,6 +1,4 @@
 post:
-  tags:
-    - crawler
   summary: Immediately crawl some URLs and update the live index.
   operationId: createCrawl
   description: |
