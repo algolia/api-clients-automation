@@ -44,7 +44,7 @@ runs:
       shell: bash
       run: |
         previousCommit=${{ github.event.before }}
-        baseRef=$( [[ -z "${{ github.base_ref }}" ]] && echo ${GITHUB_REF#refs/heads/} || echo "${{ github.base_ref }}" )
+        baseRef=${{ github.base_ref }}
         origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
 
         yarn workspace scripts setRunVariables "$origin"
