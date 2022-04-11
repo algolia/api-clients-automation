@@ -237,7 +237,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   private String createImportName() {
-    if(!language.equals("java")) {
+    if (!language.equals("java")) {
       return this.packageName;
     }
     String[] clientParts = client.split("-");

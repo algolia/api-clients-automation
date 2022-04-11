@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
+import com.algolia.api.AbtestingApi;
 import com.algolia.model.abtesting.*;
 import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;

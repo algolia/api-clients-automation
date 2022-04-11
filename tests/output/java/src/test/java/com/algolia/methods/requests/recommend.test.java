@@ -3,6 +3,7 @@ package com.algolia.methods.requests;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.algolia.api.RecommendApi;
 import com.algolia.model.recommend.*;
 import com.algolia.utils.echo.*;
 import java.util.*;
