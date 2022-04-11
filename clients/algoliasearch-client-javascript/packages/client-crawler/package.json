@@ -21,9 +21,9 @@
     "node": "^14.0.0"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0",
-    "@algolia/requester-browser-xhr": "5.0.0",
-    "@algolia/requester-node-http": "5.0.0"
+    "@experimental-api-clients-automation/client-common": "0.0.6",
+    "@experimental-api-clients-automation/equester-browser-xhr": "0.0.6",
+    "@experimental-api-clients-automation/requester-node-http": "0.0.6"
   },
   "devDependencies": {
     "@types/node": "16.11.11",
