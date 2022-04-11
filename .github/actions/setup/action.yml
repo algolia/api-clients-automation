@@ -38,18 +38,13 @@ runs:
         # We want to load the java formatter
         language: java
 
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
-
     - name: Setting diff outputs variables
       if: inputs.type != 'minimal'
       id: diff
       shell: bash
       run: |
         previousCommit=${{ github.event.before }}
-        baseRef=${{ steps.extract_branch.outputs.branch }}
+        baseRef=$( [[ -z "${{ github.base_ref }}" ]] && echo ${GITHUB_REF#refs/heads/} || echo "${{ github.base_ref }}" )
         origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
 
         yarn workspace scripts setRunVariables "$origin"
