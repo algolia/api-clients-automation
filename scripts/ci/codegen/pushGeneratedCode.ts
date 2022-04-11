@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { run, GENERATED_MAIN_BRANCH } from '../../common';
+import { run } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
 
@@ -20,7 +20,7 @@ export async function pushGeneratedCode(): Promise<void> {
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
   const nbDiff = await getNbGitDiff({
-    branch: baseBranch,
+    branch: 'origin/generated/main',
     head: null,
     path: FOLDERS_TO_CHECK,
   });
@@ -45,9 +45,7 @@ export async function pushGeneratedCode(): Promise<void> {
     await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
 
     console.log(`Creating branch for generated code: '${generatedCodeBranch}'`);
-    await run(
-      `git branch ${generatedCodeBranch} origin/${GENERATED_MAIN_BRANCH}`
-    );
+    await run(`git branch ${generatedCodeBranch}`);
   }
 
   await run(`git checkout ${generatedCodeBranch}`);
@@ -59,7 +57,7 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const commitMessage =
-    await run(`git show -s ${baseBranch} --format="Generated code for commit %H.
+    await run(`git show -s ${baseBranch} --format="chore: generated code for commit %H.
 
 Co-authored-by: %an <%ae>"`);
 
