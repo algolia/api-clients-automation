@@ -5,7 +5,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/algoliasearchLite": "0.0.5",
     "@experimental-api-clients-automation/client-abtesting": "0.0.5",
     "@experimental-api-clients-automation/client-analytics": "0.0.5",
     "@experimental-api-clients-automation/client-common": "0.0.5",
