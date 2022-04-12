@@ -7,7 +7,6 @@ import {
 } from './common';
 import { getLanguageFolder } from './config';
 import { createSpinner } from './oraLog';
-import type { Generator } from './types';
 
 /**
  * Build JavaScript utils packages used in generated clients.
