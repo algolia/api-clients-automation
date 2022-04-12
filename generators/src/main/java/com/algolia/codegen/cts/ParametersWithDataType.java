@@ -291,7 +291,7 @@ public class ParametersWithDataType {
       );
     }
     // sometimes it's really just an object
-    if(testOutput.get("objectName").equals("Object")) {
+    if (testOutput.get("objectName").equals("Object")) {
       testOutput.put("isSimpleObject", true);
     }
 
