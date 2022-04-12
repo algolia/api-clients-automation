@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.core.util.Json;
-import io.swagger.v3.oas.models.media.Schema;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
