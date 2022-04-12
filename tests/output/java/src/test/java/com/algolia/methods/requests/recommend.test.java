@@ -32,7 +32,6 @@ class RecommendApiTests {
     GetRecommendationsParams getRecommendationsParams0 = new GetRecommendationsParams();
     {
       List<RecommendationsRequest> requests1 = new ArrayList<>();
-
       {
         RecommendationRequest requests_02 = new RecommendationRequest();
         {
@@ -83,7 +82,6 @@ class RecommendApiTests {
     GetRecommendationsParams getRecommendationsParams0 = new GetRecommendationsParams();
     {
       List<RecommendationsRequest> requests1 = new ArrayList<>();
-
       {
         RecommendationRequest requests_02 = new RecommendationRequest();
         {
@@ -115,7 +113,6 @@ class RecommendApiTests {
             queryParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "query";
 
@@ -132,7 +129,6 @@ class RecommendApiTests {
             fallbackParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "fallback";
 
@@ -172,7 +168,6 @@ class RecommendApiTests {
     GetRecommendationsParams getRecommendationsParams0 = new GetRecommendationsParams();
     {
       List<RecommendationsRequest> requests1 = new ArrayList<>();
-
       {
         TrendingRequest requests_02 = new TrendingRequest();
         {
@@ -216,7 +211,6 @@ class RecommendApiTests {
     GetRecommendationsParams getRecommendationsParams0 = new GetRecommendationsParams();
     {
       List<RecommendationsRequest> requests1 = new ArrayList<>();
-
       {
         TrendingRequest requests_02 = new TrendingRequest();
         {
@@ -249,7 +243,6 @@ class RecommendApiTests {
             queryParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "query";
 
@@ -266,7 +259,6 @@ class RecommendApiTests {
             fallbackParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "fallback";
 
@@ -304,7 +296,6 @@ class RecommendApiTests {
     GetRecommendationsParams getRecommendationsParams0 = new GetRecommendationsParams();
     {
       List<RecommendationsRequest> requests1 = new ArrayList<>();
-
       {
         RecommendationRequest requests_02 = new RecommendationRequest();
         {
@@ -378,7 +369,6 @@ class RecommendApiTests {
     GetRecommendationsParams getRecommendationsParams0 = new GetRecommendationsParams();
     {
       List<RecommendationsRequest> requests1 = new ArrayList<>();
-
       {
         RecommendationRequest requests_02 = new RecommendationRequest();
         {
@@ -410,7 +400,6 @@ class RecommendApiTests {
             queryParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "query1";
 
@@ -427,7 +416,6 @@ class RecommendApiTests {
             fallbackParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "fallback1";
 
@@ -471,7 +459,6 @@ class RecommendApiTests {
             queryParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "query2";
 
@@ -488,7 +475,6 @@ class RecommendApiTests {
             fallbackParameters3.setQuery(query4);
 
             List<String> facetFilters4 = new ArrayList<>();
-
             {
               String facetFilters_05 = "fallback2";
 
@@ -528,7 +514,6 @@ class RecommendApiTests {
     GetRecommendationsParams getRecommendationsParams0 = new GetRecommendationsParams();
     {
       List<RecommendationsRequest> requests1 = new ArrayList<>();
-
       {
         RecommendationRequest requests_02 = new RecommendationRequest();
         {

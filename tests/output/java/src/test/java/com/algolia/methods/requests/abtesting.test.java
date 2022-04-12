@@ -40,7 +40,6 @@ class AbtestingApiTests {
       addABTestsRequest0.setName(name1);
 
       List<AddABTestsVariant> variant1 = new ArrayList<>();
-
       {
         AbTestsVariant variant_02 = new AbTestsVariant();
         {

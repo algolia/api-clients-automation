@@ -158,7 +158,7 @@ public class ParametersWithDataType {
     testOutput.put("isBoolean", false);
     testOutput.put("isEnum", false);
 
-    //childElements is used to restrict to the scope of the child, and not the parent one
+    // childElements is used to restrict to the scope of the child, and not the parent one
     testOutput.put("childElements", new HashMap<String, Object>());
 
     return testOutput;

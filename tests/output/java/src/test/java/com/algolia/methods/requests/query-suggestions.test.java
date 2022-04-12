@@ -34,7 +34,6 @@ class QuerySuggestionsApiTests {
       querySuggestionsIndexWithIndexParam0.setIndexName(indexName1);
 
       List<SourceIndex> sourceIndices1 = new ArrayList<>();
-
       {
         SourceIndex sourceIndices_02 = new SourceIndex();
         {
@@ -43,10 +42,8 @@ class QuerySuggestionsApiTests {
           sourceIndices_02.setIndexName(indexName3);
 
           List<Object<String, String>> facets3 = new ArrayList<>();
-
           {
             HashMap<String, String> facets_04 = new HashMap<>();
-
             {
               String attributes5 = "test";
 
@@ -57,10 +54,8 @@ class QuerySuggestionsApiTests {
           sourceIndices_02.setFacets(facets3);
 
           List<List<String>> generate3 = new ArrayList<>();
-
           {
             List<String> generate_04 = new ArrayList<>();
-
             {
               String generate_0_05 = "facetA";
 
@@ -72,7 +67,6 @@ class QuerySuggestionsApiTests {
             generate3.add(generate_04);
 
             List<String> generate_14 = new ArrayList<>();
-
             {
               String generate_1_05 = "facetC";
 
@@ -87,7 +81,6 @@ class QuerySuggestionsApiTests {
       querySuggestionsIndexWithIndexParam0.setSourceIndices(sourceIndices1);
 
       List<String> languages1 = new ArrayList<>();
-
       {
         String languages_02 = "french";
 
@@ -96,7 +89,6 @@ class QuerySuggestionsApiTests {
       querySuggestionsIndexWithIndexParam0.setLanguages(languages1);
 
       List<String> exclude1 = new ArrayList<>();
-
       {
         String exclude_02 = "test";
 
@@ -198,7 +190,6 @@ class QuerySuggestionsApiTests {
     QuerySuggestionsIndexParam querySuggestionsIndexParam0 = new QuerySuggestionsIndexParam();
     {
       List<SourceIndex> sourceIndices1 = new ArrayList<>();
-
       {
         SourceIndex sourceIndices_02 = new SourceIndex();
         {
@@ -207,10 +198,8 @@ class QuerySuggestionsApiTests {
           sourceIndices_02.setIndexName(indexName3);
 
           List<Object<String, String>> facets3 = new ArrayList<>();
-
           {
             HashMap<String, String> facets_04 = new HashMap<>();
-
             {
               String attributes5 = "test";
 
@@ -221,10 +210,8 @@ class QuerySuggestionsApiTests {
           sourceIndices_02.setFacets(facets3);
 
           List<List<String>> generate3 = new ArrayList<>();
-
           {
             List<String> generate_04 = new ArrayList<>();
-
             {
               String generate_0_05 = "facetA";
 
@@ -236,7 +223,6 @@ class QuerySuggestionsApiTests {
             generate3.add(generate_04);
 
             List<String> generate_14 = new ArrayList<>();
-
             {
               String generate_1_05 = "facetC";
 
@@ -251,7 +237,6 @@ class QuerySuggestionsApiTests {
       querySuggestionsIndexParam0.setSourceIndices(sourceIndices1);
 
       List<String> languages1 = new ArrayList<>();
-
       {
         String languages_02 = "french";
 
@@ -260,7 +245,6 @@ class QuerySuggestionsApiTests {
       querySuggestionsIndexParam0.setLanguages(languages1);
 
       List<String> exclude1 = new ArrayList<>();
-
       {
         String exclude_02 = "test";
 

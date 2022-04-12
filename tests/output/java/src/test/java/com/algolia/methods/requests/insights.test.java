@@ -30,7 +30,6 @@ class InsightsApiTests {
     InsightEvents insightEvents0 = new InsightEvents();
     {
       List<InsightEvent> events1 = new ArrayList<>();
-
       {
         InsightEvent events_02 = new InsightEvent();
         {
@@ -52,7 +51,6 @@ class InsightsApiTests {
           events_02.setTimestamp(timestamp3);
 
           List<String> objectIDs3 = new ArrayList<>();
-
           {
             String objectIDs_04 = "9780545139700";
 
@@ -67,7 +65,6 @@ class InsightsApiTests {
           events_02.setQueryID(queryID3);
 
           List<Integer> positions3 = new ArrayList<>();
-
           {
             int positions_04 = 7;
 
@@ -100,7 +97,6 @@ class InsightsApiTests {
           events_12.setTimestamp(timestamp3);
 
           List<String> objectIDs3 = new ArrayList<>();
-
           {
             String objectIDs_04 = "9780545139700";
 
@@ -133,7 +129,6 @@ class InsightsApiTests {
           events_22.setTimestamp(timestamp3);
 
           List<String> objectIDs3 = new ArrayList<>();
-
           {
             String objectIDs_04 = "9780545139700";
 
