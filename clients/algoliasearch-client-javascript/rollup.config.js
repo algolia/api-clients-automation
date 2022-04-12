@@ -63,7 +63,7 @@ function getUtilsConfigs() {
     dependencies: [],
   };
 
-  const availableUtils = [
+  return [
     // Common
     {
       ...commonOptions,
@@ -90,12 +90,6 @@ function getUtilsConfigs() {
       dependencies: ['@experimental-api-clients-automation/client-common'],
     },
   ];
-
-  return client === 'all'
-    ? availableUtils
-    : availableUtils.filter(
-        (availableUtil) => availableUtil.package === client
-      );
 }
 
 function initPackagesConfig() {
@@ -156,7 +150,7 @@ function initPackagesConfig() {
     ];
   });
 
-  return client === 'all' ? [...getUtilsConfigs(), ...configs] : configs;
+  return [...getUtilsConfigs(), ...configs];
 }
 
 const packagesConfig = initPackagesConfig();
