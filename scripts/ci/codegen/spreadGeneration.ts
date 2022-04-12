@@ -68,18 +68,17 @@ async function spreadGeneration(): Promise<void> {
       console.log(
         `❎ Skipping ${lang} repository, because there is no change.`
       );
-      return;
+    } else {
+      await configureGitHubAuthor(tempGitDir);
+      await run(`git add .`, { cwd: tempGitDir });
+      await gitCommit({
+        message: commitMessage,
+        coauthor: { name, email },
+        cwd: tempGitDir,
+      });
+      await run(`git push`, { cwd: tempGitDir });
+      console.log(`✅ Spread the generation to ${lang} repository.`);
     }
-
-    await configureGitHubAuthor(tempGitDir);
-    await run(`git add .`, { cwd: tempGitDir });
-    await gitCommit({
-      message: commitMessage,
-      coauthor: { name, email },
-      cwd: tempGitDir,
-    });
-    await run(`git push`, { cwd: tempGitDir });
-    console.log(`✅ Spread the generation to ${lang} repository.`);
   }
 }
 
