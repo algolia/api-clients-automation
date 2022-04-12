@@ -45,64 +45,62 @@ function createBundlers({ output, clientPath }) {
 }
 
 function getAvailableClients() {
-  const exception = new Set([
-    'client-common',
-    'requester-browser-xhr',
-    'requester-node-http',
-  ]);
-
   // ['algoliasearch', 'client-abtesting', ... ]
   const availableClients = fs
     .readdirSync('packages/')
-    .filter((_client) => !exception.has(_client));
+    .filter((_client) => !UTILS.includes(_client));
 
   return client === 'all'
     ? availableClients
     : availableClients.filter((availableClient) => availableClient === client);
 }
 
+function getUtilsConfigs() {
+  const commonOptions = {
+    input: 'index.ts',
+    formats: ['cjs-node', 'esm-node'],
+    external: [],
+    dependencies: [],
+  };
+
+  const availableUtils = [
+    // Common
+    {
+      ...commonOptions,
+      output: 'client-common',
+      package: 'client-common',
+      name: '@experimental-api-clients-automation/client-common',
+    },
+    // Browser requester
+    {
+      ...commonOptions,
+      output: 'requester-browser-xhr',
+      package: 'requester-browser-xhr',
+      name: '@experimental-api-clients-automation/requester-browser-xhr',
+      external: ['dom'],
+      dependencies: ['@experimental-api-clients-automation/client-common'],
+    },
+    // Node requester
+    {
+      ...commonOptions,
+      output: 'requester-node-http',
+      package: 'requester-node-http',
+      name: '@experimental-api-clients-automation/requester-node-http',
+      external: ['https', 'http', 'url'],
+      dependencies: ['@experimental-api-clients-automation/client-common'],
+    },
+  ];
+
+  return client === 'all'
+    ? availableUtils
+    : availableUtils.filter(
+        (availableUtil) => availableUtil.package === client
+      );
+}
+
 function initPackagesConfig() {
   if (UTILS.includes(client)) {
-    const commonOptions = {
-      input: 'index.ts',
-      formats: ['cjs-node', 'esm-node'],
-      external: [],
-      dependencies: [],
-    };
-
-    const availableUtils = [
-      // Common
-      {
-        ...commonOptions,
-        output: 'client-common',
-        package: 'client-common',
-        name: '@experimental-api-clients-automation/client-common',
-      },
-      // Browser requester
-      {
-        ...commonOptions,
-        output: 'requester-browser-xhr',
-        package: 'requester-browser-xhr',
-        name: '@experimental-api-clients-automation/requester-browser-xhr',
-        external: ['dom'],
-        dependencies: ['@experimental-api-clients-automation/client-common'],
-      },
-      // Node requester
-      {
-        ...commonOptions,
-        output: 'requester-node-http',
-        package: 'requester-node-http',
-        name: '@experimental-api-clients-automation/requester-node-http',
-        external: ['https', 'http', 'url'],
-        dependencies: ['@experimental-api-clients-automation/client-common'],
-      },
-    ];
-
-    return client === 'all'
-      ? availableUtils
-      : availableUtils.filter(
-          (availableUtil) => availableUtil.package === client
-        );
+    return getUtilsConfigs();
   }
 
   const availableClients = getAvailableClients();
@@ -111,7 +109,7 @@ function initPackagesConfig() {
     throw new Error(`No clients matches '${client}'.`);
   }
 
-  return availableClients.flatMap((packageName) => {
+  const configs = availableClients.flatMap((packageName) => {
     const isAlgoliasearchClient = packageName.startsWith('algoliasearch');
     const commonConfig = {
       package: packageName,
@@ -157,6 +155,8 @@ function initPackagesConfig() {
       },
     ];
   });
+
+  return client === 'all' ? [...getUtilsConfigs(), ...configs] : configs;
 }
 
 const packagesConfig = initPackagesConfig();
