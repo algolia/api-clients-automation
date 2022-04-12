@@ -6,7 +6,7 @@ import { checkForCache, exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
 import type { Spec } from './pre-gen/setHostsOptions';
 
-const ALGOLIASEARCHLITE_OPERATIONS = [
+const ALGOLIASEARCH_LITE_OPERATIONS = [
   'search',
   'multipleQueries',
   'searchForFacetValues',
@@ -47,7 +47,7 @@ async function buildSpec(
   verbose: boolean,
   useCache: boolean
 ): Promise<void> {
-  const shouldBundleLiteSpec = spec === 'algoliasearchLite';
+  const shouldBundleLiteSpec = spec === 'algoliasearch-lite';
   const client = shouldBundleLiteSpec ? 'search' : spec;
   const cacheFile = toAbsolutePath(`specs/dist/${client}.cache`);
   let hash = '';
@@ -104,7 +104,7 @@ async function buildSpec(
   spinner.text = `linting '${client}' bundled spec`;
   await run(`yarn specs:fix bundled/${client}.${outputFormat}`, { verbose });
 
-  // This part creates an algoliasearchLite bundled spec based on the search spec
+  // This part creates an algoliasearch-lite bundled spec based on the search spec
   // which allow us to generated a JavaScript lite client.
   if (shouldBundleLiteSpec) {
     const searchSpec = yaml.load(
@@ -116,7 +116,7 @@ async function buildSpec(
         for (const [method, operation] of Object.entries(operations)) {
           if (
             method === 'post' &&
-            ALGOLIASEARCHLITE_OPERATIONS.includes(operation.operationId)
+            ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)
           ) {
             return { ...acc, [path]: { post: operation } };
           }

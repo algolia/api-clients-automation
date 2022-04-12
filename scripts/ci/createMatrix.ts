@@ -106,8 +106,8 @@ async function getSpecMatrix({
       continue;
     }
 
-    // The `algoliasearchLite` spec is created by the `search` spec
-    if (client === 'algoliasearchLite') {
+    // The `algoliasearch-lite` spec is created by the `search` spec
+    if (client === 'algoliasearch-lite') {
       matrix.client.push({
         name: 'search',
         path: 'specs/search',
