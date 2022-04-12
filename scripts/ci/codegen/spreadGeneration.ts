@@ -76,7 +76,9 @@ async function spreadGeneration(): Promise<void> {
         cwd: tempGitDir,
       })) === 0
     ) {
-      console.log(`Skipping ${lang} repository, because there is no change.`);
+      console.log(
+        `❎ Skipping ${lang} repository, because there is no change.`
+      );
       return;
     }
 
@@ -88,7 +90,7 @@ async function spreadGeneration(): Promise<void> {
       cwd: tempGitDir,
     });
     await run(`git push`, { cwd: tempGitDir });
-    console.log(`Spread the generation to ${lang} repository.`);
+    console.log(`✅ Spread the generation to ${lang} repository.`);
   }
 }
 
