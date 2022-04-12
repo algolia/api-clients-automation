@@ -50,23 +50,32 @@ export async function buildJSClientUtils(
  */
 async function buildPerLanguage({
   language,
-  generator,
+  client,
   verbose,
 }: {
   language: string;
-  generator: Generator;
+  client: string;
   verbose: boolean;
 }): Promise<void> {
   const spinner = createSpinner(`building '${language}'`, verbose).start();
   const cwd = toAbsolutePath(getLanguageFolder(language));
+  const generator =
+    client === 'all'
+      ? null
+      : GENERATORS[createGeneratorKey({ language, client })];
 
   switch (language) {
     case 'javascript':
       await run(`yarn clean`, { cwd, verbose });
-      await run(`yarn build ${generator.additionalProperties.buildFile}`, {
-        cwd,
-        verbose,
-      });
+      await run(
+        `yarn build ${
+          client === 'all' ? '' : generator!.additionalProperties.buildFile
+        }`,
+        {
+          cwd,
+          verbose,
+        }
+      );
       break;
     case 'java':
       await run(
@@ -96,7 +105,7 @@ export async function buildClients(
     languages.map((lang) =>
       buildPerLanguage({
         language: lang,
-        generator: GENERATORS[createGeneratorKey({ language: lang, client })],
+        client,
         verbose,
       })
     )
