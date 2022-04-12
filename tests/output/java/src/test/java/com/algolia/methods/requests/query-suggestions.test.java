@@ -43,7 +43,7 @@ class QuerySuggestionsApiTests {
 
           List<Object<String, String>> facets3 = new ArrayList<>();
           {
-            HashMap<String, String> facets_04 = new HashMap<>();
+            Map<String, String> facets_04 = new HashMap<>();
             {
               String attributes5 = "test";
 
@@ -199,7 +199,7 @@ class QuerySuggestionsApiTests {
 
           List<Object<String, String>> facets3 = new ArrayList<>();
           {
-            HashMap<String, String> facets_04 = new HashMap<>();
+            Map<String, String> facets_04 = new HashMap<>();
             {
               String attributes5 = "test";
 

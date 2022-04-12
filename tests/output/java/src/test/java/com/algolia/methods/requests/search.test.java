@@ -2,6 +2,7 @@ package com.algolia.methods.requests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
@@ -85,7 +86,7 @@ class SearchApiTests {
 
     String objectID0 = "uniqueID";
 
-    HashMap<String, String> body0 = new HashMap<>();
+    Map<String, String> body0 = new HashMap<>();
     {
       String key1 = "value";
 
@@ -167,13 +168,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"X-Algolia-User-ID\":\"userID\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -192,7 +205,7 @@ class SearchApiTests {
 
           requests_02.setAction(action3);
 
-          HashMap<String, String> body3 = new HashMap<>();
+          Map<String, String> body3 = new HashMap<>();
           {
             String key4 = "value";
 
@@ -264,13 +277,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"X-Algolia-User-ID\":\"userID\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -587,13 +612,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -864,13 +901,25 @@ class SearchApiTests {
     assertEquals(req.getPath(), "/1/logs");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -899,13 +948,25 @@ class SearchApiTests {
     assertEquals(req.getPath(), "/1/indexes/theIndexName/uniqueID");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"attributesToRetrieve\":\"attr1,attr2\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1070,13 +1131,25 @@ class SearchApiTests {
     assertEquals(req.getPath(), "/1/clusters/mapping/pending");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"getClusters\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1117,13 +1190,25 @@ class SearchApiTests {
     assertEquals(req.getPath(), "/1/indexes");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"page\":\"8\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1142,13 +1227,25 @@ class SearchApiTests {
     assertEquals(req.getPath(), "/1/clusters/mapping");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"page\":\"8\",\"hitsPerPage\":\"100\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1165,7 +1262,7 @@ class SearchApiTests {
 
           requests_02.setAction(action3);
 
-          HashMap<String, String> body3 = new HashMap<>();
+          Map<String, String> body3 = new HashMap<>();
           {
             String key4 = "value";
 
@@ -1305,7 +1402,7 @@ class SearchApiTests {
 
     List<Map<String, AttributeOrBuiltInOperation>> attributeOrBuiltInOperation0 = new ArrayList<>();
     {
-      HashMap<String, AttributeOrBuiltInOperation> attributeOrBuiltInOperation_01 = new HashMap<>();
+      Map<String, AttributeOrBuiltInOperation> attributeOrBuiltInOperation_01 = new HashMap<>();
       {
         String id12 = "test";
 
@@ -1356,13 +1453,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"createIfNotExists\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1433,7 +1542,7 @@ class SearchApiTests {
   void saveObjectTest0() {
     String indexName0 = "theIndexName";
 
-    HashMap<String, String> body0 = new HashMap<>();
+    Map<String, String> body0 = new HashMap<>();
     {
       String objectID1 = "id";
 
@@ -1525,13 +1634,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1590,13 +1711,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1688,13 +1821,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
@@ -1951,7 +2096,7 @@ class SearchApiTests {
     {
       StandardEntries disableStandardEntries1 = new StandardEntries();
       {
-        HashMap<String, Boolean> plurals2 = new HashMap<>();
+        Map<String, Boolean> plurals2 = new HashMap<>();
         {
           boolean fr3 = false;
 
@@ -1996,7 +2141,7 @@ class SearchApiTests {
     {
       StandardEntries disableStandardEntries1 = new StandardEntries();
       {
-        HashMap<String, Boolean> plurals2 = new HashMap<>();
+        Map<String, Boolean> plurals2 = new HashMap<>();
         {
           boolean fr3 = false;
 
@@ -2012,7 +2157,7 @@ class SearchApiTests {
         }
         disableStandardEntries1.setPlurals(plurals2);
 
-        HashMap<String, Boolean> stopwords2 = new HashMap<>();
+        Map<String, Boolean> stopwords2 = new HashMap<>();
         {
           boolean fr3 = false;
 
@@ -2020,7 +2165,7 @@ class SearchApiTests {
         }
         disableStandardEntries1.setStopwords(stopwords2);
 
-        HashMap<String, Boolean> compounds2 = new HashMap<>();
+        Map<String, Boolean> compounds2 = new HashMap<>();
         {
           boolean ru3 = true;
 
@@ -2084,13 +2229,25 @@ class SearchApiTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
     }
   }
 
