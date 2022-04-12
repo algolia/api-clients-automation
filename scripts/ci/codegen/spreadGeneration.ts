@@ -88,6 +88,7 @@ async function spreadGeneration(): Promise<void> {
       cwd: tempGitDir,
     });
     await run(`git push`, { cwd: tempGitDir });
+    console.log(`Spread the generation to ${lang} repository.`);
   }
 }
 
