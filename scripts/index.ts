@@ -2,7 +2,7 @@
 import { Argument, program } from 'commander';
 import inquirer from 'inquirer';
 
-import { buildClients, buildJSClientUtils } from './buildClients';
+import { buildClients } from './buildClients';
 import { buildSpecs } from './buildSpecs';
 import {
   CI,
@@ -155,23 +155,7 @@ buildCommand
         ...CLIENTS_JS,
       ]);
 
-      // We build the JavaScript utils before generated clients as they
-      // rely on them
-      if (
-        (language === 'javascript' || language === 'all') &&
-        (!client || client === 'all' || CLIENTS_JS_UTILS.includes(client))
-      ) {
-        await buildJSClientUtils(Boolean(verbose), client);
-      }
-
-      await buildClients(
-        generatorList({
-          language,
-          client,
-          clientList: CLIENTS_JS,
-        }),
-        Boolean(verbose)
-      );
+      await buildClients(language, client, Boolean(verbose));
     }
   );
 
