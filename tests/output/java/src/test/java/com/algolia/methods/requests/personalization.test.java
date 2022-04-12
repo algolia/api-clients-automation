@@ -69,7 +69,8 @@ class PersonalizationApiTests {
   void setPersonalizationStrategyTest0() {
     PersonalizationStrategyParams personalizationStrategyParams0 = new PersonalizationStrategyParams();
     {
-      List eventScoring1 = new ArrayList();
+      List<EventScoring> eventScoring1 = new ArrayList<>();
+
       {
         EventScoring eventScoring_02 = new EventScoring();
         {
@@ -85,10 +86,10 @@ class PersonalizationApiTests {
         }
         eventScoring1.add(eventScoring_02);
       }
-
       personalizationStrategyParams0.setEventScoring(eventScoring1);
 
-      List facetScoring1 = new ArrayList();
+      List<FacetScoring> facetScoring1 = new ArrayList<>();
+
       {
         FacetScoring facetScoring_02 = new FacetScoring();
         {
@@ -101,7 +102,6 @@ class PersonalizationApiTests {
         }
         facetScoring1.add(facetScoring_02);
       }
-
       personalizationStrategyParams0.setFacetScoring(facetScoring1);
 
       int personalizationImpact1 = 42;

@@ -32,7 +32,8 @@ class SearchApiTests {
   void addApiKeyTest0() {
     ApiKey apiKey0 = new ApiKey();
     {
-      List acl1 = new ArrayList();
+      List<Acl> acl1 = new ArrayList<>();
+
       {
         Acl acl_02 = Acl.fromValue("search");
 
@@ -42,7 +43,6 @@ class SearchApiTests {
 
         acl1.add(acl_12);
       }
-
       apiKey0.setAcl(acl1);
       String description1 = "my new api key";
 
@@ -86,7 +86,8 @@ class SearchApiTests {
 
     String objectID0 = "uniqueID";
 
-    HashMap body0 = new HashMap<String, Object>();
+    HashMap<String, String> body0 = new HashMap<>();
+
     {
       String key1 = "value";
 
@@ -185,7 +186,8 @@ class SearchApiTests {
 
     BatchWriteParams batchWriteParams0 = new BatchWriteParams();
     {
-      List requests1 = new ArrayList();
+      List<BatchOperation> requests1 = new ArrayList<>();
+
       {
         BatchOperation requests_02 = new BatchOperation();
         {
@@ -193,7 +195,8 @@ class SearchApiTests {
 
           requests_02.setAction(action3);
 
-          HashMap body3 = new HashMap<String, Object>();
+          HashMap<String, String> body3 = new HashMap<>();
+
           {
             String key4 = "value";
 
@@ -203,7 +206,6 @@ class SearchApiTests {
         }
         requests1.add(requests_02);
       }
-
       batchWriteParams0.setRequests(requests1);
     }
 
@@ -235,7 +237,8 @@ class SearchApiTests {
 
       batchAssignUserIdsParams0.setCluster(cluster1);
 
-      List users1 = new ArrayList();
+      List<String> users1 = new ArrayList<>();
+
       {
         String users_02 = "user1";
 
@@ -244,7 +247,6 @@ class SearchApiTests {
 
         users1.add(users_12);
       }
-
       batchAssignUserIdsParams0.setUsers(users1);
     }
 
@@ -284,7 +286,8 @@ class SearchApiTests {
 
     BatchDictionaryEntriesParams batchDictionaryEntriesParams0 = new BatchDictionaryEntriesParams();
     {
-      List requests1 = new ArrayList();
+      List<BatchDictionaryEntriesRequest> requests1 = new ArrayList<>();
+
       {
         BatchDictionaryEntriesRequest requests_02 = new BatchDictionaryEntriesRequest();
         {
@@ -324,7 +327,6 @@ class SearchApiTests {
         }
         requests1.add(requests_12);
       }
-
       batchDictionaryEntriesParams0.setRequests(requests1);
     }
 
@@ -361,7 +363,8 @@ class SearchApiTests {
         clearExistingDictionaryEntries1
       );
 
-      List requests1 = new ArrayList();
+      List<BatchDictionaryEntriesRequest> requests1 = new ArrayList<>();
+
       {
         BatchDictionaryEntriesRequest requests_02 = new BatchDictionaryEntriesRequest();
         {
@@ -381,7 +384,8 @@ class SearchApiTests {
 
             body3.setWord(word4);
 
-            List words4 = new ArrayList();
+            List<String> words4 = new ArrayList<>();
+
             {
               String words_05 = "believe";
 
@@ -390,10 +394,10 @@ class SearchApiTests {
 
               words4.add(words_15);
             }
-
             body3.setWords(words4);
 
-            List decomposition4 = new ArrayList();
+            List<String> decomposition4 = new ArrayList<>();
+
             {
               String decomposition_05 = "trust";
 
@@ -402,7 +406,6 @@ class SearchApiTests {
 
               decomposition4.add(decomposition_15);
             }
-
             body3.setDecomposition(decomposition4);
 
             DictionaryEntryState state4 = DictionaryEntryState.fromValue(
@@ -433,7 +436,8 @@ class SearchApiTests {
 
             body3.setWord(word4);
 
-            List words4 = new ArrayList();
+            List<String> words4 = new ArrayList<>();
+
             {
               String words_05 = "candor";
 
@@ -442,10 +446,10 @@ class SearchApiTests {
 
               words4.add(words_15);
             }
-
             body3.setWords(words4);
 
-            List decomposition4 = new ArrayList();
+            List<String> decomposition4 = new ArrayList<>();
+
             {
               String decomposition_05 = "grit";
 
@@ -454,7 +458,6 @@ class SearchApiTests {
 
               decomposition4.add(decomposition_15);
             }
-
             body3.setDecomposition(decomposition4);
 
             DictionaryEntryState state4 = DictionaryEntryState.fromValue(
@@ -467,7 +470,6 @@ class SearchApiTests {
         }
         requests1.add(requests_12);
       }
-
       batchDictionaryEntriesParams0.setRequests(requests1);
     }
 
@@ -496,7 +498,8 @@ class SearchApiTests {
   void batchRulesTest0() {
     String indexName0 = "indexName";
 
-    List rule0 = new ArrayList();
+    List<Rule> rule0 = new ArrayList<>();
+
     {
       Rule rule_01 = new Rule();
       {
@@ -504,7 +507,8 @@ class SearchApiTests {
 
         rule_01.setObjectID(objectID2);
 
-        List conditions2 = new ArrayList();
+        List<Condition> conditions2 = new ArrayList<>();
+
         {
           Condition conditions_03 = new Condition();
           {
@@ -518,7 +522,6 @@ class SearchApiTests {
           }
           conditions2.add(conditions_03);
         }
-
         rule_01.setConditions(conditions2);
 
         Consequence consequence2 = new Consequence();
@@ -541,7 +544,8 @@ class SearchApiTests {
 
         rule_11.setObjectID(objectID2);
 
-        List conditions2 = new ArrayList();
+        List<Condition> conditions2 = new ArrayList<>();
+
         {
           Condition conditions_03 = new Condition();
           {
@@ -555,7 +559,6 @@ class SearchApiTests {
           }
           conditions2.add(conditions_03);
         }
-
         rule_11.setConditions(conditions2);
 
         Consequence consequence2 = new Consequence();
@@ -892,7 +895,8 @@ class SearchApiTests {
 
     String objectID0 = "uniqueID";
 
-    List attributesToRetrieve0 = new ArrayList();
+    List<String> attributesToRetrieve0 = new ArrayList<>();
+
     {
       String attributesToRetrieve_01 = "attr1";
 
@@ -925,11 +929,13 @@ class SearchApiTests {
   void getObjectsTest0() {
     GetObjectsParams getObjectsParams0 = new GetObjectsParams();
     {
-      List requests1 = new ArrayList();
+      List<MultipleGetObjectsParams> requests1 = new ArrayList<>();
+
       {
         MultipleGetObjectsParams requests_02 = new MultipleGetObjectsParams();
         {
-          List attributesToRetrieve3 = new ArrayList();
+          List<String> attributesToRetrieve3 = new ArrayList<>();
+
           {
             String attributesToRetrieve_04 = "attr1";
 
@@ -938,7 +944,6 @@ class SearchApiTests {
 
             attributesToRetrieve3.add(attributesToRetrieve_14);
           }
-
           requests_02.setAttributesToRetrieve(attributesToRetrieve3);
           String objectID3 = "uniqueID";
 
@@ -949,7 +954,6 @@ class SearchApiTests {
         }
         requests1.add(requests_02);
       }
-
       getObjectsParams0.setRequests(requests1);
     }
 
@@ -1170,7 +1174,8 @@ class SearchApiTests {
   void multipleBatchTest0() {
     BatchParams batchParams0 = new BatchParams();
     {
-      List requests1 = new ArrayList();
+      List<MultipleBatchOperation> requests1 = new ArrayList<>();
+
       {
         MultipleBatchOperation requests_02 = new MultipleBatchOperation();
         {
@@ -1178,7 +1183,8 @@ class SearchApiTests {
 
           requests_02.setAction(action3);
 
-          HashMap body3 = new HashMap<String, Object>();
+          HashMap<String, String> body3 = new HashMap<>();
+
           {
             String key4 = "value";
 
@@ -1191,7 +1197,6 @@ class SearchApiTests {
         }
         requests1.add(requests_02);
       }
-
       batchParams0.setRequests(requests1);
     }
 
@@ -1217,7 +1222,8 @@ class SearchApiTests {
   void multipleQueriesTest0() {
     MultipleQueriesParams multipleQueriesParams0 = new MultipleQueriesParams();
     {
-      List requests1 = new ArrayList();
+      List<MultipleQueries> requests1 = new ArrayList<>();
+
       {
         MultipleQueries requests_02 = new MultipleQueries();
         {
@@ -1240,7 +1246,6 @@ class SearchApiTests {
         }
         requests1.add(requests_02);
       }
-
       multipleQueriesParams0.setRequests(requests1);
 
       MultipleQueriesStrategy strategy1 = MultipleQueriesStrategy.fromValue(
@@ -1281,7 +1286,8 @@ class SearchApiTests {
 
       operationIndexParams0.setDestination(destination1);
 
-      List scope1 = new ArrayList();
+      List<ScopeType> scope1 = new ArrayList<>();
+
       {
         ScopeType scope_02 = ScopeType.fromValue("rules");
 
@@ -1291,7 +1297,6 @@ class SearchApiTests {
 
         scope1.add(scope_12);
       }
-
       operationIndexParams0.setScope(scope1);
     }
 
@@ -1319,13 +1324,18 @@ class SearchApiTests {
 
     String objectID0 = "uniqueID";
 
-    List attributeOrBuiltInOperation0 = new ArrayList();
+    List<Map<String, AttributeOrBuiltInOperation>> attributeOrBuiltInOperation0 = new ArrayList<>();
+
     {
-      HashMap attributeOrBuiltInOperation_01 = new HashMap<String, Object>();
+      HashMap<String, AttributeOrBuiltInOperation> attributeOrBuiltInOperation_01 = new HashMap<>();
+
       {
         String id12 = "test";
 
-        attributeOrBuiltInOperation_01.put("id1", id12);
+        attributeOrBuiltInOperation_01.put(
+          "id1",
+          AttributeOrBuiltInOperation.ofString(id12)
+        );
 
         BuiltInOperation id22 = new BuiltInOperation();
         {
@@ -1338,7 +1348,10 @@ class SearchApiTests {
 
           id22.setValue(value3);
         }
-        attributeOrBuiltInOperation_01.put("id2", id22);
+        attributeOrBuiltInOperation_01.put(
+          "id2",
+          AttributeOrBuiltInOperation.ofBuiltInOperation(id22)
+        );
       }
       attributeOrBuiltInOperation0.add(attributeOrBuiltInOperation_01);
     }
@@ -1393,7 +1406,8 @@ class SearchApiTests {
   @Test
   @DisplayName("replaceSources")
   void replaceSourcesTest0() {
-    List source0 = new ArrayList();
+    List<Source> source0 = new ArrayList<>();
+
     {
       Source source_01 = new Source();
       {
@@ -1443,7 +1457,8 @@ class SearchApiTests {
   void saveObjectTest0() {
     String indexName0 = "theIndexName";
 
-    HashMap body0 = new HashMap<String, Object>();
+    HashMap<String, String> body0 = new HashMap<>();
+
     {
       String objectID1 = "id";
 
@@ -1483,7 +1498,8 @@ class SearchApiTests {
 
       rule0.setObjectID(objectID1);
 
-      List conditions1 = new ArrayList();
+      List<Condition> conditions1 = new ArrayList<>();
+
       {
         Condition conditions_02 = new Condition();
         {
@@ -1497,7 +1513,6 @@ class SearchApiTests {
         }
         conditions1.add(conditions_02);
       }
-
       rule0.setConditions(conditions1);
 
       Consequence consequence1 = new Consequence();
@@ -1563,7 +1578,8 @@ class SearchApiTests {
 
       synonymHit0.setType(type1);
 
-      List synonyms1 = new ArrayList();
+      List<String> synonyms1 = new ArrayList<>();
+
       {
         String synonyms_02 = "car";
 
@@ -1575,7 +1591,6 @@ class SearchApiTests {
 
         synonyms1.add(synonyms_22);
       }
-
       synonymHit0.setSynonyms(synonyms1);
     }
 
@@ -1617,7 +1632,8 @@ class SearchApiTests {
   void saveSynonymsTest0() {
     String indexName0 = "indexName";
 
-    List synonymHit0 = new ArrayList();
+    List<SynonymHit> synonymHit0 = new ArrayList<>();
+
     {
       SynonymHit synonymHit_01 = new SynonymHit();
       {
@@ -1629,7 +1645,8 @@ class SearchApiTests {
 
         synonymHit_01.setType(type2);
 
-        List synonyms2 = new ArrayList();
+        List<String> synonyms2 = new ArrayList<>();
+
         {
           String synonyms_03 = "car";
 
@@ -1641,7 +1658,6 @@ class SearchApiTests {
 
           synonyms2.add(synonyms_23);
         }
-
         synonymHit_01.setSynonyms(synonyms2);
       }
       synonymHit0.add(synonymHit_01);
@@ -1659,7 +1675,8 @@ class SearchApiTests {
 
         synonymHit_11.setInput(input2);
 
-        List synonyms2 = new ArrayList();
+        List<String> synonyms2 = new ArrayList<>();
+
         {
           String synonyms_03 = "ephone";
 
@@ -1671,7 +1688,6 @@ class SearchApiTests {
 
           synonyms2.add(synonyms_23);
         }
-
         synonymHit_11.setSynonyms(synonyms2);
       }
       synonymHit0.add(synonymHit_11);
@@ -1965,7 +1981,8 @@ class SearchApiTests {
     {
       StandardEntries disableStandardEntries1 = new StandardEntries();
       {
-        HashMap plurals2 = new HashMap<String, Object>();
+        HashMap<String, Boolean> plurals2 = new HashMap<>();
+
         {
           boolean fr3 = false;
 
@@ -2010,7 +2027,8 @@ class SearchApiTests {
     {
       StandardEntries disableStandardEntries1 = new StandardEntries();
       {
-        HashMap plurals2 = new HashMap<String, Object>();
+        HashMap<String, Boolean> plurals2 = new HashMap<>();
+
         {
           boolean fr3 = false;
 
@@ -2026,7 +2044,8 @@ class SearchApiTests {
         }
         disableStandardEntries1.setPlurals(plurals2);
 
-        HashMap stopwords2 = new HashMap<String, Object>();
+        HashMap<String, Boolean> stopwords2 = new HashMap<>();
+
         {
           boolean fr3 = false;
 
@@ -2034,7 +2053,8 @@ class SearchApiTests {
         }
         disableStandardEntries1.setStopwords(stopwords2);
 
-        HashMap compounds2 = new HashMap<String, Object>();
+        HashMap<String, Boolean> compounds2 = new HashMap<>();
+
         {
           boolean ru3 = true;
 
@@ -2115,7 +2135,8 @@ class SearchApiTests {
 
     ApiKey apiKey0 = new ApiKey();
     {
-      List acl1 = new ArrayList();
+      List<Acl> acl1 = new ArrayList<>();
+
       {
         Acl acl_02 = Acl.fromValue("search");
 
@@ -2125,7 +2146,6 @@ class SearchApiTests {
 
         acl1.add(acl_12);
       }
-
       apiKey0.setAcl(acl1);
 
       int validity1 = 300;

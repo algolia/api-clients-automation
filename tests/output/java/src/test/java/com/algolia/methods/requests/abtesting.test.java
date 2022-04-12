@@ -39,7 +39,8 @@ class AbtestingApiTests {
 
       addABTestsRequest0.setName(name1);
 
-      List variant1 = new ArrayList();
+      List<AddABTestsVariant> variant1 = new ArrayList<>();
+
       {
         AbTestsVariant variant_02 = new AbTestsVariant();
         {
@@ -51,7 +52,7 @@ class AbtestingApiTests {
 
           variant_02.setTrafficPercentage(trafficPercentage3);
         }
-        variant1.add(variant_02);
+        variant1.add(AddABTestsVariant.ofAbTestsVariant(variant_02));
 
         AbTestsVariant variant_12 = new AbTestsVariant();
         {
@@ -63,9 +64,8 @@ class AbtestingApiTests {
 
           variant_12.setTrafficPercentage(trafficPercentage3);
         }
-        variant1.add(variant_12);
+        variant1.add(AddABTestsVariant.ofAbTestsVariant(variant_12));
       }
-
       addABTestsRequest0.setVariant(variant1);
     }
 

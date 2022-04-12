@@ -158,6 +158,9 @@ public class ParametersWithDataType {
     testOutput.put("isBoolean", false);
     testOutput.put("isEnum", false);
 
+    //childElements is used to restrict to the scope of the child, and not the parent one
+    testOutput.put("childElements", new HashMap<String, Object>());
+
     return testOutput;
   }
 
@@ -215,15 +218,16 @@ public class ParametersWithDataType {
         traverseParams(paramName, param, match, parent, suffix)
       );
 
-      HashMap<String, String> hashMapOneOfModel = new HashMap();
+      HashMap<String, String> oneOfModel = new HashMap<>();
 
-      hashMapOneOfModel.put("classname", baseType);
-      hashMapOneOfModel.put(
+      oneOfModel.put("classname", Utils.capitalize(baseType));
+      oneOfModel.put(
         "name",
         getTypeName(match).replace("<", "").replace(">", "")
       );
-
-      testOutput.put("oneOfModel", hashMapOneOfModel);
+      HashMap<String, Object> childElements = new HashMap<>();
+      childElements.put("oneOfModel", oneOfModel);
+      testOutput.put("childElements", childElements);
 
       return;
     }

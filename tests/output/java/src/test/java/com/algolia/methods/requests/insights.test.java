@@ -29,7 +29,8 @@ class InsightsApiTests {
   void pushEventsTest0() {
     InsightEvents insightEvents0 = new InsightEvents();
     {
-      List events1 = new ArrayList();
+      List<InsightEvent> events1 = new ArrayList<>();
+
       {
         InsightEvent events_02 = new InsightEvent();
         {
@@ -50,7 +51,8 @@ class InsightsApiTests {
 
           events_02.setTimestamp(timestamp3);
 
-          List objectIDs3 = new ArrayList();
+          List<String> objectIDs3 = new ArrayList<>();
+
           {
             String objectIDs_04 = "9780545139700";
 
@@ -59,13 +61,13 @@ class InsightsApiTests {
 
             objectIDs3.add(objectIDs_14);
           }
-
           events_02.setObjectIDs(objectIDs3);
           String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
 
           events_02.setQueryID(queryID3);
 
-          List positions3 = new ArrayList();
+          List<Integer> positions3 = new ArrayList<>();
+
           {
             int positions_04 = 7;
 
@@ -74,7 +76,6 @@ class InsightsApiTests {
 
             positions3.add(positions_14);
           }
-
           events_02.setPositions(positions3);
         }
         events1.add(events_02);
@@ -98,7 +99,8 @@ class InsightsApiTests {
 
           events_12.setTimestamp(timestamp3);
 
-          List objectIDs3 = new ArrayList();
+          List<String> objectIDs3 = new ArrayList<>();
+
           {
             String objectIDs_04 = "9780545139700";
 
@@ -107,7 +109,6 @@ class InsightsApiTests {
 
             objectIDs3.add(objectIDs_14);
           }
-
           events_12.setObjectIDs(objectIDs3);
         }
         events1.add(events_12);
@@ -131,7 +132,8 @@ class InsightsApiTests {
 
           events_22.setTimestamp(timestamp3);
 
-          List objectIDs3 = new ArrayList();
+          List<String> objectIDs3 = new ArrayList<>();
+
           {
             String objectIDs_04 = "9780545139700";
 
@@ -140,7 +142,6 @@ class InsightsApiTests {
 
             objectIDs3.add(objectIDs_14);
           }
-
           events_22.setObjectIDs(objectIDs3);
           String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
 
@@ -148,7 +149,6 @@ class InsightsApiTests {
         }
         events1.add(events_22);
       }
-
       insightEvents0.setEvents(events1);
     }
 

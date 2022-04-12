@@ -33,7 +33,8 @@ class QuerySuggestionsApiTests {
 
       querySuggestionsIndexWithIndexParam0.setIndexName(indexName1);
 
-      List sourceIndices1 = new ArrayList();
+      List<SourceIndex> sourceIndices1 = new ArrayList<>();
+
       {
         SourceIndex sourceIndices_02 = new SourceIndex();
         {
@@ -41,9 +42,11 @@ class QuerySuggestionsApiTests {
 
           sourceIndices_02.setIndexName(indexName3);
 
-          List facets3 = new ArrayList();
+          List<Object<String, String>> facets3 = new ArrayList<>();
+
           {
-            HashMap facets_04 = new HashMap<String, Object>();
+            HashMap<String, String> facets_04 = new HashMap<>();
+
             {
               String attributes5 = "test";
 
@@ -51,12 +54,13 @@ class QuerySuggestionsApiTests {
             }
             facets3.add(facets_04);
           }
-
           sourceIndices_02.setFacets(facets3);
 
-          List generate3 = new ArrayList();
+          List<List<String>> generate3 = new ArrayList<>();
+
           {
-            List generate_04 = new ArrayList();
+            List<String> generate_04 = new ArrayList<>();
+
             {
               String generate_0_05 = "facetA";
 
@@ -65,42 +69,39 @@ class QuerySuggestionsApiTests {
 
               generate_04.add(generate_0_15);
             }
-
             generate3.add(generate_04);
 
-            List generate_14 = new ArrayList();
+            List<String> generate_14 = new ArrayList<>();
+
             {
               String generate_1_05 = "facetC";
 
               generate_14.add(generate_1_05);
             }
-
             generate3.add(generate_14);
           }
-
           sourceIndices_02.setGenerate(generate3);
         }
         sourceIndices1.add(sourceIndices_02);
       }
-
       querySuggestionsIndexWithIndexParam0.setSourceIndices(sourceIndices1);
 
-      List languages1 = new ArrayList();
+      List<String> languages1 = new ArrayList<>();
+
       {
         String languages_02 = "french";
 
         languages1.add(languages_02);
       }
-
       querySuggestionsIndexWithIndexParam0.setLanguages(languages1);
 
-      List exclude1 = new ArrayList();
+      List<String> exclude1 = new ArrayList<>();
+
       {
         String exclude_02 = "test";
 
         exclude1.add(exclude_02);
       }
-
       querySuggestionsIndexWithIndexParam0.setExclude(exclude1);
     }
 
@@ -196,7 +197,8 @@ class QuerySuggestionsApiTests {
 
     QuerySuggestionsIndexParam querySuggestionsIndexParam0 = new QuerySuggestionsIndexParam();
     {
-      List sourceIndices1 = new ArrayList();
+      List<SourceIndex> sourceIndices1 = new ArrayList<>();
+
       {
         SourceIndex sourceIndices_02 = new SourceIndex();
         {
@@ -204,9 +206,11 @@ class QuerySuggestionsApiTests {
 
           sourceIndices_02.setIndexName(indexName3);
 
-          List facets3 = new ArrayList();
+          List<Object<String, String>> facets3 = new ArrayList<>();
+
           {
-            HashMap facets_04 = new HashMap<String, Object>();
+            HashMap<String, String> facets_04 = new HashMap<>();
+
             {
               String attributes5 = "test";
 
@@ -214,12 +218,13 @@ class QuerySuggestionsApiTests {
             }
             facets3.add(facets_04);
           }
-
           sourceIndices_02.setFacets(facets3);
 
-          List generate3 = new ArrayList();
+          List<List<String>> generate3 = new ArrayList<>();
+
           {
-            List generate_04 = new ArrayList();
+            List<String> generate_04 = new ArrayList<>();
+
             {
               String generate_0_05 = "facetA";
 
@@ -228,42 +233,39 @@ class QuerySuggestionsApiTests {
 
               generate_04.add(generate_0_15);
             }
-
             generate3.add(generate_04);
 
-            List generate_14 = new ArrayList();
+            List<String> generate_14 = new ArrayList<>();
+
             {
               String generate_1_05 = "facetC";
 
               generate_14.add(generate_1_05);
             }
-
             generate3.add(generate_14);
           }
-
           sourceIndices_02.setGenerate(generate3);
         }
         sourceIndices1.add(sourceIndices_02);
       }
-
       querySuggestionsIndexParam0.setSourceIndices(sourceIndices1);
 
-      List languages1 = new ArrayList();
+      List<String> languages1 = new ArrayList<>();
+
       {
         String languages_02 = "french";
 
         languages1.add(languages_02);
       }
-
       querySuggestionsIndexParam0.setLanguages(languages1);
 
-      List exclude1 = new ArrayList();
+      List<String> exclude1 = new ArrayList<>();
+
       {
         String exclude_02 = "test";
 
         exclude1.add(exclude_02);
       }
-
       querySuggestionsIndexParam0.setExclude(exclude1);
     }
 
