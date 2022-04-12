@@ -120,7 +120,7 @@ async function buildSpec(
   }
 
   spinner.text = `linting ${client} spec`;
-  await run(`yarn specs:lint ${client}`, { verbose });
+  await run(`yarn specs:fix ${client}`, { verbose });
 
   spinner.text = `validating ${client} spec`;
   await run(`yarn openapi lint specs/bundled/${client}.${outputFormat}`, {
