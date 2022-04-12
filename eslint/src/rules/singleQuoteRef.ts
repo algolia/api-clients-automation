@@ -23,15 +23,15 @@ export const singleQuoteRef: Rule.RuleModule = {
           return;
         }
         if (!isScalar(node.value)) {
-          // not our problem
+          // not our problem, something else will fail like path resolution
           return;
         }
         if (node.value.style === 'single-quoted') {
-          // that's waht we want
+          // that's what we want
           return;
         }
         if (isBLockScalar(node.value)) {
-          // what to do here ?
+          // another rule should take care of that case
           return;
         }
         const hasDoubleQuote = node.value.style === 'double-quoted';
