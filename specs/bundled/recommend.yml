@@ -54,16 +54,14 @@ components:
       type: integer
       description: Specify the page to retrieve.
       default: 0
-    aroundRadiusAll:
-      type: string
-      enum:
-        - all
     aroundRadius:
       description: Define the maximum radius for a geo search (in meters).
       oneOf:
         - type: integer
           minimum: 1
-        - $ref: '#/components/schemas/aroundRadiusAll'
+        - type: string
+          enum:
+            - all
     baseSearchParams:
       type: object
       additionalProperties: false
@@ -253,55 +251,6 @@ components:
       type: integer
       description: Set the number of hits per page.
       default: 20
-    typoTolerance:
-      type: string
-      enum:
-        - true
-        - false
-        - min
-        - strict
-      description: Controls whether typo tolerance is enabled and how it is applied.
-      default: true
-    queryType:
-      type: string
-      enum:
-        - prefixLast
-        - prefixAll
-        - prefixNone
-      description: Controls if and how query words are interpreted as prefixes.
-      default: prefixLast
-    removeWordsIfNoResults:
-      type: string
-      enum:
-        - none
-        - lastWords
-        - firstWords
-        - allOptional
-      description: >-
-        Selects a strategy to remove words from the query when it doesn't match
-        any hits.
-      default: none
-    exactOnSingleWordQuery:
-      type: string
-      enum:
-        - attribute
-        - none
-        - word
-      description: >-
-        Controls how the exact ranking criterion is computed when the query
-        contains only one word.
-      default: attribute
-    alternativesAsExact:
-      type: string
-      enum:
-        - ignorePlurals
-        - singleWordSynonym
-        - multiWordsSynonym
-    advancedSyntaxFeatures:
-      type: string
-      enum:
-        - exactPhrase
-        - excludeWords
     maxFacetHits:
       type: integer
       description: >-
@@ -425,7 +374,14 @@ components:
             to accept matches with 2 typos.
           default: 8
         typoTolerance:
-          $ref: '#/components/schemas/typoTolerance'
+          type: string
+          enum:
+            - true
+            - false
+            - min
+            - strict
+          description: Controls whether typo tolerance is enabled and how it is applied.
+          default: true
         allowTyposOnNumericTokens:
           type: boolean
           description: >-
@@ -480,9 +436,24 @@ components:
           description: Enable the Personalization feature.
           default: false
         queryType:
-          $ref: '#/components/schemas/queryType'
+          type: string
+          enum:
+            - prefixLast
+            - prefixAll
+            - prefixNone
+          description: Controls if and how query words are interpreted as prefixes.
+          default: prefixLast
         removeWordsIfNoResults:
-          $ref: '#/components/schemas/removeWordsIfNoResults'
+          type: string
+          enum:
+            - none
+            - lastWords
+            - firstWords
+            - allOptional
+          description: >-
+            Selects a strategy to remove words from the query when it doesn't
+            match any hits.
+          default: none
         advancedSyntax:
           type: boolean
           description: Enables the advanced query syntax.
@@ -504,11 +475,23 @@ components:
             criterion.
           default: []
         exactOnSingleWordQuery:
-          $ref: '#/components/schemas/exactOnSingleWordQuery'
+          type: string
+          enum:
+            - attribute
+            - none
+            - word
+          description: >-
+            Controls how the exact ranking criterion is computed when the query
+            contains only one word.
+          default: attribute
         alternativesAsExact:
           type: array
           items:
-            $ref: '#/components/schemas/alternativesAsExact'
+            type: string
+            enum:
+              - ignorePlurals
+              - singleWordSynonym
+              - multiWordsSynonym
           description: >-
             List of alternatives that should be considered an exact match by the
             exact ranking criterion.
@@ -518,7 +501,10 @@ components:
         advancedSyntaxFeatures:
           type: array
           items:
-            $ref: '#/components/schemas/advancedSyntaxFeatures'
+            type: string
+            enum:
+              - exactPhrase
+              - excludeWords
           description: >-
             Allows you to specify which advanced syntax features are active when
             ‘advancedSyntax' is enabled.
@@ -790,13 +776,6 @@ components:
       type: string
       description: Markup text with occurrences highlighted.
       example: <em>George</em> <em>Clo</em>oney
-    matchLevel:
-      type: string
-      description: Indicates how well the attribute matched the search query.
-      enum:
-        - none
-        - partial
-        - full
     highlightResult:
       type: object
       description: Highlighted attributes.
@@ -805,7 +784,12 @@ components:
         value:
           $ref: '#/components/schemas/highlightedValue'
         matchLevel:
-          $ref: '#/components/schemas/matchLevel'
+          type: string
+          description: Indicates how well the attribute matched the search query.
+          enum:
+            - none
+            - partial
+            - full
         matchedWords:
           type: array
           description: List of words from the query that matched the object.
@@ -821,7 +805,12 @@ components:
         value:
           $ref: '#/components/schemas/highlightedValue'
         matchLevel:
-          $ref: '#/components/schemas/matchLevel'
+          type: string
+          description: Indicates how well the attribute matched the search query.
+          enum:
+            - none
+            - partial
+            - full
     rankingInfo:
       type: object
       additionalProperties: false

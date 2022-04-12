@@ -49,17 +49,6 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    modelsToRetrieve:
-      type: string
-      enum:
-        - funnel_stage
-        - order_value
-        - affinities
-    typesToRetrieve:
-      type: string
-      enum:
-        - properties
-        - segments
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -238,12 +227,19 @@ paths:
                   type: array
                   description: List with model types for which to retrieve predictions.
                   items:
-                    $ref: '#/components/schemas/modelsToRetrieve'
+                    type: string
+                    enum:
+                      - funnel_stage
+                      - order_value
+                      - affinities
                 typesToRetrieve:
                   type: array
                   description: List with types to be retrieved.
                   items:
-                    $ref: '#/components/schemas/typesToRetrieve'
+                    type: string
+                    enum:
+                      - properties
+                      - segments
                   minItems: 1
       responses:
         '200':
