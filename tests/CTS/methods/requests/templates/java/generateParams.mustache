@@ -7,6 +7,6 @@
 {{#isArray}}List{{> generateGenerics}} {{{key}}}{{suffix}} = new ArrayList<>(); { {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.add({{> maybeConvertOneOf}});{{/value}} }{{/isArray}}
 {{#isObject}}{{{objectName}}} {{{key}}}{{suffix}} = new {{{objectName}}}();
 { {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.set{{#lambda.titlecase}}{{{key}}}{{/lambda.titlecase}}({{> maybeConvertOneOf}});
-{{/value}} }{{/isObject}}{{#isFreeFormObject}}Map{{> generateGenerics}} {{{key}}}{{suffix}} = new HashMap<>();
+{{/value}} }{{/isObject}}{{#isFreeFormObject}}Map{{> forceMapGenerics}} {{{key}}}{{suffix}} = new HashMap<>();
 { {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.put("{{{key}}}", {{> maybeConvertOneOf}});
 {{/value}} }{{/isFreeFormObject}}

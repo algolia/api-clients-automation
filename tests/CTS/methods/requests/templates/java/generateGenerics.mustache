@@ -1,2 +1,2 @@
-{{#isArray}}{{#value.0}}<{{#childElements.oneOfModel}}{{classname}}{{/childElements.oneOfModel}}{{^childElements.oneOfModel}}{{objectName}}{{/childElements.oneOfModel}}{{> generateGenerics}}>{{/value.0}}{{/isArray}}
-{{#isFreeFormObject}}<String, {{#value.0}}{{#childElements.oneOfModel}}{{classname}}{{/childElements.oneOfModel}}{{^childElements.oneOfModel}}{{objectName}}{{/childElements.oneOfModel}}{{> generateGenerics}}{{/value.0}}>{{/isFreeFormObject}}
+{{#isArray}}{{#value.0}}<{{#oneOfModel}}{{classname}}{{/oneOfModel}}{{^oneOfModel}}{{objectName}}{{/oneOfModel}}{{> generateGenerics}}>{{/value.0}}{{/isArray}}
+{{#isFreeFormObject}}{{^isSimpleObject}}<String, {{#value.0}}{{#oneOfModel}}{{classname}}{{/oneOfModel}}{{^oneOfModel}}{{objectName}}{{/oneOfModel}}{{> generateGenerics}}{{/value.0}}>{{/isSimpleObject}}{{/isFreeFormObject}}

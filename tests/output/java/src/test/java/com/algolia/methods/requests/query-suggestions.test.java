@@ -41,7 +41,7 @@ class QuerySuggestionsApiTests {
 
           sourceIndices_02.setIndexName(indexName3);
 
-          List<Object<String, String>> facets3 = new ArrayList<>();
+          List<Object> facets3 = new ArrayList<>();
           {
             Map<String, String> facets_04 = new HashMap<>();
             {
@@ -197,7 +197,7 @@ class QuerySuggestionsApiTests {
 
           sourceIndices_02.setIndexName(indexName3);
 
-          List<Object<String, String>> facets3 = new ArrayList<>();
+          List<Object> facets3 = new ArrayList<>();
           {
             Map<String, String> facets_04 = new HashMap<>();
             {
