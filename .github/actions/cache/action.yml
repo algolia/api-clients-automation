@@ -375,7 +375,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/SearchApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/SearchConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Search/**',
             'specs/bundled/search.yml',
             'templates/php/**',
             'generators/src/**'
@@ -393,7 +392,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/RecommendApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/RecommendConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Recommend/**',
             'specs/bundled/recommend.yml',
             'templates/php/**',
             'generators/src/**'
@@ -411,7 +409,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/PersonalizationConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Personalization/**',
             'specs/bundled/personalization.yml',
             'templates/php/**',
             'generators/src/**'
@@ -429,7 +426,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/AnalyticsConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Analytics/**',
             'specs/bundled/analytics.yml',
             'templates/php/**',
             'generators/src/**'
@@ -447,7 +443,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/InsightsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/InsightsConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Insights/**',
             'specs/bundled/insights.yml',
             'templates/php/**',
             'generators/src/**'
@@ -465,7 +460,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/AbtestingApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/AbtestingConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Abtesting/**',
             'specs/bundled/abtesting.yml',
             'templates/php/**',
             'generators/src/**'
@@ -483,7 +477,6 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/QuerySuggestionsConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**',
             'specs/bundled/query-suggestions.yml',
             'templates/php/**',
             'generators/src/**'
