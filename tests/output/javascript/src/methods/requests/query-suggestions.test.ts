@@ -58,12 +58,11 @@ describe('del', () => {
     const req = (await client.del({
       path: '/test/all',
       parameters: { query: 'parameters' },
-      body: { body: 'parameters' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/test/all');
     expect(req.method).toEqual('DELETE');
-    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.data).toEqual(undefined);
     expect(req.searchParams).toEqual({ query: 'parameters' });
   });
 });

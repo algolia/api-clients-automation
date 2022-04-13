@@ -722,28 +722,13 @@ class SearchApiTests {
       parameters0.put("query", query1);
     }
 
-    HashMap body0 = new HashMap<String, Object>();
-    {
-      String body1 = "parameters";
-
-      body0.put("body", body1);
-    }
-
     EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0, parameters0, body0);
+        return client.del(path0, parameters0);
       }
     );
 
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "DELETE");
-
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"body\":\"parameters\"}",
-        req.getBody(),
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
 
     HashMap<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
