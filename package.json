@@ -1,6 +1,7 @@
 {
   "name": "@algolia/api-client-automation",
   "version": "0.0.0",
+  "private": true,
   "workspaces": [
     "clients/algoliasearch-client-javascript/",
     "playground/javascript/node/",
@@ -20,7 +21,7 @@
     "docker": "docker exec -it dev yarn cli $*",
     "github-actions:lint": "eslint --ext=yml .github/",
     "playground:browser": "yarn workspace javascript-browser-playground start",
-    "postinstall": "yarn workspace eslint-plugin-automation-custom build",
+    "postinstall": "echo 'running post install' && yarn workspace eslint-plugin-automation-custom build",
     "build:eslint": "yarn workspace eslint-plugin-automation-custom build && yarn install",
     "release": "yarn workspace scripts createReleaseIssue",
     "scripts:lint": "eslint --ext=ts scripts/",
