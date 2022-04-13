@@ -95,6 +95,14 @@ function getUtilConfigs() {
   ];
 }
 
+function isClientBuilt(client) {
+  // Checking existence of `dist` folder doesn't really guarantee the built files are up-to-date.
+  // However, on the CI, it's very likely.
+  // For the local environment, we simply return `false`, which will trigger unnecessary builds.
+  // We can come back here and improve this part (checking if `dist` folder exists and if it's up-to-date).
+  return process.env.CI ? fs.existsSync(path.resolve('packages', client, 'dist')) : false;
+}
+
 function getPackageConfigs() {
   if (client === CLIENT_UTILS) {
     return getUtilConfigs();
@@ -157,7 +165,7 @@ function getPackageConfigs() {
     ];
   });
 
-  return [...getUtilConfigs(), ...configs];
+  return [...(getUtilConfigs().filter(config => !isClientBuilt(config.package)), ...configs];
 }
 
 const packageConfigs = getPackageConfigs();
