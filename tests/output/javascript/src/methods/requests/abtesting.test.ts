@@ -30,7 +30,7 @@ describe('addABTests', () => {
         { index: 'AB_TEST_2', trafficPercentage: 50 },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -68,7 +68,7 @@ describe('deleteABTest', () => {
     expect(req.path).toEqual('/2/abtests/42');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -104,7 +104,7 @@ describe('getABTest', () => {
     expect(req.path).toEqual('/2/abtests/42');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -118,7 +118,7 @@ describe('listABTests', () => {
     expect(req.path).toEqual('/2/abtests');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({ offset: '42', limit: '21' });
+    expect(req.searchParams).toStrictEqual({ offset: '42', limit: '21' });
   });
 });
 
@@ -183,6 +183,6 @@ describe('stopABTest', () => {
     expect(req.path).toEqual('/2/abtests/42/stop');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });

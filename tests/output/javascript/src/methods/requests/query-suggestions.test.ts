@@ -38,7 +38,7 @@ describe('createConfig', () => {
       languages: ['french'],
       exclude: ['test'],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -76,7 +76,7 @@ describe('deleteConfig', () => {
     expect(req.path).toEqual('/1/configs/theIndexName');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -112,7 +112,7 @@ describe('getAllConfigs', () => {
     expect(req.path).toEqual('/1/configs');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -125,7 +125,7 @@ describe('getConfig', () => {
     expect(req.path).toEqual('/1/configs/theIndexName');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -138,7 +138,7 @@ describe('getConfigStatus', () => {
     expect(req.path).toEqual('/1/configs/theIndexName/status');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -151,7 +151,7 @@ describe('getLogFile', () => {
     expect(req.path).toEqual('/1/logs/theIndexName');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -237,6 +237,6 @@ describe('updateConfig', () => {
       languages: ['french'],
       exclude: ['test'],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });

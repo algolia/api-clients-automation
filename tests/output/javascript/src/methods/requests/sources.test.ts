@@ -100,7 +100,7 @@ describe('postIngestUrl', () => {
       input: { url: 'https://example.com/file.csv' },
       target: { type: 'search', indexName: 'pageviews', operation: 'replace' },
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('post postIngestUrl with all parameters', async () => {
@@ -127,7 +127,7 @@ describe('postIngestUrl', () => {
       },
       target: { type: 'search', indexName: 'pageviews', operation: 'replace' },
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

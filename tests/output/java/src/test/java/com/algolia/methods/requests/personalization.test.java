@@ -2,14 +2,10 @@ package com.algolia.methods.requests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.algolia.JSON;
-import com.algolia.Pair;
 import com.algolia.api.PersonalizationClient;
 import com.algolia.model.personalization.*;
 import com.algolia.utils.echo.*;
-import com.google.gson.reflect.TypeToken;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +16,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PersonalizationClientTests {
-
   private PersonalizationClient client;
 
   @BeforeAll
@@ -33,10 +28,12 @@ class PersonalizationClientTests {
   void delTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.del(path0);
+                });
 
     assertEquals(req.getPath(), "/1/test/minimal");
     assertEquals(req.getMethod(), "DELETE");
@@ -54,34 +51,15 @@ class PersonalizationClientTests {
       parameters0.put("query", query1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0, parameters0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.del(path0, parameters0);
+                });
 
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "DELETE");
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    List<Pair> actualQuery = req.getQueryParams();
-    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
-      boolean found = false;
-      for (Pair p : actualQuery) {
-        if (
-          p.getName().equals(entry.getKey()) &&
-          p.getValue().equals(entry.getValue())
-        ) {
-          found = true;
-        }
-      }
-      assertTrue(
-        found,
-        "Query parameter " + entry.getKey() + " not found in the actual query"
-      );
-    }
   }
 
   @Test
@@ -89,10 +67,12 @@ class PersonalizationClientTests {
   void deleteUserProfileTest0() {
     String userToken0 = "UserToken";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.deleteUserProfile(userToken0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.deleteUserProfile(userToken0);
+                });
 
     assertEquals(req.getPath(), "/1/profiles/UserToken");
     assertEquals(req.getMethod(), "DELETE");
@@ -103,10 +83,12 @@ class PersonalizationClientTests {
   void getTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.get(path0);
+                });
 
     assertEquals(req.getPath(), "/1/test/minimal");
     assertEquals(req.getMethod(), "GET");
@@ -124,43 +106,27 @@ class PersonalizationClientTests {
       parameters0.put("query", query1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0, parameters0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.get(path0, parameters0);
+                });
 
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "GET");
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    List<Pair> actualQuery = req.getQueryParams();
-    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
-      boolean found = false;
-      for (Pair p : actualQuery) {
-        if (
-          p.getName().equals(entry.getKey()) &&
-          p.getValue().equals(entry.getValue())
-        ) {
-          found = true;
-        }
-      }
-      assertTrue(
-        found,
-        "Query parameter " + entry.getKey() + " not found in the actual query"
-      );
-    }
   }
 
   @Test
   @DisplayName("get getPersonalizationStrategy")
   void getPersonalizationStrategyTest0() {
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getPersonalizationStrategy();
-      }
-    );
+
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.getPersonalizationStrategy();
+                });
 
     assertEquals(req.getPath(), "/1/strategies/personalization");
     assertEquals(req.getMethod(), "GET");
@@ -171,10 +137,12 @@ class PersonalizationClientTests {
   void getUserTokenProfileTest0() {
     String userToken0 = "UserToken";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getUserTokenProfile(userToken0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.getUserTokenProfile(userToken0);
+                });
 
     assertEquals(req.getPath(), "/1/profiles/personalization/UserToken");
     assertEquals(req.getMethod(), "GET");
@@ -185,10 +153,12 @@ class PersonalizationClientTests {
   void postTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.post(path0);
+                });
 
     assertEquals(req.getPath(), "/1/test/minimal");
     assertEquals(req.getMethod(), "POST");
@@ -213,42 +183,15 @@ class PersonalizationClientTests {
       body0.put("body", body1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0, parameters0, body0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.post(path0, parameters0, body0);
+                });
 
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "POST");
-
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"body\":\"parameters\"}",
-        req.getBody(),
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    List<Pair> actualQuery = req.getQueryParams();
-    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
-      boolean found = false;
-      for (Pair p : actualQuery) {
-        if (
-          p.getName().equals(entry.getKey()) &&
-          p.getValue().equals(entry.getValue())
-        ) {
-          found = true;
-        }
-      }
-      assertTrue(
-        found,
-        "Query parameter " + entry.getKey() + " not found in the actual query"
-      );
-    }
   }
 
   @Test
@@ -256,10 +199,12 @@ class PersonalizationClientTests {
   void putTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.put(path0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.put(path0);
+                });
 
     assertEquals(req.getPath(), "/1/test/minimal");
     assertEquals(req.getMethod(), "PUT");
@@ -284,48 +229,23 @@ class PersonalizationClientTests {
       body0.put("body", body1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.put(path0, parameters0, body0);
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.put(path0, parameters0, body0);
+                });
 
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "PUT");
-
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"body\":\"parameters\"}",
-        req.getBody(),
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    List<Pair> actualQuery = req.getQueryParams();
-    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
-      boolean found = false;
-      for (Pair p : actualQuery) {
-        if (
-          p.getName().equals(entry.getKey()) &&
-          p.getValue().equals(entry.getValue())
-        ) {
-          found = true;
-        }
-      }
-      assertTrue(
-        found,
-        "Query parameter " + entry.getKey() + " not found in the actual query"
-      );
-    }
   }
 
   @Test
   @DisplayName("set setPersonalizationStrategy")
   void setPersonalizationStrategyTest0() {
-    PersonalizationStrategyParams personalizationStrategyParams0 = new PersonalizationStrategyParams();
+
+    PersonalizationStrategyParams personalizationStrategyParams0 =
+        new PersonalizationStrategyParams();
     {
       List<EventScoring> eventScoring1 = new ArrayList<>();
       {
@@ -362,27 +282,25 @@ class PersonalizationClientTests {
 
       int personalizationImpact1 = 42;
 
-      personalizationStrategyParams0.setPersonalizationImpact(
-        personalizationImpact1
-      );
+      personalizationStrategyParams0.setPersonalizationImpact(personalizationImpact1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.setPersonalizationStrategy(
-          personalizationStrategyParams0
-        );
-      }
-    );
+    EchoResponseInterface req =
+        (EchoResponseInterface)
+            assertDoesNotThrow(
+                () -> {
+                  return client.setPersonalizationStrategy(personalizationStrategyParams0);
+                });
 
     assertEquals(req.getPath(), "/1/strategies/personalization");
     assertEquals(req.getMethod(), "POST");
 
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}",
-        req.getBody(),
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
+    assertDoesNotThrow(
+        () -> {
+          JSONAssert.assertEquals(
+              "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}",
+              req.getBody(),
+              JSONCompareMode.STRICT_ORDER);
+        });
   }
 }

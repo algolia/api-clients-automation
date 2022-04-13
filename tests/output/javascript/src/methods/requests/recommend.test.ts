@@ -82,7 +82,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get recommendations for recommend model with all parameters', async () => {
@@ -115,7 +115,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get recommendations for trending model with minimal parameters', async () => {
@@ -132,7 +132,7 @@ describe('getRecommendations', () => {
         { indexName: 'indexName', model: 'trending-items', threshold: 42 },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get recommendations for trending model with all parameters', async () => {
@@ -167,7 +167,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get multiple recommendations with minimal parameters', async () => {
@@ -206,7 +206,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get multiple recommendations with all parameters', async () => {
@@ -257,7 +257,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get frequently bought together recommendations', async () => {
@@ -284,7 +284,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

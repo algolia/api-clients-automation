@@ -152,7 +152,7 @@ describe('pushEvents', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

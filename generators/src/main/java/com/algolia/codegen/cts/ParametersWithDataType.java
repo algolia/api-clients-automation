@@ -29,13 +29,14 @@ public class ParametersWithDataType {
   }
 
   public Map<String, Object> buildJSONForRequest(
+    String operationId,
     Request req,
     CodegenOperation ope,
     int testIndex
   ) throws CTSException, JsonMappingException, JsonProcessingException {
     Map<String, Object> test = new HashMap<>();
-    test.put("method", req.method);
-    test.put("testName", req.testName == null ? req.method : req.testName);
+    test.put("method", operationId);
+    test.put("testName", req.testName == null ? operationId : req.testName);
     test.put("testIndex", testIndex);
     test.put("request", req.request);
 

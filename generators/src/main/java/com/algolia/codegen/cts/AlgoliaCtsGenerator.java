@@ -158,6 +158,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
         List<Object> tests = new ArrayList<>();
         for (int i = 0; i < entry.getValue().length; i++) {
           Map<String, Object> test = paramsType.buildJSONForRequest(
+            operationId,
             entry.getValue()[i],
             op,
             i
@@ -173,12 +174,10 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
       return bundle;
     } catch (CTSException e) {
+      System.out.println(e.getMessage());
       if (e.isSkipable()) {
-        System.out.println(e.getMessage());
         System.exit(0);
       }
-
-      System.out.println(e.getMessage());
       System.exit(1);
     } catch (Exception e) {
       e.printStackTrace();

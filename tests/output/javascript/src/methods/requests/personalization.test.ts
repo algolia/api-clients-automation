@@ -43,7 +43,7 @@ describe('deleteUserProfile', () => {
     expect(req.path).toEqual('/1/profiles/UserToken');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -80,7 +80,7 @@ describe('getPersonalizationStrategy', () => {
     expect(req.path).toEqual('/1/strategies/personalization');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -93,7 +93,7 @@ describe('getUserTokenProfile', () => {
     expect(req.path).toEqual('/1/profiles/personalization/UserToken');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -164,6 +164,6 @@ describe('setPersonalizationStrategy', () => {
       facetScoring: [{ score: 42, facetName: 'Event' }],
       personalizationImpact: 42,
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
