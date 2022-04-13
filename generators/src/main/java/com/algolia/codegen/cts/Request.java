@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Request {
+
   public String testName;
 
   public Map<String, Object> parameters;
