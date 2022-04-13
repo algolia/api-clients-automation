@@ -49,9 +49,12 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const commitMessage =
-    await run(`git show -s ${baseBranch} --format="chore: generated code for commit %H.
+    await run(`git show -s ${baseBranch} --format="chore: generated code for commit %H. ${
+      isMainBranch ? '[skip ci]' : ''
+    }
 
-Co-authored-by: %an <%ae>"`);
+Co-authored-by: %an <%ae>
+%(trailers:key=Co-authored-by)"`);
 
   console.log(
     `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${branchToPush}'`
