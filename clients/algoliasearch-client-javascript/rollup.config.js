@@ -15,6 +15,9 @@ const client = process.env.CLIENT?.replace(
 );
 const UTILS = ['client-common', 'requester-browser-xhr', 'requester-node-http'];
 
+const CLIENT_ALL = 'all';
+const CLIENT_UTILS = 'utils';
+
 function createLicence(name, version) {
   return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
 }
@@ -50,12 +53,12 @@ function getAvailableClients() {
     .readdirSync('packages/')
     .filter((_client) => !UTILS.includes(_client));
 
-  return client === 'all'
+  return client === CLIENT_ALL
     ? availableClients
     : availableClients.filter((availableClient) => availableClient === client);
 }
 
-function getUtilsConfigs() {
+function getUtilConfigs() {
   const commonOptions = {
     input: 'index.ts',
     formats: ['cjs-node', 'esm-node'],
@@ -92,9 +95,13 @@ function getUtilsConfigs() {
   ];
 }
 
-function initPackagesConfig() {
+function getPackageConfigs() {
+  if (client === CLIENT_UTILS) {
+    return getUtilConfigs();
+  }
+
   if (UTILS.includes(client)) {
-    return getUtilsConfigs();
+    return getUtilConfigs().filter(package => package === client);
   }
 
   const availableClients = getAvailableClients();
@@ -150,13 +157,13 @@ function initPackagesConfig() {
     ];
   });
 
-  return [...getUtilsConfigs(), ...configs];
+  return [...getUtilConfigs(), ...configs];
 }
 
-const packagesConfig = initPackagesConfig();
+const packageConfigs = getPackageConfigs();
 const rollupConfig = [];
 
-packagesConfig.forEach((packageConfig) => {
+packageConfigs.forEach((packageConfig) => {
   const clientPath = path.resolve('packages', packageConfig.package);
   const clientPackage = JSON.parse(
     fs.readFileSync(path.resolve(clientPath, 'package.json'))
