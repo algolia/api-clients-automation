@@ -100,7 +100,9 @@ function isClientBuilt(client) {
   // However, on the CI, it's very likely.
   // For the local environment, we simply return `false`, which will trigger unnecessary builds.
   // We can come back here and improve this part (checking if `dist` folder exists and if it's up-to-date).
-  return process.env.CI ? fs.existsSync(path.resolve('packages', client, 'dist')) : false;
+  return process.env.CI
+    ? fs.existsSync(path.resolve('packages', client, 'dist'))
+    : false;
 }
 
 function getPackageConfigs() {
@@ -109,7 +111,7 @@ function getPackageConfigs() {
   }
 
   if (UTILS.includes(client)) {
-    return getUtilConfigs().filter(package => package === client);
+    return getUtilConfigs().filter((config) => config.package === client);
   }
 
   const availableClients = getAvailableClients();
@@ -165,7 +167,10 @@ function getPackageConfigs() {
     ];
   });
 
-  return [...(getUtilConfigs().filter(config => !isClientBuilt(config.package)), ...configs];
+  return [
+    ...getUtilConfigs().filter((config) => !isClientBuilt(config.package)),
+    ...configs,
+  ];
 }
 
 const packageConfigs = getPackageConfigs();
