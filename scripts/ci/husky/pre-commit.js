@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 /* eslint-disable import/no-commonjs */
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const execa = require('execa');
 const micromatch = require('micromatch');
