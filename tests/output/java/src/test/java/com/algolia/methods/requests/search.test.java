@@ -234,15 +234,724 @@ assignUserIdParams0.setCluster(cluster1);
         assertEquals(req.getPath(), "/1/clusters/mapping");
         assertEquals(req.getMethod(), "POST");
 
-        assertDoesNotThrow(() -> {
-            JSONAssert.assertEquals("{\"cluster\":\"theCluster\"}", req.getBody(), JSONCompareMode.STRICT_ORDER);
-        });
+            params3.setFilters(filters4);
+          }
+          consequence2.setParams(params3);
+        }
+        rule_11.setConsequence(consequence2);
+      }
+      rule0.add(rule_11);
+    }
 
-        HashMap<String, String> expectedQuery = JSON.deserialize("{\"X-Algolia-User-ID\":\"userID\"}", new TypeToken<HashMap<String, String>>() {}.getType());
-        List<Pair> actualQuery = req.getQueryParams();
-        assertEquals(expectedQuery.size(), actualQuery.size());
-        for (Pair p : actualQuery) {
-            assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    boolean forwardToReplicas0 = true;
+
+    boolean clearExistingRules0 = true;
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.batchRules(
+          indexName0,
+          rule0,
+          forwardToReplicas0,
+          clearExistingRules0
+        );
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/rules/batch");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"category:smartphone\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}}]",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("get browse results with minimal parameters")
+  void browseTest0() {
+    String indexName0 = "indexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.browse(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/browse");
+    assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("get browse results with all parameters")
+  void browseTest1() {
+    String indexName0 = "indexName";
+
+    BrowseRequest browseRequest0 = new BrowseRequest();
+    {
+      String params1 = "query=foo&facetFilters=['bar']";
+
+      browseRequest0.setParams(params1);
+      String cursor1 = "cts";
+
+      browseRequest0.setCursor(cursor1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.browse(indexName0, browseRequest0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/browse");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"params\":\"query=foo&facetFilters=['bar']\",\"cursor\":\"cts\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("clearAllSynonyms")
+  void clearAllSynonymsTest0() {
+    String indexName0 = "indexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.clearAllSynonyms(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/synonyms/clear");
+    assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("clearObjects")
+  void clearObjectsTest0() {
+    String indexName0 = "theIndexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.clearObjects(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/theIndexName/clear");
+    assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("clearRules")
+  void clearRulesTest0() {
+    String indexName0 = "indexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.clearRules(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/rules/clear");
+    assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("allow del method for a custom path with minimal parameters")
+  void delTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.del(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("allow del method for a custom path with all parameters")
+  void delTest1() {
+    String path0 = "/test/all";
+
+    Map<String, Object> parameters0 = new HashMap<>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.del(path0, parameters0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "DELETE");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("deleteApiKey")
+  void deleteApiKeyTest0() {
+    String key0 = "myTestApiKey";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.deleteApiKey(key0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/keys/myTestApiKey");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("deleteBy")
+  void deleteByTest0() {
+    String indexName0 = "theIndexName";
+
+    SearchParamsObject searchParams0 = new SearchParamsObject();
+    {
+      String query1 = "testQuery";
+
+      searchParams0.setQuery(query1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.deleteBy(
+          indexName0,
+          SearchParams.ofSearchParamsObject(searchParams0)
+        );
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/theIndexName/deleteByQuery");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"query\":\"testQuery\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("deleteIndex")
+  void deleteIndexTest0() {
+    String indexName0 = "theIndexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.deleteIndex(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/theIndexName");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("deleteObject")
+  void deleteObjectTest0() {
+    String indexName0 = "theIndexName";
+
+    String objectID0 = "uniqueID";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.deleteObject(indexName0, objectID0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/theIndexName/uniqueID");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("deleteRule")
+  void deleteRuleTest0() {
+    String indexName0 = "indexName";
+
+    String objectID0 = "id1";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.deleteRule(indexName0, objectID0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/rules/id1");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("deleteSource")
+  void deleteSourceTest0() {
+    String source0 = "theSource";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.deleteSource(source0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/security/sources/theSource");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("deleteSynonym")
+  void deleteSynonymTest0() {
+    String indexName0 = "indexName";
+
+    String objectID0 = "id1";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.deleteSynonym(indexName0, objectID0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/synonyms/id1");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("allow get method for a custom path with minimal parameters")
+  void getTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.get(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("allow get method for a custom path with all parameters")
+  void getTest1() {
+    String path0 = "/test/all";
+
+    Map<String, Object> parameters0 = new HashMap<>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.get(path0, parameters0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("getApiKey")
+  void getApiKeyTest0() {
+    String key0 = "myTestApiKey";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getApiKey(key0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/keys/myTestApiKey");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("get getDictionaryLanguages")
+  void getDictionaryLanguagesTest0() {
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getDictionaryLanguages();
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/dictionaries/*/languages");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("get getDictionarySettings results")
+  void getDictionarySettingsTest0() {
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getDictionarySettings();
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/dictionaries/*/settings");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getLogs")
+  void getLogsTest0() {
+    int offset0 = 5;
+
+    int length0 = 10;
+
+    String indexName0 = "theIndexName";
+
+    LogType type0 = LogType.fromValue("all");
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getLogs(offset0, length0, indexName0, type0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/logs");
+    assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("getObject")
+  void getObjectTest0() {
+    String indexName0 = "theIndexName";
+
+    String objectID0 = "uniqueID";
+
+    List<String> attributesToRetrieve0 = new ArrayList<>();
+    {
+      String attributesToRetrieve_01 = "attr1";
+
+      attributesToRetrieve0.add(attributesToRetrieve_01);
+      String attributesToRetrieve_11 = "attr2";
+
+      attributesToRetrieve0.add(attributesToRetrieve_11);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getObject(indexName0, objectID0, attributesToRetrieve0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/theIndexName/uniqueID");
+    assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"attributesToRetrieve\":\"attr1,attr2\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("getObjects")
+  void getObjectsTest0() {
+    GetObjectsParams getObjectsParams0 = new GetObjectsParams();
+    {
+      List<MultipleGetObjectsParams> requests1 = new ArrayList<>();
+      {
+        MultipleGetObjectsParams requests_02 = new MultipleGetObjectsParams();
+        {
+          List<String> attributesToRetrieve3 = new ArrayList<>();
+          {
+            String attributesToRetrieve_04 = "attr1";
+
+            attributesToRetrieve3.add(attributesToRetrieve_04);
+            String attributesToRetrieve_14 = "attr2";
+
+            attributesToRetrieve3.add(attributesToRetrieve_14);
+          }
+          requests_02.setAttributesToRetrieve(attributesToRetrieve3);
+          String objectID3 = "uniqueID";
+
+          requests_02.setObjectID(objectID3);
+          String indexName3 = "theIndexName";
+
+          requests_02.setIndexName(indexName3);
+        }
+        requests1.add(requests_02);
+      }
+      getObjectsParams0.setRequests(requests1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getObjects(getObjectsParams0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/*/objects");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("getRule")
+  void getRuleTest0() {
+    String indexName0 = "indexName";
+
+    String objectID0 = "id1";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getRule(indexName0, objectID0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/rules/id1");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getSettings")
+  void getSettingsTest0() {
+    String indexName0 = "theIndexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getSettings(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/theIndexName/settings");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getSources")
+  void getSourcesTest0() {
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getSources();
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/security/sources");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getSynonym")
+  void getSynonymTest0() {
+    String indexName0 = "indexName";
+
+    String objectID0 = "id1";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getSynonym(indexName0, objectID0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/synonyms/id1");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getTask")
+  void getTaskTest0() {
+    String indexName0 = "theIndexName";
+
+    int taskID0 = 123;
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getTask(indexName0, taskID0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/theIndexName/task/123");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getTopUserIds")
+  void getTopUserIdsTest0() {
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getTopUserIds();
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/clusters/mapping/top");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getUserId")
+  void getUserIdTest0() {
+    String userID0 = "uniqueID";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getUserId(userID0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/clusters/mapping/uniqueID");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("hasPendingMappings")
+  void hasPendingMappingsTest0() {
+    boolean getClusters0 = true;
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.hasPendingMappings(getClusters0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/clusters/mapping/pending");
+    assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"getClusters\":\"true\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("listApiKeys")
+  void listApiKeysTest0() {
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.listApiKeys();
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/keys");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("listClusters")
+  void listClustersTest0() {
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.listClusters();
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/clusters");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("listIndices")
+  void listIndicesTest0() {
+    int page0 = 8;
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.listIndices(page0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes");
+    assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"page\":\"8\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("listUserIds")
+  void listUserIdsTest0() {
+    int page0 = 8;
+
+    int hitsPerPage0 = 100;
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.listUserIds(page0, hitsPerPage0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/clusters/mapping");
+    assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"page\":\"8\",\"hitsPerPage\":\"100\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("multipleBatch")
+  void multipleBatchTest0() {
+    BatchParams batchParams0 = new BatchParams();
+    {
+      List<MultipleBatchOperation> requests1 = new ArrayList<>();
+      {
+        MultipleBatchOperation requests_02 = new MultipleBatchOperation();
+        {
+          Action action3 = Action.fromValue("addObject");
+
+          requests_02.setAction(action3);
+
+          Map<String, String> body3 = new HashMap<>();
+          {
+            String key4 = "value";
+
+            body3.put("key", key4);
+          }
+          requests_02.setBody(body3);
+          String indexName3 = "theIndexName";
+
+          requests_02.setIndexName(indexName3);
         }
     }
     @Test
@@ -300,8 +1009,104 @@ Map<String, String
 
 
 
+      parameters0.put("query", query1);
+    }
+
+    Map<String, String> body0 = new HashMap<>();
+    {
+      String body1 = "parameters";
+
+      body0.put("body", body1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.post(path0, parameters0, body0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"body\":\"parameters\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("allow put method for a custom path with minimal parameters")
+  void putTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.put(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "PUT");
+  }
+
+  @Test
+  @DisplayName("allow put method for a custom path with all parameters")
+  void putTest1() {
+    String path0 = "/test/all";
 
 
+      parameters0.put("query", query1);
+    }
+
+    Map<String, String> body0 = new HashMap<>();
+    {
+      String body1 = "parameters";
+
+      body0.put("body", body1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.put(path0, parameters0, body0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "PUT");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"body\":\"parameters\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    assertEquals(expectedQuery.size(), actualQuery.size());
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("removeUserId")
+  void removeUserIdTest0() {
+    String userID0 = "uniqueID";
 
 body3.put("key", key4);
  }requests_02.setBody(body3);
