@@ -23,7 +23,6 @@ type ClientMatrix = BaseMatrix & {
 };
 
 type SpecMatrix = BaseMatrix & {
-  bundledName: string;
   bundledPath: string;
 };
 
@@ -110,7 +109,6 @@ async function getSpecMatrix({
     const spec = {
       name: client,
       path: `specs/${client}`,
-      bundledName: client,
       bundledPath: `specs/bundled/${client}.yml`,
     };
 
@@ -118,7 +116,6 @@ async function getSpecMatrix({
     if (client === 'algoliasearch-lite') {
       matrix.client.push({
         ...spec,
-        name: 'search',
         path: 'specs/search',
       });
 
