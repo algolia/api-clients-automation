@@ -18,7 +18,7 @@ export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function camelizeClientName(client: string, language: string): string {
+export function createClientName(client: string, language: string): string {
   const clientName = client
     .split('-')
     .map((part, i) => {
@@ -30,14 +30,9 @@ export function camelizeClientName(client: string, language: string): string {
     })
     .join('');
 
-  return `${clientName}`;
+  return clientName;
 }
 
-export function createClientName(client: string, language: string): string {
-  const clientName = camelizeClientName(client, language);
-
-  return `${clientName}Api`;
-}
 export async function createOutputDir({
   language,
   testPath,

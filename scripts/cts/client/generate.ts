@@ -7,11 +7,10 @@ import { createSpinner } from '../../oraLog';
 import type { Generator } from '../../types';
 import {
   walk,
-  createClientName,
-  camelizeClientName,
   createOutputDir,
   getOutputPath,
   loadTemplates,
+  createClientName,
 } from '../utils';
 
 import type { TestsBlock, Test, ModifiedStepForMustache } from './types';
@@ -99,8 +98,7 @@ export async function generateClientTests(
     template,
     {
       import: packageName,
-      client: createClientName(client, language),
-      clientRawName: camelizeClientName(client, language),
+      client: `${createClientName(client, language)}Api`,
       blocks: modifyForMustache(testsBlocks),
       hasRegionalHost: hasRegionalHost ? true : undefined,
     },
