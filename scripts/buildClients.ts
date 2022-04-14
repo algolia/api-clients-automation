@@ -9,42 +9,6 @@ import { getLanguageFolder } from './config';
 import { createSpinner } from './oraLog';
 
 /**
- * Build JavaScript utils packages used in generated clients.
- */
-export async function buildJSClientUtils(
-  verbose: boolean,
-  client?: string
-): Promise<void> {
-  if (!client || client === 'all') {
-    const spinner = createSpinner('building JavaScript utils', verbose).start();
-    await run('yarn workspace algoliasearch-client-javascript clean:utils', {
-      verbose,
-    });
-    await run('yarn workspace algoliasearch-client-javascript build:utils', {
-      verbose,
-    });
-
-    spinner.succeed();
-    return;
-  }
-
-  const spinner = createSpinner(
-    `building JavaScript ${client} utils`,
-    verbose
-  ).start();
-
-  await run(
-    `yarn workspace @experimental-api-clients-automation/${client} clean`,
-    { verbose }
-  );
-  await run(`yarn workspace algoliasearch-client-javascript build ${client}`, {
-    verbose,
-  });
-
-  spinner.succeed();
-}
-
-/**
  * Build all client for a language at the same time, for those who live in the same folder.
  */
 async function buildPerLanguage({
