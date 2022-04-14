@@ -322,7 +322,7 @@ describe('del', () => {
     expect(req.path).toEqual('/1/test/minimal');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('allow del method for a custom path with all parameters', async () => {
@@ -334,7 +334,7 @@ describe('del', () => {
     expect(req.path).toEqual('/1/test/all');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({ query: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -442,7 +442,7 @@ describe('get', () => {
     expect(req.path).toEqual('/1/test/minimal');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('allow get method for a custom path with all parameters', async () => {
@@ -454,7 +454,7 @@ describe('get', () => {
     expect(req.path).toEqual('/1/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({ query: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -823,7 +823,7 @@ describe('post', () => {
     expect(req.path).toEqual('/1/test/minimal');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('allow post method for a custom path with all parameters', async () => {
@@ -836,7 +836,7 @@ describe('post', () => {
     expect(req.path).toEqual('/1/test/all');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ body: 'parameters' });
-    expect(req.searchParams).toEqual({ query: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -849,7 +849,7 @@ describe('put', () => {
     expect(req.path).toEqual('/1/test/minimal');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('allow put method for a custom path with all parameters', async () => {
@@ -862,7 +862,7 @@ describe('put', () => {
     expect(req.path).toEqual('/1/test/all');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ body: 'parameters' });
-    expect(req.searchParams).toEqual({ query: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
