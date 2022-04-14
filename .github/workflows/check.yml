@@ -100,7 +100,7 @@ jobs:
         with:
           path: ${{ matrix.client.bundledPath }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{
+            ${{ env.CACHE_VERSION }}-${{ matrix.client.bundledName }}-${{
             hashFiles(
               format('{0}/**', matrix.client.path),
               'specs/common/**'

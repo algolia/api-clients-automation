@@ -42,7 +42,7 @@ runs:
       with:
         path: specs/bundled/abtesting.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-abtesting-${{
           hashFiles(
             'specs/abtesting/**',
             'specs/common/**'
@@ -54,7 +54,7 @@ runs:
       with:
         path: specs/bundled/analytics.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-analytics-${{
           hashFiles(
             'specs/analytics/**',
             'specs/common/**'
@@ -66,7 +66,7 @@ runs:
       with:
         path: specs/bundled/insights.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-insights-${{
           hashFiles(
             'specs/insights/**',
             'specs/common/**'
@@ -78,7 +78,7 @@ runs:
       with:
         path: specs/bundled/personalization.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-personalization-${{
           hashFiles(
             'specs/personalization/**',
             'specs/common/**'
@@ -90,7 +90,7 @@ runs:
       with:
         path: specs/bundled/predict.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-predict-${{
           hashFiles(
             'specs/predict/**',
             'specs/common/**'
@@ -102,7 +102,7 @@ runs:
       with:
         path: specs/bundled/query-suggestions.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-query-suggestions-${{
           hashFiles(
             'specs/query-suggestions/**',
             'specs/common/**'
@@ -114,7 +114,7 @@ runs:
       with:
         path: specs/bundled/recommend.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-recommend-${{
           hashFiles(
             'specs/recommend/**',
             'specs/common/**'
@@ -126,7 +126,7 @@ runs:
       with:
         path: specs/bundled/search.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-search-${{
           hashFiles(
             'specs/search/**',
             'specs/common/**'
@@ -138,7 +138,7 @@ runs:
       with:
         path: specs/bundled/algoliasearch-lite.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-algoliasearch-lite-${{
           hashFiles(
             'specs/search/**',
             'specs/common/**'
@@ -150,7 +150,7 @@ runs:
       with:
         path: specs/bundled/sources.yml
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-sources-${{
           hashFiles(
             'specs/sources/**',
             'specs/common/**'
