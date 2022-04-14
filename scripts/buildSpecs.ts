@@ -74,6 +74,52 @@ async function lintCommon(verbose: boolean, useCache: boolean): Promise<void> {
   spinner.succeed();
 }
 
+/**
+ * Creates a lite search spec with the `ALGOLIASEARCH_LITE_OPERATIONS` methods
+ * from the `search` spec.
+ */
+async function buildLiteSpec(
+  spec: string,
+  bundledPath: string,
+  outputFormat: string,
+  verbose: boolean
+): Promise<void> {
+  const searchSpec = yaml.load(
+    await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')
+  ) as Spec;
+
+  searchSpec.paths = Object.entries(searchSpec.paths).reduce(
+    (acc, [path, operations]) => {
+      for (const [method, operation] of Object.entries(operations)) {
+        if (
+          method === 'post' &&
+          ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)
+        ) {
+          return { ...acc, [path]: { post: operation } };
+        }
+      }
+
+      return acc;
+    },
+    {} as Spec['paths']
+  );
+
+  const liteBundledPath = `specs/bundled/${spec}.${outputFormat}`;
+  await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(searchSpec));
+
+  if (
+    !(await propagateTagsToOperations(toAbsolutePath(liteBundledPath), spec))
+  ) {
+    throw new Error(
+      `Unable to propage tags to operations for \`${spec}\` spec.`
+    );
+  }
+
+  await run(`yarn specs:fix bundled/${spec}.${outputFormat}`, {
+    verbose,
+  });
+}
+
 async function buildSpec(
   spec: string,
   outputFormat: string,
@@ -137,45 +183,9 @@ async function buildSpec(
   spinner.text = `linting '${client}' bundled spec`;
   await run(`yarn specs:fix bundled/${client}.${outputFormat}`, { verbose });
 
-  // This part creates an algoliasearch-lite bundled spec based on the search spec
-  // which allow us to generated a JavaScript lite client.
   if (shouldBundleLiteSpec) {
-    const searchSpec = yaml.load(
-      await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')
-    ) as Spec;
-
-    searchSpec.paths = Object.entries(searchSpec.paths).reduce(
-      (acc, [path, operations]) => {
-        for (const [method, operation] of Object.entries(operations)) {
-          if (
-            method === 'post' &&
-            ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)
-          ) {
-            return { ...acc, [path]: { post: operation } };
-          }
-        }
-
-        return acc;
-      },
-      {} as Spec['paths']
-    );
-
-    const liteBundledPath = `specs/bundled/${spec}.${outputFormat}`;
-    await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(searchSpec));
-
-    if (
-      !(await propagateTagsToOperations(toAbsolutePath(liteBundledPath), spec))
-    ) {
-      spinner.fail();
-      throw new Error(
-        `Unable to propage tags to operations for \`${spec}\` spec.`
-      );
-    }
-
-    spinner.text = `linting '${spec}' bundled spec`;
-    await run(`yarn specs:fix bundled/${spec}.${outputFormat}`, {
-      verbose,
-    });
+    spinner.text = `Building and linting '${spec}' spec`;
+    await buildLiteSpec(spec, bundledPath, outputFormat, verbose);
   }
 
   if (hash) {

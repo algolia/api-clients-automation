@@ -177,7 +177,7 @@ jobs:
               format('{0}/model/**', matrix.client.path),
               format('{0}/builds/**', matrix.client.path),
               format('{0}/package.json', matrix.client.path),
-              format('specs/bundled/{0}.yml', matrix.client.spec),
+              format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/javascript/**',
               'generators/src/**'
             )}}

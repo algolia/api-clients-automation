@@ -16,7 +16,6 @@ type BaseMatrix = {
 };
 
 type ClientMatrix = BaseMatrix & {
-  spec: string;
   config?: string;
   api?: string;
   capitalizedName?: string;
@@ -70,7 +69,6 @@ async function getClientMatrix({
     const matchedGenerator: ClientMatrix = {
       name: client,
       path: output,
-      spec: client,
     };
 
     // Extra informations for the PHP matrix in order to properly scope the
