@@ -1,0 +1,103 @@
+<?php
+
+namespace Algolia\AlgoliaSearch\Test\Api;
+
+use Algolia\AlgoliaSearch\Api\{{clientRawName}}Api;
+use Algolia\AlgoliaSearch\Configuration\{{clientRawName}}Config;
+use Algolia\AlgoliaSearch\Http\HttpClientInterface;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+/**
+ * {{clientRawName}}Test
+ *
+ * @category Class
+ * @package  Algolia\AlgoliaSearch
+ */
+class {{clientRawName}}Test extends TestCase implements HttpClientInterface
+{
+    /**
+     * @var RequestInterface[]
+     */
+    private $recordedRequests = [];
+
+    protected function assertRequests(array $requests)
+    {
+        $this->assertGreaterThan(0, count($requests));
+        $this->assertEquals(count($requests), count($this->recordedRequests));
+
+        foreach ($requests as $i => $request) {
+            $recordedRequest = $this->recordedRequests[$i];
+
+            $this->assertEquals($request['method'], $recordedRequest->getMethod());
+            $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
+            $this->assertEquals($request['body'], $recordedRequest->getBody()->getContents());
+        }
+    }
+
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    {
+        $this->recordedRequests[] = $request;
+
+        return new Response(200, [], '{}');
+    }
+
+    protected function getClient()
+    {
+        $api = new ApiWrapper($this, {{clientRawName}}Config::create(), ClusterHosts::create('127.0.0.1'));
+        $config = {{clientRawName}}Config::create('foo', 'bar');
+
+        return new {{clientRawName}}Api($api, $config);
+    }
+    {{#blocks}}
+    {{#tests}}
+
+    /**
+    * Test case for {{{method}}}
+    * {{#capitalize}}{{{testName}}}{{/capitalize}}
+    */
+    public function test{{#capitalize}}{{method}}{{/capitalize}}{{testIndex}}()
+    {
+        $client = $this->getClient();
+
+        {{#hasParameters}}
+        /*
+            {{{parametersWithDataType}}}
+
+            {{#parametersWithDataType}}
+                key      => "{{{key}}}"
+                value    => "{{{value}}}"
+                isDate   => "{{{isDate}}}"
+                isArray  => "{{{isArray}}}"
+                isObject => "{{{isObject}}}"
+                isString => "{{{isString}}}"
+                last     => "{{{-last}}}"
+            {{/parametersWithDataType}}
+        */
+
+        $client->{{{method}}}(
+        {{#parametersWithDataType}}
+            {{#isArray}}["{{{key}}}" => json_decode("{{#escapeQuotes}}{{{value}}}{{/escapeQuotes}}", true)]{{^-last}},{{/-last}}{{/isArray}}
+            {{#isInteger}}{{{value}}}{{^-last}},{{/-last}}{{/isInteger}}
+            {{^isArray}}{{^isInteger}}"{{{value}}}"{{^-last}},{{/-last}}{{/isInteger}}{{/isArray}}
+        {{/parametersWithDataType}}
+        );
+        {{/hasParameters}}
+        {{^hasParameters}}
+            $client->{{{method}}}();
+        {{/hasParameters}}
+
+        $this->assertRequests([
+            [
+                "path" => "{{{request.path}}}",
+                "method" => "{{{request.method}}}",
+                "body" => "{{#escapeQuotes}}{{{request.data}}}{{/escapeQuotes}}",
+            ],
+        ]);
+    }
+    {{/tests}}
+    {{/blocks}}
+}

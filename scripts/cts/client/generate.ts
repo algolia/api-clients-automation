@@ -8,6 +8,7 @@ import type { Generator } from '../../types';
 import {
   walk,
   createClientName,
+  camelizeClientName,
   createOutputDir,
   getOutputPath,
   loadTemplates,
@@ -99,6 +100,7 @@ export async function generateClientTests(
     {
       import: packageName,
       client: createClientName(client, language),
+      clientRawName: camelizeClientName(client, language),
       blocks: modifyForMustache(testsBlocks),
       hasRegionalHost: hasRegionalHost ? true : undefined,
     },
