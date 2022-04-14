@@ -21,6 +21,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private String language;
   private String client;
   private String packageName;
+  private String clientRawName;
   private boolean hasRegionalHost;
 
   /**
@@ -132,6 +133,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       // We can put whatever we want in the bundle, and it will be accessible in the
       // template
       bundle.put("client", createClientName());
+      bundle.put("clientRawName", createClientRawName());
       bundle.put("import", packageName);
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("lambda", lambda);
@@ -235,6 +237,10 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   private String createClientName() {
+    return createClientRawName() + "Api";
+  }
+
+  private String createClientRawName() {
     String[] clientParts = client.split("-");
     String clientName = "";
     if (language.equals("javascript")) {
@@ -249,7 +255,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       }
     }
 
-    return clientName + "Api";
+    return clientName;
   }
 
   /**
