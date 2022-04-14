@@ -49,6 +49,17 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
+    modelsToRetrieve:
+      type: string
+      enum:
+        - funnel_stage
+        - order_value
+        - affinities
+    typesToRetrieve:
+      type: string
+      enum:
+        - properties
+        - segments
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -176,12 +187,6 @@ paths:
         - predict
     delete:
       operationId: del
-      requestBody:
-        description: The parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
       summary: Send requests to the Algolia REST API.
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
@@ -227,19 +232,12 @@ paths:
                   type: array
                   description: List with model types for which to retrieve predictions.
                   items:
-                    type: string
-                    enum:
-                      - funnel_stage
-                      - order_value
-                      - affinities
+                    $ref: '#/components/schemas/modelsToRetrieve'
                 typesToRetrieve:
                   type: array
                   description: List with types to be retrieved.
                   items:
-                    type: string
-                    enum:
-                      - properties
-                      - segments
+                    $ref: '#/components/schemas/typesToRetrieve'
                   minItems: 1
       responses:
         '200':

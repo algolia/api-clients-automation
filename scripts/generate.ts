@@ -1,6 +1,5 @@
 import path from 'path';
 
-import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
 import {
   buildCustomGenerators,
@@ -102,6 +101,7 @@ export async function generate(
     await buildSpecs(clients, 'yml', verbose, true);
   }
 
+  const availableWorkspaces = await run('yarn workspaces list', { verbose });
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const useCustomGenerator = langs
     .map((lang) => getCustomGenerator(lang))
@@ -117,6 +117,17 @@ export async function generate(
     spinner.text = `generating ${gen.key}`;
     await generateClient(gen, verbose);
 
+    // Prevents the CI/CLI to throw when a new JS client is generated
+    // by linking it if it's not the case
+    if (
+      gen.language === 'javascript' &&
+      !availableWorkspaces.includes(gen.output)
+    ) {
+      spinner.text = `First time generating ${gen.client}, linking to workspaces`;
+
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn', { verbose });
+    }
+
     spinner.text = `post-gen ${gen.key}`;
     await postGen(gen, verbose);
 
@@ -131,12 +142,6 @@ export async function generate(
   for (const lang of langs) {
     if (!(CI && lang === 'javascript')) {
       await formatter(lang, getLanguageFolder(lang), verbose);
-    }
-
-    // JavaScript utils are tested independently, we only build them
-    // during dev to ease the process
-    if (!CI && lang === 'javascript') {
-      await buildJSClientUtils(verbose, 'all');
     }
   }
 }
