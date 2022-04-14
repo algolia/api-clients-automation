@@ -5,13 +5,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build:utils": "yarn build utils",
     "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
-    "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
+    "build:utils": "yarn build utils",
     "clean": "rm -rf packages/*/dist || true",
+    "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
+    "release": "shipjs prepare",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --yes",
     "release:publish": "ts-node --project tsconfig.script.json scripts/publish.ts",
-    "release": "shipjs prepare",
     "test:lint": "eslint . --ext .js,.ts",
     "test:size": "bundlesize",
     "test:types": "yarn tsc --noEmit"
