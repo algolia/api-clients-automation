@@ -68,7 +68,9 @@ async function buildPerLanguage({
       await run(`yarn clean`, { cwd, verbose });
       await run(
         `yarn build ${
-          client === 'all' ? '' : generator!.additionalProperties.buildFile
+          client === 'all'
+            ? ''
+            : generator?.additionalProperties.buildFile ?? client
         }`,
         {
           cwd,
