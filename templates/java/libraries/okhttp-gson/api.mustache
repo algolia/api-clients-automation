@@ -135,7 +135,7 @@ public class {{classname}} extends ApiClient {
           {{/x-is-custom-request}}
           {{#x-is-custom-request}}
             for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue().toString()));
+              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue()));
             }
           {{/x-is-custom-request}}
         }
