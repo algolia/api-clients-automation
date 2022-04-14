@@ -138,7 +138,7 @@ public class ParametersWithDataType {
       // free key but only one type
       handleMap(paramName, param, testOutput, spec, suffix);
     } else {
-      handlePrimitive(param, testOutput);
+      handlePrimitive(param, testOutput, spec);
     }
     return testOutput;
   }
@@ -151,6 +151,7 @@ public class ParametersWithDataType {
     testOutput.put("isObject", false);
     testOutput.put("isArray", false);
     testOutput.put("isFreeFormObject", false);
+    testOutput.put("isAnyType", false);
     testOutput.put("isString", false);
     testOutput.put("isInteger", false);
     testOutput.put("isLong", false);
@@ -330,7 +331,8 @@ public class ParametersWithDataType {
       IJsonSchemaValidationProperties itemType = items;
 
       // The generator consider a free form object type as an `object`, which
-      // is wrong in our case, so we infer it.
+      // is wrong in our case, so we infer it to explore the right path in the traverseParams
+      // function, but we keep the any type for the CTS.
       if (
         items == null ||
         (items.openApiType.equals("object") && items.isFreeFormObject)
@@ -339,6 +341,7 @@ public class ParametersWithDataType {
         String paramType = inferDataType(entry.getValue(), maybeMatch, null);
 
         maybeMatch.dataType = paramType;
+        maybeMatch.isAnyType = true;
         itemType = maybeMatch;
       }
 
@@ -357,9 +360,17 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handlePrimitive(Object param, Map<String, Object> testOutput)
-    throws CTSException {
+  private void handlePrimitive(
+    Object param,
+    Map<String, Object> testOutput,
+    IJsonSchemaValidationProperties spec
+  ) throws CTSException {
     inferDataType(param, null, testOutput);
+    if (
+      spec instanceof CodegenParameter && ((CodegenParameter) spec).isAnyType
+    ) {
+      testOutput.put("isAnyType", true);
+    }
     testOutput.put("value", param);
   }
 

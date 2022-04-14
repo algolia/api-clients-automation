@@ -137,7 +137,7 @@ class QuerySuggestionsApiTests {
   void delTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 
@@ -207,7 +207,7 @@ class QuerySuggestionsApiTests {
   void getTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 
@@ -317,7 +317,7 @@ class QuerySuggestionsApiTests {
   void postTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 
@@ -388,7 +388,7 @@ class QuerySuggestionsApiTests {
   void putTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 

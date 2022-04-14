@@ -47,7 +47,7 @@ class InsightsApiTests {
   void delTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 
@@ -103,7 +103,7 @@ class InsightsApiTests {
   void getTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 
@@ -159,7 +159,7 @@ class InsightsApiTests {
   void postTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 
@@ -374,7 +374,7 @@ class InsightsApiTests {
   void putTest1() {
     String path0 = "/test/all";
 
-    Map<String, String> parameters0 = new HashMap<>();
+    Map<String, Object> parameters0 = new HashMap<>();
     {
       String query1 = "parameters";
 
