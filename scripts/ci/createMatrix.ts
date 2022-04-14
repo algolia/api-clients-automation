@@ -72,7 +72,10 @@ async function getClientMatrix({
         'Config',
         'Api'
       );
-      matchedGenerator.capitalizedName = createClientName(client, 'php');
+      matchedGenerator.capitalizedName = createClientName(
+        client,
+        'php'
+      ).replace('Api', '');
     }
 
     matrix.client.push(matchedGenerator);

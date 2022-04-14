@@ -35,7 +35,7 @@ async function removeExistingModel(
       clientModel = client;
       break;
     case 'php':
-      clientModel = createClientName(client, 'php');
+      clientModel = createClientName(client, 'php').replace('Api', '');
       break;
     default:
       break;
