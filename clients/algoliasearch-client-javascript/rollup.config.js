@@ -96,7 +96,7 @@ function getUtilConfigs() {
 }
 
 function shouldBuildUtil(utilClient) {
-  if (process.env.SKIP_UTILS) {
+  if (process.env.SKIP_UTILS === 'true') {
     return false;
   }
 
