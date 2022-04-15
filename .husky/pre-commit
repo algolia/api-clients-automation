@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn workspace scripts pre-commit
+./scripts/ci/husky/pre-commit.js
