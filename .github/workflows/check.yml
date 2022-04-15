@@ -428,8 +428,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GENERATE_BOT }}
 
       - name: Spread generation to each repository
-        if: |
-          steps.pushGeneratedCode.exitcode == 0
+        if: steps.pushGeneratedCode.exitcode == 0
         run: yarn workspace scripts spreadGeneration
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
