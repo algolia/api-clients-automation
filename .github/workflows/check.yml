@@ -365,6 +365,10 @@ jobs:
       !contains(needs.*.result, 'failure')
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.TOKEN_RELEASE_BOT }}
 
       - name: Restore cache
         uses: ./.github/actions/cache
