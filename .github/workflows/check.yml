@@ -385,7 +385,38 @@ jobs:
       - name: Run
         run: yarn cli cts run
 
-  codegen:
+  codegen_pr:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    needs:
+      - client_javascript
+      - client_java
+      - client_php
+    if: |
+      always() &&
+      github.event_name == 'pull_request' &&
+      needs.setup.outputs.RUN_CODEGEN == 'true' &&
+      needs.*.result == 'success'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.TOKEN_RELEASE_BOT }}
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: codegen
+
+      - name: Push generated code generated branch
+        id: pushGeneratedCode
+        run: yarn workspace scripts pushGeneratedCode
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GENERATE_BOT }}
+          PR_NUMBER: ${{ github.event.number }}
+
+  codegen_main:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs:
@@ -394,6 +425,7 @@ jobs:
       - client_javascript_algoliasearch
     if: |
       always() &&
+      github.ref == 'refs/heads/main' &&
       needs.setup.outputs.RUN_CODEGEN == 'true' &&
       needs.cts.result == 'success'
     steps:
@@ -408,7 +440,7 @@ jobs:
         with:
           job: codegen
 
-      - name: Push generated code
+      - name: Push generated code to main
         id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
         env:
@@ -417,8 +449,7 @@ jobs:
 
       - name: Spread generation to each repository
         if: |
-          steps.pushGeneratedCode.exitcode == 0 &&
-          github.ref == 'refs/heads/main'
+          steps.pushGeneratedCode.exitcode == 0
         run: yarn workspace scripts spreadGeneration
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
