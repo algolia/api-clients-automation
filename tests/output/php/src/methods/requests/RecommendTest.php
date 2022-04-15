@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\Api;
-use Algolia\AlgoliaSearch\Configuration\Config;
+use Algolia\AlgoliaSearch\Api\RecommendApi;
+use Algolia\AlgoliaSearch\Configuration\RecommendConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -12,12 +12,12 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Test
+ * RecommendTest
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
  */
-class Test extends TestCase implements HttpClientInterface
+class RecommendTest extends TestCase implements HttpClientInterface
 {
     /**
      * @var RequestInterface[]
@@ -32,14 +32,26 @@ class Test extends TestCase implements HttpClientInterface
         foreach ($requests as $i => $request) {
             $recordedRequest = $this->recordedRequests[$i];
 
-            $this->assertEquals($request['method'], $recordedRequest->getMethod());
-            $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
-            $this->assertEquals($request['body'], $recordedRequest->getBody()->getContents());
+            $this->assertEquals(
+                $request['method'],
+                $recordedRequest->getMethod()
+            );
+            $this->assertEquals(
+                $request['path'],
+                $recordedRequest->getUri()->getPath()
+            );
+            $this->assertEquals(
+                $request['body'],
+                $recordedRequest->getBody()->getContents()
+            );
         }
     }
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
-    {
+    public function sendRequest(
+        RequestInterface $request,
+        $timeout,
+        $connectTimeout
+    ) {
         $this->recordedRequests[] = $request;
 
         return new Response(200, [], '{}');
@@ -47,239 +59,489 @@ class Test extends TestCase implements HttpClientInterface
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, Config::create(), ClusterHosts::create('127.0.0.1'));
-        $config = Config::create('foo', 'bar');
+        $api = new ApiWrapper(
+            $this,
+            RecommendConfig::create(),
+            ClusterHosts::create('127.0.0.1')
+        );
+        $config = RecommendConfig::create('foo', 'bar');
 
-        return new Api($api, $config);
+        return new RecommendApi($api, $config);
     }
 
     /**
-    * Test case for getRecommendations
-    *
-    */
-    public function test0()
+     * Test case for Del
+     * allow del method for a custom path with minimal parameters
+     */
+    public function testDel0()
     {
         $client = $this->getClient();
 
-        /*
-            [{parent=, isObject=true, isEnum=false, suffix=0, parentSuffix=-1, isInteger=false, isBoolean=false, isString=false, objectName=GetRecommendationsParams, isArray=false, value=[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}], isFreeFormObject=false, key=getRecommendationsParams, isDouble=false}]
-
-                key      => "getRecommendationsParams"
-                value    => "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-                isDate   => ""
-                isArray  => "false"
-                isObject => "true"
-                isString => "false"
-                last     => "true"
-        */
-
-        $client->getRecommendations(
-            "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-        );
+        $client->del('/test/minimal');
 
         $this->assertRequests([
             [
-                "path" => "/1/indexes/*/recommendations",
-                "method" => "POST",
-                "body" => "",
+                'path' => '/1/test/minimal',
+                'method' => 'DELETE',
+                'body' => json_decode(''),
             ],
         ]);
     }
 
     /**
-    * Test case for getRecommendations
-    *
-    */
-    public function test1()
+     * Test case for Del
+     * allow del method for a custom path with all parameters
+     */
+    public function testDel1()
     {
         $client = $this->getClient();
 
-        /*
-            [{parent=, isObject=true, isEnum=false, suffix=0, parentSuffix=-1, isInteger=false, isBoolean=false, isString=false, objectName=GetRecommendationsParams, isArray=false, value=[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}], isFreeFormObject=false, key=getRecommendationsParams, isDouble=false}]
-
-                key      => "getRecommendationsParams"
-                value    => "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-                isDate   => ""
-                isArray  => "false"
-                isObject => "true"
-                isString => "false"
-                last     => "true"
-        */
-
-        $client->getRecommendations(
-            "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
         );
 
         $this->assertRequests([
             [
-                "path" => "/1/indexes/*/recommendations",
-                "method" => "POST",
-                "body" => "",
+                'path' => '/1/test/all',
+                'method' => 'DELETE',
+                'body' => json_decode(''),
+                'searchParams' => json_decode('{"query":"parameters"}'),
             ],
         ]);
     }
 
     /**
-    * Test case for getRecommendations
-    *
-    */
-    public function test2()
+     * Test case for Get
+     * allow get method for a custom path with minimal parameters
+     */
+    public function testGet0()
     {
         $client = $this->getClient();
 
-        /*
-            [{parent=, isObject=true, isEnum=false, suffix=0, parentSuffix=-1, isInteger=false, isBoolean=false, isString=false, objectName=GetRecommendationsParams, isArray=false, value=[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=TrendingRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=TrendingRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=TrendingModels, isArray=false, value=trending-items, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}], isFreeFormObject=false, key=getRecommendationsParams, isDouble=false}]
-
-                key      => "getRecommendationsParams"
-                value    => "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=TrendingRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=TrendingRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=TrendingModels, isArray=false, value=trending-items, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-                isDate   => ""
-                isArray  => "false"
-                isObject => "true"
-                isString => "false"
-                last     => "true"
-        */
-
-        $client->getRecommendations(
-            "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=TrendingRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=TrendingRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=TrendingModels, isArray=false, value=trending-items, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-        );
+        $client->get('/test/minimal');
 
         $this->assertRequests([
             [
-                "path" => "/1/indexes/*/recommendations",
-                "method" => "POST",
-                "body" => "",
+                'path' => '/1/test/minimal',
+                'method' => 'GET',
+                'body' => json_decode(''),
             ],
         ]);
     }
 
     /**
-    * Test case for getRecommendations
-    *
-    */
-    public function test3()
+     * Test case for Get
+     * allow get method for a custom path with all parameters
+     */
+    public function testGet1()
     {
         $client = $this->getClient();
 
-        /*
-            [{parent=, isObject=true, isEnum=false, suffix=0, parentSuffix=-1, isInteger=false, isBoolean=false, isString=false, objectName=GetRecommendationsParams, isArray=false, value=[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=TrendingRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=TrendingRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=TrendingModels, isArray=false, value=trending-items, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myFacetName, isFreeFormObject=false, key=facetName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myFacetValue, isFreeFormObject=false, key=facetValue, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}], isFreeFormObject=false, key=getRecommendationsParams, isDouble=false}]
-
-                key      => "getRecommendationsParams"
-                value    => "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=TrendingRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=TrendingRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=TrendingModels, isArray=false, value=trending-items, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myFacetName, isFreeFormObject=false, key=facetName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myFacetValue, isFreeFormObject=false, key=facetValue, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-                isDate   => ""
-                isArray  => "false"
-                isObject => "true"
-                isString => "false"
-                last     => "true"
-        */
-
-        $client->getRecommendations(
-            "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=TrendingRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=TrendingRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=TrendingModels, isArray=false, value=trending-items, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myFacetName, isFreeFormObject=false, key=facetName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myFacetValue, isFreeFormObject=false, key=facetValue, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
+        $client->get(
+            '/test/all',
+            ['query' => 'parameters']
         );
 
         $this->assertRequests([
             [
-                "path" => "/1/indexes/*/recommendations",
-                "method" => "POST",
-                "body" => "",
+                'path' => '/1/test/all',
+                'method' => 'GET',
+                'body' => json_decode(''),
+                'searchParams' => json_decode('{"query":"parameters"}'),
             ],
         ]);
     }
 
     /**
-    * Test case for getRecommendations
-    *
-    */
-    public function test4()
+     * Test case for GetRecommendations
+     * get recommendations for recommend model with minimal parameters
+     */
+    public function testGetRecommendations0()
     {
         $client = $this->getClient();
 
-        /*
-            [{parent=, isObject=true, isEnum=false, suffix=0, parentSuffix=-1, isInteger=false, isBoolean=false, isString=false, objectName=GetRecommendationsParams, isArray=false, value=[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}, {parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName2, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID2, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_1, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_1, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}], isFreeFormObject=false, key=getRecommendationsParams, isDouble=false}]
+        $client->getRecommendations([
+            'requests' => [
+                'requests_0' => [
+                    'indexName' => 'indexName',
 
-                key      => "getRecommendationsParams"
-                value    => "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}, {parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName2, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID2, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_1, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_1, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-                isDate   => ""
-                isArray  => "false"
-                isObject => "true"
-                isString => "false"
-                last     => "true"
-        */
+                    'objectID' => 'objectID',
 
-        $client->getRecommendations(
-            "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}, {parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName2, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID2, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_1, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_1, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-        );
+                    'model' => 'related-products',
+
+                    'threshold' => 42,
+                ],
+            ],
+        ]);
 
         $this->assertRequests([
             [
-                "path" => "/1/indexes/*/recommendations",
-                "method" => "POST",
-                "body" => "",
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode(
+                    '{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}'
+                ),
             ],
         ]);
     }
 
     /**
-    * Test case for getRecommendations
-    *
-    */
-    public function test5()
+     * Test case for GetRecommendations
+     * get recommendations for recommend model with all parameters
+     */
+    public function testGetRecommendations1()
     {
         $client = $this->getClient();
 
-        /*
-            [{parent=, isObject=true, isEnum=false, suffix=0, parentSuffix=-1, isInteger=false, isBoolean=false, isString=false, objectName=GetRecommendationsParams, isArray=false, value=[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query1, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback1, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}, {parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName2, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID2, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_1, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_1, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query2, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_1, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback2, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_1, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}], isFreeFormObject=false, key=getRecommendationsParams, isDouble=false}]
+        $client->getRecommendations([
+            'requests' => [
+                'requests_0' => [
+                    'indexName' => 'indexName',
 
-                key      => "getRecommendationsParams"
-                value    => "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query1, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback1, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}, {parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName2, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID2, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_1, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_1, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query2, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_1, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback2, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_1, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-                isDate   => ""
-                isArray  => "false"
-                isObject => "true"
-                isString => "false"
-                last     => "true"
-        */
+                    'objectID' => 'objectID',
 
-        $client->getRecommendations(
-            "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query1, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_0, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback1, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}, {parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName2, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID2, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_1, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=related-products, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=21, isFreeFormObject=false, key=threshold, isDouble=false}, {parent=requests_1, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=10, isFreeFormObject=false, key=maxRecommendations, isDouble=false}, {parent=requests_1, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=queryParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=query2, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=queryParameters, isDouble=false}, {parent=requests_1, isObject=true, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=SearchParamsObject, isArray=false, value=[{parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=myQuery, isFreeFormObject=false, key=query, isDouble=false}, {parent=fallbackParameters, isObject=false, isEnum=false, suffix=4, parentSuffix=3, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=facetFilters, isObject=false, isEnum=false, suffix=5, parentSuffix=4, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=fallback2, isFreeFormObject=false, key=facetFilters_0, isDouble=false}], isFreeFormObject=false, key=facetFilters, isDouble=false}], isFreeFormObject=false, key=fallbackParameters, isDouble=false}], isFreeFormObject=false, key=requests_1, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-        );
+                    'model' => 'related-products',
+
+                    'threshold' => 42,
+
+                    'maxRecommendations' => 10,
+
+                    'queryParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'query']],
+                    ],
+
+                    'fallbackParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'fallback']],
+                    ],
+                ],
+            ],
+        ]);
 
         $this->assertRequests([
             [
-                "path" => "/1/indexes/*/recommendations",
-                "method" => "POST",
-                "body" => "",
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode(
+                    '{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'
+                ),
             ],
         ]);
     }
 
     /**
-    * Test case for getRecommendations
-    *
-    */
-    public function test6()
+     * Test case for GetRecommendations
+     * get recommendations for trending model with minimal parameters
+     */
+    public function testGetRecommendations2()
     {
         $client = $this->getClient();
 
-        /*
-            [{parent=, isObject=true, isEnum=false, suffix=0, parentSuffix=-1, isInteger=false, isBoolean=false, isString=false, objectName=GetRecommendationsParams, isArray=false, value=[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=bought-together, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}], isFreeFormObject=false, key=getRecommendationsParams, isDouble=false}]
+        $client->getRecommendations([
+            'requests' => [
+                'requests_0' => [
+                    'indexName' => 'indexName',
 
-                key      => "getRecommendationsParams"
-                value    => "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=bought-together, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
-                isDate   => ""
-                isArray  => "false"
-                isObject => "true"
-                isString => "false"
-                last     => "true"
-        */
+                    'model' => 'trending-items',
 
-        $client->getRecommendations(
-            "[{parent=getRecommendationsParams, isObject=false, isEnum=false, suffix=1, parentSuffix=0, isInteger=false, isBoolean=false, isString=false, objectName=List, isArray=true, value=[{parent=requests, isObject=true, isEnum=false, suffix=2, oneOfModel={classname=recommendationsRequest, name=RecommendationRequest}, parentSuffix=1, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationRequest, isArray=false, value=[{parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=indexName1, isFreeFormObject=false, key=indexName, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=true, objectName=String, isArray=false, value=objectID1, isFreeFormObject=false, key=objectID, isDouble=false}, {parent=requests_0, isObject=false, isEnum=true, suffix=3, parentSuffix=2, isInteger=false, isBoolean=false, isString=false, objectName=RecommendationModels, isArray=false, value=bought-together, isFreeFormObject=false, key=model, isDouble=false}, {parent=requests_0, isObject=false, isEnum=false, suffix=3, parentSuffix=2, isInteger=true, isBoolean=false, isString=false, objectName=Integer, isArray=false, value=42, isFreeFormObject=false, key=threshold, isDouble=false}], isFreeFormObject=false, key=requests_0, isDouble=false}], isFreeFormObject=false, key=requests, isDouble=false}]"
+                    'threshold' => 42,
+                ],
+            ],
+        ]);
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode(
+                    '{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}'
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetRecommendations
+     * get recommendations for trending model with all parameters
+     */
+    public function testGetRecommendations3()
+    {
+        $client = $this->getClient();
+
+        $client->getRecommendations([
+            'requests' => [
+                'requests_0' => [
+                    'indexName' => 'indexName',
+
+                    'model' => 'trending-items',
+
+                    'threshold' => 42,
+
+                    'maxRecommendations' => 10,
+
+                    'facetName' => 'myFacetName',
+
+                    'facetValue' => 'myFacetValue',
+
+                    'queryParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'query']],
+                    ],
+
+                    'fallbackParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'fallback']],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode(
+                    '{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetRecommendations
+     * get multiple recommendations with minimal parameters
+     */
+    public function testGetRecommendations4()
+    {
+        $client = $this->getClient();
+
+        $client->getRecommendations([
+            'requests' => [
+                'requests_0' => [
+                    'indexName' => 'indexName1',
+
+                    'objectID' => 'objectID1',
+
+                    'model' => 'related-products',
+
+                    'threshold' => 21,
+                ],
+
+                'requests_1' => [
+                    'indexName' => 'indexName2',
+
+                    'objectID' => 'objectID2',
+
+                    'model' => 'related-products',
+
+                    'threshold' => 21,
+                ],
+            ],
+        ]);
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode(
+                    '{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}'
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetRecommendations
+     * get multiple recommendations with all parameters
+     */
+    public function testGetRecommendations5()
+    {
+        $client = $this->getClient();
+
+        $client->getRecommendations([
+            'requests' => [
+                'requests_0' => [
+                    'indexName' => 'indexName1',
+
+                    'objectID' => 'objectID1',
+
+                    'model' => 'related-products',
+
+                    'threshold' => 21,
+
+                    'maxRecommendations' => 10,
+
+                    'queryParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'query1']],
+                    ],
+
+                    'fallbackParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'fallback1']],
+                    ],
+                ],
+
+                'requests_1' => [
+                    'indexName' => 'indexName2',
+
+                    'objectID' => 'objectID2',
+
+                    'model' => 'related-products',
+
+                    'threshold' => 21,
+
+                    'maxRecommendations' => 10,
+
+                    'queryParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'query2']],
+                    ],
+
+                    'fallbackParameters' => [
+                        'query' => 'myQuery',
+
+                        ['facetFilters' => ['facetFilters_0' => 'fallback2']],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode(
+                    '{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetRecommendations
+     * get frequently bought together recommendations
+     */
+    public function testGetRecommendations6()
+    {
+        $client = $this->getClient();
+
+        $client->getRecommendations([
+            'requests' => [
+                'requests_0' => [
+                    'indexName' => 'indexName1',
+
+                    'objectID' => 'objectID1',
+
+                    'model' => 'bought-together',
+
+                    'threshold' => 42,
+                ],
+            ],
+        ]);
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode(
+                    '{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}'
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * allow post method for a custom path with minimal parameters
+     */
+    public function testPost0()
+    {
+        $client = $this->getClient();
+
+        $client->post('/test/minimal');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/minimal',
+                'method' => 'POST',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * allow post method for a custom path with all parameters
+     */
+    public function testPost1()
+    {
+        $client = $this->getClient();
+
+        $client->post(
+            '/test/all',
+            ['query' => 'parameters'],
+            ['body' => 'parameters']
         );
 
         $this->assertRequests([
             [
-                "path" => "/1/indexes/*/recommendations",
-                "method" => "POST",
-                "body" => "",
+                'path' => '/1/test/all',
+                'method' => 'POST',
+                'body' => json_decode('{"body":"parameters"}'),
+                'searchParams' => json_decode('{"query":"parameters"}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Put
+     * allow put method for a custom path with minimal parameters
+     */
+    public function testPut0()
+    {
+        $client = $this->getClient();
+
+        $client->put('/test/minimal');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/minimal',
+                'method' => 'PUT',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Put
+     * allow put method for a custom path with all parameters
+     */
+    public function testPut1()
+    {
+        $client = $this->getClient();
+
+        $client->put(
+            '/test/all',
+            ['query' => 'parameters'],
+            ['body' => 'parameters']
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'PUT',
+                'body' => json_decode('{"body":"parameters"}'),
+                'searchParams' => json_decode('{"query":"parameters"}'),
             ],
         ]);
     }

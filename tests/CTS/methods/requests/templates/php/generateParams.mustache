@@ -1,0 +1,18 @@
+{{#isFirstLevel}}{{#isString}}"{{{value}}}"{{^-last}},{{/-last}}{{/isString}}
+{{#isInteger}}{{{value}}}{{^-last}},{{/-last}}{{/isInteger}}
+{{#isDouble}}{{{value}}}{{^-last}},{{/-last}}{{/isDouble}}
+{{#isBoolean}}{{{value}}}{{^-last}},{{/-last}}{{/isBoolean}}
+{{#isEnum}}"{{{value}}}"{{^-last}},{{/-last}}{{/isEnum}}
+{{#isArray}}["{{{key}}}" => {{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isArray}}
+{{#isObject}}{{#value}}{{> generateParams}}{{/value}}{{^-last}},{{/-last}}{{/isObject}}
+{{#isFreeFormObject}}{{#value}}[{{> generateParams}}]{{/value}}{{^-last}},{{/-last}}{{/isFreeFormObject}}
+{{/isFirstLevel}}
+{{^isFirstLevel}}{{#isString}}"{{{key}}}" => "{{{value}}}"{{^-last}},{{/-last}}{{/isString}}
+{{#isInteger}}"{{{key}}}" => {{{value}}}{{^-last}},{{/-last}}{{/isInteger}}
+{{#isDouble}}"{{{key}}}" => {{{value}}}{{^-last}},{{/-last}}{{/isDouble}}
+{{#isBoolean}}"{{{key}}}" => {{{value}}}{{^-last}},{{/-last}}{{/isBoolean}}
+{{#isEnum}}"{{{key}}}" => "{{{value}}}"{{^-last}},{{/-last}}{{/isEnum}}
+{{#isArray}}["{{{key}}}" => [{{#value}}{{> generateParams}}{{/value}}]]{{^-last}},{{/-last}}{{/isArray}}
+{{#isObject}}"{{{key}}}" => [{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isObject}}
+{{#isFreeFormObject}}{{#value}}[{{> generateParams}}]{{/value}}{{^-last}},{{/-last}}{{/isFreeFormObject}}
+{{/isFirstLevel}}

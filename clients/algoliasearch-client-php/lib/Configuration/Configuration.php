@@ -70,6 +70,16 @@ abstract class Configuration
         $this->config = $config;
     }
 
+    public static function create($appId = null, $apiKey = null)
+    {
+        $config = [
+            'appId' => null !== $appId ? $appId : getenv('ALGOLIA_APP_ID'),
+            'apiKey' => null !== $apiKey ? $apiKey : getenv('ALGOLIA_API_KEY'),
+        ];
+
+        return new static($config);
+    }
+
     /**
      * Sets API key
      *

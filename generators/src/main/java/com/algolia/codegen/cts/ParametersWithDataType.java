@@ -117,9 +117,12 @@ public class ParametersWithDataType {
       finalParamName = paramName.substring(1);
     }
 
+    Boolean isFirstLevel = suffix == 0;
+
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
     testOutput.put("parentSuffix", suffix - 1);
+    testOutput.put("isFirstLevel", isFirstLevel);
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));

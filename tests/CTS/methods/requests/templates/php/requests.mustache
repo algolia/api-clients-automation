@@ -52,38 +52,22 @@ class {{clientRawName}}Test extends TestCase implements HttpClientInterface
 
         return new {{clientRawName}}Api($api, $config);
     }
+
     {{#blocks}}
     {{#tests}}
 
     /**
-    * Test case for {{{method}}}
-    * {{#capitalize}}{{{testName}}}{{/capitalize}}
+    * Test case for {{#lambda.titlecase}}{{{method}}}{{/lambda.titlecase}}
+    * {{{testName}}}
     */
-    public function test{{#capitalize}}{{method}}{{/capitalize}}{{testIndex}}()
+    public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
     {
         $client = $this->getClient();
 
         {{#hasParameters}}
-        /*
-            {{{parametersWithDataType}}}
-
-            {{#parametersWithDataType}}
-                key      => "{{{key}}}"
-                value    => "{{{value}}}"
-                isDate   => "{{{isDate}}}"
-                isArray  => "{{{isArray}}}"
-                isObject => "{{{isObject}}}"
-                isString => "{{{isString}}}"
-                last     => "{{{-last}}}"
-            {{/parametersWithDataType}}
-        */
 
         $client->{{{method}}}(
-        {{#parametersWithDataType}}
-            {{#isArray}}["{{{key}}}" => json_decode("{{#escapeQuotes}}{{{value}}}{{/escapeQuotes}}", true)]{{^-last}},{{/-last}}{{/isArray}}
-            {{#isInteger}}{{{value}}}{{^-last}},{{/-last}}{{/isInteger}}
-            {{^isArray}}{{^isInteger}}"{{{value}}}"{{^-last}},{{/-last}}{{/isInteger}}{{/isArray}}
-        {{/parametersWithDataType}}
+        {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
         );
         {{/hasParameters}}
         {{^hasParameters}}
@@ -94,7 +78,10 @@ class {{clientRawName}}Test extends TestCase implements HttpClientInterface
             [
                 "path" => "{{{request.path}}}",
                 "method" => "{{{request.method}}}",
-                "body" => "{{#escapeQuotes}}{{{request.data}}}{{/escapeQuotes}}",
+                "body" => json_decode('{{#request.data}}{{{request.data}}}{{/request.data}}'),
+                {{#request.searchParams}}
+                "searchParams" => json_decode('{{{request.searchParams}}}'),
+                {{/request.searchParams}}
             ],
         ]);
     }
