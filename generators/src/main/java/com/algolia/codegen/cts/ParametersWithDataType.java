@@ -253,7 +253,7 @@ public class ParametersWithDataType {
       HashMap<String, String> oneOfModel = new HashMap<>();
       String typeName = getTypeName(match).replace("<", "").replace(">", "");
 
-      oneOfModel.put("classname", Utils.capitalize(baseType));
+      oneOfModel.put("parentClassName", Utils.capitalize(baseType));
 
       if (typeName.equals("List")) {
         CodegenProperty items = match.getItems();
@@ -265,7 +265,7 @@ public class ParametersWithDataType {
         typeName += getTypeName(items);
       }
 
-      oneOfModel.put("name", typeName);
+      oneOfModel.put("type", typeName);
       testOutput.put("oneOfModel", oneOfModel);
 
       return;
