@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-/* eslint-disable no-process-exit */
 /* eslint-disable no-console */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
+const chalk = require('chalk');
 const execa = require('execa');
 const micromatch = require('micromatch');
 
@@ -73,17 +73,20 @@ function createMemoizedMicromatchMatcher(patterns = []) {
 async function preCommit() {
   const stagedFiles = (await run(`git diff --name-only --cached`)).split('\n');
   const matcher = createMemoizedMicromatchMatcher(GENERATED_FILE_PATTERNS);
-  const generatedFiles = stagedFiles.filter((file) => matcher(file));
+  const filesToUnstage = stagedFiles.filter((file) => matcher(file));
 
-  if (generatedFiles.length > 0) {
+  for (const fileToUnstage of filesToUnstage) {
+    await run(`git restore --staged ${fileToUnstage}`);
+  }
+
+  if (filesToUnstage.length > 0) {
     console.log(
-      '\x1b[41m%s\x1b[0m',
-      '[ERROR]',
-      `You cannot include generated files in the commit. Please unstage the following:\n\n${generatedFiles
-        .map((file) => `  - ${file}`)
-        .join('\n')}`
+      chalk.bgYellow('[INFO]'),
+      "The following files are excluded from the commit because they're auto-generated."
     );
-    process.exit(1);
+    console.log('');
+    console.log(filesToUnstage.map((file) => `  > ${file}`).join('\n'));
+    console.log('');
   }
 }
 
