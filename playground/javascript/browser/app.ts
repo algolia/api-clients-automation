@@ -1,8 +1,8 @@
-import { searchApi } from '@experimental-api-clients-automation/client-search';
+import { searchClient } from '@experimental-api-clients-automation/client-search';
 
 import './app.css';
 
-const searchClient = searchApi(
+const searchClient = searchClient(
   'QPBQ67WNIG',
   'b590ae1153bf574215ca1605c19eb1fe'
 );
