@@ -6,6 +6,7 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
 import org.openapitools.codegen.CodegenOperation;
+import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 
 public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
@@ -13,6 +14,47 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   @Override
   public String getName() {
     return "algolia-javascript";
+  }
+
+  @Override
+  public void processOpts() {
+    super.processOpts();
+
+    // set default options of the generator for every clients
+    String client = additionalProperties.get("client").toString();
+    String clientName = Utils.createClientName(client, "javascript");
+    String apiName = clientName + "Api";
+
+    setSupportsES6(true);
+    setModelPropertyNaming("original");
+    additionalProperties.put("apiName", apiName);
+    additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
+    additionalProperties.put("userAgent", Utils.capitalize(clientName));
+
+    // clear all supported files to avoid unwanted ones
+    supportingFiles.clear();
+    // model
+    supportingFiles.add(
+      new SupportingFile("modelBarrel.mustache", "model", "index.ts")
+    );
+    // builds
+    supportingFiles.add(
+      new SupportingFile("browser.mustache", "builds", "browser.ts")
+    );
+    supportingFiles.add(
+      new SupportingFile("node.mustache", "builds", "node.ts")
+    );
+    // root
+    supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
+    supportingFiles.add(
+      new SupportingFile("index.d.mustache", "", "index.d.ts")
+    );
+    supportingFiles.add(
+      new SupportingFile("package.mustache", "", "package.json")
+    );
+    supportingFiles.add(
+      new SupportingFile("tsconfig.mustache", "", "tsconfig.json")
+    );
   }
 
   @Override

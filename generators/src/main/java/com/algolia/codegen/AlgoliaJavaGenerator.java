@@ -1,5 +1,7 @@
 package com.algolia.codegen;
 
+import io.swagger.v3.core.util.Json;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.servers.Server;
@@ -229,6 +231,12 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     modelTestTemplateFiles.clear();
     apiDocTemplateFiles.clear();
     modelDocTemplateFiles.clear();
+
+    // set default options of the generator for every clients
+    additionalProperties.put("java8", true);
+    additionalProperties.put("sourceFolder", "algoliasearch-core");
+    setDateLibrary("java8");
+    setSourceFolder("algoliasearch-core");
   }
 
   @Override
