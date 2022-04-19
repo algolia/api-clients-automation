@@ -4,7 +4,7 @@
 {{#isBoolean}}{{{value}}}{{^-last}},{{/-last}}{{/isBoolean}}
 {{#isEnum}}"{{{value}}}"{{^-last}},{{/-last}}{{/isEnum}}
 {{#isArray}}["{{{key}}}" => {{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isArray}}
-{{#isObject}}{{#value}}[{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isObject}}
+{{#isObject}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isObject}}
 {{#isFreeFormObject}}{{#value}}[{{> generateParams}}]{{/value}}{{^-last}},{{/-last}}{{/isFreeFormObject}}
 {{/isFirstLevel}}
 {{^isFirstLevel}}
