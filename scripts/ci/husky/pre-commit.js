@@ -43,7 +43,7 @@ function createMemoizedMicromatchMatcher(patterns = []) {
   const negativeMatchers = [];
 
   patterns.forEach((pattern) => {
-    if (pattern.charCodeAt(0) === 33) {
+    if (pattern.startsWith('!')) {
       // Patterns starting with `!` are negated
       negativeMatchers.push(micromatch.matcher(pattern.slice(1)));
     } else if (!pattern.includes('*')) {
