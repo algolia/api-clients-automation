@@ -74,7 +74,7 @@ async function preCommit() {
   if (stagedFiles.some((file) => matcher(file))) {
     const generatedFiles = stagedFiles.filter((file) => matcher(file));
     throw new Error(
-      `You cannot include gnerated files in the commit. Please unstage the following:\n\n${generatedFiles
+      `You cannot include generated files in the commit. Please unstage the following:\n\n${generatedFiles
         .map((file) => `  - ${file}`)
         .join('\n')}`
     );
