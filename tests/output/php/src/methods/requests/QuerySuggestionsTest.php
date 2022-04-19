@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\AbtestingApi;
-use Algolia\AlgoliaSearch\Configuration\AbtestingConfig;
+use Algolia\AlgoliaSearch\Api\QuerySuggestionsApi;
+use Algolia\AlgoliaSearch\Configuration\QuerySuggestionsConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -12,12 +12,12 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * AbtestingTest
+ * QuerySuggestionsTest
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
  */
-class AbtestingTest extends TestCase implements HttpClientInterface
+class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 {
     /**
      * @var RequestInterface[]
@@ -65,40 +65,46 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            AbtestingConfig::create(),
+            QuerySuggestionsConfig::create(),
             ClusterHosts::create('127.0.0.1')
         );
-        $config = AbtestingConfig::create('foo', 'bar');
+        $config = QuerySuggestionsConfig::create('foo', 'bar');
 
-        return new AbtestingApi($api, $config);
+        return new QuerySuggestionsApi($api, $config);
     }
 
     /**
-     * Test case for AddABTests
-     * addABTests with minimal parameters
+     * Test case for CreateConfig
+     * createConfig
      */
-    public function testAddABTests0()
+    public function testCreateConfig0()
     {
         $client = $this->getClient();
 
-        $client->addABTests([
-            'endAt' => '2022-12-31T00:00:00.000Z',
+        $client->createConfig([
+            'indexName' => 'theIndexName',
 
-            'name' => 'myABTest',
+            'sourceIndices' => [
+                [
+                    'indexName' => 'testIndex',
 
-            'variant' => [
-                ['index' => 'AB_TEST_1', 'trafficPercentage' => 30],
+                    'facets' => [['attributes' => 'test']],
 
-                ['index' => 'AB_TEST_2', 'trafficPercentage' => 50],
+                    'generate' => [['facetA', 'facetB'], ['facetC']],
+                ],
             ],
+
+            'languages' => ['french'],
+
+            'exclude' => ['test'],
         ]);
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests',
+                'path' => '/1/configs',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variant":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}'
+                    '{"indexName":"theIndexName","sourceIndices":[{"indexName":"testIndex","facets":[{"attributes":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}'
                 ),
             ],
         ]);
@@ -142,18 +148,18 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for DeleteABTest
-     * deleteABTest
+     * Test case for DeleteConfig
+     * deleteConfig
      */
-    public function testDeleteABTest0()
+    public function testDeleteConfig0()
     {
         $client = $this->getClient();
 
-        $client->deleteABTest(42);
+        $client->deleteConfig('theIndexName');
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests/42',
+                'path' => '/1/configs/theIndexName',
                 'method' => 'DELETE',
             ],
         ]);
@@ -197,38 +203,73 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetABTest
-     * getABTest
+     * Test case for GetAllConfigs
+     * getAllConfigs
      */
-    public function testGetABTest0()
+    public function testGetAllConfigs0()
     {
         $client = $this->getClient();
 
-        $client->getABTest(42);
+        $client->getAllConfigs();
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests/42',
+                'path' => '/1/configs',
                 'method' => 'GET',
             ],
         ]);
     }
 
     /**
-     * Test case for ListABTests
-     * listABTests with minimal parameters
+     * Test case for GetConfig
+     * getConfig
      */
-    public function testListABTests0()
+    public function testGetConfig0()
     {
         $client = $this->getClient();
 
-        $client->listABTests(42, 21);
+        $client->getConfig('theIndexName');
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests',
+                'path' => '/1/configs/theIndexName',
                 'method' => 'GET',
-                'searchParams' => json_decode('{"offset":"42","limit":"21"}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetConfigStatus
+     * getConfigStatus
+     */
+    public function testGetConfigStatus0()
+    {
+        $client = $this->getClient();
+
+        $client->getConfigStatus('theIndexName');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/configs/theIndexName/status',
+                'method' => 'GET',
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetLogFile
+     * getLogFile
+     */
+    public function testGetLogFile0()
+    {
+        $client = $this->getClient();
+
+        $client->getLogFile('theIndexName');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/logs/theIndexName',
+                'method' => 'GET',
             ],
         ]);
     }
@@ -318,19 +359,36 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for StopABTest
-     * stopABTest
+     * Test case for UpdateConfig
+     * updateConfig
      */
-    public function testStopABTest0()
+    public function testUpdateConfig0()
     {
         $client = $this->getClient();
 
-        $client->stopABTest(42);
+        $client->updateConfig('theIndexName', [
+            'sourceIndices' => [
+                [
+                    'indexName' => 'testIndex',
+
+                    'facets' => [['attributes' => 'test']],
+
+                    'generate' => [['facetA', 'facetB'], ['facetC']],
+                ],
+            ],
+
+            'languages' => ['french'],
+
+            'exclude' => ['test'],
+        ]);
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests/42/stop',
-                'method' => 'POST',
+                'path' => '/1/configs/theIndexName',
+                'method' => 'PUT',
+                'body' => json_decode(
+                    '{"sourceIndices":[{"indexName":"testIndex","facets":[{"attributes":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}'
+                ),
             ],
         ]);
     }

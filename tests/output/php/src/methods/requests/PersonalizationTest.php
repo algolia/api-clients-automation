@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\AbtestingApi;
-use Algolia\AlgoliaSearch\Configuration\AbtestingConfig;
+use Algolia\AlgoliaSearch\Api\PersonalizationApi;
+use Algolia\AlgoliaSearch\Configuration\PersonalizationConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -12,12 +12,12 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * AbtestingTest
+ * PersonalizationTest
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
  */
-class AbtestingTest extends TestCase implements HttpClientInterface
+class PersonalizationTest extends TestCase implements HttpClientInterface
 {
     /**
      * @var RequestInterface[]
@@ -65,43 +65,12 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            AbtestingConfig::create(),
+            PersonalizationConfig::create(),
             ClusterHosts::create('127.0.0.1')
         );
-        $config = AbtestingConfig::create('foo', 'bar');
+        $config = PersonalizationConfig::create('foo', 'bar');
 
-        return new AbtestingApi($api, $config);
-    }
-
-    /**
-     * Test case for AddABTests
-     * addABTests with minimal parameters
-     */
-    public function testAddABTests0()
-    {
-        $client = $this->getClient();
-
-        $client->addABTests([
-            'endAt' => '2022-12-31T00:00:00.000Z',
-
-            'name' => 'myABTest',
-
-            'variant' => [
-                ['index' => 'AB_TEST_1', 'trafficPercentage' => 30],
-
-                ['index' => 'AB_TEST_2', 'trafficPercentage' => 50],
-            ],
-        ]);
-
-        $this->assertRequests([
-            [
-                'path' => '/2/abtests',
-                'method' => 'POST',
-                'body' => json_decode(
-                    '{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variant":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}'
-                ),
-            ],
-        ]);
+        return new PersonalizationApi($api, $config);
     }
 
     /**
@@ -142,18 +111,18 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for DeleteABTest
-     * deleteABTest
+     * Test case for DeleteUserProfile
+     * delete deleteUserProfile
      */
-    public function testDeleteABTest0()
+    public function testDeleteUserProfile0()
     {
         $client = $this->getClient();
 
-        $client->deleteABTest(42);
+        $client->deleteUserProfile('UserToken');
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests/42',
+                'path' => '/1/profiles/UserToken',
                 'method' => 'DELETE',
             ],
         ]);
@@ -197,38 +166,37 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetABTest
-     * getABTest
+     * Test case for GetPersonalizationStrategy
+     * get getPersonalizationStrategy
      */
-    public function testGetABTest0()
+    public function testGetPersonalizationStrategy0()
     {
         $client = $this->getClient();
 
-        $client->getABTest(42);
+        $client->getPersonalizationStrategy();
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests/42',
+                'path' => '/1/strategies/personalization',
                 'method' => 'GET',
             ],
         ]);
     }
 
     /**
-     * Test case for ListABTests
-     * listABTests with minimal parameters
+     * Test case for GetUserTokenProfile
+     * get getUserTokenProfile
      */
-    public function testListABTests0()
+    public function testGetUserTokenProfile0()
     {
         $client = $this->getClient();
 
-        $client->listABTests(42, 21);
+        $client->getUserTokenProfile('UserToken');
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests',
+                'path' => '/1/profiles/personalization/UserToken',
                 'method' => 'GET',
-                'searchParams' => json_decode('{"offset":"42","limit":"21"}'),
             ],
         ]);
     }
@@ -318,19 +286,42 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for StopABTest
-     * stopABTest
+     * Test case for SetPersonalizationStrategy
+     * set setPersonalizationStrategy
      */
-    public function testStopABTest0()
+    public function testSetPersonalizationStrategy0()
     {
         $client = $this->getClient();
 
-        $client->stopABTest(42);
+        $client->setPersonalizationStrategy([
+            'eventScoring' => [
+                [
+                    'score' => 42,
+
+                    'eventName' => 'Algolia',
+
+                    'eventType' => 'Event',
+                ],
+            ],
+
+            'facetScoring' => [
+                [
+                    'score' => 42,
+
+                    'facetName' => 'Event',
+                ],
+            ],
+
+            'personalizationImpact' => 42,
+        ]);
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests/42/stop',
+                'path' => '/1/strategies/personalization',
                 'method' => 'POST',
+                'body' => json_decode(
+                    '{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'
+                ),
             ],
         ]);
     }
