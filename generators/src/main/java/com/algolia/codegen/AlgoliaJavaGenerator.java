@@ -109,6 +109,12 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     }
   }
 
+  /** Set default generator options */
+  private void setDefaultGeneratorOptions(Map<String, Object> client) {
+    additionalProperties.put("java8", true);
+    additionalProperties.put("sourceFolder", "algoliasearch-core");
+  }
+
   @Override
   public CodegenOperation fromOperation(
     String path,
@@ -136,6 +142,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     );
 
     generateServer(client);
+    setDefaultGeneratorOptions(client);
 
     return results;
   }
@@ -224,17 +231,18 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   public void processOpts() {
     super.processOpts();
 
+    // generator specific options
+    setDateLibrary("java8");
+    setSourceFolder("algoliasearch-core");
+
+    additionalProperties.put("java8", true);
+    additionalProperties.put("sourceFolder", "algoliasearch-core");
+
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
     apiDocTemplateFiles.clear();
     modelDocTemplateFiles.clear();
-
-    // set default options of the generator for every clients
-    additionalProperties.put("java8", true);
-    additionalProperties.put("sourceFolder", "algoliasearch-core");
-    setDateLibrary("java8");
-    setSourceFolder("algoliasearch-core");
   }
 
   @Override

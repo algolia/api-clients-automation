@@ -28,6 +28,7 @@ public class Utils {
     return ope;
   }
 
+  /** Returns the client name for the given language */
   public static String createClientName(String client, String language) {
     String[] clientParts = client.split("-");
     String clientName = "";

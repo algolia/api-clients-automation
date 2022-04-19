@@ -55,7 +55,6 @@ export async function setDefaultGeneratorOptions({
       : generatorOptions.generatorName,
     ...generatorOptions,
     additionalProperties: {
-      client,
       ...generatorOptions.additionalProperties,
       ...hostsOptions,
     },

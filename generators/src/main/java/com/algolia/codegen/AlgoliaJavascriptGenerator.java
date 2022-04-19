@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
+import java.util.Map;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
@@ -20,16 +21,9 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public void processOpts() {
     super.processOpts();
 
-    // set default options of the generator for every clients
-    String client = additionalProperties.get("client").toString();
-    String clientName = Utils.createClientName(client, "javascript");
-    String apiName = clientName + "Api";
-
+    // generator specific options
     setSupportsES6(true);
     setModelPropertyNaming("original");
-    additionalProperties.put("apiName", apiName);
-    additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
-    additionalProperties.put("userAgent", Utils.capitalize(clientName));
 
     // clear all supported files to avoid unwanted ones
     supportingFiles.clear();
@@ -55,6 +49,35 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     supportingFiles.add(
       new SupportingFile("tsconfig.mustache", "", "tsconfig.json")
     );
+  }
+
+  /** Set default generator options */
+  private void setDefaultGeneratorOptions(Map<String, Object> client) {
+    String spec = (String) client.get("pathPrefix");
+    String apiName = spec + "Api";
+
+    additionalProperties.put("apiName", apiName);
+    additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
+    additionalProperties.put("userAgent", Utils.capitalize(spec));
+  }
+
+  /** Provides an opportunity to inspect and modify operation data before the code is generated. */
+  @Override
+  public Map<String, Object> postProcessOperationsWithModels(
+    Map<String, Object> objs,
+    List<Object> allModels
+  ) {
+    Map<String, Object> results = super.postProcessOperationsWithModels(
+      objs,
+      allModels
+    );
+    Map<String, Object> client = (Map<String, Object>) results.get(
+      "operations"
+    );
+
+    setDefaultGeneratorOptions(client);
+
+    return results;
   }
 
   @Override
