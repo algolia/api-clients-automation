@@ -1,6 +1,6 @@
 {
   "releasedTag": "released",
-  "mainBranch": "main",
+  "mainBranch": "main_test",
   "owner": "algolia",
   "repo": "api-clients-automation",
   "teamSlug": "api-clients-automation",
