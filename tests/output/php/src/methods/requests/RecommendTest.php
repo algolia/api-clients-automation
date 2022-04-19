@@ -36,14 +36,18 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 $request['method'],
                 $recordedRequest->getMethod()
             );
+
             $this->assertEquals(
                 $request['path'],
                 $recordedRequest->getUri()->getPath()
             );
-            $this->assertEquals(
-                $request['body'],
-                $recordedRequest->getBody()->getContents()
-            );
+
+            if (isset($request['body'])) {
+                $this->assertEquals(
+                    json_encode($request['body']),
+                    $recordedRequest->getBody()->getContents()
+                );
+            }
         }
     }
 
@@ -83,7 +87,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/minimal',
                 'method' => 'DELETE',
-                'body' => json_decode(''),
             ],
         ]);
     }
@@ -105,7 +108,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'body' => json_decode(''),
                 'searchParams' => json_decode('{"query":"parameters"}'),
             ],
         ]);
@@ -125,7 +127,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/minimal',
                 'method' => 'GET',
-                'body' => json_decode(''),
             ],
         ]);
     }
@@ -147,7 +148,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'body' => json_decode(''),
                 'searchParams' => json_decode('{"query":"parameters"}'),
             ],
         ]);
@@ -163,7 +163,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
         $client->getRecommendations([
             'requests' => [
-                'requests_0' => [
+                [
                     'indexName' => 'indexName',
 
                     'objectID' => 'objectID',
@@ -196,7 +196,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
         $client->getRecommendations([
             'requests' => [
-                'requests_0' => [
+                [
                     'indexName' => 'indexName',
 
                     'objectID' => 'objectID',
@@ -210,13 +210,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'query']],
+                        ['facetFilters' => ['query']],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'fallback']],
+                        ['facetFilters' => ['fallback']],
                     ],
                 ],
             ],
@@ -243,7 +243,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
         $client->getRecommendations([
             'requests' => [
-                'requests_0' => [
+                [
                     'indexName' => 'indexName',
 
                     'model' => 'trending-items',
@@ -274,7 +274,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
         $client->getRecommendations([
             'requests' => [
-                'requests_0' => [
+                [
                     'indexName' => 'indexName',
 
                     'model' => 'trending-items',
@@ -290,13 +290,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'query']],
+                        ['facetFilters' => ['query']],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'fallback']],
+                        ['facetFilters' => ['fallback']],
                     ],
                 ],
             ],
@@ -323,7 +323,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
         $client->getRecommendations([
             'requests' => [
-                'requests_0' => [
+                [
                     'indexName' => 'indexName1',
 
                     'objectID' => 'objectID1',
@@ -333,7 +333,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'threshold' => 21,
                 ],
 
-                'requests_1' => [
+                [
                     'indexName' => 'indexName2',
 
                     'objectID' => 'objectID2',
@@ -366,7 +366,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
         $client->getRecommendations([
             'requests' => [
-                'requests_0' => [
+                [
                     'indexName' => 'indexName1',
 
                     'objectID' => 'objectID1',
@@ -380,17 +380,17 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'query1']],
+                        ['facetFilters' => ['query1']],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'fallback1']],
+                        ['facetFilters' => ['fallback1']],
                     ],
                 ],
 
-                'requests_1' => [
+                [
                     'indexName' => 'indexName2',
 
                     'objectID' => 'objectID2',
@@ -404,13 +404,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'query2']],
+                        ['facetFilters' => ['query2']],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['facetFilters_0' => 'fallback2']],
+                        ['facetFilters' => ['fallback2']],
                     ],
                 ],
             ],
@@ -437,7 +437,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
         $client->getRecommendations([
             'requests' => [
-                'requests_0' => [
+                [
                     'indexName' => 'indexName1',
 
                     'objectID' => 'objectID1',
@@ -474,7 +474,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/minimal',
                 'method' => 'POST',
-                'body' => json_decode(''),
             ],
         ]);
     }
@@ -517,7 +516,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/minimal',
                 'method' => 'PUT',
-                'body' => json_decode(''),
             ],
         ]);
     }

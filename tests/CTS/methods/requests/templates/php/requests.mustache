@@ -33,8 +33,15 @@ class {{clientRawName}}Test extends TestCase implements HttpClientInterface
             $recordedRequest = $this->recordedRequests[$i];
 
             $this->assertEquals($request['method'], $recordedRequest->getMethod());
+
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
-            $this->assertEquals($request['body'], $recordedRequest->getBody()->getContents());
+
+            if (isset($request['body'])) {
+                $this->assertEquals(
+                    json_encode($request['body']),
+                    $recordedRequest->getBody()->getContents()
+                );
+            }
         }
     }
 
@@ -78,7 +85,9 @@ class {{clientRawName}}Test extends TestCase implements HttpClientInterface
             [
                 "path" => "{{{request.path}}}",
                 "method" => "{{{request.method}}}",
-                "body" => json_decode('{{#request.data}}{{{request.data}}}{{/request.data}}'),
+                {{#request.data}}
+                "body" => json_decode('{{{request.data}}}'),
+                {{/request.data}}
                 {{#request.searchParams}}
                 "searchParams" => json_decode('{{{request.searchParams}}}'),
                 {{/request.searchParams}}

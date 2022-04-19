@@ -123,6 +123,7 @@ public class ParametersWithDataType {
     testOutput.put("key", finalParamName);
     testOutput.put("parentSuffix", suffix - 1);
     testOutput.put("isFirstLevel", isFirstLevel);
+    testOutput.put("hasGeneratedKey", finalParamName.matches("(.*)_[0-9]$"));
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
