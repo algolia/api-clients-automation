@@ -5,7 +5,7 @@ const { createMemoizedMicromatchMatcher } = require('../pre-commit');
 describe('createMemoizedMicromatchMatcher', () => {
   it('matches correctly', () => {
     const matcher = createMemoizedMicromatchMatcher([
-      'clients/**/*',
+      'clients/**',
       '!clients/README.md',
     ]);
 

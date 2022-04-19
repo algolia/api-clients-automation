@@ -8,7 +8,7 @@ const micromatch = require('micromatch');
 
 const GENERATED_FILE_PATTERNS = [
   // Ignore the roots and go down the tree by negating hand written files
-  'clients/**/*',
+  'clients/**',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
 
@@ -19,12 +19,12 @@ const GENERATED_FILE_PATTERNS = [
 
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
-  '!clients/algoliasearch-client-javascript/.github/**/*',
-  '!clients/algoliasearch-client-javascript/.yarn/**/*',
-  '!clients/algoliasearch-client-javascript/scripts/**/*',
-  '!clients/algoliasearch-client-javascript/packages/algoliasearch/**/*',
-  '!clients/algoliasearch-client-javascript/packages/requester-*/**/*',
-  '!clients/algoliasearch-client-javascript/packages/client-common/**/*',
+  '!clients/algoliasearch-client-javascript/.github/**',
+  '!clients/algoliasearch-client-javascript/.yarn/**',
+  '!clients/algoliasearch-client-javascript/scripts/**',
+  '!clients/algoliasearch-client-javascript/packages/algoliasearch/**',
+  '!clients/algoliasearch-client-javascript/packages/requester-*/**',
+  '!clients/algoliasearch-client-javascript/packages/client-common/**',
 
   // PHP
   '!clients/algoliasearch-client-php/lib/Configuration/*',
