@@ -109,12 +109,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     }
   }
 
-  /** Set default generator options */
-  private void setDefaultGeneratorOptions(Map<String, Object> client) {
-    additionalProperties.put("java8", true);
-    additionalProperties.put("sourceFolder", "algoliasearch-core");
-  }
-
   @Override
   public CodegenOperation fromOperation(
     String path,
@@ -142,7 +136,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     );
 
     generateServer(client);
-    setDefaultGeneratorOptions(client);
 
     return results;
   }
