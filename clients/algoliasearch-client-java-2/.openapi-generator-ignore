@@ -18,9 +18,9 @@ pom.xml
 gradle*
 
 # Selective source file
-algoliasearch-core/com/algolia/auth/**
-algoliasearch-core/com/algolia/ApiException.java
-algoliasearch-core/com/algolia/Configuration.java
-algoliasearch-core/com/algolia/Server*.java
-algoliasearch-core/com/algolia/StringUtil.java
-algoliasearch-core/com/algolia/GzipRequestInterceptor.java
+algoliasearch-core/com/algolia/src/auth/**
+algoliasearch-core/com/algolia/src/ApiException.java
+algoliasearch-core/com/algolia/src/Configuration.java
+algoliasearch-core/com/algolia/src/Server*.java
+algoliasearch-core/com/algolia/src/StringUtil.java
+algoliasearch-core/com/algolia/src/GzipRequestInterceptor.java
