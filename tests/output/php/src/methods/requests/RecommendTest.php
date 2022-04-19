@@ -210,13 +210,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['query']],
+                        'facetFilters' => ['query'],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['fallback']],
+                        'facetFilters' => ['fallback'],
                     ],
                 ],
             ],
@@ -290,13 +290,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['query']],
+                        'facetFilters' => ['query'],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['fallback']],
+                        'facetFilters' => ['fallback'],
                     ],
                 ],
             ],
@@ -380,13 +380,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['query1']],
+                        'facetFilters' => ['query1'],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['fallback1']],
+                        'facetFilters' => ['fallback1'],
                     ],
                 ],
 
@@ -404,13 +404,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'queryParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['query2']],
+                        'facetFilters' => ['query2'],
                     ],
 
                     'fallbackParameters' => [
                         'query' => 'myQuery',
 
-                        ['facetFilters' => ['fallback2']],
+                        'facetFilters' => ['fallback2'],
                     ],
                 ],
             ],
