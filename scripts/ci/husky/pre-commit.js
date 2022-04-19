@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+/* eslint-disable no-process-exit */
+/* eslint-disable no-console */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const execa = require('execa');
@@ -71,13 +73,17 @@ function createMemoizedMicromatchMatcher(patterns = []) {
 async function preCommit() {
   const stagedFiles = (await run(`git diff --name-only --cached`)).split('\n');
   const matcher = createMemoizedMicromatchMatcher(GENERATED_FILE_PATTERNS);
-  if (stagedFiles.some((file) => matcher(file))) {
-    const generatedFiles = stagedFiles.filter((file) => matcher(file));
-    throw new Error(
+  const generatedFiles = stagedFiles.filter((file) => matcher(file));
+
+  if (generatedFiles.length > 0) {
+    console.log(
+      '\x1b[41m%s\x1b[0m',
+      '[ERROR]',
       `You cannot include generated files in the commit. Please unstage the following:\n\n${generatedFiles
         .map((file) => `  - ${file}`)
         .join('\n')}`
     );
+    process.exit(1);
   }
 }
 
