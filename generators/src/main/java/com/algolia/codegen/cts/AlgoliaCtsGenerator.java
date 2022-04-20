@@ -63,6 +63,9 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
+    if (language.equals("php")) {
+      client = Utils.createClientName(client, language);
+    }
     packageName = (String) additionalProperties.get("packageName");
     hasRegionalHost =
       additionalProperties.get("hasRegionalHost").equals("true");
@@ -133,7 +136,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       // We can put whatever we want in the bundle, and it will be accessible in the
       // template
       bundle.put("client", Utils.createClientName(client, language) + "Client");
-      bundle.put("clientRawName", createClientRawName());
+      bundle.put("clientRawName", Utils.createClientName(client, language));
       bundle.put("import", createImportName());
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("lambda", lambda);
