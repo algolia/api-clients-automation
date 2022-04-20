@@ -2,7 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\QuerySuggestionsApi;
+use Algolia\AlgoliaSearch\Api\QuerySuggestionsClient;
 use Algolia\AlgoliaSearch\Configuration\QuerySuggestionsConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
@@ -70,7 +70,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
         );
         $config = QuerySuggestionsConfig::create('foo', 'bar');
 
-        return new QuerySuggestionsApi($api, $config);
+        return new QuerySuggestionsClient($api, $config);
     }
 
     /**

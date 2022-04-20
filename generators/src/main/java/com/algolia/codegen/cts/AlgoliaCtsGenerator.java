@@ -63,9 +63,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
-    if (language.equals("php")) {
-      client = Utils.createClientName(client, language);
-    }
     packageName = (String) additionalProperties.get("packageName");
     hasRegionalHost =
       additionalProperties.get("hasRegionalHost").equals("true");

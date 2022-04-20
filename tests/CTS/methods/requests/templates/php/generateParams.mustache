@@ -1,6 +1,7 @@
 {{#isFirstLevel}}{{#isString}}"{{{value}}}"{{^-last}},{{/-last}}{{/isString}}
 {{#isInteger}}{{{value}}}{{^-last}},{{/-last}}{{/isInteger}}
 {{#isDouble}}{{{value}}}{{^-last}},{{/-last}}{{/isDouble}}
+{{#isLong}}{{{value}}}{{^-last}},{{/-last}}{{/isLong}}
 {{#isBoolean}}{{{value}}}{{^-last}},{{/-last}}{{/isBoolean}}
 {{#isEnum}}"{{{value}}}"{{^-last}},{{/-last}}{{/isEnum}}
 {{#isArray}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isArray}}
@@ -11,6 +12,7 @@
 {{#isString}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} "{{{value}}}",{{/isString}}
 {{#isInteger}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isInteger}}
 {{#isDouble}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isDouble}}
+{{#isLong}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isLong}}
 {{#isBoolean}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isBoolean}}
 {{#isEnum}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} "{{{value}}}",{{/isEnum}}
 {{#isArray}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} [{{#value}}{{> generateParams}}{{/value}}],{{/isArray}}

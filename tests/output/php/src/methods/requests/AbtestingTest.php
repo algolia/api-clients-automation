@@ -2,7 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\AbtestingApi;
+use Algolia\AlgoliaSearch\Api\AbtestingClient;
 use Algolia\AlgoliaSearch\Configuration\AbtestingConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
@@ -70,7 +70,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         );
         $config = AbtestingConfig::create('foo', 'bar');
 
-        return new AbtestingApi($api, $config);
+        return new AbtestingClient($api, $config);
     }
 
     /**

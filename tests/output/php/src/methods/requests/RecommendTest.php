@@ -2,7 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\RecommendApi;
+use Algolia\AlgoliaSearch\Api\RecommendClient;
 use Algolia\AlgoliaSearch\Configuration\RecommendConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
@@ -70,7 +70,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
         );
         $config = RecommendConfig::create('foo', 'bar');
 
-        return new RecommendApi($api, $config);
+        return new RecommendClient($api, $config);
     }
 
     /**

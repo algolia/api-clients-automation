@@ -2,7 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\InsightsApi;
+use Algolia\AlgoliaSearch\Api\InsightsClient;
 use Algolia\AlgoliaSearch\Configuration\InsightsConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
@@ -70,7 +70,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
         );
         $config = InsightsConfig::create('foo', 'bar');
 
-        return new InsightsApi($api, $config);
+        return new InsightsClient($api, $config);
     }
 
     /**
@@ -99,7 +99,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->del('/test/all', ['query' => 'parameters']);
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -136,7 +139,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->get('/test/all', ['query' => 'parameters']);
+        $client->get(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [

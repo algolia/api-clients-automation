@@ -2,7 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\PersonalizationApi;
+use Algolia\AlgoliaSearch\Api\PersonalizationClient;
 use Algolia\AlgoliaSearch\Configuration\PersonalizationConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
@@ -70,7 +70,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
         );
         $config = PersonalizationConfig::create('foo', 'bar');
 
-        return new PersonalizationApi($api, $config);
+        return new PersonalizationClient($api, $config);
     }
 
     /**

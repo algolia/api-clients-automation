@@ -2,7 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\AnalyticsApi;
+use Algolia\AlgoliaSearch\Api\AnalyticsClient;
 use Algolia\AlgoliaSearch\Configuration\AnalyticsConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
@@ -70,7 +70,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
         $config = AnalyticsConfig::create('foo', 'bar');
 
-        return new AnalyticsApi($api, $config);
+        return new AnalyticsClient($api, $config);
     }
 
     /**
