@@ -98,7 +98,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/2/abtests',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variant":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}'
+                    "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variant\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
                 ),
             ],
         ]);
@@ -136,7 +136,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -191,7 +191,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -228,7 +228,9 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/abtests',
                 'method' => 'GET',
-                'searchParams' => json_decode('{"offset":"42","limit":"21"}'),
+                'searchParams' => json_decode(
+                    "{\"offset\":\"42\",\"limit\":\"21\"}"
+                ),
             ],
         ]);
     }
@@ -269,8 +271,8 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'POST',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -311,8 +313,8 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }

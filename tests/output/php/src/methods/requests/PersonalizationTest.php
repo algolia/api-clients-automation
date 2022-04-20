@@ -105,7 +105,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -160,7 +160,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -237,8 +237,8 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'POST',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -279,8 +279,8 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -320,7 +320,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                 'path' => '/1/strategies/personalization',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'
+                    "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
                 ),
             ],
         ]);

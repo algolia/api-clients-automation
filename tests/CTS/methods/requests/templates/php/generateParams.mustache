@@ -3,9 +3,9 @@
 {{#isDouble}}{{{value}}}{{^-last}},{{/-last}}{{/isDouble}}
 {{#isBoolean}}{{{value}}}{{^-last}},{{/-last}}{{/isBoolean}}
 {{#isEnum}}"{{{value}}}"{{^-last}},{{/-last}}{{/isEnum}}
-{{#isArray}}["{{{key}}}" => {{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isArray}}
+{{#isArray}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isArray}}
 {{#isObject}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isObject}}
-{{#isFreeFormObject}}{{#value}}[{{> generateParams}}]{{/value}}{{^-last}},{{/-last}}{{/isFreeFormObject}}
+{{#isFreeFormObject}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isFreeFormObject}}
 {{/isFirstLevel}}
 {{^isFirstLevel}}
 {{#isString}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} "{{{value}}}"{{^-last}},{{/-last}}{{/isString}}

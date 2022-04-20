@@ -105,7 +105,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -142,7 +142,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -174,7 +174,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}'
+                    "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42}]}"
                 ),
             ],
         ]);
@@ -221,7 +221,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'
+                    "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
                 ),
             ],
         ]);
@@ -252,7 +252,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}'
+                    "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42}]}"
                 ),
             ],
         ]);
@@ -301,7 +301,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'
+                    "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
                 ),
             ],
         ]);
@@ -344,7 +344,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}'
+                    "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21}]}"
                 ),
             ],
         ]);
@@ -415,7 +415,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'
+                    "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}"
                 ),
             ],
         ]);
@@ -448,7 +448,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}'
+                    "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42}]}"
                 ),
             ],
         ]);
@@ -490,8 +490,8 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'POST',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -532,8 +532,8 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }

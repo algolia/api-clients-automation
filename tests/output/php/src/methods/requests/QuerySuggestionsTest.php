@@ -104,7 +104,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
                 'path' => '/1/configs',
                 'method' => 'POST',
                 'body' => json_decode(
-                    '{"indexName":"theIndexName","sourceIndices":[{"indexName":"testIndex","facets":[{"attributes":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}'
+                    "{\"indexName\":\"theIndexName\",\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attributes\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}"
                 ),
             ],
         ]);
@@ -142,7 +142,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -197,7 +197,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -310,8 +310,8 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'POST',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -352,8 +352,8 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'searchParams' => json_decode('{"query":"parameters"}'),
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -387,7 +387,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
                 'path' => '/1/configs/theIndexName',
                 'method' => 'PUT',
                 'body' => json_decode(
-                    '{"sourceIndices":[{"indexName":"testIndex","facets":[{"attributes":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}'
+                    "{\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attributes\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}"
                 ),
             ],
         ]);
