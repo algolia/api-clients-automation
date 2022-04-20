@@ -113,10 +113,6 @@ public class ParametersWithDataType {
     }
 
     String finalParamName = paramName;
-    if (paramName.startsWith("_")) {
-      finalParamName = paramName.substring(1);
-    }
-
     Boolean isFirstLevel = suffix == 0;
 
     Map<String, Object> testOutput = createDefaultOutput();
