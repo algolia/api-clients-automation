@@ -10,11 +10,11 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
 const userId = process.env.USER_ID || 'user1';
 
 // Init client with appId and apiKey
-const predictClient = predictClient(appId, apiKey);
+const client = predictClient(appId, apiKey);
 
 async function testPredict() {
   try {
-    const userProfile = await predictClient.fetchUserProfile({
+    const userProfile = await client.fetchUserProfile({
       userID: userId,
       params: {
         modelsToRetrieve: ['funnel_stage', 'order_value', 'affinities'],
