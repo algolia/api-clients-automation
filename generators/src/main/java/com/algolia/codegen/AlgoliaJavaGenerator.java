@@ -226,12 +226,12 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
     // generator specific options
     setDateLibrary("java8");
-    setSourceFolder("algoliasearch-core");
+    setSourceFolder("algoliasearch-core/src");
     setApiNameSuffix(Utils.API_SUFFIX);
 
     additionalProperties.put("apiNameSuffix", Utils.API_SUFFIX);
     additionalProperties.put("java8", true);
-    additionalProperties.put("sourceFolder", "algoliasearch-core");
+    additionalProperties.put("sourceFolder", "algoliasearch-core/src");
 
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();
