@@ -27,7 +27,7 @@
     "modelFolder": "lib/Model",
     "customGenerator": "algolia-php",
     "apiFolder": "lib/Api",
-    "tests":  {
+    "tests": {
       "extension": "Test.php",
       "outputFolder": "src"
     }
