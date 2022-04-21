@@ -72,9 +72,17 @@ function createMemoizedMicromatchMatcher(patterns = []) {
 
 async function preCommit() {
   const stagedFiles = (await run(`git diff --name-only --cached`)).split('\n');
+  const deletedFiles = new Set(
+    (await run(`git ls-files --deleted`)).split('\n')
+  );
   const matcher = createMemoizedMicromatchMatcher(GENERATED_FILE_PATTERNS);
 
   for (const stagedFile of stagedFiles) {
+    // keep the deleted files staged even if they were generated before.
+    if (deletedFiles.has(stagedFile)) {
+      continue;
+    }
+
     if (!matcher(stagedFile)) {
       continue;
     }
