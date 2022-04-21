@@ -13,6 +13,8 @@ import { getLanguageFolder } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
 
+import text from './text';
+
 export function decideWhereToSpread(commitMessage: string): string[] {
   if (commitMessage.startsWith('chore: release')) {
     return [];
@@ -29,12 +31,31 @@ export function decideWhereToSpread(commitMessage: string): string[] {
 }
 
 export function cleanUpCommitMessage(commitMessage: string): string {
-  const result = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
-  if (!result) {
+  const isCodeGenCommit = commitMessage.startsWith(text.commitStartMessage);
+
+  if (isCodeGenCommit) {
+    const hash = commitMessage
+      .split(text.commitStartMessage)[1]
+      .replace('. [skip ci]', '')
+      .trim();
+
+    if (!hash) {
+      return commitMessage;
+    }
+
+    return [
+      `${text.commitStartMessage} ${hash.substring(0, 8)}. [skip ci]`,
+      `${REPO_URL}/commit/${hash}`,
+    ].join('\n\n');
+  }
+
+  const prCommit = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
+
+  if (!prCommit) {
     return commitMessage;
   }
 
-  return [result[1], `${REPO_URL}/pull/${result[2]}`].join('\n\n');
+  return [prCommit[1], `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
 async function spreadGeneration(): Promise<void> {
@@ -42,9 +63,17 @@ async function spreadGeneration(): Promise<void> {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }
 
-  const lastCommitMessage = await run(`git log -1 --format="%s"`);
-  const name = (await run(`git log -1 --format="%an"`)).trim();
-  const email = (await run(`git log -1 --format="%ae"`)).trim();
+  const lastCommitMessage = await run('git log -1 --format="%s"');
+  const author = (
+    await run('git log -1 --format="Co-authored-by: %an <%ae>"')
+  ).trim();
+  const coAuthors = (
+    await run('git log -1 --format="%(trailers:key=Co-authored-by)"')
+  )
+    .split('\n')
+    .map((coAuthor) => coAuthor.trim())
+    .filter(Boolean);
+
   const commitMessage = cleanUpCommitMessage(lastCommitMessage);
   const langs = decideWhereToSpread(lastCommitMessage);
 
@@ -75,7 +104,7 @@ async function spreadGeneration(): Promise<void> {
     await run(`git add .`, { cwd: tempGitDir });
     await gitCommit({
       message: commitMessage,
-      coauthor: { name, email },
+      coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
     await run(`git push`, { cwd: tempGitDir });
