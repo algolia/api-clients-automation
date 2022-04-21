@@ -37,7 +37,7 @@ describe('gitCommit', () => {
 
     gitCommit({
       message: 'chore: does something',
-      coauthors: [author, ...coAuthors],
+      coAuthors: [author, ...coAuthors],
     });
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenCalledWith(

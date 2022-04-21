@@ -83,7 +83,7 @@ async function spreadGeneration(): Promise<void> {
     await run(`git add .`, { cwd: tempGitDir });
     await gitCommit({
       message: commitMessage,
-      coauthors: [author, ...coAuthors],
+      coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
     await run(`git push`, { cwd: tempGitDir });

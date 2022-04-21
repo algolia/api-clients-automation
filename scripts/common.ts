@@ -186,15 +186,15 @@ export async function runIfExists(
 
 export async function gitCommit({
   message,
-  coauthors,
+  coAuthors,
   cwd = ROOT_DIR,
 }: {
   message: string;
-  coauthors?: string[];
+  coAuthors?: string[];
   cwd?: string;
 }): Promise<void> {
-  const messageWithCoAuthors = coauthors
-    ? `${message}\n\n\n${coauthors.join('\n')}`
+  const messageWithCoAuthors = coAuthors
+    ? `${message}\n\n\n${coAuthors.join('\n')}`
     : message;
 
   await execa('git', ['commit', '-m', messageWithCoAuthors], {
