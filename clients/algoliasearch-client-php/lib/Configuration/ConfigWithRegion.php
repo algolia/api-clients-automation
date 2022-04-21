@@ -13,8 +13,8 @@ abstract class ConfigWithRegion extends Configuration
         }
 
         $config = [
-            'appId' => null !== $appId ? $appId : getenv('ALGOLIA_APP_ID'),
-            'apiKey' => null !== $apiKey ? $apiKey : getenv('ALGOLIA_API_KEY'),
+            'appId' => null !== $appId,
+            'apiKey' => null !== $apiKey,
             'region' => null !== $region ? $region : 'us',
         ];
 

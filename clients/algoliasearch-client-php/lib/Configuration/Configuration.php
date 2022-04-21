@@ -73,8 +73,8 @@ abstract class Configuration
     public static function create($appId = null, $apiKey = null)
     {
         $config = [
-            'appId' => null !== $appId ? $appId : getenv('ALGOLIA_APP_ID'),
-            'apiKey' => null !== $apiKey ? $apiKey : getenv('ALGOLIA_API_KEY'),
+            'appId' => $appId,
+            'apiKey' => $apiKey,
         ];
 
         return new static($config);
