@@ -23,14 +23,6 @@ async function publish(): Promise<void> {
   // Get tag like `alpha`, `beta`, ...
   const tag = semver.prerelease(version)?.[0];
 
-  // This adds the following line to ~/.npmrc
-  // > registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
-  await execa.command(
-    `npm config set "//registry.npmjs.org/:_authToken" "\\\${NPM_AUTH_TOKEN}"`,
-    {
-      shell: 'bash',
-    }
-  );
   await execa.command(
     `lerna exec --no-bail -- npm_config_registry=https://registry.npmjs.org/ npm publish --access public ${
       tag ? `--tag ${tag}` : ''
