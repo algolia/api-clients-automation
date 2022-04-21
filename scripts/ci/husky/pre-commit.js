@@ -73,24 +73,22 @@ function createMemoizedMicromatchMatcher(patterns = []) {
 async function preCommit() {
   const stagedFiles = (await run(`git diff --name-only --cached`)).split('\n');
   const matcher = createMemoizedMicromatchMatcher(GENERATED_FILE_PATTERNS);
-  const filesToUnstage = stagedFiles.filter((file) => matcher(file));
 
-  for (const fileToUnstage of filesToUnstage) {
-    await run(`git restore --staged ${fileToUnstage}`);
-  }
+  for (const stagedFile of stagedFiles) {
+    if (!matcher(stagedFile)) {
+      continue;
+    }
 
-  if (filesToUnstage.length > 0) {
     console.log(
       chalk.bgYellow('[INFO]'),
-      "The following files are excluded from the commit because they're auto-generated."
+      `Generated file found, unstaging: ${stagedFile}`
     );
-    console.log('');
-    console.log(filesToUnstage.map((file) => `  > ${file}`).join('\n'));
-    console.log('');
+
+    await run(`git restore --staged ${stagedFile}`);
   }
 }
 
-if (require.main === module) {
+if (require.main === module && !process.env.CI) {
   preCommit();
 }
 
