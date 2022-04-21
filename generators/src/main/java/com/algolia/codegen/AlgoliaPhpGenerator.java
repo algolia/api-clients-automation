@@ -65,7 +65,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     // generator specific options
     setApiNameSuffix(Utils.API_SUFFIX);
     setParameterNamingConvention("camelCase");
-    
+
     super.processOpts();
 
     // Remove base template as we want to change its path
