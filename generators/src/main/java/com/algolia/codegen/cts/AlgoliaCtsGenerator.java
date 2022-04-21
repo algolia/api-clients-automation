@@ -76,7 +76,9 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
       setTemplateDir("tests/CTS/methods/requests/templates/" + language);
       setOutputDir("tests/output/" + language);
-      String clientName = language.equals("php") ? Utils.createClientName(client, language) : client;
+      String clientName = language.equals("php")
+        ? Utils.createClientName(client, language)
+        : client;
       supportingFiles.add(
         new SupportingFile(
           "requests.mustache",
