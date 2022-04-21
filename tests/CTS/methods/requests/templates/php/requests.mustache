@@ -2,8 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Test\Api;
 
-use Algolia\AlgoliaSearch\Api\{{clientRawName}}Client;
-use Algolia\AlgoliaSearch\Configuration\{{clientRawName}}Config;
+use Algolia\AlgoliaSearch\Api\{{client}};
+use Algolia\AlgoliaSearch\Configuration\{{clientPrefix}}Config;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -12,12 +12,12 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * {{clientRawName}}Test
+ * {{clientPrefix}}Test
  *
  * @category Class
  * @package  Algolia\AlgoliaSearch
  */
-class {{clientRawName}}Test extends TestCase implements HttpClientInterface
+class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 {
     /**
      * @var RequestInterface[]
@@ -54,10 +54,10 @@ class {{clientRawName}}Test extends TestCase implements HttpClientInterface
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, {{clientRawName}}Config::create(), ClusterHosts::create('127.0.0.1'));
-        $config = {{clientRawName}}Config::create('foo', 'bar');
+        $api = new ApiWrapper($this, {{clientPrefix}}Config::create(), ClusterHosts::create('127.0.0.1'));
+        $config = {{clientPrefix}}Config::create('foo', 'bar');
 
-        return new {{clientRawName}}Client($api, $config);
+        return new {{client}}($api, $config);
     }
 
     {{#blocks}}

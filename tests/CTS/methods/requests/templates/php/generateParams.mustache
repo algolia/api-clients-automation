@@ -1,21 +1,23 @@
-{{#isFirstLevel}}{{#isString}}"{{{value}}}"{{^-last}},{{/-last}}{{/isString}}
-{{#isInteger}}{{{value}}}{{^-last}},{{/-last}}{{/isInteger}}
-{{#isDouble}}{{{value}}}{{^-last}},{{/-last}}{{/isDouble}}
-{{#isLong}}{{{value}}}{{^-last}},{{/-last}}{{/isLong}}
-{{#isBoolean}}{{{value}}}{{^-last}},{{/-last}}{{/isBoolean}}
-{{#isEnum}}"{{{value}}}"{{^-last}},{{/-last}}{{/isEnum}}
-{{#isArray}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isArray}}
-{{#isObject}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isObject}}
-{{#isFreeFormObject}}[{{#value}}{{> generateParams}}{{/value}}]{{^-last}},{{/-last}}{{/isFreeFormObject}}
+{{#isFirstLevel}}{{#isString}}"{{{value}}}"{{/isString}}
+{{#isInteger}}{{{value}}}{{/isInteger}}
+{{#isDouble}}{{{value}}}{{/isDouble}}
+{{#isLong}}{{{value}}}{{/isLong}}
+{{#isBoolean}}{{{value}}}{{/isBoolean}}
+{{#isEnum}}"{{{value}}}"{{/isEnum}}
+{{#isArray}}[{{#value}}{{> generateParams}}{{/value}}]{{/isArray}}
+{{#isObject}}[{{#value}}{{> generateParams}}{{/value}}]{{/isObject}}
+{{#isFreeFormObject}}[{{#value}}{{> generateParams}}{{/value}}]{{/isFreeFormObject}}
+{{^-last}},{{/-last}}
 {{/isFirstLevel}}
 {{^isFirstLevel}}
-{{#isString}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} "{{{value}}}",{{/isString}}
-{{#isInteger}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isInteger}}
-{{#isDouble}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isDouble}}
-{{#isLong}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isLong}}
-{{#isBoolean}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} {{{value}}},{{/isBoolean}}
-{{#isEnum}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} "{{{value}}}",{{/isEnum}}
-{{#isArray}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} [{{#value}}{{> generateParams}}{{/value}}],{{/isArray}}
-{{#isObject}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} [{{#value}}{{> generateParams}}{{/value}}],{{/isObject}}
-{{#isFreeFormObject}}{{^hasGeneratedKey}}"{{{key}}}" =>{{/hasGeneratedKey}} [{{#value}}{{> generateParams}}{{/value}}],{{/isFreeFormObject}}
+{{^hasGeneratedKey}}"{{{key}}}" => {{/hasGeneratedKey}}
+{{#isString}}"{{{value}}}",{{/isString}}
+{{#isInteger}}{{{value}}},{{/isInteger}}
+{{#isDouble}}{{{value}}},{{/isDouble}}
+{{#isLong}}{{{value}}},{{/isLong}}
+{{#isBoolean}}{{{value}}},{{/isBoolean}}
+{{#isEnum}}"{{{value}}}",{{/isEnum}}
+{{#isArray}}[{{#value}}{{> generateParams}}{{/value}}],{{/isArray}}
+{{#isObject}}[{{#value}}{{> generateParams}}{{/value}}],{{/isObject}}
+{{#isFreeFormObject}}[{{#value}}{{> generateParams}}{{/value}}],{{/isFreeFormObject}}
 {{/isFirstLevel}}
