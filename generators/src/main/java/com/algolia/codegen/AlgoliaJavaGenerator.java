@@ -229,12 +229,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     setApiNameSuffix(Utils.API_SUFFIX);
 
     super.processOpts();
-    /*
-
-    additionalProperties.put("apiNameSuffix", Utils.API_SUFFIX);
-    additionalProperties.put("java8", true);
-    additionalProperties.put("sourceFolder", "algoliasearch-core/src");
-    */
 
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();
