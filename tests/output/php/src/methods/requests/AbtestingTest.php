@@ -130,7 +130,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->del('/test/all', ['query' => 'parameters']);
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -185,7 +188,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->get('/test/all', ['query' => 'parameters']);
+        $client->get(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -222,7 +228,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->listABTests(42, 21);
+        $client->listABTests(
+            42,
+            21
+        );
 
         $this->assertRequests([
             [

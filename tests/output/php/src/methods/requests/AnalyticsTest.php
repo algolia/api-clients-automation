@@ -99,7 +99,10 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->del('/test/all', ['query' => 'parameters']);
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -136,7 +139,10 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->get('/test/all', ['query' => 'parameters']);
+        $client->get(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -219,7 +225,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->getClickPositions('index', '1999-09-19', '2001-01-01', 'tag');
+        $client->getClickPositions(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
 
         $this->assertRequests([
             [
@@ -349,7 +360,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->getNoClickRate('index', '1999-09-19', '2001-01-01', 'tag');
+        $client->getNoClickRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
 
         $this->assertRequests([
             [
@@ -389,7 +405,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->getNoResultsRate('index', '1999-09-19', '2001-01-01', 'tag');
+        $client->getNoResultsRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
 
         $this->assertRequests([
             [
@@ -429,7 +450,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->getSearchesCount('index', '1999-09-19', '2001-01-01', 'tag');
+        $client->getSearchesCount(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
 
         $this->assertRequests([
             [
@@ -658,7 +684,10 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->getTopFilterForAttribute('myAttribute', 'index');
+        $client->getTopFilterForAttribute(
+            'myAttribute',
+            'index'
+        );
 
         $this->assertRequests([
             [
@@ -677,7 +706,10 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->getTopFilterForAttribute('myAttribute1,myAttribute2', 'index');
+        $client->getTopFilterForAttribute(
+            'myAttribute1,myAttribute2',
+            'index'
+        );
 
         $this->assertRequests([
             [
@@ -922,7 +954,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->getUsersCount('index', '1999-09-19', '2001-01-01', 'tag');
+        $client->getUsersCount(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
 
         $this->assertRequests([
             [

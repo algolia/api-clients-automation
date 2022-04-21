@@ -99,7 +99,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->del('/test/all', ['query' => 'parameters']);
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -136,7 +139,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->get('/test/all', ['query' => 'parameters']);
+        $client->get(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
