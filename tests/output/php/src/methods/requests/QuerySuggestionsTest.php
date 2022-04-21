@@ -136,7 +136,10 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->del('/test/all', ['query' => 'parameters']);
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -191,7 +194,10 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->get('/test/all', ['query' => 'parameters']);
+        $client->get(
+            '/test/all',
+            ['query' => 'parameters']
+        );
 
         $this->assertRequests([
             [
@@ -366,21 +372,24 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
 
-        $client->updateConfig('theIndexName', [
-            'sourceIndices' => [
-                [
-                    'indexName' => 'testIndex',
+        $client->updateConfig(
+            'theIndexName',
+            [
+                'sourceIndices' => [
+                    [
+                        'indexName' => 'testIndex',
 
-                    'facets' => [['attributes' => 'test']],
+                        'facets' => [['attributes' => 'test']],
 
-                    'generate' => [['facetA', 'facetB'], ['facetC']],
+                        'generate' => [['facetA', 'facetB'], ['facetC']],
+                    ],
                 ],
-            ],
 
-            'languages' => ['french'],
+                'languages' => ['french'],
 
-            'exclude' => ['test'],
-        ]);
+                'exclude' => ['test'],
+            ]
+        );
 
         $this->assertRequests([
             [
