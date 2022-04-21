@@ -139,7 +139,10 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       bundle.put("lambda", lambda);
 
       List<Object> blocks = new ArrayList<>();
-      ParametersWithDataType paramsType = new ParametersWithDataType(models);
+      ParametersWithDataType paramsType = new ParametersWithDataType(
+        models,
+        language
+      );
 
       for (Entry<String, Request[]> entry : cts.entrySet()) {
         String operationId = entry.getKey();
