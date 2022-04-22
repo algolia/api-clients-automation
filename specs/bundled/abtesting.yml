@@ -269,6 +269,9 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: abtesting
+    description: abtesting API reference.
 paths:
   /1{path}:
     get:

@@ -1901,6 +1901,9 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: search
+    description: Search API reference.
 paths:
   /1{path}:
     get:
@@ -3900,6 +3903,8 @@ paths:
       tags:
         - search
     put:
+      tags:
+        - search
       operationId: replaceSources
       description: Replace all allowed sources.
       summary: Replace all allowed sources.
@@ -3932,8 +3937,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - search
   /1/security/sources/append:
     post:
       operationId: appendSource
