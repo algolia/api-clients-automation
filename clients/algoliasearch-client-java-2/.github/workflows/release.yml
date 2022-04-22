@@ -18,8 +18,6 @@ jobs:
       ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Install Java
         uses: actions/setup-java@v2
@@ -34,5 +32,6 @@ jobs:
       - name: Upload Artifacts
         run: ./gradlew clean publish --no-parallel --stacktrace
 
-      # - name: Release Artifacts
-      #   run: ./gradlew closeAndReleaseRepository
+      - name: Release Artifacts
+        if: ! cat ./gradle.properties | grep 'VERSION_NAME=.*-SNAPSHOT'
+        run: ./gradlew closeAndReleaseRepository

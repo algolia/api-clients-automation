@@ -39,13 +39,13 @@ This Part 3 runs conditionally according to what has been done in Part 2. Under 
 
 Each language repository should have their own release process, and should run only when the latest commit starts with `chore: release`. By doing so, we have a way to just update the repository, for example READMEs, without having to release.
 
-## Releasing by hand
+## Releasing manually
 
 ### Java
 
 Java is released to [sonatype](https://oss.sonatype.org/) before being sent to [Maven](https://search.maven.org/artifact/com.algolia/algoliasearch-core) central repository, the `jar` need to be signed before publishing, and then verified on sonatype by using `closeAndRelease` target on Gradle.
-All of this is handled in the [release action](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-java-2/.github/workflows/release.yml), executed on the [Java repository](https://github.com/algolia/algoliasearch-client-java-2).
-If you want to release by hand, you need to copy some secrets to either:
+All of this is handled in the [release action](https://github.com/algolia/algoliasearch-client-java-2/tree/next/.github/workflows/release.yml), executed on the [Java repository](https://github.com/algolia/algoliasearch-client-java-2).
+If you want to release manually, you need to copy some secrets to either:
 - `clients/algoliasearch-client-java-2/gradle.properties` /!\ make sure to remove them before committing !
 - `~/.gradle/gradle.properties` which is safer because it's not committed and can stay on your computer.
 
