@@ -88,6 +88,15 @@ Then the resulting User Agent is `Algolia for Java (5.0.0); Search (5.0.0); JVM 
 
 You can take a look at the Java implementation [here](https://github.com/algolia/api-clients-automation/pull/347).
 
+### Dependencies
+
+You can use any dependency you want to create the client, it can be Json parser or HTTP client, but it's important to never expose those dependencies through the client, meaning:
+ - a function cannot return an object from a dependency
+ - a function cannot accept an object from a dependency as a parameter
+ - and so on
+
+To achieve this you can create interfaces that can be exposed, and wrap the method you want to be exposed, for an HTTP client for example.
+
 ### Requesters
 
 > TODO: informations
