@@ -6,32 +6,8 @@ const chalk = require('chalk');
 const execa = require('execa');
 const micromatch = require('micromatch');
 
-const GENERATED_FILE_PATTERNS = [
-  // Ignore the roots and go down the tree by negating hand written files
-  'clients/**',
-  '!clients/README.md',
-  '!clients/**/.openapi-generator-ignore',
-
-  // Java
-  '!clients/algoliasearch-client-java-2/algoliasearch-core/com/algolia/exceptions/*',
-  '!clients/algoliasearch-client-java-2/algoliasearch-core/com/algolia/utils/*',
-  'clients/algoliasearch-client-java-2/algoliasearch-core/com/algolia/utils/echo/EchoResponse.java',
-
-  // JavaScript
-  '!clients/algoliasearch-client-javascript/*',
-  '!clients/algoliasearch-client-javascript/.github/**',
-  '!clients/algoliasearch-client-javascript/.yarn/**',
-  '!clients/algoliasearch-client-javascript/scripts/**',
-  '!clients/algoliasearch-client-javascript/packages/algoliasearch/**',
-  '!clients/algoliasearch-client-javascript/packages/requester-*/**',
-  '!clients/algoliasearch-client-javascript/packages/client-common/**',
-
-  // PHP
-  '!clients/algoliasearch-client-php/lib/Configuration/*',
-  'clients/algoliasearch-client-php/lib/*.php',
-  'clients/algoliasearch-client-php/lib/Api/*',
-  'clients/algoliasearch-client-php/lib/Configuration/Configuration.php',
-];
+const GENERATED_FILE_PATTERNS =
+  require('../../../config/generation.config').patterns;
 
 const run = async (command, { cwd } = {}) => {
   return (
