@@ -3,6 +3,7 @@ module.exports = {
   patterns: [
     // Ignore the roots and go down the tree by negating hand written files
     'clients/**',
+    'clients/**/.*', // hidden files are not ignored by default
     '!clients/README.md',
     '!clients/**/.openapi-generator-ignore',
 

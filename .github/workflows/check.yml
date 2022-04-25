@@ -372,12 +372,6 @@ jobs:
         with:
           job: cts
 
-      - name: test
-        run: |
-          ls -la clients/algoliasearch-client-java-2/
-          ls -la clients/algoliasearch-client-java-2/algoliasearch-core
-          cat clients/algoliasearch-client-java-2/gradle.properties
-
       - name: Push generated code to generated branch
         id: pushGeneratedCode
         if: github.event_name == 'pull_request'
