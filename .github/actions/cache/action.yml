@@ -376,12 +376,24 @@ runs:
           )}}
 
     # Restore Java clients: used during 'cts' or 'codegen'
+    - name: Restore Java client gradle properties
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2/gradle.properties
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/bundled/search.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
     - name: Restore built Java search client
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/SearchClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/search/**
         key: |
@@ -397,7 +409,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/RecommendClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/recommend/**
         key: |
@@ -413,7 +424,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/PersonalizationClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/personalization/**
         key: |
@@ -429,7 +439,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/AnalyticsClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/analytics/**
         key: |
@@ -445,7 +454,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/InsightsClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/insights/**
         key: |
@@ -461,7 +469,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/AbtestingClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/abtesting/**
         key: |
@@ -477,7 +484,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/QuerySuggestionsClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/querySuggestions/**
         key: |
@@ -493,7 +499,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-java-2/gradle.properties
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/PredictClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/predict/**
         key: |

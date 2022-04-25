@@ -221,7 +221,6 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            clients/algoliasearch-client-java-2/gradle.properties
             ${{ format('{0}/algoliasearch-core/src/com/algolia/api/{1}.java', matrix.client.path, matrix.client.api) }}
             ${{ format('{0}/{1}/**', matrix.client.path, matrix.client.capitalizedName) }}
           key: |
@@ -372,6 +371,12 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
+
+      - name: test
+        run: |
+          ls -la clients/algoliasearch-client-java-2/
+          ls -la clients/algoliasearch-client-java-2/algoliasearch-core
+          cat clients/algoliasearch-client-java-2/gradle.properties
 
       - name: Push generated code to generated branch
         id: pushGeneratedCode
