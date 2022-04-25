@@ -242,12 +242,22 @@ public class ParametersWithDataType {
       );
 
       HashMap<String, String> oneOfModel = new HashMap<>();
+      String typeName = getTypeName(match).replace("<", "").replace(">", "");
 
       oneOfModel.put("classname", Utils.capitalize(baseType));
-      oneOfModel.put(
-        "name",
-        getTypeName(match).replace("<", "").replace(">", "")
-      );
+
+      if (typeName.equals("List")) {
+        Json.prettyPrint(match);
+        CodegenProperty items = match.getItems();
+
+        if (items == null) {
+          throw new CTSException("Unhandled case for empty oneOf List items.");
+        }
+
+        typeName += getTypeName(items);
+      }
+
+      oneOfModel.put("name", typeName);
       testOutput.put("oneOfModel", oneOfModel);
 
       return;

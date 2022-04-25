@@ -235,7 +235,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             queryParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_02.setQueryParameters(queryParameters3);
@@ -253,7 +253,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             fallbackParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_02.setFallbackParameters(fallbackParameters3);
@@ -369,7 +369,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             queryParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_02.setQueryParameters(queryParameters3);
@@ -387,7 +387,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             fallbackParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_02.setFallbackParameters(fallbackParameters3);
@@ -530,7 +530,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             queryParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_02.setQueryParameters(queryParameters3);
@@ -548,7 +548,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             fallbackParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_02.setFallbackParameters(fallbackParameters3);
@@ -593,7 +593,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             queryParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_12.setQueryParameters(queryParameters3);
@@ -611,7 +611,7 @@ class RecommendClientTests {
               facetFilters4.add(facetFilters_05);
             }
             fallbackParameters3.setFacetFilters(
-              FacetFilters.ofList(facetFilters4)
+              FacetFilters.ofListString(facetFilters4)
             );
           }
           requests_12.setFallbackParameters(fallbackParameters3);
