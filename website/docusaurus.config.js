@@ -96,18 +96,23 @@ function getSpecsForNavBar() {
           title: 'API Clients Automation',
           logo: {
             alt: 'Algolia',
-            src: 'img/algolia-logo.svg',
-            srcDark: 'img/algolia-logo.svg',
+            src: 'img/logo-small.png',
+            srcDark: 'img/logo-small.png',
           },
           items: [
             // left
             {
-              label: 'Docs',
-              to: 'docs/introduction',
+              label: 'Automation',
+              to: 'docs/automation/introduction',
               position: 'left',
             },
             {
-              label: 'Specs',
+              label: 'Clients',
+              to: 'docs/clients/introduction',
+              position: 'left',
+            },
+            {
+              label: 'API Specs',
               position: 'left',
               type: 'dropdown',
               items: getSpecsForNavBar(),
