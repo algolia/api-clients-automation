@@ -57,7 +57,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   if (!(await isUpToDate())) {
     console.log(
-      `The branch ${branchToPush} is not up to date with ${baseBranch}, stopping this CI and letting the new one push generated code.`
+      `The branch ${branchToPush} is not up to date with ${baseBranch}, stopping this task and letting the new job push generated code.`
     );
     return;
   }
