@@ -247,7 +247,6 @@ public class ParametersWithDataType {
       oneOfModel.put("classname", Utils.capitalize(baseType));
 
       if (typeName.equals("List")) {
-        Json.prettyPrint(match);
         CodegenProperty items = match.getItems();
 
         if (items == null) {
