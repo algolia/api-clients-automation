@@ -7,6 +7,8 @@ module.exports = {
     '!clients/**/.openapi-generator-ignore',
 
     // Java
+    '!clients/algoliasearch-client-java-2/*.gradle',
+    '!clients/algoliasearch-client-java-2/algoliasearch-core/build.gradle',
     '!clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/exceptions/*',
     '!clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/utils/*',
     'clients/algoliasearch-client-java-2/algoliasearch-core/com/algolia/utils/echo/EchoResponse*.java',
