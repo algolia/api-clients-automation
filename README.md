@@ -14,13 +14,13 @@ nvm use && yarn
 yarn docker:setup
 ```
 
-[Read more on our documentation](http://localhost:3000/docs/automation/setupRepository)
+[Read more on our documentation](https://api-clients-automation.netlify.app/docs/automation/setupRepository)
 
 ## Contributing
 
 You can make changes locally and run commands through the docker container.
 
-[Specs CLI commands](http://localhost:3000/docs/automation/CLI/specsCommands) • [Clients CLI commands](http://localhost:3000/docs/automation/CLI/clientsCommands) • [CTS CLI commands](http://localhost:3000/docs/automation/CLI/ctsCommands)
+[Specs CLI commands](https://api-clients-automation.netlify.app/docs/automation/CLI/specsCommands) • [Clients CLI commands](https://api-clients-automation.netlify.app/docs/automation/CLI/clientsCommands) • [CTS CLI commands](https://api-clients-automation.netlify.app/docs/automation/CLI/ctsCommands)
 
 ### Build and validate specs
 
@@ -30,7 +30,7 @@ You can make changes locally and run commands through the docker container.
 yarn docker build specs <client | all>
 ```
 
-[Read more on our documentation](http://localhost:3000/docs/automation/addNewClient)
+[Read more on our documentation](https://api-clients-automation.netlify.app/docs/automation/addNewClient)
 
 ### Generate clients based on the [`specs`](./specs/)
 
@@ -40,7 +40,7 @@ yarn docker build specs <client | all>
 yarn docker generate <language | all> <client | all>
 ```
 
-[Read more on our documentation](http://localhost:3000/docs/automation/addNewLanguage)
+[Read more on our documentation](https://api-clients-automation.netlify.app/docs/automation/addNewLanguage)
 
 ## Testing clients
 
