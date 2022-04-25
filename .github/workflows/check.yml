@@ -98,7 +98,7 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ matrix.client.bundledPath }}
+          path: ${{ format('specs/bundled/{0}.yml', matrix.client.name) }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
