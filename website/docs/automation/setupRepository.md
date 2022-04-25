@@ -58,6 +58,7 @@ Once you've successfully built and mounted the Docker image, you can now play wi
 - [How to add a new language](/docs/automation/addNewLanguage)
 - [Use CLI specs commands](/docs/automation/CLI/specsCommands)
 - [Use CLI clients commands](/docs/automation/CLI/clientsCommands)
+- [Use CLI Common Test Suite commands](/docs/automation/CLI/specsCommands)
 
 ## Troubleshooting
 
