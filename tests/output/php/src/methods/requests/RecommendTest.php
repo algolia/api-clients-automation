@@ -65,7 +65,10 @@ class RecommendTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            RecommendConfig::create(),
+            RecommendConfig::create(
+                getenv('ALGOLIA_APP_ID'),
+                getenv('ALGOLIA_API_KEY')
+            ),
             ClusterHosts::create('127.0.0.1')
         );
         $config = RecommendConfig::create('foo', 'bar');

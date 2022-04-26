@@ -65,7 +65,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            AbtestingConfig::create(),
+            AbtestingConfig::create(
+                getenv('ALGOLIA_APP_ID'),
+                getenv('ALGOLIA_API_KEY')
+            ),
             ClusterHosts::create('127.0.0.1')
         );
         $config = AbtestingConfig::create('foo', 'bar');

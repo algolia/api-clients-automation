@@ -65,7 +65,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            InsightsConfig::create(),
+            InsightsConfig::create(
+                getenv('ALGOLIA_APP_ID'),
+                getenv('ALGOLIA_API_KEY')
+            ),
             ClusterHosts::create('127.0.0.1')
         );
         $config = InsightsConfig::create('foo', 'bar');

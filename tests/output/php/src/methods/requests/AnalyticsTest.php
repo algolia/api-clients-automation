@@ -65,7 +65,10 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            AnalyticsConfig::create(),
+            AnalyticsConfig::create(
+                getenv('ALGOLIA_APP_ID'),
+                getenv('ALGOLIA_API_KEY')
+            ),
             ClusterHosts::create('127.0.0.1')
         );
         $config = AnalyticsConfig::create('foo', 'bar');

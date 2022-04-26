@@ -65,7 +65,10 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            QuerySuggestionsConfig::create(),
+            QuerySuggestionsConfig::create(
+                getenv('ALGOLIA_APP_ID'),
+                getenv('ALGOLIA_API_KEY')
+            ),
             ClusterHosts::create('127.0.0.1')
         );
         $config = QuerySuggestionsConfig::create('foo', 'bar');

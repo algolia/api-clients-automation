@@ -65,7 +65,10 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $api = new ApiWrapper(
             $this,
-            SearchConfig::create(),
+            SearchConfig::create(
+                getenv('ALGOLIA_APP_ID'),
+                getenv('ALGOLIA_API_KEY')
+            ),
             ClusterHosts::create('127.0.0.1')
         );
         $config = SearchConfig::create('foo', 'bar');
@@ -1487,7 +1490,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for Search
-     * search
+     * search with minimal parameters
      */
     public function testSearch0()
     {
@@ -1503,6 +1506,30 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/indexName/query',
                 'method' => 'POST',
                 'body' => json_decode("{\"query\":\"myQuery\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Search
+     * search with facetFilters
+     */
+    public function testSearch1()
+    {
+        $client = $this->getClient();
+
+        $client->search(
+            'indexName',
+            ['query' => 'myQuery', 'facetFilters' => ['tags:algolia']]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode(
+                    "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}"
+                ),
             ],
         ]);
     }
