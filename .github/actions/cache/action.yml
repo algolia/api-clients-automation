@@ -22,15 +22,18 @@ runs:
     # JavaScript setup
     - name: Get yarn cache directory path
       shell: bash
+      if: ${{ inputs.skip_yarn != 'true' }}
       id: yarn-cache-dir
-      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      run: |
+        echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        echo "::set-output name=cache::$(< .github/.cache_version)"
 
     - name: Restore Yarn
-      if: ${{ inputs.skip_yarn == 'true' }}
+      if: ${{ inputs.skip_yarn != 'true' }}
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        key: node-cache-${{ cat .github/.cache_version }}-yarn-${{ hashFiles('yarn.lock') }}
+        key: node-cache-${{ steps.yarn-cache-dir.outputs.cache }}-yarn-${{ hashFiles('yarn.lock') }}
 
     # Java setup: used during 'java' generation or 'cts'
     - name: Download Java formatter
@@ -620,4 +623,5 @@ runs:
 
     - name: Install JavaScript dependencies
       shell: bash
+      if: ${{ inputs.skip_yarn != 'true' }}
       run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install

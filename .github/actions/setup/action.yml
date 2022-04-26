@@ -31,11 +31,10 @@ runs:
         node-version-file: .nvmrc
         cache: yarn
 
-    - name: Restore Yarn
-      uses: actions/cache@v2
+    - name: Run yarn install
+      uses: ./.github/actions/cache
       with:
-        path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        key: node-cache-${{ cat .github/.cache_version }}-yarn-${{ hashFiles('yarn.lock') }}
+        cache_version: not-used-here
 
     - name: Setting diff outputs variables
       if: inputs.type != 'minimal'
@@ -52,7 +51,7 @@ runs:
       shell: bash
       run: echo "CACHE_VERSION=$(< .github/.cache_version)-${{ steps.diff.outputs.GITHUB_ACTIONS_HASH }}-${{ steps.diff.outputs.SCRIPTS_CHANGED }}" >> $GITHUB_ENV
 
-    - name: Restore cache
+    - name: Install java formatter
       uses: ./.github/actions/cache
       with:
         # We want to load the java formatter
