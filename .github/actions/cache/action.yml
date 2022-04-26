@@ -382,9 +382,8 @@ runs:
       with:
         path: clients/algoliasearch-client-java-2/gradle*
         key: |
-          ${{ env.CACHE_VERSION }}-${{
+          ${{ env.CACHE_VERSION }}-java-common-${{
           hashFiles(
-            'specs/bundled/search.yml',
             'templates/java/**',
             'generators/src/**'
           )}}
