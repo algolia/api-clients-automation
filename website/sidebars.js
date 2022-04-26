@@ -28,7 +28,7 @@ const sidebars = {
       label: 'Contributing',
       collapsed: false,
       items: [
-        'automation/addNewClient',
+        'automation/addNewApiClient',
         'automation/addNewLanguage',
         {
           type: 'category',

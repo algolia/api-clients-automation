@@ -30,7 +30,7 @@ You can make changes locally and run commands through the docker container.
 yarn docker build specs <client | all>
 ```
 
-[Read more on our documentation](https://api-clients-automation.netlify.app/docs/automation/addNewClient)
+[Read more on our documentation](https://api-clients-automation.netlify.app/docs/automation/addNewApiClient)
 
 ### Generate clients based on the [`specs`](./specs/)
 

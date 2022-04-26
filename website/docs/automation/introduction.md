@@ -12,7 +12,7 @@ To contribute to the repository, make sure to take a look at our guidelines and 
 
 - [Setup the repository tooling](/docs/automation/setupRepository): to install our tooling.
   - CLI commands can be found at [CLI > specs commands](/docs/automation/CLI/specsCommands), [CLI > clients commands](/docs/automation/CLI/clientsCommands) and [CLI > CTS commands](/docs/automation/CLI/ctsCommands).
-- [Add a new client](/docs/automation/addNewClient): to add a new API spec to generate a client.
+- [Add a new client](/docs/automation/addNewApiClient): to add a new API spec to generate a client.
 - [Support a new language](/docs/automation/addNewLanguage): to add a new supported language to the API clients.
 - [Commit and Pull-request](/docs/automation/commitAndPullRequest): to see what to commit and send pull-requests.
 - [Release process](/docs/automation/releaseProcess): to see how to release API clients.

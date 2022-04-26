@@ -1,10 +1,10 @@
 ---
-title: Add a new client
+title: Add a new API client
 ---
 
-# Add a new client
+# Add a new API client
 
-Adding a client requires a manual steps in order to setup the tooling, generation scripts and properly generate the code. We recommend getting inspirations from existing clients such as `javascript-recommend`.
+Adding an API client requires a manual steps in order to setup the tooling, generation scripts and properly generate the code. We recommend getting inspirations from existing clients such as `javascript-recommend`.
 
 :::info
 
