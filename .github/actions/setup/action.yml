@@ -38,7 +38,7 @@ runs:
     - name: Run yarn install and install java formatter
       uses: ./.github/actions/cache
       with:
-        language: true
+        language: java
 
     - name: Setting diff outputs variables
       if: inputs.type != 'minimal'
