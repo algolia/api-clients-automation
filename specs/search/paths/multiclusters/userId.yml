@@ -1,6 +1,6 @@
 get:
   tags:
-    - Cluster
+    - Clusters
   operationId: getUserId
   summary: Get userID
   description: >
@@ -29,7 +29,7 @@ get:
 
 delete:
   tags:
-    - Cluster
+    - Clusters
   operationId: removeUserId
   summary: Remove userID
   description: >

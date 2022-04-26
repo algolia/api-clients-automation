@@ -1,6 +1,6 @@
 post:
   tags:
-    - Object
+    - Records
   operationId: saveObject
   description: Add an object to the index, automatically assigning it an object ID.
   summary: Add an object to the index.
@@ -40,7 +40,7 @@ post:
 
 delete:
   tags:
-    - Object
+    - Indices
   operationId: deleteIndex
   summary: Delete index.
   description: Delete an existing index.

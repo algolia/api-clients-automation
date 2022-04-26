@@ -1,6 +1,6 @@
 post:
   tags:
-    - Cluster
+    - Clusters
   operationId: batchAssignUserIds
   summary: Batch assign userIDs
   description: >

@@ -38,24 +38,46 @@ tags:
     description: Advanced operations.
   - name: Api Keys
     description: Manage your Api Keys.
-  - name: Cluster
+  - name: Clusters
     description: Clusters operations.
-  - name: Dictionnary
+  - name: Dictionnaries
     description: Dictionnaries operations.
-  - name: Index
-    description: Manage your Indices.
-  - name: Index Settings
-    description: Manage your Index Settings.
-  - name: Object
-    description: Objects and indexing operations.
-  - name: Rule
+  - name: Indices
+    description: Manage indices.
+  - name: Records
+    description: Records operations.
+  - name: Rules
     description: Rules operations.
   - name: Search
     description: Perform search operations.
-  - name: Synonym
+  - name: Synonyms
     description: Synonyms operations.
-  - name: Vault
+  - name: Vaults
     description: Vault operations.
+  - name: _model_index_settings
+    x-displayName: Index Settings
+    description: |
+      <SchemaDefinition schemaRef="#/components/schemas/indexSettings" />.
+x-tagGroups:
+  - name: Search and Indexing
+    tags:
+      - Indices
+      - Records
+      - Search
+  - name: Relevance
+    tags:
+      - Rules
+      - Synonyms
+      - Dictionnaries
+  - name: Other
+    tags:
+      - Api Keys
+      - Clusters
+      - Vaults
+      - Advanced
+  - name: Models
+    tags:
+      - _model_index_settings
 paths:
   # ######################
   # ### Custom request ###

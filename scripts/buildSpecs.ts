@@ -24,15 +24,27 @@ async function propagateTagsToOperations({
     throw new Error(`Bundled file not found ${bundledPath}.`);
   }
 
+  const pathToDoc = bundledPath.replace('.yml', '.doc.yml');
+
   const bundledSpec = yaml.load(
+    await fsp.readFile(bundledPath, 'utf8')
+  ) as Spec;
+  const bundledDocSpec = yaml.load(
     await fsp.readFile(bundledPath, 'utf8')
   ) as Spec;
   const tagsDefinitions = bundledSpec.tags;
 
-  for (const pathMethods of Object.values(bundledSpec.paths)) {
-    for (const specMethod of Object.values(pathMethods)) {
-      specMethod.tags = [...(specMethod.tags || []), clientName];
-      for (const tag of specMethod.tags) {
+  for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
+    for (const [method, specMethod] of Object.entries(pathMethods)) {
+      // In the main bundle we need to only have the clientName before open-api generator will use this to determine the name of the client
+      specMethod.tags = [clientName];
+
+      if (!bundledDocSpec.paths[pathKey][method].tags) {
+        continue;
+      }
+
+      // Checks that specified tags are well defined at root level
+      for (const tag of bundledDocSpec.paths[pathKey][method].tags) {
         if (tag === clientName) {
           return;
         }
@@ -52,6 +64,12 @@ async function propagateTagsToOperations({
   await fsp.writeFile(
     bundledPath,
     yaml.dump(bundledSpec, {
+      noRefs: true,
+    })
+  );
+  await fsp.writeFile(
+    pathToDoc,
+    yaml.dump(bundledDocSpec, {
       noRefs: true,
     })
   );
@@ -147,7 +165,10 @@ async function buildSpec(
   createSpinner(`'${client}' spec`, verbose).start().info();
 
   if (useCache) {
-    const generatedFiles = [`bundled/${client}.yml`];
+    const generatedFiles = [
+      `bundled/${client}.yml`,
+      `bundled/${client}.doc.yml`,
+    ];
 
     if (shouldBundleLiteSpec) {
       generatedFiles.push(`bundled/${spec}.yml`);

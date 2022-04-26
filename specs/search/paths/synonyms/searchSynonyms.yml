@@ -1,6 +1,6 @@
 post:
   tags:
-    - Synonym
+    - Synonyms
   operationId: searchSynonyms
   summary: Get all synonyms that match a query.
   description: Search or browse all synonyms, optionally filtering them by type.

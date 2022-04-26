@@ -1,3 +1,27 @@
+get:
+  tags:
+    - Api Keys
+  operationId: getApiKey
+  summary: Get an API key.
+  description: Get the permissions of an API key.
+  parameters:
+    - $ref: 'common/parameters.yml#/KeyString'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'common/schemas.yml#/key'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+
 put:
   tags:
     - Api Keys
@@ -29,30 +53,6 @@ put:
                 $ref: 'common/schemas.yml#/keyString'
               updatedAt:
                 $ref: '../../../common/parameters.yml#/updatedAt'
-    '400':
-      $ref: '../../../common/responses/BadRequest.yml'
-    '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
-    '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
-    '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
-
-get:
-  tags:
-    - Api Keys
-  operationId: getApiKey
-  summary: Get an API key.
-  description: Get the permissions of an API key.
-  parameters:
-    - $ref: 'common/parameters.yml#/KeyString'
-  responses:
-    '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: 'common/schemas.yml#/key'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

@@ -1,6 +1,6 @@
 get:
   tags:
-    - Vault
+    - Vaults
   operationId: getSources
   description: List all allowed sources.
   summary: List all allowed sources.
@@ -22,7 +22,7 @@ get:
 
 put:
   tags:
-    - Vault
+    - Vaults
   operationId: replaceSources
   description: Replace all allowed sources.
   summary: Replace all allowed sources.
