@@ -1,4 +1,6 @@
 get:
+  tags:
+    - Cluster
   operationId: listClusters
   summary: List clusters
   description: >

@@ -33,6 +33,29 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: Advanced
+    description: Advanced operations.
+  - name: Api Keys
+    description: Manage your Api Keys.
+  - name: Cluster
+    description: Clusters operations.
+  - name: Dictionnary
+    description: Dictionnaries operations.
+  - name: Index
+    description: Manage your Indices.
+  - name: Index Settings
+    description: Manage your Index Settings.
+  - name: Object
+    description: Objects and indexing operations.
+  - name: Rule
+    description: Rules operations.
+  - name: Search
+    description: Perform search operations.
+  - name: Synonym
+    description: Synonyms operations.
+  - name: Vault
+    description: Vault operations.
 paths:
   # ######################
   # ### Custom request ###

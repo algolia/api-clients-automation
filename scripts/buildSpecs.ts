@@ -13,10 +13,13 @@ const ALGOLIASEARCH_LITE_OPERATIONS = [
   'post',
 ];
 
-async function propagateTagsToOperations(
-  bundledPath: string,
-  client: string
-): Promise<boolean> {
+async function propagateTagsToOperations({
+  bundledPath,
+  clientName,
+}: {
+  bundledPath: string;
+  clientName: string;
+}): Promise<void> {
   if (!(await exists(bundledPath))) {
     throw new Error(`Bundled file not found ${bundledPath}.`);
   }
@@ -24,10 +27,25 @@ async function propagateTagsToOperations(
   const bundledSpec = yaml.load(
     await fsp.readFile(bundledPath, 'utf8')
   ) as Spec;
+  const tagsDefinitions = bundledSpec.tags;
 
   for (const pathMethods of Object.values(bundledSpec.paths)) {
     for (const specMethod of Object.values(pathMethods)) {
-      specMethod.tags = [client];
+      specMethod.tags = [...(specMethod.tags || []), clientName];
+      for (const tag of specMethod.tags) {
+        if (tag === clientName) {
+          return;
+        }
+
+        const tagExists = tagsDefinitions
+          ? tagsDefinitions.find((t) => t.name === tag)
+          : null;
+        if (!tagExists) {
+          throw new Error(
+            `Tag "${tag}" in "client[${clientName}] -> operation[${specMethod.operationId}]" is not defined`
+          );
+        }
+      }
     }
   }
 
@@ -37,8 +55,6 @@ async function propagateTagsToOperations(
       noRefs: true,
     })
   );
-
-  return true;
 }
 
 async function lintCommon(verbose: boolean, useCache: boolean): Promise<void> {
@@ -84,11 +100,11 @@ async function buildLiteSpec(
   outputFormat: string,
   verbose: boolean
 ): Promise<void> {
-  const searchSpec = yaml.load(
+  const parsed = yaml.load(
     await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')
   ) as Spec;
 
-  searchSpec.paths = Object.entries(searchSpec.paths).reduce(
+  parsed.paths = Object.entries(parsed.paths).reduce(
     (acc, [path, operations]) => {
       for (const [method, operation] of Object.entries(operations)) {
         if (
@@ -105,15 +121,12 @@ async function buildLiteSpec(
   );
 
   const liteBundledPath = `specs/bundled/${spec}.${outputFormat}`;
-  await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(searchSpec));
+  await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(parsed));
 
-  if (
-    !(await propagateTagsToOperations(toAbsolutePath(liteBundledPath), spec))
-  ) {
-    throw new Error(
-      `Unable to propage tags to operations for \`${spec}\` spec.`
-    );
-  }
+  await propagateTagsToOperations({
+    bundledPath: toAbsolutePath(liteBundledPath),
+    clientName: spec,
+  });
 
   await run(`yarn specs:fix bundled/${spec}.${outputFormat}`, {
     verbose,
@@ -165,12 +178,10 @@ async function buildSpec(
     { verbose }
   );
 
-  if (!(await propagateTagsToOperations(toAbsolutePath(bundledPath), client))) {
-    spinner.fail();
-    throw new Error(
-      `Unable to propage tags to operations for \`${client}\` spec.`
-    );
-  }
+  await propagateTagsToOperations({
+    bundledPath: toAbsolutePath(bundledPath),
+    clientName: spec,
+  });
 
   spinner.text = `linting ${client} spec`;
   await run(`yarn specs:fix ${client}`, { verbose });

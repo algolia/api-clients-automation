@@ -1,4 +1,6 @@
 put:
+  tags:
+    - Api Keys
   operationId: updateApiKey
   summary: Update an API key.
   description: Replace every permission of an existing API key.
@@ -37,6 +39,8 @@ put:
       $ref: '../../../common/responses/IndexNotFound.yml'
 
 get:
+  tags:
+    - Api Keys
   operationId: getApiKey
   summary: Get an API key.
   description: Get the permissions of an API key.
@@ -59,6 +63,8 @@ get:
       $ref: '../../../common/responses/IndexNotFound.yml'
 
 delete:
+  tags:
+    - Api Keys
   operationId: deleteApiKey
   summary: Delete an API key.
   description: Delete an existing API Key.
