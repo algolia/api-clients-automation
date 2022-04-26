@@ -21,13 +21,13 @@ yarn docker generate <language | all> <client | all>
 
 ## Generate
 
-### Generate all supported languages for all clients
+### Generate all clients for all supported languages
 
 ```bash
 yarn docker generate
 ```
 
-### Generate specific language for specific client
+### Generate specific client for specific language
 
 ```bash
 yarn docker generate java sources
@@ -35,13 +35,13 @@ yarn docker generate java sources
 
 ## Build
 
-### Build all supported languages for all clients
+### Build all clients for all supported languages
 
 ```bash
 yarn docker build clients
 ```
 
-### Build specific language for specific client
+### Build specific client for specific language
 
 ```bash
 yarn docker build clients javascript recommend

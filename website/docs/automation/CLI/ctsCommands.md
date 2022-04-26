@@ -27,13 +27,13 @@ yarn docker cts generate <language | all> <client | all>
 
 ## Generate
 
-### Generate CTS for all supported languages for all clients
+### Generate CTS for all clients for all supported languages
 
 ```bash
 yarn docker cts generate
 ```
 
-### Generate CTS for specific language for specific client
+### Generate CTS for specific client for specific language
 
 ```bash
 yarn docker cts generate java sources
@@ -45,10 +45,4 @@ yarn docker cts generate java sources
 
 ```bash
 yarn docker cts run
-```
-
-### Build specific language
-
-```bash
-yarn docker build clients javascript
 ```
