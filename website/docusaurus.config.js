@@ -102,13 +102,13 @@ function getSpecsForNavBar() {
           items: [
             // left
             {
-              label: 'Automation',
-              to: 'docs/automation/introduction',
+              label: 'Clients',
+              to: 'docs/clients/introduction',
               position: 'left',
             },
             {
-              label: 'Clients',
-              to: 'docs/clients/introduction',
+              label: 'Automation',
+              to: 'docs/automation/introduction',
               position: 'left',
             },
             {
