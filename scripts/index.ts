@@ -194,12 +194,7 @@ buildCommand
         clientsTodo = CLIENTS;
       }
       // ignore cache when building from cli
-      await buildSpecs(
-        clientsTodo,
-        outputFormat!,
-        Boolean(verbose),
-        !skipCache
-      );
+      await buildSpecs(clientsTodo, outputFormat, Boolean(verbose), !skipCache);
     }
   );
 
@@ -226,6 +221,10 @@ ctsCommand
     ) => {
       language = await promptLanguage(language, interactive);
       client = await promptClient(client, interactive);
+
+      if (CI) {
+        await buildSpecs(CLIENTS, 'yml', Boolean(verbose), true);
+      }
 
       await ctsGenerateMany(
         generatorList({ language, client }),
