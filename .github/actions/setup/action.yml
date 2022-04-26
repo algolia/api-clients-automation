@@ -31,6 +31,12 @@ runs:
         node-version-file: .nvmrc
         cache: yarn
 
+    - name: Restore Yarn
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
+        key: node-cache-${{ cat .github/.cache_version }}-yarn-${{ hashFiles('yarn.lock') }}
+
     - name: Setting diff outputs variables
       if: inputs.type != 'minimal'
       id: diff
@@ -52,6 +58,7 @@ runs:
         # We want to load the java formatter
         language: java
         cache_version: ${{ env.CACHE_VERSION }}
+        skip_yarn: true
 
     - name: Compute specs matrix
       if: inputs.type != 'minimal'

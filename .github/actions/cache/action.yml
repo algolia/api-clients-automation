@@ -12,6 +12,9 @@ inputs:
   cache_version:
     description: the cache version that includes the common change hash
     required: true
+  skip_yarn:
+    description: true if you want to skip yarn install
+    required: false
 
 runs:
   using: composite
@@ -23,6 +26,7 @@ runs:
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
     - name: Restore Yarn
+      if: ${{ inputs.skip_yarn == 'true' }}
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
