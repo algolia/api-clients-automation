@@ -81,7 +81,6 @@ Co-authored-by: %an <%ae>
 
   if (PR_NUMBER) {
     await run(`git checkout ${baseBranch}`);
-    await run(`git checkout ${branchToPush} -- ${FOLDERS_TO_CHECK}`);
     await run(`yarn workspace scripts upsertGenerationComment codegen`);
   }
 }
