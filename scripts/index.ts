@@ -222,10 +222,6 @@ ctsCommand
       language = await promptLanguage(language, interactive);
       client = await promptClient(client, interactive);
 
-      if (CI) {
-        await buildSpecs(CLIENTS, 'yml', Boolean(verbose), true);
-      }
-
       await ctsGenerateMany(
         generatorList({ language, client }),
         Boolean(verbose)
