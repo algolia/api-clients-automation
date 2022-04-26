@@ -102,8 +102,8 @@ function getSpecsForNavBar() {
           items: [
             // left
             {
-              label: 'Clients',
-              to: 'docs/clients/introduction',
+              label: 'API Clients',
+              to: 'docs/api-clients/introduction',
               position: 'left',
             },
             {

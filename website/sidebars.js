@@ -45,7 +45,7 @@ const sidebars = {
     },
   ],
   // Everything related to the generated clients usage
-  clients: ['clients/introduction', 'clients/gettingStarted'],
+  clients: ['api-clients/introduction', 'api-clients/gettingStarted'],
 };
 
 // eslint-disable-next-line import/no-commonjs
