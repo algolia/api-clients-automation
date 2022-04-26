@@ -125,6 +125,7 @@ async function setRunVariables({
     console.log(`Found ${diff} changes for '${check.name}'`);
     console.log(`::set-output name=${check.name}::${diff}`);
     if (diff && check.needHash) {
+      // remove troublesome char from the hash
       const hash = (await hashElement('.', check.hashOptions)).hash.replace(
         /[=/]/g,
         ''

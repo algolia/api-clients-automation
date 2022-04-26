@@ -25,7 +25,9 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Lint GitHub actions
-        run: yarn github-actions:lint
+        run: |
+          echo "CACHE_VERSION=${{ steps.setup.outputs.CACHE_VERSION }}" >> $GITHUB_ENV
+          yarn github-actions:lint
 
       - name: Lint generators
         run: |
