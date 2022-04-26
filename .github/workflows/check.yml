@@ -71,6 +71,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Check script linting
         run: yarn scripts:lint
@@ -93,6 +95,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' bundled specs
         id: cache
@@ -126,6 +130,8 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client }}' client
         id: cache
@@ -164,6 +170,7 @@ jobs:
         with:
           job: client
           language: javascript
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -215,6 +222,7 @@ jobs:
         with:
           job: client
           language: java
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -264,6 +272,7 @@ jobs:
         with:
           job: client
           language: php
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -309,6 +318,7 @@ jobs:
         with:
           job: codegen
           language: javascript
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache 'algoliasearch' client
         id: cache
@@ -344,6 +354,7 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Run client-common tests
         run: yarn workspace @experimental-api-clients-automation/client-common test
@@ -371,6 +382,7 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Push generated code to generated branch
         id: pushGeneratedCode
@@ -417,6 +429,7 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: codegen
+          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Push generated code to main
         id: pushGeneratedCode
