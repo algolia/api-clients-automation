@@ -49,7 +49,7 @@ runs:
 
     - name: Read current GitHub Actions cache version
       shell: bash
-      run: echo "CACHE_VERSION=$(< .github/.cache_version)-${{ steps.diff.outputs.GITHUB_ACTIONS_HASH }}-${{ steps.diff.outputs.SCRIPTS_CHANGED }}" >> $GITHUB_ENV
+      run: echo "CACHE_VERSION=$(< .github/.cache_version)-${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED_HASH }}-${{ steps.diff.outputs.SCRIPTS_CHANGED_HASH }}" >> $GITHUB_ENV
 
     - name: Install java formatter
       uses: ./.github/actions/cache
