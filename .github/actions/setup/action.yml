@@ -13,6 +13,10 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Read current GitHub Actions cache version
+      shell: bash
+      run: echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
+
     - name: Install Java
       if: inputs.type != 'minimal'
       uses: actions/setup-java@v2
@@ -31,10 +35,10 @@ runs:
         node-version-file: .nvmrc
         cache: yarn
 
-    - name: Run yarn install
+    - name: Run yarn install and install java formatter
       uses: ./.github/actions/cache
       with:
-        cache_version: not-used-here
+        language: true
 
     - name: Setting diff outputs variables
       if: inputs.type != 'minimal'
@@ -47,20 +51,10 @@ runs:
 
         yarn workspace scripts setRunVariables "$origin"
 
-    - name: Read current GitHub Actions cache version
-      id: cache-version
+    - name: Compute cache common hash
+      if: inputs.type != 'minimal'
       shell: bash
-      run: |
-        cache_version=$(< .github/.cache_version)-${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED_HASH }}-${{ steps.diff.outputs.SCRIPTS_CHANGED_HASH }}
-        echo "::set-output name=CACHE_VERSION::$cache_version"
-
-    - name: Install java formatter
-      uses: ./.github/actions/cache
-      with:
-        # We want to load the java formatter
-        language: java
-        cache_version: ${{ steps.cache-version.outputs.CACHE_VERSION }}
-        skip_yarn: true
+      run: echo "CACHE_COMMON_HASH=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED_HASH }}-${{ steps.diff.outputs.SCRIPTS_CHANGED_HASH }}" >> $GITHUB_ENV
 
     - name: Compute specs matrix
       if: inputs.type != 'minimal'
@@ -159,9 +153,6 @@ runs:
         echo "::set-output name=RUN_CLIENT::$run"
 
 outputs:
-  CACHE_VERSION:
-    description: the cache version
-    value: ${{ steps.cache-version.outputs.CACHE_VERSION }}
   RUN_SPECS:
     description: Determine if the `specs` job should run
     value: ${{ steps.spec-matrix.outputs.RUN_SPECS }}

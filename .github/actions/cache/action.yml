@@ -9,12 +9,6 @@ inputs:
   language:
     description: The language to retrieve dependencies.
     required: false
-  cache_version:
-    description: the cache version that includes the common change hash
-    required: true
-  skip_yarn:
-    description: true if you want to skip yarn install
-    required: false
 
 runs:
   using: composite
@@ -22,18 +16,14 @@ runs:
     # JavaScript setup
     - name: Get yarn cache directory path
       shell: bash
-      if: ${{ inputs.skip_yarn != 'true' }}
       id: yarn-cache-dir
-      run: |
-        echo "::set-output name=dir::$(yarn config get cacheFolder)"
-        echo "::set-output name=cache::$(< .github/.cache_version)"
+      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
     - name: Restore Yarn
-      if: ${{ inputs.skip_yarn != 'true' }}
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        key: node-cache-${{ steps.yarn-cache-dir.outputs.cache }}-yarn-${{ hashFiles('yarn.lock') }}
+        key: node-cache-${{ env.CACHE_VERSION }}-yarn-${{ hashFiles('yarn.lock') }}
 
     # Java setup: used during 'java' generation or 'cts'
     - name: Download Java formatter
@@ -48,7 +38,7 @@ runs:
       with:
         path: specs/bundled/abtesting.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/abtesting/**',
             'specs/common/**'
@@ -60,7 +50,7 @@ runs:
       with:
         path: specs/bundled/analytics.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/analytics/**',
             'specs/common/**'
@@ -72,7 +62,7 @@ runs:
       with:
         path: specs/bundled/insights.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/insights/**',
             'specs/common/**'
@@ -84,7 +74,7 @@ runs:
       with:
         path: specs/bundled/personalization.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/personalization/**',
             'specs/common/**'
@@ -96,7 +86,7 @@ runs:
       with:
         path: specs/bundled/predict.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/predict/**',
             'specs/common/**'
@@ -108,7 +98,7 @@ runs:
       with:
         path: specs/bundled/query-suggestions.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/query-suggestions/**',
             'specs/common/**'
@@ -120,7 +110,7 @@ runs:
       with:
         path: specs/bundled/recommend.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/recommend/**',
             'specs/common/**'
@@ -132,7 +122,7 @@ runs:
       with:
         path: specs/bundled/search.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/search/**',
             'specs/common/**'
@@ -144,7 +134,7 @@ runs:
       with:
         path: specs/bundled/algoliasearch-lite.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/search/**',
             'specs/common/**'
@@ -156,7 +146,7 @@ runs:
       with:
         path: specs/bundled/sources.yml
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/sources/**',
             'specs/common/**'
@@ -169,7 +159,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-common
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-common/src/**'
           )}}
@@ -180,7 +170,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/requester-node-http
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/requester-node-http/src/**'
           )}}
@@ -191,7 +181,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/requester-browser-xhr
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/requester-browser-xhr/src/**'
           )}}
@@ -203,7 +193,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/algoliasearch
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
             'clients/algoliasearch-client-javascript/packages/client-search/**',
@@ -217,7 +207,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/algoliasearch-lite
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/algoliasearch-lite/src/**',
             'clients/algoliasearch-client-javascript/packages/algoliasearch-lite/model/**',
@@ -234,7 +224,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-search
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-search/src/**',
             'clients/algoliasearch-client-javascript/packages/client-search/model/**',
@@ -251,7 +241,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/recommend
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/recommend/src/**',
             'clients/algoliasearch-client-javascript/packages/recommend/model/**',
@@ -268,7 +258,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-query-suggestions
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-query-suggestions/src/**',
             'clients/algoliasearch-client-javascript/packages/client-query-suggestions/model/**',
@@ -285,7 +275,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-personalization
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-personalization/src/**',
             'clients/algoliasearch-client-javascript/packages/client-personalization/model/**',
@@ -302,7 +292,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-analytics
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-analytics/src/**',
             'clients/algoliasearch-client-javascript/packages/client-analytics/model/**',
@@ -319,7 +309,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-abtesting
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-abtesting/src/**',
             'clients/algoliasearch-client-javascript/packages/client-abtesting/model/**',
@@ -336,7 +326,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-insights
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-insights/src/**',
             'clients/algoliasearch-client-javascript/packages/client-insights/model/**',
@@ -353,7 +343,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-sources
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-sources/src/**',
             'clients/algoliasearch-client-javascript/packages/client-sources/model/**',
@@ -370,7 +360,7 @@ runs:
       with:
         path: clients/algoliasearch-client-javascript/packages/client-predict
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'clients/algoliasearch-client-javascript/packages/client-predict/src/**',
             'clients/algoliasearch-client-javascript/packages/client-predict/model/**',
@@ -388,7 +378,7 @@ runs:
       with:
         path: clients/algoliasearch-client-java-2/gradle.properties
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/search.yml',
             'templates/java/**',
@@ -403,7 +393,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/SearchClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/search/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/search.yml',
             'templates/java/**',
@@ -418,7 +408,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/RecommendClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/recommend/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/recommend.yml',
             'templates/java/**',
@@ -433,7 +423,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/PersonalizationClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/personalization/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/personalization.yml',
             'templates/java/**',
@@ -448,7 +438,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/AnalyticsClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/analytics/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/analytics.yml',
             'templates/java/**',
@@ -463,7 +453,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/InsightsClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/insights/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/insights.yml',
             'templates/java/**',
@@ -478,7 +468,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/AbtestingClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/abtesting/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/abtesting.yml',
             'templates/java/**',
@@ -493,7 +483,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/QuerySuggestionsClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/querySuggestions/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/query-suggestions.yml',
             'templates/java/**',
@@ -508,7 +498,7 @@ runs:
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/PredictClient.java
           clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/predict/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/predict.yml',
             'templates/java/**',
@@ -524,7 +514,7 @@ runs:
           clients/algoliasearch-client-php/lib/Api/SearchClient.php
           clients/algoliasearch-client-php/lib/Model/Search/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/search.yml',
             'templates/php/**',
@@ -539,7 +529,7 @@ runs:
           clients/algoliasearch-client-php/lib/Api/RecommendClient.php
           clients/algoliasearch-client-php/lib/Model/Recommend/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/recommend.yml',
             'templates/php/**',
@@ -554,7 +544,7 @@ runs:
           clients/algoliasearch-client-php/lib/Api/PersonalizationClient.php
           clients/algoliasearch-client-php/lib/Model/Personalization/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/personalization.yml',
             'templates/php/**',
@@ -569,7 +559,7 @@ runs:
           clients/algoliasearch-client-php/lib/Api/AnalyticsClient.php
           clients/algoliasearch-client-php/lib/Model/Analytics/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/analytics.yml',
             'templates/php/**',
@@ -584,7 +574,7 @@ runs:
           clients/algoliasearch-client-php/lib/Api/InsightsClient.php
           clients/algoliasearch-client-php/lib/Model/Insights/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/insights.yml',
             'templates/php/**',
@@ -599,7 +589,7 @@ runs:
           clients/algoliasearch-client-php/lib/Api/AbtestingClient.php
           clients/algoliasearch-client-php/lib/Model/Abtesting/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/abtesting.yml',
             'templates/php/**',
@@ -614,7 +604,7 @@ runs:
           clients/algoliasearch-client-php/lib/Api/QuerySuggestionsClient.php
           clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**
         key: |
-          ${{ inputs.cache_version }}-${{
+          ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
           hashFiles(
             'specs/bundled/query-suggestions.yml',
             'templates/php/**',
@@ -623,5 +613,4 @@ runs:
 
     - name: Install JavaScript dependencies
       shell: bash
-      if: ${{ inputs.skip_yarn != 'true' }}
       run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install

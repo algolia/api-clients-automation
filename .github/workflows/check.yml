@@ -25,9 +25,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Lint GitHub actions
-        run: |
-          echo "CACHE_VERSION=${{ steps.setup.outputs.CACHE_VERSION }}" >> $GITHUB_ENV
-          yarn github-actions:lint
+        run: yarn github-actions:lint
 
       - name: Lint generators
         run: |
@@ -73,8 +71,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Check script linting
         run: yarn scripts:lint
@@ -97,8 +93,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' bundled specs
         id: cache
@@ -106,7 +100,7 @@ jobs:
         with:
           path: ${{ format('specs/bundled/{0}.yml', matrix.client.name) }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{
+            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
             hashFiles(
               format('{0}/**', matrix.client.path),
               'specs/common/**'
@@ -132,8 +126,6 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
-        with:
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client }}' client
         id: cache
@@ -141,7 +133,7 @@ jobs:
         with:
           path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{
+            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
             hashFiles(
               format('clients/algoliasearch-client-javascript/packages/{0}/src/**', matrix.client)
             )}}
@@ -172,7 +164,6 @@ jobs:
         with:
           job: client
           language: javascript
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -180,7 +171,7 @@ jobs:
         with:
           path: ${{ matrix.client.path }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{
+            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
             hashFiles(
               format('{0}/src/**', matrix.client.path),
               format('{0}/model/**', matrix.client.path),
@@ -224,7 +215,6 @@ jobs:
         with:
           job: client
           language: java
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -234,7 +224,7 @@ jobs:
             ${{ format('{0}/algoliasearch-core/src/com/algolia/api/{1}.java', matrix.client.path, matrix.client.api) }}
             ${{ format('{0}/algoliasearch-core/src/com/algolia/model/{1}/**', matrix.client.path, matrix.client.camelizedName) }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{
+            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
             hashFiles(
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/java/**',
@@ -274,7 +264,6 @@ jobs:
         with:
           job: client
           language: php
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -284,7 +273,7 @@ jobs:
             ${{ format('{0}/lib/Api/{1}.php', matrix.client.path, matrix.client.api) }}
             ${{ format('{0}/lib/Model/{1}/**', matrix.client.path, matrix.client.capitalizedName) }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{
+            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
             hashFiles(
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/php/**',
@@ -320,7 +309,6 @@ jobs:
         with:
           job: codegen
           language: javascript
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Cache 'algoliasearch' client
         id: cache
@@ -328,7 +316,7 @@ jobs:
         with:
           path: clients/algoliasearch-client-javascript/packages/algoliasearch
           key: |
-            ${{ env.CACHE_VERSION }}-${{
+            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
             hashFiles(
               'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
               'clients/algoliasearch-client-javascript/packages/client-search/**',
@@ -356,7 +344,6 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Run client-common tests
         run: yarn workspace @experimental-api-clients-automation/client-common test
@@ -384,7 +371,6 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Push generated code to generated branch
         id: pushGeneratedCode
@@ -431,7 +417,6 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: codegen
-          cache_version: ${{ env.CACHE_VERSION }}
 
       - name: Push generated code to main
         id: pushGeneratedCode
