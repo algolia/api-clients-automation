@@ -10,6 +10,8 @@ Common Test Suite requires all clients to be built.
 
 :::
 
+The Common Test Suite commands are used to [`generate`](#generate) and [`run`](#run) tests.
+
 ## Usage
 
 > `language` and `client` defaults to `all`

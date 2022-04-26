@@ -4,6 +4,8 @@ title: Clients commands
 
 # Clients commands
 
+The Clients commands are used to [`generate`](#generate) and [`build`](#build) API clients.
+
 ## Usage
 
 > `language` and `client` defaults to `all`

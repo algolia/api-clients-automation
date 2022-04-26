@@ -4,6 +4,8 @@ title: Specs commands
 
 # Specs commands
 
+The Specs commands are used to [`build`](#build), [`lint`](#lint) and validate the REST API specs.
+
 ## Usage
 
 > `client` defaults to `all`
