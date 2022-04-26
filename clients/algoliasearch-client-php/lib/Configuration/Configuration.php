@@ -70,7 +70,7 @@ abstract class Configuration
         $this->config = $config;
     }
 
-    public static function create($appId = null, $apiKey = null)
+    public static function create($appId, $apiKey)
     {
         $config = [
             'appId' => $appId,

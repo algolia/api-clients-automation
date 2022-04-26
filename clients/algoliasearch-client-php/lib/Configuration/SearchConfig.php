@@ -6,7 +6,7 @@ class SearchConfig extends Configuration
 {
     private $defaultWaitTaskTimeBeforeRetry = 100000;
 
-    public static function create($appId = null, $apiKey = null)
+    public static function create($appId, $apiKey)
     {
         $config = [
             'appId' => $appId,
