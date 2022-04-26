@@ -74,8 +74,8 @@ Co-authored-by: %an <%ae>
   console.log(
     `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${branchToPush}'`
   );
+  await run('git rm `git ls-files --deleted`');
   await run(`git add ${FOLDERS_TO_CHECK}`);
-  await run('git add `git ls-files --deleted`');
   await run(`git commit -m "${commitMessage}"`);
   await run(`git push origin ${branchToPush}`);
 
