@@ -61,7 +61,7 @@ class RecommendClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "DELETE");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -106,7 +106,7 @@ class RecommendClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -716,7 +716,7 @@ class RecommendClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -776,7 +776,7 @@ class RecommendClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );

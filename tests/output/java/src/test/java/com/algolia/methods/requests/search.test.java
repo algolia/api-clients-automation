@@ -167,7 +167,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"X-Algolia-User-ID\":\"userID\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -265,7 +265,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"X-Algolia-User-ID\":\"userID\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -589,7 +589,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -722,7 +722,7 @@ class SearchClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "DELETE");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -889,7 +889,7 @@ class SearchClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -957,7 +957,7 @@ class SearchClientTests {
     assertEquals(req.getPath(), "/1/logs");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -993,7 +993,7 @@ class SearchClientTests {
     assertEquals(req.getPath(), "/1/indexes/theIndexName/uniqueID");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"attributesToRetrieve\":\"attr1,attr2\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1165,7 +1165,7 @@ class SearchClientTests {
     assertEquals(req.getPath(), "/1/clusters/mapping/pending");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"getClusters\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1213,7 +1213,7 @@ class SearchClientTests {
     assertEquals(req.getPath(), "/1/indexes");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"page\":\"8\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1239,7 +1239,7 @@ class SearchClientTests {
     assertEquals(req.getPath(), "/1/clusters/mapping");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"page\":\"8\",\"hitsPerPage\":\"100\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1513,7 +1513,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"createIfNotExists\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1573,7 +1573,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1633,7 +1633,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1803,7 +1803,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1869,7 +1869,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1968,7 +1968,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -2405,7 +2405,7 @@ class SearchClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );

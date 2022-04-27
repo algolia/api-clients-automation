@@ -119,7 +119,7 @@ class AbtestingClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "DELETE");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -178,7 +178,7 @@ class AbtestingClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -218,7 +218,7 @@ class AbtestingClientTests {
     assertEquals(req.getPath(), "/2/abtests");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"offset\":\"42\",\"limit\":\"21\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -278,7 +278,7 @@ class AbtestingClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -338,7 +338,7 @@ class AbtestingClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );

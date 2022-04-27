@@ -61,7 +61,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "DELETE");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -106,7 +106,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -130,7 +130,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/clicks/averageClickPosition");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -165,7 +165,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/clicks/averageClickPosition");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -189,7 +189,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/clicks/positions");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -219,7 +219,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/clicks/positions");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -243,7 +243,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/clicks/clickThroughRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -273,7 +273,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/clicks/clickThroughRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -297,7 +297,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/conversions/conversionRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -327,7 +327,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/conversions/conversionRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -351,7 +351,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noClickRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -381,7 +381,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noClickRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -405,7 +405,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noResultRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -435,7 +435,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noResultRate");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -459,7 +459,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/count");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -489,7 +489,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/count");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -513,7 +513,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noClicks");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -554,7 +554,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noClicks");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -578,7 +578,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noResults");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -619,7 +619,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches/noResults");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -643,7 +643,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/status");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -667,7 +667,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/countries");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -708,7 +708,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/countries");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -732,7 +732,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -776,7 +776,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -802,7 +802,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters/myAttribute");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -830,7 +830,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters/myAttribute1%2CmyAttribute2");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -877,7 +877,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters/myAttribute");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -926,7 +926,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters/myAttribute1%2CmyAttribute2");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -950,7 +950,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters/noResults");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -994,7 +994,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/filters/noResults");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1018,7 +1018,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/hits");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1065,7 +1065,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/hits");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1089,7 +1089,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1139,7 +1139,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/searches");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1163,7 +1163,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/users/count");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1193,7 +1193,7 @@ class AnalyticsClientTests {
     assertEquals(req.getPath(), "/2/users/count");
     assertEquals(req.getMethod(), "GET");
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1253,7 +1253,7 @@ class AnalyticsClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
@@ -1313,7 +1313,7 @@ class AnalyticsClientTests {
       );
     });
 
-    HashMap<String, String> expectedQuery = JSON.deserialize(
+    Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
