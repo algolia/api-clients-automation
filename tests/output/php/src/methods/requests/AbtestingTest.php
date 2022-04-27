@@ -77,84 +77,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for DeleteABTest
-     * deleteABTest
-     */
-    public function testDeleteABTest0()
-    {
-        $client = $this->getClient();
-
-        $client->deleteABTest(42);
-
-        $this->assertRequests([
-            [
-                'path' => '/2/abtests/42',
-                'method' => 'DELETE',
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Post
-     * allow post method for a custom path with minimal parameters
-     */
-    public function testPost0()
-    {
-        $client = $this->getClient();
-
-        $client->post('/test/minimal');
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/minimal',
-                'method' => 'POST',
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Post
-     * allow post method for a custom path with all parameters
-     */
-    public function testPost1()
-    {
-        $client = $this->getClient();
-
-        $client->post(
-            '/test/all',
-            ['query' => 'parameters'],
-            ['body' => 'parameters']
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/all',
-                'method' => 'POST',
-                'body' => json_decode("{\"body\":\"parameters\"}"),
-                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for StopABTest
-     * stopABTest
-     */
-    public function testStopABTest0()
-    {
-        $client = $this->getClient();
-
-        $client->stopABTest(42);
-
-        $this->assertRequests([
-            [
-                'path' => '/2/abtests/42/stop',
-                'method' => 'POST',
-            ],
-        ]);
-    }
-
-    /**
      * Test case for AddABTests
      * addABTests with minimal parameters
      */
@@ -181,6 +103,64 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'body' => json_decode(
                     "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variant\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
                 ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Del
+     * allow del method for a custom path with minimal parameters
+     */
+    public function testDel0()
+    {
+        $client = $this->getClient();
+
+        $client->del('/test/minimal');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/minimal',
+                'method' => 'DELETE',
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Del
+     * allow del method for a custom path with all parameters
+     */
+    public function testDel1()
+    {
+        $client = $this->getClient();
+
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'DELETE',
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for DeleteABTest
+     * deleteABTest
+     */
+    public function testDeleteABTest0()
+    {
+        $client = $this->getClient();
+
+        $client->deleteABTest(42);
+
+        $this->assertRequests([
+            [
+                'path' => '/2/abtests/42',
+                'method' => 'DELETE',
             ],
         ]);
     }
@@ -226,6 +206,24 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for GetABTest
+     * getABTest
+     */
+    public function testGetABTest0()
+    {
+        $client = $this->getClient();
+
+        $client->getABTest(42);
+
+        $this->assertRequests([
+            [
+                'path' => '/2/abtests/42',
+                'method' => 'GET',
+            ],
+        ]);
+    }
+
+    /**
      * Test case for ListABTests
      * listABTests with minimal parameters
      */
@@ -250,40 +248,42 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Del
-     * allow del method for a custom path with minimal parameters
+     * Test case for Post
+     * allow post method for a custom path with minimal parameters
      */
-    public function testDel0()
+    public function testPost0()
     {
         $client = $this->getClient();
 
-        $client->del('/test/minimal');
+        $client->post('/test/minimal');
 
         $this->assertRequests([
             [
                 'path' => '/1/test/minimal',
-                'method' => 'DELETE',
+                'method' => 'POST',
             ],
         ]);
     }
 
     /**
-     * Test case for Del
-     * allow del method for a custom path with all parameters
+     * Test case for Post
+     * allow post method for a custom path with all parameters
      */
-    public function testDel1()
+    public function testPost1()
     {
         $client = $this->getClient();
 
-        $client->del(
+        $client->post(
             '/test/all',
-            ['query' => 'parameters']
+            ['query' => 'parameters'],
+            ['body' => 'parameters']
         );
 
         $this->assertRequests([
             [
                 'path' => '/1/test/all',
-                'method' => 'DELETE',
+                'method' => 'POST',
+                'body' => json_decode("{\"body\":\"parameters\"}"),
                 'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
@@ -332,19 +332,19 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetABTest
-     * getABTest
+     * Test case for StopABTest
+     * stopABTest
      */
-    public function testGetABTest0()
+    public function testStopABTest0()
     {
         $client = $this->getClient();
 
-        $client->getABTest(42);
+        $client->stopABTest(42);
 
         $this->assertRequests([
             [
-                'path' => '/2/abtests/42',
-                'method' => 'GET',
+                'path' => '/2/abtests/42/stop',
+                'method' => 'POST',
             ],
         ]);
     }

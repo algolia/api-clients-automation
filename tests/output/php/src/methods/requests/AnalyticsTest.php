@@ -77,105 +77,6 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetTopSearches
-     * get getTopSearches with minimal parameters
-     */
-    public function testGetTopSearches0()
-    {
-        $client = $this->getClient();
-
-        $client->getTopSearches('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetTopSearches
-     * get getTopSearches with all parameters
-     */
-    public function testGetTopSearches1()
-    {
-        $client = $this->getClient();
-
-        $client->getTopSearches(
-            'index',
-            true,
-            '1999-09-19',
-            '2001-01-01',
-            'searchCount',
-            'asc',
-            21,
-            42,
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetTopHits
-     * get getTopHits with minimal parameters
-     */
-    public function testGetTopHits0()
-    {
-        $client = $this->getClient();
-
-        $client->getTopHits('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/hits',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetTopHits
-     * get getTopHits with all parameters
-     */
-    public function testGetTopHits1()
-    {
-        $client = $this->getClient();
-
-        $client->getTopHits(
-            'index',
-            'mySearch',
-            true,
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/hits',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
      * Test case for Del
      * allow del method for a custom path with minimal parameters
      */
@@ -216,18 +117,58 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetTopFiltersNoResults
-     * get getTopFiltersNoResults with minimal parameters
+     * Test case for Get
+     * allow get method for a custom path with minimal parameters
      */
-    public function testGetTopFiltersNoResults0()
+    public function testGet0()
     {
         $client = $this->getClient();
 
-        $client->getTopFiltersNoResults('index');
+        $client->get('/test/minimal');
 
         $this->assertRequests([
             [
-                'path' => '/2/filters/noResults',
+                'path' => '/1/test/minimal',
+                'method' => 'GET',
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Get
+     * allow get method for a custom path with all parameters
+     */
+    public function testGet1()
+    {
+        $client = $this->getClient();
+
+        $client->get(
+            '/test/all',
+            ['query' => 'parameters']
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetAverageClickPosition
+     * get getAverageClickPosition with minimal parameters
+     */
+    public function testGetAverageClickPosition0()
+    {
+        $client = $this->getClient();
+
+        $client->getAverageClickPosition('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/clicks/averageClickPosition',
                 'method' => 'GET',
                 'searchParams' => json_decode("{\"index\":\"index\"}"),
             ],
@@ -235,16 +176,330 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetTopFiltersNoResults
-     * get getTopFiltersNoResults with all parameters
+     * Test case for GetAverageClickPosition
+     * get getAverageClickPosition with all parameters
      */
-    public function testGetTopFiltersNoResults1()
+    public function testGetAverageClickPosition1()
     {
         $client = $this->getClient();
 
-        $client->getTopFiltersNoResults(
+        $client->getAverageClickPosition(
             'index',
-            'mySearch',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/clicks/averageClickPosition',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetClickPositions
+     * get getClickPositions with minimal parameters
+     */
+    public function testGetClickPositions0()
+    {
+        $client = $this->getClient();
+
+        $client->getClickPositions('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/clicks/positions',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetClickPositions
+     * get getClickPositions with all parameters
+     */
+    public function testGetClickPositions1()
+    {
+        $client = $this->getClient();
+
+        $client->getClickPositions(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/clicks/positions',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetClickThroughRate
+     * get getClickThroughRate with minimal parameters
+     */
+    public function testGetClickThroughRate0()
+    {
+        $client = $this->getClient();
+
+        $client->getClickThroughRate('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/clicks/clickThroughRate',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetClickThroughRate
+     * get getClickThroughRate with all parameters
+     */
+    public function testGetClickThroughRate1()
+    {
+        $client = $this->getClient();
+
+        $client->getClickThroughRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/clicks/clickThroughRate',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetConversationRate
+     * get getConversationRate with minimal parameters
+     */
+    public function testGetConversationRate0()
+    {
+        $client = $this->getClient();
+
+        $client->getConversationRate('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/conversionRate',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetConversationRate
+     * get getConversationRate with all parameters
+     */
+    public function testGetConversationRate1()
+    {
+        $client = $this->getClient();
+
+        $client->getConversationRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/conversionRate',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetNoClickRate
+     * get getNoClickRate with minimal parameters
+     */
+    public function testGetNoClickRate0()
+    {
+        $client = $this->getClient();
+
+        $client->getNoClickRate('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches/noClickRate',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetNoClickRate
+     * get getNoClickRate with all parameters
+     */
+    public function testGetNoClickRate1()
+    {
+        $client = $this->getClient();
+
+        $client->getNoClickRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches/noClickRate',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetNoResultsRate
+     * get getNoResultsRate with minimal parameters
+     */
+    public function testGetNoResultsRate0()
+    {
+        $client = $this->getClient();
+
+        $client->getNoResultsRate('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches/noResultRate',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetNoResultsRate
+     * get getNoResultsRate with all parameters
+     */
+    public function testGetNoResultsRate1()
+    {
+        $client = $this->getClient();
+
+        $client->getNoResultsRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches/noResultRate',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetSearchesCount
+     * get getSearchesCount with minimal parameters
+     */
+    public function testGetSearchesCount0()
+    {
+        $client = $this->getClient();
+
+        $client->getSearchesCount('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches/count',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetSearchesCount
+     * get getSearchesCount with all parameters
+     */
+    public function testGetSearchesCount1()
+    {
+        $client = $this->getClient();
+
+        $client->getSearchesCount(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches/count',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetSearchesNoClicks
+     * get getSearchesNoClicks with minimal parameters
+     */
+    public function testGetSearchesNoClicks0()
+    {
+        $client = $this->getClient();
+
+        $client->getSearchesNoClicks('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches/noClicks',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetSearchesNoClicks
+     * get getSearchesNoClicks with all parameters
+     */
+    public function testGetSearchesNoClicks1()
+    {
+        $client = $this->getClient();
+
+        $client->getSearchesNoClicks(
+            'index',
             '1999-09-19',
             '2001-01-01',
             21,
@@ -254,10 +509,10 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/2/filters/noResults',
+                'path' => '/2/searches/noClicks',
                 'method' => 'GET',
                 'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
                 ),
             ],
         ]);
@@ -330,18 +585,18 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetClickPositions
-     * get getClickPositions with minimal parameters
+     * Test case for GetTopCountries
+     * get getTopCountries with minimal parameters
      */
-    public function testGetClickPositions0()
+    public function testGetTopCountries0()
     {
         $client = $this->getClient();
 
-        $client->getClickPositions('index');
+        $client->getTopCountries('index');
 
         $this->assertRequests([
             [
-                'path' => '/2/clicks/positions',
+                'path' => '/2/countries',
                 'method' => 'GET',
                 'searchParams' => json_decode("{\"index\":\"index\"}"),
             ],
@@ -349,69 +604,77 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetClickPositions
-     * get getClickPositions with all parameters
+     * Test case for GetTopCountries
+     * get getTopCountries with all parameters
      */
-    public function testGetClickPositions1()
+    public function testGetTopCountries1()
     {
         $client = $this->getClient();
 
-        $client->getClickPositions(
+        $client->getTopCountries(
             'index',
             '1999-09-19',
             '2001-01-01',
+            21,
+            42,
             'tag'
         );
 
         $this->assertRequests([
             [
-                'path' => '/2/clicks/positions',
+                'path' => '/2/countries',
                 'method' => 'GET',
                 'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
                 ),
             ],
         ]);
     }
 
     /**
-     * Test case for Put
-     * allow put method for a custom path with minimal parameters
+     * Test case for GetTopFilterAttributes
+     * get getTopFilterAttributes with minimal parameters
      */
-    public function testPut0()
+    public function testGetTopFilterAttributes0()
     {
         $client = $this->getClient();
 
-        $client->put('/test/minimal');
+        $client->getTopFilterAttributes('index');
 
         $this->assertRequests([
             [
-                'path' => '/1/test/minimal',
-                'method' => 'PUT',
+                'path' => '/2/filters',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
             ],
         ]);
     }
 
     /**
-     * Test case for Put
-     * allow put method for a custom path with all parameters
+     * Test case for GetTopFilterAttributes
+     * get getTopFilterAttributes with all parameters
      */
-    public function testPut1()
+    public function testGetTopFilterAttributes1()
     {
         $client = $this->getClient();
 
-        $client->put(
-            '/test/all',
-            ['query' => 'parameters'],
-            ['body' => 'parameters']
+        $client->getTopFilterAttributes(
+            'index',
+            'mySearch',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag'
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/all',
-                'method' => 'PUT',
-                'body' => json_decode("{\"body\":\"parameters\"}"),
-                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
+                'path' => '/2/filters',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                ),
             ],
         ]);
     }
@@ -521,18 +784,18 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetNoClickRate
-     * get getNoClickRate with minimal parameters
+     * Test case for GetTopFiltersNoResults
+     * get getTopFiltersNoResults with minimal parameters
      */
-    public function testGetNoClickRate0()
+    public function testGetTopFiltersNoResults0()
     {
         $client = $this->getClient();
 
-        $client->getNoClickRate('index');
+        $client->getTopFiltersNoResults('index');
 
         $this->assertRequests([
             [
-                'path' => '/2/searches/noClickRate',
+                'path' => '/2/filters/noResults',
                 'method' => 'GET',
                 'searchParams' => json_decode("{\"index\":\"index\"}"),
             ],
@@ -540,26 +803,128 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetNoClickRate
-     * get getNoClickRate with all parameters
+     * Test case for GetTopFiltersNoResults
+     * get getTopFiltersNoResults with all parameters
      */
-    public function testGetNoClickRate1()
+    public function testGetTopFiltersNoResults1()
     {
         $client = $this->getClient();
 
-        $client->getNoClickRate(
+        $client->getTopFiltersNoResults(
             'index',
+            'mySearch',
             '1999-09-19',
             '2001-01-01',
+            21,
+            42,
             'tag'
         );
 
         $this->assertRequests([
             [
-                'path' => '/2/searches/noClickRate',
+                'path' => '/2/filters/noResults',
                 'method' => 'GET',
                 'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                    "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetTopHits
+     * get getTopHits with minimal parameters
+     */
+    public function testGetTopHits0()
+    {
+        $client = $this->getClient();
+
+        $client->getTopHits('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/hits',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetTopHits
+     * get getTopHits with all parameters
+     */
+    public function testGetTopHits1()
+    {
+        $client = $this->getClient();
+
+        $client->getTopHits(
+            'index',
+            'mySearch',
+            true,
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/hits',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetTopSearches
+     * get getTopSearches with minimal parameters
+     */
+    public function testGetTopSearches0()
+    {
+        $client = $this->getClient();
+
+        $client->getTopSearches('index');
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches',
+                'method' => 'GET',
+                'searchParams' => json_decode("{\"index\":\"index\"}"),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetTopSearches
+     * get getTopSearches with all parameters
+     */
+    public function testGetTopSearches1()
+    {
+        $client = $this->getClient();
+
+        $client->getTopSearches(
+            'index',
+            true,
+            '1999-09-19',
+            '2001-01-01',
+            'searchCount',
+            'asc',
+            21,
+            42,
+            'tag'
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches',
+                'method' => 'GET',
+                'searchParams' => json_decode(
+                    "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
                 ),
             ],
         ]);
@@ -611,53 +976,6 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetSearchesNoClicks
-     * get getSearchesNoClicks with minimal parameters
-     */
-    public function testGetSearchesNoClicks0()
-    {
-        $client = $this->getClient();
-
-        $client->getSearchesNoClicks('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noClicks',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetSearchesNoClicks
-     * get getSearchesNoClicks with all parameters
-     */
-    public function testGetSearchesNoClicks1()
-    {
-        $client = $this->getClient();
-
-        $client->getSearchesNoClicks(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noClicks',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
      * Test case for Post
      * allow post method for a custom path with minimal parameters
      */
@@ -700,361 +1018,43 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetAverageClickPosition
-     * get getAverageClickPosition with minimal parameters
+     * Test case for Put
+     * allow put method for a custom path with minimal parameters
      */
-    public function testGetAverageClickPosition0()
+    public function testPut0()
     {
         $client = $this->getClient();
 
-        $client->getAverageClickPosition('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/averageClickPosition',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetAverageClickPosition
-     * get getAverageClickPosition with all parameters
-     */
-    public function testGetAverageClickPosition1()
-    {
-        $client = $this->getClient();
-
-        $client->getAverageClickPosition(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/averageClickPosition',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetSearchesCount
-     * get getSearchesCount with minimal parameters
-     */
-    public function testGetSearchesCount0()
-    {
-        $client = $this->getClient();
-
-        $client->getSearchesCount('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/count',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetSearchesCount
-     * get getSearchesCount with all parameters
-     */
-    public function testGetSearchesCount1()
-    {
-        $client = $this->getClient();
-
-        $client->getSearchesCount(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/count',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Get
-     * allow get method for a custom path with minimal parameters
-     */
-    public function testGet0()
-    {
-        $client = $this->getClient();
-
-        $client->get('/test/minimal');
+        $client->put('/test/minimal');
 
         $this->assertRequests([
             [
                 'path' => '/1/test/minimal',
-                'method' => 'GET',
+                'method' => 'PUT',
             ],
         ]);
     }
 
     /**
-     * Test case for Get
-     * allow get method for a custom path with all parameters
+     * Test case for Put
+     * allow put method for a custom path with all parameters
      */
-    public function testGet1()
+    public function testPut1()
     {
         $client = $this->getClient();
 
-        $client->get(
+        $client->put(
             '/test/all',
-            ['query' => 'parameters']
+            ['query' => 'parameters'],
+            ['body' => 'parameters']
         );
 
         $this->assertRequests([
             [
                 'path' => '/1/test/all',
-                'method' => 'GET',
+                'method' => 'PUT',
+                'body' => json_decode("{\"body\":\"parameters\"}"),
                 'searchParams' => json_decode("{\"query\":\"parameters\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetTopFilterAttributes
-     * get getTopFilterAttributes with minimal parameters
-     */
-    public function testGetTopFilterAttributes0()
-    {
-        $client = $this->getClient();
-
-        $client->getTopFilterAttributes('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetTopFilterAttributes
-     * get getTopFilterAttributes with all parameters
-     */
-    public function testGetTopFilterAttributes1()
-    {
-        $client = $this->getClient();
-
-        $client->getTopFilterAttributes(
-            'index',
-            'mySearch',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetTopCountries
-     * get getTopCountries with minimal parameters
-     */
-    public function testGetTopCountries0()
-    {
-        $client = $this->getClient();
-
-        $client->getTopCountries('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/countries',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetTopCountries
-     * get getTopCountries with all parameters
-     */
-    public function testGetTopCountries1()
-    {
-        $client = $this->getClient();
-
-        $client->getTopCountries(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/countries',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetConversationRate
-     * get getConversationRate with minimal parameters
-     */
-    public function testGetConversationRate0()
-    {
-        $client = $this->getClient();
-
-        $client->getConversationRate('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/conversionRate',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetConversationRate
-     * get getConversationRate with all parameters
-     */
-    public function testGetConversationRate1()
-    {
-        $client = $this->getClient();
-
-        $client->getConversationRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/conversionRate',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetNoResultsRate
-     * get getNoResultsRate with minimal parameters
-     */
-    public function testGetNoResultsRate0()
-    {
-        $client = $this->getClient();
-
-        $client->getNoResultsRate('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noResultRate',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetNoResultsRate
-     * get getNoResultsRate with all parameters
-     */
-    public function testGetNoResultsRate1()
-    {
-        $client = $this->getClient();
-
-        $client->getNoResultsRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noResultRate',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                ),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetClickThroughRate
-     * get getClickThroughRate with minimal parameters
-     */
-    public function testGetClickThroughRate0()
-    {
-        $client = $this->getClient();
-
-        $client->getClickThroughRate('index');
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/clickThroughRate',
-                'method' => 'GET',
-                'searchParams' => json_decode("{\"index\":\"index\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for GetClickThroughRate
-     * get getClickThroughRate with all parameters
-     */
-    public function testGetClickThroughRate1()
-    {
-        $client = $this->getClient();
-
-        $client->getClickThroughRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag'
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/clickThroughRate',
-                'method' => 'GET',
-                'searchParams' => json_decode(
-                    "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                ),
             ],
         ]);
     }

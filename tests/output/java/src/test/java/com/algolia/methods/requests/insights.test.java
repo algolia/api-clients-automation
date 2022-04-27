@@ -29,22 +29,22 @@ class InsightsClientTests {
   }
 
   @Test
-  @DisplayName("allow post method for a custom path with minimal parameters")
-  void postTest0() {
+  @DisplayName("allow del method for a custom path with minimal parameters")
+  void delTest0() {
     String path0 = "/test/minimal";
 
     EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0);
+        return client.del(path0);
       }
     );
 
     assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "POST");
+    assertEquals(req.getMethod(), "DELETE");
   }
 
   @Test
-  @DisplayName("allow post method for a custom path with all parameters")
-  void postTest1() {
+  @DisplayName("allow del method for a custom path with all parameters")
+  void delTest1() {
     String path0 = "/test/all";
 
     Map<String, Object> parameters0 = new HashMap<>();
@@ -54,28 +54,13 @@ class InsightsClientTests {
       parameters0.put("query", query1);
     }
 
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-
-      body0.put("body", body1);
-    }
-
     EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0, parameters0, body0);
+        return client.del(path0, parameters0);
       }
     );
 
     assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "POST");
-
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"body\":\"parameters\"}",
-        req.getBody(),
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
+    assertEquals(req.getMethod(), "DELETE");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
@@ -132,6 +117,77 @@ class InsightsClientTests {
 
     assertEquals(req.getPath(), "/1/test/all");
     assertEquals(req.getMethod(), "GET");
+
+    Map<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
+    }
+  }
+
+  @Test
+  @DisplayName("allow post method for a custom path with minimal parameters")
+  void postTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.post(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("allow post method for a custom path with all parameters")
+  void postTest1() {
+    String path0 = "/test/all";
+
+    Map<String, Object> parameters0 = new HashMap<>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    Map<String, String> body0 = new HashMap<>();
+    {
+      String body1 = "parameters";
+
+      body0.put("body", body1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.post(path0, parameters0, body0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"body\":\"parameters\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
@@ -297,62 +353,6 @@ class InsightsClientTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
-  }
-
-  @Test
-  @DisplayName("allow del method for a custom path with minimal parameters")
-  void delTest0() {
-    String path0 = "/test/minimal";
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "DELETE");
-  }
-
-  @Test
-  @DisplayName("allow del method for a custom path with all parameters")
-  void delTest1() {
-    String path0 = "/test/all";
-
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-
-      parameters0.put("query", query1);
-    }
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0, parameters0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "DELETE");
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    List<Pair> actualQuery = req.getQueryParams();
-    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
-      boolean found = false;
-      for (Pair p : actualQuery) {
-        if (
-          p.getName().equals(entry.getKey()) &&
-          p.getValue().equals(entry.getValue())
-        ) {
-          found = true;
-        }
-      }
-      assertTrue(
-        found,
-        "Query parameter " + entry.getKey() + " not found in the actual query"
-      );
-    }
   }
 
   @Test

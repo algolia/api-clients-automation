@@ -69,6 +69,32 @@ describe('multipleQueries', () => {
   });
 });
 
+describe('post', () => {
+  test('allow post method for a custom path with minimal parameters', async () => {
+    const req = (await client.post({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('allow post method for a custom path with all parameters', async () => {
+    const req = (await client.post({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toEqual({ query: 'parameters' });
+  });
+});
+
 describe('search', () => {
   test('search with minimal parameters', async () => {
     const req = (await client.search({
@@ -130,31 +156,5 @@ describe('searchForFacetValues', () => {
       maxFacetHits: 42,
     });
     expect(req.searchParams).toEqual(undefined);
-  });
-});
-
-describe('post', () => {
-  test('allow post method for a custom path with minimal parameters', async () => {
-    const req = (await client.post({
-      path: '/test/minimal',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/test/minimal');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
-  });
-
-  test('allow post method for a custom path with all parameters', async () => {
-    const req = (await client.post({
-      path: '/test/all',
-      parameters: { query: 'parameters' },
-      body: { body: 'parameters' },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/test/all');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ body: 'parameters' });
-    expect(req.searchParams).toEqual({ query: 'parameters' });
   });
 });

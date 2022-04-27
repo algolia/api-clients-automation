@@ -77,42 +77,40 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
-     * allow post method for a custom path with minimal parameters
+     * Test case for Del
+     * allow del method for a custom path with minimal parameters
      */
-    public function testPost0()
+    public function testDel0()
     {
         $client = $this->getClient();
 
-        $client->post('/test/minimal');
+        $client->del('/test/minimal');
 
         $this->assertRequests([
             [
                 'path' => '/1/test/minimal',
-                'method' => 'POST',
+                'method' => 'DELETE',
             ],
         ]);
     }
 
     /**
-     * Test case for Post
-     * allow post method for a custom path with all parameters
+     * Test case for Del
+     * allow del method for a custom path with all parameters
      */
-    public function testPost1()
+    public function testDel1()
     {
         $client = $this->getClient();
 
-        $client->post(
+        $client->del(
             '/test/all',
-            ['query' => 'parameters'],
-            ['body' => 'parameters']
+            ['query' => 'parameters']
         );
 
         $this->assertRequests([
             [
                 'path' => '/1/test/all',
-                'method' => 'POST',
-                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'method' => 'DELETE',
                 'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
@@ -153,46 +151,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Del
-     * allow del method for a custom path with minimal parameters
-     */
-    public function testDel0()
-    {
-        $client = $this->getClient();
-
-        $client->del('/test/minimal');
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/minimal',
-                'method' => 'DELETE',
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Del
-     * allow del method for a custom path with all parameters
-     */
-    public function testDel1()
-    {
-        $client = $this->getClient();
-
-        $client->del(
-            '/test/all',
-            ['query' => 'parameters']
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/all',
-                'method' => 'DELETE',
                 'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
@@ -501,6 +459,48 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'body' => json_decode(
                     "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42}]}"
                 ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * allow post method for a custom path with minimal parameters
+     */
+    public function testPost0()
+    {
+        $client = $this->getClient();
+
+        $client->post('/test/minimal');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/minimal',
+                'method' => 'POST',
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * allow post method for a custom path with all parameters
+     */
+    public function testPost1()
+    {
+        $client = $this->getClient();
+
+        $client->post(
+            '/test/all',
+            ['query' => 'parameters'],
+            ['body' => 'parameters']
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'POST',
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }

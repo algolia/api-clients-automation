@@ -29,235 +29,6 @@ class QuerySuggestionsClientTests {
   }
 
   @Test
-  @DisplayName("deleteConfig")
-  void deleteConfigTest0() {
-    String indexName0 = "theIndexName";
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.deleteConfig(indexName0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/configs/theIndexName");
-    assertEquals(req.getMethod(), "DELETE");
-  }
-
-  @Test
-  @DisplayName("allow post method for a custom path with minimal parameters")
-  void postTest0() {
-    String path0 = "/test/minimal";
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "POST");
-  }
-
-  @Test
-  @DisplayName("allow post method for a custom path with all parameters")
-  void postTest1() {
-    String path0 = "/test/all";
-
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-
-      parameters0.put("query", query1);
-    }
-
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-
-      body0.put("body", body1);
-    }
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0, parameters0, body0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "POST");
-
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"body\":\"parameters\"}",
-        req.getBody(),
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    List<Pair> actualQuery = req.getQueryParams();
-    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
-      boolean found = false;
-      for (Pair p : actualQuery) {
-        if (
-          p.getName().equals(entry.getKey()) &&
-          p.getValue().equals(entry.getValue())
-        ) {
-          found = true;
-        }
-      }
-      assertTrue(
-        found,
-        "Query parameter " + entry.getKey() + " not found in the actual query"
-      );
-    }
-  }
-
-  @Test
-  @DisplayName("updateConfig")
-  void updateConfigTest0() {
-    String indexName0 = "theIndexName";
-
-    QuerySuggestionsIndexParam querySuggestionsIndexParam0 = new QuerySuggestionsIndexParam();
-    {
-      List<SourceIndex> sourceIndices1 = new ArrayList<>();
-      {
-        SourceIndex sourceIndices_02 = new SourceIndex();
-        {
-          String indexName3 = "testIndex";
-
-          sourceIndices_02.setIndexName(indexName3);
-
-          List<Object> facets3 = new ArrayList<>();
-          {
-            Map<String, String> facets_04 = new HashMap<>();
-            {
-              String attributes5 = "test";
-
-              facets_04.put("attributes", attributes5);
-            }
-            facets3.add(facets_04);
-          }
-          sourceIndices_02.setFacets(facets3);
-
-          List<List<String>> generate3 = new ArrayList<>();
-          {
-            List<String> generate_04 = new ArrayList<>();
-            {
-              String generate_0_05 = "facetA";
-
-              generate_04.add(generate_0_05);
-              String generate_0_15 = "facetB";
-
-              generate_04.add(generate_0_15);
-            }
-            generate3.add(generate_04);
-
-            List<String> generate_14 = new ArrayList<>();
-            {
-              String generate_1_05 = "facetC";
-
-              generate_14.add(generate_1_05);
-            }
-            generate3.add(generate_14);
-          }
-          sourceIndices_02.setGenerate(generate3);
-        }
-        sourceIndices1.add(sourceIndices_02);
-      }
-      querySuggestionsIndexParam0.setSourceIndices(sourceIndices1);
-
-      List<String> languages1 = new ArrayList<>();
-      {
-        String languages_02 = "french";
-
-        languages1.add(languages_02);
-      }
-      querySuggestionsIndexParam0.setLanguages(languages1);
-
-      List<String> exclude1 = new ArrayList<>();
-      {
-        String exclude_02 = "test";
-
-        exclude1.add(exclude_02);
-      }
-      querySuggestionsIndexParam0.setExclude(exclude1);
-    }
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.updateConfig(indexName0, querySuggestionsIndexParam0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/configs/theIndexName");
-    assertEquals(req.getMethod(), "PUT");
-
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attributes\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}",
-        req.getBody(),
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
-  }
-
-  @Test
-  @DisplayName("allow get method for a custom path with minimal parameters")
-  void getTest0() {
-    String path0 = "/test/minimal";
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "GET");
-  }
-
-  @Test
-  @DisplayName("allow get method for a custom path with all parameters")
-  void getTest1() {
-    String path0 = "/test/all";
-
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-
-      parameters0.put("query", query1);
-    }
-
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0, parameters0);
-      }
-    );
-
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "GET");
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    List<Pair> actualQuery = req.getQueryParams();
-    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
-      boolean found = false;
-      for (Pair p : actualQuery) {
-        if (
-          p.getName().equals(entry.getKey()) &&
-          p.getValue().equals(entry.getValue())
-        ) {
-          found = true;
-        }
-      }
-      assertTrue(
-        found,
-        "Query parameter " + entry.getKey() + " not found in the actual query"
-      );
-    }
-  }
-
-  @Test
   @DisplayName("createConfig")
   void createConfigTest0() {
     QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam0 = new QuerySuggestionsIndexWithIndexParam();
@@ -404,17 +175,73 @@ class QuerySuggestionsClientTests {
   }
 
   @Test
-  @DisplayName("getConfigStatus")
-  void getConfigStatusTest0() {
+  @DisplayName("deleteConfig")
+  void deleteConfigTest0() {
     String indexName0 = "theIndexName";
 
     EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getConfigStatus(indexName0);
+        return client.deleteConfig(indexName0);
       }
     );
 
-    assertEquals(req.getPath(), "/1/configs/theIndexName/status");
+    assertEquals(req.getPath(), "/1/configs/theIndexName");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("allow get method for a custom path with minimal parameters")
+  void getTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.get(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
     assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("allow get method for a custom path with all parameters")
+  void getTest1() {
+    String path0 = "/test/all";
+
+    Map<String, Object> parameters0 = new HashMap<>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.get(path0, parameters0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "GET");
+
+    Map<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
+    }
   }
 
   @Test
@@ -441,6 +268,105 @@ class QuerySuggestionsClientTests {
 
     assertEquals(req.getPath(), "/1/configs/theIndexName");
     assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getConfigStatus")
+  void getConfigStatusTest0() {
+    String indexName0 = "theIndexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getConfigStatus(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/configs/theIndexName/status");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("getLogFile")
+  void getLogFileTest0() {
+    String indexName0 = "theIndexName";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.getLogFile(indexName0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/logs/theIndexName");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("allow post method for a custom path with minimal parameters")
+  void postTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.post(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("allow post method for a custom path with all parameters")
+  void postTest1() {
+    String path0 = "/test/all";
+
+    Map<String, Object> parameters0 = new HashMap<>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    Map<String, String> body0 = new HashMap<>();
+    {
+      String body1 = "parameters";
+
+      body0.put("body", body1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.post(path0, parameters0, body0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"body\":\"parameters\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+
+    Map<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+      boolean found = false;
+      for (Pair p : actualQuery) {
+        if (
+          p.getName().equals(entry.getKey()) &&
+          p.getValue().equals(entry.getValue())
+        ) {
+          found = true;
+        }
+      }
+      assertTrue(
+        found,
+        "Query parameter " + entry.getKey() + " not found in the actual query"
+      );
+    }
   }
 
   @Test
@@ -515,16 +441,90 @@ class QuerySuggestionsClientTests {
   }
 
   @Test
-  @DisplayName("getLogFile")
-  void getLogFileTest0() {
+  @DisplayName("updateConfig")
+  void updateConfigTest0() {
     String indexName0 = "theIndexName";
 
+    QuerySuggestionsIndexParam querySuggestionsIndexParam0 = new QuerySuggestionsIndexParam();
+    {
+      List<SourceIndex> sourceIndices1 = new ArrayList<>();
+      {
+        SourceIndex sourceIndices_02 = new SourceIndex();
+        {
+          String indexName3 = "testIndex";
+
+          sourceIndices_02.setIndexName(indexName3);
+
+          List<Object> facets3 = new ArrayList<>();
+          {
+            Map<String, String> facets_04 = new HashMap<>();
+            {
+              String attributes5 = "test";
+
+              facets_04.put("attributes", attributes5);
+            }
+            facets3.add(facets_04);
+          }
+          sourceIndices_02.setFacets(facets3);
+
+          List<List<String>> generate3 = new ArrayList<>();
+          {
+            List<String> generate_04 = new ArrayList<>();
+            {
+              String generate_0_05 = "facetA";
+
+              generate_04.add(generate_0_05);
+              String generate_0_15 = "facetB";
+
+              generate_04.add(generate_0_15);
+            }
+            generate3.add(generate_04);
+
+            List<String> generate_14 = new ArrayList<>();
+            {
+              String generate_1_05 = "facetC";
+
+              generate_14.add(generate_1_05);
+            }
+            generate3.add(generate_14);
+          }
+          sourceIndices_02.setGenerate(generate3);
+        }
+        sourceIndices1.add(sourceIndices_02);
+      }
+      querySuggestionsIndexParam0.setSourceIndices(sourceIndices1);
+
+      List<String> languages1 = new ArrayList<>();
+      {
+        String languages_02 = "french";
+
+        languages1.add(languages_02);
+      }
+      querySuggestionsIndexParam0.setLanguages(languages1);
+
+      List<String> exclude1 = new ArrayList<>();
+      {
+        String exclude_02 = "test";
+
+        exclude1.add(exclude_02);
+      }
+      querySuggestionsIndexParam0.setExclude(exclude1);
+    }
+
     EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getLogFile(indexName0);
+        return client.updateConfig(indexName0, querySuggestionsIndexParam0);
       }
     );
 
-    assertEquals(req.getPath(), "/1/logs/theIndexName");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.getPath(), "/1/configs/theIndexName");
+    assertEquals(req.getMethod(), "PUT");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attributes\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
   }
 }
