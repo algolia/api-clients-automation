@@ -77,46 +77,6 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Del
-     * allow del method for a custom path with minimal parameters
-     */
-    public function testDel0()
-    {
-        $client = $this->getClient();
-
-        $client->del('/test/minimal');
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/minimal',
-                'method' => 'DELETE',
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Del
-     * allow del method for a custom path with all parameters
-     */
-    public function testDel1()
-    {
-        $client = $this->getClient();
-
-        $client->del(
-            '/test/all',
-            ['query' => 'parameters']
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/all',
-                'method' => 'DELETE',
-                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
-            ],
-        ]);
-    }
-
-    /**
      * Test case for DeleteUserProfile
      * delete deleteUserProfile
      */
@@ -130,6 +90,48 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/profiles/UserToken',
                 'method' => 'DELETE',
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * allow post method for a custom path with minimal parameters
+     */
+    public function testPost0()
+    {
+        $client = $this->getClient();
+
+        $client->post('/test/minimal');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/minimal',
+                'method' => 'POST',
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * allow post method for a custom path with all parameters
+     */
+    public function testPost1()
+    {
+        $client = $this->getClient();
+
+        $client->post(
+            '/test/all',
+            ['query' => 'parameters'],
+            ['body' => 'parameters']
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'POST',
+                'body' => json_decode("{\"body\":\"parameters\"}"),
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
             ],
         ]);
     }
@@ -193,6 +195,46 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for Del
+     * allow del method for a custom path with minimal parameters
+     */
+    public function testDel0()
+    {
+        $client = $this->getClient();
+
+        $client->del('/test/minimal');
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/minimal',
+                'method' => 'DELETE',
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Del
+     * allow del method for a custom path with all parameters
+     */
+    public function testDel1()
+    {
+        $client = $this->getClient();
+
+        $client->del(
+            '/test/all',
+            ['query' => 'parameters']
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'DELETE',
+                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
+            ],
+        ]);
+    }
+
+    /**
      * Test case for GetUserTokenProfile
      * get getUserTokenProfile
      */
@@ -211,43 +253,36 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
-     * allow post method for a custom path with minimal parameters
+     * Test case for SetPersonalizationStrategy
+     * set setPersonalizationStrategy
      */
-    public function testPost0()
+    public function testSetPersonalizationStrategy0()
     {
         $client = $this->getClient();
 
-        $client->post('/test/minimal');
+        $client->setPersonalizationStrategy([
+            'eventScoring' => [
+                [
+                    'score' => 42,
 
-        $this->assertRequests([
-            [
-                'path' => '/1/test/minimal',
-                'method' => 'POST',
+                    'eventName' => 'Algolia',
+
+                    'eventType' => 'Event',
+                ],
             ],
+
+            'facetScoring' => [['score' => 42, 'facetName' => 'Event']],
+
+            'personalizationImpact' => 42,
         ]);
-    }
-
-    /**
-     * Test case for Post
-     * allow post method for a custom path with all parameters
-     */
-    public function testPost1()
-    {
-        $client = $this->getClient();
-
-        $client->post(
-            '/test/all',
-            ['query' => 'parameters'],
-            ['body' => 'parameters']
-        );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/all',
+                'path' => '/1/strategies/personalization',
                 'method' => 'POST',
-                'body' => json_decode("{\"body\":\"parameters\"}"),
-                'searchParams' => json_decode("{\"query\":\"parameters\"}"),
+                'body' => json_decode(
+                    "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
+                ),
             ],
         ]);
     }
@@ -290,41 +325,6 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                 'method' => 'PUT',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
                 'searchParams' => json_decode("{\"query\":\"parameters\"}"),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for SetPersonalizationStrategy
-     * set setPersonalizationStrategy
-     */
-    public function testSetPersonalizationStrategy0()
-    {
-        $client = $this->getClient();
-
-        $client->setPersonalizationStrategy([
-            'eventScoring' => [
-                [
-                    'score' => 42,
-
-                    'eventName' => 'Algolia',
-
-                    'eventType' => 'Event',
-                ],
-            ],
-
-            'facetScoring' => [['score' => 42, 'facetName' => 'Event']],
-
-            'personalizationImpact' => 42,
-        ]);
-
-        $this->assertRequests([
-            [
-                'path' => '/1/strategies/personalization',
-                'method' => 'POST',
-                'body' => json_decode(
-                    "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
-                ),
             ],
         ]);
     }

@@ -246,7 +246,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
         result.put(ope.operationId, ope);
       }
     }
-    return result.keySet().stream().sorted().collect(Collectors.toList());
+    return result;
   }
 
   private String createImportName() {
