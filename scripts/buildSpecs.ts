@@ -16,9 +16,11 @@ const ALGOLIASEARCH_LITE_OPERATIONS = [
 async function propagateTagsToOperations({
   bundledPath,
   clientName,
+  alias,
 }: {
   bundledPath: string;
   clientName: string;
+  alias?: string;
 }): Promise<void> {
   if (!(await exists(bundledPath))) {
     throw new Error(`Bundled file not found ${bundledPath}.`);
@@ -45,7 +47,7 @@ async function propagateTagsToOperations({
 
       // Checks that specified tags are well defined at root level
       for (const tag of bundledDocSpec.paths[pathKey][method].tags) {
-        if (tag === clientName) {
+        if (tag === clientName || (alias && tag === alias)) {
           return;
         }
 
@@ -202,6 +204,7 @@ async function buildSpec(
   await propagateTagsToOperations({
     bundledPath: toAbsolutePath(bundledPath),
     clientName: spec,
+    alias: client,
   });
 
   spinner.text = `linting ${client} spec`;
