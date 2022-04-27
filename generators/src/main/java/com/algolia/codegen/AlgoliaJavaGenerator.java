@@ -152,7 +152,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
           .get(0)
           .get("model");
       if (!model.oneOf.isEmpty()) {
-        List<HashMap<String, String>> listOneOf = new ArrayList();
+        List<HashMap<String, String>> oneOfList = new ArrayList();
 
         for (String iterateModel : model.oneOf) {
           HashMap<String, String> oneOfModel = new HashMap();
@@ -163,11 +163,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
             iterateModel.replace("<", "").replace(">", "")
           );
 
-          listOneOf.add(oneOfModel);
+          oneOfList.add(oneOfModel);
         }
 
         model.vendorExtensions.put("x-is-one-of-interface", true);
-        model.vendorExtensions.put("x-is-one-of-list", listOneOf);
+        model.vendorExtensions.put("x-is-one-of-list", oneOfList);
       }
     }
 
@@ -238,7 +238,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
     supportingFiles.removeIf(file ->
       file.getTemplateFile().equals("build.gradle.mustache") ||
-      file.getTemplateFile().equals("settings.gradle.mustache")
+      file.getTemplateFile().equals("settings.gradle.mustache") ||
+      file.getTemplateFile().equals("gitignore.mustache")
     );
   }
 

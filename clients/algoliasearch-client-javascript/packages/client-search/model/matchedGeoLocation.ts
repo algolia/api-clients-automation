@@ -1,4 +1,4 @@
-export type RankingInfoMatchedGeoLocation = {
+export type MatchedGeoLocation = {
   /**
    * Latitude of the matched location.
    */

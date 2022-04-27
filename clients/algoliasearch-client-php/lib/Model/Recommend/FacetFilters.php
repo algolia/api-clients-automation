@@ -3,12 +3,14 @@
 namespace Algolia\AlgoliaSearch\Model\Recommend;
 
 /**
- * RankingInfoMatchedGeoLocation Class Doc Comment
+ * FacetFilters Class Doc Comment
  *
  * @category Class
+ * @description Filter hits by facet value.
+ *
  * @package Algolia\AlgoliaSearch
  */
-class RankingInfoMatchedGeoLocation extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class FacetFilters extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -16,9 +18,7 @@ class RankingInfoMatchedGeoLocation extends \Algolia\AlgoliaSearch\Model\Abstrac
       * @var string[]
       */
     protected static $modelTypes = [
-        'lat' => 'double',
-        'lng' => 'double',
-        'distance' => 'int',
+
     ];
 
     /**
@@ -27,9 +27,7 @@ class RankingInfoMatchedGeoLocation extends \Algolia\AlgoliaSearch\Model\Abstrac
       * @var string[]
       */
     protected static $modelFormats = [
-        'lat' => 'double',
-        'lng' => 'double',
-        'distance' => null,
+
     ];
 
     /**
@@ -58,9 +56,7 @@ class RankingInfoMatchedGeoLocation extends \Algolia\AlgoliaSearch\Model\Abstrac
      * @var string[]
      */
     protected static $setters = [
-        'lat' => 'setLat',
-        'lng' => 'setLng',
-        'distance' => 'setDistance',
+
     ];
 
     /**
@@ -69,9 +65,7 @@ class RankingInfoMatchedGeoLocation extends \Algolia\AlgoliaSearch\Model\Abstrac
      * @var string[]
      */
     protected static $getters = [
-        'lat' => 'getLat',
-        'lng' => 'getLng',
-        'distance' => 'getDistance',
+
     ];
 
     /**
@@ -108,15 +102,6 @@ class RankingInfoMatchedGeoLocation extends \Algolia\AlgoliaSearch\Model\Abstrac
      */
     public function __construct(array $data = null)
     {
-        if (isset($data['lat'])) {
-            $this->container['lat'] = $data['lat'];
-        }
-        if (isset($data['lng'])) {
-            $this->container['lng'] = $data['lng'];
-        }
-        if (isset($data['distance'])) {
-            $this->container['distance'] = $data['distance'];
-        }
     }
 
     /**
@@ -142,77 +127,6 @@ class RankingInfoMatchedGeoLocation extends \Algolia\AlgoliaSearch\Model\Abstrac
         return count($this->listInvalidProperties()) === 0;
     }
 
-    /**
-     * Gets lat
-     *
-     * @return float|null
-     */
-    public function getLat()
-    {
-        return $this->container['lat'] ?? null;
-    }
-
-    /**
-     * Sets lat
-     *
-     * @param float|null $lat latitude of the matched location
-     *
-     * @return self
-     */
-    public function setLat($lat)
-    {
-        $this->container['lat'] = $lat;
-
-        return $this;
-    }
-
-    /**
-     * Gets lng
-     *
-     * @return float|null
-     */
-    public function getLng()
-    {
-        return $this->container['lng'] ?? null;
-    }
-
-    /**
-     * Sets lng
-     *
-     * @param float|null $lng longitude of the matched location
-     *
-     * @return self
-     */
-    public function setLng($lng)
-    {
-        $this->container['lng'] = $lng;
-
-        return $this;
-    }
-
-    /**
-     * Gets distance
-     *
-     * @return int|null
-     */
-    public function getDistance()
-    {
-        return $this->container['distance'] ?? null;
-    }
-
-    /**
-     * Sets distance
-     *
-     * @param int|null $distance distance between the matched location and the search location (in meters)
-     *
-     * @return self
-     */
-    public function setDistance($distance)
-    {
-        $this->container['distance'] = $distance;
-
-        return $this;
-    }
     /**
      * Returns true if offset exists. False otherwise.
      *

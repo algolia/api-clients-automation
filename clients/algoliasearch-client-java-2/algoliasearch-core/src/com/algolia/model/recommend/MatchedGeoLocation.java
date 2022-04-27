@@ -1,10 +1,10 @@
-package com.algolia.model.search;
+package com.algolia.model.recommend;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
-/** RankingInfoMatchedGeoLocation */
-public class RankingInfoMatchedGeoLocation {
+/** MatchedGeoLocation */
+public class MatchedGeoLocation {
 
   @SerializedName("lat")
   private Double lat;
@@ -15,7 +15,7 @@ public class RankingInfoMatchedGeoLocation {
   @SerializedName("distance")
   private Integer distance;
 
-  public RankingInfoMatchedGeoLocation setLat(Double lat) {
+  public MatchedGeoLocation setLat(Double lat) {
     this.lat = lat;
     return this;
   }
@@ -30,7 +30,7 @@ public class RankingInfoMatchedGeoLocation {
     return lat;
   }
 
-  public RankingInfoMatchedGeoLocation setLng(Double lng) {
+  public MatchedGeoLocation setLng(Double lng) {
     this.lng = lng;
     return this;
   }
@@ -45,7 +45,7 @@ public class RankingInfoMatchedGeoLocation {
     return lng;
   }
 
-  public RankingInfoMatchedGeoLocation setDistance(Integer distance) {
+  public MatchedGeoLocation setDistance(Integer distance) {
     this.distance = distance;
     return this;
   }
@@ -68,11 +68,11 @@ public class RankingInfoMatchedGeoLocation {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RankingInfoMatchedGeoLocation rankingInfoMatchedGeoLocation = (RankingInfoMatchedGeoLocation) o;
+    MatchedGeoLocation matchedGeoLocation = (MatchedGeoLocation) o;
     return (
-      Objects.equals(this.lat, rankingInfoMatchedGeoLocation.lat) &&
-      Objects.equals(this.lng, rankingInfoMatchedGeoLocation.lng) &&
-      Objects.equals(this.distance, rankingInfoMatchedGeoLocation.distance)
+      Objects.equals(this.lat, matchedGeoLocation.lat) &&
+      Objects.equals(this.lng, matchedGeoLocation.lng) &&
+      Objects.equals(this.distance, matchedGeoLocation.distance)
     );
   }
 
@@ -84,7 +84,7 @@ public class RankingInfoMatchedGeoLocation {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RankingInfoMatchedGeoLocation {\n");
+    sb.append("class MatchedGeoLocation {\n");
     sb.append("    lat: ").append(toIndentedString(lat)).append("\n");
     sb.append("    lng: ").append(toIndentedString(lng)).append("\n");
     sb.append("    distance: ").append(toIndentedString(distance)).append("\n");
