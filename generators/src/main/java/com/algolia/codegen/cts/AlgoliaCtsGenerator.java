@@ -139,23 +139,20 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       List<Object> blocks = new ArrayList<>();
       ParametersWithDataType paramsType = new ParametersWithDataType(models);
 
-      for (Entry<String, Request[]> entry : cts.entrySet()) {
+      for (Entry<String, CodegenOperation> entry : operations.entrySet()) {
         String operationId = entry.getKey();
-        if (!operations.containsKey(operationId)) {
-          // We only inform that it does not exist but skip the test generation
-          System.out.println(
+        if (!cts.containsKey(operationId)) {
+          throw new CTSException(
             "operationId " + operationId + " does not exist in the spec"
           );
-
-          continue;
         }
-        CodegenOperation op = operations.get(operationId);
+        Request[] op = cts.get(operationId);
 
         List<Object> tests = new ArrayList<>();
-        for (int i = 0; i < entry.getValue().length; i++) {
+        for (int i = 0; i < op.length; i++) {
           Map<String, Object> test = paramsType.buildJSONForRequest(
-            entry.getValue()[i],
-            op,
+            op[i],
+            entry.getValue(),
             i
           );
           tests.add(test);
@@ -242,7 +239,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
         result.put(ope.operationId, ope);
       }
     }
-    return result;
+    return result.keySet().stream().sorted().collect(Collectors.toList());
   }
 
   private String createImportName() {
