@@ -50,7 +50,7 @@ class {{client}}Tests {
         {{/request.body}}
 
         {{#request.queryParameters}}
-        HashMap<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
+        Map<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
         List<Pair> actualQuery = req.getQueryParams();
         assertEquals(expectedQuery.size(), actualQuery.size());
         for (Pair p : actualQuery) {
