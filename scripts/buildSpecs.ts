@@ -2,7 +2,13 @@ import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
 
-import { checkForCache, exists, run, toAbsolutePath } from './common';
+import {
+  BUNDLE_WITH_DOC,
+  checkForCache,
+  exists,
+  run,
+  toAbsolutePath,
+} from './common';
 import { createSpinner } from './oraLog';
 import type { Spec } from './types';
 
@@ -40,15 +46,20 @@ async function propagateTagsToOperations({
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
-      // In the main bundle we need to only have the clientName before open-api generator will use this to determine the name of the client
+      // In the main bundle we need to have only the clientName
+      // because open-api-generator will use this to determine the name of the client
       specMethod.tags = [clientName];
 
-      if (!withDoc || !bundledDocSpec!.paths[pathKey][method].tags) {
+      if (
+        !withDoc ||
+        !bundledDocSpec ||
+        !bundledDocSpec.paths[pathKey][method].tags
+      ) {
         continue;
       }
 
       // Checks that specified tags are well defined at root level
-      for (const tag of bundledDocSpec!.paths[pathKey][method].tags) {
+      for (const tag of bundledDocSpec.paths[pathKey][method].tags) {
         if (tag === clientName || (alias && tag === alias)) {
           return;
         }
@@ -154,6 +165,7 @@ async function buildLiteSpec({
   await propagateTagsToOperations({
     bundledPath: toAbsolutePath(liteBundledPath),
     clientName: spec,
+    // Lite does not need documentation because it's just a subset
     withDoc: false,
   });
 }
@@ -168,7 +180,8 @@ async function buildSpec(
   useCache: boolean
 ): Promise<void> {
   const isLite = spec === 'algoliasearch-lite';
-  const specBase = isLite ? 'search' : spec; // In case of lite we use a different base because the base only exists virtually.
+  // In case of lite we use a the `search` spec as a base because only its bundled form exists.
+  const specBase = isLite ? 'search' : spec;
   const cacheFile = toAbsolutePath(`specs/dist/${spec}.cache`);
   let hash = '';
 
@@ -176,7 +189,7 @@ async function buildSpec(
 
   if (useCache) {
     spinner.info(`checking cache for '${specBase}'`);
-    const generatedFiles: string[] = [`bundled/${spec}.yml`];
+    const generatedFiles = [`bundled/${spec}.yml`];
     if (!isLite) {
       generatedFiles.push(`bundled/${spec}.doc.yml`);
     }
@@ -213,7 +226,7 @@ async function buildSpec(
     await propagateTagsToOperations({
       bundledPath: toAbsolutePath(bundledPath),
       clientName: spec,
-      withDoc: true,
+      withDoc: BUNDLE_WITH_DOC,
     });
   } else {
     await buildLiteSpec({
