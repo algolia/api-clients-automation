@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import sha256 from 'crypto-js/sha256';
 import { hashElement } from 'folder-hash';
 
 import { getNbGitDiff } from './utils';
@@ -15,10 +16,7 @@ const JS_CLIENT_FOLDER = 'clients/algoliasearch-client-javascript';
  *
  * The variable will be accessible in the CI via `steps.diff.outputs.<name>`.
  */
-const VARIABLES_TO_CHECK: Array<{
-  name: string;
-  path: string[];
-}> = [
+const VARIABLES_TO_CHECK = [
   {
     name: 'GITHUB_ACTIONS_CHANGED',
     path: ['.github/actions', '.github/workflows', '.github/.cache_version'],
@@ -94,23 +92,6 @@ const VARIABLES_TO_CHECK: Array<{
   },
 ];
 
-// simple hash to reduce the hash length
-// reference: https://code-examples.net/en/q/7437cd
-function hashCode(str: string): string {
-  const p1 = 2654435761;
-  const p2 = 1597334677;
-  let h1 = 0xdeadbeef | 0;
-  let h2 = 0x41c6ce57 | 0;
-  for (let i = 0; i < str.length; i++) {
-    const ch = str.charCodeAt(i);
-    h1 = Math.imul(h1 + ch, p1);
-    h2 = Math.imul(h2 + ch, p2);
-  }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), p2);
-  h2 = Math.imul(h2 ^ (h2 >>> 15), p1);
-  return ((h2 & 2097151) * 4294967296 + h1).toString(16);
-}
-
 async function computeCommonHash(): Promise<string> {
   const hashGA = await hashElement('../.github', {
     encoding: 'hex',
@@ -127,7 +108,9 @@ async function computeCommonHash(): Promise<string> {
     files: { include: ['openapitools.json', 'clients.config.json'] },
   });
 
-  return hashCode(`${hashGA.hash}-${hashScripts.hash}-${hashConfig.hash}`);
+  return sha256(
+    `${hashGA.hash}-${hashScripts.hash}-${hashConfig.hash}`
+  ).toString();
 }
 
 /**
