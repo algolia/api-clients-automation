@@ -3,6 +3,8 @@ import crypto from 'crypto';
 
 import { hashElement } from 'folder-hash';
 
+import { toAbsolutePath } from '../common';
+
 import { getNbGitDiff } from './utils';
 
 const JS_CLIENT_FOLDER = 'clients/algoliasearch-client-javascript';
@@ -94,16 +96,16 @@ const VARIABLES_TO_CHECK = [
 ];
 
 async function computeCommonHash(): Promise<string> {
-  const hashGA = await hashElement('../.github', {
+  const hashGA = await hashElement(toAbsolutePath('.github'), {
     encoding: 'hex',
     folders: { exclude: ['ISSUE_TEMPLATE'] },
     files: { include: ['*.yml', '.cache_version'] },
   });
-  const hashScripts = await hashElement('../scripts', {
+  const hashScripts = await hashElement(toAbsolutePath('scripts'), {
     encoding: 'hex',
     folders: { exclude: ['docker', '__tests__'] },
   });
-  const hashConfig = await hashElement('../', {
+  const hashConfig = await hashElement(toAbsolutePath('.'), {
     encoding: 'hex',
     folders: { include: ['config'] },
     files: { include: ['openapitools.json', 'clients.config.json'] },
