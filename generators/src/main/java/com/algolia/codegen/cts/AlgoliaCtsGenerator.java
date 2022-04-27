@@ -10,10 +10,8 @@ import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.Collections;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 import org.openapitools.codegen.*;
 
 @SuppressWarnings("unchecked")
