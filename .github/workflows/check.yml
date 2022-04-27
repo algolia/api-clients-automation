@@ -66,14 +66,14 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
+    if: ${{ jobs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Check script linting
         run: yarn scripts:lint
@@ -88,16 +88,16 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_SPECS == 'true' }}
+    if: ${{ jobs.setup.outputs.RUN_SPECS == 'true' }}
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX) }}
+      matrix: ${{ fromJSON(jobs.setup.outputs.SPECS_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Cache '${{ matrix.client.name }}' bundled specs
         id: cache
@@ -119,7 +119,7 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_JS_COMMON == 'true' }}
+    if: ${{ jobs.setup.outputs.RUN_JS_COMMON == 'true' }}
     strategy:
       matrix:
         client:
@@ -132,7 +132,7 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Cache '${{ matrix.client }}' client
         id: cache
@@ -158,11 +158,11 @@ jobs:
       - client_javascript_common
     if: |
       always() &&
-      needs.setup.outputs.RUN_JS == 'true' &&
+      jobs.setup.outputs.RUN_JS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
+      matrix: ${{ fromJSON(jobs.setup.outputs.JS_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -171,7 +171,7 @@ jobs:
         with:
           job: client
           language: javascript
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -210,11 +210,11 @@ jobs:
       - specs
     if: |
       always() &&
-      needs.setup.outputs.RUN_JAVA == 'true' &&
+      jobs.setup.outputs.RUN_JAVA == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
+      matrix: ${{ fromJSON(jobs.setup.outputs.JAVA_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -223,7 +223,7 @@ jobs:
         with:
           job: client
           language: java
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -260,11 +260,11 @@ jobs:
       - specs
     if: |
       always() &&
-      needs.setup.outputs.RUN_PHP == 'true' &&
+      jobs.setup.outputs.RUN_PHP == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
+      matrix: ${{ fromJSON(jobs.setup.outputs.PHP_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -273,7 +273,7 @@ jobs:
         with:
           job: client
           language: php
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Cache '${{ matrix.client.name }}' client
         id: cache
@@ -308,7 +308,7 @@ jobs:
     needs: client_javascript
     if: |
       always() &&
-      needs.setup.outputs.RUN_JS_ALGOLIASEARCH == 'true' &&
+      jobs.setup.outputs.RUN_JS_ALGOLIASEARCH == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     steps:
@@ -319,7 +319,7 @@ jobs:
         with:
           job: codegen
           language: javascript
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Cache 'algoliasearch' client
         id: cache
@@ -345,7 +345,7 @@ jobs:
     needs: client_javascript
     if: |
       always() &&
-      needs.setup.outputs.RUN_JS_TESTS == 'true' &&
+      jobs.setup.outputs.RUN_JS_TESTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     steps:
@@ -355,7 +355,7 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Run client-common tests
         run: yarn workspace @experimental-api-clients-automation/client-common test
@@ -369,7 +369,7 @@ jobs:
       - client_php
     if: |
       always() &&
-      needs.setup.outputs.RUN_CTS == 'true' &&
+      jobs.setup.outputs.RUN_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     steps:
@@ -383,7 +383,7 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: cts
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Push generated code to generated branch
         id: pushGeneratedCode
@@ -417,7 +417,7 @@ jobs:
     if: |
       always() &&
       github.ref == 'refs/heads/main' &&
-      needs.setup.outputs.RUN_CODEGEN == 'true' &&
+      jobs.setup.outputs.RUN_CODEGEN == 'true' &&
       needs.cts.result == 'success'
     steps:
       - uses: actions/checkout@v2
@@ -430,7 +430,7 @@ jobs:
         uses: ./.github/actions/cache
         with:
           job: codegen
-          cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
+          cache_hash: ${{ jobs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Push generated code to main
         id: pushGeneratedCode
