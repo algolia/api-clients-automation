@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import sha256 from 'crypto-js/sha256';
+import crypto from 'crypto';
+
 import { hashElement } from 'folder-hash';
 
 import { getNbGitDiff } from './utils';
@@ -108,9 +109,10 @@ async function computeCommonHash(): Promise<string> {
     files: { include: ['openapitools.json', 'clients.config.json'] },
   });
 
-  return sha256(
-    `${hashGA.hash}-${hashScripts.hash}-${hashConfig.hash}`
-  ).toString();
+  return crypto
+    .createHash('sha256')
+    .update(`${hashGA.hash}-${hashScripts.hash}-${hashConfig.hash}`)
+    .digest('hex');
 }
 
 /**

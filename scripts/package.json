@@ -16,7 +16,6 @@
   "devDependencies": {
     "@apidevtools/swagger-parser": "10.0.3",
     "@octokit/rest": "18.12.0",
-    "@types/crypto-js": "4.1.1",
     "@types/folder-hash": "4.0.1",
     "@types/inquirer": "8.2.1",
     "@types/jest": "27.4.1",
@@ -27,7 +26,6 @@
     "@types/semver": "7.3.9",
     "chalk": "4.1.2",
     "commander": "9.1.0",
-    "crypto-js": "4.1.1",
     "dotenv": "16.0.0",
     "eslint": "8.12.0",
     "execa": "5.1.1",
