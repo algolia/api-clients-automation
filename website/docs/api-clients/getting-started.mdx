@@ -9,7 +9,8 @@ import TabItem from '@theme/TabItem';
   groupId="language"
   defaultValue="js"
   values={[
-    { label: 'JavaScript', value: 'js', }
+    { label: 'JavaScript', value: 'js', },
+    { label: 'PHP', value: 'php', }
   ]
 }>
 <TabItem value="js">
@@ -107,5 +108,27 @@ const res = await personalizationClient.getUserTokenProfile({
 console.log('[Results]', res);
 ```
 
+</TabItem>
+
+<TabItem value="php">
+First, install Algolia PHP API Client via the composer package manager:
+
+```bash
+composer require algolia/algoliasearch-client-php
+```
+Then, create objects on your index:
+```php
+$client = Algolia\AlgoliaSearch\Api\SearchClient::create(
+    '<YOUR_APP_ID>',
+    '<YOUR_API_KEY>'
+);
+
+$client->saveObject('<YOUR_INDEX>', ['objectID' => 1, 'name' => 'Foo']);
+```
+
+Finally, you may begin searching a object using the `search` method:
+```php
+$objects = $client->search('<YOUR_INDEX>', ['query' => 'Foo']);
+```
 </TabItem>
 </Tabs>
