@@ -270,7 +270,7 @@ async function processRelease(): Promise<void> {
       message: `chore: release v${next}`,
       cwd: tempGitDir,
     });
-    await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
+    await execa('git', ['tag', `${next}`], { cwd: tempGitDir });
     await run(`git push --follow-tags`, { cwd: tempGitDir });
   }
 
