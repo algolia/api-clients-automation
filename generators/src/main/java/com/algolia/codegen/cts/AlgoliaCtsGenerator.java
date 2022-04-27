@@ -142,9 +142,12 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       for (Entry<String, Request[]> entry : cts.entrySet()) {
         String operationId = entry.getKey();
         if (!operations.containsKey(operationId)) {
-          throw new CTSException(
+          // We only inform that it does not exist but skip the test generation
+          System.out.println(
             "operationId " + operationId + " does not exist in the spec"
           );
+
+          continue;
         }
         CodegenOperation op = operations.get(operationId);
 
@@ -183,7 +186,15 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private Map<String, Request[]> loadCTS()
     throws JsonParseException, JsonMappingException, IOException, CTSException {
     TreeMap<String, Request[]> cts = new TreeMap<>();
-    File dir = new File("tests/CTS/methods/requests/" + client);
+    String clientName = client;
+
+    // This special case allow us to read the `search` CTS to generated the
+    // tests for the `algoliasearch-lite` client.
+    if (clientName.equals("algoliasearch-lite")) {
+      clientName = "search";
+    }
+
+    File dir = new File("tests/CTS/methods/requests/" + clientName);
     File commonTestDir = new File("tests/CTS/methods/requests/common");
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
