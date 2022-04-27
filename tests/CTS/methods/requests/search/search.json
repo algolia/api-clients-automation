@@ -30,7 +30,7 @@
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
-      "data": {
+      "body": {
         "query": "myQuery",
         "facetFilters": [
           "tags:algolia"

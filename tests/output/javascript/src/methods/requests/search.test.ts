@@ -1037,7 +1037,7 @@ describe('search', () => {
       query: 'myQuery',
       facetFilters: ['tags:algolia'],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

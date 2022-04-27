@@ -1982,6 +1982,14 @@ class SearchClientTests {
 
     assertEquals(req.getPath(), "/1/indexes/indexName/query");
     assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
   }
 
   @Test
