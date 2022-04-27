@@ -188,7 +188,7 @@ async function buildSpec(
   const spinner = createSpinner(`starting '${spec}' spec`, verbose).start();
 
   if (useCache) {
-    spinner.info(`checking cache for '${specBase}'`);
+    spinner.text = `checking cache for '${specBase}'`;
     const generatedFiles = [`bundled/${spec}.yml`];
     if (!isLite) {
       generatedFiles.push(`bundled/${spec}.doc.yml`);
@@ -206,7 +206,7 @@ async function buildSpec(
       return;
     }
 
-    spinner.info(`cache not found for '${specBase}'`);
+    spinner.text = `cache not found for '${specBase}'`;
     hash = newCache;
   }
 
