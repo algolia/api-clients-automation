@@ -84,28 +84,26 @@ async function propagateTagsToOperations({
 }
 
 async function lintCommon(verbose: boolean, useCache: boolean): Promise<void> {
+  const spinner = createSpinner('linting common spec', verbose).start();
+
   let hash = '';
   const cacheFile = toAbsolutePath(`specs/dist/common.cache`);
   if (useCache) {
-    const { cacheExists, hash: newCache } = await checkForCache(
-      {
-        job: 'common specs',
-        folder: toAbsolutePath('specs/'),
-        generatedFiles: [],
-        filesToCache: ['common'],
-        cacheFile,
-      },
-      verbose
-    );
+    const { cacheExists, hash: newCache } = await checkForCache({
+      folder: toAbsolutePath('specs/'),
+      generatedFiles: [],
+      filesToCache: ['common'],
+      cacheFile,
+    });
 
     if (cacheExists) {
+      spinner.succeed("job skipped, cache found for 'common' spec");
       return;
     }
 
     hash = newCache;
   }
 
-  const spinner = createSpinner('linting common spec', verbose).start();
   await run(`yarn specs:lint common`, { verbose });
 
   if (hash) {
@@ -177,26 +175,25 @@ async function buildSpec(
   const spinner = createSpinner(`starting '${spec}' spec`, verbose).start();
 
   if (useCache) {
+    spinner.info(`checking cache for '${specBase}'`);
     const generatedFiles: string[] = [`bundled/${spec}.yml`];
     if (!isLite) {
       generatedFiles.push(`bundled/${spec}.doc.yml`);
     }
 
-    const { cacheExists, hash: newCache } = await checkForCache(
-      {
-        job: `'${spec}' specs`,
-        folder: toAbsolutePath('specs/'),
-        generatedFiles,
-        filesToCache: [spec, 'common'],
-        cacheFile,
-      },
-      verbose
-    );
+    const { cacheExists, hash: newCache } = await checkForCache({
+      folder: toAbsolutePath('specs/'),
+      generatedFiles,
+      filesToCache: [specBase, 'common'],
+      cacheFile,
+    });
 
     if (cacheExists) {
+      spinner.succeed(`job skipped, cache found for '${specBase}'`);
       return;
     }
 
+    spinner.info(`cache not found for '${specBase}'`);
     hash = newCache;
   }
 
