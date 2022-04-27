@@ -105,7 +105,7 @@ jobs:
         with:
           path: ${{ format('specs/bundled/{0}.yml', matrix.client.name) }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
+            ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('{0}/**', matrix.client.path),
               'specs/common/**'
@@ -140,7 +140,7 @@ jobs:
         with:
           path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
+            ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('clients/algoliasearch-client-javascript/packages/{0}/src/**', matrix.client)
             )}}
@@ -179,7 +179,7 @@ jobs:
         with:
           path: ${{ matrix.client.path }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
+            ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('{0}/src/**', matrix.client.path),
               format('{0}/model/**', matrix.client.path),
@@ -233,7 +233,7 @@ jobs:
             ${{ format('{0}/algoliasearch-core/src/com/algolia/api/{1}.java', matrix.client.path, matrix.client.api) }}
             ${{ format('{0}/algoliasearch-core/src/com/algolia/model/{1}/**', matrix.client.path, matrix.client.camelizedName) }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
+            ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/java/**',
@@ -283,7 +283,7 @@ jobs:
             ${{ format('{0}/lib/Api/{1}.php', matrix.client.path, matrix.client.api) }}
             ${{ format('{0}/lib/Model/{1}/**', matrix.client.path, matrix.client.capitalizedName) }}
           key: |
-            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
+            ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/php/**',
@@ -329,7 +329,7 @@ jobs:
         with:
           path: clients/algoliasearch-client-javascript/packages/algoliasearch
           key: |
-            ${{ env.CACHE_VERSION }}-${{ env.CACHE_COMMON_HASH }}-${{
+            ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
               'clients/algoliasearch-client-javascript/packages/client-search/**',
