@@ -190,7 +190,7 @@ async function buildSpec(
   if (useCache) {
     spinner.text = `checking cache for '${specBase}'`;
     const generatedFiles = [`bundled/${spec}.yml`];
-    if (!isLite) {
+    if (!isLite && BUNDLE_WITH_DOC) {
       generatedFiles.push(`bundled/${spec}.doc.yml`);
     }
 
