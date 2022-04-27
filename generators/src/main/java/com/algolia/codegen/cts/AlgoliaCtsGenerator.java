@@ -193,8 +193,11 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     String clientName = client;
 
     // This special case allow us to read the `search` CTS to generated the
-    // tests for the `algoliasearch-lite` client.
-    if (clientName.equals("algoliasearch-lite")) {
+    // tests for the `algoliasearch-lite` client, which is only available
+    // in JavaScript
+    if (
+      language.equals("javascript") && clientName.equals("algoliasearch-lite")
+    ) {
       clientName = "search";
     }
 
