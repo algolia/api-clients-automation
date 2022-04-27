@@ -40,7 +40,7 @@ async function getClientMatrix({
 
   for (const { language, client, output } of Object.values(GENERATORS)) {
     // `algoliasearch` is an aggregation of clients
-    if (forLanguage !== language || client === 'algoliasearch') {
+    if (language !== forLanguage || client === 'algoliasearch') {
       continue;
     }
 
