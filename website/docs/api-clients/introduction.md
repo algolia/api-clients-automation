@@ -4,7 +4,7 @@ title: Introduction
 
 # Introduction
 
-This section hosts informations about the [API clients usage](https://github.com/algolia/api-clients-automation) repository. For informations regarding the clients automation, see [the automation page](/docs/automation/introduction).
+This section hosts informations about the [usage of the API clients](https://github.com/algolia/api-clients-automation). For informations regarding the automation and how to contribute, see [the automation page](/docs/automation/introduction).
 
 ## Repositories
 
