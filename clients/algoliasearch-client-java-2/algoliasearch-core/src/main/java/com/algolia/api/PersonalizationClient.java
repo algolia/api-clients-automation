@@ -5,7 +5,7 @@ import com.algolia.ApiClient;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.exceptions.*;
-import com.algolia.model.querySuggestions.*;
+import com.algolia.model.personalization.*;
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
 import com.algolia.utils.retry.CallType;
@@ -19,13 +19,13 @@ import java.util.List;
 import java.util.Map;
 import okhttp3.Call;
 
-public class QuerySuggestionsClient extends ApiClient {
+public class PersonalizationClient extends ApiClient {
 
-  public QuerySuggestionsClient(String appId, String apiKey, String region) {
+  public PersonalizationClient(String appId, String apiKey, String region) {
     this(appId, apiKey, new HttpRequester(getDefaultHosts(region)), null);
   }
 
-  public QuerySuggestionsClient(
+  public PersonalizationClient(
     String appId,
     String apiKey,
     String region,
@@ -39,7 +39,7 @@ public class QuerySuggestionsClient extends ApiClient {
     );
   }
 
-  public QuerySuggestionsClient(
+  public PersonalizationClient(
     String appId,
     String apiKey,
     Requester requester
@@ -47,20 +47,20 @@ public class QuerySuggestionsClient extends ApiClient {
     this(appId, apiKey, requester, null);
   }
 
-  public QuerySuggestionsClient(
+  public PersonalizationClient(
     String appId,
     String apiKey,
     Requester requester,
     UserAgent.Segment[] userAgentSegments
   ) {
-    super(appId, apiKey, requester, "QuerySuggestions", userAgentSegments);
+    super(appId, apiKey, requester, "Personalization", userAgentSegments);
   }
 
   private static List<StatefulHost> getDefaultHosts(String region) {
     List<StatefulHost> hosts = new ArrayList<StatefulHost>();
     hosts.add(
       new StatefulHost(
-        "query-suggestions." +
+        "personalization." +
         (region == null ? "" : region + ".") +
         "algolia.com",
         "https",
@@ -68,103 +68,6 @@ public class QuerySuggestionsClient extends ApiClient {
       )
     );
     return hosts;
-  }
-
-  /**
-   * Build call for createConfig
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call createConfigCall(
-    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = querySuggestionsIndexWithIndexParam;
-
-    // create path and map variables
-    String requestPath = "/1/configs";
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "POST",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call createConfigValidateBeforeCall(
-    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'querySuggestionsIndexWithIndexParam' is set
-    if (querySuggestionsIndexWithIndexParam == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'querySuggestionsIndexWithIndexParam' when calling" +
-        " createConfig(Async)"
-      );
-    }
-
-    return createConfigCall(querySuggestionsIndexWithIndexParam, callback);
-  }
-
-  /**
-   * Create a configuration of a Query Suggestions index. There's a limit of 100 configurations per
-   * application.
-   *
-   * @param querySuggestionsIndexWithIndexParam (required)
-   * @return SucessResponse
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public SucessResponse createConfig(
-    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam
-  ) throws AlgoliaRuntimeException {
-    Call req = createConfigValidateBeforeCall(
-      querySuggestionsIndexWithIndexParam,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.CreateConfig(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    ApiResponse<SucessResponse> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) Create a configuration of a Query Suggestions index. There&#39;s a limit of
-   * 100 configurations per application.
-   *
-   * @param querySuggestionsIndexWithIndexParam (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call createConfigAsync(
-    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = createConfigValidateBeforeCall(
-      querySuggestionsIndexWithIndexParam,
-      callback
-    );
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
   }
 
   /**
@@ -237,7 +140,7 @@ public class QuerySuggestionsClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = delValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Del(((CallEcho) req).request());
+      return new EchoResponsePersonalization.Del(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -246,7 +149,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   public Object del(String path) throws AlgoliaRuntimeException {
-    return this.del(path, new HashMap<>());
+    return this.del(path, null);
   }
 
   /**
@@ -272,23 +175,23 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Build call for deleteConfig
+   * Build call for deleteUserProfile
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call deleteConfigCall(
-    String indexName,
-    final ApiCallback<SucessResponse> callback
+  private Call deleteUserProfileCall(
+    String userToken,
+    final ApiCallback<DeleteUserProfileResponse> callback
   ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
     String requestPath =
-      "/1/configs/{indexName}".replaceAll(
-          "\\{indexName\\}",
-          this.escapeString(indexName.toString())
+      "/1/profiles/{userToken}".replaceAll(
+          "\\{userToken\\}",
+          this.escapeString(userToken.toString())
         );
 
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -307,61 +210,67 @@ public class QuerySuggestionsClient extends ApiClient {
       );
   }
 
-  private Call deleteConfigValidateBeforeCall(
-    String indexName,
-    final ApiCallback<SucessResponse> callback
+  private Call deleteUserProfileValidateBeforeCall(
+    String userToken,
+    final ApiCallback<DeleteUserProfileResponse> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
+    // verify the required parameter 'userToken' is set
+    if (userToken == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling deleteConfig(Async)"
+        "Missing the required parameter 'userToken' when calling deleteUserProfile(Async)"
       );
     }
 
-    return deleteConfigCall(indexName, callback);
+    return deleteUserProfileCall(userToken, callback);
   }
 
   /**
-   * Delete a configuration of a Query Suggestion's index. By deleting a configuraton, you stop all
-   * updates to the underlying query suggestion index. Note that when doing this, the underlying
-   * index does not change - existing suggestions remain untouched.
+   * Returns, as part of the response, a date until which the data can safely be considered as
+   * deleted for the given user. This means that if you send events for the given user before this
+   * date, they will be ignored. Any data received after the deletedUntil date will start building a
+   * new user profile. It might take a couple hours before for the deletion request to be fully
+   * processed.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @return SucessResponse
+   * @param userToken userToken representing the user for which to fetch the Personalization
+   *     profile. (required)
+   * @return DeleteUserProfileResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public SucessResponse deleteConfig(String indexName)
+  public DeleteUserProfileResponse deleteUserProfile(String userToken)
     throws AlgoliaRuntimeException {
-    Call req = deleteConfigValidateBeforeCall(indexName, null);
+    Call req = deleteUserProfileValidateBeforeCall(userToken, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.DeleteConfig(
+      return new EchoResponsePersonalization.DeleteUserProfile(
         ((CallEcho) req).request()
       );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    ApiResponse<SucessResponse> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<DeleteUserProfileResponse>() {}.getType();
+    ApiResponse<DeleteUserProfileResponse> res = this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Delete a configuration of a Query Suggestion&#39;s index. By deleting a
-   * configuraton, you stop all updates to the underlying query suggestion index. Note that when
-   * doing this, the underlying index does not change - existing suggestions remain untouched.
+   * (asynchronously) Returns, as part of the response, a date until which the data can safely be
+   * considered as deleted for the given user. This means that if you send events for the given user
+   * before this date, they will be ignored. Any data received after the deletedUntil date will
+   * start building a new user profile. It might take a couple hours before for the deletion request
+   * to be fully processed.
    *
-   * @param indexName The index in which to perform the request. (required)
+   * @param userToken userToken representing the user for which to fetch the Personalization
+   *     profile. (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call deleteConfigAsync(
-    String indexName,
-    final ApiCallback<SucessResponse> callback
+  public Call deleteUserProfileAsync(
+    String userToken,
+    final ApiCallback<DeleteUserProfileResponse> callback
   ) throws AlgoliaRuntimeException {
-    Call call = deleteConfigValidateBeforeCall(indexName, callback);
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    Call call = deleteUserProfileValidateBeforeCall(userToken, callback);
+    Type returnType = new TypeToken<DeleteUserProfileResponse>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
@@ -436,7 +345,7 @@ public class QuerySuggestionsClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = getValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Get(((CallEcho) req).request());
+      return new EchoResponsePersonalization.Get(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -445,7 +354,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   public Object get(String path) throws AlgoliaRuntimeException {
-    return this.get(path, new HashMap<>());
+    return this.get(path, null);
   }
 
   /**
@@ -471,19 +380,19 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Build call for getAllConfigs
+   * Build call for getPersonalizationStrategy
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call getAllConfigsCall(
-    final ApiCallback<List<QuerySuggestionsIndex>> callback
+  private Call getPersonalizationStrategyCall(
+    final ApiCallback<PersonalizationStrategyParams> callback
   ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/1/configs";
+    String requestPath = "/1/strategies/personalization";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -501,71 +410,73 @@ public class QuerySuggestionsClient extends ApiClient {
       );
   }
 
-  private Call getAllConfigsValidateBeforeCall(
-    final ApiCallback<List<QuerySuggestionsIndex>> callback
+  private Call getPersonalizationStrategyValidateBeforeCall(
+    final ApiCallback<PersonalizationStrategyParams> callback
   ) throws AlgoliaRuntimeException {
-    return getAllConfigsCall(callback);
+    return getPersonalizationStrategyCall(callback);
   }
 
   /**
-   * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a
-   * list of its configuration settings.
+   * The strategy contains information on the events and facets that impact user profiles and
+   * personalized search results.
    *
-   * @return List&lt;QuerySuggestionsIndex&gt;
+   * @return PersonalizationStrategyParams
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public List<QuerySuggestionsIndex> getAllConfigs()
+  public PersonalizationStrategyParams getPersonalizationStrategy()
     throws AlgoliaRuntimeException {
-    Call req = getAllConfigsValidateBeforeCall(null);
+    Call req = getPersonalizationStrategyValidateBeforeCall(null);
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetAllConfigs(
+      return new EchoResponsePersonalization.GetPersonalizationStrategy(
         ((CallEcho) req).request()
       );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<List<QuerySuggestionsIndex>>() {}.getType();
-    ApiResponse<List<QuerySuggestionsIndex>> res =
+    Type returnType = new TypeToken<PersonalizationStrategyParams>() {}
+      .getType();
+    ApiResponse<PersonalizationStrategyParams> res =
       this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Get all the configurations of Query Suggestions. For each index, you get a
-   * block of JSON with a list of its configuration settings.
+   * (asynchronously) The strategy contains information on the events and facets that impact user
+   * profiles and personalized search results.
    *
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getAllConfigsAsync(
-    final ApiCallback<List<QuerySuggestionsIndex>> callback
+  public Call getPersonalizationStrategyAsync(
+    final ApiCallback<PersonalizationStrategyParams> callback
   ) throws AlgoliaRuntimeException {
-    Call call = getAllConfigsValidateBeforeCall(callback);
-    Type returnType = new TypeToken<List<QuerySuggestionsIndex>>() {}.getType();
+    Call call = getPersonalizationStrategyValidateBeforeCall(callback);
+    Type returnType = new TypeToken<PersonalizationStrategyParams>() {}
+      .getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
 
   /**
-   * Build call for getConfig
+   * Build call for getUserTokenProfile
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call getConfigCall(
-    String indexName,
-    final ApiCallback<QuerySuggestionsIndex> callback
+  private Call getUserTokenProfileCall(
+    String userToken,
+    final ApiCallback<GetUserTokenResponse> callback
   ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
     String requestPath =
-      "/1/configs/{indexName}".replaceAll(
-          "\\{indexName\\}",
-          this.escapeString(indexName.toString())
+      "/1/profiles/personalization/{userToken}".replaceAll(
+          "\\{userToken\\}",
+          this.escapeString(userToken.toString())
         );
 
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -584,242 +495,66 @@ public class QuerySuggestionsClient extends ApiClient {
       );
   }
 
-  private Call getConfigValidateBeforeCall(
-    String indexName,
-    final ApiCallback<QuerySuggestionsIndex> callback
+  private Call getUserTokenProfileValidateBeforeCall(
+    String userToken,
+    final ApiCallback<GetUserTokenResponse> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
+    // verify the required parameter 'userToken' is set
+    if (userToken == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling getConfig(Async)"
+        "Missing the required parameter 'userToken' when calling getUserTokenProfile(Async)"
       );
     }
 
-    return getConfigCall(indexName, callback);
+    return getUserTokenProfileCall(userToken, callback);
   }
 
   /**
-   * Get the configuration of a single Query Suggestions index.
+   * The profile is structured by facet name used in the strategy. Each facet value is mapped to its
+   * score. Each score represents the user affinity for a specific facet value given the userToken
+   * past events and the Personalization strategy defined. Scores are bounded to 20. The last
+   * processed event timestamp is provided using the ISO 8601 format for debugging purposes.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @return QuerySuggestionsIndex
+   * @param userToken userToken representing the user for which to fetch the Personalization
+   *     profile. (required)
+   * @return GetUserTokenResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public QuerySuggestionsIndex getConfig(String indexName)
+  public GetUserTokenResponse getUserTokenProfile(String userToken)
     throws AlgoliaRuntimeException {
-    Call req = getConfigValidateBeforeCall(indexName, null);
+    Call req = getUserTokenProfileValidateBeforeCall(userToken, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetConfig(
+      return new EchoResponsePersonalization.GetUserTokenProfile(
         ((CallEcho) req).request()
       );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<QuerySuggestionsIndex>() {}.getType();
-    ApiResponse<QuerySuggestionsIndex> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<GetUserTokenResponse>() {}.getType();
+    ApiResponse<GetUserTokenResponse> res = this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Get the configuration of a single Query Suggestions index.
+   * (asynchronously) The profile is structured by facet name used in the strategy. Each facet value
+   * is mapped to its score. Each score represents the user affinity for a specific facet value
+   * given the userToken past events and the Personalization strategy defined. Scores are bounded to
+   * 20. The last processed event timestamp is provided using the ISO 8601 format for debugging
+   * purposes.
    *
-   * @param indexName The index in which to perform the request. (required)
+   * @param userToken userToken representing the user for which to fetch the Personalization
+   *     profile. (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getConfigAsync(
-    String indexName,
-    final ApiCallback<QuerySuggestionsIndex> callback
+  public Call getUserTokenProfileAsync(
+    String userToken,
+    final ApiCallback<GetUserTokenResponse> callback
   ) throws AlgoliaRuntimeException {
-    Call call = getConfigValidateBeforeCall(indexName, callback);
-    Type returnType = new TypeToken<QuerySuggestionsIndex>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for getConfigStatus
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getConfigStatusCall(
-    String indexName,
-    final ApiCallback<Status> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath =
-      "/1/configs/{indexName}/status".replaceAll(
-          "\\{indexName\\}",
-          this.escapeString(indexName.toString())
-        );
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call getConfigStatusValidateBeforeCall(
-    String indexName,
-    final ApiCallback<Status> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling getConfigStatus(Async)"
-      );
-    }
-
-    return getConfigStatusCall(indexName, callback);
-  }
-
-  /**
-   * Get the status of a Query Suggestion's index. The status includes whether the Query Suggestions
-   * index is currently in the process of being built, and the last build time.
-   *
-   * @param indexName The index in which to perform the request. (required)
-   * @return Status
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public Status getConfigStatus(String indexName)
-    throws AlgoliaRuntimeException {
-    Call req = getConfigStatusValidateBeforeCall(indexName, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetConfigStatus(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Status>() {}.getType();
-    ApiResponse<Status> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) Get the status of a Query Suggestion&#39;s index. The status includes whether
-   * the Query Suggestions index is currently in the process of being built, and the last build
-   * time.
-   *
-   * @param indexName The index in which to perform the request. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call getConfigStatusAsync(
-    String indexName,
-    final ApiCallback<Status> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getConfigStatusValidateBeforeCall(indexName, callback);
-    Type returnType = new TypeToken<Status>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for getLogFile
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getLogFileCall(
-    String indexName,
-    final ApiCallback<List<LogFile>> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath =
-      "/1/logs/{indexName}".replaceAll(
-          "\\{indexName\\}",
-          this.escapeString(indexName.toString())
-        );
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call getLogFileValidateBeforeCall(
-    String indexName,
-    final ApiCallback<List<LogFile>> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling getLogFile(Async)"
-      );
-    }
-
-    return getLogFileCall(indexName, callback);
-  }
-
-  /**
-   * Get the log file of the last build of a single Query Suggestion index.
-   *
-   * @param indexName The index in which to perform the request. (required)
-   * @return List&lt;LogFile&gt;
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public List<LogFile> getLogFile(String indexName)
-    throws AlgoliaRuntimeException {
-    Call req = getLogFileValidateBeforeCall(indexName, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetLogFile(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<List<LogFile>>() {}.getType();
-    ApiResponse<List<LogFile>> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) Get the log file of the last build of a single Query Suggestion index.
-   *
-   * @param indexName The index in which to perform the request. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call getLogFileAsync(
-    String indexName,
-    final ApiCallback<List<LogFile>> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getLogFileValidateBeforeCall(indexName, callback);
-    Type returnType = new TypeToken<List<LogFile>>() {}.getType();
+    Call call = getUserTokenProfileValidateBeforeCall(userToken, callback);
+    Type returnType = new TypeToken<GetUserTokenResponse>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
@@ -897,7 +632,7 @@ public class QuerySuggestionsClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = postValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Post(((CallEcho) req).request());
+      return new EchoResponsePersonalization.Post(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -906,7 +641,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   public Object post(String path) throws AlgoliaRuntimeException {
-    return this.post(path, new HashMap<>(), null);
+    return this.post(path, null, null);
   }
 
   /**
@@ -1006,7 +741,7 @@ public class QuerySuggestionsClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = putValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Put(((CallEcho) req).request());
+      return new EchoResponsePersonalization.Put(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -1015,7 +750,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   public Object put(String path) throws AlgoliaRuntimeException {
-    return this.put(path, new HashMap<>(), null);
+    return this.put(path, null, null);
   }
 
   /**
@@ -1043,25 +778,20 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Build call for updateConfig
+   * Build call for setPersonalizationStrategy
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call updateConfigCall(
-    String indexName,
-    QuerySuggestionsIndexParam querySuggestionsIndexParam,
-    final ApiCallback<SucessResponse> callback
+  private Call setPersonalizationStrategyCall(
+    PersonalizationStrategyParams personalizationStrategyParams,
+    final ApiCallback<SetPersonalizationStrategyResponse> callback
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = querySuggestionsIndexParam;
+    Object bodyObj = personalizationStrategyParams;
 
     // create path and map variables
-    String requestPath =
-      "/1/configs/{indexName}".replaceAll(
-          "\\{indexName\\}",
-          this.escapeString(indexName.toString())
-        );
+    String requestPath = "/1/strategies/personalization";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -1071,7 +801,7 @@ public class QuerySuggestionsClient extends ApiClient {
 
     return this.buildCall(
         requestPath,
-        "PUT",
+        "POST",
         queryParams,
         bodyObj,
         headers,
@@ -1079,79 +809,73 @@ public class QuerySuggestionsClient extends ApiClient {
       );
   }
 
-  private Call updateConfigValidateBeforeCall(
-    String indexName,
-    QuerySuggestionsIndexParam querySuggestionsIndexParam,
-    final ApiCallback<SucessResponse> callback
+  private Call setPersonalizationStrategyValidateBeforeCall(
+    PersonalizationStrategyParams personalizationStrategyParams,
+    final ApiCallback<SetPersonalizationStrategyResponse> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
+    // verify the required parameter 'personalizationStrategyParams' is set
+    if (personalizationStrategyParams == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling updateConfig(Async)"
+        "Missing the required parameter 'personalizationStrategyParams' when calling" +
+        " setPersonalizationStrategy(Async)"
       );
     }
 
-    // verify the required parameter 'querySuggestionsIndexParam' is set
-    if (querySuggestionsIndexParam == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'querySuggestionsIndexParam' when calling" +
-        " updateConfig(Async)"
-      );
-    }
-
-    return updateConfigCall(indexName, querySuggestionsIndexParam, callback);
+    return setPersonalizationStrategyCall(
+      personalizationStrategyParams,
+      callback
+    );
   }
 
   /**
-   * Update the configuration of a Query Suggestions index.
+   * A strategy defines the events and facets that impact user profiles and personalized search
+   * results.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param querySuggestionsIndexParam (required)
-   * @return SucessResponse
+   * @param personalizationStrategyParams (required)
+   * @return SetPersonalizationStrategyResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public SucessResponse updateConfig(
-    String indexName,
-    QuerySuggestionsIndexParam querySuggestionsIndexParam
+  public SetPersonalizationStrategyResponse setPersonalizationStrategy(
+    PersonalizationStrategyParams personalizationStrategyParams
   ) throws AlgoliaRuntimeException {
-    Call req = updateConfigValidateBeforeCall(
-      indexName,
-      querySuggestionsIndexParam,
+    Call req = setPersonalizationStrategyValidateBeforeCall(
+      personalizationStrategyParams,
       null
     );
     if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.UpdateConfig(
+      return new EchoResponsePersonalization.SetPersonalizationStrategy(
         ((CallEcho) req).request()
       );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    ApiResponse<SucessResponse> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<SetPersonalizationStrategyResponse>() {}
+      .getType();
+    ApiResponse<SetPersonalizationStrategyResponse> res =
+      this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Update the configuration of a Query Suggestions index.
+   * (asynchronously) A strategy defines the events and facets that impact user profiles and
+   * personalized search results.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param querySuggestionsIndexParam (required)
+   * @param personalizationStrategyParams (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call updateConfigAsync(
-    String indexName,
-    QuerySuggestionsIndexParam querySuggestionsIndexParam,
-    final ApiCallback<SucessResponse> callback
+  public Call setPersonalizationStrategyAsync(
+    PersonalizationStrategyParams personalizationStrategyParams,
+    final ApiCallback<SetPersonalizationStrategyResponse> callback
   ) throws AlgoliaRuntimeException {
-    Call call = updateConfigValidateBeforeCall(
-      indexName,
-      querySuggestionsIndexParam,
+    Call call = setPersonalizationStrategyValidateBeforeCall(
+      personalizationStrategyParams,
       callback
     );
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    Type returnType = new TypeToken<SetPersonalizationStrategyResponse>() {}
+      .getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }

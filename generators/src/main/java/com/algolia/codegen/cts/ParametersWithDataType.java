@@ -18,19 +18,25 @@ import org.openapitools.codegen.IJsonSchemaValidationProperties;
 public class ParametersWithDataType {
 
   private final Map<String, CodegenModel> models;
+  private final String language;
 
-  public ParametersWithDataType(Map<String, CodegenModel> models) {
+  public ParametersWithDataType(
+    Map<String, CodegenModel> models,
+    String language
+  ) {
     this.models = models;
+    this.language = language;
   }
 
   public Map<String, Object> buildJSONForRequest(
+    String operationId,
     Request req,
     CodegenOperation ope,
     int testIndex
   ) throws CTSException, JsonMappingException, JsonProcessingException {
     Map<String, Object> test = new HashMap<>();
-    test.put("method", req.method);
-    test.put("testName", req.testName == null ? req.method : req.testName);
+    test.put("method", operationId);
+    test.put("testName", req.testName == null ? operationId : req.testName);
     test.put("testIndex", testIndex);
     test.put("request", req.request);
 
@@ -114,13 +120,16 @@ public class ParametersWithDataType {
     }
 
     String finalParamName = paramName;
-    if (paramName.startsWith("_")) {
+    if (language.equals("java") && paramName.startsWith("_")) {
       finalParamName = paramName.substring(1);
     }
+    Boolean isFirstLevel = suffix == 0;
 
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
     testOutput.put("parentSuffix", suffix - 1);
+    testOutput.put("isFirstLevel", isFirstLevel);
+    testOutput.put("hasGeneratedKey", finalParamName.matches("(.*)_[0-9]$"));
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
@@ -244,7 +253,7 @@ public class ParametersWithDataType {
       HashMap<String, String> oneOfModel = new HashMap<>();
       String typeName = getTypeName(match).replace("<", "").replace(">", "");
 
-      oneOfModel.put("classname", Utils.capitalize(baseType));
+      oneOfModel.put("parentClassName", Utils.capitalize(baseType));
 
       if (typeName.equals("List")) {
         CodegenProperty items = match.getItems();
@@ -256,7 +265,7 @@ public class ParametersWithDataType {
         typeName += getTypeName(items);
       }
 
-      oneOfModel.put("name", typeName);
+      oneOfModel.put("type", typeName);
       testOutput.put("oneOfModel", oneOfModel);
 
       return;
