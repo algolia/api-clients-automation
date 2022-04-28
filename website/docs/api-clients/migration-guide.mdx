@@ -44,7 +44,19 @@ For informations regarding the installation of the package, please see [the inst
 | `algoliasearch/lite` | `algoliasearch-lite`                   | The lite version of the client now have [its own package](https://www.npmjs.com/package/@experimental-api-clients-automation/algoliasearch-lite).                                                                    |
 | `search`             | `searchClient`                         | Exported clients are not suffixed by `Client`.                                                                                                                                                                       |
 
+</TabItem>
+</Tabs>
+
 ### Installation
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', }
+  ]
+}>
+<TabItem value="js">
 
 To get started, first install the `algoliasearch` client.
 
@@ -66,7 +78,19 @@ npm uninstall algoliasearch
 
 You can continue this guide on [our installation page](/docs/api-clients/installation).
 
+</TabItem>
+</Tabs>
+
 ### Importing algoliasearch using ES Modules
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', }
+  ]
+}>
+<TabItem value="js">
 
 ```diff
 - import algoliasearch from 'algoliasearch/lite';
@@ -76,7 +100,19 @@ You can continue this guide on [our installation page](/docs/api-clients/install
 + import { algoliasearch } from '@experimental-api-clients-automation/algoliasearch';
 ```
 
+</TabItem>
+</Tabs>
+
 ### Methods targetting an `indexName`
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', }
+  ]
+}>
+<TabItem value="js">
 
 Prior to the `initIndex` removal stated in the [Common breaking changes](#common-breaking-changes), all methods previously avaialble at the `initIndex` level requires the `indexName` to be sent with the query.
 
