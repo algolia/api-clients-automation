@@ -1,7 +1,7 @@
 post:
   operationId: setPersonalizationStrategy
   description: A strategy defines the events and facets that impact user profiles and personalized search results.
-  summary: Set a new personalization strategy.
+  summary: Set a new personalization strategy
   requestBody:
     required: true
     content:
@@ -34,7 +34,7 @@ post:
 get:
   operationId: getPersonalizationStrategy
   description: The strategy contains information on the events and facets that impact user profiles and personalized search results.
-  summary: Get the current personalization strategy.
+  summary: Get the current personalization strategy
   responses:
     '200':
       description: OK

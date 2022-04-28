@@ -2,7 +2,7 @@ post:
   tags:
     - Rules
   operationId: searchRules
-  summary: Search for rules.
+  summary: Search for rules
   description: Search for rules matching various criteria.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

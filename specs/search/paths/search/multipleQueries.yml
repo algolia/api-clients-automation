@@ -2,8 +2,8 @@ post:
   tags:
     - Search
   operationId: multipleQueries
-  description: Get search results for the given requests.
-  summary: Get search results for the given requests.
+  summary: Search many indice
+  description: Perform a search operation targetting one or many indices.
   requestBody:
     required: true
     description: The `multipleQueries` requests and strategy.

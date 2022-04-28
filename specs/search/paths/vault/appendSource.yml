@@ -3,7 +3,7 @@ post:
     - Vaults
   operationId: appendSource
   description: Add a single source to the list of allowed sources.
-  summary: Add a single source.
+  summary: Add a single source
   requestBody:
     required: true
     description: The source to add.

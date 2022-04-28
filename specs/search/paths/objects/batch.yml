@@ -2,8 +2,8 @@ post:
   tags:
     - Records
   operationId: batch
-  description: Performs multiple write operations in a single API call.
-  summary: Performs multiple write operations in a single API call.
+  description: Perform multiple write operations targetting one index, in a single API call.
+  summary: Batch operations to one index
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

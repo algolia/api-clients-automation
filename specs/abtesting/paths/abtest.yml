@@ -4,7 +4,7 @@ get:
     Returns metadata and metrics for A/B test id.
 
     Behaves in the same way as GET /2/abtests however the endpoint will return 403.
-  summary: Returns metadata and metrics for A/B test id.
+  summary: Returns metadata and metrics for A/B test id
   parameters:
     - $ref: '../common/parameters.yml#/ID'
   responses:
@@ -26,7 +26,7 @@ get:
 delete:
   operationId: deleteABTest
   description: Deletes the A/B Test and removes all associated metadata & metrics.
-  summary: Deletes the A/B Test.
+  summary: Deletes the A/B Test
   parameters:
     - $ref: '../common/parameters.yml#/ID'
   responses:

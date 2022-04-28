@@ -2,7 +2,7 @@ get:
   tags:
     - Indices
   operationId: listIndices
-  summary: List existing indexes.
+  summary: List existing indexes
   description: List existing indexes from an application.
   parameters:
     - $ref: '../../../common/parameters.yml#/Page'

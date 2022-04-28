@@ -2,7 +2,7 @@ post:
   tags:
     - Rules
   operationId: clearRules
-  summary: Clear Rules.
+  summary: Clear Rules
   description: Delete all Rules in the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

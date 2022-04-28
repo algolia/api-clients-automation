@@ -2,7 +2,7 @@ post:
   tags:
     - Search
   operationId: browse
-  summary: Retrieve all index content.
+  summary: Retrieve all index content
   description: >
     This method allows you to retrieve all index content. It can retrieve up to 1,000 records per call and supports full text search and filters.
 

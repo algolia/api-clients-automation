@@ -2,7 +2,7 @@ post:
   tags:
     - Records
   operationId: deleteBy
-  summary: Delete all records matching the query.
+  summary: Delete all records matching the query
   description: >
     Remove all objects matching a filter (including geo filters).
 
