@@ -36,7 +36,6 @@ runs:
       uses: gradle/wrapper-validation-action@v1
 
     - name: Run yarn install and install java formatter
-      if: inputs.type != 'minimal'
       uses: ./.github/actions/cache
       with:
         language: java
