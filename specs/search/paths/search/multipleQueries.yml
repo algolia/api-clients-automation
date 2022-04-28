@@ -2,7 +2,7 @@ post:
   tags:
     - Search
   operationId: multipleQueries
-  summary: Search many indice
+  summary: Search many indices
   description: Perform a search operation targetting one or many indices.
   requestBody:
     required: true
