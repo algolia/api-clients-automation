@@ -212,10 +212,9 @@ async function processRelease(): Promise<void> {
   }
 
   if (!(await isAuthorizedRelease())) {
-    console.log(
+    throw new Error(
       'The issue was not approved.\nA team member must leave a comment "approved" in the release issue.'
     );
-    return;
   }
 
   const issueBody = await getIssueBody();
