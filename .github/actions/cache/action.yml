@@ -213,7 +213,7 @@ runs:
 
     # Restore JavaScript clients: used during 'cts' or 'codegen'
     - name: Restore built JavaScript algoliasearch client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/algoliasearch
@@ -244,7 +244,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript search client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch'  }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-search
@@ -295,7 +295,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript personalization client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch'  }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-personalization
@@ -312,7 +312,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript analytics client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch'  }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-analytics

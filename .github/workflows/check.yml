@@ -322,7 +322,7 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          job: codegen
+          job: algoliasearch
           language: javascript
           cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
 
