@@ -48,7 +48,7 @@ The test generation script requires a JSON file name from the `operationId` (e.g
 ]
 ```
 
-And that's it! If the name of the file matches a real `operationId` in the spec, then a test will be generated and will be calling the method name `operationId`.
+And that's it! If the name of the file matches an `operationId` in the spec, a test will be generated and will be calling the method name `operationId`.
 
 The list of `queryParameters` must match exactly the actual value, the CTS has to check the number of query parameters and the value of each.
 
