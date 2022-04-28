@@ -13,7 +13,10 @@ const JAVA_CLIENT_FOLDER = getLanguageFolder('java');
 const PHP_CLIENT_FOLDER = getLanguageFolder('php');
 
 // Files that are common to every clients
-const CLIENTS_COMMON_FILES = ['config/clients.config.json'];
+const CLIENTS_COMMON_FILES = [
+  'openapitools.json',
+  'config/clients.config.json',
+];
 
 /**
  * Exhaustive list of output variables to use in the CI.
