@@ -238,7 +238,7 @@ runs:
     - name: Set cache hit env var
       if: steps.cache-javascript-single.conclusion == 'success'
       shell: bash
-      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-javascript-single.output.cache-hit }}" >> $GITHUB_ENV
+      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-javascript-single.outputs.cache-hit }}" >> $GITHUB_ENV
 
     - name: Restore built JavaScript algoliasearch client
       if: ${{ inputs.job == 'cts' || inputs.job == 'algoliasearch_js' }}
@@ -419,7 +419,7 @@ runs:
     - name: Set cache hit env var
       if: steps.cache-java-single.conclusion == 'success'
       shell: bash
-      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-java-single.output.cache-hit }}" >> $GITHUB_ENV
+      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-java-single.outputs.cache-hit }}" >> $GITHUB_ENV
 
     - name: Restore built Java search client
       if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
@@ -561,7 +561,7 @@ runs:
     - name: Set cache hit env var
       if: steps.cache-php-single.conclusion == 'success'
       shell: bash
-      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-php-single.output.cache-hit }}" >> $GITHUB_ENV
+      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-php-single.outputs.cache-hit }}" >> $GITHUB_ENV
 
     - name: Restore built PHP search client
       if: ${{ inputs.job == 'cts' }}
