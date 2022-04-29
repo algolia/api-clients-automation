@@ -236,6 +236,7 @@ runs:
           )}}
 
     - name: Set cache hit env var
+      if: steps.cache-javascript-single.conclusion == 'success'
       shell: bash
       run: echo "CACHE_HIT_CLIENT=${{ steps.cache-javascript-single.output.cache-hit }}" >> $GITHUB_ENV
 
@@ -399,7 +400,7 @@ runs:
             'generators/src/**'
           )}}
 
-    - name: Restore single Java client
+    - name: Cache 'java-${{ fromJSON(inputs.client).name }}' client
       id: cache-java-single
       if: ${{ inputs.job == 'client_gen' && inputs.language == 'java' && fromJSON(inputs.client) }}
       uses: actions/cache@v3
@@ -416,6 +417,7 @@ runs:
           )}}
 
     - name: Set cache hit env var
+      if: steps.cache-java-single.conclusion == 'success'
       shell: bash
       run: echo "CACHE_HIT_CLIENT=${{ steps.cache-java-single.output.cache-hit }}" >> $GITHUB_ENV
 
@@ -557,6 +559,7 @@ runs:
           )}}
 
     - name: Set cache hit env var
+      if: steps.cache-php-single.conclusion == 'success'
       shell: bash
       run: echo "CACHE_HIT_CLIENT=${{ steps.cache-php-single.output.cache-hit }}" >> $GITHUB_ENV
 
