@@ -5,7 +5,12 @@ title: Migration guide
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+<<<<<<< HEAD
 This document lists every known breaking change. Not all these changes may affect your application, since some of these breaking changes happen in hidden parts of the client.
+=======
+This document lists every known breaking change, not all of them may affect your application.
+
+> > > > > > > main
 
 :::caution
 
@@ -42,7 +47,7 @@ For informations regarding the installation of the package, please see [the inst
 | -------------------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@algolia`           | `@experimental-api-clients-automation` | **During the beta phase**, the clients are available under the NPM `@experimental-api-clients-automation` namespace, you can find a full list [here](https://www.npmjs.com/org/experimental-api-clients-automation). |
 | `algoliasearch/lite` | `algoliasearch-lite`                   | The lite version of the client now have [its own package](https://www.npmjs.com/package/@experimental-api-clients-automation/algoliasearch-lite).                                                                    |
-| `search`             | `searchClient`                         | Exported clients are not suffixed by `Client`.                                                                                                                                                                       |
+| `search`             | `searchClient`                         | Exported clients are suffixed by `Client`.                                                                                                                                                                           |
 
 </TabItem>
 </Tabs>
@@ -114,7 +119,7 @@ You can continue this guide on [our installation page](/docs/api-clients/install
 }>
 <TabItem value="js">
 
-Prior to the `initIndex` removal stated in the [Common breaking changes](#common-breaking-changes), all methods previously avaialble at the `initIndex` level requires the `indexName` to be sent with the query.
+Prior to the `initIndex` removal stated in the [Common breaking changes](#common-breaking-changes), all methods previously available at the `initIndex` level requires the `indexName` to be sent with the query.
 
 ```js
 import { algoliasearch } from '@experimental-api-clients-automation/algoliasearch';
