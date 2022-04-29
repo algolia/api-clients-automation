@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Installation
 ---
 
 import Tabs from '@theme/Tabs';
@@ -9,23 +9,28 @@ import TabItem from '@theme/TabItem';
   groupId="language"
   defaultValue="js"
   values={[
-    { label: 'JavaScript', value: 'js', }
+    { label: 'JavaScript', value: 'js', },
+    { label: 'PHP', value: 'php', }
   ]
 }>
 <TabItem value="js">
 
-## Installation
-
 To get started, you first need to install `algoliasearch` (or any other available API client package). You can find the full list of available packages [here](https://www.npmjs.com/org/experimental-api-clients-automation).
+
+All of our clients comes with type definition, and are available for both `browser` and `node` environments.
 
 ```bash
 yarn add @experimental-api-clients-automation/algoliasearch
+# or
+npm install @experimental-api-clients-automation/algoliasearch
 ```
 
 Or use a specific package:
 
 ```bash
 yarn add @experimental-api-clients-automation/client-search
+# or
+npm install @experimental-api-clients-automation/client-search
 ```
 
 **Without a package manager**
@@ -47,7 +52,7 @@ const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
 // And access analytics or personalization client
 const analyticsClient = client.initAnalytics('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-const personalizationCilent = client.initPersonalization(
+const personalizationClient = client.initPersonalization(
   '<YOUR_APP_ID>',
   '<YOUR_API_KEY>',
   'eu'
@@ -107,5 +112,41 @@ const res = await personalizationClient.getUserTokenProfile({
 console.log('[Results]', res);
 ```
 
+</TabItem>
+
+<TabItem value="php">
+
+## Installation
+
+First, install Algolia PHP API Client via the composer package manager:
+```bash
+composer require algolia/algoliasearch-client-php
+```
+## Using the client
+
+Then, create objects on your index:
+```php
+$client = Algolia\AlgoliaSearch\Api\SearchClient::create(
+    '<YOUR_APP_ID>',
+    '<YOUR_API_KEY>'
+);
+
+$client->saveObject('<YOUR_INDEX>', ['objectID' => 1, 'name' => 'Foo']);
+```
+
+Finally, you may begin searching an object using the `search` method:
+```php
+$objects = $client->search('<YOUR_INDEX>', ['query' => 'Foo']);
+```
+
+Another example with the personalization client:
+```php
+$client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create(
+    '<YOUR_APP_ID>',
+    '<YOUR_API_KEY>'
+);
+
+$res = $client->getUserTokenProfile('<YOUR_TOKEN>');
+```
 </TabItem>
 </Tabs>
