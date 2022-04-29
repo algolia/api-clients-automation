@@ -46,19 +46,21 @@ describe('create release issue', () => {
           current: '0.0.1',
           releaseType: 'patch',
         },
+
         php: {
           current: '0.0.1',
           releaseType: 'patch',
         },
+
         java: {
           current: '0.0.1',
           releaseType: 'patch',
         },
       })
     ).toMatchInlineSnapshot(`
-      "- [x] javascript: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
-      - [x] java: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
-      - [x] php: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_"
+      "- [x] javascript: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
+      - [x] java: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
+      - [x] php: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_"
     `);
   });
 
@@ -69,20 +71,22 @@ describe('create release issue', () => {
           current: '0.0.1',
           releaseType: 'patch',
         },
+
         php: {
           current: '0.0.1',
           releaseType: null,
           noCommit: true,
         },
+
         java: {
           current: '0.0.1',
           releaseType: 'patch',
         },
       })
     ).toMatchInlineSnapshot(`
-      "- [x] javascript: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
-      - [x] java: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
-      - ~php: v0.0.1 (no commit)~"
+      "- [x] javascript: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
+      - [x] java: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
+      - ~php: 0.0.1 (no commit)~"
     `);
   });
 
@@ -93,10 +97,12 @@ describe('create release issue', () => {
           current: '0.0.1',
           releaseType: 'patch',
         },
+
         php: {
           current: '0.0.1',
           releaseType: 'minor',
         },
+
         java: {
           current: '0.0.1',
           releaseType: 'patch',
@@ -104,10 +110,10 @@ describe('create release issue', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      "- [x] javascript: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
-      - [ ] java: v0.0.1 -> \`patch\` _(e.g. v0.0.2)_
+      "- [x] javascript: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
+      - [ ] java: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
         - No \`feat\` or \`fix\` commit, thus unchecked by default.
-      - [x] php: v0.0.1 -> \`minor\` _(e.g. v0.1.0)_"
+      - [x] php: 0.0.1 -> \`minor\` _(e.g. 0.1.0)_"
     `);
   });
 
@@ -259,22 +265,37 @@ describe('create release issue', () => {
 
     expect(
       getSkippedCommitsText({
-        commitsWithoutLanguageScope: ['abcdefg fix: something'],
-        commitsWithUnknownLanguageScope: ['abcdef2 fix(pascal): what'],
+        commitsWithoutLanguageScope: [
+          'abcdefg fix: something',
+          'abcdefg fix: somethin2',
+        ],
+
+        commitsWithUnknownLanguageScope: [
+          'abcdef2 fix(pascal): what',
+          'abcdef2 fix(pascal): what is that',
+        ],
       })
     ).toMatchInlineSnapshot(`
-      "<p></p>
-        <p>It doesn't mean these commits are being excluded from the release. It means they're not taken into account when the release process figured out the next version number, and updated the changelog.</p>
+      "</p>
+      <p>It doesn't mean these commits are being excluded from the release. It means they're not taken into account when the release process figured out the next version number, and updated the changelog.</p>
 
-        <p>Commits without language scope:</p>
-        <ul>
-          <li>abcdefg fix: something</li>
-        </ul>
+      <details>
+        <summary>
+          <i>Commits without language scope:</i>
+        </summary>
 
-        <p>Commits with unknown language scope:</p>
-        <ul>
-          <li>abcdef2 fix(pascal): what</li>
-        </ul>"
+        - abcdefg fix: something
+      - abcdefg fix: somethin2
+      </details>
+
+      <details>
+        <summary>
+          <i>Commits with unknown language scope:</i>
+        </summary>
+
+        - abcdef2 fix(pascal): what
+      - abcdef2 fix(pascal): what is that
+      </details>"
     `);
   });
 });

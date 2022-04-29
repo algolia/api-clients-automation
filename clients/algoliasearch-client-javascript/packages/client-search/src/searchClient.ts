@@ -73,7 +73,7 @@ import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
 export * from '../model';
-export const apiClientVersion = '0.0.5';
+export const apiClientVersion = '0.1.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -1161,9 +1161,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Retrieve dictionaries settings.
+     * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
      *
-     * @summary Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
+     * @summary Retrieve dictionaries settings.
      */
     getDictionarySettings(
       requestOptions?: RequestOptions

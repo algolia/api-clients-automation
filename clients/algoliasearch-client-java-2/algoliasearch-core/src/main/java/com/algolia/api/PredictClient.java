@@ -5,7 +5,7 @@ import com.algolia.ApiClient;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.exceptions.*;
-import com.algolia.model.personalization.*;
+import com.algolia.model.predict.*;
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
 import com.algolia.utils.retry.CallType;
@@ -19,50 +19,43 @@ import java.util.List;
 import java.util.Map;
 import okhttp3.Call;
 
-public class PersonalizationClient extends ApiClient {
+public class PredictClient extends ApiClient {
 
-  public PersonalizationClient(String appId, String apiKey, String region) {
-    this(appId, apiKey, new HttpRequester(getDefaultHosts(region)), null);
+  public PredictClient(String appId, String apiKey) {
+    this(appId, apiKey, new HttpRequester(getDefaultHosts()), null);
   }
 
-  public PersonalizationClient(
+  public PredictClient(
     String appId,
     String apiKey,
-    String region,
     UserAgent.Segment[] userAgentSegments
   ) {
     this(
       appId,
       apiKey,
-      new HttpRequester(getDefaultHosts(region)),
+      new HttpRequester(getDefaultHosts()),
       userAgentSegments
     );
   }
 
-  public PersonalizationClient(
-    String appId,
-    String apiKey,
-    Requester requester
-  ) {
+  public PredictClient(String appId, String apiKey, Requester requester) {
     this(appId, apiKey, requester, null);
   }
 
-  public PersonalizationClient(
+  public PredictClient(
     String appId,
     String apiKey,
     Requester requester,
     UserAgent.Segment[] userAgentSegments
   ) {
-    super(appId, apiKey, requester, "Personalization", userAgentSegments);
+    super(appId, apiKey, requester, "Predict", userAgentSegments);
   }
 
-  private static List<StatefulHost> getDefaultHosts(String region) {
+  private static List<StatefulHost> getDefaultHosts() {
     List<StatefulHost> hosts = new ArrayList<StatefulHost>();
     hosts.add(
       new StatefulHost(
-        "personalization." +
-        (region == null ? "" : region + ".") +
-        "algolia.com",
+        "predict-api-432xa6wemq-ew.a.run.app",
         "https",
         EnumSet.of(CallType.READ, CallType.WRITE)
       )
@@ -140,7 +133,7 @@ public class PersonalizationClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = delValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.Del(((CallEcho) req).request());
+      return new EchoResponsePredict.Del(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -149,7 +142,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   public Object del(String path) throws AlgoliaRuntimeException {
-    return this.del(path, new HashMap<>());
+    return this.del(path, null);
   }
 
   /**
@@ -175,23 +168,24 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * Build call for deleteUserProfile
+   * Build call for fetchUserProfile
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call deleteUserProfileCall(
-    String userToken,
-    final ApiCallback<DeleteUserProfileResponse> callback
+  private Call fetchUserProfileCall(
+    String userID,
+    Params params,
+    final ApiCallback<FetchUserProfileResponse> callback
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
+    Object bodyObj = params;
 
     // create path and map variables
     String requestPath =
-      "/1/profiles/{userToken}".replaceAll(
-          "\\{userToken\\}",
-          this.escapeString(userToken.toString())
+      "/1/users/{userID}/fetch".replaceAll(
+          "\\{userID\\}",
+          this.escapeString(userID.toString())
         );
 
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -202,7 +196,7 @@ public class PersonalizationClient extends ApiClient {
 
     return this.buildCall(
         requestPath,
-        "DELETE",
+        "POST",
         queryParams,
         bodyObj,
         headers,
@@ -210,67 +204,74 @@ public class PersonalizationClient extends ApiClient {
       );
   }
 
-  private Call deleteUserProfileValidateBeforeCall(
-    String userToken,
-    final ApiCallback<DeleteUserProfileResponse> callback
+  private Call fetchUserProfileValidateBeforeCall(
+    String userID,
+    Params params,
+    final ApiCallback<FetchUserProfileResponse> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'userToken' is set
-    if (userToken == null) {
+    // verify the required parameter 'userID' is set
+    if (userID == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'userToken' when calling deleteUserProfile(Async)"
+        "Missing the required parameter 'userID' when calling fetchUserProfile(Async)"
       );
     }
 
-    return deleteUserProfileCall(userToken, callback);
+    // verify the required parameter 'params' is set
+    if (params == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'params' when calling fetchUserProfile(Async)"
+      );
+    }
+
+    return fetchUserProfileCall(userID, params, callback);
   }
 
   /**
-   * Returns, as part of the response, a date until which the data can safely be considered as
-   * deleted for the given user. This means that if you send events for the given user before this
-   * date, they will be ignored. Any data received after the deletedUntil date will start building a
-   * new user profile. It might take a couple hours before for the deletion request to be fully
-   * processed.
+   * Get predictions, properties (raw, computed or custom) and segments (computed or custom) for a
+   * user profile.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
-   *     profile. (required)
-   * @return DeleteUserProfileResponse
+   * @param userID User ID for authenticated users or cookie ID for non-authenticated repeated users
+   *     (visitors). (required)
+   * @param params (required)
+   * @return FetchUserProfileResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public DeleteUserProfileResponse deleteUserProfile(String userToken)
-    throws AlgoliaRuntimeException {
-    Call req = deleteUserProfileValidateBeforeCall(userToken, null);
+  public FetchUserProfileResponse fetchUserProfile(
+    String userID,
+    Params params
+  ) throws AlgoliaRuntimeException {
+    Call req = fetchUserProfileValidateBeforeCall(userID, params, null);
     if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.DeleteUserProfile(
+      return new EchoResponsePredict.FetchUserProfile(
         ((CallEcho) req).request()
       );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<DeleteUserProfileResponse>() {}.getType();
-    ApiResponse<DeleteUserProfileResponse> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<FetchUserProfileResponse>() {}.getType();
+    ApiResponse<FetchUserProfileResponse> res = this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Returns, as part of the response, a date until which the data can safely be
-   * considered as deleted for the given user. This means that if you send events for the given user
-   * before this date, they will be ignored. Any data received after the deletedUntil date will
-   * start building a new user profile. It might take a couple hours before for the deletion request
-   * to be fully processed.
+   * (asynchronously) Get predictions, properties (raw, computed or custom) and segments (computed
+   * or custom) for a user profile.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
-   *     profile. (required)
+   * @param userID User ID for authenticated users or cookie ID for non-authenticated repeated users
+   *     (visitors). (required)
+   * @param params (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call deleteUserProfileAsync(
-    String userToken,
-    final ApiCallback<DeleteUserProfileResponse> callback
+  public Call fetchUserProfileAsync(
+    String userID,
+    Params params,
+    final ApiCallback<FetchUserProfileResponse> callback
   ) throws AlgoliaRuntimeException {
-    Call call = deleteUserProfileValidateBeforeCall(userToken, callback);
-    Type returnType = new TypeToken<DeleteUserProfileResponse>() {}.getType();
+    Call call = fetchUserProfileValidateBeforeCall(userID, params, callback);
+    Type returnType = new TypeToken<FetchUserProfileResponse>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
@@ -345,7 +346,7 @@ public class PersonalizationClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = getValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.Get(((CallEcho) req).request());
+      return new EchoResponsePredict.Get(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -354,7 +355,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   public Object get(String path) throws AlgoliaRuntimeException {
-    return this.get(path, new HashMap<>());
+    return this.get(path, null);
   }
 
   /**
@@ -375,186 +376,6 @@ public class PersonalizationClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Call call = getValidateBeforeCall(path, parameters, callback);
     Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for getPersonalizationStrategy
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getPersonalizationStrategyCall(
-    final ApiCallback<PersonalizationStrategyParams> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath = "/1/strategies/personalization";
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call getPersonalizationStrategyValidateBeforeCall(
-    final ApiCallback<PersonalizationStrategyParams> callback
-  ) throws AlgoliaRuntimeException {
-    return getPersonalizationStrategyCall(callback);
-  }
-
-  /**
-   * The strategy contains information on the events and facets that impact user profiles and
-   * personalized search results.
-   *
-   * @return PersonalizationStrategyParams
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public PersonalizationStrategyParams getPersonalizationStrategy()
-    throws AlgoliaRuntimeException {
-    Call req = getPersonalizationStrategyValidateBeforeCall(null);
-    if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.GetPersonalizationStrategy(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<PersonalizationStrategyParams>() {}
-      .getType();
-    ApiResponse<PersonalizationStrategyParams> res =
-      this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) The strategy contains information on the events and facets that impact user
-   * profiles and personalized search results.
-   *
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call getPersonalizationStrategyAsync(
-    final ApiCallback<PersonalizationStrategyParams> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getPersonalizationStrategyValidateBeforeCall(callback);
-    Type returnType = new TypeToken<PersonalizationStrategyParams>() {}
-      .getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for getUserTokenProfile
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getUserTokenProfileCall(
-    String userToken,
-    final ApiCallback<GetUserTokenResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath =
-      "/1/profiles/personalization/{userToken}".replaceAll(
-          "\\{userToken\\}",
-          this.escapeString(userToken.toString())
-        );
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call getUserTokenProfileValidateBeforeCall(
-    String userToken,
-    final ApiCallback<GetUserTokenResponse> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'userToken' is set
-    if (userToken == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'userToken' when calling getUserTokenProfile(Async)"
-      );
-    }
-
-    return getUserTokenProfileCall(userToken, callback);
-  }
-
-  /**
-   * The profile is structured by facet name used in the strategy. Each facet value is mapped to its
-   * score. Each score represents the user affinity for a specific facet value given the userToken
-   * past events and the Personalization strategy defined. Scores are bounded to 20. The last
-   * processed event timestamp is provided using the ISO 8601 format for debugging purposes.
-   *
-   * @param userToken userToken representing the user for which to fetch the Personalization
-   *     profile. (required)
-   * @return GetUserTokenResponse
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public GetUserTokenResponse getUserTokenProfile(String userToken)
-    throws AlgoliaRuntimeException {
-    Call req = getUserTokenProfileValidateBeforeCall(userToken, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.GetUserTokenProfile(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetUserTokenResponse>() {}.getType();
-    ApiResponse<GetUserTokenResponse> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) The profile is structured by facet name used in the strategy. Each facet value
-   * is mapped to its score. Each score represents the user affinity for a specific facet value
-   * given the userToken past events and the Personalization strategy defined. Scores are bounded to
-   * 20. The last processed event timestamp is provided using the ISO 8601 format for debugging
-   * purposes.
-   *
-   * @param userToken userToken representing the user for which to fetch the Personalization
-   *     profile. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call getUserTokenProfileAsync(
-    String userToken,
-    final ApiCallback<GetUserTokenResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getUserTokenProfileValidateBeforeCall(userToken, callback);
-    Type returnType = new TypeToken<GetUserTokenResponse>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
@@ -632,7 +453,7 @@ public class PersonalizationClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = postValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.Post(((CallEcho) req).request());
+      return new EchoResponsePredict.Post(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -641,7 +462,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   public Object post(String path) throws AlgoliaRuntimeException {
-    return this.post(path, new HashMap<>(), null);
+    return this.post(path, null, null);
   }
 
   /**
@@ -741,7 +562,7 @@ public class PersonalizationClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = putValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.Put(((CallEcho) req).request());
+      return new EchoResponsePredict.Put(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -750,7 +571,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   public Object put(String path) throws AlgoliaRuntimeException {
-    return this.put(path, new HashMap<>(), null);
+    return this.put(path, null, null);
   }
 
   /**
@@ -773,109 +594,6 @@ public class PersonalizationClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Call call = putValidateBeforeCall(path, parameters, body, callback);
     Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for setPersonalizationStrategy
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call setPersonalizationStrategyCall(
-    PersonalizationStrategyParams personalizationStrategyParams,
-    final ApiCallback<SetPersonalizationStrategyResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = personalizationStrategyParams;
-
-    // create path and map variables
-    String requestPath = "/1/strategies/personalization";
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "POST",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call setPersonalizationStrategyValidateBeforeCall(
-    PersonalizationStrategyParams personalizationStrategyParams,
-    final ApiCallback<SetPersonalizationStrategyResponse> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'personalizationStrategyParams' is set
-    if (personalizationStrategyParams == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'personalizationStrategyParams' when calling" +
-        " setPersonalizationStrategy(Async)"
-      );
-    }
-
-    return setPersonalizationStrategyCall(
-      personalizationStrategyParams,
-      callback
-    );
-  }
-
-  /**
-   * A strategy defines the events and facets that impact user profiles and personalized search
-   * results.
-   *
-   * @param personalizationStrategyParams (required)
-   * @return SetPersonalizationStrategyResponse
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public SetPersonalizationStrategyResponse setPersonalizationStrategy(
-    PersonalizationStrategyParams personalizationStrategyParams
-  ) throws AlgoliaRuntimeException {
-    Call req = setPersonalizationStrategyValidateBeforeCall(
-      personalizationStrategyParams,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponsePersonalization.SetPersonalizationStrategy(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<SetPersonalizationStrategyResponse>() {}
-      .getType();
-    ApiResponse<SetPersonalizationStrategyResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) A strategy defines the events and facets that impact user profiles and
-   * personalized search results.
-   *
-   * @param personalizationStrategyParams (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call setPersonalizationStrategyAsync(
-    PersonalizationStrategyParams personalizationStrategyParams,
-    final ApiCallback<SetPersonalizationStrategyResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = setPersonalizationStrategyValidateBeforeCall(
-      personalizationStrategyParams,
-      callback
-    );
-    Type returnType = new TypeToken<SetPersonalizationStrategyResponse>() {}
-      .getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }

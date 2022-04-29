@@ -5,7 +5,7 @@ import com.algolia.ApiClient;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.exceptions.*;
-import com.algolia.model.abtesting.*;
+import com.algolia.model.querySuggestions.*;
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
 import com.algolia.utils.retry.CallType;
@@ -19,17 +19,13 @@ import java.util.List;
 import java.util.Map;
 import okhttp3.Call;
 
-public class AbtestingClient extends ApiClient {
+public class QuerySuggestionsClient extends ApiClient {
 
-  public AbtestingClient(String appId, String apiKey) {
-    this(appId, apiKey, new HttpRequester(getDefaultHosts(null)), null);
-  }
-
-  public AbtestingClient(String appId, String apiKey, String region) {
+  public QuerySuggestionsClient(String appId, String apiKey, String region) {
     this(appId, apiKey, new HttpRequester(getDefaultHosts(region)), null);
   }
 
-  public AbtestingClient(
+  public QuerySuggestionsClient(
     String appId,
     String apiKey,
     String region,
@@ -43,24 +39,30 @@ public class AbtestingClient extends ApiClient {
     );
   }
 
-  public AbtestingClient(String appId, String apiKey, Requester requester) {
+  public QuerySuggestionsClient(
+    String appId,
+    String apiKey,
+    Requester requester
+  ) {
     this(appId, apiKey, requester, null);
   }
 
-  public AbtestingClient(
+  public QuerySuggestionsClient(
     String appId,
     String apiKey,
     Requester requester,
     UserAgent.Segment[] userAgentSegments
   ) {
-    super(appId, apiKey, requester, "Abtesting", userAgentSegments);
+    super(appId, apiKey, requester, "QuerySuggestions", userAgentSegments);
   }
 
   private static List<StatefulHost> getDefaultHosts(String region) {
     List<StatefulHost> hosts = new ArrayList<StatefulHost>();
     hosts.add(
       new StatefulHost(
-        "analytics." + (region == null ? "" : region + ".") + "algolia.com",
+        "query-suggestions." +
+        (region == null ? "" : region + ".") +
+        "algolia.com",
         "https",
         EnumSet.of(CallType.READ, CallType.WRITE)
       )
@@ -69,20 +71,20 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Build call for addABTests
+   * Build call for createConfig
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call addABTestsCall(
-    AddABTestsRequest addABTestsRequest,
-    final ApiCallback<ABTestResponse> callback
+  private Call createConfigCall(
+    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = addABTestsRequest;
+    Object bodyObj = querySuggestionsIndexWithIndexParam;
 
     // create path and map variables
-    String requestPath = "/2/abtests";
+    String requestPath = "/1/configs";
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -100,59 +102,67 @@ public class AbtestingClient extends ApiClient {
       );
   }
 
-  private Call addABTestsValidateBeforeCall(
-    AddABTestsRequest addABTestsRequest,
-    final ApiCallback<ABTestResponse> callback
+  private Call createConfigValidateBeforeCall(
+    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'addABTestsRequest' is set
-    if (addABTestsRequest == null) {
+    // verify the required parameter 'querySuggestionsIndexWithIndexParam' is set
+    if (querySuggestionsIndexWithIndexParam == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'addABTestsRequest' when calling addABTests(Async)"
+        "Missing the required parameter 'querySuggestionsIndexWithIndexParam' when calling" +
+        " createConfig(Async)"
       );
     }
 
-    return addABTestsCall(addABTestsRequest, callback);
+    return createConfigCall(querySuggestionsIndexWithIndexParam, callback);
   }
 
   /**
-   * Creates a new A/B test with provided configuration. You can set an A/B test on two different
-   * indices with different settings, or on the same index with different search parameters by
-   * providing a customSearchParameters setting on one of the variants.
+   * Create a configuration of a Query Suggestions index. There's a limit of 100 configurations per
+   * application.
    *
-   * @param addABTestsRequest (required)
-   * @return ABTestResponse
+   * @param querySuggestionsIndexWithIndexParam (required)
+   * @return SucessResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public ABTestResponse addABTests(AddABTestsRequest addABTestsRequest)
-    throws AlgoliaRuntimeException {
-    Call req = addABTestsValidateBeforeCall(addABTestsRequest, null);
+  public SucessResponse createConfig(
+    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam
+  ) throws AlgoliaRuntimeException {
+    Call req = createConfigValidateBeforeCall(
+      querySuggestionsIndexWithIndexParam,
+      null
+    );
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.AddABTests(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.CreateConfig(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<ABTestResponse>() {}.getType();
-    ApiResponse<ABTestResponse> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    ApiResponse<SucessResponse> res = this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Creates a new A/B test with provided configuration. You can set an A/B test on
-   * two different indices with different settings, or on the same index with different search
-   * parameters by providing a customSearchParameters setting on one of the variants.
+   * (asynchronously) Create a configuration of a Query Suggestions index. There&#39;s a limit of
+   * 100 configurations per application.
    *
-   * @param addABTestsRequest (required)
+   * @param querySuggestionsIndexWithIndexParam (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call addABTestsAsync(
-    AddABTestsRequest addABTestsRequest,
-    final ApiCallback<ABTestResponse> callback
+  public Call createConfigAsync(
+    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    Call call = addABTestsValidateBeforeCall(addABTestsRequest, callback);
-    Type returnType = new TypeToken<ABTestResponse>() {}.getType();
+    Call call = createConfigValidateBeforeCall(
+      querySuggestionsIndexWithIndexParam,
+      callback
+    );
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
@@ -227,7 +237,7 @@ public class AbtestingClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = delValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.Del(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.Del(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -236,7 +246,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   public Object del(String path) throws AlgoliaRuntimeException {
-    return this.del(path, new HashMap<>());
+    return this.del(path, null);
   }
 
   /**
@@ -262,23 +272,23 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Build call for deleteABTest
+   * Build call for deleteConfig
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call deleteABTestCall(
-    Integer id,
-    final ApiCallback<ABTestResponse> callback
+  private Call deleteConfigCall(
+    String indexName,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
     String requestPath =
-      "/2/abtests/{id}".replaceAll(
-          "\\{id\\}",
-          this.escapeString(id.toString())
+      "/1/configs/{indexName}".replaceAll(
+          "\\{indexName\\}",
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -297,55 +307,61 @@ public class AbtestingClient extends ApiClient {
       );
   }
 
-  private Call deleteABTestValidateBeforeCall(
-    Integer id,
-    final ApiCallback<ABTestResponse> callback
+  private Call deleteConfigValidateBeforeCall(
+    String indexName,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'id' is set
-    if (id == null) {
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'id' when calling deleteABTest(Async)"
+        "Missing the required parameter 'indexName' when calling deleteConfig(Async)"
       );
     }
 
-    return deleteABTestCall(id, callback);
+    return deleteConfigCall(indexName, callback);
   }
 
   /**
-   * Deletes the A/B Test and removes all associated metadata & metrics.
+   * Delete a configuration of a Query Suggestion's index. By deleting a configuraton, you stop all
+   * updates to the underlying query suggestion index. Note that when doing this, the underlying
+   * index does not change - existing suggestions remain untouched.
    *
-   * @param id The A/B test ID. (required)
-   * @return ABTestResponse
+   * @param indexName The index in which to perform the request. (required)
+   * @return SucessResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public ABTestResponse deleteABTest(Integer id)
+  public SucessResponse deleteConfig(String indexName)
     throws AlgoliaRuntimeException {
-    Call req = deleteABTestValidateBeforeCall(id, null);
+    Call req = deleteConfigValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.DeleteABTest(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.DeleteConfig(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<ABTestResponse>() {}.getType();
-    ApiResponse<ABTestResponse> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    ApiResponse<SucessResponse> res = this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Deletes the A/B Test and removes all associated metadata &amp; metrics.
+   * (asynchronously) Delete a configuration of a Query Suggestion&#39;s index. By deleting a
+   * configuraton, you stop all updates to the underlying query suggestion index. Note that when
+   * doing this, the underlying index does not change - existing suggestions remain untouched.
    *
-   * @param id The A/B test ID. (required)
+   * @param indexName The index in which to perform the request. (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call deleteABTestAsync(
-    Integer id,
-    final ApiCallback<ABTestResponse> callback
+  public Call deleteConfigAsync(
+    String indexName,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    Call call = deleteABTestValidateBeforeCall(id, callback);
-    Type returnType = new TypeToken<ABTestResponse>() {}.getType();
+    Call call = deleteConfigValidateBeforeCall(indexName, callback);
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
@@ -420,7 +436,7 @@ public class AbtestingClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = getValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.Get(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.Get(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -429,7 +445,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   public Object get(String path) throws AlgoliaRuntimeException {
-    return this.get(path, new HashMap<>());
+    return this.get(path, null);
   }
 
   /**
@@ -455,21 +471,101 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Build call for getABTest
+   * Build call for getAllConfigs
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call getABTestCall(Integer id, final ApiCallback<ABTest> callback)
+  private Call getAllConfigsCall(
+    final ApiCallback<List<QuerySuggestionsIndex>> callback
+  ) throws AlgoliaRuntimeException {
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath = "/1/configs";
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        callback
+      );
+  }
+
+  private Call getAllConfigsValidateBeforeCall(
+    final ApiCallback<List<QuerySuggestionsIndex>> callback
+  ) throws AlgoliaRuntimeException {
+    return getAllConfigsCall(callback);
+  }
+
+  /**
+   * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a
+   * list of its configuration settings.
+   *
+   * @return List&lt;QuerySuggestionsIndex&gt;
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
+   */
+  public List<QuerySuggestionsIndex> getAllConfigs()
     throws AlgoliaRuntimeException {
+    Call req = getAllConfigsValidateBeforeCall(null);
+    if (req instanceof CallEcho) {
+      return new EchoResponseQuerySuggestions.GetAllConfigs(
+        ((CallEcho) req).request()
+      );
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<List<QuerySuggestionsIndex>>() {}.getType();
+    ApiResponse<List<QuerySuggestionsIndex>> res =
+      this.execute(call, returnType);
+    return res.getData();
+  }
+
+  /**
+   * (asynchronously) Get all the configurations of Query Suggestions. For each index, you get a
+   * block of JSON with a list of its configuration settings.
+   *
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
+   */
+  public Call getAllConfigsAsync(
+    final ApiCallback<List<QuerySuggestionsIndex>> callback
+  ) throws AlgoliaRuntimeException {
+    Call call = getAllConfigsValidateBeforeCall(callback);
+    Type returnType = new TypeToken<List<QuerySuggestionsIndex>>() {}.getType();
+    this.executeAsync(call, returnType, callback);
+    return call;
+  }
+
+  /**
+   * Build call for getConfig
+   *
+   * @param callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
+   */
+  private Call getConfigCall(
+    String indexName,
+    final ApiCallback<QuerySuggestionsIndex> callback
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
     String requestPath =
-      "/2/abtests/{id}".replaceAll(
-          "\\{id\\}",
-          this.escapeString(id.toString())
+      "/1/configs/{indexName}".replaceAll(
+          "\\{indexName\\}",
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -488,85 +584,83 @@ public class AbtestingClient extends ApiClient {
       );
   }
 
-  private Call getABTestValidateBeforeCall(
-    Integer id,
-    final ApiCallback<ABTest> callback
+  private Call getConfigValidateBeforeCall(
+    String indexName,
+    final ApiCallback<QuerySuggestionsIndex> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'id' is set
-    if (id == null) {
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'id' when calling getABTest(Async)"
+        "Missing the required parameter 'indexName' when calling getConfig(Async)"
       );
     }
 
-    return getABTestCall(id, callback);
+    return getConfigCall(indexName, callback);
   }
 
   /**
-   * Returns metadata and metrics for A/B test id. Behaves in the same way as GET /2/abtests however
-   * the endpoint will return 403.
+   * Get the configuration of a single Query Suggestions index.
    *
-   * @param id The A/B test ID. (required)
-   * @return ABTest
+   * @param indexName The index in which to perform the request. (required)
+   * @return QuerySuggestionsIndex
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public ABTest getABTest(Integer id) throws AlgoliaRuntimeException {
-    Call req = getABTestValidateBeforeCall(id, null);
+  public QuerySuggestionsIndex getConfig(String indexName)
+    throws AlgoliaRuntimeException {
+    Call req = getConfigValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.GetABTest(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.GetConfig(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<ABTest>() {}.getType();
-    ApiResponse<ABTest> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<QuerySuggestionsIndex>() {}.getType();
+    ApiResponse<QuerySuggestionsIndex> res = this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Returns metadata and metrics for A/B test id. Behaves in the same way as GET
-   * /2/abtests however the endpoint will return 403.
+   * (asynchronously) Get the configuration of a single Query Suggestions index.
    *
-   * @param id The A/B test ID. (required)
+   * @param indexName The index in which to perform the request. (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getABTestAsync(Integer id, final ApiCallback<ABTest> callback)
-    throws AlgoliaRuntimeException {
-    Call call = getABTestValidateBeforeCall(id, callback);
-    Type returnType = new TypeToken<ABTest>() {}.getType();
+  public Call getConfigAsync(
+    String indexName,
+    final ApiCallback<QuerySuggestionsIndex> callback
+  ) throws AlgoliaRuntimeException {
+    Call call = getConfigValidateBeforeCall(indexName, callback);
+    Type returnType = new TypeToken<QuerySuggestionsIndex>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
 
   /**
-   * Build call for listABTests
+   * Build call for getConfigStatus
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call listABTestsCall(
-    Integer offset,
-    Integer limit,
-    final ApiCallback<ListABTestsResponse> callback
+  private Call getConfigStatusCall(
+    String indexName,
+    final ApiCallback<Status> callback
   ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/abtests";
+    String requestPath =
+      "/1/configs/{indexName}/status".replaceAll(
+          "\\{indexName\\}",
+          this.escapeString(indexName.toString())
+        );
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
-
-    if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
-    }
-
-    if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
-    }
 
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
@@ -581,64 +675,151 @@ public class AbtestingClient extends ApiClient {
       );
   }
 
-  private Call listABTestsValidateBeforeCall(
-    Integer offset,
-    Integer limit,
-    final ApiCallback<ListABTestsResponse> callback
+  private Call getConfigStatusValidateBeforeCall(
+    String indexName,
+    final ApiCallback<Status> callback
   ) throws AlgoliaRuntimeException {
-    return listABTestsCall(offset, limit, callback);
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'indexName' when calling getConfigStatus(Async)"
+      );
+    }
+
+    return getConfigStatusCall(indexName, callback);
   }
 
   /**
-   * Fetch all existing A/B tests for App that are available for the current API Key. Returns an
-   * array of metadata and metrics. When no data has been processed, the metrics will be returned as
-   * null.
+   * Get the status of a Query Suggestion's index. The status includes whether the Query Suggestions
+   * index is currently in the process of being built, and the last build time.
    *
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
-   * @param limit Number of records to return. Limit is the size of the page. (optional, default to
-   *     10)
-   * @return ListABTestsResponse
+   * @param indexName The index in which to perform the request. (required)
+   * @return Status
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public ListABTestsResponse listABTests(Integer offset, Integer limit)
+  public Status getConfigStatus(String indexName)
     throws AlgoliaRuntimeException {
-    Call req = listABTestsValidateBeforeCall(offset, limit, null);
+    Call req = getConfigStatusValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.ListABTests(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.GetConfigStatus(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<ListABTestsResponse>() {}.getType();
-    ApiResponse<ListABTestsResponse> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<Status>() {}.getType();
+    ApiResponse<Status> res = this.execute(call, returnType);
     return res.getData();
   }
 
-  public ListABTestsResponse listABTests() throws AlgoliaRuntimeException {
-    return this.listABTests(0, 10);
-  }
-
   /**
-   * (asynchronously) Fetch all existing A/B tests for App that are available for the current API
-   * Key. Returns an array of metadata and metrics. When no data has been processed, the metrics
-   * will be returned as null.
+   * (asynchronously) Get the status of a Query Suggestion&#39;s index. The status includes whether
+   * the Query Suggestions index is currently in the process of being built, and the last build
+   * time.
    *
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
-   * @param limit Number of records to return. Limit is the size of the page. (optional, default to
-   *     10)
+   * @param indexName The index in which to perform the request. (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call listABTestsAsync(
-    Integer offset,
-    Integer limit,
-    final ApiCallback<ListABTestsResponse> callback
+  public Call getConfigStatusAsync(
+    String indexName,
+    final ApiCallback<Status> callback
   ) throws AlgoliaRuntimeException {
-    Call call = listABTestsValidateBeforeCall(offset, limit, callback);
-    Type returnType = new TypeToken<ListABTestsResponse>() {}.getType();
+    Call call = getConfigStatusValidateBeforeCall(indexName, callback);
+    Type returnType = new TypeToken<Status>() {}.getType();
+    this.executeAsync(call, returnType, callback);
+    return call;
+  }
+
+  /**
+   * Build call for getLogFile
+   *
+   * @param callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
+   */
+  private Call getLogFileCall(
+    String indexName,
+    final ApiCallback<List<LogFile>> callback
+  ) throws AlgoliaRuntimeException {
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath =
+      "/1/logs/{indexName}".replaceAll(
+          "\\{indexName\\}",
+          this.escapeString(indexName.toString())
+        );
+
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    headers.put("Accept", "application/json");
+    headers.put("Content-Type", "application/json");
+
+    return this.buildCall(
+        requestPath,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        callback
+      );
+  }
+
+  private Call getLogFileValidateBeforeCall(
+    String indexName,
+    final ApiCallback<List<LogFile>> callback
+  ) throws AlgoliaRuntimeException {
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'indexName' when calling getLogFile(Async)"
+      );
+    }
+
+    return getLogFileCall(indexName, callback);
+  }
+
+  /**
+   * Get the log file of the last build of a single Query Suggestion index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @return List&lt;LogFile&gt;
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
+   */
+  public List<LogFile> getLogFile(String indexName)
+    throws AlgoliaRuntimeException {
+    Call req = getLogFileValidateBeforeCall(indexName, null);
+    if (req instanceof CallEcho) {
+      return new EchoResponseQuerySuggestions.GetLogFile(
+        ((CallEcho) req).request()
+      );
+    }
+    Call call = (Call) req;
+    Type returnType = new TypeToken<List<LogFile>>() {}.getType();
+    ApiResponse<List<LogFile>> res = this.execute(call, returnType);
+    return res.getData();
+  }
+
+  /**
+   * (asynchronously) Get the log file of the last build of a single Query Suggestion index.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
+   */
+  public Call getLogFileAsync(
+    String indexName,
+    final ApiCallback<List<LogFile>> callback
+  ) throws AlgoliaRuntimeException {
+    Call call = getLogFileValidateBeforeCall(indexName, callback);
+    Type returnType = new TypeToken<List<LogFile>>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
@@ -716,7 +897,7 @@ public class AbtestingClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = postValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.Post(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.Post(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -725,7 +906,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   public Object post(String path) throws AlgoliaRuntimeException {
-    return this.post(path, new HashMap<>(), null);
+    return this.post(path, null, null);
   }
 
   /**
@@ -825,7 +1006,7 @@ public class AbtestingClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Call req = putValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.Put(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.Put(((CallEcho) req).request());
     }
     Call call = (Call) req;
     Type returnType = new TypeToken<Object>() {}.getType();
@@ -834,7 +1015,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   public Object put(String path) throws AlgoliaRuntimeException {
-    return this.put(path, new HashMap<>(), null);
+    return this.put(path, null, null);
   }
 
   /**
@@ -862,23 +1043,24 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Build call for stopABTest
+   * Build call for updateConfig
    *
    * @param callback Callback for upload/download progress
    * @return Call to execute
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
-  private Call stopABTestCall(
-    Integer id,
-    final ApiCallback<ABTestResponse> callback
+  private Call updateConfigCall(
+    String indexName,
+    QuerySuggestionsIndexParam querySuggestionsIndexParam,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
+    Object bodyObj = querySuggestionsIndexParam;
 
     // create path and map variables
     String requestPath =
-      "/2/abtests/{id}/stop".replaceAll(
-          "\\{id\\}",
-          this.escapeString(id.toString())
+      "/1/configs/{indexName}".replaceAll(
+          "\\{indexName\\}",
+          this.escapeString(indexName.toString())
         );
 
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -889,7 +1071,7 @@ public class AbtestingClient extends ApiClient {
 
     return this.buildCall(
         requestPath,
-        "POST",
+        "PUT",
         queryParams,
         bodyObj,
         headers,
@@ -897,58 +1079,79 @@ public class AbtestingClient extends ApiClient {
       );
   }
 
-  private Call stopABTestValidateBeforeCall(
-    Integer id,
-    final ApiCallback<ABTestResponse> callback
+  private Call updateConfigValidateBeforeCall(
+    String indexName,
+    QuerySuggestionsIndexParam querySuggestionsIndexParam,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'id' is set
-    if (id == null) {
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'id' when calling stopABTest(Async)"
+        "Missing the required parameter 'indexName' when calling updateConfig(Async)"
       );
     }
 
-    return stopABTestCall(id, callback);
+    // verify the required parameter 'querySuggestionsIndexParam' is set
+    if (querySuggestionsIndexParam == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'querySuggestionsIndexParam' when calling" +
+        " updateConfig(Async)"
+      );
+    }
+
+    return updateConfigCall(indexName, querySuggestionsIndexParam, callback);
   }
 
   /**
-   * Marks the A/B test as stopped. At this point, the test is over and cannot be restarted. As a
-   * result, your application is back to normal: index A will perform as usual, receiving 100% of
-   * all search requests. Associated metadata and metrics are still stored.
+   * Update the configuration of a Query Suggestions index.
    *
-   * @param id The A/B test ID. (required)
-   * @return ABTestResponse
+   * @param indexName The index in which to perform the request. (required)
+   * @param querySuggestionsIndexParam (required)
+   * @return SucessResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public ABTestResponse stopABTest(Integer id) throws AlgoliaRuntimeException {
-    Call req = stopABTestValidateBeforeCall(id, null);
+  public SucessResponse updateConfig(
+    String indexName,
+    QuerySuggestionsIndexParam querySuggestionsIndexParam
+  ) throws AlgoliaRuntimeException {
+    Call req = updateConfigValidateBeforeCall(
+      indexName,
+      querySuggestionsIndexParam,
+      null
+    );
     if (req instanceof CallEcho) {
-      return new EchoResponseAbtesting.StopABTest(((CallEcho) req).request());
+      return new EchoResponseQuerySuggestions.UpdateConfig(
+        ((CallEcho) req).request()
+      );
     }
     Call call = (Call) req;
-    Type returnType = new TypeToken<ABTestResponse>() {}.getType();
-    ApiResponse<ABTestResponse> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    ApiResponse<SucessResponse> res = this.execute(call, returnType);
     return res.getData();
   }
 
   /**
-   * (asynchronously) Marks the A/B test as stopped. At this point, the test is over and cannot be
-   * restarted. As a result, your application is back to normal: index A will perform as usual,
-   * receiving 100% of all search requests. Associated metadata and metrics are still stored.
+   * (asynchronously) Update the configuration of a Query Suggestions index.
    *
-   * @param id The A/B test ID. (required)
+   * @param indexName The index in which to perform the request. (required)
+   * @param querySuggestionsIndexParam (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call stopABTestAsync(
-    Integer id,
-    final ApiCallback<ABTestResponse> callback
+  public Call updateConfigAsync(
+    String indexName,
+    QuerySuggestionsIndexParam querySuggestionsIndexParam,
+    final ApiCallback<SucessResponse> callback
   ) throws AlgoliaRuntimeException {
-    Call call = stopABTestValidateBeforeCall(id, callback);
-    Type returnType = new TypeToken<ABTestResponse>() {}.getType();
+    Call call = updateConfigValidateBeforeCall(
+      indexName,
+      querySuggestionsIndexParam,
+      callback
+    );
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;
   }
