@@ -15,9 +15,6 @@ inputs:
   client:
     description: The matrix of the client to restore, when building a single client
     required: false
-  specPath:
-    description: The path of the spec to hash
-    required: false
 
 outputs:
   cache-hit-client:
@@ -52,15 +49,15 @@ runs:
       run: curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar" > /tmp/java-formatter.jar
 
     # Restore bundled specs from input: used during 'client' generation
-    - name: Restore ${{ toJSON(inputs.client).name }} built spec
-      if: ${{ inputs.job == 'client_gen' && toJSON(inputs.client) }}
+    - name: Restore ${{ fromJSON(inputs.client).name }} built spec
+      if: ${{ inputs.job == 'client_gen' && fromJSON(inputs.client) }}
       uses: actions/cache@v3
       with:
-        path: ${{ format('specs/bundled/{0}.yml', toJSON(inputs.client).name) }}
+        path: ${{ format('specs/bundled/{0}.yml', fromJSON(inputs.client).name) }}
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            format('specs/{0}/**', toJSON(inputs.client).specPath),
+            format('specs/{0}/**', fromJSON(inputs.client).specPath),
             'specs/common/**'
           )}}
 
@@ -220,20 +217,20 @@ runs:
           )}}
 
     # Restore JavaScript clients: used during 'cts' or 'codegen'
-    - name: Cache 'javascript-${{ toJSON(inputs.client).name }}' client
+    - name: Cache 'javascript-${{ fromJSON(inputs.client).name }}' client
       id: cache-javascript-single
-      if: ${{ inputs.job == 'client_gen' && inputs.language == 'javascript' && toJSON(inputs.client) }}
+      if: ${{ inputs.job == 'client_gen' && inputs.language == 'javascript' && fromJSON(inputs.client) }}
       uses: actions/cache@v3
       with:
-        path: ${{ toJSON(inputs.client).path }}
+        path: ${{ fromJSON(inputs.client).path }}
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            format('{0}/src/**', toJSON(inputs.client).path),
-            format('{0}/model/**', toJSON(inputs.client).path),
-            format('{0}/builds/**', toJSON(inputs.client).path),
-            format('{0}/package.json', toJSON(inputs.client).path),
-            format('specs/bundled/{0}.yml', toJSON(inputs.client).name),
+            format('{0}/src/**', fromJSON(inputs.client).path),
+            format('{0}/model/**', fromJSON(inputs.client).path),
+            format('{0}/builds/**', fromJSON(inputs.client).path),
+            format('{0}/package.json', fromJSON(inputs.client).path),
+            format('specs/bundled/{0}.yml', fromJSON(inputs.client).name),
             'templates/javascript/**',
             'generators/src/**'
           )}}
@@ -404,16 +401,16 @@ runs:
 
     - name: Restore single Java client
       id: cache-java-single
-      if: ${{ inputs.job == 'client_gen' && inputs.language == 'java' && toJSON(inputs.client) }}
+      if: ${{ inputs.job == 'client_gen' && inputs.language == 'java' && fromJSON(inputs.client) }}
       uses: actions/cache@v3
       with:
         path: |
-          ${{ format('{0}/algoliasearch-core/src/main/java/com/algolia/api/{1}.java', toJSON(inputs.client).path, toJSON(inputs.client).api) }}
-          ${{ format('{0}/algoliasearch-core/src/main/java/com/algolia/model/{1}/**', toJSON(inputs.client).path, toJSON(inputs.client).camelizedName) }}
+          ${{ format('{0}/algoliasearch-core/src/main/java/com/algolia/api/{1}.java', fromJSON(inputs.client).path, fromJSON(inputs.client).api) }}
+          ${{ format('{0}/algoliasearch-core/src/main/java/com/algolia/model/{1}/**', fromJSON(inputs.client).path, fromJSON(inputs.client).camelizedName) }}
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            format('specs/bundled/{0}.yml', toJSON(inputs.client).name),
+            format('specs/bundled/{0}.yml', fromJSON(inputs.client).name),
             'templates/java/**',
             'generators/src/**'
           )}}
@@ -543,18 +540,18 @@ runs:
           )}}
 
     # Restore PHP clients: used during 'cts' or 'codegen'
-    - name: Cache 'php-${{ toJSON(inputs.client).name }}' client
+    - name: Cache 'php-${{ fromJSON(inputs.client).name }}' client
       id: cache-php-single
-      if: ${{ inputs.job == 'client_gen' && inputs.language == 'php' && toJSON(inputs.client) }}
+      if: ${{ inputs.job == 'client_gen' && inputs.language == 'php' && fromJSON(inputs.client) }}
       uses: actions/cache@v3
       with:
         path: |
-          ${{ format('{0}/lib/Api/{1}.php', toJSON(inputs.client).path, toJSON(inputs.client).api) }}
-          ${{ format('{0}/lib/Model/{1}/**', toJSON(inputs.client).path, toJSON(inputs.client).capitalizedName) }}
+          ${{ format('{0}/lib/Api/{1}.php', fromJSON(inputs.client).path, fromJSON(inputs.client).api) }}
+          ${{ format('{0}/lib/Model/{1}/**', fromJSON(inputs.client).path, fromJSON(inputs.client).capitalizedName) }}
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            format('specs/bundled/{0}.yml', toJSON(inputs.client).name),
+            format('specs/bundled/{0}.yml', fromJSON(inputs.client).name),
             'templates/php/**',
             'generators/src/**'
           )}}

@@ -172,7 +172,7 @@ jobs:
         with:
           job: client_gen
           language: javascript
-          client: ${{ fromJSON(matrix.client) }}
+          client: ${{ toJSON(matrix.client) }}
           cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -209,7 +209,7 @@ jobs:
         with:
           job: client_gen
           language: java
-          client: ${{ fromJSON(matrix.client) }}
+          client: ${{ toJSON(matrix.client) }}
           cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Generate '${{ matrix.client.name }}' client
@@ -267,7 +267,7 @@ jobs:
         with:
           job: client_gen
           language: php
-          client: ${{ fromJSON(matrix.client) }}
+          client: ${{ toJSON(matrix.client) }}
           cache_hash: ${{ needs.setup.outputs.CACHE_COMMON_HASH }}
 
       - name: Generate '${{ matrix.client.name }}' client
