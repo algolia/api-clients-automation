@@ -1,7 +1,7 @@
 get:
   operationId: getClickThroughRate
   description: Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.
-  summary: Returns a click-through rate (CTR)
+  summary: Returns a click-through rate (CTR).
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

@@ -1,7 +1,7 @@
 get:
   operationId: getTopCountries
   description: Returns top countries. Limited to the 1000 most frequent ones.
-  summary: Returns top countries
+  summary: Returns top countries.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

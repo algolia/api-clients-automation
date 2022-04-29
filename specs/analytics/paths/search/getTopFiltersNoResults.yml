@@ -1,7 +1,7 @@
 get:
   operationId: getTopFiltersNoResults
   description: Returns top filters with no results. Limited to the 1000 most used filters.
-  summary: Returns top filters with no results
+  summary: Returns top filters with no results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'

@@ -1,7 +1,7 @@
 post:
   operationId: getRecommendations
   description: Returns recommendations for a specific model and objectID.
-  summary: Returns recommendations for a specific model and objectID
+  summary: Returns recommendations for a specific model and objectID.
   requestBody:
     required: true
     content:

@@ -1,7 +1,7 @@
 get:
   operationId: getTopFilterForAttribute
   description: Returns top filters for the given attribute. Limited to the 1000 most used filters.
-  summary: Returns top filters for the given attribute
+  summary: Returns top filters for the given attribute.
   parameters:
     - $ref: '../../common/parameters.yml#/Attribute'
     - $ref: '../../../common/parameters.yml#/Index'
