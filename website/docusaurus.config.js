@@ -123,7 +123,7 @@ function getSpecsForNavBar() {
               position: 'left',
             },
             {
-              label: 'API Specs',
+              label: 'Rest API',
               position: 'left',
               type: 'dropdown',
               items: getSpecsForNavBar(),
