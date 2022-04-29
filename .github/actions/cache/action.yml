@@ -12,12 +12,17 @@ inputs:
   cache_hash:
     description: The cache hash from github actions and scripts
     required: false
-  spec:
-    description: The name of the spec to restore, used for client matrix gen.
+  client:
+    description: The matrix of the client to restore, when building a single client
     required: false
   specPath:
     description: The path of the spec to hash
     required: false
+
+outputs:
+  cache-hit-client:
+    description: true if the required client was restored from cache
+    value: $ {{ env.CACHE_HIT_CLIENT }}
 
 runs:
   using: composite
@@ -51,7 +56,7 @@ runs:
       if: ${{ inputs.job == 'client' && inputs.spec && inputs.specPath }}
       uses: actions/cache@v3
       with:
-        path: ${{ format('specs/bundled/{0}.yml', inputs.spec) }}
+        path: ${{ format('specs/bundled/{0}.yml', inputs.client.name) }}
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
@@ -61,7 +66,7 @@ runs:
 
     # Restore bundled specs: used during 'cts' or pushing the 'codegen'
     - name: Restore built abtesting spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/abtesting.yml
@@ -73,7 +78,7 @@ runs:
           )}}
 
     - name: Restore built analytics spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/analytics.yml
@@ -85,7 +90,7 @@ runs:
           )}}
 
     - name: Restore built insights spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/insights.yml
@@ -97,7 +102,7 @@ runs:
           )}}
 
     - name: Restore built personalization spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/personalization.yml
@@ -109,7 +114,7 @@ runs:
           )}}
 
     - name: Restore built predict spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/predict.yml
@@ -121,7 +126,7 @@ runs:
           )}}
 
     - name: Restore built query-suggestions spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/query-suggestions.yml
@@ -133,7 +138,7 @@ runs:
           )}}
 
     - name: Restore built recommend spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/recommend.yml
@@ -145,7 +150,7 @@ runs:
           )}}
 
     - name: Restore built search spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/search.yml
@@ -157,7 +162,7 @@ runs:
           )}}
 
     - name: Restore built algoliasearch-lite spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/algoliasearch-lite.yml
@@ -169,7 +174,7 @@ runs:
           )}}
 
     - name: Restore built sources spec
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: specs/bundled/sources.yml
@@ -215,8 +220,30 @@ runs:
           )}}
 
     # Restore JavaScript clients: used during 'cts' or 'codegen'
+    - name: Cache 'javascript-${{ inputs.client.name }}' client
+      id: cache-javascript-single
+      if: ${{ inputs.job == 'client_gen' && inputs.language == 'javascript' && inputs.client }}
+      uses: actions/cache@v3
+      with:
+        path: ${{ inputs.client.path }}
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            format('{0}/src/**', inputs.client.path),
+            format('{0}/model/**', inputs.client.path),
+            format('{0}/builds/**', inputs.client.path),
+            format('{0}/package.json', inputs.client.path),
+            format('specs/bundled/{0}.yml', inputs.client.name),
+            'templates/javascript/**',
+            'generators/src/**'
+          )}}
+
+    - name: Set cache hit env var
+      shell: bash
+      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-javascript-single.output.cache-hit }}" >> $GITHUB_ENV
+
     - name: Restore built JavaScript algoliasearch client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'algoliasearch_js' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/algoliasearch
@@ -231,7 +258,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript algoliasearch-lite client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/algoliasearch-lite
@@ -244,7 +271,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript search client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch'  }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'algoliasearch_js'  }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-search
@@ -257,7 +284,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript recommend client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/recommend
@@ -270,7 +297,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript query-suggestions client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-query-suggestions
@@ -283,7 +310,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript personalization client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch'  }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'algoliasearch_js'  }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-personalization
@@ -296,7 +323,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript analytics client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || inputs.job == 'algoliasearch'  }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'algoliasearch_js'  }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-analytics
@@ -309,7 +336,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript abtesting client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-abtesting
@@ -322,7 +349,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript insights client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-insights
@@ -335,7 +362,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript sources client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-sources
@@ -348,7 +375,7 @@ runs:
           )}}
 
     - name: Restore built JavaScript predict client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: clients/algoliasearch-client-javascript/packages/client-predict
@@ -362,7 +389,7 @@ runs:
 
     # Restore Java clients: used during 'cts' or 'codegen'
     - name: Restore Java client gradle files
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || (inputs.job == 'client' && inputs.language == 'java') }}
+      if: ${{ inputs.job == 'cts' || ((inputs.job == 'client_gen' || inputs.job == 'build') && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -375,8 +402,28 @@ runs:
             'generators/src/**'
           )}}
 
+    - name: Restore single Java client
+      id: cache-java-single
+      if: ${{ inputs.job == 'client_gen' && inputs.language == 'java' && inputs.client }}
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ format('{0}/algoliasearch-core/src/main/java/com/algolia/api/{1}.java', inputs.client.path, inputs.client.api) }}
+          ${{ format('{0}/algoliasearch-core/src/main/java/com/algolia/model/{1}/**', inputs.client.path, inputs.client.camelizedName) }}
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            format('specs/bundled/{0}.yml', inputs.client.name),
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Set cache hit env var
+      shell: bash
+      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-java-single.output.cache-hit }}" >> $GITHUB_ENV
+
     - name: Restore built Java search client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -391,7 +438,7 @@ runs:
           )}}
 
     - name: Restore built Java recommend client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -406,7 +453,7 @@ runs:
           )}}
 
     - name: Restore built Java personalization client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -421,7 +468,7 @@ runs:
           )}}
 
     - name: Restore built Java analytics client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -436,7 +483,7 @@ runs:
           )}}
 
     - name: Restore built Java insights client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -451,7 +498,7 @@ runs:
           )}}
 
     - name: Restore built Java abtesting client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -466,7 +513,7 @@ runs:
           )}}
 
     - name: Restore built Java query-suggestions client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -481,7 +528,7 @@ runs:
           )}}
 
     - name: Restore built Java predict client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || (inputs.job == 'build' && inputs.language == 'java') }}
       uses: actions/cache@v3
       with:
         path: |
@@ -496,8 +543,28 @@ runs:
           )}}
 
     # Restore PHP clients: used during 'cts' or 'codegen'
+    - name: Cache 'php-${{ inputs.client.name }}' client
+      id: cache-php-single
+      if: ${{ inputs.job == 'client_gen' && inputs.language == 'php' && inputs.client }}
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ format('{0}/lib/Api/{1}.php', inputs.client.path, inputs.client.api) }}
+          ${{ format('{0}/lib/Model/{1}/**', inputs.client.path, inputs.client.capitalizedName) }}
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            format('specs/bundled/{0}.yml', inputs.client.name),
+            'templates/php/**',
+            'generators/src/**'
+          )}}
+
+    - name: Set cache hit env var
+      shell: bash
+      run: echo "CACHE_HIT_CLIENT=${{ steps.cache-php-single.output.cache-hit }}" >> $GITHUB_ENV
+
     - name: Restore built PHP search client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: |
@@ -512,7 +579,7 @@ runs:
           )}}
 
     - name: Restore built PHP recommend client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: |
@@ -527,7 +594,7 @@ runs:
           )}}
 
     - name: Restore built PHP personalization client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: |
@@ -542,7 +609,7 @@ runs:
           )}}
 
     - name: Restore built PHP analytics client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: |
@@ -557,7 +624,7 @@ runs:
           )}}
 
     - name: Restore built PHP insights client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: |
@@ -572,7 +639,7 @@ runs:
           )}}
 
     - name: Restore built PHP abtesting client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: |
@@ -587,7 +654,7 @@ runs:
           )}}
 
     - name: Restore built PHP query-suggestions client
-      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v3
       with:
         path: |
