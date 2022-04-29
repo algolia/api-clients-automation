@@ -2,7 +2,7 @@ post:
   tags:
     - Search
   operationId: search
-  summary: Search one index
+  summary: Search one index.
   description: Perform a search operation targetting one specific index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

@@ -3,7 +3,7 @@ post:
     - Records
   operationId: multipleBatch
   description: Perform multiple write operations, potentially targeting multiple indices, in a single API call.
-  summary: Batch operations to many indices
+  summary: Batch operations to many indices.
   requestBody:
     required: true
     content:

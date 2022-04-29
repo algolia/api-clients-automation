@@ -3,7 +3,7 @@ post:
     - Records
   operationId: saveObject
   description: Add an object to the index, automatically assigning it an object ID.
-  summary: Add an object to the index
+  summary: Add an object to the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -42,7 +42,7 @@ delete:
   tags:
     - Indices
   operationId: deleteIndex
-  summary: Delete index
+  summary: Delete index.
   description: Delete an existing index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

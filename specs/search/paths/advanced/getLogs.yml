@@ -3,7 +3,7 @@ get:
     - Advanced
   operationId: getLogs
   description: Return the latest log entries.
-  summary: Return the latest log entries
+  summary: Return the latest log entries.
   parameters:
     - name: offset
       in: query

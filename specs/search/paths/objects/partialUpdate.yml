@@ -2,7 +2,7 @@ post:
   tags:
     - Records
   operationId: partialUpdateObject
-  summary: Partially update an object
+  summary: Partially update an object.
   description: >
     Update one or more attributes of an existing object.
 

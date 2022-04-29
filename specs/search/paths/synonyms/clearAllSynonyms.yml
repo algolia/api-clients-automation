@@ -2,7 +2,7 @@ post:
   tags:
     - Synonyms
   operationId: clearAllSynonyms
-  summary: Clear all synonyms
+  summary: Clear all synonyms.
   description: Remove all synonyms from an index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

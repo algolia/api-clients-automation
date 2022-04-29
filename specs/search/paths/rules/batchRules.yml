@@ -2,7 +2,7 @@ post:
   tags:
     - Rules
   operationId: batchRules
-  summary: Batch Rules
+  summary: Batch Rules.
   description: Create or update a batch of Rules.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
