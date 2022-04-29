@@ -21,6 +21,11 @@ const ALGOLIASEARCH_LITE_OPERATIONS = [
 
 /**
  * This function will transform properties in the bundle depending on the context.
+ * E.g:
+ * - Check tags definition
+ * - Add name of the client in tags
+ * - Remove unecessary punctuation for documentation
+ * - etc...
  */
 async function transformBundle({
   bundledPath,

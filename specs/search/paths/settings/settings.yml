@@ -26,7 +26,7 @@ put:
   tags:
     - Indices
   operationId: setSettings
-  description: Update settings of an indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
+  description: Update settings of an index. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
   summary: Update settings of an index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
