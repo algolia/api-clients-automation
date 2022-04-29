@@ -54,6 +54,11 @@ html[data-theme='dark'] .header-github-link:before {
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+/* override italic keywords in code blocks */
+code .token.keyword {
+  font-style: normal !important;
+}
+
 /* Redoc fix */
 .redocusaurus .menu-content label.-depth0 {
   padding-top: 5px;
