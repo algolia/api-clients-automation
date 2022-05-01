@@ -226,10 +226,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            format('{0}/src/**', fromJSON(inputs.client).path),
-            format('{0}/model/**', fromJSON(inputs.client).path),
-            format('{0}/builds/**', fromJSON(inputs.client).path),
-            format('{0}/package.json', fromJSON(inputs.client).path),
             format('specs/bundled/{0}.yml', fromJSON(inputs.client).name),
             'templates/javascript/**',
             'generators/src/**'
