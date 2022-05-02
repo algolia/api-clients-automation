@@ -48,6 +48,10 @@ export type Spec = {
   paths: Path[];
 };
 
+export type PackageLocationMap = {
+  [packageName: string]: string;
+};
+
 /**
  * Server of a spec.
  */

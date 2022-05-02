@@ -11,6 +11,7 @@ import openapitools from '../../openapitools.json';
 import {
   ROOT_ENV_PATH,
   toAbsolutePath,
+  updateDependenciesToLocalVersions,
   run,
   exists,
   getGitHubUrl,
@@ -44,6 +45,10 @@ const BEFORE_CLIENT_GENERATION: {
 } = {
   javascript: async ({ releaseType, dir }) => {
     await run(`yarn release:bump ${releaseType}`, { cwd: dir });
+
+    await updateDependenciesToLocalVersions('tests/output/javascript');
+    await updateDependenciesToLocalVersions('playground/javascript/browser');
+    await updateDependenciesToLocalVersions('playground/javascript/node');
   },
 };
 

@@ -15,6 +15,7 @@ import type {
   CheckForCacheOptions,
   Generator,
   RunOptions,
+  PackageLocationMap,
 } from './types';
 
 export const MAIN_BRANCH = config.mainBranch;
@@ -279,4 +280,44 @@ export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
       await remove(path.resolve(dir, file));
     }
   }
+}
+
+export async function readPackageJson(dir: string): Promise<any> {
+  const filePath = toAbsolutePath(`${dir}/package.json`);
+  return JSON.parse((await fsp.readFile(filePath)).toString());
+}
+
+export async function getPackageLocationMap(): Promise<PackageLocationMap> {
+  return (await run(`yarn workspaces list --json`))
+    .split('\n')
+    .reduce((acc, item) => {
+      const { name, location } = JSON.parse(item);
+      return {
+        ...acc,
+        [name]: location,
+      };
+    }, {});
+}
+
+export async function updateDependenciesToLocalVersions(
+  packageDir: string
+): Promise<void> {
+  const packageLocationMap = getPackageLocationMap();
+
+  const targetPackageJson = await readPackageJson(packageDir);
+  for (const packageName of targetPackageJson.dependencies) {
+    if (!packageLocationMap[packageName]) {
+      // Skip if it's not a local package.
+      continue;
+    }
+
+    targetPackageJson.dependencies[packageName] = (
+      await readPackageJson(packageLocationMap[packageName])
+    ).version;
+  }
+
+  await fsp.writeFile(
+    toAbsolutePath(`${packageDir}/package.json`),
+    `${JSON.stringify(targetPackageJson)}\n`
+  );
 }
