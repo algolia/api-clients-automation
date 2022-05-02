@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
+import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
-import chalk from 'chalk';
 
 import {
   LANGUAGES,
