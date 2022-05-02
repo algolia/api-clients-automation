@@ -1,0 +1,326 @@
+name: Restore all artifacts
+
+description: |
+  When no input is given, artifacts are restored in the current directory, under their artifact `name`.
+
+  This composite restore all of our artifacts, at their right path.
+
+runs:
+  using: composite
+  steps:
+    # Bundled specs
+    - name: spec-abtesting
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-abtesting
+        path: specs/bundled/
+
+    - name: spec-analytics
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-analytics
+        path: specs/bundled/
+
+    - name: spec-insights
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-insights
+        path: specs/bundled/
+
+    - name: spec-personalization
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-personalization
+        path: specs/bundled/
+
+    - name: spec-predict
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-predict
+        path: specs/bundled/
+
+    - name: spec-query-suggestions
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-query-suggestions
+        path: specs/bundled/
+
+    - name: spec-recommend
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-recommend
+        path: specs/bundled/
+
+    - name: spec-search
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-search
+        path: specs/bundled/
+
+    - name: spec-sources
+      uses: actions/download-artifact@v3
+      with:
+        name: spec-sources
+        path: specs/bundled/
+
+    # JavaScript utils
+    - name: client-javascript-utils-client-common
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-utils-client-common
+        path: clients/algoliasearch-client-javascript/packages/client-common/
+
+    - name: client-javascript-utils-requester-browser-xhr
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-utils-requester-browser-xhr
+        path: clients/algoliasearch-client-javascript/packages/requester-browser-xhr/
+
+    - name: client-javascript-utils-requester-node-http
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-utils-requester-node-http
+        path: clients/algoliasearch-client-javascript/packages/requester-node-http/
+
+    # JavaScript
+    - name: client-javascript-algoliasearch-lite
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-algoliasearch-lite
+        path: clients/algoliasearch-client-javascript/packages/algoliasearch-lite/
+
+    - name: client-javascript-abtesting
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-abtesting
+        path: clients/algoliasearch-client-javascript/packages/client-abtesting/
+
+    - name: client-javascript-analytics
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-analytics
+        path: clients/algoliasearch-client-javascript/packages/client-analytics/
+
+    - name: client-javascript-insights
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-insights
+        path: clients/algoliasearch-client-javascript/packages/client-insights/
+
+    - name: client-javascript-personalization
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-personalization
+        path: clients/algoliasearch-client-javascript/packages/client-personalization/
+
+    - name: client-javascript-predict
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-predict
+        path: clients/algoliasearch-client-javascript/packages/client-predict/
+
+    - name: client-javascript-query-suggestions
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-query-suggestions
+        path: clients/algoliasearch-client-javascript/packages/client-query-suggestions/
+
+    - name: client-javascript-recommend
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-recommend
+        path: clients/algoliasearch-client-javascript/packages/recommend/
+
+    - name: client-javascript-search
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-search
+        path: clients/algoliasearch-client-javascript/packages/client-search/
+
+    - name: client-javascript-sources
+      uses: actions/download-artifact@v3
+      with:
+        name: client-javascript-sources
+        path: clients/algoliasearch-client-javascript/packages/client-sources/
+
+    # PHP model and API
+    - name: client-php-abtesting-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-abtesting-api
+        path: clients/algoliasearch-client-php/lib/Api/
+
+    - name: client-php-abtesting-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-abtesting-model
+        path: clients/algoliasearch-client-php/lib/Model/Abtesting/
+
+    - name: client-php-analytics-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-analytics-api
+        path: clients/algoliasearch-client-php/lib/Api/
+
+    - name: client-php-analytics-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-analytics-model
+        path: clients/algoliasearch-client-php/lib/Model/Analytics/
+
+    - name: client-php-insights-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-insights-api
+        path: clients/algoliasearch-client-php/lib/Api/
+
+    - name: client-php-insights-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-insights-model
+        path: clients/algoliasearch-client-php/lib/Model/Insights/
+
+    - name: client-php-personalization-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-personalization-api
+        path: clients/algoliasearch-client-php/lib/Api/
+
+    - name: client-php-personalization-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-personalization-model
+        path: clients/algoliasearch-client-php/lib/Model/Personalization/
+
+    - name: client-php-query-suggestions-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-query-suggestions-api
+        path: clients/algoliasearch-client-php/lib/Api/
+
+    - name: client-php-query-suggestions-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-query-suggestions-model
+        path: clients/algoliasearch-client-php/lib/Model/QuerySuggestions/
+
+    - name: client-php-recommend-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-recommend-api
+        path: clients/algoliasearch-client-php/lib/Api/
+
+    - name: client-php-recommend-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-recommend-model
+        path: clients/algoliasearch-client-php/lib/Model/Recommend/
+
+    - name: client-php-search-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-search-api
+        path: clients/algoliasearch-client-php/lib/Api/
+
+    - name: client-php-search-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-php-search-model
+        path: clients/algoliasearch-client-php/lib/Model/Search/
+
+    # Java model and API
+    - name: client-java-abtesting-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-abtesting-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-abtesting-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-abtesting-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/abtesting/
+
+    - name: client-java-analytics-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-analytics-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-analytics-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-analytics-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/analytics/
+
+    - name: client-java-insights-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-insights-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-insights-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-insights-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/insights/
+
+    - name: client-java-personalization-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-personalization-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-personalization-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-personalization-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/personalization/
+
+    - name: client-java-predict-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-predict-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-predict-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-predict-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/predict/
+
+    - name: client-java-query-suggestions-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-query-suggestions-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-query-suggestions-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-query-suggestions-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/querySuggestions/
+
+    - name: client-java-recommend-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-recommend-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-recommend-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-recommend-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/recommend/
+
+    - name: client-java-search-api
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-search-api
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/
+
+    - name: client-java-search-model
+      uses: actions/download-artifact@v3
+      with:
+        name: client-java-search-model
+        path: clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/search/

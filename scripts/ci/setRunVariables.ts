@@ -1,9 +1,4 @@
 /* eslint-disable no-console */
-import crypto from 'crypto';
-
-import { hashElement } from 'folder-hash';
-
-import { toAbsolutePath } from '../common';
 import { getLanguageFolder } from '../config';
 
 import { getNbGitDiff } from './utils';
@@ -72,7 +67,7 @@ const VARIABLES_TO_CHECK = [
     ],
   },
   {
-    name: 'JS_COMMON_CHANGED',
+    name: 'JS_UTILS_CHANGED',
     path: [
       `${JS_CLIENT_FOLDER}/packages/client-common`,
       `${JS_CLIENT_FOLDER}/packages/requester-browser-xhr`,
@@ -105,28 +100,6 @@ const VARIABLES_TO_CHECK = [
   },
 ];
 
-async function computeCommonHash(): Promise<string> {
-  const hashGA = await hashElement(toAbsolutePath('.github'), {
-    encoding: 'hex',
-    folders: { exclude: ['ISSUE_TEMPLATE'] },
-    files: { include: ['*.yml', '.cache_version'] },
-  });
-  const hashScripts = await hashElement(toAbsolutePath('scripts'), {
-    encoding: 'hex',
-    folders: { exclude: ['docker', '__tests__'] },
-  });
-  const hashConfig = await hashElement(toAbsolutePath('.'), {
-    encoding: 'hex',
-    folders: { include: ['config'] },
-    files: { include: ['openapitools.json', 'clients.config.json'] },
-  });
-
-  return crypto
-    .createHash('sha256')
-    .update(`${hashGA.hash}-${hashScripts.hash}-${hashConfig.hash}`)
-    .digest('hex');
-}
-
 /**
  * Outputs variables used in the CI to determine if a job should run.
  */
@@ -146,8 +119,6 @@ async function setRunVariables({
     console.log(`Found ${diff} changes for '${check.name}'`);
     console.log(`::set-output name=${check.name}::${diff}`);
   }
-
-  console.log(`::set-output name=COMMON_HASH::${await computeCommonHash()}`);
 
   console.log(`::set-output name=ORIGIN_BRANCH::${originBranch}`);
 }
