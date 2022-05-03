@@ -2,8 +2,8 @@ post:
   tags:
     - Search
   operationId: search
-  summary: Search in an index THIS_IS_A_TEST.
-  description: Perform a search operation targeting one specific index THIS_IS_A_TEST.
+  summary: Search in an index.
+  description: Perform a search operation targeting one specific index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
