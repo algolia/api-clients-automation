@@ -35,6 +35,11 @@ async function computeCacheKey(
   }
 
   // Files common to the cache key of every jobs
+  const ghHash = await hashElement(toAbsolutePath('.github'), {
+    encoding: 'hex',
+    folders: { exclude: ['ISSUE_TEMPLATE'] },
+    files: { include: ['*.yml', '.cache_version'] },
+  });
   const scriptsHash = await hashElement(toAbsolutePath('scripts'), {
     encoding: 'hex',
     folders: { exclude: ['docker', '__tests__'] },
@@ -47,7 +52,7 @@ async function computeCacheKey(
 
   return `${baseName}-${crypto
     .createHash('sha256')
-    .update(`${scriptsHash}-${configHash}-${hash}`)
+    .update(`${ghHash}-${scriptsHash}-${configHash}-${hash}`)
     .digest('hex')}`;
 }
 

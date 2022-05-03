@@ -13,6 +13,11 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Read current GitHub Actions cache version
+      shell: bash
+      run: |
+        echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
+
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
@@ -38,6 +43,12 @@ runs:
         node-version-file: .nvmrc
         cache: yarn
 
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: node-modules-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
     - name: Get yarn cache directory path
       shell: bash
       id: yarn-cache-dir
@@ -47,7 +58,7 @@ runs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        key: yarn-cache-${{ hashFiles('yarn.lock') }}
+        key: yarn-cache-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
     - name: Install JavaScript dependencies
       shell: bash

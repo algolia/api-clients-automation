@@ -123,7 +123,7 @@ jobs:
         with:
           if-no-files-found: error
           name: spec-${{ matrix.client.name }}
-          path: ${{ format('specs/bundled/{0}.yml', matrix.client.name) }}
+          path: ${{ matrix.client.bundledPath }}
 
   client_javascript_utils:
     timeout-minutes: 10
