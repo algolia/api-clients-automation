@@ -1,9 +1,5 @@
 export type CreateMatrix = {
   /**
-   * `baseChanged` is computed in `.github/actions/setup/action.yml`.
-   */
-  baseChanged: boolean;
-  /**
    * The name of the branch of reference.
    */
   baseBranch: string;

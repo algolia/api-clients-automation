@@ -1,65 +1,44 @@
-import crypto from 'crypto';
+import { CLIENTS, GENERATORS } from '../../common';
+import { getLanguageApiFolder, getLanguageModelFolder } from '../../config';
+import { camelize, createClientName } from '../../cts/utils';
+import { getNbGitDiff } from '../utils';
 
-import { hashElement } from 'folder-hash';
-
-import { toAbsolutePath, CLIENTS, GENERATORS } from '../common';
-import { getLanguageApiFolder, getLanguageModelFolder } from '../config';
-import { camelize, createClientName } from '../cts/utils';
-
+import { DEPENDENCIES } from './setRunVariables';
 import type { CreateMatrix, ClientMatrix, SpecMatrix, Matrix } from './types';
-import { getNbGitDiff } from './utils';
+import { computeCacheKey, isBaseChanged } from './utils';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = JSON.stringify({ client: ['no-run'] });
 
 /**
- * Compute a cache key to be used in the CI.
- *
- * The `paths` parameter is an array of string, that needs to be treated as dependencies.
+ * List of dependencies based on the language, inherited from `./setRunVariables.ts` in a more dynamic form.
  */
-async function computeCacheKey(
-  baseName: string,
-  paths: string[]
-): Promise<string> {
-  let hash = '';
+const MATRIX_DEPENDENCIES = {
+  common: {
+    GITHUB_ACTIONS_CHANGED: DEPENDENCIES.GITHUB_ACTIONS_CHANGED,
+    SCRIPTS_CHANGED: DEPENDENCIES.SCRIPTS_CHANGED,
+    COMMON_SPECS_CHANGED: DEPENDENCIES.COMMON_SPECS_CHANGED,
+  },
+  clients: {
+    common: {
+      GENERATORS_CHANGED: DEPENDENCIES.GENERATORS_CHANGED,
+    },
+    javascript: {
+      JS_UTILS_CHANGED: DEPENDENCIES.JS_UTILS_CHANGED,
+      JS_TEMPLATE_CHANGED: DEPENDENCIES.JS_TEMPLATE_CHANGED,
+    },
+    php: {
+      PHP_TEMPLATE_CHANGED: DEPENDENCIES.PHP_TEMPLATE_CHANGED,
+    },
+    java: {
+      JAVA_TEMPLATE_CHANGED: DEPENDENCIES.JAVA_TEMPLATE_CHANGED,
+    },
+  },
+};
 
-  for (const path of paths) {
-    const pathHash = await hashElement(toAbsolutePath(path), {
-      encoding: 'hex',
-      files: {
-        include: ['**'],
-      },
-    });
-
-    hash += `-${pathHash}`;
-  }
-
-  // Files common to the cache key of every jobs
-  const ghHash = await hashElement(toAbsolutePath('.github'), {
-    encoding: 'hex',
-    folders: { exclude: ['ISSUE_TEMPLATE'] },
-    files: { include: ['*.yml', '.cache_version'] },
-  });
-  const scriptsHash = await hashElement(toAbsolutePath('scripts'), {
-    encoding: 'hex',
-    folders: { exclude: ['docker', '__tests__'] },
-  });
-  const configHash = await hashElement(toAbsolutePath('.'), {
-    encoding: 'hex',
-    folders: { include: ['config'] },
-    files: { include: ['openapitools.json', 'clients.config.json'] },
-  });
-
-  return `${baseName}-${crypto
-    .createHash('sha256')
-    .update(`${ghHash}-${scriptsHash}-${configHash}-${hash}`)
-    .digest('hex')}`;
-}
-
-async function getClientMatrix({
-  baseBranch,
-  baseChanged,
-}: CreateMatrix): Promise<Matrix<ClientMatrix>> {
+async function getClientMatrix(
+  baseBranch: string
+): Promise<Matrix<ClientMatrix>> {
   const matrix: Matrix<ClientMatrix> = { client: [] };
 
   for (const { language, client, output } of Object.values(GENERATORS)) {
@@ -76,6 +55,11 @@ async function getClientMatrix({
     const clientChanges = await getNbGitDiff({
       branch: baseBranch,
       path: output,
+    });
+    const baseChanged = await isBaseChanged(baseBranch, {
+      ...MATRIX_DEPENDENCIES.common,
+      ...MATRIX_DEPENDENCIES.clients.common,
+      ...MATRIX_DEPENDENCIES.clients[language],
     });
 
     // No changes found, we don't put this job in the matrix
@@ -134,10 +118,7 @@ async function getClientMatrix({
   return matrix;
 }
 
-async function getSpecMatrix({
-  baseBranch,
-  baseChanged,
-}: CreateMatrix): Promise<Matrix<SpecMatrix>> {
+async function getSpecMatrix(baseBranch: string): Promise<Matrix<SpecMatrix>> {
   const matrix: Matrix<SpecMatrix> = { client: [] };
 
   for (const client of CLIENTS) {
@@ -147,6 +128,10 @@ async function getSpecMatrix({
       branch: baseBranch,
       path: `specs/${bundledSpecName}`,
     });
+    const baseChanged = await isBaseChanged(
+      baseBranch,
+      MATRIX_DEPENDENCIES.common
+    );
 
     // No changes found, we don't put this job in the matrix
     if (specChanges === 0 && !baseChanged) {
@@ -171,8 +156,8 @@ async function getSpecMatrix({
  */
 async function createMatrix(opts: CreateMatrix): Promise<void> {
   const matrix = opts.forClients
-    ? await getClientMatrix(opts)
-    : await getSpecMatrix(opts);
+    ? await getClientMatrix(opts.baseBranch)
+    : await getSpecMatrix(opts.baseBranch);
 
   // eslint-disable-next-line no-console
   console.log(
@@ -184,8 +169,7 @@ if (require.main === module) {
   const args = process.argv.slice(2);
 
   createMatrix({
-    baseChanged: args[0] === 'true',
-    baseBranch: args[1],
-    forClients: args[2] === 'clients',
+    baseBranch: args[0],
+    forClients: args[1] === 'clients',
   });
 }
