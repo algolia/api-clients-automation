@@ -16,11 +16,6 @@ inputs:
     description: The matrix of the client to restore, when building a single client
     required: false
 
-outputs:
-  cache-hit-client:
-    description: true if the required client was restored from cache
-    value: ''
-
 runs:
   using: composite
   steps:
@@ -389,6 +384,7 @@ runs:
         path: |
           clients/algoliasearch-client-java-2/gradle*
           clients/algoliasearch-client-java-2/gradle/*
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/*.java
         key: |
           ${{ env.CACHE_VERSION }}-java-common-${{
           hashFiles(
