@@ -1,103 +1,55 @@
-import { CLIENTS, GENERATORS } from '../common';
+import crypto from 'crypto';
+
+import { hashElement } from 'folder-hash';
+
+import { toAbsolutePath, CLIENTS, GENERATORS } from '../common';
 import { getLanguageApiFolder, getLanguageModelFolder } from '../config';
 import { camelize, createClientName } from '../cts/utils';
 
+import type { CreateMatrix, ClientMatrix, SpecMatrix, Matrix } from './types';
 import { getNbGitDiff } from './utils';
-
-type CreateMatrix = {
-  /**
-   * `baseChanged` is computed in `.github/actions/setup/action.yml`.
-   */
-  baseChanged: boolean;
-  /**
-   * The name of the branch of reference.
-   */
-  baseBranch: string;
-  /**
-   * `true` means we generated the matrix for the `clients` job, `false` for the specs.
-   */
-  forClients?: boolean;
-};
-
-type BaseMatrix = {
-  /**
-   * Name of the client.
-   */
-  name: string;
-  /**
-   * Path to the file/folder being handled.
-   */
-  path: string;
-};
-
-type ClientMatrix = BaseMatrix & {
-  /**
-   * The client language.
-   */
-  language: string;
-
-  /**
-   * The client name plus `Config` appended. With the casing corresponding to the language.
-   */
-  configName: string;
-  /**
-   * The client name plus `Client` appended. With the casing corresponding to the language.
-   */
-  apiName: string;
-
-  /**
-   * The capitalized name of the client.
-   */
-  capitalizedClientName: string;
-  /**
-   * The camelized name of the client.
-   */
-  camelizedClientName: string;
-
-  /**
-   * Path to the `API` file/folder of the client, based on the language.
-   */
-  apiPath: string;
-  /**
-   * Path to the `Model` file/folder of the client, based on the language.
-   */
-  modelPath: string;
-  /**
-   * Path to the bundled spec used to generated the client.
-   */
-  bundledSpecPath: string;
-
-  /**
-   * Wether to run the build action or not.
-   *
-   * E.g. It's false for `PHP` as it does not have a build process.
-   */
-  shouldBuild: boolean;
-
-  /**
-   * Wether to store the whole client folder or only the API/Model files.
-   *
-   * JavaScript outputs clients in their own folder, so we can store everything.
-   *
-   * PHP or Java will output generated files in a common `algoliasearch` API/Model folder,
-   * so we only store the relevant files.
-   */
-  storeFolder: boolean;
-};
-
-type SpecMatrix = BaseMatrix & {
-  /**
-   * The path of the bundled spec file.
-   */
-  bundledPath: string;
-};
-
-type Matrix<TMatrix> = {
-  client: TMatrix[];
-};
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = JSON.stringify({ client: ['no-run'] });
+
+/**
+ * Compute a cache key to be used in the CI.
+ *
+ * The `paths` parameter is an array of string, that needs to be treated as dependencies.
+ */
+async function computeCacheKey(
+  baseName: string,
+  paths: string[]
+): Promise<string> {
+  let hash = '';
+
+  for (const path of paths) {
+    const pathHash = await hashElement(toAbsolutePath(path), {
+      encoding: 'hex',
+      files: {
+        include: ['**'],
+      },
+    });
+
+    hash += `-${pathHash}`;
+  }
+
+  // Files common to the cache key of every jobs
+  const scriptsHash = await hashElement(toAbsolutePath('scripts'), {
+    encoding: 'hex',
+    folders: { exclude: ['docker', '__tests__'] },
+  });
+  const configHash = await hashElement(toAbsolutePath('.'), {
+    encoding: 'hex',
+    folders: { include: ['config'] },
+    files: { include: ['openapitools.json', 'clients.config.json'] },
+  });
+
+  return `${baseName}-${crypto
+    .createHash('sha256')
+    .update(`${scriptsHash}-${configHash}-${hash}`)
+    .digest('hex')}`;
+}
 
 async function getClientMatrix({
   baseBranch,
@@ -129,6 +81,7 @@ async function getClientMatrix({
     const clientName = createClientName(client, language);
     const pathToApi = `${output}/${getLanguageApiFolder(language)}`;
     const pathToModel = `${output}/${getLanguageModelFolder(language)}`;
+    const bundledSpecPath = `specs/bundled/${bundledSpec}.yml`;
 
     const clientMatrix: ClientMatrix = {
       language,
@@ -143,10 +96,16 @@ async function getClientMatrix({
 
       apiPath: pathToApi,
       modelPath: pathToModel,
-      bundledSpecPath: `specs/bundled/${bundledSpec}.yml`,
+      bundledSpecPath,
 
       shouldBuild: language !== 'php',
       storeFolder: language === 'javascript',
+
+      cacheKey: await computeCacheKey('client', [
+        bundledSpecPath,
+        `templates/${language}`,
+        `generators/src`,
+      ]),
     };
 
     // While JavaScript have it's own package per client, other language have
@@ -178,10 +137,10 @@ async function getSpecMatrix({
 
   for (const client of CLIENTS) {
     // The `algoliasearch-lite` spec is created by the `search` spec
-    const bundledSpec = client === 'algoliasearch-lite' ? 'search' : client;
+    const bundledSpecName = client === 'algoliasearch-lite' ? 'search' : client;
     const specChanges = await getNbGitDiff({
       branch: baseBranch,
-      path: `specs/${bundledSpec}`,
+      path: `specs/${bundledSpecName}`,
     });
 
     // No changes found, we don't put this job in the matrix
@@ -189,10 +148,13 @@ async function getSpecMatrix({
       continue;
     }
 
+    const path = `specs/${bundledSpecName}`;
+
     matrix.client.push({
       name: client,
-      path: `specs/${bundledSpec}`,
+      path,
       bundledPath: `specs/bundled/${client}.yml`,
+      cacheKey: await computeCacheKey('spec', ['specs/common', path]),
     });
   }
 

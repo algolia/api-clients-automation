@@ -101,11 +101,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          key: |
-            ${{ matrix.client.name }}-${{ hashFiles(
-              format('{0}/**', matrix.client.path),
-              'specs/common/**'
-            )}}
+          key: ${{ matrix.client.cacheKey }}
           path: ${{ matrix.client.bundledPath }}
 
       - name: Setup
@@ -201,12 +197,7 @@ jobs:
         id: cache-split
         uses: actions/cache@v3
         with:
-          key: |
-            ${{ matrix.client.name }}-${{ hashFiles(
-              format('specs/bundled/{0}.yml', matrix.client.name),
-              format('templates/{0}/**', matrix.client.language),
-              'generators/src/**'
-            )}}
+          key: ${{ matrix.client.cacheKey }}
           path: |
             ${{ matrix.client.apiPath }}
             ${{ matrix.client.modelPath }}
@@ -217,12 +208,7 @@ jobs:
         id: cache-folder
         uses: actions/cache@v3
         with:
-          key: |
-            ${{ matrix.client.name }}-${{ hashFiles(
-              format('specs/bundled/{0}.yml', matrix.client.name),
-              format('templates/{0}/**', matrix.client.language),
-              'generators/src/**'
-            )}}
+          key: ${{ matrix.client.cacheKey }}
           path: ${{ matrix.client.path }}
 
       - name: Download '${{ matrix.client.name }}' bundled spec
@@ -271,21 +257,15 @@ jobs:
         run: git --no-pager diff
 
       # Language others than JavaScript only need `API` and `model`s to be stored.
-      - name: Store API file for '${{ matrix.client.name }}' ${{ matrix.client.language }} client
+      - name: Store Model and API folder for '${{ matrix.client.name }}' ${{ matrix.client.language }} client
         if: ${{ !matrix.client.storeFolder }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
-          name: client-${{matrix.client.language }}-${{ matrix.client.name }}-api
-          path: ${{ matrix.client.apiPath }}
-
-      - name: Store Model folder for '${{ matrix.client.name }}' ${{ matrix.client.language }} client
-        if: ${{ !matrix.client.storeFolder }}
-        uses: actions/upload-artifact@v3
-        with:
-          if-no-files-found: error
-          name: client-${{matrix.client.language }}-${{ matrix.client.name }}-model
-          path: ${{ matrix.client.modelPath }}
+          name: client-${{matrix.client.language }}-${{ matrix.client.name }}-api-model
+          path: |
+            ${{ matrix.client.modelPath }}
+            ${{ matrix.client.apiPath }}
 
       # For JavaScript, we store the whole folder.
       - name: Store '${{ matrix.client.name }}' ${{ matrix.client.language }} client
@@ -295,6 +275,18 @@ jobs:
           if-no-files-found: error
           name: client-${{matrix.client.language }}-${{ matrix.client.name }}
           path: ${{ matrix.client.path }}
+
+      # Java utils storing
+      - name: Store Java utils
+        if: ${{ matrix.client.language == 'java' }}
+        uses: actions/upload-artifact@v3
+        with:
+          if-no-files-found: error
+          name: client-java-utils
+          path: |
+            clients/algoliasearch-client-java-2/gradle
+            clients/algoliasearch-client-java-2/gradle*
+            clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/ApiCallback.java
 
   client_javascript_algoliasearch:
     timeout-minutes: 10
@@ -389,7 +381,7 @@ jobs:
       - name: Check JavaScript client size
         run: exit $(yarn workspace algoliasearch-client-javascript test:size | echo $?)
 
-      # This can be added once the PHP CTS is fixed
+      # ----> This can be added once the PHP build for the CTS is fixed
       # - name: Cache generated CTS
       #   id: cache
       #   uses: actions/cache@v3
