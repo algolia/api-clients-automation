@@ -286,7 +286,7 @@ jobs:
           path: |
             clients/algoliasearch-client-java-2/gradle
             clients/algoliasearch-client-java-2/gradle*
-            clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/ApiCallback.java
+            clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/*.java
 
   client_javascript_algoliasearch:
     timeout-minutes: 10

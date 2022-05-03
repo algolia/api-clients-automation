@@ -101,7 +101,7 @@ async function getClientMatrix({
       shouldBuild: language !== 'php',
       storeFolder: language === 'javascript',
 
-      cacheKey: await computeCacheKey('client', [
+      cacheKey: await computeCacheKey(`client-${client}`, [
         bundledSpecPath,
         `templates/${language}`,
         `generators/src`,
@@ -154,7 +154,7 @@ async function getSpecMatrix({
       name: client,
       path,
       bundledPath: `specs/bundled/${client}.yml`,
-      cacheKey: await computeCacheKey('spec', ['specs/common', path]),
+      cacheKey: await computeCacheKey(`spec-${client}`, ['specs/common', path]),
     });
   }
 
