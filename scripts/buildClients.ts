@@ -34,6 +34,7 @@ async function buildAllClients(
   verbose: boolean
 ): Promise<void> {
   const spinner = createSpinner(`building '${language}'`, verbose).start();
+  let cmd = '';
   switch (language) {
     case 'java':
       await run(
@@ -46,6 +47,9 @@ async function buildAllClients(
       );
       break;
     case 'php':
+      cmd = `composer update --working-dir=clients/algoliasearch-client-php \
+            && composer dump-autoload --working-dir=clients/algoliasearch-client-php`;
+      await run(cmd, { verbose });
       break;
     default:
   }

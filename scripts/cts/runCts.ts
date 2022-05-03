@@ -19,7 +19,7 @@ async function runCtsOne(language: string, verbose: boolean): Promise<void> {
       let php = 'php8';
       if (CI) php = 'php';
       await run(
-        `${php} ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`,
+        `yarn cli build clients php && ${php} ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`,
         { verbose }
       );
       break;
