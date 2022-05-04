@@ -120,7 +120,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
     console.log(`::set-output name=RUN_${lang}::${shouldRun}`);
     console.log(
       `::set-output name=${lang}_MATRIX::${
-        shouldRun ? EMPTY_MATRIX : JSON.stringify(matrix[language])
+        shouldRun ? JSON.stringify(matrix[language]) : EMPTY_MATRIX
       }`
     );
   }
@@ -161,7 +161,7 @@ async function getSpecMatrix(baseBranch: string): Promise<void> {
   console.log(`::set-output name=RUN_SPECS::${shouldRun}`);
   console.log(
     `::set-output name=MATRIX::${
-      shouldRun ? EMPTY_MATRIX : JSON.stringify(matrix)
+      shouldRun ? JSON.stringify(matrix) : EMPTY_MATRIX
     }`
   );
 }
