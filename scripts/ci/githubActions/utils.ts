@@ -25,7 +25,7 @@ const commonCacheKey = await (async function (): Promise<string> {
     files: { include: ['openapitools.json', 'clients.config.json'] },
   });
 
-  return `${ghHash}-${scriptsHash}-${configHash}`;
+  return `${ghHash.hash}-${scriptsHash.hash}-${configHash.hash}`;
 })();
 
 /**
