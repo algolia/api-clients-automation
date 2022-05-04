@@ -38,7 +38,7 @@ export async function generate(
     await buildSpecs(clients, 'yml', verbose, true);
   }
 
-  const availableWorkspaces = await run('yarn workspaces list', { verbose });
+  const availableWorkspaces = await run('yarn workspaces list');
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const useCustomGenerator = langs
     .map((lang) => getCustomGenerator(lang))
@@ -65,17 +65,10 @@ export async function generate(
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn', { verbose });
     }
 
-    if (CI && gen.language === 'javascript') {
-      // because the CI is parallelized, run the formatter for each client
-      await formatter(gen.language, gen.output, verbose);
-    }
-
     spinner.succeed();
   }
 
   for (const lang of langs) {
-    if (!(CI && lang === 'javascript')) {
-      await formatter(lang, getLanguageFolder(lang), verbose);
-    }
+    await formatter(lang, getLanguageFolder(lang), verbose);
   }
 }

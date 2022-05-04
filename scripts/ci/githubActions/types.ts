@@ -11,10 +11,6 @@ export type CreateMatrix = {
 
 type BaseMatrix = {
   /**
-   * Name of the client.
-   */
-  name: string;
-  /**
    * Path to the file/folder being handled.
    */
   path: string;
@@ -22,6 +18,10 @@ type BaseMatrix = {
    * The computed cache key, used to restore files from the CI.
    */
   cacheKey: string;
+  /**
+   * The list of clients to run in the CI.
+   */
+  toRun: string;
 };
 
 export type ClientMatrix = BaseMatrix & {
@@ -29,24 +29,17 @@ export type ClientMatrix = BaseMatrix & {
    * The client language.
    */
   language: string;
+};
 
+export type CTSMatrix = Pick<BaseMatrix, 'toRun'> & {
   /**
-   * The client name plus `Config` appended. With the casing corresponding to the language.
+   * The client language.
    */
-  configName: string;
+  language: string;
   /**
-   * The client name plus `Client` appended. With the casing corresponding to the language.
+   * The path of the outputted tests to clean.
    */
-  apiName: string;
-
-  /**
-   * Path to the `API` file/folder of the client, based on the language.
-   */
-  apiPath: string;
-  /**
-   * Path to the `Model` file/folder of the client, based on the language.
-   */
-  modelPath: string;
+  pathToClean: string;
 };
 
 export type SpecMatrix = BaseMatrix & {

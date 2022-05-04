@@ -11,6 +11,7 @@ import {
 } from '../../common';
 import { getLanguageFolder } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
+import type { Language } from '../../types';
 import { getNbGitDiff } from '../utils';
 
 import text from './text';
@@ -26,7 +27,7 @@ export function decideWhereToSpread(commitMessage: string): string[] {
     return LANGUAGES;
   }
 
-  const scope = result[2];
+  const scope = result[2] as Language;
   return LANGUAGES.includes(scope) ? [scope] : LANGUAGES;
 }
 

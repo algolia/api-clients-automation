@@ -12,14 +12,14 @@ export function getLanguageModelFolder(language: string): string {
   return clientsConfig[language].modelFolder;
 }
 
-export function getTestExtension(language: string): string | undefined {
+export function getTestExtension(language: string): string {
   return clientsConfig[language]?.tests?.extension;
 }
 
-export function getTestOutputFolder(language: string): string | undefined {
+export function getTestOutputFolder(language: string): string {
   return clientsConfig[language]?.tests?.outputFolder;
 }
 
-export function getCustomGenerator(language: string): string | undefined {
+export function getCustomGenerator(language: string): string {
   return clientsConfig[language]?.customGenerator;
 }
