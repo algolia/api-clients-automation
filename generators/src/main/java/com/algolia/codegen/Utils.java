@@ -144,12 +144,6 @@ public class Utils {
         host = hostParts[0];
         topLevelDomain = hostParts[hostParts.length - 1];
       }
-      System.out.println(hasRegionalHost);
-      System.out.println(fallbackToAliasHost);
-      System.out.println(isEuHost);
-      System.out.println(isDeHost);
-      System.out.println(host);
-      System.out.println(topLevelDomain);
       additionalProperties.put("hasRegionalHost", hasRegionalHost);
       additionalProperties.put("fallbackToAliasHost", fallbackToAliasHost);
       additionalProperties.put("isEuHost", isEuHost);
@@ -171,9 +165,6 @@ public class Utils {
           new URL((String) servers.get(0).get("url")).getHost()
         );
       }
-
-      System.out.println(allowedRegionsString.toString());
-      System.out.println(clientKebab.equals("predict"));
     } catch (Exception e) {
       e.printStackTrace();
       System.exit(1);
