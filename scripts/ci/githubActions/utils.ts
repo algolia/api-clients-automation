@@ -9,7 +9,7 @@ import { getNbGitDiff } from '../utils';
 /**
  * This cache key holds the hash of the common dependencies of all the clients.
  */
-const commonCacheKey = await (async function (): Promise<string> {
+const commonCacheKey = (async function (): Promise<string> {
   const ghHash = await hashElement(toAbsolutePath('.github'), {
     encoding: 'hex',
     folders: { exclude: ['ISSUE_TEMPLATE'] },
@@ -52,7 +52,7 @@ export async function computeCacheKey(
 
   return `${baseName}-${crypto
     .createHash('sha256')
-    .update(`${commonCacheKey}-${hash}`)
+    .update(`${await commonCacheKey}-${hash}`)
     .digest('hex')}`;
 }
 
