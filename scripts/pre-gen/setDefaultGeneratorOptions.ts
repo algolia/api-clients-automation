@@ -4,8 +4,6 @@ import clientsConfig from '../../config/clients.config.json';
 import { toAbsolutePath } from '../common';
 import type { Generator } from '../types';
 
-import { getHostsOptions } from './getHostsOptions';
-
 const AVAILABLE_CUSTOM_GEN = Object.entries(clientsConfig).reduce(
   (clients, [lang, clientOptions]) => {
     if (clientOptions.customGenerator) {
@@ -29,7 +27,7 @@ export async function setDefaultGeneratorOptions({
   client,
   key,
 }: Generator): Promise<void> {
-  const openapitoolsPath = toAbsolutePath('openapitools.json');
+  const openapitoolsPath = toAbsolutePath('config/openapitools.json');
   if (!(await stat(openapitoolsPath))) {
     throw new Error(
       `File not found ${openapitoolsPath}.\nMake sure your run scripts from the root directory using yarn workspace.`
@@ -42,8 +40,6 @@ export async function setDefaultGeneratorOptions({
     throw new Error(`Generator not found: ${key}`);
   }
 
-  const hostsOptions = await getHostsOptions({ client, key });
-
   openapitools['generator-cli'].generators[key] = {
     config: '#{cwd}/openapitools.json',
     gitHost: 'algolia',
@@ -54,14 +50,10 @@ export async function setDefaultGeneratorOptions({
       ? `algolia-${language}`
       : generatorOptions.generatorName,
     ...generatorOptions,
-    additionalProperties: {
-      ...generatorOptions.additionalProperties,
-      ...hostsOptions,
-    },
   };
 
   await writeFile(
-    openapitoolsPath,
+    toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2).concat('\n')
   );
 }
