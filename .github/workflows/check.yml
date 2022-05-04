@@ -227,7 +227,8 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: git --no-pager diff
 
-      - name: Store '${{ matrix.client.name }}' ${{ matrix.client.language }} client
+      - name: Store ${{ matrix.client.name }}-${{ matrix.client.language }} client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
@@ -283,11 +284,12 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: git --no-pager diff
 
-      - name: Store Model and API folder for '${{ matrix.client.name }}' ${{ matrix.client.language }} client
+      - name: Store ${{ matrix.client.name }}-${{ matrix.client.language }} client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
-          name: client-${{matrix.client.language }}-${{ matrix.client.name }}-api-model
+          name: client-${{matrix.client.language }}-${{ matrix.client.name }}
           path: |
             ${{ matrix.client.modelPath }}
             ${{ matrix.client.apiPath }}
@@ -347,11 +349,12 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: git --no-pager diff
 
-      - name: Store Model and API folder for '${{ matrix.client.name }}' ${{ matrix.client.language }} client
+      - name: Store ${{ matrix.client.name }}-${{ matrix.client.language }} client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
-          name: client-${{matrix.client.language }}-${{ matrix.client.name }}-api-model
+          name: client-${{matrix.client.language }}-${{ matrix.client.name }}
           path: |
             ${{ matrix.client.modelPath }}
             ${{ matrix.client.apiPath }}
@@ -436,9 +439,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-
-      - name: Show generated client and bundled specs changes
-        run: git --no-pager diff
 
       - name: Push generated code to generated branch
         if: github.event_name == 'pull_request'

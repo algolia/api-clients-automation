@@ -7,6 +7,28 @@ import { toAbsolutePath } from '../../common';
 import { getNbGitDiff } from '../utils';
 
 /**
+ * This cache key holds the hash of the common dependencies of all the clients.
+ */
+const commonCacheKey = await (async function (): Promise<string> {
+  const ghHash = await hashElement(toAbsolutePath('.github'), {
+    encoding: 'hex',
+    folders: { exclude: ['ISSUE_TEMPLATE'] },
+    files: { include: ['*.yml', '.cache_version'] },
+  });
+  const scriptsHash = await hashElement(toAbsolutePath('scripts'), {
+    encoding: 'hex',
+    folders: { exclude: ['docker', '__tests__'] },
+  });
+  const configHash = await hashElement(toAbsolutePath('.'), {
+    encoding: 'hex',
+    folders: { include: ['config'] },
+    files: { include: ['openapitools.json', 'clients.config.json'] },
+  });
+
+  return `${ghHash}-${scriptsHash}-${configHash}`;
+})();
+
+/**
  * Compute a cache key based on the changes in the `paths` array of dependenciy.
  *
  * The `paths` parameter is an array of string, that needs to be treated as dependencies.
@@ -25,28 +47,12 @@ export async function computeCacheKey(
       },
     });
 
-    hash += `-${pathHash}`;
+    hash += `-${pathHash.hash}`;
   }
-
-  // Files common to the cache key of every jobs
-  const ghHash = await hashElement(toAbsolutePath('.github'), {
-    encoding: 'hex',
-    folders: { exclude: ['ISSUE_TEMPLATE'] },
-    files: { include: ['*.yml', '.cache_version'] },
-  });
-  const scriptsHash = await hashElement(toAbsolutePath('scripts'), {
-    encoding: 'hex',
-    folders: { exclude: ['docker', '__tests__'] },
-  });
-  const configHash = await hashElement(toAbsolutePath('.'), {
-    encoding: 'hex',
-    folders: { include: ['config'] },
-    files: { include: ['openapitools.json', 'clients.config.json'] },
-  });
 
   return `${baseName}-${crypto
     .createHash('sha256')
-    .update(`${ghHash}-${scriptsHash}-${configHash}-${hash}`)
+    .update(`${commonCacheKey}-${hash}`)
     .digest('hex')}`;
 }
 

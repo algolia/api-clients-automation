@@ -10,7 +10,7 @@ import type { CreateMatrix, ClientMatrix, Matrix, SpecMatrix } from './types';
 import { computeCacheKey, isBaseChanged } from './utils';
 
 // This empty matrix is required by the CI, otherwise it throws
-const EMPTY_MATRIX = JSON.stringify({ client: ['no-run'] });
+const EMPTY_MATRIX = { client: ['no-run'] };
 
 /**
  * List of dependencies based on the language, inherited from `./setRunVariables.ts` in a more dynamic form.
@@ -119,9 +119,9 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
 
     console.log(`::set-output name=RUN_${lang}::${shouldRun}`);
     console.log(
-      `::set-output name=${lang}_MATRIX::${
-        shouldRun ? JSON.stringify(matrix[language]) : EMPTY_MATRIX
-      }`
+      `::set-output name=${lang}_MATRIX::${JSON.stringify(
+        shouldRun ? matrix[language] : EMPTY_MATRIX
+      )}`
     );
   }
 }
@@ -160,9 +160,9 @@ async function getSpecMatrix(baseBranch: string): Promise<void> {
 
   console.log(`::set-output name=RUN_SPECS::${shouldRun}`);
   console.log(
-    `::set-output name=MATRIX::${
-      shouldRun ? JSON.stringify(matrix) : EMPTY_MATRIX
-    }`
+    `::set-output name=MATRIX::${JSON.stringify(
+      shouldRun ? matrix : EMPTY_MATRIX
+    )}`
   );
 }
 
