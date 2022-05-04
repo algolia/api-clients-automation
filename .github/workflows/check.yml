@@ -174,7 +174,6 @@ jobs:
 
       - name: Store '${{ matrix.client }}' JavaScript utils package
         uses: actions/upload-artifact@v3
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         with:
           if-no-files-found: error
           name: client-javascript-utils-${{ matrix.client }}
@@ -229,7 +228,6 @@ jobs:
         run: git --no-pager diff
 
       - name: Store ${{ matrix.client.name }}-${{ matrix.client.language }} client
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
@@ -286,7 +284,6 @@ jobs:
         run: git --no-pager diff
 
       - name: Store ${{ matrix.client.name }}-${{ matrix.client.language }} client
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
@@ -351,7 +348,6 @@ jobs:
         run: git --no-pager diff
 
       - name: Store ${{ matrix.client.name }}-${{ matrix.client.language }} client
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
