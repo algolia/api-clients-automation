@@ -1,10 +1,12 @@
-import { CLIENTS, GENERATORS } from '../../common';
+/* eslint-disable no-console */
+import { CLIENTS, GENERATORS, LANGUAGES } from '../../common';
 import { getLanguageApiFolder, getLanguageModelFolder } from '../../config';
 import { camelize, createClientName } from '../../cts/utils';
+import type { Language } from '../../types';
 import { getNbGitDiff } from '../utils';
 
 import { DEPENDENCIES } from './setRunVariables';
-import type { CreateMatrix, ClientMatrix, SpecMatrix, Matrix } from './types';
+import type { CreateMatrix, ClientMatrix, Matrix, SpecMatrix } from './types';
 import { computeCacheKey, isBaseChanged } from './utils';
 
 // This empty matrix is required by the CI, otherwise it throws
@@ -36,10 +38,12 @@ const MATRIX_DEPENDENCIES = {
   },
 };
 
-async function getClientMatrix(
-  baseBranch: string
-): Promise<Matrix<ClientMatrix>> {
-  const matrix: Matrix<ClientMatrix> = { client: [] };
+async function getClientMatrix(baseBranch: string): Promise<void> {
+  const matrix: Record<Language, Matrix<ClientMatrix>> = {
+    java: { client: [] },
+    php: { client: [] },
+    javascript: { client: [] },
+  };
 
   for (const { language, client, output } of Object.values(GENERATORS)) {
     // `algoliasearch` is an aggregation of generated clients.
@@ -68,9 +72,9 @@ async function getClientMatrix(
     }
 
     const clientName = createClientName(client, language);
+    const camelizedClientName = camelize(client);
     const pathToApi = `${output}/${getLanguageApiFolder(language)}`;
     const pathToModel = `${output}/${getLanguageModelFolder(language)}`;
-    const bundledSpecPath = `specs/bundled/${bundledSpec}.yml`;
 
     const clientMatrix: ClientMatrix = {
       language,
@@ -80,18 +84,11 @@ async function getClientMatrix(
       configName: `${clientName}Config`,
       apiName: `${clientName}Client`,
 
-      capitalizedClientName: clientName,
-      camelizedClientName: camelize(client),
-
       apiPath: pathToApi,
       modelPath: pathToModel,
-      bundledSpecPath,
-
-      shouldBuild: language !== 'php',
-      storeFolder: language === 'javascript',
 
       cacheKey: await computeCacheKey(`client-${client}`, [
-        bundledSpecPath,
+        `specs/bundled/${bundledSpec}.yml`,
         `templates/${language}`,
         `generators/src`,
       ]),
@@ -102,23 +99,34 @@ async function getClientMatrix(
     switch (language) {
       case 'java':
         clientMatrix.apiPath = `${pathToApi}/${clientMatrix.apiName}.java`;
-        clientMatrix.modelPath = `${pathToModel}/${clientMatrix.camelizedClientName}/`;
+        clientMatrix.modelPath = `${pathToModel}/${camelizedClientName}/`;
         break;
       case 'php':
         clientMatrix.apiPath = `${pathToApi}/${clientMatrix.apiName}.php`;
-        clientMatrix.modelPath = `${pathToModel}/${clientMatrix.capitalizedClientName}/`;
+        clientMatrix.modelPath = `${pathToModel}/${clientName}/`;
         break;
       default:
         break;
     }
 
-    matrix.client.push(clientMatrix);
+    matrix[language].client.push(clientMatrix);
   }
 
-  return matrix;
+  // Set output variables for the CI
+  for (const language of LANGUAGES) {
+    const lang = language.toLocaleUpperCase();
+    const shouldRun = matrix[language].client.length > 0;
+
+    console.log(`::set-output name=RUN_${lang}::${shouldRun}`);
+    console.log(
+      `::set-output name=${lang}_MATRIX::${
+        shouldRun ? EMPTY_MATRIX : JSON.stringify(matrix[language])
+      }`
+    );
+  }
 }
 
-async function getSpecMatrix(baseBranch: string): Promise<Matrix<SpecMatrix>> {
+async function getSpecMatrix(baseBranch: string): Promise<void> {
   const matrix: Matrix<SpecMatrix> = { client: [] };
 
   for (const client of CLIENTS) {
@@ -148,21 +156,25 @@ async function getSpecMatrix(baseBranch: string): Promise<Matrix<SpecMatrix>> {
     });
   }
 
-  return matrix;
+  const shouldRun = matrix.client.length > 0;
+
+  console.log(`::set-output name=RUN_SPECS::${shouldRun}`);
+  console.log(
+    `::set-output name=MATRIX::${
+      shouldRun ? EMPTY_MATRIX : JSON.stringify(matrix)
+    }`
+  );
 }
 
 /**
  * Creates a matrix for the CI jobs based on the files that changed.
  */
 async function createMatrix(opts: CreateMatrix): Promise<void> {
-  const matrix = opts.forClients
-    ? await getClientMatrix(opts.baseBranch)
-    : await getSpecMatrix(opts.baseBranch);
+  if (opts.forClients) {
+    return await getClientMatrix(opts.baseBranch);
+  }
 
-  // eslint-disable-next-line no-console
-  console.log(
-    matrix.client.length === 0 ? EMPTY_MATRIX : JSON.stringify(matrix)
-  );
+  return await getSpecMatrix(opts.baseBranch);
 }
 
 if (require.main === module) {

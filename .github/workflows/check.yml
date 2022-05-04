@@ -53,8 +53,14 @@ jobs:
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
-      RUN_GEN: ${{ steps.setup.outputs.RUN_GEN }}
-      GEN_MATRIX: ${{ steps.setup.outputs.GEN_MATRIX }}
+      RUN_JAVASCRIPT: ${{ steps.setup.outputs.RUN_JAVASCRIPT }}
+      JAVASCRIPT_MATRIX: ${{ steps.setup.outputs.JAVASCRIPT_MATRIX }}
+
+      RUN_JAVA: ${{ steps.setup.outputs.RUN_JAVA }}
+      JAVA_MATRIX: ${{ steps.setup.outputs.JAVA_MATRIX }}
+
+      RUN_PHP: ${{ steps.setup.outputs.RUN_PHP }}
+      PHP_MATRIX: ${{ steps.setup.outputs.PHP_MATRIX }}
 
       RUN_JS_ALGOLIASEARCH: ${{ steps.setup.outputs.RUN_JS_ALGOLIASEARCH }}
       RUN_JS_UTILS: ${{ steps.setup.outputs.RUN_JS_UTILS }}
@@ -173,7 +179,7 @@ jobs:
           name: client-javascript-utils-${{ matrix.client }}
           path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
 
-  client_gen:
+  client_javascript:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     needs:
@@ -183,18 +189,70 @@ jobs:
       - client_javascript_utils
     if: |
       always() &&
-      needs.setup.outputs.RUN_GEN == 'true' &&
+      needs.setup.outputs.RUN_JAVASCRIPT == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
+      matrix: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
 
-      # Language others than JavaScript only need `API` and `model`s to be stored.
+      - name: Cache '${{ matrix.client.name }}' client folder
+        id: cache
+        uses: actions/cache@v3
+        with:
+          key: ${{ matrix.client.cacheKey }}
+          path: ${{ matrix.client.path }}
+
+      - name: Download '${{ matrix.client.name }}' bundled spec
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: spec-${{ matrix.client.name }}
+          path: specs/bundled/
+
+      - name: Setup
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        uses: ./.github/actions/setup
+
+      - name: Generate '${{ matrix.client.language }}' '${{ matrix.client.name }}' client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.name }}
+
+      - name: Build '${{ matrix.client.language }}' '${{ matrix.client.name }}' client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: yarn cli build clients ${{ matrix.client.language }} ${{ matrix.client.name }}
+
+      - name: Show diff for '${{ matrix.client.name }}' client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: git --no-pager diff
+
+      - name: Store '${{ matrix.client.name }}' ${{ matrix.client.language }} client
+        uses: actions/upload-artifact@v3
+        with:
+          if-no-files-found: error
+          name: client-${{matrix.client.language }}-${{ matrix.client.name }}
+          path: ${{ matrix.client.path }}
+
+  client_java:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    needs:
+      - setup
+      - specs
+      - scripts
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JAVA == 'true' &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    strategy:
+      matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
+    steps:
+      - uses: actions/checkout@v2
+
       - name: Cache '${{ matrix.client.name }}' client API and Model
-        if: ${{ !matrix.client.storeFolder }}
-        id: cache-split
+        id: cache
         uses: actions/cache@v3
         with:
           key: ${{ matrix.client.cacheKey }}
@@ -202,63 +260,30 @@ jobs:
             ${{ matrix.client.apiPath }}
             ${{ matrix.client.modelPath }}
 
-      # For JavaScript, we store the whole folder.
-      - name: Cache '${{ matrix.client.name }}' client folder
-        if: ${{ matrix.client.storeFolder }}
-        id: cache-folder
-        uses: actions/cache@v3
-        with:
-          key: ${{ matrix.client.cacheKey }}
-          path: ${{ matrix.client.path }}
-
       - name: Download '${{ matrix.client.name }}' bundled spec
-        if: |
-          ${{
-            steps.cache-folder.outputs.cache-hit != 'true' &&
-            steps.cache-split.outputs.cache-hit != 'true'
-          }}
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: actions/download-artifact@v3
         with:
           name: spec-${{ matrix.client.name }}
           path: specs/bundled/
 
       - name: Setup
-        if: |
-          ${{
-            steps.cache-folder.outputs.cache-hit != 'true' &&
-            steps.cache-split.outputs.cache-hit != 'true'
-          }}
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/setup
 
       - name: Generate '${{ matrix.client.language }}' '${{ matrix.client.name }}' client
-        if: |
-          ${{
-            steps.cache-folder.outputs.cache-hit != 'true' &&
-            steps.cache-split.outputs.cache-hit != 'true'
-          }}
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.name }}
 
-      # Some clients like PHP does not have a build process
       - name: Build '${{ matrix.client.language }}' '${{ matrix.client.name }}' client
-        if: |
-          ${{
-            steps.cache-folder.outputs.cache-hit != 'true' &&
-            steps.cache-split.outputs.cache-hit != 'true' &&
-            matrix.client.shouldBuild
-          }}
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli build clients ${{ matrix.client.language }} ${{ matrix.client.name }}
 
       - name: Show diff for '${{ matrix.client.name }}' client
-        if: |
-          ${{
-            steps.cache-folder.outputs.cache-hit != 'true' &&
-            steps.cache-split.outputs.cache-hit != 'true'
-          }}
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: git --no-pager diff
 
-      # Language others than JavaScript only need `API` and `model`s to be stored.
       - name: Store Model and API folder for '${{ matrix.client.name }}' ${{ matrix.client.language }} client
-        if: ${{ !matrix.client.storeFolder }}
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
@@ -267,33 +292,66 @@ jobs:
             ${{ matrix.client.modelPath }}
             ${{ matrix.client.apiPath }}
 
-      # For JavaScript, we store the whole folder.
-      - name: Store '${{ matrix.client.name }}' ${{ matrix.client.language }} client
-        if: ${{ matrix.client.storeFolder }}
-        uses: actions/upload-artifact@v3
-        with:
-          if-no-files-found: error
-          name: client-${{matrix.client.language }}-${{ matrix.client.name }}
-          path: ${{ matrix.client.path }}
+  client_php:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    needs:
+      - setup
+      - specs
+      - scripts
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_PHP == 'true' &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    strategy:
+      matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
+    steps:
+      - uses: actions/checkout@v2
 
-      # Java utils storing
-      - name: Store Java utils
-        if: ${{ matrix.client.language == 'java' }}
+      - name: Cache '${{ matrix.client.name }}' client API and Model
+        id: cache
+        uses: actions/cache@v3
+        with:
+          key: ${{ matrix.client.cacheKey }}
+          path: |
+            ${{ matrix.client.apiPath }}
+            ${{ matrix.client.modelPath }}
+
+      - name: Download '${{ matrix.client.name }}' bundled spec
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: spec-${{ matrix.client.name }}
+          path: specs/bundled/
+
+      - name: Setup
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        uses: ./.github/actions/setup
+
+      - name: Generate '${{ matrix.client.language }}' '${{ matrix.client.name }}' client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.name }}
+
+      - name: Show diff for '${{ matrix.client.name }}' client
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: git --no-pager diff
+
+      - name: Store Model and API folder for '${{ matrix.client.name }}' ${{ matrix.client.language }} client
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
-          name: client-java-utils
+          name: client-${{matrix.client.language }}-${{ matrix.client.name }}-api-model
           path: |
-            clients/algoliasearch-client-java-2/gradle
-            clients/algoliasearch-client-java-2/gradle*
-            clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/*.java
+            ${{ matrix.client.modelPath }}
+            ${{ matrix.client.apiPath }}
 
   client_javascript_algoliasearch:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     needs:
       - setup
-      - client_gen
+      - client_javascript
     if: |
       always() &&
       needs.setup.outputs.RUN_JS_ALGOLIASEARCH == 'true' &&
@@ -348,7 +406,9 @@ jobs:
     timeout-minutes: 20
     needs:
       - setup
-      - client_gen
+      - client_javascript
+      - client_java
+      - client_php
     if: |
       always() &&
       needs.setup.outputs.RUN_CTS == 'true' &&

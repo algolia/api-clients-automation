@@ -40,15 +40,6 @@ export type ClientMatrix = BaseMatrix & {
   apiName: string;
 
   /**
-   * The capitalized name of the client.
-   */
-  capitalizedClientName: string;
-  /**
-   * The camelized name of the client.
-   */
-  camelizedClientName: string;
-
-  /**
    * Path to the `API` file/folder of the client, based on the language.
    */
   apiPath: string;
@@ -56,27 +47,6 @@ export type ClientMatrix = BaseMatrix & {
    * Path to the `Model` file/folder of the client, based on the language.
    */
   modelPath: string;
-  /**
-   * Path to the bundled spec used to generated the client.
-   */
-  bundledSpecPath: string;
-
-  /**
-   * Wether to run the build action or not.
-   *
-   * E.g. It's false for `PHP` as it does not have a build process.
-   */
-  shouldBuild: boolean;
-
-  /**
-   * Wether to store the whole client folder or only the API/Model files.
-   *
-   * JavaScript outputs clients in their own folder, so we can store everything.
-   *
-   * PHP or Java will output generated files in a common `algoliasearch` API/Model folder,
-   * so we only store the relevant files.
-   */
-  storeFolder: boolean;
 };
 
 export type SpecMatrix = BaseMatrix & {
