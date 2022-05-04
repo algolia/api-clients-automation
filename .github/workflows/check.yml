@@ -292,6 +292,16 @@ jobs:
             ${{ matrix.client.modelPath }}
             ${{ matrix.client.apiPath }}
 
+      - name: Store Java utils
+        uses: actions/upload-artifact@v3
+        with:
+          if-no-files-found: error
+          name: client-java-utils
+          path: |
+            clients/algoliasearch-client-java-2/gradle
+            clients/algoliasearch-client-java-2/gradle*
+            clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/*.java
+
   client_php:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
