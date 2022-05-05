@@ -94,7 +94,7 @@ public class {{classname}} extends ApiClient {
     {{#hasRegionalHost}}
     private static List<StatefulHost> getDefaultHosts(String region) {
       List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost("{{{host}}}." + (region == null ? "" : region + ".") + "algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
+      hosts.add(new StatefulHost("{{{host}}}." + {{#fallbackToAliasHost}}(region == null ? "" : region + "."){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}region{{/fallbackToAliasHost}} + "algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
       return hosts;
     }
     {{/hasRegionalHost}}
