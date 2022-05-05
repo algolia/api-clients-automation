@@ -5,13 +5,7 @@ import type { Language } from '../../types';
 import { getNbGitDiff } from '../utils';
 
 import { DEPENDENCIES } from './setRunVariables';
-import type {
-  ClientMatrix,
-  CreateMatrix,
-  CTSMatrix,
-  Matrix,
-  SpecMatrix,
-} from './types';
+import type { ClientMatrix, CreateMatrix, Matrix, SpecMatrix } from './types';
 import { computeCacheKey, isBaseChanged } from './utils';
 
 // This empty matrix is required by the CI, otherwise it throws
@@ -95,9 +89,6 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
   const clientMatrix: Matrix<ClientMatrix> = {
     client: [],
   };
-  const ctsMatrix: Matrix<CTSMatrix> = {
-    client: [],
-  };
 
   // Set output variables for the CI
   for (const language of LANGUAGES) {
@@ -114,11 +105,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
         `templates/${language}`,
         `generators/src`,
       ]),
-    });
-    ctsMatrix.client.push({
-      language,
-      toRun: matrix[language].toRun.join(' '),
-      pathToClean: `./tests/output/${language}/${getTestOutputFolder(
+      testsOutputPath: `./tests/output/${language}/${getTestOutputFolder(
         language
       )}`,
     });
@@ -130,11 +117,6 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
   console.log(
     `::set-output name=GEN_MATRIX::${JSON.stringify(
       shouldRun ? clientMatrix : EMPTY_MATRIX
-    )}`
-  );
-  console.log(
-    `::set-output name=CTS_MATRIX::${JSON.stringify(
-      shouldRun ? ctsMatrix : EMPTY_MATRIX
     )}`
   );
 }

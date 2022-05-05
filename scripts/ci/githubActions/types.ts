@@ -29,17 +29,10 @@ export type ClientMatrix = BaseMatrix & {
    * The client language.
    */
   language: string;
-};
-
-export type CTSMatrix = Pick<BaseMatrix, 'toRun'> & {
   /**
-   * The client language.
+   * The test output path to clean.
    */
-  language: string;
-  /**
-   * The path of the outputted tests to clean.
-   */
-  pathToClean: string;
+  testsOutputPath: string;
 };
 
 export type SpecMatrix = BaseMatrix & {
