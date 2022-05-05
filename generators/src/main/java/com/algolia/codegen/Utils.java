@@ -140,7 +140,10 @@ public class Utils {
       additionalProperties.put("fallbackToAliasHost", fallbackToAliasHost);
       additionalProperties.put("host", host);
       additionalProperties.put("topLevelDomain", topLevelDomain);
-      additionalProperties.put("allowedRegions", allowedRegions.toArray(new String[0]));
+      additionalProperties.put(
+        "allowedRegions",
+        allowedRegions.toArray(new String[0])
+      );
 
       if (clientKebab.equals("predict")) {
         additionalProperties.put("isExperimentalHost", true);
