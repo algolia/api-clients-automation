@@ -244,10 +244,29 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
         {{/bodyParam}}
       };
 
+      {{#vendorExtensions.x-has-task-id}}
+      // The response of this method contains `taskID`.
+      // So it should be more like...
+      /*
+        return createWaitablePromise(
+          transporter.request(request, {
+            queryParameters,
+            headers,
+          }, requestOptions),
+          wait
+        );
+      */
       return transporter.request(request, {
         queryParameters,
         headers,
       }, requestOptions);
+      {{/vendorExtensions.x-has-task-id}}
+      {{^vendorExtensions.x-has-task-id}}
+      return transporter.request(request, {
+        queryParameters,
+        headers,
+      }, requestOptions);
+      {{/vendorExtensions.x-has-task-id}}
     },
 
     {{/operation}}

@@ -1,7 +1,11 @@
 package com.algolia.codegen;
 
 import com.google.common.collect.Sets;
+import io.swagger.util.Json;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 
 public class Utils {
@@ -31,6 +35,26 @@ public class Utils {
     return ope;
   }
 
+  public static CodegenOperation injectHasTaskId(
+    CodegenOperation ope,
+    Map<String, CodegenModel> models
+  ) {
+    models
+      .values()
+      .stream()
+      .filter(m -> m.classname.equals(ope.returnType))
+      .findFirst()
+      .ifPresent(model -> {
+        Boolean hasTaskId = model.vars
+          .stream()
+          .anyMatch(var -> var.baseName.equals("taskID"));
+
+        ope.vendorExtensions.put("x-has-task-id", hasTaskId);
+      });
+
+    return ope;
+  }
+
   /** Returns the client name for the given language */
   public static String createClientName(String client, String language) {
     String[] clientParts = client.split("-");
@@ -49,4 +73,18 @@ public class Utils {
 
     return clientName;
   }
+  // public static void injectHasTaskId(Map<String, Object> models) {
+  //   for (Object modelContainer : models.values()) {
+  //     CodegenModel model =
+  //       ((Map<String, List<Map<String, CodegenModel>>>) modelContainer).get(
+  //           "models"
+  //         )
+  //         .get(0)
+  //         .get("model");
+  //     model.vendorExtensions.put(
+  //       "x-has-task-id",
+  //       model.vars.stream().anyMatch(var -> var.baseName.equals("taskID"))
+  //     );
+  //   }
+  // }
 }

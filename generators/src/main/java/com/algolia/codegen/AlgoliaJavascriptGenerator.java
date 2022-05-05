@@ -4,8 +4,11 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.servers.Server;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
@@ -13,6 +16,9 @@ import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
+
+  // cache the models
+  private final Map<String, CodegenModel> models = new HashMap<>();
 
   @Override
   public String getName() {
@@ -120,9 +126,28 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     Operation operation,
     List<Server> servers
   ) {
-    return Utils.specifyCustomRequest(
-      super.fromOperation(path, httpMethod, operation, servers)
+    return Utils.injectHasTaskId(
+      Utils.specifyCustomRequest(
+        super.fromOperation(path, httpMethod, operation, servers)
+      ),
+      this.models
     );
+  }
+
+  @Override
+  public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+    Map<String, Object> mod = super.postProcessAllModels(objs);
+    for (Entry<String, Object> entry : mod.entrySet()) {
+      List<Object> innerModel =
+        ((Map<String, List<Object>>) entry.getValue()).get("models");
+      if (!innerModel.isEmpty()) {
+        models.put(
+          entry.getKey(),
+          (CodegenModel) ((Map<String, Object>) innerModel.get(0)).get("model")
+        );
+      }
+    }
+    return mod;
   }
 
   @Override
