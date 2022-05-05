@@ -48,6 +48,13 @@ class SearchTest extends TestCase implements HttpClientInterface
                     $recordedRequest->getBody()->getContents()
                 );
             }
+
+            if (isset($request['queryParameters'])) {
+                $this->assertEquals(
+                    \GuzzleHttp\Psr7\Query::build($request['queryParameters']),
+                    $recordedRequest->getUri()->getQuery()
+                );
+            }
         }
     }
 
@@ -164,9 +171,6 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/clusters/mapping',
                 'method' => 'POST',
                 'body' => json_decode("{\"cluster\":\"theCluster\"}"),
-                'queryParameters' => json_decode(
-                    "{\"X-Algolia-User-ID\":\"userID\"}"
-                ),
             ],
         ]);
     }
@@ -216,9 +220,6 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode(
                     "{\"cluster\":\"theCluster\",\"users\":[\"user1\",\"user2\"]}"
-                ),
-                'queryParameters' => json_decode(
-                    "{\"X-Algolia-User-ID\":\"userID\"}"
                 ),
             ],
         ]);
@@ -349,7 +350,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                     "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"category:smartphone\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}}]"
                 ),
                 'queryParameters' => json_decode(
-                    "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}"
+                    "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}",
+                    true
                 ),
             ],
         ]);
@@ -479,7 +481,10 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -649,7 +654,10 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -724,7 +732,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/logs',
                 'method' => 'GET',
                 'queryParameters' => json_decode(
-                    "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}"
+                    "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}",
+                    true
                 ),
             ],
         ]);
@@ -748,7 +757,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/theIndexName/uniqueID',
                 'method' => 'GET',
                 'queryParameters' => json_decode(
-                    "{\"attributesToRetrieve\":\"attr1,attr2\"}"
+                    "{\"attributesToRetrieve\":\"attr1,attr2\"}",
+                    true
                 ),
             ],
         ]);
@@ -923,7 +933,10 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/clusters/mapping/pending',
                 'method' => 'GET',
-                'queryParameters' => json_decode("{\"getClusters\":\"true\"}"),
+                'queryParameters' => json_decode(
+                    "{\"getClusters\":\"true\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -975,7 +988,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes',
                 'method' => 'GET',
-                'queryParameters' => json_decode("{\"page\":\"8\"}"),
+                'queryParameters' => json_decode("{\"page\":\"8\"}", true),
             ],
         ]);
     }
@@ -997,7 +1010,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/clusters/mapping',
                 'method' => 'GET',
                 'queryParameters' => json_decode(
-                    "{\"page\":\"8\",\"hitsPerPage\":\"100\"}"
+                    "{\"page\":\"8\",\"hitsPerPage\":\"100\"}",
+                    true
                 ),
             ],
         ]);
@@ -1146,7 +1160,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                     "[{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}]"
                 ),
                 'queryParameters' => json_decode(
-                    "{\"createIfNotExists\":\"true\"}"
+                    "{\"createIfNotExists\":\"true\"}",
+                    true
                 ),
             ],
         ]);
@@ -1187,7 +1202,10 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'POST',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -1227,7 +1245,10 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'PUT',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -1337,7 +1358,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                     "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}}"
                 ),
                 'queryParameters' => json_decode(
-                    "{\"forwardToReplicas\":\"true\"}"
+                    "{\"forwardToReplicas\":\"true\"}",
+                    true
                 ),
             ],
         ]);
@@ -1369,7 +1391,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                     "{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]}"
                 ),
                 'queryParameters' => json_decode(
-                    "{\"forwardToReplicas\":\"true\"}"
+                    "{\"forwardToReplicas\":\"true\"}",
+                    true
                 ),
             ],
         ]);
@@ -1410,7 +1433,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                     "[{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]},{\"objectID\":\"id2\",\"type\":\"onewaysynonym\",\"input\":\"iphone\",\"synonyms\":[\"ephone\",\"aphone\",\"yphone\"]}]"
                 ),
                 'queryParameters' => json_decode(
-                    "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}"
+                    "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}",
+                    true
                 ),
             ],
         ]);
@@ -1689,7 +1713,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'method' => 'PUT',
                 'body' => json_decode("{\"paginationLimitedTo\":10}"),
                 'queryParameters' => json_decode(
-                    "{\"forwardToReplicas\":\"true\"}"
+                    "{\"forwardToReplicas\":\"true\"}",
+                    true
                 ),
             ],
         ]);

@@ -48,6 +48,13 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                     $recordedRequest->getBody()->getContents()
                 );
             }
+
+            if (isset($request['queryParameters'])) {
+                $this->assertEquals(
+                    \GuzzleHttp\Psr7\Query::build($request['queryParameters']),
+                    $recordedRequest->getUri()->getQuery()
+                );
+            }
         }
     }
 
@@ -137,7 +144,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -192,7 +202,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -231,7 +244,8 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/2/abtests',
                 'method' => 'GET',
                 'queryParameters' => json_decode(
-                    "{\"offset\":\"42\",\"limit\":\"21\"}"
+                    "{\"offset\":\"42\",\"limit\":\"21\"}",
+                    true
                 ),
             ],
         ]);
@@ -272,7 +286,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'POST',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -312,7 +329,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'PUT',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }

@@ -42,6 +42,13 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                     $recordedRequest->getBody()->getContents()
                 );
             }
+
+            if (isset($request['queryParameters'])) {
+                $this->assertEquals(
+                    \GuzzleHttp\Psr7\Query::build($request['queryParameters']),
+                    $recordedRequest->getUri()->getQuery()
+                );
+            }
         }
     }
 
@@ -82,7 +89,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 "body" => json_decode("{{#lambda.escapequotes}}{{{request.body}}}{{/lambda.escapequotes}}"),
                 {{/request.body}}
                 {{#request.queryParameters}}
-                "queryParameters" => json_decode("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}"),
+                "queryParameters" => json_decode("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}", true),
                 {{/request.queryParameters}}
             ],
         ]);
