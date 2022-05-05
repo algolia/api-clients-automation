@@ -26,7 +26,7 @@ export async function generateOpenapitools(
       gitUserId: 'algolia',
       glob: `specs/bundled/${client}.yml`,
       templateDir: `#{cwd}/templates/${language}/`,
-      generatorName: AVAILABLE_CUSTOM_GEN.includes(language)
+      generatorName: AVAILABLE_CUSTOM_GEN.includes(`algolia-${language}`)
         ? `algolia-${language}`
         : rest.generatorName,
       ...rest,
