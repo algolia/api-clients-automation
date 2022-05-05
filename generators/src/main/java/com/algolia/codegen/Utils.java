@@ -73,18 +73,4 @@ public class Utils {
 
     return clientName;
   }
-  // public static void injectHasTaskId(Map<String, Object> models) {
-  //   for (Object modelContainer : models.values()) {
-  //     CodegenModel model =
-  //       ((Map<String, List<Map<String, CodegenModel>>>) modelContainer).get(
-  //           "models"
-  //         )
-  //         .get(0)
-  //         .get("model");
-  //     model.vendorExtensions.put(
-  //       "x-has-task-id",
-  //       model.vars.stream().anyMatch(var -> var.baseName.equals("taskID"))
-  //     );
-  //   }
-  // }
 }
