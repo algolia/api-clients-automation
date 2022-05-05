@@ -1,20 +1,13 @@
 import { writeFile } from 'fs/promises';
 
 import clientsConfig from '../../config/clients.config.json';
-import openapitools from '../../config/openapitools.json';
+import openapiConfig from '../../config/openapitools.json';
 import { toAbsolutePath } from '../common';
 import type { Generator } from '../types';
 
-const AVAILABLE_CUSTOM_GEN = Object.entries(clientsConfig).reduce(
-  (clients, [lang, clientOptions]) => {
-    if (clientOptions.customGenerator) {
-      return [...new Set([...clients, lang])];
-    }
-
-    return clients;
-  },
-  [] as string[]
-);
+const AVAILABLE_CUSTOM_GEN = Object.values(clientsConfig)
+  .map((gen) => ('customGenerator' in gen ? gen.customGenerator : null))
+  .filter(Boolean);
 
 /**
  * Create openapitools.json file with default options for all generators.
@@ -45,7 +38,7 @@ export async function generateOpenapitools(
     JSON.stringify(
       {
         'generator-cli': {
-          version: openapitools['generator-cli'].version,
+          version: openapiConfig['generator-cli'].version,
           generators: result,
         },
       },

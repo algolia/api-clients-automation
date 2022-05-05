@@ -7,7 +7,7 @@ import { copy } from 'fs-extra';
 import semver from 'semver';
 import type { ReleaseType } from 'semver';
 
-import openapitools from '../../config/openapitools.json';
+import openapiConfig from '../../config/openapitools.json';
 import {
   ROOT_ENV_PATH,
   toAbsolutePath,
@@ -105,16 +105,16 @@ async function updateOpenApiTools(
   versionsToRelease: VersionsToRelease
 ): Promise<void> {
   const nextUtilsPackageVersion = semver.inc(
-    openapitools['generator-cli'].generators[MAIN_PACKAGE.javascript]
+    openapiConfig['generator-cli'].generators[MAIN_PACKAGE.javascript]
       .additionalProperties.utilsPackageVersion,
     versionsToRelease.javascript?.releaseType
   );
 
-  Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
+  Object.keys(openapiConfig['generator-cli'].generators).forEach((client) => {
     const lang = client.split('-')[0];
     if (versionsToRelease[lang]) {
       const additionalProperties =
-        openapitools['generator-cli'].generators[client].additionalProperties;
+        openapiConfig['generator-cli'].generators[client].additionalProperties;
       const releaseType = versionsToRelease[lang].releaseType;
 
       const newVersion = semver.inc(
@@ -138,7 +138,7 @@ async function updateOpenApiTools(
   });
   await fsp.writeFile(
     toAbsolutePath('config/openapitools.json'),
-    JSON.stringify(openapitools, null, 2)
+    JSON.stringify(openapiConfig, null, 2)
   );
 }
 

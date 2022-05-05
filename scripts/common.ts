@@ -6,7 +6,7 @@ import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
 import clientsConfig from '../config/clients.config.json';
-import openapitools from '../config/openapitools.json';
+import openapiConfig from '../config/openapitools.json';
 import releaseConfig from '../config/release.config.json';
 
 import { createSpinner } from './oraLog';
@@ -41,7 +41,7 @@ export const GENERATORS: Record<string, Generator> = {
       buildFile: 'algoliasearch',
       packageName: '@experimental-api-clients-automation/algoliasearch',
       packageVersion:
-        openapitools['generator-cli'].generators[
+        openapiConfig['generator-cli'].generators[
           clientsConfig.javascript.mainPackage
         ].additionalProperties.packageVersion,
     },
@@ -49,7 +49,7 @@ export const GENERATORS: Record<string, Generator> = {
 };
 
 // Build `GENERATORS` from the openapitools file
-Object.entries(openapitools['generator-cli'].generators).forEach(
+Object.entries(openapiConfig['generator-cli'].generators).forEach(
   ([key, gen]) => {
     GENERATORS[key] = {
       ...gen,
@@ -103,7 +103,7 @@ export const getGitHubUrl: GitHubUrl = (
   lang: string,
   { token } = {}
 ): string => {
-  const entry = Object.entries(openapitools['generator-cli'].generators).find(
+  const entry = Object.entries(openapiConfig['generator-cli'].generators).find(
     (_entry) => _entry[0].startsWith(`${lang}-`)
   );
 
