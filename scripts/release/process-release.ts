@@ -7,7 +7,7 @@ import { copy } from 'fs-extra';
 import semver from 'semver';
 import type { ReleaseType } from 'semver';
 
-import openapitools from '../../openapitools.json';
+import openapitools from '../../config/openapitools.json';
 import {
   ROOT_ENV_PATH,
   toAbsolutePath,
@@ -137,7 +137,7 @@ async function updateOpenApiTools(
     }
   });
   await fsp.writeFile(
-    toAbsolutePath('openapitools.json'),
+    toAbsolutePath('config/openapitools.json'),
     JSON.stringify(openapitools, null, 2)
   );
 }
