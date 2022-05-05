@@ -16,7 +16,7 @@ import { getNbGitDiff } from '../utils';
 
 import text from './text';
 
-export function decideWhereToSpread(commitMessage: string): string[] {
+export function decideWhereToSpread(commitMessage: string): Language[] {
   if (commitMessage.startsWith('chore: release')) {
     return [];
   }

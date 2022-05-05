@@ -9,9 +9,6 @@ inputs:
   type:
     description: Type of artifacts to restore (`all` | `specs` | `javascript` | `js-utils` | `java` | `php`)
     required: false
-  specific:
-    description: Only restore a specific artifact if true.
-    required: false
 
 runs:
   using: composite
@@ -23,18 +20,6 @@ runs:
       with:
         name: specs
         path: specs/bundled/
-
-    # Common
-    - name: Download clients-${{ inputs.type }} artifact
-      if: ${{ inputs.specific && inputs.type }}
-      uses: actions/download-artifact@v3
-      with:
-        name: clients-${{ inputs.type }}
-
-    - name: Unzip clients-${{ inputs.type }} artifact
-      if: ${{ inputs.specific && inputs.type }}
-      shell: bash
-      run: unzip -q -o clients-${{ inputs.type }}.zip
 
     # JavaScript utils
     - name: client-javascript-utils-client-common
