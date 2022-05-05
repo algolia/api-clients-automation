@@ -2,6 +2,7 @@ import { buildCustomGenerators, run, toAbsolutePath } from '../common';
 import { getTestOutputFolder } from '../config';
 import { formatter } from '../formatter';
 import { createSpinner } from '../oraLog';
+import { generateOpenapitools } from '../pre-gen';
 import type { Generator } from '../types';
 
 import { generateClientTests } from './client/generate';
@@ -31,6 +32,7 @@ export async function ctsGenerateMany(
   verbose: boolean
 ): Promise<void> {
   await buildCustomGenerators(verbose);
+  await generateOpenapitools(generators);
 
   for (const gen of generators) {
     if (!getTestOutputFolder(gen.language)) {
