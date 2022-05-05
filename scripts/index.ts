@@ -177,11 +177,11 @@ buildCommand
   .action(
     async (
       client: string[],
-      { verbose, interactive, skipCache, outputFormat }
+      { verbose, interactive, skipCache, outputJson }
     ) => {
       client = await promptClient(client, interactive);
 
-      outputFormat = outputFormat ? 'json' : 'yml';
+      const outputFormat = outputJson ? 'json' : 'yml';
 
       let clientsTodo = client;
       if (client === ['all']) {
@@ -263,7 +263,7 @@ program
       { interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      client = (await promptClient([client], interactive)) as unknown as string;
+      client = (await promptClient([client], interactive))[0];
 
       await playground({
         language,
