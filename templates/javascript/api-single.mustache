@@ -28,7 +28,7 @@ export const apiClientVersion = '{{packageVersion}}';
 {{/description}}
 
 {{#hasRegionalHost}}
-export type Region = {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us';
+export type Region = {{#allowedRegions}}'{{.}}'{{^-last}}|{{/-last}}{{/allowedRegions}};
 {{/hasRegionalHost}}
 
 {{^hasRegionalHost}}{{^isExperimentalHost}}

@@ -84,9 +84,6 @@ public class Utils {
 
       boolean hasRegionalHost = false;
       boolean fallbackToAliasHost = false;
-
-      boolean isEuHost = false;
-      boolean isDeHost = false;
       String host = "";
       String topLevelDomain = "";
       Set<String> allowedRegions = new HashSet<>();
@@ -131,11 +128,6 @@ public class Utils {
 
         for (String region : regions) {
           allowedRegions.add(region);
-          if (region.equals("eu")) {
-            isEuHost = true;
-          } else if (region.equals("de")) {
-            isDeHost = true;
-          }
         }
 
         // This is used for hosts like `insights` that uses `.io`
@@ -146,17 +138,9 @@ public class Utils {
       }
       additionalProperties.put("hasRegionalHost", hasRegionalHost);
       additionalProperties.put("fallbackToAliasHost", fallbackToAliasHost);
-      additionalProperties.put("isEuHost", isEuHost);
-      additionalProperties.put("isDeHost", isDeHost);
       additionalProperties.put("host", host);
       additionalProperties.put("topLevelDomain", topLevelDomain);
-
-      StringJoiner allowedRegionsString = new StringJoiner("-");
-      for (String region : allowedRegions) allowedRegionsString.add(region);
-      additionalProperties.put(
-        "allowedRegions",
-        allowedRegionsString.toString()
-      );
+      additionalProperties.put("allowedRegions", allowedRegions.toArray(new String[0]));
 
       if (clientKebab.equals("predict")) {
         additionalProperties.put("isExperimentalHost", true);
