@@ -256,7 +256,9 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             $httpBody = ${{paramName}};
         } 
         {{/bodyParams}}
-
+        {{#headerParams}}
+            $queryParams['{{baseName}}'] = ${{paramName}};
+        {{/headerParams}}
         {{#servers.0}}
         $operationHosts = [{{#servers}}"{{{url}}}"{{^-last}}, {{/-last}}{{/servers}}];
         if ($this->hostIndex < 0 || $this->hostIndex >= sizeof($operationHosts)) {
@@ -265,7 +267,6 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $operationHost = $operationHosts[$this->hostIndex];
 
         {{/servers.0}}
-
         $requestOptions += $queryParams;
 
         return $this->sendRequest('{{httpMethod}}', $resourcePath, $queryParams, $httpBody, $requestOptions);
