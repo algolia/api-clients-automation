@@ -3,13 +3,11 @@ import { buildCustomGenerators, CI, run } from './common';
 import { getCustomGenerator, getLanguageFolder } from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
-import { removeExistingCodegen, setDefaultGeneratorOptions } from './pre-gen';
+import { generateOpenapitools, removeExistingCodegen } from './pre-gen';
 import type { Generator } from './types';
 
 async function preGen(gen: Generator, verbose?: boolean): Promise<void> {
   await removeExistingCodegen(gen, verbose);
-
-  await setDefaultGeneratorOptions(gen);
 }
 
 async function generateClient(
@@ -38,6 +36,8 @@ export async function generate(
     await buildSpecs(clients, 'yml', verbose, true);
   }
 
+  await generateOpenapitools(generators);
+
   const availableWorkspaces = await run('yarn workspaces list', { verbose });
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const useCustomGenerator = langs
@@ -65,17 +65,10 @@ export async function generate(
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn', { verbose });
     }
 
-    if (CI && gen.language === 'javascript') {
-      // because the CI is parallelized, run the formatter for each client
-      await formatter(gen.language, gen.output, verbose);
-    }
-
     spinner.succeed();
   }
 
   for (const lang of langs) {
-    if (!(CI && lang === 'javascript')) {
-      await formatter(lang, getLanguageFolder(lang), verbose);
-    }
+    await formatter(lang, getLanguageFolder(lang), verbose);
   }
 }

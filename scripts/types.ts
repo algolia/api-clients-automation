@@ -1,7 +1,7 @@
 import type config from '../config/clients.config.json';
 
 export type Generator = Record<string, any> & {
-  language: string;
+  language: Language;
   client: string;
   key: string;
   additionalProperties: AdditionalProperties;
@@ -10,15 +10,6 @@ export type Generator = Record<string, any> & {
 export type AdditionalProperties = Partial<{
   packageName: string;
   hasRegionalHost: boolean;
-  fallbackToAliasHost: boolean;
-  isEuHost: boolean;
-  isDeHost: boolean;
-  host: string;
-  topLevelDomain: string;
-  /**
-   * Client name needs to be explicitly set, no variables required in the host.
-   */
-  experimentalHost: string;
 }> &
   Record<string, any>;
 
