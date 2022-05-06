@@ -29,7 +29,7 @@ export const DEPENDENCIES = {
     '.github/workflows',
     '.github/.cache_version',
   ],
-  SPECS_CHANGED: [
+  SHOULD_RUN_SPECS: [
     ...CLIENTS_COMMON_FILES,
     'specs',
     'templates',
