@@ -136,10 +136,7 @@ public class Utils {
         URL url = new URL((String) server.get("url"));
         host = url.getHost();
       }
-      if (fallbackToAliasHost) {
-        additionalProperties.put("hostWithFallback", hostWithFallback);
-      }
-
+      additionalProperties.put("hostWithFallback", hostWithFallback);
       additionalProperties.put("hasRegionalHost", hasRegionalHost);
       additionalProperties.put("fallbackToAliasHost", fallbackToAliasHost);
       additionalProperties.put("host", host);
