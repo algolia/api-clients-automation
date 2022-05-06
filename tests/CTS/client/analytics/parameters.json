@@ -7,8 +7,7 @@
         "type": "createClient",
         "parameters": {
           "appId": "my-app-id",
-          "apiKey": "my-api-key",
-          "region": ""
+          "apiKey": "my-api-key"
         },
         "expected": {
           "error": false
@@ -40,9 +39,7 @@
         "type": "method",
         "object": "$client",
         "path": "getClickPositions",
-        "parameters": [
-          {}
-        ],
+        "parameters": [{}],
         "expected": {
           "error": "Parameter `index` is required when calling `getClickPositions`."
         }
