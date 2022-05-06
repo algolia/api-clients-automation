@@ -39,7 +39,9 @@
         "type": "method",
         "object": "$client",
         "path": "getClickPositions",
-        "parameters": [{}],
+        "parameters": [
+          {}
+        ],
         "expected": {
           "error": "Parameter `index` is required when calling `getClickPositions`."
         }
