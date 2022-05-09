@@ -192,8 +192,8 @@ dependencies {
 
 ## Using the client
 
-The package is divided into multiples API Clients, you can find the list nowhere.
-To create a client, prepare your credentials a follow this example:
+The package is divided into multiples API Clients, you can find the list [here](https://github.com/algolia/algoliasearch-client-java-2/tree/next/algoliasearch-core/src/main/java/com/algolia/api).
+To instanciate a client, prepare your credentials and follow this example:
 
 ```java
 import com.algolia.api.SearchClient;
@@ -203,8 +203,9 @@ public class AlgoliaTest {
     SearchClient client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
   }
 }
+```
 
-You can specify a custom `Requester`, or add segments to the `User Agent`:
+You can add segments to the `User Agent`:
 ```java
 import com.algolia.utils.UserAgent;
 
@@ -216,6 +217,8 @@ SearchClient client = new SearchClient(
   }
 );
 ```
+
+And also specify a custom `Requester`:
 ```java
 import com.algolia.utils.echo.EchoRequester;
 
@@ -226,7 +229,7 @@ SearchClient client = new SearchClient(
 );
 ```
 
-Or use a completely different client and specify a region:
+Or use a completely different client (some clients might require a `region` parameter):
 ```java
 import com.algolia.api.AbtestingClient;
 

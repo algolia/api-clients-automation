@@ -87,6 +87,7 @@ runs:
       id: gen-matrix
       shell: bash
       run: |
+        echo "${{steps.diff.outputs.JS_ALGOLIASEARCH_CHANGED}}"
         if [[ steps.diff.outputs.JS_ALGOLIASEARCH_CHANGED > 0 ]]; then
           echo "Running algoliasearch: true"
           echo "::set-output name=RUN_JS_ALGOLIASEARCH::true"
