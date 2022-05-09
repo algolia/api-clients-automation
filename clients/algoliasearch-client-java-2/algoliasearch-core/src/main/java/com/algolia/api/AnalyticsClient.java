@@ -58,12 +58,13 @@ public class AnalyticsClient extends ApiClient {
 
   private static List<StatefulHost> getDefaultHosts(String region) {
     List<StatefulHost> hosts = new ArrayList<StatefulHost>();
+
+    String url = region == null
+      ? "analytics.algolia.com"
+      : "analytics.{region}.algolia.com".replace("{region}", region);
+
     hosts.add(
-      new StatefulHost(
-        "analytics." + (region == null ? "" : region + ".") + "algolia.com",
-        "https",
-        EnumSet.of(CallType.READ, CallType.WRITE)
-      )
+      new StatefulHost(url, "https", EnumSet.of(CallType.READ, CallType.WRITE))
     );
     return hosts;
   }
@@ -503,7 +504,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the distribution of clicks per range of positions.
+   * Returns the distribution of clicks per range of positions. If the groups all have a count of 0,
+   * it means Algolia didn’t receive any click events for the queries with the clickAnalytics search
+   * parameter set to true. The count is 0 until Algolia receives at least one click event.
    *
    * @param index The index name to target. (required)
    * @param startDate The lower bound timestamp (a date, a string like \"2006-01-02\") of the period
@@ -547,7 +550,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the distribution of clicks per range of positions.
+   * (asynchronously) Returns the distribution of clicks per range of positions. If the groups all
+   * have a count of 0, it means Algolia didn’t receive any click events for the queries with the
+   * clickAnalytics search parameter set to true. The count is 0 until Algolia receives at least one
+   * click event.
    *
    * @param index The index name to target. (required)
    * @param startDate The lower bound timestamp (a date, a string like \"2006-01-02\") of the period

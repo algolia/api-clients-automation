@@ -21,15 +21,11 @@ export const apiClientVersion = '0.2.0';
 export type Region = 'de' | 'us';
 
 function getDefaultHosts(region?: Region): Host[] {
-  const regionHost = region ? `.${region}.` : '.';
+  const url = !region
+    ? 'insights.algolia.io'
+    : 'insights.{region}.algolia.io'.replace('{region}', region);
 
-  return [
-    {
-      url: `insights${regionHost}algolia.io`,
-      accept: 'readWrite',
-      protocol: 'https',
-    },
-  ];
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -170,9 +166,9 @@ export function createInsightsClient(
     },
 
     /**
-     * This command pushes an array of events.
+     * This command pushes an array of events.  An event is   - an action: `eventName`   - performed in a context: `eventType`   - at some point in time provided: `timestamp`   - by an end user: `userToken`   - on something: `index`   Notes:   - To be accepted, all events sent must be valid.   - The size of the body must be *less than 2 MB*.   - When an event is tied to an Algolia search, it must also provide a `queryID`. If that event is a `click`, their absolute `positions` should also be passed.   - We consider that an `index` provides access to 2 resources: objects and filters. An event can only interact with a single resource type, but not necessarily on a single item. As such an event will accept an array of `objectIDs` or `filters`.
      *
-     * @summary Pushes an array of events.
+     * @summary Push events.
      * @param insightEvents - The insightEvents object.
      */
     pushEvents(

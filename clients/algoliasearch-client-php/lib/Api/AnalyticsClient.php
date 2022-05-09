@@ -49,7 +49,7 @@ class AnalyticsClient
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = explode('-', 'us-de');
+        $allowedRegions = ['de', 'us'];
         $config = AnalyticsConfig::create(
             $appId,
             $apiKey,
@@ -73,9 +73,12 @@ class AnalyticsClient
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create(
-                'analytics.' . $config->getRegion() . '.algolia.com'
+            $url = str_replace(
+                '{region}',
+                $config->getRegion(),
+                'analytics.{region}.algolia.com'
             );
+            $clusterHosts = ClusterHosts::create($url);
         }
 
         $apiWrapper = new ApiWrapper(
@@ -184,7 +187,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns the average click position.
+     * Get average click position.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -282,7 +285,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns the distribution of clicks per range of positions.
+     * Get clicks per positions.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -380,7 +383,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns a click-through rate (CTR).
+     * Get click-through rate (CTR).
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -478,7 +481,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns a conversion rate (CR).
+     * Get conversion rate (CR).
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -576,7 +579,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns the rate at which searches didn&#39;t lead to any clicks.
+     * Get no click rate.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -674,7 +677,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns the rate at which searches didn&#39;t return any results.
+     * Get no results rate.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -772,7 +775,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns the number of searches across the given time range.
+     * Get searches count.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -870,7 +873,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top searches that didn&#39;t lead to any clicks.
+     * Get top searches with no clicks.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -992,7 +995,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top searches that didn&#39;t return any results.
+     * Get top searches with no results.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -1114,7 +1117,7 @@ class AnalyticsClient
     }
 
     /**
-     * Get latest update time of the analytics API.
+     * Get Analytics API status.
      *
      * @param string $index The index name to target. (required)
      *
@@ -1152,7 +1155,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top countries.
+     * Get top countries.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
@@ -1274,7 +1277,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top filter attributes.
+     * Get top filter attributes.
      *
      * @param string $index The index name to target. (required)
      * @param string $search The query term to search for. Must match the exact user input. (optional)
@@ -1408,7 +1411,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top filters for the given attribute.
+     * Get top filters for the an attribute.
      *
      * @param string $attribute The exact name of the attribute. (required)
      * @param string $index The index name to target. (required)
@@ -1562,7 +1565,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top filters with no results.
+     * Get top filters for a no result search.
      *
      * @param string $index The index name to target. (required)
      * @param string $search The query term to search for. Must match the exact user input. (optional)
@@ -1696,7 +1699,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top hits.
+     * Get top hits.
      *
      * @param string $index The index name to target. (required)
      * @param string $search The query term to search for. Must match the exact user input. (optional)
@@ -1842,7 +1845,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns top searches.
+     * Get top searches.
      *
      * @param string $index The index name to target. (required)
      * @param bool $clickAnalytics Whether to include the click-through and conversion rates for a search. (optional, default to false)
@@ -2000,7 +2003,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns the distinct count of users across the given time range.
+     * Get users count.
      *
      * @param string $index The index name to target. (required)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)

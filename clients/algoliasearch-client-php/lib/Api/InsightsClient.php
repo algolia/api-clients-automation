@@ -48,7 +48,7 @@ class InsightsClient
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = explode('-', 'us-de');
+        $allowedRegions = ['de', 'us'];
         $config = InsightsConfig::create(
             $appId,
             $apiKey,
@@ -72,9 +72,12 @@ class InsightsClient
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create(
-                'insights.' . $config->getRegion() . '.algolia.io'
+            $url = str_replace(
+                '{region}',
+                $config->getRegion(),
+                'insights.{region}.algolia.io'
             );
+            $clusterHosts = ClusterHosts::create($url);
         }
 
         $apiWrapper = new ApiWrapper(
@@ -232,7 +235,7 @@ class InsightsClient
     }
 
     /**
-     * Pushes an array of events.
+     * Push events.
      *
      * @param array $insightEvents insightEvents (required)
      * - $insightEvents['events'] => (array) Array of events sent. (required)

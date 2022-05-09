@@ -49,7 +49,7 @@ class AbtestingClient
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = explode('-', 'us-de');
+        $allowedRegions = ['de', 'us'];
         $config = AbtestingConfig::create(
             $appId,
             $apiKey,
@@ -73,9 +73,12 @@ class AbtestingClient
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create(
-                'analytics.' . $config->getRegion() . '.algolia.com'
+            $url = str_replace(
+                '{region}',
+                $config->getRegion(),
+                'analytics.{region}.algolia.com'
             );
+            $clusterHosts = ClusterHosts::create($url);
         }
 
         $apiWrapper = new ApiWrapper(
@@ -96,7 +99,7 @@ class AbtestingClient
     }
 
     /**
-     * Creates a new A/B test with provided configuration.
+     * Create a test.
      *
      * @param array $addABTestsRequest addABTestsRequest (required)
      * - $addABTestsRequest['name'] => (string) A/B test name. (required)
@@ -180,7 +183,7 @@ class AbtestingClient
     }
 
     /**
-     * Deletes the A/B Test.
+     * Delete a test.
      *
      * @param int $id The A/B test ID. (required)
      *
@@ -261,7 +264,7 @@ class AbtestingClient
     }
 
     /**
-     * Returns metadata and metrics for A/B test id.
+     * Get a test.
      *
      * @param int $id The A/B test ID. (required)
      *
@@ -298,7 +301,7 @@ class AbtestingClient
     }
 
     /**
-     * Fetch all existing A/B tests for App that are available for the current API Key.
+     * List all tests.
      *
      * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
      * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
@@ -438,7 +441,7 @@ class AbtestingClient
     }
 
     /**
-     * Marks the A/B test as stopped.
+     * Stop a test.
      *
      * @param int $id The A/B test ID. (required)
      *

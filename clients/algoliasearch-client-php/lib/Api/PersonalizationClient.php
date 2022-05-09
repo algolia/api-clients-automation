@@ -49,7 +49,7 @@ class PersonalizationClient
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = explode('-', 'us-eu');
+        $allowedRegions = ['eu', 'us'];
         $config = PersonalizationConfig::create(
             $appId,
             $apiKey,
@@ -73,9 +73,12 @@ class PersonalizationClient
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create(
-                'personalization.' . $config->getRegion() . '.algolia.com'
+            $url = str_replace(
+                '{region}',
+                $config->getRegion(),
+                'personalization.{region}.algolia.com'
             );
+            $clusterHosts = ClusterHosts::create($url);
         }
 
         $apiWrapper = new ApiWrapper(
