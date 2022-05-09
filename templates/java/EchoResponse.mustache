@@ -7,57 +7,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okio.Buffer;
-
-
 public class EchoResponse{{#apiInfo}}{{#apis}}{{{baseName}}}{{/apis}}{{/apiInfo}} {
-  private static String parseRequestBody(Request req) {
-    try {
-      final Request copy = req.newBuilder().build();
-      final Buffer buffer = new Buffer();
-      copy.body().writeTo(buffer);
-      return buffer.readUtf8();
-    } catch (final IOException e) {
-      return "error";
-    }
-  }
-
-  private static List<Pair> buildQueryParams(Request req) {
-    List<Pair> params = new ArrayList<Pair>();
-    HttpUrl url = req.url();
-    for (String name : url.queryParameterNames()) {
-      for (String value : url.queryParameterValues(name)) {
-        params.add(new Pair(name, value));
-      }
-    }
-    return params;
-  }
-
   {{#apiInfo}}{{#apis}}
   {{#operations}}{{#operation}}
+
   public static class {{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}} extends {{{returnType}}} implements EchoResponseInterface {
-    private Request request;
+    public String path;
+    public String method;
+    public String body;
+    public List<Pair> queryParameters;
 
-    public {{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(Request request) { 
-      this.request = request; 
+    public String getPath() {
+      return path;
     }
 
-    public String getPath() { 
-      return request.url().encodedPath(); 
-    }
-
-    public String getMethod() { 
-      return request.method(); 
+    public String getMethod() {
+      return method;
     }
 
     public String getBody() {
-      return parseRequestBody(request);
+      return body;
     }
 
     public List<Pair> getQueryParams() {
-      return buildQueryParams(request);
+      return queryParameters;
     }
 
     // to satisfy CompoundType in case it's a parent

@@ -3,25 +3,25 @@ package {{invokerPackage}};
 import com.algolia.utils.Requester;
 import com.algolia.exceptions.*;
 import com.algolia.utils.UserAgent;
+import com.algolia.utils.JSON;
 
 import okhttp3.*;
+import com.algolia.utils.echo.EchoRequester;
 import okhttp3.internal.http.HttpMethod;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.DateFormat;
-{{#java8}}
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-{{/java8}}
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.CompletableFuture;
 
 public class ApiClient {
 
@@ -408,80 +408,43 @@ public class ApiClient {
     }
 
     /**
-     * {@link #execute(Call, Type)}
-     *
-     * @param <T> Type
-     * @param call An instance of the Call object
-     * @return ApiResponse&lt;T&gt;
-     * @throws AlgoliaRuntimeException If fail to execute the call
-     */
-    public <T> ApiResponse<T> execute(Call call) throws AlgoliaRuntimeException {
-        return execute(call, null);
-    }
-
-    /**
-     * Execute HTTP call and deserialize the HTTP response body into the given return type.
-     *
-     * @param returnType The return type used to deserialize HTTP response body
-     * @param <T> The return type corresponding to (same with) returnType
-     * @param call Call
-     * @return ApiResponse object containing response status, headers and
-     *   data, which is a Java object deserialized from response body and would be null
-     *   when returnType is null.
-     * @throws AlgoliaRuntimeException If fail to execute the call
-     */
-    public <T> ApiResponse<T> execute(Call call, Type returnType) throws AlgoliaRuntimeException {
-        try {
-            Response response = call.execute();
-            T data = handleResponse(response, returnType);
-            return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
-        } catch (IOException e) {
-            throw new AlgoliaRuntimeException(e);
-        }
-    }
-
-    /**
-     * {@link #executeAsync(Call, Type, ApiCallback)}
-     *
-     * @param <T> Type
-     * @param call An instance of the Call object
-     * @param callback ApiCallback&lt;T&gt;
-     */
-    public <T> void executeAsync(Call call, ApiCallback<T> callback) {
-        executeAsync(call, null, callback);
-    }
-
-    /**
      * Execute HTTP call asynchronously.
      *
      * @param <T> Type
-     * @param call The callback to be executed when the API call finishes
      * @param returnType Return type
-     * @param callback ApiCallback
      * @see #execute(Call, Type)
      */
-    public <T> void executeAsync(Call call, final Type returnType, final ApiCallback<T> callback) {
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callback.onFailure(new AlgoliaRuntimeException(e), 0, null);
-            }
+    public <T> CompletableFuture<T> executeAsync(Call call, final Type returnType, String echoResponseClassName) {
+        final CompletableFuture<T> future = new CompletableFuture<>();
+    call.enqueue(
+      new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+          future.completeExceptionally(new AlgoliaRuntimeException(e));
+        }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                T result;
-                try {
-                    result = (T) handleResponse(response, returnType);
-                } catch (AlgoliaRuntimeException e) {
-                    callback.onFailure(e, response.code(), response.headers().toMultimap());
-                    return;
-                } catch (Exception e) {
-                    callback.onFailure(new AlgoliaRuntimeException(e), response.code(), response.headers().toMultimap());
-                    return;
-                }
-                callback.onSuccess(result, response.code(), response.headers().toMultimap());
+        @Override
+        public void onResponse(Call call, Response response)
+          throws IOException {
+          T result;
+          try {
+            if(requester instanceof EchoRequester) {
+              result = (T) handleResponse(response, Class.forName(echoResponseClassName));
+            } else {
+              result = (T) handleResponse(response, returnType);
             }
-        });
+          } catch (AlgoliaRuntimeException e) {
+            future.completeExceptionally(e);
+            return;
+          } catch (Exception e) {
+            future.completeExceptionally(new AlgoliaRuntimeException(e));
+            return;
+          }
+          future.complete(result);
+        }
+      }
+    );
+    return future;
     }
 
     /**
@@ -530,12 +493,11 @@ public class ApiClient {
      * @param queryParams The query parameters
      * @param body The request body object
      * @param headerParams The header parameters
-     * @param callback Callback for upload/download progress
      * @return The HTTP call
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, ApiCallback callback) throws AlgoliaRuntimeException {
-        Request request = buildRequest(path, method, queryParams, body, headerParams, callback);
+    public Call buildCall(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams) throws AlgoliaRuntimeException {
+        Request request = buildRequest(path, method, queryParams, body, headerParams);
 
         return requester.newCall(request);
     }
@@ -548,11 +510,10 @@ public class ApiClient {
      * @param queryParams The query parameters
      * @param body The request body object
      * @param headerParams The header parameters
-     * @param callback Callback for upload/download progress
      * @return The HTTP request
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      */
-    public Request buildRequest(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, ApiCallback callback) throws AlgoliaRuntimeException {
+    public Request buildRequest(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams) throws AlgoliaRuntimeException {
         headerParams.put("X-Algolia-Application-Id", this.appId);
         headerParams.put("X-Algolia-API-Key", this.apiKey);
 
@@ -560,7 +521,7 @@ public class ApiClient {
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
 
-        String contentType = (String) headerParams.get("Content-Type");
+        String contentType = headerParams.get("Content-Type");
         // ensuring a default content type
         if (contentType == null) {
             contentType = "application/json";
@@ -581,20 +542,7 @@ public class ApiClient {
             reqBody = serialize(body, contentType);
         }
 
-        // Associate callback with request (if not null) so interceptor can
-        // access it when creating ProgressResponseBody
-        reqBuilder.tag(callback);
-
-        Request request = null;
-
-        if (callback != null && reqBody != null) {
-            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, callback);
-            request = reqBuilder.method(method, progressRequestBody).build();
-        } else {
-            request = reqBuilder.method(method, reqBody).build();
-        }
-
-        return request;
+        return reqBuilder.method(method, reqBody).build();
     }
 
     /**
