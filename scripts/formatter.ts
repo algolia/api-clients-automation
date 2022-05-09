@@ -25,8 +25,7 @@ export async function formatter(
         && yarn prettier --write ${folder}`;
       break;
     case 'php':
-      cmd = `yarn cli build clients php \
-            && yarn run prettier ${folder} --write \
+      cmd = `yarn run prettier ${folder} --write \
             && PHP_CS_FIXER_IGNORE_ENV=1 ${
               CI ? 'php' : 'php8'
             } clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;

@@ -36,6 +36,13 @@ runs:
       with:
         language: java
 
+    - name: Run composer update
+      if: inputs.type != 'minimal'
+      shell: bash
+      run: |
+        composer update --working-dir=clients/algoliasearch-client-php
+        composer dump-autoload --working-dir=clients/algoliasearch-client-php
+
     - name: Setting diff outputs variables
       if: inputs.type != 'minimal'
       id: diff

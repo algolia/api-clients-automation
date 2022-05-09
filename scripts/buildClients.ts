@@ -46,11 +46,6 @@ async function buildAllClients(
       );
       break;
     case 'php':
-      await run(
-        `composer update --working-dir=clients/algoliasearch-client-php \
-        && composer dump-autoload --working-dir=clients/algoliasearch-client-php`,
-        { verbose }
-      );
       break;
     default:
   }
