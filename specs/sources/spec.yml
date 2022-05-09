@@ -6,9 +6,9 @@ info:
 components:
   securitySchemes:
     appId:
-      $ref: ../common/securitySchemes.yml#/appId
+      $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
-      $ref: ../common/securitySchemes.yml#/apiKey
+      $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
   - url: https://data.{region}.algolia.com
     variables:
@@ -21,14 +21,19 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: sources
-    description: Sources API reference.
+  - name: jobs
+    x-displayName: Jobs
+    description: Manage jobs.
+x-tagGroups:
+  - name: General
+    tags:
+      - jobs
 paths:
   # ######################
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/ingest/url:
-    $ref: paths/ingest/postUrl.yml
+    $ref: 'paths/ingest/postUrl.yml'

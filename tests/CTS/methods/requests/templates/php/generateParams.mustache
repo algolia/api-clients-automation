@@ -1,0 +1,28 @@
+{{^isFirstLevel}}{{^hasGeneratedKey}}"{{{key}}}" => {{/hasGeneratedKey}}{{/isFirstLevel}}
+{{#isString}}
+  "{{{value}}}",
+{{/isString}}
+{{#isEnum}}
+  "{{{value}}}",
+{{/isEnum}}
+{{#isInteger}}
+  {{{value}}},
+{{/isInteger}}
+{{#isDouble}}
+  {{{value}}},
+{{/isDouble}}
+{{#isLong}}
+  {{{value}}},
+{{/isLong}}
+{{#isBoolean}}
+  {{{value}}},
+{{/isBoolean}}
+{{#isArray}}
+  [{{#value}}{{> generateParams}}{{/value}}],
+{{/isArray}}
+{{#isObject}}
+  [{{#value}}{{> generateParams}}{{/value}}],
+{{/isObject}}
+{{#isFreeFormObject}}
+  [{{#value}}{{> generateParams}}{{/value}}],
+{{/isFreeFormObject}}

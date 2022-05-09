@@ -3,6 +3,7 @@ import path from 'path';
 
 import { exists, toAbsolutePath } from '../common';
 import { getTestExtension, getTestOutputFolder } from '../config';
+import type { Language } from '../types';
 
 export async function* walk(
   dir: string
@@ -14,29 +15,54 @@ export async function* walk(
   }
 }
 
+/**
+ * Sets the first letter of the given string in capital.
+ *
+ * `searchClient` -> `SearchClient`.
+ */
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function createClientName(client: string, language: string): string {
-  const clientName = client
-    .split('-')
+/**
+ * Splits a string for a given `delimiter` (defaults to `-`) and capitalize each
+ * parts except the first letter.
+ *
+ * `search-client` -> `searchClient`.
+ */
+export function camelize(str: string, delimiter: string = '-'): string {
+  return str
+    .split(delimiter)
     .map((part, i) => {
-      if (language === 'javascript' && i === 0) {
+      if (i === 0) {
         return part;
       }
 
       return capitalize(part);
     })
     .join('');
-
-  return `${clientName}Api`;
 }
+
+/**
+ * Returns the client name with the correct casing for its language.
+ *
+ * `search-client`, `java` -> `SearchClient`.
+ *
+ * `search-client`, `javascript` -> `searchClient`.
+ */
+export function createClientName(client: string, language: string): string {
+  if (language === 'javascript') {
+    return camelize(client);
+  }
+
+  return capitalize(camelize(client));
+}
+
 export async function createOutputDir({
   language,
   testPath,
 }: {
-  language: string;
+  language: Language;
   testPath: string;
 }): Promise<void> {
   await fsp.mkdir(
@@ -54,7 +80,7 @@ export function getOutputPath({
   client,
   testPath,
 }: {
-  language: string;
+  language: Language;
   client: string;
   testPath: string;
 }): string {

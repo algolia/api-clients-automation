@@ -1,7 +1,9 @@
 get:
+  tags:
+    - search
   operationId: getSearchesNoClicks
+  summary: Get top searches with no clicks.
   description: Returns top searches that didn't lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
-  summary: Returns top searches that didn't lead to any clicks.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -33,16 +35,16 @@ get:
                     - withFilterCount
                   properties:
                     search:
-                      $ref: ../../common/parameters.yml#/search
+                      $ref: '../../common/parameters.yml#/search'
                     count:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
                     withFilterCount:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

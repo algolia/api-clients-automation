@@ -12,7 +12,7 @@ import okhttp3.Request;
 
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
-import com.algolia.model.search.*;
+import {{modelPackage}}.*;
 import com.algolia.exceptions.*;
 import com.algolia.utils.retry.CallType;
 import com.algolia.utils.retry.StatefulHost;
@@ -35,7 +35,7 @@ public class {{classname}} extends ApiClient {
     {{#hasRegionalHost}}
     {{#fallbackToAliasHost}}
     public {{classname}}(String appId, String apiKey) {
-        this(appId, apiKey, new HttpRequester(getDefaultHosts(".")), null);
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(null)), null);
     }
     
     {{/fallbackToAliasHost}}
@@ -66,7 +66,7 @@ public class {{classname}} extends ApiClient {
         super(appId, apiKey, requester, "{{{baseName}}}", userAgentSegments);
     }
 
-    {{^hasRegionalHost}}{{^experimentalHost}}
+    {{^hasRegionalHost}}
     private static List<StatefulHost> getDefaultHosts(String appId) {
       List<StatefulHost> hosts = new ArrayList<StatefulHost>();
       hosts.add(new StatefulHost(appId + "-dsn.algolia.net", "https", EnumSet.of(CallType.READ)));
@@ -81,23 +81,15 @@ public class {{classname}} extends ApiClient {
 
       return Stream.concat(hosts.stream(), commonHosts.stream()).collect(Collectors.toList());
     }
-    {{/experimentalHost}}{{/hasRegionalHost}}
-
-    {{#experimentalHost}}
-    private static List<StatefulHost> getDefaultHosts() {
-      List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost("https", "{{{experimentalHost}}}",  EnumSet.of(CallType.READ, CallType.WRITE)));
-      return hosts;
-    }
-    {{/experimentalHost}}
+    {{/hasRegionalHost}}
 
     {{#hasRegionalHost}}
     private static List<StatefulHost> getDefaultHosts(String region) {
       List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost({{{host}}} + "." + region + ".algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
 
-      hosts.add(new StatefulHost(appId + "-1.algolianet.com", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
+      String url = {{#fallbackToAliasHost}}region == null ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{host}}}".replace("{region}", region);
 
+      hosts.add(new StatefulHost(url, "https", EnumSet.of(CallType.READ, CallType.WRITE)));
       return hosts;
     }
     {{/hasRegionalHost}}
@@ -138,7 +130,7 @@ public class {{classname}} extends ApiClient {
           {{/x-is-custom-request}}
           {{#x-is-custom-request}}
             for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue().toString()));
+              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue()));
             }
           {{/x-is-custom-request}}
         }
@@ -189,7 +181,7 @@ public class {{classname}} extends ApiClient {
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws AlgoliaRuntimeException {
         Call req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
         if (req instanceof CallEcho) {
-            {{#returnType}}return new EchoResponse.{{baseName}}Echo.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
+            {{#returnType}}return new EchoResponse{{baseName}}.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
         }
         Call call = (Call)req;
         {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();
@@ -197,36 +189,36 @@ public class {{classname}} extends ApiClient {
         return res.getData();{{/returnType}}{{^returnType}}this.execute(call).getData();{{/returnType}}
     }
 
-    {{#optionalParams.0}}
-    public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) throws AlgoliaRuntimeException {
-        {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}},{{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}{{#schema}}{{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/schema}}{{^schema}}null{{/schema}}{{^-last}},{{/-last}}{{/optionalParams}});
-    }
-    {{/optionalParams.0}}
+  {{#optionalParams.0}}
+  public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}},{{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}});
+  }
+  {{/optionalParams.0}}
 
-    /**
-     * (asynchronously)
-     * {{notes}}{{#allParams}}
-     * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request body object
-     {{#isDeprecated}}
-     * @deprecated
-     {{/isDeprecated}}
-        {{#externalDocs}}
-     * {{&description}}
-     * @see <a href="{{url}}">{{&summary}} Documentation</a>
-        {{/externalDocs}}
-     */
-    {{#isDeprecated}}
-    @Deprecated
-    {{/isDeprecated}}
-    public Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> callback) throws AlgoliaRuntimeException {
-        Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}callback);
-        {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        this.executeAsync(call, returnType, callback);{{/returnType}}{{^returnType}}this.executeAsync(call, callback);{{/returnType}}
-        return call;
-    }
-    {{/operation}}
+  /**
+  * (asynchronously)
+  * {{notes}}{{#allParams}}
+  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
+  * @param callback The callback to be executed when the API call finishes
+  * @return The request call
+  * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request body object
+  {{#isDeprecated}}
+  * @deprecated
+  {{/isDeprecated}}
+  {{#externalDocs}}
+  * {{&description}}
+  * @see <a href="{{url}}">{{&summary}} Documentation</a>
+  {{/externalDocs}}
+  */
+  {{#isDeprecated}}
+  @Deprecated
+  {{/isDeprecated}}
+  public Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> callback) throws AlgoliaRuntimeException {
+    Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}callback);
+    {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
+    this.executeAsync(call, returnType, callback);{{/returnType}}{{^returnType}}this.executeAsync(call, callback);{{/returnType}}
+    return call;
+  }
+  {{/operation}}
 }
 {{/operations}}

@@ -1,7 +1,9 @@
 post:
+  tags:
+    - Search
   operationId: multipleQueries
-  description: Get search results for the given requests.
-  summary: Get search results for the given requests.
+  summary: Search multiple indices.
+  description: Perform a search operation targeting one or many indices.
   requestBody:
     required: true
     description: The `multipleQueries` requests and strategy.
@@ -52,10 +54,10 @@ post:
                 items:
                   $ref: '../../common/schemas/SearchResponse.yml#/searchResponse'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

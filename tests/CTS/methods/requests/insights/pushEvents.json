@@ -1,6 +1,5 @@
 [
   {
-    "method": "pushEvents",
     "parameters": {
       "events": [
         {
@@ -9,9 +8,15 @@
           "index": "products",
           "userToken": "user-123456",
           "timestamp": 1641290601962,
-          "objectIDs": ["9780545139700", "9780439784542"],
+          "objectIDs": [
+            "9780545139700",
+            "9780439784542"
+          ],
           "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
-          "positions": [7, 6]
+          "positions": [
+            7,
+            6
+          ]
         },
         {
           "eventType": "view",
@@ -19,7 +24,10 @@
           "index": "products",
           "userToken": "user-123456",
           "timestamp": 1641290601962,
-          "objectIDs": ["9780545139700", "9780439784542"]
+          "objectIDs": [
+            "9780545139700",
+            "9780439784542"
+          ]
         },
         {
           "eventType": "conversion",
@@ -27,7 +35,10 @@
           "index": "products",
           "userToken": "user-123456",
           "timestamp": 1641290601962,
-          "objectIDs": ["9780545139700", "9780439784542"],
+          "objectIDs": [
+            "9780545139700",
+            "9780439784542"
+          ],
           "queryID": "43b15df305339e827f0ac0bdc5ebcaa7"
         }
       ]
@@ -35,7 +46,7 @@
     "request": {
       "path": "/1/events",
       "method": "POST",
-      "data": {
+      "body": {
         "events": [
           {
             "eventType": "click",
@@ -43,9 +54,15 @@
             "index": "products",
             "userToken": "user-123456",
             "timestamp": 1641290601962,
-            "objectIDs": ["9780545139700", "9780439784542"],
+            "objectIDs": [
+              "9780545139700",
+              "9780439784542"
+            ],
             "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
-            "positions": [7, 6]
+            "positions": [
+              7,
+              6
+            ]
           },
           {
             "eventType": "view",
@@ -53,7 +70,10 @@
             "index": "products",
             "userToken": "user-123456",
             "timestamp": 1641290601962,
-            "objectIDs": ["9780545139700", "9780439784542"]
+            "objectIDs": [
+              "9780545139700",
+              "9780439784542"
+            ]
           },
           {
             "eventType": "conversion",
@@ -61,7 +81,10 @@
             "index": "products",
             "userToken": "user-123456",
             "timestamp": 1641290601962,
-            "objectIDs": ["9780545139700", "9780439784542"],
+            "objectIDs": [
+              "9780545139700",
+              "9780439784542"
+            ],
             "queryID": "43b15df305339e827f0ac0bdc5ebcaa7"
           }
         ]

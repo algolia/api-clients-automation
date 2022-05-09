@@ -17,7 +17,7 @@ import type {
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
 
-export * from '../model/models';
+export * from '../model';
 export const apiClientVersion = '{{packageVersion}}';
 
 {{#operations}}
@@ -28,10 +28,10 @@ export const apiClientVersion = '{{packageVersion}}';
 {{/description}}
 
 {{#hasRegionalHost}}
-export type Region = {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us';
+export type Region = {{#allowedRegions}}'{{.}}'{{^-last}}|{{/-last}}{{/allowedRegions}};
 {{/hasRegionalHost}}
 
-{{^hasRegionalHost}}{{^experimentalHost}}
+{{^hasRegionalHost}}
 function getDefaultHosts(appId: string): Host[] {
   return (
     [
@@ -66,27 +66,21 @@ function getDefaultHosts(appId: string): Host[] {
     ])
   );
 }
-{{/experimentalHost}}{{/hasRegionalHost}}
-
-{{#experimentalHost}}
-function getDefaultHosts(): Host[] {
-  return [{ url: '{{experimentalHost}}', accept: 'readWrite', protocol: 'https' }];
-}
-{{/experimentalHost}}
+{{/hasRegionalHost}}
 
 {{#hasRegionalHost}}
 function getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region): Host[] {
-  {{#fallbackToAliasHost}}const regionHost = region ? `.${region}.` : '.';{{/fallbackToAliasHost}}
+  const url = {{#fallbackToAliasHost}}!region ? '{{{hostWithFallback}}}' : {{/fallbackToAliasHost}} '{{{host}}}'.replace('{region}', region);
 
-  return [{ url: `{{{host}}}{{#fallbackToAliasHost}}${regionHost}{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}.${region}.{{/fallbackToAliasHost}}algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}`, accept: 'readWrite', protocol: 'https' }];
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 {{/hasRegionalHost}}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
+export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = createTransporter({
-    hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}{{^experimentalHost}}options.appId{{/experimentalHost}}{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
+    hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}options.appId{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
     hostsCache: options.hostsCache,
     requestsCache: options.requestsCache,
     responsesCache: options.responsesCache,
@@ -97,7 +91,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
     baseQueryParameters: auth.queryParameters(),
     userAgent: getUserAgent({
       userAgents: options.userAgents,
-      client: '{{{capitalizedApiName}}}',
+      client: '{{{userAgent}}}',
       version: apiClientVersion,
     }),
     timeouts: options.timeouts,
@@ -122,7 +116,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
       {{^bodyParams.0}}
         * @param {{nickname}} - The {{nickname}} object.
           {{#allParams}}
-            * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+            * @param {{nickname}}.{{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
           {{/allParams}}
       {{/bodyParams.0}}
       {{#bodyParams.0}}
@@ -132,25 +126,25 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
               {{^bodyParams.1}}
                 * @param {{nickname}} - The {{nickname}} object.
                   {{#allParams}}
-                    * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+                    * @param {{nickname}}.{{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
                   {{/allParams}}
               {{/bodyParams.1}}
             {{/bodyParams.0.isArray}}
             {{^bodyParams.0.isArray}}
-              * @param {{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+              * @param {{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
             {{/bodyParams.0.isArray}}
           {{/pathParams.0}}
           {{#pathParams.0}}
             * @param {{nickname}} - The {{nickname}} object.
               {{#allParams}}
-                * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+                * @param {{nickname}}.{{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
               {{/allParams}}
           {{/pathParams.0}}
         {{/queryParams.0}}
         {{#queryParams.0}}
           * @param {{nickname}} - The {{nickname}} object.
             {{#allParams}}
-              * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+              * @param {{nickname}}.{{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
             {{/allParams}}
         {{/queryParams.0}}
       {{/bodyParams.0}}
@@ -254,7 +248,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
   };
 }
 
-export type {{capitalizedApiName}}Api = ReturnType<typeof create{{capitalizedApiName}}Api>;
+export type {{capitalizedApiName}} = ReturnType<typeof create{{capitalizedApiName}}>;
 
 {{#operation}}
 {{#allParams.0}}

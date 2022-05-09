@@ -1,6 +1,8 @@
 get:
+  tags:
+    - Clusters
   operationId: getUserId
-  summary: Get userID
+  summary: Get userID.
   description: >
     Returns the userID data stored in the mapping.
 
@@ -17,17 +19,19 @@ get:
           schema:
             $ref: '../../common/schemas/UserId.yml#/userId'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'
 
 delete:
+  tags:
+    - Clusters
   operationId: removeUserId
-  summary: Remove userID
+  summary: Remove userID.
   description: >
     Remove a userID and its associated data from the multi-clusters.
 
@@ -49,10 +53,10 @@ delete:
             required:
               - deletedAt
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

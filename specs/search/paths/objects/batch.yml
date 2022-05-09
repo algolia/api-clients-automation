@@ -1,7 +1,9 @@
 post:
+  tags:
+    - Records
   operationId: batch
-  description: Performs multiple write operations in a single API call.
-  summary: Performs multiple write operations in a single API call.
+  summary: Batch operations to one index.
+  description: Perform multiple write operations targeting one index, in a single API call.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -41,10 +43,10 @@ post:
               objectIDs:
                 $ref: '../../../common/parameters.yml#/objectIDs'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

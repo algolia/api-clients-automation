@@ -1,10 +1,20 @@
 /* eslint-disable no-console */
-import { run } from '../../common';
+import { MAIN_BRANCH, run } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
 
+import text from './text';
+
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
-const FOLDERS_TO_CHECK = 'yarn.lock openapitools.json clients specs/bundled';
+const FOLDERS_TO_CHECK =
+  'yarn.lock config/openapitools.json clients specs/bundled';
+
+async function isUpToDate(baseBranch: string): Promise<boolean> {
+  await run('git fetch origin');
+  return (await run(`git pull origin ${baseBranch}`)).includes(
+    'Already up to date.'
+  );
+}
 
 /**
  * Push generated code for the current `JOB` and `CLIENT` on a `generated/` branch.
@@ -17,10 +27,11 @@ export async function pushGeneratedCode(): Promise<void> {
   await configureGitHubAuthor();
 
   const baseBranch = await run('git branch --show-current');
+  const isMainBranch = baseBranch === MAIN_BRANCH;
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
   const nbDiff = await getNbGitDiff({
-    branch: 'origin/generated/main',
+    branch: baseBranch,
     head: null,
     path: FOLDERS_TO_CHECK,
   });
@@ -38,38 +49,37 @@ export async function pushGeneratedCode(): Promise<void> {
   console.log(`${nbDiff} changes found for ${FOLDERS_TO_CHECK}`);
 
   // determine generated branch name based on current branch
-  const generatedCodeBranch = `generated/${baseBranch}`;
+  const branchToPush = isMainBranch ? baseBranch : `generated/${baseBranch}`;
 
-  // We don't re-create GENERATED_MAIN_BRANCH
-  if (baseBranch !== 'main') {
+  if (!isMainBranch) {
     await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
 
-    console.log(`Creating branch for generated code: '${generatedCodeBranch}'`);
-    await run(`git branch ${generatedCodeBranch}`);
+    console.log(`Creating branch for generated code: '${branchToPush}'`);
+    await run(`git checkout -b ${branchToPush}`);
   }
 
-  await run(`git checkout ${generatedCodeBranch}`);
-
-  // For the GENERATED_MAIN_BRANCH, we take the latest commit on main and generate code
-  if (baseBranch === 'main') {
-    console.log(`Merging '${baseBranch}' in '${generatedCodeBranch}'`);
-    await run(`git merge --no-commit ${baseBranch}`);
+  if (!(await isUpToDate(baseBranch))) {
+    console.log(
+      `The branch '${baseBranch}' is not up to date with origin, stopping this task and letting the new job push generated code.`
+    );
+    return;
   }
 
-  const commitMessage =
-    await run(`git show -s ${baseBranch} --format="chore: generated code for commit %H.
+  const commitMessage = await run(`git show -s ${baseBranch} --format="${
+    text.commitStartMessage
+  } %H. ${isMainBranch ? '[skip ci]' : ''}
 
-Co-authored-by: %an <%ae>"`);
+Co-authored-by: %an <%ae>
+%(trailers:key=Co-authored-by)"`);
 
   console.log(
-    `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${generatedCodeBranch}'`
+    `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${branchToPush}'`
   );
   await run(`git add ${FOLDERS_TO_CHECK}`);
   await run(`git commit -m "${commitMessage}"`);
-  await run(`git push origin ${generatedCodeBranch}`);
+  await run(`git push origin ${branchToPush}`);
 
   if (PR_NUMBER) {
-    await run(`git checkout ${baseBranch}`);
     await run(`yarn workspace scripts upsertGenerationComment codegen`);
   }
 }

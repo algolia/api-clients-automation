@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import { execaCommand } from 'execa';
+import execa from 'execa';
 import semver from 'semver';
 
 async function publish(): Promise<void> {
@@ -23,8 +23,8 @@ async function publish(): Promise<void> {
   // Get tag like `alpha`, `beta`, ...
   const tag = semver.prerelease(version)?.[0];
 
-  await execaCommand(
-    `lerna exec --no-bail npm publish --access public ${
+  await execa.command(
+    `lerna exec --no-bail -- npm_config_registry=https://registry.npmjs.org/ npm publish --access public ${
       tag ? `--tag ${tag}` : ''
     }`,
     {

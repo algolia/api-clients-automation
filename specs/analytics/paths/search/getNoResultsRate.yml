@@ -1,7 +1,9 @@
 get:
+  tags:
+    - search
   operationId: getNoResultsRate
+  summary: Get no results rate.
   description: Returns the rate at which searches didn't return any results. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without results used to compute the rates.
-  summary: Returns the rate at which searches didn't return any results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -25,9 +27,9 @@ get:
               rate:
                 $ref: '../../common/parameters.yml#/rate'
               count:
-                $ref: ../../../common/parameters.yml#/count
+                $ref: '../../../common/parameters.yml#/count'
               noResultCount:
-                $ref: ../../../common/parameters.yml#/count
+                $ref: '../../../common/parameters.yml#/count'
               dates:
                 type: array
                 description: A list of searches without results with their date, rate and counts.
@@ -43,16 +45,16 @@ get:
                     date:
                       $ref: '../../common/parameters.yml#/date'
                     noResultCount:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
                     count:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
                     rate:
                       $ref: '../../common/parameters.yml#/rate'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

@@ -3,19 +3,20 @@ import { copy } from 'fs-extra';
 
 import {
   emptyDirExceptForDotGit,
-  gitBranchExists,
   gitCommit,
   LANGUAGES,
   run,
   toAbsolutePath,
-  GENERATED_MAIN_BRANCH,
   REPO_URL,
 } from '../../common';
 import { getLanguageFolder } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
+import type { Language } from '../../types';
 import { getNbGitDiff } from '../utils';
 
-export function decideWhereToSpread(commitMessage: string): string[] {
+import text from './text';
+
+export function decideWhereToSpread(commitMessage: string): Language[] {
   if (commitMessage.startsWith('chore: release')) {
     return [];
   }
@@ -26,17 +27,36 @@ export function decideWhereToSpread(commitMessage: string): string[] {
     return LANGUAGES;
   }
 
-  const scope = result[2];
+  const scope = result[2] as Language;
   return LANGUAGES.includes(scope) ? [scope] : LANGUAGES;
 }
 
 export function cleanUpCommitMessage(commitMessage: string): string {
-  const result = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
-  if (!result) {
+  const isCodeGenCommit = commitMessage.startsWith(text.commitStartMessage);
+
+  if (isCodeGenCommit) {
+    const hash = commitMessage
+      .split(text.commitStartMessage)[1]
+      .replace('. [skip ci]', '')
+      .trim();
+
+    if (!hash) {
+      return commitMessage;
+    }
+
+    return [
+      `${text.commitStartMessage} ${hash.substring(0, 8)}. [skip ci]`,
+      `${REPO_URL}/commit/${hash}`,
+    ].join('\n\n');
+  }
+
+  const prCommit = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
+
+  if (!prCommit) {
     return commitMessage;
   }
 
-  return [result[1], `${REPO_URL}/pull/${result[2]}`].join('\n\n');
+  return [prCommit[1], `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
 async function spreadGeneration(): Promise<void> {
@@ -44,20 +64,19 @@ async function spreadGeneration(): Promise<void> {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }
 
-  if (!(await gitBranchExists(GENERATED_MAIN_BRANCH))) {
-    console.log(
-      `Skiping because the branch \`${GENERATED_MAIN_BRANCH}\` does not exist.`
-    );
-    return;
-  }
+  const lastCommitMessage = await run('git log -1 --format="%s"');
+  const author = (
+    await run('git log -1 --format="Co-authored-by: %an <%ae>"')
+  ).trim();
+  const coAuthors = (
+    await run('git log -1 --format="%(trailers:key=Co-authored-by)"')
+  )
+    .split('\n')
+    .map((coAuthor) => coAuthor.trim())
+    .filter(Boolean);
 
-  const lastCommitMessage = await run(`git log -1 --format="%s"`);
-  const name = (await run(`git log -1 --format="%an"`)).trim();
-  const email = (await run(`git log -1 --format="%ae"`)).trim();
   const commitMessage = cleanUpCommitMessage(lastCommitMessage);
   const langs = decideWhereToSpread(lastCommitMessage);
-
-  await run(`git checkout ${GENERATED_MAIN_BRANCH}`);
 
   for (const lang of langs) {
     const { tempGitDir } = await cloneRepository({
@@ -76,18 +95,21 @@ async function spreadGeneration(): Promise<void> {
         cwd: tempGitDir,
       })) === 0
     ) {
-      console.log(`Skipping ${lang} repository, because there is no change.`);
-      return;
+      console.log(
+        `❎ Skipping ${lang} repository, because there is no change.`
+      );
+      continue;
     }
 
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
     await gitCommit({
       message: commitMessage,
-      coauthor: { name, email },
+      coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
     await run(`git push`, { cwd: tempGitDir });
+    console.log(`✅ Spread the generation to ${lang} repository.`);
   }
 }
 

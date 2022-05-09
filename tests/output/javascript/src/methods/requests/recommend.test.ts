@@ -1,11 +1,61 @@
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
-import { recommendApi } from '@experimental-api-clients-automation/recommend';
+import { recommendClient } from '@experimental-api-clients-automation/recommend';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = recommendApi(appId, apiKey, { requester: echoRequester() });
+const client = recommendClient(appId, apiKey, { requester: echoRequester() });
+
+describe('del', () => {
+  test('allow del method for a custom path with minimal parameters', async () => {
+    const req = (await client.del({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow del method for a custom path with all parameters', async () => {
+    const req = (await client.del({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
+  });
+});
+
+describe('get', () => {
+  test('allow get method for a custom path with minimal parameters', async () => {
+    const req = (await client.get({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow get method for a custom path with all parameters', async () => {
+    const req = (await client.get({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
+  });
+});
 
 describe('getRecommendations', () => {
   test('get recommendations for recommend model with minimal parameters', async () => {
@@ -32,7 +82,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get recommendations for recommend model with all parameters', async () => {
@@ -65,7 +115,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get recommendations for trending model with minimal parameters', async () => {
@@ -82,7 +132,7 @@ describe('getRecommendations', () => {
         { indexName: 'indexName', model: 'trending-items', threshold: 42 },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get recommendations for trending model with all parameters', async () => {
@@ -117,7 +167,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get multiple recommendations with minimal parameters', async () => {
@@ -156,7 +206,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get multiple recommendations with all parameters', async () => {
@@ -207,7 +257,7 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get frequently bought together recommendations', async () => {
@@ -234,6 +284,58 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('post', () => {
+  test('allow post method for a custom path with minimal parameters', async () => {
+    const req = (await client.post({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow post method for a custom path with all parameters', async () => {
+    const req = (await client.post({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
+  });
+});
+
+describe('put', () => {
+  test('allow put method for a custom path with minimal parameters', async () => {
+    const req = (await client.put({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow put method for a custom path with all parameters', async () => {
+    const req = (await client.put({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });

@@ -1,0 +1,44 @@
+// eslint-disable-next-line import/no-commonjs
+module.exports = {
+  patterns: [
+    // Ignore the roots and go down the tree by negating hand written files
+    'specs/bundled/*.yml',
+
+    'clients/**',
+    'clients/**/.*', // hidden files are not ignored by default
+    '!clients/README.md',
+    '!clients/**/.openapi-generator-ignore',
+
+    // Java
+    '!clients/algoliasearch-client-java-2/*.gradle',
+    '!clients/algoliasearch-client-java-2/.gitignore',
+    '!clients/algoliasearch-client-java-2/algoliasearch-core/build.gradle',
+    '!clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/exceptions/*',
+    '!clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/utils/*',
+    'clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/utils/echo/EchoResponse*.java',
+    '!clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/utils/echo/EchoResponseInterface.java',
+
+    // JavaScript
+    '!clients/algoliasearch-client-javascript/*',
+    '!clients/algoliasearch-client-javascript/.github/**',
+    '!clients/algoliasearch-client-javascript/.yarn/**',
+    '!clients/algoliasearch-client-javascript/scripts/**',
+    '!clients/algoliasearch-client-javascript/packages/algoliasearch/**',
+    '!clients/algoliasearch-client-javascript/packages/requester-*/**',
+    '!clients/algoliasearch-client-javascript/packages/client-common/**',
+
+    // PHP
+    '!clients/algoliasearch-client-php/*',
+    '!clients/algoliasearch-client-php/.*',
+    '!clients/algoliasearch-client-php/lib/*',
+    '!clients/algoliasearch-client-php/lib/Cache/**',
+    '!clients/algoliasearch-client-php/lib/Exceptions/**',
+    '!clients/algoliasearch-client-php/lib/Http/**',
+    '!clients/algoliasearch-client-php/lib/Log/**',
+    '!clients/algoliasearch-client-php/lib/RequestOptions/**',
+    '!clients/algoliasearch-client-php/lib/RetryStrategy/**',
+    '!clients/algoliasearch-client-php/lib/Support/**',
+    '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
+    'clients/algoliasearch-client-php/lib/Configuration/Configuration.php',
+  ],
+};

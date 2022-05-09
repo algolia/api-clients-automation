@@ -1,70 +1,13 @@
-import path from 'path';
-
-import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
-import {
-  buildCustomGenerators,
-  CI,
-  run,
-  runIfExists,
-  toAbsolutePath,
-} from './common';
-import {
-  getCustomGenerator,
-  getLanguageFolder,
-  getLanguageModelFolder,
-} from './config';
-import { createClientName } from './cts/utils';
+import { buildCustomGenerators, CI, run } from './common';
+import { getCustomGenerator, getLanguageFolder } from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
-import { setHostsOptions } from './pre-gen/setHostsOptions';
+import { generateOpenapitools, removeExistingCodegen } from './pre-gen';
 import type { Generator } from './types';
 
-/**
- * Remove `model` folder for the current language and client.
- */
-async function removeExistingModel(
-  { language, client, output }: Generator,
-  verbose?: boolean
-): Promise<void> {
-  const baseModelFolder = getLanguageModelFolder(language);
-
-  let clientModel = '';
-  switch (language) {
-    case 'java':
-      clientModel = client;
-      break;
-    case 'php':
-      clientModel = createClientName(client, 'php');
-      break;
-    default:
-      break;
-  }
-
-  await run(
-    `rm -rf ${toAbsolutePath(
-      path.resolve('..', output, baseModelFolder, clientModel)
-    )}`,
-    {
-      verbose,
-    }
-  );
-}
-
 async function preGen(gen: Generator, verbose?: boolean): Promise<void> {
-  // Run bash pre-gen script
-  await runIfExists(
-    `./scripts/pre-gen/${gen.language}.sh`,
-    `${gen.output} ${gen.key}`,
-    {
-      verbose,
-    }
-  );
-
-  await removeExistingModel(gen);
-
-  // Updates `openapitools.json` file based on the spec `servers`
-  await setHostsOptions({ client: gen.client, key: gen.key });
+  await removeExistingCodegen(gen, verbose);
 }
 
 async function generateClient(
@@ -84,15 +27,6 @@ async function generateClient(
   );
 }
 
-async function postGen(
-  { language, key, output }: Generator,
-  verbose?: boolean
-): Promise<void> {
-  await runIfExists(`./scripts/post-gen/${language}.sh`, `${output} ${key}`, {
-    verbose,
-  });
-}
-
 export async function generate(
   generators: Generator[],
   verbose: boolean
@@ -102,6 +36,9 @@ export async function generate(
     await buildSpecs(clients, 'yml', verbose, true);
   }
 
+  await generateOpenapitools(generators);
+
+  const availableWorkspaces = await run('yarn workspaces list');
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const useCustomGenerator = langs
     .map((lang) => getCustomGenerator(lang))
@@ -117,26 +54,21 @@ export async function generate(
     spinner.text = `generating ${gen.key}`;
     await generateClient(gen, verbose);
 
-    spinner.text = `post-gen ${gen.key}`;
-    await postGen(gen, verbose);
+    // Prevents the CI/CLI to throw when a new JS client is generated
+    // by linking it if it's not the case
+    if (
+      gen.language === 'javascript' &&
+      !availableWorkspaces.includes(gen.output)
+    ) {
+      spinner.text = `First time generating ${gen.client}, linking to workspaces`;
 
-    if (CI && gen.language === 'javascript') {
-      // because the CI is parallelized, run the formatter for each client
-      await formatter(gen.language, gen.output, verbose);
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn', { verbose });
     }
 
     spinner.succeed();
   }
 
   for (const lang of langs) {
-    if (!(CI && lang === 'javascript')) {
-      await formatter(lang, getLanguageFolder(lang), verbose);
-    }
-
-    // JavaScript utils are tested independently, we only build them
-    // during dev to ease the process
-    if (!CI && lang === 'javascript') {
-      await buildJSClientUtils(verbose, 'all');
-    }
+    await formatter(lang, getLanguageFolder(lang), verbose);
   }
 }

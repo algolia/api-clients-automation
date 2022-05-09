@@ -6,25 +6,26 @@ import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
 import clientsConfig from '../config/clients.config.json';
-import config from '../config/release.config.json';
-import openapitools from '../openapitools.json';
+import openapiConfig from '../config/openapitools.json';
+import releaseConfig from '../config/release.config.json';
 
 import { createSpinner } from './oraLog';
 import type {
   CheckForCache,
   CheckForCacheOptions,
   Generator,
+  Language,
   RunOptions,
 } from './types';
 
-export const MAIN_BRANCH = config.mainBranch;
-export const GENERATED_MAIN_BRANCH = `generated/${MAIN_BRANCH}`;
-export const OWNER = config.owner;
-export const REPO = config.repo;
+export const MAIN_BRANCH = releaseConfig.mainBranch;
+export const OWNER = releaseConfig.owner;
+export const REPO = releaseConfig.repo;
 export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 
 export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);
+export const BUNDLE_WITH_DOC = process.env.BUNDLE_WITH_DOC === 'true';
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
@@ -38,9 +39,10 @@ export const GENERATORS: Record<string, Generator> = {
     client: 'algoliasearch',
     key: 'javascript-algoliasearch',
     additionalProperties: {
+      buildFile: 'algoliasearch',
       packageName: '@experimental-api-clients-automation/algoliasearch',
       packageVersion:
-        openapitools['generator-cli'].generators[
+        openapiConfig['generator-cli'].generators[
           clientsConfig.javascript.mainPackage
         ].additionalProperties.packageVersion,
     },
@@ -48,7 +50,7 @@ export const GENERATORS: Record<string, Generator> = {
 };
 
 // Build `GENERATORS` from the openapitools file
-Object.entries(openapitools['generator-cli'].generators).forEach(
+Object.entries(openapiConfig['generator-cli'].generators).forEach(
   ([key, gen]) => {
     GENERATORS[key] = {
       ...gen,
@@ -86,7 +88,7 @@ export const CLIENTS = CLIENTS_JS.filter(
 export function splitGeneratorKey(
   generatorKey: string
 ): Pick<Generator, 'client' | 'key' | 'language'> {
-  const language = generatorKey.slice(0, generatorKey.indexOf('-'));
+  const language = generatorKey.slice(0, generatorKey.indexOf('-')) as Language;
   const client = generatorKey.slice(generatorKey.indexOf('-') + 1);
   return { language, client, key: generatorKey };
 }
@@ -102,14 +104,14 @@ export const getGitHubUrl: GitHubUrl = (
   lang: string,
   { token } = {}
 ): string => {
-  const entry = Object.entries(openapitools['generator-cli'].generators).find(
+  const entry = Object.entries(openapiConfig['generator-cli'].generators).find(
     (_entry) => _entry[0].startsWith(`${lang}-`)
   );
 
   if (!entry) {
     throw new Error(`\`${lang}\` is not found from \`openapitools.json\`.`);
   }
-  const { gitHost, gitRepoId } = entry[1];
+  const { gitRepoId } = entry[1];
 
   // GitHub Action provides a default token for authentication
   // https://docs.github.com/en/actions/security-guides/automatic-token-authentication
@@ -117,14 +119,17 @@ export const getGitHubUrl: GitHubUrl = (
   // If we want to do something like pushing commits to other repositories,
   // we need to specify a token with more access.
   return token
-    ? `https://${token}:${token}@github.com/${gitHost}/${gitRepoId}`
-    : `https://github.com/${gitHost}/${gitRepoId}`;
+    ? `https://${token}:${token}@github.com/algolia/${gitRepoId}`
+    : `https://github.com/algolia/${gitRepoId}`;
 };
 
 export function createGeneratorKey({
   language,
   client,
-}: Pick<Generator, 'client' | 'language'>): string {
+}: {
+  language: Language | 'all';
+  client: string;
+}): string {
   return `${language}-${client}`;
 }
 
@@ -186,43 +191,28 @@ export async function runIfExists(
 
 export async function gitCommit({
   message,
-  coauthor,
+  coAuthors,
   cwd = ROOT_DIR,
 }: {
   message: string;
-  coauthor?: {
-    name: string;
-    email: string;
-  };
+  coAuthors?: string[];
   cwd?: string;
 }): Promise<void> {
-  await execa(
-    'git',
-    [
-      'commit',
-      '-m',
-      message +
-        (coauthor
-          ? `\n\n\nCo-authored-by: ${coauthor.name} <${coauthor.email}>`
-          : ''),
-    ],
-    {
-      cwd,
-    }
-  );
+  const messageWithCoAuthors = coAuthors
+    ? `${message}\n\n\n${coAuthors.join('\n')}`
+    : message;
+
+  await execa('git', ['commit', '-m', messageWithCoAuthors], {
+    cwd,
+  });
 }
 
-export async function checkForCache(
-  {
-    job,
-    folder,
-    generatedFiles,
-    filesToCache,
-    cacheFile,
-  }: CheckForCacheOptions,
-  verbose: boolean
-): Promise<CheckForCache> {
-  const spinner = createSpinner(`checking cache for ${job}`, verbose).start();
+export async function checkForCache({
+  folder,
+  generatedFiles,
+  filesToCache,
+  cacheFile,
+}: CheckForCacheOptions): Promise<CheckForCache> {
   const cache: CheckForCache = {
     cacheExists: false,
     hash: '',
@@ -245,7 +235,6 @@ export async function checkForCache(
   if (generatedFilesExists && (await exists(cacheFile))) {
     const storedHash = (await fsp.readFile(cacheFile)).toString();
     if (storedHash === cache.hash) {
-      spinner.succeed(`job skipped, cache found for ${job}`);
       return {
         cacheExists: true,
         hash: cache.hash,
@@ -253,29 +242,24 @@ export async function checkForCache(
     }
   }
 
-  spinner.info(`cache not found for ${job}`);
-
   return cache;
 }
 
 export async function buildCustomGenerators(verbose: boolean): Promise<void> {
+  const spinner = createSpinner('building custom generators', verbose).start();
+
   const cacheFile = toAbsolutePath('generators/.cache');
-  const { cacheExists, hash } = await checkForCache(
-    {
-      job: 'custom generators',
-      folder: toAbsolutePath('generators/'),
-      generatedFiles: ['build'],
-      filesToCache: ['src', 'build.gradle', 'settings.gradle'],
-      cacheFile,
-    },
-    verbose
-  );
+  const { cacheExists, hash } = await checkForCache({
+    folder: toAbsolutePath('generators/'),
+    generatedFiles: ['build'],
+    filesToCache: ['src', 'build.gradle', 'settings.gradle'],
+    cacheFile,
+  });
 
   if (cacheExists) {
+    spinner.succeed('job skipped, cache found for custom generators');
     return;
   }
-
-  const spinner = createSpinner('building custom generators', verbose).start();
 
   await run('./gradle/gradlew --no-daemon -p generators assemble', {
     verbose,

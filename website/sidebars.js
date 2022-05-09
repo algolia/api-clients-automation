@@ -2,31 +2,66 @@
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
-  docs: [
+  // Everything related to the API Clients Automation
+  automation: [
+    'automation/introduction',
     {
       type: 'category',
       label: 'Getting Started',
-      items: ['introduction', 'gettingStarted'],
-    },
-    {
-      type: 'category',
-      label: 'Contributing',
+      collapsed: false,
       items: [
+        'automation/setup-repository',
         {
           type: 'category',
-          label: 'Setup and CLI commands',
-          items: ['setupRepository', 'specsCommands', 'generationCommands'],
+          label: 'CLI',
+          collapsed: false,
+          items: [
+            'automation/CLI/specs-commands',
+            'automation/CLI/clients-commands',
+            'automation/CLI/cts-commands',
+          ],
         },
-        'addNewClient',
-        'addNewLanguage',
-        'pullRequest',
-        'releaseProcess',
       ],
     },
     {
       type: 'category',
-      label: 'Testing',
-      items: ['commonTestSuite', 'playground'],
+      label: 'Contributing',
+      collapsed: false,
+      items: [
+        'automation/add-new-api-client',
+        'automation/add-new-language',
+        {
+          type: 'category',
+          label: 'Testing',
+          collapsed: false,
+          items: [
+            'automation/testing/common-test-suite',
+            'automation/testing/playground',
+          ],
+        },
+        'automation/commit-and-pull-request',
+        'automation/release-process',
+      ],
+    },
+  ],
+  // Everything related to the generated clients usage
+  clients: [
+    'api-clients/introduction',
+    {
+      type: 'category',
+      label: 'Getting Started',
+      collapsed: false,
+      items: ['api-clients/installation', 'api-clients/migration-guide'],
+    },
+    {
+      type: 'category',
+      label: 'Guides',
+      collapsed: false,
+      items: [
+        'api-clients/guides/send-data-to-algolia',
+        'api-clients/guides/filtering-your-search',
+        'api-clients/guides/retrieving-facets',
+      ],
     },
   ],
 };

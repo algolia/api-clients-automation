@@ -22,14 +22,19 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: insights
-    description: Insights API reference.
+  - name: events
+    x-displayName: Events
+    description: Events operations.
+x-tagGroups:
+  - name: General
+    tags:
+      - events
 paths:
   # ######################
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/events:
-    $ref: paths/pushEvents.yml
+    $ref: 'paths/pushEvents.yml'

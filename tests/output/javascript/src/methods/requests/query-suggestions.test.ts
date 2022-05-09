@@ -1,11 +1,11 @@
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
-import { querySuggestionsApi } from '@experimental-api-clients-automation/client-query-suggestions';
+import { querySuggestionsClient } from '@experimental-api-clients-automation/client-query-suggestions';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = querySuggestionsApi(appId, apiKey, 'us', {
+const client = querySuggestionsClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
 
@@ -38,7 +38,32 @@ describe('createConfig', () => {
       languages: ['french'],
       exclude: ['test'],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('del', () => {
+  test('allow del method for a custom path with minimal parameters', async () => {
+    const req = (await client.del({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow del method for a custom path with all parameters', async () => {
+    const req = (await client.del({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -51,7 +76,32 @@ describe('deleteConfig', () => {
     expect(req.path).toEqual('/1/configs/theIndexName');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('get', () => {
+  test('allow get method for a custom path with minimal parameters', async () => {
+    const req = (await client.get({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow get method for a custom path with all parameters', async () => {
+    const req = (await client.get({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -62,7 +112,7 @@ describe('getAllConfigs', () => {
     expect(req.path).toEqual('/1/configs');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -75,7 +125,7 @@ describe('getConfig', () => {
     expect(req.path).toEqual('/1/configs/theIndexName');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -88,7 +138,7 @@ describe('getConfigStatus', () => {
     expect(req.path).toEqual('/1/configs/theIndexName/status');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -101,7 +151,59 @@ describe('getLogFile', () => {
     expect(req.path).toEqual('/1/logs/theIndexName');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('post', () => {
+  test('allow post method for a custom path with minimal parameters', async () => {
+    const req = (await client.post({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow post method for a custom path with all parameters', async () => {
+    const req = (await client.post({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
+  });
+});
+
+describe('put', () => {
+  test('allow put method for a custom path with minimal parameters', async () => {
+    const req = (await client.put({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow put method for a custom path with all parameters', async () => {
+    const req = (await client.put({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -135,6 +237,6 @@ describe('updateConfig', () => {
       languages: ['french'],
       exclude: ['test'],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });

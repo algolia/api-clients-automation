@@ -1,4 +1,6 @@
 delete:
+  tags:
+    - Vaults
   operationId: deleteSource
   description: Remove a single source from the list of allowed sources.
   summary: Remove a single source.
@@ -25,10 +27,10 @@ delete:
               deletedAt:
                 $ref: '../../../common/parameters.yml#/deletedAt'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

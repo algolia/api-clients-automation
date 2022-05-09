@@ -10,19 +10,30 @@ components:
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
-  - url: https://predict-api-oslcbws3zq-ew.a.run.app
+  - url: https://predict-api-432xa6wemq-{region}.a.run.app
+    variables:
+      region:
+        enum:
+          - ue
+          - ew
+        default: ew
 security:
   - appId: []
     apiKey: []
 tags:
-  - name: predict
-    description: Predict API reference.
+  - name: profiles
+    x-displayName: Profiles
+    description: Manage users' profiles.
+x-tagGroups:
+  - name: General
+    tags:
+      - profiles
 paths:
   # ######################
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/users/{userID}/fetch:
-    $ref: paths/fetchUserProfile.yml
+    $ref: 'paths/fetchUserProfile.yml'

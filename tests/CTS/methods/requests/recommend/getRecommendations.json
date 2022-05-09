@@ -1,6 +1,5 @@
 [
   {
-    "method": "getRecommendations",
     "testName": "get recommendations for recommend model with minimal parameters",
     "parameters": {
       "requests": [
@@ -15,7 +14,7 @@
     "request": {
       "path": "/1/indexes/*/recommendations",
       "method": "POST",
-      "data": {
+      "body": {
         "requests": [
           {
             "indexName": "indexName",
@@ -28,7 +27,6 @@
     }
   },
   {
-    "method": "getRecommendations",
     "testName": "get recommendations for recommend model with all parameters",
     "parameters": {
       "requests": [
@@ -40,11 +38,15 @@
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": ["query"]
+            "facetFilters": [
+              "query"
+            ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": ["fallback"]
+            "facetFilters": [
+              "fallback"
+            ]
           }
         }
       ]
@@ -52,7 +54,7 @@
     "request": {
       "path": "/1/indexes/*/recommendations",
       "method": "POST",
-      "data": {
+      "body": {
         "requests": [
           {
             "indexName": "indexName",
@@ -62,11 +64,15 @@
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": ["query"]
+              "facetFilters": [
+                "query"
+              ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": ["fallback"]
+              "facetFilters": [
+                "fallback"
+              ]
             }
           }
         ]
@@ -74,7 +80,6 @@
     }
   },
   {
-    "method": "getRecommendations",
     "testName": "get recommendations for trending model with minimal parameters",
     "parameters": {
       "requests": [
@@ -88,7 +93,7 @@
     "request": {
       "path": "/1/indexes/*/recommendations",
       "method": "POST",
-      "data": {
+      "body": {
         "requests": [
           {
             "indexName": "indexName",
@@ -100,7 +105,6 @@
     }
   },
   {
-    "method": "getRecommendations",
     "testName": "get recommendations for trending model with all parameters",
     "parameters": {
       "requests": [
@@ -113,11 +117,15 @@
           "facetValue": "myFacetValue",
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": ["query"]
+            "facetFilters": [
+              "query"
+            ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": ["fallback"]
+            "facetFilters": [
+              "fallback"
+            ]
           }
         }
       ]
@@ -125,7 +133,7 @@
     "request": {
       "path": "/1/indexes/*/recommendations",
       "method": "POST",
-      "data": {
+      "body": {
         "requests": [
           {
             "indexName": "indexName",
@@ -136,11 +144,15 @@
             "facetValue": "myFacetValue",
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": ["query"]
+              "facetFilters": [
+                "query"
+              ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": ["fallback"]
+              "facetFilters": [
+                "fallback"
+              ]
             }
           }
         ]
@@ -148,7 +160,6 @@
     }
   },
   {
-    "method": "getRecommendations",
     "testName": "get multiple recommendations with minimal parameters",
     "parameters": {
       "requests": [
@@ -169,7 +180,7 @@
     "request": {
       "path": "/1/indexes/*/recommendations",
       "method": "POST",
-      "data": {
+      "body": {
         "requests": [
           {
             "indexName": "indexName1",
@@ -188,7 +199,6 @@
     }
   },
   {
-    "method": "getRecommendations",
     "testName": "get multiple recommendations with all parameters",
     "parameters": {
       "requests": [
@@ -200,11 +210,15 @@
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": ["query1"]
+            "facetFilters": [
+              "query1"
+            ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": ["fallback1"]
+            "facetFilters": [
+              "fallback1"
+            ]
           }
         },
         {
@@ -215,11 +229,15 @@
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": ["query2"]
+            "facetFilters": [
+              "query2"
+            ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": ["fallback2"]
+            "facetFilters": [
+              "fallback2"
+            ]
           }
         }
       ]
@@ -227,7 +245,7 @@
     "request": {
       "path": "/1/indexes/*/recommendations",
       "method": "POST",
-      "data": {
+      "body": {
         "requests": [
           {
             "indexName": "indexName1",
@@ -237,11 +255,15 @@
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": ["query1"]
+              "facetFilters": [
+                "query1"
+              ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": ["fallback1"]
+              "facetFilters": [
+                "fallback1"
+              ]
             }
           },
           {
@@ -252,11 +274,15 @@
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": ["query2"]
+              "facetFilters": [
+                "query2"
+              ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": ["fallback2"]
+              "facetFilters": [
+                "fallback2"
+              ]
             }
           }
         ]
@@ -264,7 +290,6 @@
     }
   },
   {
-    "method": "getRecommendations",
     "testName": "get frequently bought together recommendations",
     "parameters": {
       "requests": [
@@ -279,7 +304,7 @@
     "request": {
       "path": "/1/indexes/*/recommendations",
       "method": "POST",
-      "data": {
+      "body": {
         "requests": [
           {
             "indexName": "indexName1",

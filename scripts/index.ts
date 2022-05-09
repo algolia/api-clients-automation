@@ -2,7 +2,7 @@
 import { Argument, program } from 'commander';
 import inquirer from 'inquirer';
 
-import { buildClients, buildJSClientUtils } from './buildClients';
+import { buildClients } from './buildClients';
 import { buildSpecs } from './buildSpecs';
 import {
   CI,
@@ -19,7 +19,7 @@ import { runCts } from './cts/runCts';
 import { formatter } from './formatter';
 import { generate } from './generate';
 import { playground } from './playground';
-import type { Generator } from './types';
+import type { Generator, Language } from './types';
 
 if (!CI && !DOCKER) {
   // eslint-disable-next-line no-console
@@ -31,9 +31,9 @@ if (!CI && !DOCKER) {
 program.name('cli');
 
 async function promptLanguage(
-  defaut: string | undefined,
+  defaut: Language | 'all' | undefined,
   interactive: boolean
-): Promise<string> {
+): Promise<Language | 'all'> {
   if (defaut) {
     return defaut;
   }
@@ -53,15 +53,15 @@ async function promptLanguage(
 }
 
 async function promptClient(
-  defaut: string | undefined,
+  defaut: string[],
   interactive: boolean,
   clientList = CLIENTS
-): Promise<string> {
-  if (defaut) {
+): Promise<string[]> {
+  if (defaut.length > 0) {
     return defaut;
   }
   if (!interactive) {
-    return 'all';
+    return ['all'];
   }
   const { client } = await inquirer.prompt([
     {
@@ -79,15 +79,17 @@ function generatorList({
   language,
   client,
   clientList = CLIENTS,
-}: Pick<Generator, 'client' | 'language'> & {
+}: {
+  language: Language | 'all';
+  client: string[];
   clientList?: string[];
 }): Generator[] {
   let langsTodo = [language];
-  let clientsTodo = [client];
+  let clientsTodo = client;
   if (language === 'all') {
     langsTodo = LANGUAGES;
   }
-  if (client === 'all') {
+  if (client[0] === 'all') {
     clientsTodo = clientList;
   }
 
@@ -109,14 +111,14 @@ program
     )
   )
   .addArgument(
-    new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
+    new Argument('[client...]', 'The client').choices(['all'].concat(CLIENTS))
   )
   .option('-v, --verbose', 'make the generation verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
-      language: string | undefined,
-      client: string | undefined,
+      language: Language | 'all' | undefined,
+      client: string[],
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
@@ -137,7 +139,7 @@ buildCommand
     )
   )
   .addArgument(
-    new Argument('[client]', 'The client').choices(
+    new Argument('[client...]', 'The client').choices(
       ['all'].concat([...CLIENTS_JS_UTILS, ...CLIENTS_JS])
     )
   )
@@ -145,31 +147,18 @@ buildCommand
   .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
-      language: string | undefined,
-      client: string | undefined,
+      language: Language | 'all' | undefined,
+      client: string[],
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      client = await promptClient(client, interactive, [
-        ...CLIENTS_JS_UTILS,
-        ...CLIENTS_JS,
-      ]);
 
-      // We build the JavaScript utils before generated clients as they
-      // rely on them
-      if (
-        (language === 'javascript' || language === 'all') &&
-        (!client || client === 'all' || CLIENTS_JS_UTILS.includes(client))
-      ) {
-        await buildJSClientUtils(Boolean(verbose), client);
-      }
+      const clientList =
+        language === 'javascript' || language === 'all' ? CLIENTS_JS : CLIENTS;
+      client = await promptClient(client, interactive, clientList);
 
       await buildClients(
-        generatorList({
-          language,
-          client,
-          clientList: CLIENTS_JS,
-        }),
+        generatorList({ language, client, clientList }),
         Boolean(verbose)
       );
     }
@@ -179,40 +168,27 @@ buildCommand
   .command('specs')
   .description('Build a specified spec')
   .addArgument(
-    new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
-  )
-  .addArgument(
-    new Argument('[output-format]', 'The output format').choices([
-      'yml',
-      'json',
-    ])
+    new Argument('[client...]', 'The client').choices(['all'].concat(CLIENTS))
   )
   .option('-v, --verbose', 'make the verification verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
   .option('-s, --skip-cache', 'skip cache checking to force building specs')
+  .option('-json, --output-json', 'outputs the spec in JSON instead of yml')
   .action(
     async (
-      client: string | undefined,
-      outputFormat: 'json' | 'yml' | undefined,
-      { verbose, interactive, skipCache }
+      client: string[],
+      { verbose, interactive, skipCache, outputJson }
     ) => {
       client = await promptClient(client, interactive);
 
-      if (!outputFormat) {
-        outputFormat = 'yml';
-      }
+      const outputFormat = outputJson ? 'json' : 'yml';
 
-      let clientsTodo = [client];
-      if (client === 'all') {
+      let clientsTodo = client;
+      if (client[0] === 'all') {
         clientsTodo = CLIENTS;
       }
       // ignore cache when building from cli
-      await buildSpecs(
-        clientsTodo,
-        outputFormat!,
-        Boolean(verbose),
-        !skipCache
-      );
+      await buildSpecs(clientsTodo, outputFormat, Boolean(verbose), !skipCache);
     }
   );
 
@@ -227,14 +203,14 @@ ctsCommand
     )
   )
   .addArgument(
-    new Argument('[client]', 'The client').choices(['all'].concat(CLIENTS))
+    new Argument('[client...]', 'The client').choices(['all'].concat(CLIENTS))
   )
   .option('-v, --verbose', 'make the generation verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
-      language: string | undefined,
-      client: string | undefined,
+      language: Language | 'all' | undefined,
+      client: string[],
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
@@ -257,15 +233,20 @@ ctsCommand
   )
   .option('-v, --verbose', 'make the generation verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
-  .action(async (language: string | undefined, { verbose, interactive }) => {
-    language = await promptLanguage(language, interactive);
+  .action(
+    async (
+      language: Language | 'all' | undefined,
+      { verbose, interactive }
+    ) => {
+      language = await promptLanguage(language, interactive);
 
-    let langsTodo = [language];
-    if (language === 'all') {
-      langsTodo = LANGUAGES;
+      let langsTodo = [language];
+      if (language === 'all') {
+        langsTodo = LANGUAGES;
+      }
+      await runCts(langsTodo, Boolean(verbose));
     }
-    await runCts(langsTodo, Boolean(verbose));
-  });
+  );
 
 program
   .command('playground')
@@ -277,12 +258,12 @@ program
   .option('-i, --interactive', 'open prompt to query parameters')
   .action(
     async (
-      language: string | undefined,
-      client: string | undefined,
+      language: Language | 'all' | undefined,
+      client: string,
       { interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      client = await promptClient(client, interactive);
+      client = (await promptClient([client], interactive))[0];
 
       await playground({
         language,

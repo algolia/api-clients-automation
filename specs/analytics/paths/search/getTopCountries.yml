@@ -1,7 +1,9 @@
 get:
+  tags:
+    - search
   operationId: getTopCountries
+  summary: Get top countries.
   description: Returns top countries. Limited to the 1000 most frequent ones.
-  summary: Returns top countries.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -35,12 +37,12 @@ get:
                       description: The country.
                       type: string
                     count:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

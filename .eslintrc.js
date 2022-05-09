@@ -13,7 +13,16 @@ module.exports = {
       parser: 'yaml-eslint-parser',
       plugins: ["automation-custom"],
       rules: {
-        '@typescript-eslint/naming-convention': 0,
+        'yml/plain-scalar': [
+          2,
+          "always"
+          , {
+            // ignore path from ref, that must be quoted
+            ignorePatterns: [
+              '[./#a-zA-Z0-9_]+'
+            ]
+          }
+        ],
         'yml/quotes': [
           2,
           {
@@ -34,8 +43,17 @@ module.exports = {
       overrides: [{
         files: ['specs/**/*.yml'],
         rules: {
-          "automation-custom/description-dot": "error",
-        }
+          "automation-custom/end-with-dot": "error",
+          "automation-custom/single-quote-ref": "error",
+        },
+        overrides: [
+          {
+            files: ['!specs/bundled/*.yml'],
+            rules: {
+              "automation-custom/out-of-line-enum": "error",
+            }
+          }
+        ]
       }
       ]
     },
@@ -99,6 +117,11 @@ module.exports = {
           },
         ],
       },
+    },
+    {
+      files: ['*.json'],
+
+      plugins: ['json-format']
     }
   ],
 };

@@ -1,45 +1,9 @@
-import { run } from './common';
+import { CI, run } from './common';
 import { getLanguageFolder } from './config';
 import { createSpinner } from './oraLog';
 import type { Generator } from './types';
 
 const multiBuildLanguage = new Set(['javascript']);
-
-/**
- * Build JavaScript utils packages used in generated clients.
- */
-export async function buildJSClientUtils(
-  verbose: boolean,
-  client?: string
-): Promise<void> {
-  if (!client || client === 'all') {
-    const spinner = createSpinner('building JavaScript utils', verbose).start();
-    await run('yarn workspace algoliasearch-client-javascript clean:utils', {
-      verbose,
-    });
-    await run('yarn workspace algoliasearch-client-javascript build:utils', {
-      verbose,
-    });
-
-    spinner.succeed();
-    return;
-  }
-
-  const spinner = createSpinner(
-    `building JavaScript ${client} utils`,
-    verbose
-  ).start();
-
-  await run(
-    `yarn workspace @experimental-api-clients-automation/${client} clean`,
-    { verbose }
-  );
-  await run(`yarn workspace algoliasearch-client-javascript build ${client}`, {
-    verbose,
-  });
-
-  spinner.succeed();
-}
 
 /**
  * Build only a specific client for one language, used by javascript for example.
@@ -53,7 +17,7 @@ async function buildPerClient(
     case 'javascript':
       await run(`yarn workspace ${packageName} clean`, { verbose });
       await run(
-        `yarn workspace algoliasearch-client-javascript build ${packageName}`,
+        `SKIP_UTILS=true yarn workspace algoliasearch-client-javascript build ${packageName}`,
         { verbose }
       );
       break;
@@ -89,20 +53,26 @@ async function buildAllClients(
 }
 
 export async function buildClients(
-  allGenerators: Generator[],
+  generators: Generator[],
   verbose: boolean
 ): Promise<void> {
-  const langs = [...new Set(allGenerators.map((gen) => gen.language))];
+  const langs = [...new Set(generators.map((gen) => gen.language))];
 
-  // We exclude `javascript-algoliasearch` from the build batch because it
-  // is made of built generated clients and can cause race issue when executed
-  // together.
-  const jsAlgoliasearch = allGenerators.find(
-    (gen) => gen.key === 'javascript-algoliasearch'
-  );
-  const generators = allGenerators.filter(
-    (gen) => gen.key !== 'javascript-algoliasearch'
-  );
+  if (!CI && langs.includes('javascript')) {
+    const spinner = createSpinner(
+      "building 'JavaScript' utils",
+      verbose
+    ).start();
+
+    await run('yarn workspace algoliasearch-client-javascript clean:utils', {
+      verbose,
+    });
+    await run('yarn workspace algoliasearch-client-javascript build:utils', {
+      verbose,
+    });
+
+    spinner.succeed();
+  }
 
   await Promise.all([
     Promise.all(
@@ -116,8 +86,4 @@ export async function buildClients(
         .map((lang) => buildAllClients(lang, verbose))
     ),
   ]);
-
-  if (jsAlgoliasearch) {
-    await buildPerClient(jsAlgoliasearch, verbose);
-  }
 }

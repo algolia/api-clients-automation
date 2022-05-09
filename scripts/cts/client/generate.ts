@@ -7,10 +7,10 @@ import { createSpinner } from '../../oraLog';
 import type { Generator } from '../../types';
 import {
   walk,
-  createClientName,
   createOutputDir,
   getOutputPath,
   loadTemplates,
+  createClientName,
 } from '../utils';
 
 import type { TestsBlock, Test, ModifiedStepForMustache } from './types';
@@ -71,6 +71,8 @@ export async function generateClientTests(
   ).start();
   const testsBlocks = await loadTests(client);
 
+  await createOutputDir({ language, testPath });
+
   if (testsBlocks.length === 0) {
     spinner.warn("skipping because tests doesn't exist");
     return;
@@ -80,8 +82,6 @@ export async function generateClientTests(
     { text: 'loading templates', indent: 8 },
     verbose
   ).start();
-
-  await createOutputDir({ language, testPath });
 
   const { suite: template, ...partialTemplates } = await loadTemplates({
     language,
@@ -98,7 +98,7 @@ export async function generateClientTests(
     template,
     {
       import: packageName,
-      client: createClientName(client, language),
+      client: `${createClientName(client, language)}Client`,
       blocks: modifyForMustache(testsBlocks),
       hasRegionalHost: hasRegionalHost ? true : undefined,
     },

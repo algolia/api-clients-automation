@@ -3,13 +3,10 @@ package com.algolia.codegen;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.servers.Server;
-import java.io.FileInputStream;
-import java.net.URL;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.JavaClientCodegen;
 import org.openapitools.codegen.utils.ModelUtils;
-import org.yaml.snakeyaml.Yaml;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
@@ -23,84 +20,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   @Override
   public String getName() {
     return "algolia-java";
-  }
-
-  /** Inject server info into the client to generate the right URL */
-  private void generateServer(Map<String, Object> client) {
-    String clientName = (String) client.get("pathPrefix");
-    Yaml yaml = new Yaml();
-    try {
-      Map<String, Object> spec = yaml.load(
-        new FileInputStream("specs/" + clientName + "/spec.yml")
-      );
-      List<Map<String, Object>> servers = (List<Map<String, Object>>) spec.get(
-        "servers"
-      );
-
-      boolean hasRegionalHost = false;
-      boolean fallbackToAliasHost = false;
-
-      boolean isEuHost = false;
-      boolean isDeHost = false;
-      String host = "";
-      String topLevelDomain = "";
-
-      for (Map<String, Object> server : servers) {
-        if (!server.containsKey("url")) {
-          throw new GenerationException(
-            "Invalid server, does not contains 'url'"
-          );
-        }
-
-        if (!server.containsKey("variables")) {
-          continue;
-        }
-
-        Map<String, Map<String, Object>> variables = (Map<String, Map<String, Object>>) server.get(
-          "variables"
-        );
-
-        if (
-          !variables.containsKey("region") ||
-          !variables.get("region").containsKey("enum")
-        ) {
-          continue;
-        }
-        ArrayList<String> enums = (ArrayList<String>) variables
-          .get("region")
-          .get("enum");
-        hasRegionalHost = true;
-
-        URL url = new URL((String) server.get("url"));
-
-        if (!fallbackToAliasHost) {
-          // Determine if the current URL with `region` also have an alias without
-          // variables.
-          fallbackToAliasHost = true;
-        }
-
-        if (enums.contains("eu")) {
-          isEuHost = true;
-        }
-
-        if (enums.contains("de")) {
-          isDeHost = true;
-        }
-
-        // This is used for hosts like `insights` that uses `.io`
-        String[] hostParts = url.getHost().split("\\.");
-        host = hostParts[0];
-        topLevelDomain = hostParts[hostParts.length - 1];
-      }
-      client.put("hasRegionalHost", hasRegionalHost);
-      client.put("fallbackToAliasHost", fallbackToAliasHost);
-      client.put("isEuHost", isEuHost);
-      client.put("isDeHost", isDeHost);
-      client.put("host", host);
-      client.put("topLevelDomain", topLevelDomain);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   @Override
@@ -125,11 +44,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       objs,
       allModels
     );
-    Map<String, Object> client = (Map<String, Object>) results.get(
-      "operations"
-    );
 
-    generateServer(client);
+    Utils.generateServer(
+      Utils.getClientNameKebabCase(results),
+      additionalProperties
+    );
 
     return results;
   }
@@ -146,22 +65,22 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
           .get(0)
           .get("model");
       if (!model.oneOf.isEmpty()) {
-        List<HashMap<String, String>> listOneOf = new ArrayList();
+        List<HashMap<String, String>> oneOfList = new ArrayList();
 
         for (String iterateModel : model.oneOf) {
-          HashMap<String, String> hashMapOneOf = new HashMap();
+          HashMap<String, String> oneOfModel = new HashMap();
 
-          hashMapOneOf.put("type", iterateModel);
-          hashMapOneOf.put(
+          oneOfModel.put("type", iterateModel);
+          oneOfModel.put(
             "name",
             iterateModel.replace("<", "").replace(">", "")
           );
 
-          listOneOf.add(hashMapOneOf);
+          oneOfList.add(oneOfModel);
         }
 
         model.vendorExtensions.put("x-is-one-of-interface", true);
-        model.vendorExtensions.put("x-is-one-of-list", listOneOf);
+        model.vendorExtensions.put("x-is-one-of-list", oneOfList);
       }
     }
 
@@ -177,7 +96,17 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       ((Map<String, List<Map<String, Object>>>) bundle.get("apiInfo")).get(
           "apis"
         );
+
     for (Map<String, Object> api : apis) {
+      String clientName = (String) api.get("baseName");
+      supportingFiles.add(
+        new SupportingFile(
+          "EchoResponse.mustache",
+          sourceFolder + "/com/algolia/utils/echo",
+          "EchoResponse" + clientName + ".java"
+        )
+      );
+
       List<CodegenOperation> operations =
         ((Map<String, List<CodegenOperation>>) api.get("operations")).get(
             "operation"
@@ -206,21 +135,25 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
   @Override
   public void processOpts() {
-    super.processOpts();
+    // generator specific options
+    setDateLibrary("java8");
+    setSourceFolder("algoliasearch-core/src/main/java");
+    setInvokerPackage("com.algolia");
+    setApiNameSuffix(Utils.API_SUFFIX);
 
-    supportingFiles.add(
-      new SupportingFile(
-        "EchoResponse.mustache",
-        "algoliasearch-core/com/algolia/utils/echo",
-        "EchoResponse.java"
-      )
-    );
+    super.processOpts();
 
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
     apiDocTemplateFiles.clear();
     modelDocTemplateFiles.clear();
+
+    supportingFiles.removeIf(file ->
+      file.getTemplateFile().equals("build.gradle.mustache") ||
+      file.getTemplateFile().equals("settings.gradle.mustache") ||
+      file.getTemplateFile().equals("gitignore.mustache")
+    );
   }
 
   @Override
@@ -237,6 +170,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     if ("String".equals(datatype)) {
       // convert camelCase77String to CAMEL_CASE_77_STRING
       return value
+        .replaceAll("-", "_")
         .replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2")
         .toUpperCase(Locale.ROOT);
     }

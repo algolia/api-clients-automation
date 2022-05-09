@@ -7,8 +7,7 @@
         "type": "createClient",
         "parameters": {
           "appId": "my-app-id",
-          "apiKey": "my-api-key",
-          "region": ""
+          "apiKey": "my-api-key"
         },
         "expected": {
           "error": false
@@ -18,7 +17,11 @@
         "type": "method",
         "object": "$client",
         "path": "pushEvents",
-        "parameters": [{ "events": [] }],
+        "parameters": [
+          {
+            "events": []
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {

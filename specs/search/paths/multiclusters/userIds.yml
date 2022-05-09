@@ -1,6 +1,8 @@
 post:
+  tags:
+    - Clusters
   operationId: assignUserId
-  summary: Assign or Move userID
+  summary: Assign or Move userID.
   description: >
     Assign or Move a userID to a cluster.
 
@@ -27,19 +29,21 @@ post:
             - cluster
   responses:
     '200':
-      $ref: ../../../common/responses/CreatedAt.yml
+      $ref: '../../../common/responses/CreatedAt.yml'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'
 
 get:
+  tags:
+    - Clusters
   operationId: listUserIds
-  summary: List userIDs
+  summary: List userIDs.
   description: >
     List the userIDs assigned to a multi-clusters appID.
 
@@ -67,10 +71,10 @@ get:
             required:
               - userIDs
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

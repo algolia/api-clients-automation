@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import org.openapitools.codegen.*;
 
 @SuppressWarnings("unchecked")
@@ -21,7 +22,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private String language;
   private String client;
   private String packageName;
-  private boolean hasRegionalHost;
 
   /**
    * Configures the type of generator.
@@ -63,8 +63,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
     packageName = (String) additionalProperties.get("packageName");
-    hasRegionalHost =
-      additionalProperties.get("hasRegionalHost").equals("true");
 
     try {
       JsonNode config = Json
@@ -76,11 +74,14 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
       setTemplateDir("tests/CTS/methods/requests/templates/" + language);
       setOutputDir("tests/output/" + language);
+      String clientName = language.equals("php")
+        ? Utils.createClientName(client, language)
+        : client;
       supportingFiles.add(
         new SupportingFile(
           "requests.mustache",
           testConfig.outputFolder + "/methods/requests",
-          client + testConfig.extension
+          clientName + testConfig.extension
         )
       );
     } catch (IOException e) {
@@ -126,33 +127,47 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       // The return value of this function is not used, we need to modify the param
       // itself.
       Object lambda = objs.get("lambda");
+      List<CodegenServer> servers = (List<CodegenServer>) objs.get("servers");
+      boolean hasRegionalHost = servers
+        .stream()
+        .anyMatch(server ->
+          server.variables
+            .stream()
+            .anyMatch(variable -> variable.name.equals("region"))
+        );
+
       Map<String, Object> bundle = objs;
       bundle.clear();
 
       // We can put whatever we want in the bundle, and it will be accessible in the
       // template
-      bundle.put("client", createClientName());
-      bundle.put("import", packageName);
+      bundle.put("client", Utils.createClientName(client, language) + "Client");
+      bundle.put("clientPrefix", Utils.createClientName(client, language));
+      bundle.put("import", createImportName());
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("lambda", lambda);
 
       List<Object> blocks = new ArrayList<>();
-      ParametersWithDataType paramsType = new ParametersWithDataType(models);
+      ParametersWithDataType paramsType = new ParametersWithDataType(
+        models,
+        language
+      );
 
-      for (Entry<String, Request[]> entry : cts.entrySet()) {
+      for (Entry<String, CodegenOperation> entry : operations.entrySet()) {
         String operationId = entry.getKey();
-        if (!operations.containsKey(operationId)) {
+        if (!cts.containsKey(operationId)) {
           throw new CTSException(
             "operationId " + operationId + " does not exist in the spec"
           );
         }
-        CodegenOperation op = operations.get(operationId);
+        Request[] op = cts.get(operationId);
 
         List<Object> tests = new ArrayList<>();
-        for (int i = 0; i < entry.getValue().length; i++) {
+        for (int i = 0; i < op.length; i++) {
           Map<String, Object> test = paramsType.buildJSONForRequest(
-            entry.getValue()[i],
-            op,
+            operationId,
+            op[i],
+            entry.getValue(),
             i
           );
           tests.add(test);
@@ -166,10 +181,11 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
       return bundle;
     } catch (CTSException e) {
+      System.out.println(e.getMessage());
       if (e.isSkipable()) {
-        System.out.println(e.getMessage());
         System.exit(0);
       }
+      System.exit(1);
     } catch (Exception e) {
       e.printStackTrace();
       System.exit(1);
@@ -180,11 +196,35 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private Map<String, Request[]> loadCTS()
     throws JsonParseException, JsonMappingException, IOException, CTSException {
     TreeMap<String, Request[]> cts = new TreeMap<>();
-    File dir = new File("tests/CTS/methods/requests/" + client);
+    String clientName = client;
+
+    // This special case allow us to read the `search` CTS to generated the
+    // tests for the `algoliasearch-lite` client, which is only available
+    // in JavaScript
+    if (
+      language.equals("javascript") && clientName.equals("algoliasearch-lite")
+    ) {
+      clientName = "search";
+    }
+
+    File dir = new File("tests/CTS/methods/requests/" + clientName);
+    File commonTestDir = new File("tests/CTS/methods/requests/common");
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
     }
+    if (!commonTestDir.exists()) {
+      throw new CTSException(
+        "CTS not found at " + commonTestDir.getAbsolutePath(),
+        true
+      );
+    }
     for (File f : dir.listFiles()) {
+      cts.put(
+        f.getName().replace(".json", ""),
+        Json.mapper().readValue(f, Request[].class)
+      );
+    }
+    for (File f : commonTestDir.listFiles()) {
       cts.put(
         f.getName().replace(".json", ""),
         Json.mapper().readValue(f, Request[].class)
@@ -194,7 +234,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   // operationId -> CodegenOperation
-  private HashMap<String, CodegenOperation> buildOperations(
+  private TreeMap<String, CodegenOperation> buildOperations(
     Map<String, Object> objs
   ) {
     HashMap<String, CodegenOperation> result = new HashMap<>();
@@ -202,38 +242,38 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       ((Map<String, List<Map<String, Object>>>) objs.get("apiInfo")).get(
           "apis"
         );
+
     for (Map<String, Object> api : apis) {
       String apiName = ((String) api.get("baseName")).toLowerCase();
       if (!apiName.equals(client.replace("-", ""))) {
         continue;
       }
+
       List<CodegenOperation> operations =
         ((Map<String, List<CodegenOperation>>) api.get("operations")).get(
             "operation"
           );
+
       for (CodegenOperation ope : operations) {
         result.put(ope.operationId, ope);
       }
     }
-    return result;
+
+    return new TreeMap<String, CodegenOperation>(result);
   }
 
-  private String createClientName() {
+  private String createImportName() {
+    if (!language.equals("java")) {
+      return this.packageName;
+    }
     String[] clientParts = client.split("-");
-    String clientName = "";
-    if (language.equals("javascript")) {
-      // do not capitalize the first part
-      clientName = clientParts[0];
-      for (int i = 1; i < clientParts.length; i++) {
-        clientName += Utils.capitalize(clientParts[i]);
-      }
-    } else {
-      for (int i = 0; i < clientParts.length; i++) {
-        clientName += Utils.capitalize(clientParts[i]);
-      }
+    // do not capitalize the first part
+    String name = clientParts[0];
+    for (int i = 1; i < clientParts.length; i++) {
+      name += Utils.capitalize(clientParts[i]);
     }
 
-    return clientName + "Api";
+    return name;
   }
 
   /**

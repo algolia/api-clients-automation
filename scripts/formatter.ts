@@ -13,7 +13,7 @@ export async function formatter(
   let cmd = '';
   switch (language) {
     case 'javascript':
-      cmd = `yarn eslint --ext=ts,js ${folder} --fix || yarn eslint --ext=ts,js ${folder} --fix`;
+      cmd = `yarn eslint --ext=ts ${folder} --fix --no-error-on-unmatched-pattern`;
       break;
     case 'java':
       cmd = `find ${folder} -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
@@ -27,6 +27,7 @@ export async function formatter(
     case 'php':
       cmd = `composer update --working-dir=clients/algoliasearch-client-php \
             && composer dump-autoload --working-dir=clients/algoliasearch-client-php \
+            && yarn run prettier ${folder} --write \
             && PHP_CS_FIXER_IGNORE_ENV=1 ${
               CI ? 'php' : 'php8'
             } clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;

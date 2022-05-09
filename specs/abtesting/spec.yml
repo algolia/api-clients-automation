@@ -6,9 +6,9 @@ info:
 components:
   securitySchemes:
     appId:
-      $ref: ../common/securitySchemes.yml#/appId
+      $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
-      $ref: ../common/securitySchemes.yml#/apiKey
+      $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
   - url: https://analytics.{region}.algolia.com
     variables:
@@ -22,18 +22,23 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: abtesting
-    description: abtesting API reference.
+  - name: abtest
+    x-displayName: A/B Testing
+    description: Manage A/B Tests.
+x-tagGroups:
+  - name: General
+    tags:
+      - abtest
 paths:
   # ######################
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /2/abtests:
-    $ref: paths/abtests.yml
+    $ref: 'paths/abtests.yml'
   /2/abtests/{id}:
-    $ref: paths/abtest.yml
+    $ref: 'paths/abtest.yml'
   /2/abtests/{id}/stop:
-    $ref: paths/stopABTest.yml
+    $ref: 'paths/stopABTest.yml'

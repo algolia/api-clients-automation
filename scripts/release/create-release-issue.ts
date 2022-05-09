@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
+import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import { getNbGitDiff } from '../ci/utils';
 import {
   LANGUAGES,
   ROOT_ENV_PATH,
@@ -41,7 +41,7 @@ export function getVersionChangesText(versions: Versions): string {
     const { current, releaseType, noCommit, skipRelease } = versions[lang];
 
     if (noCommit) {
-      return `- ~${lang}: v${current} (${TEXT.noCommit})~`;
+      return `- ~${lang}: ${current} (${TEXT.noCommit})~`;
     }
 
     if (!current) {
@@ -51,12 +51,46 @@ export function getVersionChangesText(versions: Versions): string {
     const next = semver.inc(current, releaseType!);
     const checked = skipRelease ? ' ' : 'x';
     return [
-      `- [${checked}] ${lang}: v${current} -> \`${releaseType}\` _(e.g. v${next})_`,
+      `- [${checked}] ${lang}: ${current} -> \`${releaseType}\` _(e.g. ${next})_`,
       skipRelease && TEXT.descriptionForSkippedLang,
     ]
       .filter(Boolean)
       .join('\n');
   }).join('\n');
+}
+
+export function getSkippedCommitsText({
+  commitsWithoutLanguageScope,
+  commitsWithUnknownLanguageScope,
+}: {
+  commitsWithoutLanguageScope: string[];
+  commitsWithUnknownLanguageScope: string[];
+}): string {
+  if (
+    commitsWithoutLanguageScope.length === 0 &&
+    commitsWithUnknownLanguageScope.length === 0
+  ) {
+    return '_(None)_';
+  }
+
+  return `</p>
+<p>${TEXT.skippedCommitsDesc}</p>
+
+<details>
+  <summary>
+    <i>Commits without language scope:</i>
+  </summary>
+
+  ${commitsWithoutLanguageScope.map((commit) => `- ${commit}`).join('\n')}
+</details>
+
+<details>
+  <summary>
+    <i>Commits with unknown language scope:</i>
+  </summary>
+
+  ${commitsWithUnknownLanguageScope.map((commit) => `- ${commit}`).join('\n')}
+</details>`;
 }
 
 export function parseCommit(commit: string): Commit {
@@ -162,25 +196,13 @@ async function createReleaseIssue(): Promise<void> {
     );
   }
 
-  if (
-    (await getNbGitDiff({
-      head: null,
-    })) !== 0
-  ) {
-    throw new Error(
-      'Working directory is not clean. Commit all the changes first.'
-    );
-  }
-
   await run(`git rev-parse --verify refs/tags/${RELEASED_TAG}`, {
     errorMessage: '`released` tag is missing in this repository.',
   });
 
   console.log('Pulling from origin...');
-  run(`git pull`);
-
-  console.log('Pushing to origin...');
-  run(`git push`);
+  await run('git fetch origin');
+  await run('git pull');
 
   const commitsWithUnknownLanguageScope: string[] = [];
   const commitsWithoutLanguageScope: string[] = [];
@@ -197,7 +219,18 @@ async function createReleaseIssue(): Promise<void> {
     await run(`git log --oneline --abbrev=8 ${RELEASED_TAG}..${MAIN_BRANCH}`)
   )
     .split('\n')
-    .filter(Boolean)
+    .filter(Boolean);
+
+  if (latestCommits.length === 0) {
+    console.log(
+      chalk.bgYellow('[INFO]'),
+      `Skipping release because no commit has been added since \`releated\` tag.`
+    );
+    // eslint-disable-next-line no-process-exit
+    process.exit(0);
+  }
+
+  const validCommits = latestCommits
     .map((commitMessage) => {
       const commit = parseCommit(commitMessage);
 
@@ -217,23 +250,17 @@ async function createReleaseIssue(): Promise<void> {
     })
     .filter(Boolean) as PassedCommit[];
 
-  console.log('[INFO] Skipping these commits due to lack of language scope:');
-  console.log(
-    commitsWithoutLanguageScope.map((commit) => `  ${commit}`).join('\n')
-  );
-
-  console.log('');
-  console.log('[INFO] Skipping these commits due to unknown language scope:');
-  console.log(
-    commitsWithUnknownLanguageScope.map((commit) => `  ${commit}`).join('\n')
-  );
-
   const versions = decideReleaseStrategy({
     versions: readVersions(),
-    commits: latestCommits,
+    commits: validCommits,
   });
 
   const versionChanges = getVersionChangesText(versions);
+
+  const skippedCommits = getSkippedCommitsText({
+    commitsWithoutLanguageScope,
+    commitsWithUnknownLanguageScope,
+  });
 
   const changelogs = LANGUAGES.filter(
     (lang) => !versions[lang].noCommit && versions[lang].current
@@ -245,7 +272,7 @@ async function createReleaseIssue(): Promise<void> {
 
       return [
         `### ${lang}`,
-        ...latestCommits
+        ...validCommits
           .filter((commit) => commit.lang === lang)
           .map((commit) => `- ${commit.raw}`),
       ];
@@ -261,11 +288,13 @@ async function createReleaseIssue(): Promise<void> {
     TEXT.changelogHeader,
     TEXT.changelogDescription,
     changelogs,
+    TEXT.skippedCommitsHeader,
+    skippedCommits,
     TEXT.approvalHeader,
     TEXT.approval,
   ].join('\n\n');
 
-  const octokit = getOctokit(process.env.GITHUB_TOKEN!);
+  const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
   octokit.rest.issues
     .create({
@@ -282,6 +311,11 @@ async function createReleaseIssue(): Promise<void> {
       console.log('');
       console.log(`Release issue #${number} is ready for review.`);
       console.log(`  > ${url}`);
+    })
+    .catch((error) => {
+      console.log('Unable to create the release issue');
+
+      throw new Error(error);
     });
 }
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.util.Json;
 import java.util.*;
 import java.util.Map.Entry;
+import org.openapitools.codegen.CodegenComposedSchemas;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenParameter;
@@ -17,19 +18,25 @@ import org.openapitools.codegen.IJsonSchemaValidationProperties;
 public class ParametersWithDataType {
 
   private final Map<String, CodegenModel> models;
+  private final String language;
 
-  public ParametersWithDataType(Map<String, CodegenModel> models) {
+  public ParametersWithDataType(
+    Map<String, CodegenModel> models,
+    String language
+  ) {
     this.models = models;
+    this.language = language;
   }
 
   public Map<String, Object> buildJSONForRequest(
+    String operationId,
     Request req,
     CodegenOperation ope,
     int testIndex
   ) throws CTSException, JsonMappingException, JsonProcessingException {
     Map<String, Object> test = new HashMap<>();
-    test.put("method", req.method);
-    test.put("testName", req.testName == null ? req.method : req.testName);
+    test.put("method", operationId);
+    test.put("testName", req.testName == null ? operationId : req.testName);
     test.put("testIndex", testIndex);
     test.put("request", req.request);
 
@@ -113,13 +120,16 @@ public class ParametersWithDataType {
     }
 
     String finalParamName = paramName;
-    if (paramName.startsWith("_")) {
+    if (language.equals("java") && paramName.startsWith("_")) {
       finalParamName = paramName.substring(1);
     }
+    Boolean isFirstLevel = suffix == 0;
 
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
     testOutput.put("parentSuffix", suffix - 1);
+    testOutput.put("isFirstLevel", isFirstLevel);
+    testOutput.put("hasGeneratedKey", finalParamName.matches("(.*)_[0-9]$"));
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
@@ -138,7 +148,7 @@ public class ParametersWithDataType {
       // free key but only one type
       handleMap(paramName, param, testOutput, spec, suffix);
     } else {
-      handlePrimitive(param, testOutput);
+      handlePrimitive(param, testOutput, spec);
     }
     return testOutput;
   }
@@ -151,11 +161,15 @@ public class ParametersWithDataType {
     testOutput.put("isObject", false);
     testOutput.put("isArray", false);
     testOutput.put("isFreeFormObject", false);
+    testOutput.put("isAnyType", false);
     testOutput.put("isString", false);
     testOutput.put("isInteger", false);
+    testOutput.put("isLong", false);
     testOutput.put("isDouble", false);
     testOutput.put("isBoolean", false);
     testOutput.put("isEnum", false);
+    testOutput.put("isSimpleObject", false);
+    testOutput.put("oneOfModel", false);
 
     return testOutput;
   }
@@ -200,8 +214,30 @@ public class ParametersWithDataType {
     String parent,
     int suffix
   ) throws CTSException {
-    assert (spec.getHasVars());
-    assert (spec.getItems() == null);
+    if (!spec.getHasVars()) {
+      // In this case we might have a complex `allOf`, we will first check
+      // if it exists
+      CodegenComposedSchemas composedSchemas = spec.getComposedSchemas();
+
+      if (composedSchemas != null) {
+        List<CodegenProperty> allOf = composedSchemas.getAllOf();
+
+        if (allOf != null && !allOf.isEmpty()) {
+          traverseParams(paramName, param, allOf.get(0), parent, suffix);
+
+          return;
+        }
+      }
+      // We only throw if there is no `composedSchemas`, because `oneOf` can also
+      // be handled below
+      else {
+        throw new CTSException("Spec has no vars.");
+      }
+    }
+
+    if (spec.getItems() != null) {
+      throw new CTSException("Spec has items.");
+    }
 
     if (
       spec instanceof CodegenModel && ((CodegenModel) spec).oneOf.size() > 0
@@ -214,15 +250,23 @@ public class ParametersWithDataType {
         traverseParams(paramName, param, match, parent, suffix)
       );
 
-      HashMap<String, String> hashMapOneOfModel = new HashMap();
+      HashMap<String, String> oneOfModel = new HashMap<>();
+      String typeName = getTypeName(match).replace("<", "").replace(">", "");
 
-      hashMapOneOfModel.put("classname", baseType);
-      hashMapOneOfModel.put(
-        "name",
-        getTypeName(match).replace("<", "").replace(">", "")
-      );
+      oneOfModel.put("parentClassName", Utils.capitalize(baseType));
 
-      testOutput.put("oneOfModel", hashMapOneOfModel);
+      if (typeName.equals("List")) {
+        CodegenProperty items = match.getItems();
+
+        if (items == null) {
+          throw new CTSException("Unhandled case for empty oneOf List items.");
+        }
+
+        typeName += getTypeName(items);
+      }
+
+      oneOfModel.put("type", typeName);
+      testOutput.put("oneOfModel", oneOfModel);
 
       return;
     }
@@ -269,8 +313,13 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec,
     int suffix
   ) throws CTSException {
-    assert (!spec.getHasVars());
-    assert (spec.getItems() == null);
+    if (spec.getHasVars()) {
+      throw new CTSException("Spec has vars.");
+    }
+
+    if (spec.getItems() != null) {
+      throw new CTSException("Spec has items.");
+    }
 
     Map<String, Object> vars = (Map<String, Object>) param;
 
@@ -288,6 +337,10 @@ public class ParametersWithDataType {
         )
       );
     }
+    // sometimes it's really just an object
+    if (testOutput.get("objectName").equals("Object")) {
+      testOutput.put("isSimpleObject", true);
+    }
 
     testOutput.put("isFreeFormObject", true);
     testOutput.put("value", values);
@@ -300,18 +353,39 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec,
     int suffix
   ) throws CTSException {
-    assert (!spec.getHasVars());
-    assert (spec.getItems() != null);
+    if (spec.getHasVars()) {
+      throw new CTSException("Spec has vars.");
+    }
 
     Map<String, Object> vars = (Map<String, Object>) param;
 
     List<Object> values = new ArrayList<>();
+
+    CodegenProperty items = spec.getItems();
+
     for (Entry<String, Object> entry : vars.entrySet()) {
+      IJsonSchemaValidationProperties itemType = items;
+
+      // The generator consider a free form object type as an `object`, which
+      // is wrong in our case, so we infer it to explore the right path in the traverseParams
+      // function, but we keep the any type for the CTS.
+      if (
+        items == null ||
+        (items.openApiType.equals("object") && items.isFreeFormObject)
+      ) {
+        CodegenParameter maybeMatch = new CodegenParameter();
+        String paramType = inferDataType(entry.getValue(), maybeMatch, null);
+
+        maybeMatch.dataType = paramType;
+        maybeMatch.isAnyType = true;
+        itemType = maybeMatch;
+      }
+
       values.add(
         traverseParams(
           entry.getKey(),
           entry.getValue(),
-          spec.getItems(),
+          itemType,
           paramName,
           suffix + 1
         )
@@ -322,9 +396,17 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handlePrimitive(Object param, Map<String, Object> testOutput)
-    throws CTSException {
+  private void handlePrimitive(
+    Object param,
+    Map<String, Object> testOutput,
+    IJsonSchemaValidationProperties spec
+  ) throws CTSException {
     inferDataType(param, null, testOutput);
+    if (
+      spec instanceof CodegenParameter && ((CodegenParameter) spec).isAnyType
+    ) {
+      testOutput.put("isAnyType", true);
+    }
     testOutput.put("value", param);
   }
 
@@ -373,7 +455,7 @@ public class ParametersWithDataType {
         return "Integer";
       case "Long":
         if (spec != null) spec.setIsNumber(true);
-        if (output != null) output.put("isInteger", true);
+        if (output != null) output.put("isLong", true);
         return "Long";
       case "Double":
         if (spec != null) spec.setIsNumber(true);
@@ -420,7 +502,18 @@ public class ParametersWithDataType {
       return bestOneOf;
     }
     if (param instanceof List) {
-      // no idea for list
+      // NICE ---> no idea for list <--- NICE
+      CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
+
+      if (composedSchemas != null) {
+        List<CodegenProperty> oneOf = composedSchemas.getOneOf();
+
+        // Somehow this is not yet enough
+        if (oneOf != null && !oneOf.isEmpty()) {
+          return oneOf.get(0);
+        }
+      }
+
       return null;
     }
 

@@ -21,20 +21,31 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: query-suggestions
-    description: Query Suggestions API reference.
+  - name: advanced
+    x-displayName: Advanced
+    description: Advanced operations.
+  - name: configurations
+    x-displayName: Configurations
+    description: Manage Query Suggestions configurations.
+x-tagGroups:
+  - name: General
+    tags:
+      - configurations
+  - name: Others
+    tags:
+      - advanced
 paths:
   # ######################
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/configs:
-    $ref: paths/qsConfigs.yml
+    $ref: 'paths/qsConfigs.yml'
   /1/configs/{indexName}:
-    $ref: paths/qsConfig.yml
+    $ref: 'paths/qsConfig.yml'
   /1/configs/{indexName}/status:
-    $ref: paths/getConfigurationStatus.yml
+    $ref: 'paths/getConfigurationStatus.yml'
   /1/logs/{indexName}:
-    $ref: paths/getLogFile.yml
+    $ref: 'paths/getLogFile.yml'

@@ -1,11 +1,11 @@
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
-import { searchApi } from '@experimental-api-clients-automation/client-search';
+import { searchClient } from '@experimental-api-clients-automation/client-search';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = searchApi(appId, apiKey, { requester: echoRequester() });
+const client = searchClient(appId, apiKey, { requester: echoRequester() });
 
 describe('addApiKey', () => {
   test('addApiKey', async () => {
@@ -26,7 +26,7 @@ describe('addApiKey', () => {
       maxQueriesPerIPPerHour: 100,
       maxHitsPerQuery: 20,
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -41,7 +41,7 @@ describe('addOrUpdateObject', () => {
     expect(req.path).toEqual('/1/indexes/indexName/uniqueID');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ key: 'value' });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -58,7 +58,7 @@ describe('appendSource', () => {
       source: 'theSource',
       description: 'theDescription',
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -72,7 +72,7 @@ describe('assignUserId', () => {
     expect(req.path).toEqual('/1/clusters/mapping');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ cluster: 'theCluster' });
-    expect(req.searchParams).toEqual({ 'X-Algolia-User-ID': 'userID' });
+    expect(req.searchParams).toStrictEqual({ 'X-Algolia-User-ID': 'userID' });
   });
 });
 
@@ -90,7 +90,7 @@ describe('batch', () => {
     expect(req.data).toEqual({
       requests: [{ action: 'delete', body: { key: 'value' } }],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -110,7 +110,7 @@ describe('batchAssignUserIds', () => {
       cluster: 'theCluster',
       users: ['user1', 'user2'],
     });
-    expect(req.searchParams).toEqual({ 'X-Algolia-User-ID': 'userID' });
+    expect(req.searchParams).toStrictEqual({ 'X-Algolia-User-ID': 'userID' });
   });
 });
 
@@ -134,7 +134,7 @@ describe('batchDictionaryEntries', () => {
         { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get batchDictionaryEntries results with all parameters', async () => {
@@ -198,7 +198,7 @@ describe('batchDictionaryEntries', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -236,7 +236,7 @@ describe('batchRules', () => {
         consequence: { params: { filters: 'brand:apple' } },
       },
     ]);
-    expect(req.searchParams).toEqual({
+    expect(req.searchParams).toStrictEqual({
       forwardToReplicas: 'true',
       clearExistingRules: 'true',
     });
@@ -252,7 +252,7 @@ describe('browse', () => {
     expect(req.path).toEqual('/1/indexes/indexName/browse');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get browse results with all parameters', async () => {
@@ -270,7 +270,7 @@ describe('browse', () => {
       params: "query=foo&facetFilters=['bar']",
       cursor: 'cts',
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -283,7 +283,7 @@ describe('clearAllSynonyms', () => {
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/clear');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -296,7 +296,7 @@ describe('clearObjects', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/clear');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -309,7 +309,32 @@ describe('clearRules', () => {
     expect(req.path).toEqual('/1/indexes/indexName/rules/clear');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('del', () => {
+  test('allow del method for a custom path with minimal parameters', async () => {
+    const req = (await client.del({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow del method for a custom path with all parameters', async () => {
+    const req = (await client.del({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -322,7 +347,7 @@ describe('deleteApiKey', () => {
     expect(req.path).toEqual('/1/keys/myTestApiKey');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -336,7 +361,7 @@ describe('deleteBy', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/deleteByQuery');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'testQuery' });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -349,7 +374,7 @@ describe('deleteIndex', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -363,7 +388,7 @@ describe('deleteObject', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -377,7 +402,7 @@ describe('deleteRule', () => {
     expect(req.path).toEqual('/1/indexes/indexName/rules/id1');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -390,7 +415,7 @@ describe('deleteSource', () => {
     expect(req.path).toEqual('/1/security/sources/theSource');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -404,7 +429,32 @@ describe('deleteSynonym', () => {
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/id1');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('get', () => {
+  test('allow get method for a custom path with minimal parameters', async () => {
+    const req = (await client.get({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow get method for a custom path with all parameters', async () => {
+    const req = (await client.get({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -417,7 +467,7 @@ describe('getApiKey', () => {
     expect(req.path).toEqual('/1/keys/myTestApiKey');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -429,7 +479,7 @@ describe('getDictionaryLanguages', () => {
     expect(req.path).toEqual('/1/dictionaries/*/languages');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -441,7 +491,7 @@ describe('getDictionarySettings', () => {
     expect(req.path).toEqual('/1/dictionaries/*/settings');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -457,7 +507,7 @@ describe('getLogs', () => {
     expect(req.path).toEqual('/1/logs');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({
+    expect(req.searchParams).toStrictEqual({
       offset: '5',
       length: '10',
       indexName: 'theIndexName',
@@ -477,7 +527,9 @@ describe('getObject', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({ attributesToRetrieve: 'attr1,attr2' });
+    expect(req.searchParams).toStrictEqual({
+      attributesToRetrieve: 'attr1,attr2',
+    });
   });
 });
 
@@ -504,7 +556,7 @@ describe('getObjects', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -518,7 +570,7 @@ describe('getRule', () => {
     expect(req.path).toEqual('/1/indexes/indexName/rules/id1');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -531,7 +583,7 @@ describe('getSettings', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -542,7 +594,7 @@ describe('getSources', () => {
     expect(req.path).toEqual('/1/security/sources');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -556,7 +608,7 @@ describe('getSynonym', () => {
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/id1');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -570,7 +622,7 @@ describe('getTask', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/task/123');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -581,7 +633,7 @@ describe('getTopUserIds', () => {
     expect(req.path).toEqual('/1/clusters/mapping/top');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -594,7 +646,7 @@ describe('getUserId', () => {
     expect(req.path).toEqual('/1/clusters/mapping/uniqueID');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -607,7 +659,7 @@ describe('hasPendingMappings', () => {
     expect(req.path).toEqual('/1/clusters/mapping/pending');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({ getClusters: 'true' });
+    expect(req.searchParams).toStrictEqual({ getClusters: 'true' });
   });
 });
 
@@ -618,7 +670,7 @@ describe('listApiKeys', () => {
     expect(req.path).toEqual('/1/keys');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -629,7 +681,7 @@ describe('listClusters', () => {
     expect(req.path).toEqual('/1/clusters');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -642,7 +694,7 @@ describe('listIndices', () => {
     expect(req.path).toEqual('/1/indexes');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({ page: '8' });
+    expect(req.searchParams).toStrictEqual({ page: '8' });
   });
 });
 
@@ -656,7 +708,7 @@ describe('listUserIds', () => {
     expect(req.path).toEqual('/1/clusters/mapping');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({ page: '8', hitsPerPage: '100' });
+    expect(req.searchParams).toStrictEqual({ page: '8', hitsPerPage: '100' });
   });
 });
 
@@ -683,12 +735,27 @@ describe('multipleBatch', () => {
         },
       ],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
 describe('multipleQueries', () => {
-  test('multipleQueries', async () => {
+  test('multipleQueries for a single request with minimal parameters', async () => {
+    const req = (await client.multipleQueries({
+      requests: [{ indexName: 'theIndexName' }],
+      strategy: 'stopIfEnoughMatches',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [{ indexName: 'theIndexName' }],
+      strategy: 'stopIfEnoughMatches',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('multipleQueries for multiple requests with all parameters', async () => {
     const req = (await client.multipleQueries({
       requests: [
         {
@@ -696,6 +763,12 @@ describe('multipleQueries', () => {
           query: 'test',
           type: 'facet',
           facet: 'theFacet',
+          params: 'testParam',
+        },
+        {
+          indexName: 'theIndexName',
+          query: 'test',
+          type: 'default',
           params: 'testParam',
         },
       ],
@@ -713,10 +786,16 @@ describe('multipleQueries', () => {
           facet: 'theFacet',
           params: 'testParam',
         },
+        {
+          indexName: 'theIndexName',
+          query: 'test',
+          type: 'default',
+          params: 'testParam',
+        },
       ],
       strategy: 'stopIfEnoughMatches',
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -738,7 +817,7 @@ describe('operationIndex', () => {
       destination: 'dest',
       scope: ['rules', 'settings'],
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -758,7 +837,59 @@ describe('partialUpdateObject', () => {
     expect(req.data).toEqual([
       { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
     ]);
-    expect(req.searchParams).toEqual({ createIfNotExists: 'true' });
+    expect(req.searchParams).toStrictEqual({ createIfNotExists: 'true' });
+  });
+});
+
+describe('post', () => {
+  test('allow post method for a custom path with minimal parameters', async () => {
+    const req = (await client.post({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow post method for a custom path with all parameters', async () => {
+    const req = (await client.post({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
+  });
+});
+
+describe('put', () => {
+  test('allow put method for a custom path with minimal parameters', async () => {
+    const req = (await client.put({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow put method for a custom path with all parameters', async () => {
+    const req = (await client.put({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -771,7 +902,7 @@ describe('removeUserId', () => {
     expect(req.path).toEqual('/1/clusters/mapping/uniqueID');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -786,7 +917,7 @@ describe('replaceSources', () => {
     expect(req.data).toEqual([
       { source: 'theSource', description: 'theDescription' },
     ]);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -799,7 +930,7 @@ describe('restoreApiKey', () => {
     expect(req.path).toEqual('/1/keys/myApiKey/restore');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -813,7 +944,7 @@ describe('saveObject', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ objectID: 'id', test: 'val' });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -837,7 +968,7 @@ describe('saveRule', () => {
       conditions: [{ pattern: 'apple', anchoring: 'contains' }],
       consequence: { params: { filters: 'brand:apple' } },
     });
-    expect(req.searchParams).toEqual({ forwardToReplicas: 'true' });
+    expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 });
 
@@ -861,7 +992,7 @@ describe('saveSynonym', () => {
       type: 'synonym',
       synonyms: ['car', 'vehicule', 'auto'],
     });
-    expect(req.searchParams).toEqual({ forwardToReplicas: 'true' });
+    expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 });
 
@@ -901,7 +1032,7 @@ describe('saveSynonyms', () => {
         synonyms: ['ephone', 'aphone', 'yphone'],
       },
     ]);
-    expect(req.searchParams).toEqual({
+    expect(req.searchParams).toStrictEqual({
       forwardToReplicas: 'true',
       replaceExistingSynonyms: 'false',
     });
@@ -909,7 +1040,7 @@ describe('saveSynonyms', () => {
 });
 
 describe('search', () => {
-  test('search', async () => {
+  test('search with minimal parameters', async () => {
     const req = (await client.search({
       indexName: 'indexName',
       searchParams: { query: 'myQuery' },
@@ -918,7 +1049,22 @@ describe('search', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'myQuery' });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search with facetFilters', async () => {
+    const req = (await client.search({
+      indexName: 'indexName',
+      searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'myQuery',
+      facetFilters: ['tags:algolia'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -932,7 +1078,7 @@ describe('searchDictionaryEntries', () => {
     expect(req.path).toEqual('/1/dictionaries/compounds/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'foo' });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get searchDictionaryEntries results with all parameters', async () => {
@@ -954,7 +1100,7 @@ describe('searchDictionaryEntries', () => {
       hitsPerPage: 2,
       language: 'fr',
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -968,7 +1114,7 @@ describe('searchForFacetValues', () => {
     expect(req.path).toEqual('/1/indexes/indexName/facets/facetName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get searchForFacetValues results with all parameters', async () => {
@@ -989,7 +1135,7 @@ describe('searchForFacetValues', () => {
       facetQuery: 'foo',
       maxFacetHits: 42,
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -1003,7 +1149,7 @@ describe('searchRules', () => {
     expect(req.path).toEqual('/1/indexes/indexName/rules/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'something' });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -1016,7 +1162,7 @@ describe('searchSynonyms', () => {
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -1037,7 +1183,7 @@ describe('searchUserIds', () => {
       page: 5,
       hitsPerPage: 10,
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -1052,7 +1198,7 @@ describe('setDictionarySettings', () => {
     expect(req.data).toEqual({
       disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('get setDictionarySettings results with all parameters', async () => {
@@ -1073,7 +1219,7 @@ describe('setDictionarySettings', () => {
         compounds: { ru: true },
       },
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -1088,7 +1234,7 @@ describe('setSettings', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ paginationLimitedTo: 10 });
-    expect(req.searchParams).toEqual({ forwardToReplicas: 'true' });
+    expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 });
 
@@ -1112,6 +1258,6 @@ describe('updateApiKey', () => {
       maxQueriesPerIPPerHour: 100,
       maxHitsPerQuery: 20,
     });
-    expect(req.searchParams).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });

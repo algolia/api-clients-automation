@@ -1,7 +1,9 @@
 post:
+  tags:
+    - Search
   operationId: search
-  description: Get search results.
-  summary: Get search results.
+  summary: Search in an index.
+  description: Perform a search operation targeting one specific index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -18,10 +20,10 @@ post:
           schema:
             $ref: '../../common/schemas/SearchResponse.yml#/searchResponse'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'
