@@ -1,6 +1,5 @@
 package com.algolia.codegen;
 
-import io.swagger.util.Json;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
