@@ -92,7 +92,7 @@ runs:
           echo "::set-output name=RUN_JS_ALGOLIASEARCH::true"
         fi
 
-        if [[ ${{ steps.diff.outputs.JS_UTILS_CHANGED }} > 0 ]]; then
+        if [[ ${{ steps.diff.outputs.JS_UTILS_CHANGED }} > 0 || ${{ steps.diff.outputs.JS_CLIENT_CHANGED }} > 0 ]]; then
           echo "Running JavaScript utils: true"
           echo "::set-output name=RUN_JS_UTILS::true"
         fi
