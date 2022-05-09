@@ -1,5 +1,6 @@
 package com.algolia.codegen;
 
+import io.swagger.util.Json;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
@@ -80,6 +81,43 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       Utils.getClientNameKebabCase(results),
       additionalProperties
     );
+
+    List<CodegenOperation> operations =
+      ((Map<String, List<CodegenOperation>>) results.get("operations")).get(
+          "operation"
+        );
+
+    // We read operations and detect if we should wrap parameters under an object.
+    // We only wrap if there is a mix between body parameters and other parameters.
+    for (CodegenOperation ope : operations) {
+      // Nothing to wrap as there is no parameters
+      if (!ope.hasParams) {
+        continue;
+      }
+
+      boolean hasBodyParams = ope.bodyParams.size() > 0;
+      boolean hasHeaderParams = ope.headerParams.size() > 0;
+      boolean hasQueryParams = ope.queryParams.size() > 0;
+      boolean hasPathParams = ope.pathParams.size() > 0;
+
+      // We don't wrap if there is no mix
+      if (!hasBodyParams) {
+        ope.vendorExtensions.put("x-create-wrapping-object", true);
+        continue;
+      }
+
+      // If there is nothing but path params, we just ensure it's not an array
+      if (!hasHeaderParams && !hasQueryParams && !hasPathParams) {
+        // We don't wrap parameters that are arrays, so we explicitely set it
+        if (!ope.bodyParams.get(0).isArray) {
+          ope.vendorExtensions.put("x-is-not-body-params-array", true);
+          continue;
+        }
+      }
+
+      // Any other cases here are wrapped
+      ope.vendorExtensions.put("x-create-wrapping-object", true);
+    }
 
     return results;
   }
