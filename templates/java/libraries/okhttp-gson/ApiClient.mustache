@@ -534,7 +534,7 @@ public class ApiClient {
      * @return The HTTP call
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, ApiCallback callback) throws AlgoliaRuntimeException {
+    public Call buildCall(String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, ApiCallback callback) throws AlgoliaRuntimeException {
         Request request = buildRequest(path, method, queryParams, body, headerParams, callback);
 
         return requester.newCall(request);
@@ -552,19 +552,17 @@ public class ApiClient {
      * @return The HTTP request
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      */
-    public Request buildRequest(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, ApiCallback callback) throws AlgoliaRuntimeException {
+    public Request buildRequest(String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, ApiCallback callback) throws AlgoliaRuntimeException {
         headerParams.put("X-Algolia-Application-Id", this.appId);
         headerParams.put("X-Algolia-API-Key", this.apiKey);
+        headerParams.put("Accept", "application/json");
+        headerParams.put("Content-Type", "application/json");
 
         final String url = buildUrl(path, queryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
 
         String contentType = (String) headerParams.get("Content-Type");
-        // ensuring a default content type
-        if (contentType == null) {
-            contentType = "application/json";
-        }
 
         RequestBody reqBody;
         if (!HttpMethod.permitsRequestBody(method)) {
@@ -604,7 +602,7 @@ public class ApiClient {
      * @param queryParams The query parameters
      * @return The full URL
      */
-    public String buildUrl(String path, List<Pair> queryParams) {
+    public String buildUrl(String path, Map<String, String> queryParams) {
         final StringBuilder url = new StringBuilder();
 
         //The real host will be assigned by the retry strategy
@@ -613,7 +611,7 @@ public class ApiClient {
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"
             String prefix = path.contains("?") ? "&" : "?";
-            for (Pair param : queryParams) {
+            for (Entry<String, String> param : queryParams.entrySet()) {
                 if (param.getValue() != null) {
                     if (prefix != null) {
                         url.append(prefix);
@@ -622,7 +620,7 @@ public class ApiClient {
                         url.append("&");
                     }
                     String value = parameterToString(param.getValue());
-                    url.append(escapeString(param.getName())).append("=").append(escapeString(value));
+                    url.append(escapeString(param.getKey())).append("=").append(escapeString(value));
                 }
             }
         }
