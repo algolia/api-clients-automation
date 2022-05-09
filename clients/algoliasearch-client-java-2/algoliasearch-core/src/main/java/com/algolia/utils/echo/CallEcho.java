@@ -1,6 +1,6 @@
 package com.algolia.utils.echo;
 
-import com.algolia.JSON;
+import com.algolia.utils.JSON;
 import com.algolia.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
