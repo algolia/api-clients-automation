@@ -1,0 +1,91 @@
+get:
+  tags:
+    - crawlers
+  operationId: listCrawlers
+  summary: List crawlers.
+  description: |-
+    Get a list of your available crawlers and pagination information.
+  parameters:
+    - in: query
+      name: name
+      schema:
+        type: string
+        example: MyCrawlerName
+      description: Filter by crawler name.
+    - $ref: '../../common/parameters.yml#/itemsPerPage'
+    - $ref: '../../common/parameters.yml#/page'
+    - $ref: '../../common/parameters.yml#/appId'
+  responses:
+    '200':
+      description: A list of crawlers and pagination information.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../../common/schemas/Pagination.yml'
+              - type: object
+                title: listCrawlersResponse
+                additionalProperties: false
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        id:
+                          $ref: '../../common/parameters.yml#/crawlerId'
+                        name:
+                          $ref: '../../common/parameters.yml#/crawlerName'
+    '400':
+      $ref: '../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../responses/401MissingAuthorization.yml'
+    '403':
+      description: The user doesn't have enough rights to create a crawler.
+    '404':
+      description: The call does not have results for this combinaison of query params.
+
+post:
+  tags:
+    - crawlers
+  operationId: createCrawler
+  summary: Create a crawler.
+  description: |-
+    Create a new crawler with the given configuration.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          title: createCrawlerRequestBody
+          additionalProperties: false
+          properties:
+            name:
+              $ref: '../../common/parameters.yml#/crawlerName'
+            config:
+              $ref: '../../common/schemas/Config.yml#/Config'
+          required:
+            - name
+            - config
+  responses:
+    '200':
+      description: A new crawler has been created with the given configuration.
+      content:
+        application/json:
+          schema:
+            type: object
+            title: createCrawlerResponse
+            additionalProperties: false
+            properties:
+              id:
+                type: string
+                description: The id of the crawler created.
+            required:
+              - id
+    '400':
+      $ref: '../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../responses/401MissingAuthorization.yml'
+    '403':
+      description: The user doesn't have enough rights to create a crawler.

@@ -1,0 +1,42 @@
+post:
+  tags:
+    - one_crawler
+  operationId: createCrawl
+  summary: Crawl specific URLs.
+  description: |
+    Immediately crawl some URLs and update the live index.
+
+    The passed URLs will be crawled immediately, and the generated records will be pushed to the live index if no reindex is currently running.
+    If a reindex is running, the records will be pushed to the temporary index.
+  parameters:
+    - $ref: '../../common/parameters.yml#/crawlerIdPath'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          title: createCrawlRequestBody
+          additionalProperties: false
+          properties:
+            urls:
+              type: array
+              items:
+                type: string
+              example: ['https://www.algolia.com/products/crawler/']
+            save:
+              type: boolean
+              description: |
+                If true, the given URLs will be added to the `extraUrls` field of the config (if not already in `startUrls` or `sitemaps`).
+                If false, the URLs will not be saved in the config.
+                If unspecified, the URLs will be saved to the `extraUrls` field of the config only if they haven't been indexed during the last reindex.
+          required:
+            - urls
+  responses:
+    '200':
+      $ref: '../../responses/200TaskAcknowledged.yml'
+    '400':
+      $ref: '../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../responses/403NoRightsOnCrawler.yml'

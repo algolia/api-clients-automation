@@ -1,0 +1,113 @@
+get:
+  tags:
+    - one_crawler
+  operationId: getCrawler
+  summary: Get a crawler.
+  description: |-
+    Get information about the specified crawler and its settings.
+  parameters:
+    - $ref: '../../common/parameters.yml#/crawlerIdPath'
+    - in: query
+      name: withConfig
+      schema:
+        type: boolean
+      description: Whether or not the configuration should be returned in the response (in the 'config' field).
+  responses:
+    '200':
+      description: Several field with information about the specified crawler.
+      content:
+        application/json:
+          schema:
+            title: getCrawlerResponse
+            type: object
+            additionalProperties: false
+            properties:
+              name:
+                $ref: '../../common/parameters.yml#/crawlerName'
+              createdAt:
+                type: string
+                # format: date-time
+                description: The creation date of this crawler.
+                example: '2019-05-10T07:58:41.146Z'
+              updatedAt:
+                type: string
+                # format: date-time
+                description: The date this crawler was last updated.
+                example: '2019-05-10T08:16:47.920Z'
+              running:
+                type: boolean
+                description: Indicate if this crawler is running, i.e. will crawl regularly based on its configuration.
+              reindexing:
+                type: boolean
+                description: Indicate if this crawler is currently doing a complete reindex.
+              blocked:
+                type: boolean
+                description: Indicate if this crawler is currently blocked and need a manual intervention in the Console.
+                example: false
+              blockingError:
+                type: string
+                description: The reason for which the crawler has been blocked.
+                example: "Error: Failed to fetch external data for source 'testCSV': 404"
+              blockingTaskId:
+                type: string
+                description: The ID of the task that is currently blocking the crawler.
+              lastReindexStartedAt:
+                type: string
+                # format: date-time
+                nullable: true
+                description: The date when the last complete reindex was started. Will be null if no reindex was ever done.
+                example: '2019-05-10T08:16:47.920Z'
+              lastReindexEndedAt:
+                type: string
+                # format: date-time
+                nullable: true
+                description: The date when the last complete reindex finished. Can be null if the reindex is still running.
+                example: null
+              config:
+                $ref: '../../common/schemas/Config.yml#/Config'
+            required:
+              - name
+              - createdAt
+              - updatedAt
+              - running
+              - reindexing
+              - blocked
+              - lastReindexStartedAt
+              - lastReindexEndedAt
+    '400':
+      $ref: '../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../responses/403NoRightsOnCrawler.yml'
+
+patch:
+  tags:
+    - one_crawler
+  operationId: patchCrawler
+  summary: Update a crawler.
+  description: |-
+    Update parts of the crawler, either its name, its config, or both.
+  parameters:
+    - $ref: '../../common/parameters.yml#/crawlerIdPath'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          title: patchCrawlerRequestBody
+          additionalProperties: false
+          properties:
+            name:
+              $ref: '../../common/parameters.yml#/crawlerName'
+            config:
+              $ref: '../../common/schemas/Config.yml#/Config'
+  responses:
+    '200':
+      $ref: '../../responses/200TaskAcknowledged.yml'
+    '400':
+      $ref: '../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../responses/403NoRightsOnCrawler.yml'

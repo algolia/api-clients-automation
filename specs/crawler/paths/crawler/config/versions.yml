@@ -1,0 +1,46 @@
+get:
+  tags:
+    - config
+  operationId: listConfigVersions
+  summary: List versions.
+  description: |-
+    List all crawler's configuration versions.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/crawlerIdPath'
+    - $ref: '../../../common/parameters.yml#/itemsPerPage'
+    - $ref: '../../../common/parameters.yml#/page'
+  responses:
+    '200':
+      description: A list of crawler versions and pagination information.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../../../common/schemas/Pagination.yml'
+              - type: object
+                title: getConfigVersionResponse
+                additionalProperties: false
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        version:
+                          type: integer
+                          minimum: 1
+                        createdAt:
+                          type: string
+                          # format: dateTime
+                        authorId:
+                          type: string
+                      required:
+                        - version
+                        - createdAt
+    '400':
+      $ref: '../../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../../responses/403NoRightsOnCrawler.yml'

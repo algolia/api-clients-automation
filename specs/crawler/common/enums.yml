@@ -1,0 +1,27 @@
+status:
+  type: string
+  description: A string corresponding to the status of the group.
+  enum: [DONE, SKIPPED, FAILED]
+
+category:
+  type: string
+  description: In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'.
+  enum: [fetch, extraction, indexing, success]
+
+functionAsStringType:
+  type: string
+  enum:
+    - function
+
+fileTypes:
+  type: string
+  enum:
+    - html
+    - pdf
+    - doc
+    - xls
+    - ppt
+    - odt
+    - ods
+    - odp
+    - emaail

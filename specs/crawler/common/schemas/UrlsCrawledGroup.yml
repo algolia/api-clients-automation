@@ -1,0 +1,22 @@
+type: object
+description: Represent a group of URLs that have been crawled and have the same final state.
+properties:
+  status:
+    $ref: '../enums.yml#/status'
+  reason:
+    type: string
+    description: The code of the reason why when ended up in this status.
+  category:
+    $ref: '../enums.yml#/category'
+  count:
+    type: integer
+    description: Number of URLs belonging to this group.
+  readable:
+    type: string
+    description: Human redeable version of the error.
+example:
+  status: SKIPPED
+  reason: forbidden_by_robotstxt
+  category: fetch
+  nbUrls: 3
+  readable: Forbidden by robots.txt

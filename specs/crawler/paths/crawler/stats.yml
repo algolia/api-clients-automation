@@ -1,0 +1,33 @@
+get:
+  tags:
+    - one_crawler
+  operationId: getCrawlerStats
+  summary: Get statistics.
+  description: |-
+    Get a summary of the current status of crawled URLs for the specified crawler.
+  parameters:
+    - $ref: '../../common/parameters.yml#/crawlerIdPath'
+  responses:
+    '200':
+      description: Several metrics to know what the crawler did during since the last reindex.
+      content:
+        application/json:
+          schema:
+            type: object
+            title: getCrawlerStatsResponse
+            additionalProperties: false
+            properties:
+              count:
+                type: integer
+                description: The total number of crawled URLs.
+              data:
+                type: array
+                items:
+                  $ref: '../../common/schemas/UrlsCrawledGroup.yml'
+            required:
+              - count
+              - data
+    '401':
+      $ref: '../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../responses/403NoRightsOnCrawler.yml'

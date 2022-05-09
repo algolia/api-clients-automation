@@ -1,0 +1,40 @@
+get:
+  tags:
+    - config
+  operationId: getConfigVersion
+  summary: Get a version.
+  description: |-
+    Get a specific configuration's version of a crawler.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/crawlerIdPath'
+    - $ref: '../../../common/parameters.yml#/crawlerVersionIdPath'
+  responses:
+    '200':
+      description: A specific revision of the crawler.
+      content:
+        application/json:
+          schema:
+            type: object
+            title: listConfigVersionsResponse
+            additionalProperties: false
+            properties:
+              version:
+                type: integer
+                minimum: 1
+              config:
+                $ref: '../../../common/schemas/Config.yml#/Config'
+              createdAt:
+                type: string
+                # format: dateTime
+              authorId:
+                type: string
+            required:
+              - version
+              - config
+              - createdAt
+    '400':
+      $ref: '../../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../../responses/403NoRightsOnCrawler.yml'

@@ -1,0 +1,64 @@
+crawlerId:
+  type: string
+  description: The unique id of the crawler.
+  example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+
+crawlerName:
+  type: string
+  maxLength: 64
+  description: The name of the crawler.
+  example: My crawler
+
+crawlerIdPath:
+  name: id
+  in: path
+  description: The Id of the targeted crawler.
+  required: true
+  schema:
+    type: string
+    # format: uuid
+
+taskIdPath:
+  name: tid
+  in: path
+  description: The Id of the targeted Task.
+  required: true
+  schema:
+    type: string
+    # format: uuid
+
+crawlerVersionIdPath:
+  name: version
+  in: path
+  description: The version of the targeted crawler.
+  required: true
+  schema:
+    type: integer
+
+page:
+  in: query
+  name: page
+  schema:
+    type: integer
+    minimum: 1
+    maximum: 100
+    default: 1
+  description: Change the page number.
+
+appId:
+  in: query
+  name: appId
+  schema:
+    type: string
+    example: XXXXXXX123
+  description: Filter by Application ID.
+
+itemsPerPage:
+  in: query
+  name: itemsPerPage
+  schema:
+    type: integer
+    minimum: 1
+    default: 20
+    maximum: 100
+  description: Change the number of items per page.

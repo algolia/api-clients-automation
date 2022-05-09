@@ -1,0 +1,33 @@
+get:
+  tags:
+    - tasks
+  operationId: getTask
+  summary: Get a task.
+  description: |-
+    Get status of a task.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/crawlerIdPath'
+    - $ref: '../../../common/parameters.yml#/taskIdPath'
+  responses:
+    '200':
+      description: A response telling you if an task is still pending or not.
+      content:
+        application/json:
+          schema:
+            type: object
+            title: getTaskResponse
+            additionalProperties: false
+            properties:
+              pending:
+                type: boolean
+                description: |-
+                  A boolean that will be true if the task hasn't been processed yet,
+                  false if it has been processed or if the task doesn't exists.
+            required:
+              - pending
+    '400':
+      $ref: '../../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../../responses/403NoRightsOnCrawler.yml'

@@ -1,0 +1,18 @@
+post:
+  tags:
+    - one_crawler
+  operationId: disableCrawler
+  summary: Disable a crawler.
+  description: |-
+    Request the specified crawler to pause itself and no longer process any other task.
+  parameters:
+    - $ref: '../../common/parameters.yml#/crawlerIdPath'
+  responses:
+    '200':
+      $ref: '../../responses/200TaskAcknowledged.yml'
+    '400':
+      $ref: '../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../responses/403NoRightsOnCrawler.yml'

@@ -1,0 +1,34 @@
+patch:
+  tags:
+    - config
+  operationId: patchConfig
+  summary: Update configuration.
+  description: |-
+    Update parts of a crawler’s configuration.
+
+    > The partial update endpoint currently only supports top-level configuration properties. For example, to update a recordExtractor, you need to pass the complete actions property.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/crawlerIdPath'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          title: patchConfigRequestBody
+          additionalProperties: false
+          description: A partial config object that will be injected into the current one.
+          example:
+            rateLimit: 10
+            startUrls:
+              - 'https://www.algolia.com/doc'
+              - 'https://www.algolia.com/blog'
+
+  responses:
+    '200':
+      $ref: '../../../responses/200TaskAcknowledged.yml'
+    '400':
+      $ref: '../../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../../responses/403NoRightsOnCrawler.yml'

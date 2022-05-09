@@ -1,0 +1,25 @@
+post:
+  tags:
+    - tasks
+  operationId: cancelTask
+  summary: Cancel blocked task.
+  description: |-
+    Cancel a blocked task on your crawler.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/crawlerIdPath'
+    - $ref: '../../../common/parameters.yml#/taskIdPath'
+  responses:
+    '200':
+      description: Your request was processed correctly.
+      content:
+        application/json:
+          schema:
+            type: object
+            title: cancelTaskResponse
+            additionalProperties: true
+    '400':
+      $ref: '../../../responses/400InvalidRequest.yml'
+    '401':
+      $ref: '../../../responses/401MissingAuthorization.yml'
+    '403':
+      $ref: '../../../responses/403NoRightsOnCrawler.yml'

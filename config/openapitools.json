@@ -133,6 +133,20 @@
           "hasRegionalHost": true
         }
       },
+      "javascript-crawler": {
+        "templateDir": "#{cwd}/templates/javascript/",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-crawler",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "npmName": "@experimental-api-clients-automation/client-crawler",
+          "buildFile": "client-crawler",
+          "packageVersion": "0.0.1",
+          "packageName": "@experimental-api-clients-automation/client-crawler",
+          "utilsPackageVersion": "0.0.1",
+          "hasRegionalHost": false
+        }
+      },
       "java-search": {
         "output": "#{cwd}/clients/algoliasearch-client-java-2",
         "artifactId": "algoliasearch-client-java-2",
