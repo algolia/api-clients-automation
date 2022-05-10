@@ -98,7 +98,7 @@ runs:
           echo "::set-output name=RUN_JS_ALGOLIASEARCH::true"
         fi
 
-        if [[ ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT || steps.diff.outputs.JS_UTILS_CHANGED > 0 }} ]]; then
+        if [[ ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT || steps.diff.outputs.JAVASCRIPT_UTILS_CHANGED > 0 }} ]]; then
           echo "Running JavaScript utils: true"
           echo "::set-output name=RUN_JS_UTILS::true"
         fi
@@ -135,12 +135,12 @@ outputs:
   RUN_CTS:
     description: Determine if the `cts` jobs should run
     value: ${{
+      steps.spec-matrix.outputs.RUN_SPECS ||
       steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 ||
       steps.diff.outputs.SCRIPTS_CHANGED > 0 ||
-      steps.diff.outputs.SHOULD_RUN_SPECS > 0 ||
       steps.diff.outputs.TESTS_CHANGED > 0 ||
-      steps.diff.outputs.JS_CLIENT_CHANGED > 0 ||
-      steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 ||
+      steps.diff.outputs.JAVASCRIPT_CLIENT_CHANGED > 0 ||
+      steps.diff.outputs.JAVASCRIPT_TEMPLATE_CHANGED > 0 ||
       steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 ||
       steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 

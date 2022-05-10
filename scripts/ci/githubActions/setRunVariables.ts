@@ -11,7 +11,21 @@ const PHP_CLIENT_FOLDER = getLanguageFolder('php');
 const CLIENTS_COMMON_FILES = [
   'config/openapitools.json',
   'config/clients.config.json',
+  'generators/src/main/java/com/algolia/codegen/Utils.java',
 ];
+
+/**
+ * Dependencies that are common to every specs, clients or CTS jobs.
+ */
+export const COMMON_DEPENDENCIES = {
+  GITHUB_ACTIONS_CHANGED: [
+    '.github/actions',
+    '.github/workflows',
+    '.github/.cache_version',
+  ],
+  SCRIPTS_CHANGED: ['scripts'],
+  COMMON_SPECS_CHANGED: ['specs/common'],
+};
 
 /**
  * Exhaustive list of output variables to use in the CI.
@@ -24,23 +38,9 @@ const CLIENTS_COMMON_FILES = [
  * The variable will be accessible in the CI via `steps.diff.outputs.<name>`.
  */
 export const DEPENDENCIES = {
-  GITHUB_ACTIONS_CHANGED: [
-    '.github/actions',
-    '.github/workflows',
-    '.github/.cache_version',
-  ],
-  SHOULD_RUN_SPECS: [
-    ...CLIENTS_COMMON_FILES,
-    'specs',
-    'templates',
-    'generators',
-    ':!specs/bundled',
-  ],
-  COMMON_SPECS_CHANGED: ['specs/common'],
+  ...COMMON_DEPENDENCIES,
   TESTS_CHANGED: ['tests'],
-  SCRIPTS_CHANGED: ['scripts'],
-  GENERATORS_CHANGED: ['generators'],
-  JS_CLIENT_CHANGED: [
+  JAVASCRIPT_CLIENT_CHANGED: [
     ...CLIENTS_COMMON_FILES,
     JS_CLIENT_FOLDER,
     `:!${JS_CLIENT_FOLDER}/.github`,
@@ -52,7 +52,7 @@ export const DEPENDENCIES = {
     `${JS_CLIENT_FOLDER}/packages/client-analytics`,
     `${JS_CLIENT_FOLDER}/packages/client-personalization`,
   ],
-  JS_UTILS_CHANGED: [
+  JAVASCRIPT_UTILS_CHANGED: [
     `${JS_CLIENT_FOLDER}/packages/client-common`,
     `${JS_CLIENT_FOLDER}/packages/requester-browser-xhr`,
     `${JS_CLIENT_FOLDER}/packages/requester-node-http`,
@@ -60,11 +60,20 @@ export const DEPENDENCIES = {
   JS_COMMON_TESTS_CHANGED: [
     `${JS_CLIENT_FOLDER}/packages/client-common/src/__tests__`,
   ],
-  JS_TEMPLATE_CHANGED: ['templates/javascript'],
+  JAVASCRIPT_TEMPLATE_CHANGED: [
+    'templates/javascript',
+    'generators/src/main/java/com/algolia/codegen/AlgoliaJavascriptGenerator.java',
+  ],
   JAVA_CLIENT_CHANGED: [...CLIENTS_COMMON_FILES, JAVA_CLIENT_FOLDER],
-  JAVA_TEMPLATE_CHANGED: ['templates/java'],
+  JAVA_TEMPLATE_CHANGED: [
+    'templates/java',
+    'generators/src/main/java/com/algolia/codegen/AlgoliaJavaGenerator.java',
+  ],
   PHP_CLIENT_CHANGED: [...CLIENTS_COMMON_FILES, PHP_CLIENT_FOLDER],
-  PHP_TEMPLATE_CHANGED: ['templates/php'],
+  PHP_TEMPLATE_CHANGED: [
+    'templates/php',
+    'generators/src/main/java/com/algolia/codegen/AlgoliaPhpGenerator.java',
+  ],
 };
 
 /**
