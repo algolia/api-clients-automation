@@ -113,35 +113,33 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
     * @summary {{&summary}}
     {{/summary}}
     {{#vendorExtensions}}
-      {{#allParams.0}}
-        {{#x-create-wrapping-object}}
-        * @param {{nickname}} - The {{nickname}} object.
-        {{#allParams}}
-        * @param {{nickname}}.{{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
-        {{/allParams}}
-        {{/x-create-wrapping-object}}
-        {{#x-is-not-body-params-array}}
-        * @param {{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
-        {{/x-is-not-body-params-array}}
-      {{/allParams.0}}
+      {{#x-create-wrapping-object}}
+      * @param {{nickname}} - The {{nickname}} object.
+      {{#allParams}}
+      * @param {{nickname}}.{{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+      {{/allParams}}
+      {{/x-create-wrapping-object}}
+      {{#x-is-single-body-param}}
+        {{#bodyParams}}
+          * @param {{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+        {{/bodyParams}}
+      {{/x-is-single-body-param}}
     {{/vendorExtensions}}
     */
     {{nickname}}(
       {{#vendorExtensions}}
-        {{#allParams.0}}
-          {{#x-create-wrapping-object}}
-            {
-              {{#allParams}}
-                {{paramName}},
-              {{/allParams}}
-            }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
-          {{/x-create-wrapping-object}}
-          {{#x-is-not-body-params-array}}
-            {{#bodyParams}}
-              {{paramName}}: {{{dataType}}},
-            {{/bodyParams}}
-          {{/x-is-not-body-params-array}}
-        {{/allParams.0}}
+        {{#x-create-wrapping-object}}
+          {
+            {{#allParams}}
+              {{paramName}},
+            {{/allParams}}
+          }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
+        {{/x-create-wrapping-object}}
+        {{#x-is-single-body-param}}
+          {{#bodyParams}}
+            {{paramName}}: {{{dataType}}},
+          {{/bodyParams}}
+        {{/x-is-single-body-param}}
       {{/vendorExtensions}}
       requestOptions?: RequestOptions
         ) : Promise<{{{returnType}}}> {
@@ -200,7 +198,7 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
 export type {{capitalizedApiName}} = ReturnType<typeof create{{capitalizedApiName}}>;
 
 {{#operation}}
-{{#vendorExtensions}}{{#allParams.0}}
+{{#vendorExtensions}}
   {{#x-create-wrapping-object}}
 export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{#allParams}}
@@ -213,7 +211,7 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{/allParams}}
 }
   {{/x-create-wrapping-object}}
-{{/allParams.0}}{{/vendorExtensions}}
+{{/vendorExtensions}}
 
 {{/operation}}
 
