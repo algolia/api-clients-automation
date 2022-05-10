@@ -111,7 +111,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
         `templates/${language}`,
         `generators/src`,
       ]),
-      testsOutputPath: `${testOutputBase}/client ${testOutputBase}/methods`,
+      testsOutputPathToClean: `${testOutputBase}/client ${testOutputBase}/methods`,
     });
   }
 
