@@ -22,7 +22,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private String language;
   private String client;
   private String packageName;
-  private Boolean updateVersions;
 
   /**
    * Configures the type of generator.
@@ -64,7 +63,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
     packageName = (String) additionalProperties.get("packageName");
-    updateVersions = "true".equals(additionalProperties.get("updateVersions"));
 
     try {
       JsonNode config = Json
@@ -87,12 +85,10 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
         )
       );
 
-      if (updateVersions) {
-        if (language.equals("javascript")) {
-          supportingFiles.add(
-            new SupportingFile("package.mustache", ".", "package.json")
-          );
-        }
+      if (language.equals("javascript")) {
+        supportingFiles.add(
+          new SupportingFile("package.mustache", ".", "package.json")
+        );
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -122,6 +118,67 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
     lambdas.put("escapequotes", new EscapeQuotesLambda());
     return lambdas;
+  }
+
+  private Map<String, String> getPackageVersionMap() {
+    HashMap<String, String> packageVersionMap = new HashMap<>();
+    JsonNode openApiToolsConfig = null;
+    try {
+      openApiToolsConfig =
+        Json.mapper().readTree(new File("config/openapitools.json"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+
+    Iterator<JsonNode> generatorIterator = openApiToolsConfig
+      .get("generator-cli")
+      .get("generators")
+      .elements();
+    while (generatorIterator.hasNext()) {
+      JsonNode generator = generatorIterator.next();
+      JsonNode additionalProperties = generator.get("additionalProperties");
+      packageVersionMap.put(
+        additionalProperties.get("packageName").asText(),
+        additionalProperties.get("packageVersion").asText()
+      );
+    }
+
+    return packageVersionMap;
+  }
+
+  private String getJavaScriptUtilsPackageVersion() {
+    JsonNode openApiToolsConfig = null;
+    try {
+      openApiToolsConfig =
+        Json.mapper().readTree(new File("config/openapitools.json"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+
+    JsonNode clientsConfig = null;
+    try {
+      clientsConfig =
+        Json.mapper().readTree(new File("config/clients.config.json"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    String mainPackage = clientsConfig
+      .get("javascript")
+      .get("mainPackage")
+      .asText();
+
+    String utilsPackageVersion = openApiToolsConfig
+      .get("generator-cli")
+      .get("generators")
+      .get(mainPackage)
+      .get("additionalProperties")
+      .get("utilsPackageVersion")
+      .asText();
+
+    return utilsPackageVersion;
   }
 
   @Override
@@ -157,6 +214,11 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("defaultRegion", client.equals("predict") ? "ew" : "us");
       bundle.put("lambda", lambda);
+      bundle.put("packageVersionMap", this.getPackageVersionMap());
+      bundle.put(
+        "utilsPackageVersion",
+        this.getJavaScriptUtilsPackageVersion()
+      );
 
       List<Object> blocks = new ArrayList<>();
       ParametersWithDataType paramsType = new ParametersWithDataType(

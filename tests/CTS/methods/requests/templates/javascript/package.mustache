@@ -5,18 +5,20 @@
     "test": "jest"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/algoliasearch-lite": "0.2.0",
-    "@experimental-api-clients-automation/client-abtesting": "0.2.0",
-    "@experimental-api-clients-automation/client-analytics": "0.2.0",
-    "@experimental-api-clients-automation/client-common": "0.2.0",
-    "@experimental-api-clients-automation/client-insights": "0.2.0",
-    "@experimental-api-clients-automation/client-personalization": "0.2.0",
-    "@experimental-api-clients-automation/client-predict": "0.2.0",
-    "@experimental-api-clients-automation/client-query-suggestions": "0.2.0",
-    "@experimental-api-clients-automation/client-search": "0.2.0",
-    "@experimental-api-clients-automation/client-sources": "0.2.0",
-    "@experimental-api-clients-automation/recommend": "0.2.0",
-    "@experimental-api-clients-automation/requester-node-http": "0.2.0"
+    {{#packageVersionMap}}
+    "@experimental-api-clients-automation/algoliasearch-lite": "{{@experimental-api-clients-automation/algoliasearch-lite}}",
+    "@experimental-api-clients-automation/client-abtesting": "{{@experimental-api-clients-automation/client-abtesting}}",
+    "@experimental-api-clients-automation/client-analytics": "{{@experimental-api-clients-automation/client-analytics}}",
+    "@experimental-api-clients-automation/client-common": "{{utilsPackageVersion}}",
+    "@experimental-api-clients-automation/client-insights": "{{@experimental-api-clients-automation/client-insights}}",
+    "@experimental-api-clients-automation/client-personalization": "{{@experimental-api-clients-automation/client-personalization}}",
+    "@experimental-api-clients-automation/client-predict": "{{@experimental-api-clients-automation/client-predict}}",
+    "@experimental-api-clients-automation/client-query-suggestions": "{{@experimental-api-clients-automation/client-query-suggestions}}",
+    "@experimental-api-clients-automation/client-search": "{{@experimental-api-clients-automation/client-search}}",
+    "@experimental-api-clients-automation/client-sources": "{{@experimental-api-clients-automation/client-sources}}",
+    "@experimental-api-clients-automation/recommend": "{{@experimental-api-clients-automation/recommend}}",
+    "@experimental-api-clients-automation/requester-node-http": "{{utilsPackageVersion}}"
+    {{/packageVersionMap}}
   },
   "devDependencies": {
     "@types/jest": "27.4.1",
