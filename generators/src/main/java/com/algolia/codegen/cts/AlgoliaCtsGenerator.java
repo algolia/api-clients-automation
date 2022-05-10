@@ -22,6 +22,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private String language;
   private String client;
   private String packageName;
+  private Boolean updateVersions;
 
   /**
    * Configures the type of generator.
@@ -63,6 +64,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
     packageName = (String) additionalProperties.get("packageName");
+    updateVersions = "true".equals(additionalProperties.get("updateVersions"));
 
     try {
       JsonNode config = Json
@@ -84,6 +86,14 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
           clientName + testConfig.extension
         )
       );
+
+      if (updateVersions) {
+        if (language.equals("javascript")) {
+          supportingFiles.add(
+            new SupportingFile("package.mustache", ".", "package.json")
+          );
+        }
+      }
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(1);

@@ -207,17 +207,19 @@ ctsCommand
   )
   .option('-v, --verbose', 'make the generation verbose')
   .option('-i, --interactive', 'open prompt to query parameters')
+  .option('-u, --update-versions', 'update versions of CTS')
   .action(
     async (
       language: Language | 'all' | undefined,
       client: string[],
-      { verbose, interactive }
+      { verbose, interactive, updateVersions }
     ) => {
       language = await promptLanguage(language, interactive);
       client = await promptClient(client, interactive);
 
       await ctsGenerateMany(
         generatorList({ language, client }),
+        updateVersions,
         Boolean(verbose)
       );
     }
