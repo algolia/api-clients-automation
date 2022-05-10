@@ -235,7 +235,7 @@ jobs:
       - name: Check diff with pushed CTS
         if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
         run: |
-          git --no-pager diff
+          git --no-pager diff ${{ matrix.client.testsOutputPathToClean }}
           exit $(git diff --name-only --diff-filter=d ${{ matrix.client.testsOutputPathToClean }} | wc -l)
 
       - name: Run CTS
