@@ -94,10 +94,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         continue;
       }
 
-      boolean hasBodyParams = ope.bodyParams.size() > 0;
-      boolean hasHeaderParams = ope.headerParams.size() > 0;
-      boolean hasQueryParams = ope.queryParams.size() > 0;
-      boolean hasPathParams = ope.pathParams.size() > 0;
+      boolean hasBodyParams = !ope.bodyParams.isEmpty();
+      boolean hasHeaderParams = !ope.headerParams.isEmpty();
+      boolean hasQueryParams = !ope.queryParams.isEmpty();
+      boolean hasPathParams = !ope.pathParams.isEmpty();
 
       // If there is nothing but body params, we just check if it's a single param
       if (

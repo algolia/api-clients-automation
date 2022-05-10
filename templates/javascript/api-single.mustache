@@ -198,8 +198,7 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
 export type {{capitalizedApiName}} = ReturnType<typeof create{{capitalizedApiName}}>;
 
 {{#operation}}
-{{#vendorExtensions}}
-  {{#x-create-wrapping-object}}
+{{#vendorExtensions.x-create-wrapping-object}}
 export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{#allParams}}
     {{#description}}
@@ -210,8 +209,7 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
     {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
   {{/allParams}}
 }
-  {{/x-create-wrapping-object}}
-{{/vendorExtensions}}
+{{/vendorExtensions.x-create-wrapping-object}}
 
 {{/operation}}
 
