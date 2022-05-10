@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.algolia.EchoRequester;
 import com.algolia.EchoResponse;
-import com.algolia.api.AbtestingClient;
-import com.algolia.model.abtesting.*;
+import com.algolia.api.PredictClient;
+import com.algolia.model.predict.*;
 import com.algolia.utils.JSON;
 import com.google.gson.reflect.TypeToken;
 import java.util.*;
@@ -18,63 +18,15 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AbtestingClientTests {
+class PredictClientTests {
 
-  private AbtestingClient client;
+  private PredictClient client;
   private EchoRequester requester;
 
   @BeforeAll
   void init() {
     requester = new EchoRequester();
-    client = new AbtestingClient("appId", "apiKey", requester);
-  }
-
-  @Test
-  @DisplayName("addABTests with minimal parameters")
-  void addABTestsTest0() {
-    AddABTestsRequest addABTestsRequest0 = new AddABTestsRequest();
-    {
-      String endAt1 = "2022-12-31T00:00:00.000Z";
-      addABTestsRequest0.setEndAt(endAt1);
-      String name1 = "myABTest";
-      addABTestsRequest0.setName(name1);
-      List<AddABTestsVariant> variant1 = new ArrayList<>();
-      {
-        AbTestsVariant variant_02 = new AbTestsVariant();
-        {
-          String index3 = "AB_TEST_1";
-          variant_02.setIndex(index3);
-          int trafficPercentage3 = 30;
-          variant_02.setTrafficPercentage(trafficPercentage3);
-        }
-        variant1.add(AddABTestsVariant.ofAbTestsVariant(variant_02));
-        AbTestsVariant variant_12 = new AbTestsVariant();
-        {
-          String index3 = "AB_TEST_2";
-          variant_12.setIndex(index3);
-          int trafficPercentage3 = 50;
-          variant_12.setTrafficPercentage(trafficPercentage3);
-        }
-        variant1.add(AddABTestsVariant.ofAbTestsVariant(variant_12));
-      }
-      addABTestsRequest0.setVariant(variant1);
-    }
-
-    assertDoesNotThrow(() -> {
-      client.addABTests(addABTestsRequest0);
-    });
-    EchoResponse req = requester.getLastEchoResponse();
-
-    assertEquals(req.path, "/2/abtests");
-    assertEquals(req.method, "POST");
-
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variant\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
-        req.body,
-        JSONCompareMode.STRICT_ORDER
-      );
-    });
+    client = new PredictClient("appId", "apiKey", requester);
   }
 
   @Test
@@ -122,17 +74,134 @@ class AbtestingClientTests {
   }
 
   @Test
-  @DisplayName("deleteABTest")
-  void deleteABTestTest0() {
-    int id0 = 42;
+  @DisplayName("fetchUserProfile with minimal parameters for modelsToRetrieve")
+  void fetchUserProfileTest0() {
+    String userID0 = "user1";
+    ModelsToRetrieve params0 = new ModelsToRetrieve();
+    {
+      List<ModelsToRetrieveEnum> modelsToRetrieve1 = new ArrayList<>();
+      {
+        ModelsToRetrieveEnum modelsToRetrieve_02 = ModelsToRetrieveEnum.fromValue(
+          "funnel_stage"
+        );
+        modelsToRetrieve1.add(modelsToRetrieve_02);
+        ModelsToRetrieveEnum modelsToRetrieve_12 = ModelsToRetrieveEnum.fromValue(
+          "order_value"
+        );
+        modelsToRetrieve1.add(modelsToRetrieve_12);
+        ModelsToRetrieveEnum modelsToRetrieve_22 = ModelsToRetrieveEnum.fromValue(
+          "affinities"
+        );
+        modelsToRetrieve1.add(modelsToRetrieve_22);
+      }
+      params0.setModelsToRetrieve(modelsToRetrieve1);
+    }
 
     assertDoesNotThrow(() -> {
-      client.deleteABTest(id0);
+      client.fetchUserProfile(userID0, Params.ofModelsToRetrieve(params0));
     });
     EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.path, "/2/abtests/42");
-    assertEquals(req.method, "DELETE");
+    assertEquals(req.path, "/1/users/user1/fetch");
+    assertEquals(req.method, "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"modelsToRetrieve\":[\"funnel_stage\",\"order_value\",\"affinities\"]}",
+        req.body,
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("fetchUserProfile with minimal parameters for typesToRetrieve")
+  void fetchUserProfileTest1() {
+    String userID0 = "user1";
+    TypesToRetrieve params0 = new TypesToRetrieve();
+    {
+      List<TypesToRetrieveEnum> typesToRetrieve1 = new ArrayList<>();
+      {
+        TypesToRetrieveEnum typesToRetrieve_02 = TypesToRetrieveEnum.fromValue(
+          "properties"
+        );
+        typesToRetrieve1.add(typesToRetrieve_02);
+        TypesToRetrieveEnum typesToRetrieve_12 = TypesToRetrieveEnum.fromValue(
+          "segments"
+        );
+        typesToRetrieve1.add(typesToRetrieve_12);
+      }
+      params0.setTypesToRetrieve(typesToRetrieve1);
+    }
+
+    assertDoesNotThrow(() -> {
+      client.fetchUserProfile(userID0, Params.ofTypesToRetrieve(params0));
+    });
+    EchoResponse req = requester.getLastEchoResponse();
+
+    assertEquals(req.path, "/1/users/user1/fetch");
+    assertEquals(req.method, "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"typesToRetrieve\":[\"properties\",\"segments\"]}",
+        req.body,
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("fetchUserProfile with all parameters")
+  void fetchUserProfileTest2() {
+    String userID0 = "user1";
+    AllParams params0 = new AllParams();
+    {
+      List<ModelsToRetrieveEnum> modelsToRetrieve1 = new ArrayList<>();
+      {
+        ModelsToRetrieveEnum modelsToRetrieve_02 = ModelsToRetrieveEnum.fromValue(
+          "funnel_stage"
+        );
+        modelsToRetrieve1.add(modelsToRetrieve_02);
+        ModelsToRetrieveEnum modelsToRetrieve_12 = ModelsToRetrieveEnum.fromValue(
+          "order_value"
+        );
+        modelsToRetrieve1.add(modelsToRetrieve_12);
+        ModelsToRetrieveEnum modelsToRetrieve_22 = ModelsToRetrieveEnum.fromValue(
+          "affinities"
+        );
+        modelsToRetrieve1.add(modelsToRetrieve_22);
+      }
+      params0.setModelsToRetrieve(modelsToRetrieve1);
+      List<TypesToRetrieveEnum> typesToRetrieve1 = new ArrayList<>();
+      {
+        TypesToRetrieveEnum typesToRetrieve_02 = TypesToRetrieveEnum.fromValue(
+          "properties"
+        );
+        typesToRetrieve1.add(typesToRetrieve_02);
+        TypesToRetrieveEnum typesToRetrieve_12 = TypesToRetrieveEnum.fromValue(
+          "segments"
+        );
+        typesToRetrieve1.add(typesToRetrieve_12);
+      }
+      params0.setTypesToRetrieve(typesToRetrieve1);
+    }
+
+    assertDoesNotThrow(() -> {
+      client.fetchUserProfile(userID0, Params.ofAllParams(params0));
+    });
+    EchoResponse req = requester.getLastEchoResponse();
+
+    assertEquals(req.path, "/1/users/user1/fetch");
+    assertEquals(req.method, "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"modelsToRetrieve\":[\"funnel_stage\",\"order_value\",\"affinities\"],\"typesToRetrieve\":[\"properties\",\"segments\"]}",
+        req.body,
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
   }
 
   @Test
@@ -169,46 +238,6 @@ class AbtestingClientTests {
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
-      new TypeToken<HashMap<String, String>>() {}.getType()
-    );
-    Map<String, String> actualQuery = req.queryParameters;
-
-    assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
-      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
-    }
-  }
-
-  @Test
-  @DisplayName("getABTest")
-  void getABTestTest0() {
-    int id0 = 42;
-
-    assertDoesNotThrow(() -> {
-      client.getABTest(id0);
-    });
-    EchoResponse req = requester.getLastEchoResponse();
-
-    assertEquals(req.path, "/2/abtests/42");
-    assertEquals(req.method, "GET");
-  }
-
-  @Test
-  @DisplayName("listABTests with minimal parameters")
-  void listABTestsTest0() {
-    int offset0 = 42;
-    int limit0 = 21;
-
-    assertDoesNotThrow(() -> {
-      client.listABTests(offset0, limit0);
-    });
-    EchoResponse req = requester.getLastEchoResponse();
-
-    assertEquals(req.path, "/2/abtests");
-    assertEquals(req.method, "GET");
-
-    Map<String, String> expectedQuery = JSON.deserialize(
-      "{\"offset\":\"42\",\"limit\":\"21\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
     Map<String, String> actualQuery = req.queryParameters;
@@ -331,19 +360,5 @@ class AbtestingClientTests {
     for (Map.Entry<String, String> p : actualQuery.entrySet()) {
       assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
-  }
-
-  @Test
-  @DisplayName("stopABTest")
-  void stopABTestTest0() {
-    int id0 = 42;
-
-    assertDoesNotThrow(() -> {
-      client.stopABTest(id0);
-    });
-    EchoResponse req = requester.getLastEchoResponse();
-
-    assertEquals(req.path, "/2/abtests/42/stop");
-    assertEquals(req.method, "POST");
   }
 }

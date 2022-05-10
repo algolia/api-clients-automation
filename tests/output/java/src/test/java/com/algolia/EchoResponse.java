@@ -1,11 +1,11 @@
 package com.algolia;
 
-import java.util.List;
+import java.util.Map;
 
 public class EchoResponse {
 
   public String path;
   public String method;
   public String body;
-  public List<Pair> queryParameters;
+  public Map<String, String> queryParameters;
 }

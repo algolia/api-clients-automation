@@ -2,8 +2,8 @@ package com.algolia;
 
 import com.algolia.utils.JSON;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -40,7 +40,7 @@ public class CallEcho implements Call {
     try {
       final Request copy = request.newBuilder().build();
       final Buffer buffer = new Buffer();
-      if(copy.body() == null) {
+      if (copy.body() == null) {
         return "";
       }
       copy.body().writeTo(buffer);
@@ -50,12 +50,12 @@ public class CallEcho implements Call {
     }
   }
 
-  private List<Pair> buildQueryParams() {
-    List<Pair> params = new ArrayList<Pair>();
+  private Map<String, String> buildQueryParams() {
+    Map<String, String> params = new HashMap<>();
     HttpUrl url = request.url();
     for (String name : url.queryParameterNames()) {
       for (String value : url.queryParameterValues(name)) {
-        params.add(new Pair(name, value));
+        params.put(name, value);
       }
     }
     return params;

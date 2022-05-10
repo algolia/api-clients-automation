@@ -1,10 +1,10 @@
 package com.algolia.utils;
 
+import com.algolia.exceptions.AlgoliaRuntimeException;
 import java.lang.reflect.Type;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
-import com.algolia.exceptions.AlgoliaRuntimeException;
 
 public interface Requester {
   public Call newCall(Request request);

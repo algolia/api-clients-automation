@@ -122,7 +122,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       file.getTemplateFile().equals("ApiResponse.mustache") ||
       file.getTemplateFile().equals("JSON.mustache") ||
       file.getTemplateFile().equals("ProgressRequestBody.mustache") ||
-      file.getTemplateFile().equals("ProgressResponseBody.mustache")
+      file.getTemplateFile().equals("ProgressResponseBody.mustache") ||
+      file.getTemplateFile().equals("Pair.mustache")
     );
   }
 

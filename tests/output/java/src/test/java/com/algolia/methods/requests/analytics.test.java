@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.algolia.EchoRequester;
 import com.algolia.EchoResponse;
-import com.algolia.Pair;
 import com.algolia.api.AnalyticsClient;
 import com.algolia.model.analytics.*;
 import com.algolia.utils.JSON;
@@ -66,10 +65,11 @@ class AnalyticsClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -109,10 +109,11 @@ class AnalyticsClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -133,10 +134,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -160,10 +162,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -184,10 +187,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -211,10 +215,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -235,10 +240,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -262,10 +268,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -286,10 +293,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -313,10 +321,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -337,10 +346,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -364,10 +374,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -388,10 +399,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -415,10 +427,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -439,10 +452,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -466,10 +480,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -490,10 +505,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -526,10 +542,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -550,10 +567,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -586,10 +604,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -610,10 +629,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -634,10 +654,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -670,10 +691,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -694,10 +716,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -732,10 +755,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -757,10 +781,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -784,10 +809,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -824,10 +850,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -866,10 +893,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -890,10 +918,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -928,10 +957,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -952,10 +982,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -992,10 +1023,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -1016,10 +1048,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -1058,10 +1091,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -1082,10 +1116,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -1109,10 +1144,11 @@ class AnalyticsClientTests {
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -1165,10 +1201,11 @@ class AnalyticsClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -1221,10 +1258,11 @@ class AnalyticsClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.queryParameters;
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 }

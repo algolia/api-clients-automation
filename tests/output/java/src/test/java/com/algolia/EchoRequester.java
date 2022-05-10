@@ -3,10 +3,11 @@ package com.algolia;
 import com.algolia.exceptions.*;
 import com.algolia.utils.JSON;
 import com.algolia.utils.Requester;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import okhttp3.Request;
 import okhttp3.Response;
-import java.io.IOException;
+
 public class EchoRequester implements Requester {
 
   private int connectionTimeout, readTimeout, writeTimeout;
@@ -32,10 +33,10 @@ public class EchoRequester implements Requester {
   public EchoResponse getLastEchoResponse() {
     try {
       return JSON.deserialize(lastResponse.body().string(), EchoResponse.class);
-    } catch(IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
       return null;
-    } 
+    }
   }
 
   // NO-OP for now
