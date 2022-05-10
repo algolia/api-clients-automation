@@ -3,11 +3,12 @@ package com.algolia.methods.requests;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.algolia.EchoRequester;
+import com.algolia.EchoResponse;
 import com.algolia.Pair;
 import com.algolia.api.AnalyticsClient;
 import com.algolia.model.analytics.*;
 import com.algolia.utils.JSON;
-import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,10 +22,12 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class AnalyticsClientTests {
 
   private AnalyticsClient client;
+  private EchoRequester requester;
 
   @BeforeAll
   void init() {
-    client = new AnalyticsClient("appId", "apiKey", new EchoRequester());
+    requester = new EchoRequester();
+    client = new AnalyticsClient("appId", "apiKey", requester);
   }
 
   @Test
@@ -32,13 +35,13 @@ class AnalyticsClientTests {
   void delTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.del(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "DELETE");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "DELETE");
   }
 
   @Test
@@ -51,19 +54,19 @@ class AnalyticsClientTests {
       parameters0.put("query", query1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0, parameters0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.del(path0, parameters0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "DELETE");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "DELETE");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -75,13 +78,13 @@ class AnalyticsClientTests {
   void getTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.get(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "GET");
   }
 
   @Test
@@ -94,19 +97,19 @@ class AnalyticsClientTests {
       parameters0.put("query", query1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0, parameters0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.get(path0, parameters0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -118,19 +121,19 @@ class AnalyticsClientTests {
   void getAverageClickPositionTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getAverageClickPosition(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getAverageClickPosition(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/clicks/averageClickPosition");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/clicks/averageClickPosition");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -145,24 +148,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getAverageClickPosition(
-          index0,
-          startDate0,
-          endDate0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getAverageClickPosition(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/clicks/averageClickPosition");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/clicks/averageClickPosition");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -174,19 +172,19 @@ class AnalyticsClientTests {
   void getClickPositionsTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getClickPositions(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getClickPositions(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/clicks/positions");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/clicks/positions");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -201,19 +199,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getClickPositions(index0, startDate0, endDate0, tags0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getClickPositions(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/clicks/positions");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/clicks/positions");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -225,19 +223,19 @@ class AnalyticsClientTests {
   void getClickThroughRateTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getClickThroughRate(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getClickThroughRate(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/clicks/clickThroughRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/clicks/clickThroughRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -252,19 +250,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getClickThroughRate(index0, startDate0, endDate0, tags0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getClickThroughRate(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/clicks/clickThroughRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/clicks/clickThroughRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -276,19 +274,19 @@ class AnalyticsClientTests {
   void getConversationRateTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getConversationRate(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getConversationRate(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/conversions/conversionRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/conversions/conversionRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -303,19 +301,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getConversationRate(index0, startDate0, endDate0, tags0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getConversationRate(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/conversions/conversionRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/conversions/conversionRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -327,19 +325,19 @@ class AnalyticsClientTests {
   void getNoClickRateTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getNoClickRate(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getNoClickRate(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noClickRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noClickRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -354,19 +352,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getNoClickRate(index0, startDate0, endDate0, tags0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getNoClickRate(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noClickRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noClickRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -378,19 +376,19 @@ class AnalyticsClientTests {
   void getNoResultsRateTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getNoResultsRate(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getNoResultsRate(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noResultRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noResultRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -405,19 +403,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getNoResultsRate(index0, startDate0, endDate0, tags0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getNoResultsRate(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noResultRate");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noResultRate");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -429,19 +427,19 @@ class AnalyticsClientTests {
   void getSearchesCountTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getSearchesCount(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getSearchesCount(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/count");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/count");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -456,19 +454,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getSearchesCount(index0, startDate0, endDate0, tags0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getSearchesCount(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/count");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/count");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -480,19 +478,19 @@ class AnalyticsClientTests {
   void getSearchesNoClicksTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getSearchesNoClicks(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getSearchesNoClicks(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noClicks");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noClicks");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -509,26 +507,26 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getSearchesNoClicks(
-          index0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getSearchesNoClicks(
+        index0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noClicks");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noClicks");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -540,19 +538,19 @@ class AnalyticsClientTests {
   void getSearchesNoResultsTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getSearchesNoResults(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getSearchesNoResults(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noResults");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noResults");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -569,26 +567,26 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getSearchesNoResults(
-          index0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getSearchesNoResults(
+        index0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches/noResults");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches/noResults");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -600,19 +598,19 @@ class AnalyticsClientTests {
   void getStatusTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getStatus(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getStatus(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/status");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/status");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -624,19 +622,19 @@ class AnalyticsClientTests {
   void getTopCountriesTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopCountries(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopCountries(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/countries");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/countries");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -653,26 +651,26 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopCountries(
-          index0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopCountries(
+        index0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/countries");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/countries");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -684,19 +682,19 @@ class AnalyticsClientTests {
   void getTopFilterAttributesTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFilterAttributes(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFilterAttributes(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -714,27 +712,27 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFilterAttributes(
-          index0,
-          search0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFilterAttributes(
+        index0,
+        search0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -747,19 +745,19 @@ class AnalyticsClientTests {
     String attribute0 = "myAttribute";
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFilterForAttribute(attribute0, index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFilterForAttribute(attribute0, index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters/myAttribute");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters/myAttribute");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -774,19 +772,19 @@ class AnalyticsClientTests {
     String attribute0 = "myAttribute1,myAttribute2";
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFilterForAttribute(attribute0, index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFilterForAttribute(attribute0, index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters/myAttribute1%2CmyAttribute2");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters/myAttribute1%2CmyAttribute2");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -805,28 +803,28 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFilterForAttribute(
-          attribute0,
-          index0,
-          search0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFilterForAttribute(
+        attribute0,
+        index0,
+        search0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters/myAttribute");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters/myAttribute");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -847,28 +845,28 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFilterForAttribute(
-          attribute0,
-          index0,
-          search0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFilterForAttribute(
+        attribute0,
+        index0,
+        search0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters/myAttribute1%2CmyAttribute2");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters/myAttribute1%2CmyAttribute2");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -880,19 +878,19 @@ class AnalyticsClientTests {
   void getTopFiltersNoResultsTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFiltersNoResults(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFiltersNoResults(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters/noResults");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters/noResults");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -910,27 +908,27 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopFiltersNoResults(
-          index0,
-          search0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopFiltersNoResults(
+        index0,
+        search0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/filters/noResults");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/filters/noResults");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -942,19 +940,19 @@ class AnalyticsClientTests {
   void getTopHitsTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopHits(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopHits(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/hits");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/hits");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -973,28 +971,28 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopHits(
-          index0,
-          search0,
-          clickAnalytics0,
-          startDate0,
-          endDate0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopHits(
+        index0,
+        search0,
+        clickAnalytics0,
+        startDate0,
+        endDate0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/hits");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/hits");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -1006,19 +1004,19 @@ class AnalyticsClientTests {
   void getTopSearchesTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopSearches(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopSearches(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -1038,29 +1036,29 @@ class AnalyticsClientTests {
     int offset0 = 42;
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getTopSearches(
-          index0,
-          clickAnalytics0,
-          startDate0,
-          endDate0,
-          orderBy0,
-          direction0,
-          limit0,
-          offset0,
-          tags0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getTopSearches(
+        index0,
+        clickAnalytics0,
+        startDate0,
+        endDate0,
+        orderBy0,
+        direction0,
+        limit0,
+        offset0,
+        tags0
+      );
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/searches");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/searches");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -1072,19 +1070,19 @@ class AnalyticsClientTests {
   void getUsersCountTest0() {
     String index0 = "index";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getUsersCount(index0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getUsersCount(index0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/users/count");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/users/count");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -1099,19 +1097,19 @@ class AnalyticsClientTests {
     String endDate0 = "2001-01-01";
     String tags0 = "tag";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getUsersCount(index0, startDate0, endDate0, tags0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getUsersCount(index0, startDate0, endDate0, tags0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/2/users/count");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/2/users/count");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -1123,13 +1121,13 @@ class AnalyticsClientTests {
   void postTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.post(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "POST");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "POST");
   }
 
   @Test
@@ -1147,18 +1145,18 @@ class AnalyticsClientTests {
       body0.put("body", body1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0, parameters0, body0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.post(path0, parameters0, body0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "POST");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "POST");
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
         "{\"body\":\"parameters\"}",
-        req.getBody(),
+        req.body,
         JSONCompareMode.STRICT_ORDER
       );
     });
@@ -1167,7 +1165,7 @@ class AnalyticsClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
@@ -1179,13 +1177,13 @@ class AnalyticsClientTests {
   void putTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.put(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.put(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "PUT");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "PUT");
   }
 
   @Test
@@ -1203,18 +1201,18 @@ class AnalyticsClientTests {
       body0.put("body", body1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.put(path0, parameters0, body0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.put(path0, parameters0, body0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "PUT");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "PUT");
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
         "{\"body\":\"parameters\"}",
-        req.getBody(),
+        req.body,
         JSONCompareMode.STRICT_ORDER
       );
     });
@@ -1223,7 +1221,7 @@ class AnalyticsClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    List<Pair> actualQuery = req.queryParameters;
     assertEquals(expectedQuery.size(), actualQuery.size());
     for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());

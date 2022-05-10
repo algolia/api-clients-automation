@@ -1,12 +1,17 @@
 package com.algolia.utils;
 
+import com.algolia.ApiClient;
+import com.algolia.exceptions.*;
 import com.algolia.utils.retry.RetryStrategy;
 import com.algolia.utils.retry.StatefulHost;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
+import java.io.IOException;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 
@@ -29,6 +34,85 @@ public class HttpRequester implements Requester {
 
   public Call newCall(Request request) {
     return httpClient.newCall(request);
+  }
+
+  public <T> T handleResponse(Response response, Type returnType)
+    throws AlgoliaRuntimeException {
+    if (response.isSuccessful()) {
+      if (returnType == null || response.code() == 204) {
+        // returning null if the returnType is not defined, or the status code is 204 (No Content)
+        if (response.body() != null) {
+          try {
+            response.body().close();
+          } catch (Exception e) {
+            throw new AlgoliaApiException(
+              response.message(),
+              e,
+              response.code()
+            );
+          }
+        }
+        return null;
+      } else {
+        return deserialize(response, returnType);
+      }
+    } else {
+      if (response.body() != null) {
+        try {
+          response.body().string();
+        } catch (IOException e) {
+          throw new AlgoliaApiException(response.message(), e, response.code());
+        }
+      }
+      throw new AlgoliaApiException(response.message(), response.code());
+    }
+  }
+
+  private <T> T deserialize(Response response, Type returnType)
+    throws AlgoliaRuntimeException {
+    if (response == null || returnType == null) {
+      return null;
+    }
+
+    if ("byte[]".equals(returnType.toString())) {
+      // Handle binary response (byte array).
+      try {
+        return (T) response.body().bytes();
+      } catch (IOException e) {
+        throw new AlgoliaRuntimeException(e);
+      }
+    }
+
+    String respBody;
+    try {
+      if (response.body() != null) respBody =
+        response.body().string(); else respBody = null;
+    } catch (IOException e) {
+      throw new AlgoliaRuntimeException(e);
+    }
+
+    if (respBody == null || "".equals(respBody)) {
+      return null;
+    }
+
+    String contentType = response.headers().get("Content-Type");
+    if (contentType == null) {
+      contentType = "application/json";
+    }
+    if (ApiClient.isJsonMime(contentType)) {
+      return JSON.deserialize(respBody, returnType);
+    } else if (returnType.equals(String.class)) {
+      // Expecting string, return the raw response body.
+      return (T) respBody;
+    } else {
+      throw new AlgoliaApiException(
+        "Content type \"" +
+        contentType +
+        "\" is not supported for type: " +
+        returnType,
+        response.code()
+      );
+    }
   }
 
   public void setDebugging(boolean debugging) {

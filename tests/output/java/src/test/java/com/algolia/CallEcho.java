@@ -1,9 +1,6 @@
-package com.algolia.utils.echo;
+package com.algolia;
 
 import com.algolia.utils.JSON;
-import com.algolia.Pair;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +36,20 @@ public class CallEcho implements Call {
     return null;
   }
 
+  private String processResponseBody() {
+    try {
+      final Request copy = request.newBuilder().build();
+      final Buffer buffer = new Buffer();
+      if(copy.body() == null) {
+        return "";
+      }
+      copy.body().writeTo(buffer);
+      return buffer.readUtf8();
+    } catch (final IOException e) {
+      return "error";
+    }
+  }
+
   private List<Pair> buildQueryParams() {
     List<Pair> params = new ArrayList<Pair>();
     HttpUrl url = request.url();
@@ -58,29 +69,11 @@ public class CallEcho implements Call {
     builder.protocol(Protocol.HTTP_2);
     builder.message("EchoRequest");
     try {
-      JsonObject body = new JsonObject();
-      body.addProperty("path", request.url().encodedPath());
-      body.addProperty("method", request.method());
-      body.add(
-        "queryParameters",
-        (JsonArray) JSON.deserialize(
-          JSON.serialize(buildQueryParams()),
-          JsonArray.class
-        )
-      );
-      try {
-        final Request copy = request.newBuilder().build();
-        final Buffer buffer = new Buffer();
-        if (copy.body() == null) {
-          body.addProperty("body", "");
-        } else {
-          copy.body().writeTo(buffer);
-          body.addProperty("body", buffer.readUtf8());
-        }
-      } catch (final IOException e) {
-        body.addProperty("body", "error");
-      }
-      System.out.println(body);
+      EchoResponse body = new EchoResponse();
+      body.path = request.url().encodedPath();
+      body.method = request.method();
+      body.body = processResponseBody();
+      body.queryParameters = buildQueryParams();
       builder.body(
         ResponseBody.create(
           JSON.serialize(body),

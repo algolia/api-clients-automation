@@ -6,7 +6,6 @@ import com.algolia.utils.UserAgent;
 import com.algolia.utils.JSON;
 
 import okhttp3.*;
-import com.algolia.utils.echo.EchoRequester;
 import okhttp3.internal.http.HttpMethod;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
@@ -306,7 +305,7 @@ public class ApiClient {
      * @param mime MIME (Multipurpose Internet Mail Extensions)
      * @return True if the given MIME is JSON, false otherwise.
      */
-    public boolean isJsonMime(String mime) {
+    public static boolean isJsonMime(String mime) {
         String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
         return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
     }
@@ -322,62 +321,6 @@ public class ApiClient {
             return URLEncoder.encode(str, "utf8").replaceAll("\\+", "%20");
         } catch (UnsupportedEncodingException e) {
             return str;
-        }
-    }
-
-    /**
-     * Deserialize response body to Java object, according to the return type and
-     * the Content-Type response header.
-     *
-     * @param <T> Type
-     * @param response HTTP response
-     * @param returnType The type of the Java object
-     * @return The deserialized Java object
-     * @throws AlgoliaRuntimeException If fail to deserialize response body, i.e. cannot read response body
-     *   or the Content-Type of the response is not supported.
-     */
-    public <T> T deserialize(Response response, Type returnType) throws AlgoliaRuntimeException {
-        if (response == null || returnType == null) {
-            return null;
-        }
-
-        if ("byte[]".equals(returnType.toString())) {
-            // Handle binary response (byte array).
-            try {
-                return (T) response.body().bytes();
-            } catch (IOException e) {
-                throw new AlgoliaRuntimeException(e);
-            }
-        }
-
-        String respBody;
-        try {
-            if (response.body() != null)
-                respBody = response.body().string();
-            else
-                respBody = null;
-        } catch (IOException e) {
-            throw new AlgoliaRuntimeException(e);
-        }
-
-        if (respBody == null || "".equals(respBody)) {
-            return null;
-        }
-
-        String contentType = response.headers().get("Content-Type");
-        if (contentType == null) {
-            // ensuring a default content type
-            contentType = "application/json";
-        }
-        if (isJsonMime(contentType)) {
-            return JSON.deserialize(respBody, returnType);
-        } else if (returnType.equals(String.class)) {
-            // Expecting string, return the raw response body.
-            return (T) respBody;
-        } else {
-            throw new AlgoliaApiException(
-                    "Content type \"" + contentType + "\" is not supported for type: " + returnType,
-                    response.code());
         }
     }
 
@@ -414,7 +357,7 @@ public class ApiClient {
      * @param returnType Return type
      * @see #execute(Call, Type)
      */
-    public <T> CompletableFuture<T> executeAsync(Call call, final Type returnType, String echoResponseClassName) {
+    public <T> CompletableFuture<T> executeAsync(Call call, final Type returnType) {
         final CompletableFuture<T> future = new CompletableFuture<>();
     call.enqueue(
       new Callback() {
@@ -426,63 +369,18 @@ public class ApiClient {
         @Override
         public void onResponse(Call call, Response response)
           throws IOException {
-          T result;
-          try {
-            if(requester instanceof EchoRequester) {
-              result = (T) handleResponse(response, Class.forName(echoResponseClassName));
-            } else {
-              result = (T) handleResponse(response, returnType);
+            try {
+              T result = requester.handleResponse(response, returnType);
+              future.complete(result);
+            } catch (AlgoliaRuntimeException e) {
+              future.completeExceptionally(e);
+            } catch (Exception e) {
+              future.completeExceptionally(new AlgoliaRuntimeException(e));
             }
-          } catch (AlgoliaRuntimeException e) {
-            future.completeExceptionally(e);
-            return;
-          } catch (Exception e) {
-            future.completeExceptionally(new AlgoliaRuntimeException(e));
-            return;
           }
-          future.complete(result);
         }
-      }
-    );
-    return future;
-    }
-
-    /**
-     * Handle the given response, return the deserialized object when the response is successful.
-     *
-     * @param <T> Type
-     * @param response Response
-     * @param returnType Return type
-     * @return Type
-     * @throws AlgoliaRuntimeException If the response has an unsuccessful status code or
-     *                      fail to deserialize the response body
-     */
-    public <T> T handleResponse(Response response, Type returnType) throws AlgoliaRuntimeException {
-        if (response.isSuccessful()) {
-            if (returnType == null || response.code() == 204) {
-                // returning null if the returnType is not defined,
-                // or the status code is 204 (No Content)
-                if (response.body() != null) {
-                    try {
-                        response.body().close();
-                    } catch (Exception e) {
-                        throw new AlgoliaApiException(response.message(), e, response.code());
-                    }
-                }
-                return null;
-            } else {
-                return deserialize(response, returnType);
-            }
-        } else {
-            if (response.body() != null) {
-                try {
-                    response.body().string();
-                } catch (IOException e) {
-                    throw new AlgoliaApiException(response.message(), e, response.code());
-                }
-            }
-            throw new AlgoliaApiException(response.message(), response.code());
-        }
+      );
+      return future;
     }
 
     /**

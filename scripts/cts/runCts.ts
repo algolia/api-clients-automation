@@ -11,11 +11,9 @@ async function runCtsOne(language: string, verbose: boolean): Promise<void> {
       await run('yarn workspace javascript-tests test', { verbose });
       break;
     case 'java':
-      /*
       await run('./gradle/gradlew --no-daemon -p tests/output/java test', {
         verbose,
       });
-      */
       break;
     case 'php': {
       let php = 'php8';

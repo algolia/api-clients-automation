@@ -9,7 +9,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 
 import com.algolia.utils.*;
-import com.algolia.utils.echo.*;
 import {{modelPackage}}.*;
 import com.algolia.exceptions.*;
 import com.algolia.utils.retry.CallType;
@@ -143,7 +142,6 @@ public class {{classname}} extends ApiClient {
   {{/isDeprecated}}
   public CompletableFuture<{{{returnType}}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}},{{/-last}} {{/allParams}}) throws AlgoliaRuntimeException {
     {{#allParams}}{{#required}}
-    // verify the required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
         throw new AlgoliaRuntimeException("Missing the required parameter '{{paramName}}' when calling {{operationId}}(Async)");
     }
@@ -184,7 +182,7 @@ public class {{classname}} extends ApiClient {
 
     Call call = this.buildCall(requestPath, "{{httpMethod}}", queryParams, bodyObj, headers);
     Type returnType = new TypeToken<{{{returnType}}}>() {}.getType();
-    return this.executeAsync(call, returnType, "com.algolia.utils.echo.EchoResponse{{baseName}}${{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}");
+    return this.executeAsync(call, returnType);
   }
   {{/operation}}
 }
