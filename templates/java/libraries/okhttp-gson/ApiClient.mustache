@@ -309,6 +309,8 @@ public class ApiClient {
     public Request buildRequest(String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams) throws AlgoliaRuntimeException {
         headerParams.put("X-Algolia-Application-Id", this.appId);
         headerParams.put("X-Algolia-API-Key", this.apiKey);
+        headerParams.put("Accept", "application/json");
+        headerParams.put("Content-Type", "application/json");
 
         String contentType = "application/json";
         headerParams.put("Accept", contentType);
@@ -317,7 +319,7 @@ public class ApiClient {
         final String url = buildUrl(path, queryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
-
+        
         RequestBody reqBody;
         if (!HttpMethod.permitsRequestBody(method)) {
             reqBody = null;
