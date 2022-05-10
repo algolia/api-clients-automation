@@ -43,8 +43,6 @@ export async function pushGeneratedCode(): Promise<void> {
     return;
   }
 
-  await run(`git --no-pager diff`, { verbose: true });
-
   console.log(`${nbDiff} changes found`);
 
   // determine generated branch name based on current branch

@@ -53,7 +53,7 @@ runs:
     - name: Unzip clients-javascript artifact
       if: ${{ inputs.type == 'all' }}
       shell: bash
-      run: unzip -q -o clients-javascript.zip
+      run: unzip -q -o clients-javascript.zip && rm clients-javascript.zip
 
     # PHP
     - name: Download clients-php artifact
@@ -65,7 +65,7 @@ runs:
     - name: Unzip clients-php artifact
       if: ${{ inputs.type == 'all' }}
       shell: bash
-      run: unzip -q -o clients-php.zip
+      run: unzip -q -o clients-php.zip && rm clients-php.zip
 
     # Java
     - name: Download clients-java artifact
@@ -77,4 +77,4 @@ runs:
     - name: Unzip clients-java artifact
       if: ${{ inputs.type == 'all' }}
       shell: bash
-      run: unzip -q -o clients-java.zip
+      run: unzip -q -o clients-java.zip && rm clients-java.zip
