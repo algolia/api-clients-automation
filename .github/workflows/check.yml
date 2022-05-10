@@ -203,7 +203,7 @@ jobs:
         if: ${{ matrix.client.language == 'javascript' && steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/restore-artifacts
         with:
-          type: utils
+          type: js_utils
 
       - name: Setup
         uses: ./.github/actions/setup

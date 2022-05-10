@@ -7,7 +7,7 @@ description: |
 
 inputs:
   type:
-    description: Type of artifacts to restore (`all` | `specs` | `utils`)
+    description: Type of artifacts to restore (`all` | `specs` | `js_utils`)
     required: false
   php:
     description: Whether this job ran or not
@@ -32,21 +32,21 @@ runs:
 
     # JavaScript utils
     - name: client-javascript-utils-client-common
-      if: ${{ inputs.type == 'all' || inputs.type == 'utils' }}
+      if: ${{ inputs.type == 'all' || inputs.type == 'js_utils' }}
       uses: actions/download-artifact@v3
       with:
         name: client-javascript-utils-client-common
         path: clients/algoliasearch-client-javascript/packages/client-common/
 
     - name: client-javascript-utils-requester-browser-xhr
-      if: ${{ inputs.type == 'all' || inputs.type == 'utils' }}
+      if: ${{ inputs.type == 'all' || inputs.type == 'js_utils' }}
       uses: actions/download-artifact@v3
       with:
         name: client-javascript-utils-requester-browser-xhr
         path: clients/algoliasearch-client-javascript/packages/requester-browser-xhr/
 
     - name: client-javascript-utils-requester-node-http
-      if: ${{ inputs.type == 'all' || inputs.type == 'utils' }}
+      if: ${{ inputs.type == 'all' || inputs.type == 'js_utils' }}
       uses: actions/download-artifact@v3
       with:
         name: client-javascript-utils-requester-node-http

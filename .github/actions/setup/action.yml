@@ -120,13 +120,13 @@ outputs:
     value: ${{ steps.gen-matrix.outputs.GEN_MATRIX }}
 
   RUN_GEN_JAVASCRIPT:
-    description: Just a variable available here
+    description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
   RUN_GEN_JAVA:
-    description: Just a variable available here
+    description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVA }}
   RUN_GEN_PHP:
-    description: Just a variable available here
+    description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_PHP }}
 
   RUN_JS_ALGOLIASEARCH:
