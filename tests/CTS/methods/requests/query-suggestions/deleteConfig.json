@@ -1,10 +1,10 @@
 [
   {
     "parameters": {
-      "indexName": "theIndexName"
+      "indexName": "theIndexNameff"
     },
     "request": {
-      "path": "/1/configs/theIndexName",
+      "path": "/1/configs/theIndexNameff",
       "method": "DELETE"
     }
   }
