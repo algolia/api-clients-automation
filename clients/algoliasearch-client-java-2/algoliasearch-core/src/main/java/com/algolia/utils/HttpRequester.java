@@ -28,7 +28,6 @@ public class HttpRequester implements Requester {
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     builder.addInterceptor(retryStrategy.getRetryInterceptor());
     builder.retryOnConnectionFailure(false);
-
     httpClient = builder.build();
   }
 
