@@ -308,9 +308,9 @@ jobs:
         uses: ./.github/actions/restore-artifacts
         with:
           type: all
-          javascript: needs.setup.outputs.RUN_GEN_JAVASCRIPT
-          php: needs.setup.outputs.RUN_GEN_PHP
-          java: needs.setup.outputs.RUN_GEN_JAVA
+          javascript: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT }}
+          php: ${{ needs.setup.outputs.RUN_GEN_PHP }}
+          java: ${{ needs.setup.outputs.RUN_GEN_JAVA }}
 
       - name: Push generated code
         id: pushGeneratedCode
