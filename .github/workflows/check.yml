@@ -226,8 +226,7 @@ jobs:
       - name: Clean CTS output before generate
         if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
         run: |
-          rm -rf ${{ matrix.client.testsOutputPath }}/client || true
-          rm -rf ${{ matrix.client.testsOutputPath }}/methods || true
+          rm -rf ${{ matrix.client.testsOutputPathToClean }} || true
 
       - name: Generate CTS
         if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
@@ -237,7 +236,7 @@ jobs:
         if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
         run: |
           git --no-pager diff
-          exit $(git diff --name-only --diff-filter=d ${{ matrix.client.testsOutputPath }} | wc -l)
+          exit $(git diff --name-only --diff-filter=d ${{ matrix.client.testsOutputPathToClean }} | wc -l)
 
       - name: Run CTS
         if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
