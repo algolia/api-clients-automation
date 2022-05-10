@@ -125,6 +125,7 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
         {{/bodyParams}}
       {{/x-is-single-body-param}}
     {{/vendorExtensions}}
+    * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
     */
     {{nickname}}(
       {{#vendorExtensions}}
