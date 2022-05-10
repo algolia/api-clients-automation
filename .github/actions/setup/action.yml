@@ -108,9 +108,6 @@ outputs:
     description: Determine if the `scripts` job should run
     value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
 
-  RUN_SPECS:
-    description: Determine if the `specs` job should run
-    value: ${{ steps.spec-matrix.outputs.RUN_SPECS }}
   SPECS_MATRIX:
     description: The generated `specs` matrix
     value: ${{ steps.spec-matrix.outputs.MATRIX }}
@@ -134,6 +131,4 @@ outputs:
 
   RUN_CODEGEN:
     description: Determine if the `codegen` job should run
-    value: ${{
-      steps.spec-matrix.outputs.RUN_SPECS == 'true' ||
-      steps.gen-matrix.outputs.RUN_GEN == 'true' }}
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN == 'true' }}

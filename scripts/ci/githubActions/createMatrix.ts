@@ -139,7 +139,6 @@ async function getSpecMatrix(): Promise<void> {
     ],
   };
 
-  console.log('::set-output name=RUN_SPECS::true');
   console.log(`::set-output name=MATRIX::${JSON.stringify(ciMatrix)}`);
 }
 

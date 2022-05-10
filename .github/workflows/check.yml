@@ -50,7 +50,6 @@ jobs:
     outputs:
       RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
 
-      RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
       RUN_GEN: ${{ steps.setup.outputs.RUN_GEN }}
@@ -88,7 +87,6 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_SPECS == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX) }}
     steps:
