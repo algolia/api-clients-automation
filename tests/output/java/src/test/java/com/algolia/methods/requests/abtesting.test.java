@@ -3,10 +3,10 @@ package com.algolia.methods.requests;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.algolia.JSON;
 import com.algolia.Pair;
 import com.algolia.api.AbtestingClient;
 import com.algolia.model.abtesting.*;
+import com.algolia.utils.JSON;
 import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
 import java.util.*;
