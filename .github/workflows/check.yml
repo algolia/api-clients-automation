@@ -225,7 +225,9 @@ jobs:
 
       - name: Clean CTS output before generate
         if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
-        run: rm -rf ${{ matrix.client.testsOutputPath }}
+        run: |
+          rm -rf ${{ matrix.client.testsOutputPath }}/client || true
+          rm -rf ${{ matrix.client.testsOutputPath }}/methods || true
 
       - name: Generate CTS
         if: ${{ needs.setup.outputs.RUN_CTS == 'true' }}
