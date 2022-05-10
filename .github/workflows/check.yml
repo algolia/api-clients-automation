@@ -55,6 +55,10 @@ jobs:
       RUN_GEN: ${{ steps.setup.outputs.RUN_GEN }}
       GEN_MATRIX: ${{ steps.setup.outputs.GEN_MATRIX }}
 
+      RUN_GEN_JAVASCRIPT: ${{ steps.setup.outputs.RUN_GEN_JAVASCRIPT }}
+      RUN_GEN_JAVA: ${{ steps.setup.outputs.RUN_GEN_JAVA }}
+      RUN_GEN_PHP: ${{ steps.setup.outputs.RUN_GEN_PHP }}
+
       RUN_JS_ALGOLIASEARCH: ${{ steps.setup.outputs.RUN_JS_ALGOLIASEARCH }}
       RUN_JS_UTILS: ${{ steps.setup.outputs.RUN_JS_UTILS }}
       RUN_JS_TESTS: ${{ steps.setup.outputs.RUN_JS_TESTS }}
@@ -182,9 +186,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set `RUN` notice for codegen
-        run: echo "$matrix.client.language='true'" >> $GITHUB_ENV
-
       - name: Cache clients folder
         id: cache
         uses: actions/cache@v3
@@ -307,6 +308,9 @@ jobs:
         uses: ./.github/actions/restore-artifacts
         with:
           type: all
+          javascript: needs.setup.outputs.RUN_GEN_JAVASCRIPT
+          php: needs.setup.outputs.RUN_GEN_PHP
+          java: needs.setup.outputs.RUN_GEN_JAVA
 
       - name: Push generated code
         id: pushGeneratedCode
