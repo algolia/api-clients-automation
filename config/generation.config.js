@@ -17,7 +17,7 @@ module.exports = {
     '!clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/exceptions/**',
     '!clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/utils/**',
 
-    'tests/output/java/src/test/java/com/algolia/methods/**',
+    'tests/output/java/src/test/java/com/algolia/methods/**', // this could be added automatically by the script, but with overhead
     'tests/output/java/src/test/java/com/algolia/client/**',
 
     // JavaScript
@@ -29,8 +29,8 @@ module.exports = {
     '!clients/algoliasearch-client-javascript/packages/requester-*/**',
     '!clients/algoliasearch-client-javascript/packages/client-common/**',
 
-    'tests/output/java/src/test/java/com/algolia/methods/**',
-    'tests/output/java/src/test/java/com/algolia/client/**',
+    'tests/output/javascript/src/methods/**',
+    'tests/output/java/src/test/client/**',
 
     // PHP
     '!clients/algoliasearch-client-php/*',
@@ -46,7 +46,7 @@ module.exports = {
     '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
     'clients/algoliasearch-client-php/lib/Configuration/Configuration.php',
 
-    'tests/output/java/src/test/java/com/algolia/methods/**',
-    'tests/output/java/src/test/java/com/algolia/client/**',
+    'tests/output/php/src/methods/**',
+    'tests/output/php/src/client/**',
   ],
 };

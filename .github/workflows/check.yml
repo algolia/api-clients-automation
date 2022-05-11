@@ -217,7 +217,7 @@ jobs:
         run: yarn cli build clients ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Clean CTS output before generate
-        run: rm -rf ${{ matrix.client.testsOutputPathToClean }} || true
+        run: rm -rf ${{ matrix.client.testsOutputPath }} || true
 
       - name: Generate CTS
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
@@ -226,9 +226,7 @@ jobs:
         run: yarn cli cts run ${{ matrix.client.language }}
 
       - name: Zip artifact before storing
-        run: |
-          zip -q -r clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} -x "${{ matrix.client.path }}/node_modules/.**"
-          zip -q -r clients-${{ matrix.client.language }}.zip ${{ matrix.client.testsOutputPathToClean }}
+        run: zip -q -r clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsOutputPath }} -x "${{ matrix.client.path }}/node_modules/.**"
 
       - name: Store ${{ matrix.client.language }} clients
         uses: actions/upload-artifact@v3
