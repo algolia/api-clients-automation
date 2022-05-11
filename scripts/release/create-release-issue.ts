@@ -10,9 +10,8 @@ import {
   MAIN_BRANCH,
   OWNER,
   REPO,
-  GENERATORS,
 } from '../common';
-import { getPackageVersion } from '../config';
+import { getPackageVersionDefault } from '../config';
 import type { Language } from '../types';
 
 import { RELEASED_TAG, getOctokit } from './common';
@@ -27,12 +26,8 @@ import type {
 dotenv.config({ path: ROOT_ENV_PATH });
 
 export function readVersions(): VersionsWithoutReleaseType {
-  // default to search for the version
   return Object.fromEntries(
-    LANGUAGES.map((lang) => [
-      lang,
-      { current: getPackageVersion(GENERATORS[`${lang}-search`]) },
-    ])
+    LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }])
   );
 }
 

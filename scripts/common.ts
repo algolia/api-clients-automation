@@ -8,6 +8,7 @@ import { remove } from 'fs-extra';
 import openapiConfig from '../config/openapitools.json';
 import releaseConfig from '../config/release.config.json';
 
+import { getPackageVersionDefault } from './config';
 import { createSpinner } from './oraLog';
 import type {
   CheckForCache,
@@ -40,9 +41,7 @@ export const GENERATORS: Record<string, Generator> = {
     additionalProperties: {
       buildFile: 'algoliasearch',
       packageName: '@experimental-api-clients-automation/algoliasearch',
-      packageVersion:
-        openapiConfig['generator-cli'].generators['javascript-search']
-          .additionalProperties.packageVersion,
+      packageVersion: getPackageVersionDefault('javascript'),
     },
   },
 };

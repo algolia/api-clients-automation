@@ -1,6 +1,7 @@
 import clientsConfig from '../config/clients.config.json';
+import openapiConfig from '../config/openapitools.json';
 
-import type { Generator, Language } from './types';
+import type { Language } from './types';
 
 export function getLanguageFolder(language: Language): string {
   return clientsConfig[language].folder;
@@ -26,18 +27,10 @@ export function getCustomGenerator(language: Language): string {
   return clientsConfig[language].customGenerator;
 }
 
-export function getPackageVersion({
-  language,
-  additionalProperties,
-}: Generator): string {
+export function getPackageVersionDefault(language: Language): string {
   if (language === 'javascript') {
-    return additionalProperties.packageVersion;
+    return openapiConfig['generator-cli'].generators['javascript-search']
+      .additionalProperties.packageVersion;
   }
-  return getPackageVersionExcludeJavascript(language);
-}
-
-export function getPackageVersionExcludeJavascript(
-  language: Exclude<Language, 'javascript'>
-): string {
   return clientsConfig[language].packageVersion;
 }

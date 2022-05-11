@@ -21,10 +21,7 @@ import {
   GENERATORS,
   LANGUAGES,
 } from '../common';
-import {
-  getLanguageFolder,
-  getPackageVersionExcludeJavascript,
-} from '../config';
+import { getLanguageFolder, getPackageVersionDefault } from '../config';
 import type { Language } from '../types';
 
 import {
@@ -154,13 +151,10 @@ async function updateConfigFiles(
     if (lang === 'javascript' || !versionsToRelease[lang]) return;
     const releaseType = versionsToRelease[lang]!.releaseType;
 
-    const newVersion = semver.inc(
-      getPackageVersionExcludeJavascript(lang),
-      releaseType
-    );
+    const newVersion = semver.inc(getPackageVersionDefault(lang), releaseType);
     if (!newVersion) {
       throw new Error(
-        `Failed to bump version ${getPackageVersionExcludeJavascript(
+        `Failed to bump version ${getPackageVersionDefault(
           lang
         )} by ${releaseType}.`
       );
