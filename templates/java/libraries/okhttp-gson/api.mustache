@@ -118,17 +118,24 @@ public class {{classname}} extends ApiClient {
         return LaunderThrowable.await({{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}requestOptions));
     }
 
-  {{! this case handle all the both optional parameters and `requestOptions`  }}
+  {{! This case only sets `requestOptions` as optional }}
+  public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}null);
+  }
+
+  {{! This case sets `requiredParams` + `requestOptions` }}
+  {{#optionalParams.0}}
+  public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, requestOptions);
+  }
+  {{/optionalParams.0}}
+
+  {{! This case only sets `requiredParams` }}
   {{#optionalParams.0}}
   public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) throws AlgoliaRuntimeException {
     {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, null);
   }
   {{/optionalParams.0}}
-
-  {{! This case only sets `requestOptions` as optional }}
-  public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}null);
-  }
 
   /**
   * (asynchronously)
@@ -190,9 +197,24 @@ public class {{classname}} extends ApiClient {
     return this.executeAsync(call, returnType);
   }
 
-  public CompletableFuture<{{{returnType}}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}} {{/allParams}}) throws AlgoliaRuntimeException {
+  {{! This case only sets `requestOptions` as optional }}
+  public CompletableFuture<{{{returnType}}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws AlgoliaRuntimeException {
     {{#returnType}}return {{/returnType}}this.{{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}null);
   }
+
+  {{! This case sets `requiredParams` + `requestOptions` }}
+  {{#optionalParams.0}}
+  public CompletableFuture<{{{returnType}}}> {{operationId}}Async({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, requestOptions);
+  }
+  {{/optionalParams.0}}
+
+  {{! This case only sets `requiredParams` }}
+  {{#optionalParams.0}}
+  public CompletableFuture<{{{returnType}}}> {{operationId}}Async({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, null);
+  }
+  {{/optionalParams.0}}
   {{/operation}}
 }
 {{/operations}}
