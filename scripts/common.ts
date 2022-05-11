@@ -5,7 +5,6 @@ import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
-import clientsConfig from '../config/clients.config.json';
 import openapiConfig from '../config/openapitools.json';
 import releaseConfig from '../config/release.config.json';
 
@@ -42,9 +41,8 @@ export const GENERATORS: Record<string, Generator> = {
       buildFile: 'algoliasearch',
       packageName: '@experimental-api-clients-automation/algoliasearch',
       packageVersion:
-        openapiConfig['generator-cli'].generators[
-          clientsConfig.javascript.mainPackage
-        ].additionalProperties.packageVersion,
+        openapiConfig['generator-cli'].generators['javascript-search']
+          .additionalProperties.packageVersion,
     },
   },
 };
@@ -59,10 +57,6 @@ Object.entries(openapiConfig['generator-cli'].generators).forEach(
     };
   }
 );
-
-export function getPackageVersion(generator: string): string {
-  return GENERATORS[generator].additionalProperties.packageVersion;
-}
 
 export const LANGUAGES = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.language)),
