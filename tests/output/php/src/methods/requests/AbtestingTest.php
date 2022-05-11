@@ -8,6 +8,7 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -51,7 +52,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
 
             if (isset($request['queryParameters'])) {
                 $this->assertEquals(
-                    \GuzzleHttp\Psr7\Query::build($request['queryParameters']),
+                    Query::build($request['queryParameters']),
                     $recordedRequest->getUri()->getQuery()
                 );
             }

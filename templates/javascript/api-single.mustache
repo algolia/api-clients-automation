@@ -176,7 +176,7 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
 
       {{#headerParams}}
       if ({{paramName}} !== undefined) {
-        headers['{{baseName}}'] = {{paramName}};
+        headers['{{baseName}}'] = {{paramName}}.toString();
       }
       {{/headerParams}}
 
