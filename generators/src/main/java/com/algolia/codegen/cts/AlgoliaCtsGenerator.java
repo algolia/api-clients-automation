@@ -22,7 +22,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private String language;
   private String client;
   private String packageName;
-  private boolean hasRegionalHost;
 
   /**
    * Configures the type of generator.
@@ -64,8 +63,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
     packageName = (String) additionalProperties.get("packageName");
-    hasRegionalHost =
-      additionalProperties.get("hasRegionalHost").equals("true");
 
     try {
       JsonNode config = Json
@@ -130,6 +127,15 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       // The return value of this function is not used, we need to modify the param
       // itself.
       Object lambda = objs.get("lambda");
+      List<CodegenServer> servers = (List<CodegenServer>) objs.get("servers");
+      boolean hasRegionalHost = servers
+        .stream()
+        .anyMatch(server ->
+          server.variables
+            .stream()
+            .anyMatch(variable -> variable.name.equals("region"))
+        );
+
       Map<String, Object> bundle = objs;
       bundle.clear();
 
@@ -139,6 +145,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       bundle.put("clientPrefix", Utils.createClientName(client, language));
       bundle.put("import", createImportName());
       bundle.put("hasRegionalHost", hasRegionalHost);
+      bundle.put("defaultRegion", client.equals("predict") ? "ew" : "us");
       bundle.put("lambda", lambda);
 
       List<Object> blocks = new ArrayList<>();

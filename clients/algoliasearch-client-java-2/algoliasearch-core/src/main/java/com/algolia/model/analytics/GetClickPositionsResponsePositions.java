@@ -21,17 +21,15 @@ public class GetClickPositionsResponsePositions {
     return this;
   }
 
-  public GetClickPositionsResponsePositions addPositionItem(
-    Integer positionItem
-  ) {
+  public GetClickPositionsResponsePositions addPosition(Integer positionItem) {
     this.position.add(positionItem);
     return this;
   }
 
   /**
-   * Range of positions with the following pattern: Positions from 1 to 10 included are displayed in
-   * separated groups. Positions from 11 to 20 included are grouped together. Positions from 21 and
-   * up are grouped together.
+   * Range of positions with the following pattern: - Positions from 1 to 10 included are displayed
+   * in separated groups. - Positions from 11 to 20 included are grouped together. - Positions from
+   * 21 and up are grouped together.
    *
    * @return position
    */

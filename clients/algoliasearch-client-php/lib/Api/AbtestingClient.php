@@ -5,6 +5,7 @@ namespace Algolia\AlgoliaSearch\Api;
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\AbtestingConfig;
 use Algolia\AlgoliaSearch\ObjectSerializer;
+use Algolia\AlgoliaSearch\RequestOptions\RequestOptionsFactory;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
@@ -49,7 +50,7 @@ class AbtestingClient
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = explode('-', 'us-de');
+        $allowedRegions = ['de', 'us'];
         $config = AbtestingConfig::create(
             $appId,
             $apiKey,
@@ -73,9 +74,12 @@ class AbtestingClient
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create(
-                'analytics.' . $config->getRegion() . '.algolia.com'
+            $url = str_replace(
+                '{region}',
+                $config->getRegion(),
+                'analytics.{region}.algolia.com'
             );
+            $clusterHosts = ClusterHosts::create($url);
         }
 
         $apiWrapper = new ApiWrapper(
@@ -96,7 +100,7 @@ class AbtestingClient
     }
 
     /**
-     * Creates a new A/B test with provided configuration.
+     * Create a test.
      *
      * @param array $addABTestsRequest addABTestsRequest (required)
      * - $addABTestsRequest['name'] => (string) A/B test name. (required)
@@ -105,9 +109,11 @@ class AbtestingClient
      *
      * @see \Algolia\AlgoliaSearch\Model\Abtesting\AddABTestsRequest
      *
+     * @param array $requestOptions Request Options
+     *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTestResponse
      */
-    public function addABTests($addABTestsRequest)
+    public function addABTests($addABTestsRequest, $requestOptions = [])
     {
         // verify the required parameter 'addABTestsRequest' is set
         if (
@@ -126,12 +132,14 @@ class AbtestingClient
         if (isset($addABTestsRequest)) {
             $httpBody = $addABTestsRequest;
         }
+        $requestOptions += $queryParams;
 
         return $this->sendRequest(
             'POST',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -140,10 +148,11 @@ class AbtestingClient
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function del($path, $parameters = null)
+    public function del($path, $parameters = null, $requestOptions = [])
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -157,7 +166,14 @@ class AbtestingClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -171,22 +187,26 @@ class AbtestingClient
             $resourcePath = str_replace('{path}', $path, $resourcePath);
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'DELETE',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Deletes the A/B Test.
+     * Delete a test.
      *
      * @param int $id The A/B test ID. (required)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTestResponse
      */
-    public function deleteABTest($id)
+    public function deleteABTest($id, $requestOptions = [])
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -208,11 +228,14 @@ class AbtestingClient
             );
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'DELETE',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -221,10 +244,11 @@ class AbtestingClient
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function get($path, $parameters = null)
+    public function get($path, $parameters = null, $requestOptions = [])
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -238,7 +262,14 @@ class AbtestingClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -252,22 +283,26 @@ class AbtestingClient
             $resourcePath = str_replace('{path}', $path, $resourcePath);
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Returns metadata and metrics for A/B test id.
+     * Get a test.
      *
      * @param int $id The A/B test ID. (required)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTest
      */
-    public function getABTest($id)
+    public function getABTest($id, $requestOptions = [])
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -289,30 +324,44 @@ class AbtestingClient
             );
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Fetch all existing A/B tests for App that are available for the current API Key.
+     * List all tests.
      *
      * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
      * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ListABTestsResponse
      */
-    public function listABTests($offset = 0, $limit = 10)
-    {
+    public function listABTests(
+        $offset = null,
+        $limit = null,
+        $requestOptions = []
+    ) {
         $resourcePath = '/2/abtests';
         $queryParams = [];
         $httpBody = [];
 
         if ($offset !== null) {
-            if ('form' === 'form' && is_array($offset)) {
+            if (
+                is_array($offset) &&
+                !in_array(
+                    'offset',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($offset as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -322,7 +371,14 @@ class AbtestingClient
         }
 
         if ($limit !== null) {
-            if ('form' === 'form' && is_array($limit)) {
+            if (
+                is_array($limit) &&
+                !in_array(
+                    'limit',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($limit as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -331,11 +387,14 @@ class AbtestingClient
             }
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -345,11 +404,16 @@ class AbtestingClient
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function post($path, $parameters = null, $body = null)
-    {
+    public function post(
+        $path,
+        $parameters = null,
+        $body = null,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
@@ -362,7 +426,14 @@ class AbtestingClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -379,12 +450,14 @@ class AbtestingClient
         if (isset($body)) {
             $httpBody = $body;
         }
+        $requestOptions += $queryParams;
 
         return $this->sendRequest(
             'POST',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -394,11 +467,16 @@ class AbtestingClient
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function put($path, $parameters = null, $body = null)
-    {
+    public function put(
+        $path,
+        $parameters = null,
+        $body = null,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
@@ -411,7 +489,14 @@ class AbtestingClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -428,23 +513,26 @@ class AbtestingClient
         if (isset($body)) {
             $httpBody = $body;
         }
+        $requestOptions += $queryParams;
 
         return $this->sendRequest(
             'PUT',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Marks the A/B test as stopped.
+     * Stop a test.
      *
      * @param int $id The A/B test ID. (required)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTestResponse
      */
-    public function stopABTest($id)
+    public function stopABTest($id, $requestOptions = [])
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -466,11 +554,14 @@ class AbtestingClient
             );
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'POST',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -478,20 +569,23 @@ class AbtestingClient
         $method,
         $resourcePath,
         $queryParams,
-        $httpBody
+        $httpBody,
+        $requestOptions
     ) {
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
 
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,
-                $resourcePath . ($query ? "?{$query}" : '')
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $requestOptions
             );
         } else {
             $request = $this->api->write(
                 $method,
                 $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
+                $httpBody,
+                $requestOptions
             );
         }
 

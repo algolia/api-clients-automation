@@ -23,15 +23,11 @@ export const apiClientVersion = '0.2.0';
 export type Region = 'de' | 'us';
 
 function getDefaultHosts(region?: Region): Host[] {
-  const regionHost = region ? `.${region}.` : '.';
+  const url = !region
+    ? 'analytics.algolia.com'
+    : 'analytics.{region}.algolia.com'.replace('{region}', region);
 
-  return [
-    {
-      url: `analytics${regionHost}algolia.com`,
-      accept: 'readWrite',
-      protocol: 'https',
-    },
-  ];
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -67,8 +63,9 @@ export function createAbtestingClient(
     /**
      * Creates a new A/B test with provided configuration. You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
      *
-     * @summary Creates a new A/B test with provided configuration.
+     * @summary Create a test.
      * @param addABTestsRequest - The addABTestsRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     addABTests(
       addABTestsRequest: AddABTestsRequest,
@@ -123,6 +120,7 @@ export function createAbtestingClient(
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param del.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
       { path, parameters }: DelProps,
@@ -152,11 +150,12 @@ export function createAbtestingClient(
     },
 
     /**
-     * Deletes the A/B Test and removes all associated metadata & metrics.
+     * Delete a test.
      *
-     * @summary Deletes the A/B Test.
+     * @summary Delete a test.
      * @param deleteABTest - The deleteABTest object.
      * @param deleteABTest.id - The A/B test ID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteABTest(
       { id }: DeleteABTestProps,
@@ -197,6 +196,7 @@ export function createAbtestingClient(
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param get.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
       { path, parameters }: GetProps,
@@ -226,11 +226,12 @@ export function createAbtestingClient(
     },
 
     /**
-     * Returns metadata and metrics for A/B test id. Behaves in the same way as GET /2/abtests however the endpoint will return 403.
+     * Returns metadata and metrics for an A/B test.
      *
-     * @summary Returns metadata and metrics for A/B test id.
+     * @summary Get a test.
      * @param getABTest - The getABTest object.
      * @param getABTest.id - The A/B test ID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getABTest(
       { id }: GetABTestProps,
@@ -263,12 +264,13 @@ export function createAbtestingClient(
     },
 
     /**
-     * Fetch all existing A/B tests for App that are available for the current API Key. Returns an array of metadata and metrics. When no data has been processed, the metrics will be returned as null.
+     * Fetch all existing A/B tests for App that are available for the current API Key. When no data has been processed, the metrics will be returned as null.
      *
-     * @summary Fetch all existing A/B tests for App that are available for the current API Key.
+     * @summary List all tests.
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param listABTests.limit - Number of records to return. Limit is the size of the page.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
       { offset, limit }: ListABTestsProps,
@@ -309,6 +311,7 @@ export function createAbtestingClient(
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
       { path, parameters, body }: PostProps,
@@ -346,6 +349,7 @@ export function createAbtestingClient(
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
       { path, parameters, body }: PutProps,
@@ -378,9 +382,10 @@ export function createAbtestingClient(
     /**
      * Marks the A/B test as stopped. At this point, the test is over and cannot be restarted. As a result, your application is back to normal: index A will perform as usual, receiving 100% of all search requests. Associated metadata and metrics are still stored.
      *
-     * @summary Marks the A/B test as stopped.
+     * @summary Stop a test.
      * @param stopABTest - The stopABTest object.
      * @param stopABTest.id - The A/B test ID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     stopABTest(
       { id }: StopABTestProps,

@@ -18,21 +18,24 @@ import type { Params } from '../model/params';
 export * from '../model';
 export const apiClientVersion = '0.2.0';
 
-function getDefaultHosts(): Host[] {
-  return [
-    {
-      url: 'predict-api-432xa6wemq-ew.a.run.app',
-      accept: 'readWrite',
-      protocol: 'https',
-    },
-  ];
+export type Region = 'ew' | 'ue';
+
+function getDefaultHosts(region: Region): Host[] {
+  const url = 'predict-api-432xa6wemq-{region}.a.run.app'.replace(
+    '{region}',
+    region
+  );
+
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createPredictClient(options: CreateClientOptions) {
+export function createPredictClient(
+  options: CreateClientOptions & { region: Region }
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = createTransporter({
-    hosts: options?.hosts ?? getDefaultHosts(),
+    hosts: options?.hosts ?? getDefaultHosts(options.region),
     hostsCache: options.hostsCache,
     requestsCache: options.requestsCache,
     responsesCache: options.responsesCache,
@@ -63,6 +66,7 @@ export function createPredictClient(options: CreateClientOptions) {
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param del.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
       { path, parameters }: DelProps,
@@ -98,6 +102,7 @@ export function createPredictClient(options: CreateClientOptions) {
      * @param fetchUserProfile - The fetchUserProfile object.
      * @param fetchUserProfile.userID - User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
      * @param fetchUserProfile.params - The params object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     fetchUserProfile(
       { userID, params }: FetchUserProfileProps,
@@ -145,6 +150,7 @@ export function createPredictClient(options: CreateClientOptions) {
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param get.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
       { path, parameters }: GetProps,
@@ -181,6 +187,7 @@ export function createPredictClient(options: CreateClientOptions) {
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
       { path, parameters, body }: PostProps,
@@ -218,6 +225,7 @@ export function createPredictClient(options: CreateClientOptions) {
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
       { path, parameters, body }: PutProps,

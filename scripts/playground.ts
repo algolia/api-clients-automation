@@ -1,10 +1,14 @@
 import { run } from './common';
-import type { Generator } from './types';
+import { capitalize } from './cts/utils';
+import type { Language } from './types';
 
 export async function playground({
   language,
   client,
-}: Pick<Generator, 'client' | 'language'>): Promise<void> {
+}: {
+  language: Language | 'all';
+  client: string;
+}): Promise<void> {
   const verbose = true;
   switch (language) {
     case 'javascript':
@@ -13,9 +17,14 @@ export async function playground({
       });
       break;
     case 'java':
-      await run(`./gradle/gradlew -p playground/java run`, {
-        verbose,
-      });
+      await run(
+        `./gradle/gradlew -p playground/java -PmainClass=com.algolia.playground.${capitalize(
+          client
+        )} run`,
+        {
+          verbose,
+        }
+      );
       break;
     case 'php':
       await run(

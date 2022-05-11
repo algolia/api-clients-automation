@@ -1,9 +1,6 @@
 package {{package}};
 
-import {{invokerPackage}}.ApiCallback;
 import {{invokerPackage}}.ApiClient;
-import {{invokerPackage}}.ApiResponse;
-import {{invokerPackage}}.Pair;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -11,7 +8,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 
 import com.algolia.utils.*;
-import com.algolia.utils.echo.*;
 import {{modelPackage}}.*;
 import com.algolia.exceptions.*;
 import com.algolia.utils.retry.CallType;
@@ -29,6 +25,7 @@ import java.util.Map;
 {{/fullJavaUtil}}
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.concurrent.CompletableFuture;
 
 {{#operations}}
 public class {{classname}} extends ApiClient {
@@ -36,6 +33,10 @@ public class {{classname}} extends ApiClient {
     {{#fallbackToAliasHost}}
     public {{classname}}(String appId, String apiKey) {
         this(appId, apiKey, new HttpRequester(getDefaultHosts(null)), null);
+    }
+
+    public {{classname}}(String appId, String apiKey, UserAgent.Segment[] userAgentSegments) {
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(null)), userAgentSegments);
     }
     
     {{/fallbackToAliasHost}}
@@ -50,11 +51,11 @@ public class {{classname}} extends ApiClient {
 
     {{^hasRegionalHost}}
     public {{classname}}(String appId, String apiKey) {
-        this(appId, apiKey, new HttpRequester(getDefaultHosts({{^experimentalHost}}appId{{/experimentalHost}})), null);
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(appId)), null);
     }
 
     public {{classname}}(String appId, String apiKey, UserAgent.Segment[] userAgentSegments) {
-        this(appId, apiKey, new HttpRequester(getDefaultHosts({{^experimentalHost}}appId{{/experimentalHost}})), userAgentSegments);
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(appId)), userAgentSegments);
     }
     {{/hasRegionalHost}}
 
@@ -66,7 +67,7 @@ public class {{classname}} extends ApiClient {
         super(appId, apiKey, requester, "{{{baseName}}}", userAgentSegments);
     }
 
-    {{^hasRegionalHost}}{{^experimentalHost}}
+    {{^hasRegionalHost}}
     private static List<StatefulHost> getDefaultHosts(String appId) {
       List<StatefulHost> hosts = new ArrayList<StatefulHost>();
       hosts.add(new StatefulHost(appId + "-dsn.algolia.net", "https", EnumSet.of(CallType.READ)));
@@ -81,92 +82,20 @@ public class {{classname}} extends ApiClient {
 
       return Stream.concat(hosts.stream(), commonHosts.stream()).collect(Collectors.toList());
     }
-    {{/experimentalHost}}{{/hasRegionalHost}}
-
-    {{#experimentalHost}}
-    private static List<StatefulHost> getDefaultHosts() {
-      List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost("{{{experimentalHost}}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
-      return hosts;
-    }
-    {{/experimentalHost}}
+    {{/hasRegionalHost}}
 
     {{#hasRegionalHost}}
     private static List<StatefulHost> getDefaultHosts(String region) {
       List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost("{{{host}}}." + (region == null ? "" : region + ".") + "algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
+
+      String url = {{#fallbackToAliasHost}}region == null ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{host}}}".replace("{region}", region);
+
+      hosts.add(new StatefulHost(url, "https", EnumSet.of(CallType.READ, CallType.WRITE)));
       return hosts;
     }
     {{/hasRegionalHost}}
 
     {{#operation}}
-    /**
-     * Build call for {{operationId}}
-     * @param callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws AlgoliaRuntimeException If fail to serialize the request body object
-     {{#isDeprecated}}
-     * @deprecated
-     {{/isDeprecated}}
-        {{#externalDocs}}
-     * {{&description}}
-     * @see <a href="{{url}}">{{&summary}} Documentation</a>
-        {{/externalDocs}}
-     */
-    {{#isDeprecated}}
-    @Deprecated
-    {{/isDeprecated}}
-    private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> callback) throws AlgoliaRuntimeException {
-        Object bodyObj = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
-
-        // create path and map variables
-        String requestPath = "{{{path}}}"{{#vendorExtensions}}{{#pathParams}}.replaceAll(
-            {{=<% %>=}}"\\{<%baseName%>\\}"<%={{ }}=%>,
-            {{#x-is-custom-request}}{{{paramName}}}.toString(){{/x-is-custom-request}}{{^x-is-custom-request}}this.escapeString({{{paramName}}}.toString()){{/x-is-custom-request}}
-        ){{/pathParams}}{{/vendorExtensions}};
-
-        {{javaUtilPrefix}}List<Pair> queryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
-        {{javaUtilPrefix}}Map<String, String> headers = new {{javaUtilPrefix}}HashMap<String, String>();
-
-        {{#vendorExtensions}}{{#queryParams}}
-        if ({{paramName}} != null) {
-          {{^x-is-custom-request}}
-            queryParams.addAll(this.parameterToPair("{{baseName}}", {{paramName}}));
-          {{/x-is-custom-request}}
-          {{#x-is-custom-request}}
-            for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue()));
-            }
-          {{/x-is-custom-request}}
-        }
-
-        {{/queryParams}}{{/vendorExtensions}}
-        {{#headerParams}}
-        if ({{paramName}} != null) {
-            headers.put("{{baseName}}", this.parameterToString({{paramName}}));
-        }
-
-        {{/headerParams}}
-        headers.put("Accept", "application/json");
-        headers.put("Content-Type", "application/json");
-
-        return this.buildCall(requestPath, "{{httpMethod}}", queryParams, bodyObj, headers, callback);
-    }
-
-    {{#isDeprecated}}
-    @Deprecated
-    {{/isDeprecated}}
-    private Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> callback) throws AlgoliaRuntimeException {
-        {{#allParams}}{{#required}}
-        // verify the required parameter '{{paramName}}' is set
-        if ({{paramName}} == null) {
-            throw new AlgoliaRuntimeException("Missing the required parameter '{{paramName}}' when calling {{operationId}}(Async)");
-        }
-        {{/required}}{{/allParams}}
-
-        return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}callback);
-    }
-
     /**
      * {{&notes}}{{#allParams}}
      * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#returnType}}
@@ -184,14 +113,7 @@ public class {{classname}} extends ApiClient {
     @Deprecated
     {{/isDeprecated}}
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws AlgoliaRuntimeException {
-        Call req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
-        if (req instanceof CallEcho) {
-            {{#returnType}}return new EchoResponse{{baseName}}.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
-        }
-        Call call = (Call)req;
-        {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();
-        ApiResponse<{{{.}}}> res = this.execute(call, returnType);
-        return res.getData();{{/returnType}}{{^returnType}}this.execute(call).getData();{{/returnType}}
+        return LaunderThrowable.await({{operationId}}Async({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}));
     }
 
   {{#optionalParams.0}}
@@ -204,8 +126,7 @@ public class {{classname}} extends ApiClient {
   * (asynchronously)
   * {{notes}}{{#allParams}}
   * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
-  * @param callback The callback to be executed when the API call finishes
-  * @return The request call
+  * @return The awaitable future
   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request body object
   {{#isDeprecated}}
   * @deprecated
@@ -218,11 +139,46 @@ public class {{classname}} extends ApiClient {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> callback) throws AlgoliaRuntimeException {
-    Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}callback);
-    {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
-    this.executeAsync(call, returnType, callback);{{/returnType}}{{^returnType}}this.executeAsync(call, callback);{{/returnType}}
-    return call;
+  public CompletableFuture<{{{returnType}}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}},{{/-last}} {{/allParams}}) throws AlgoliaRuntimeException {
+    {{#allParams}}{{#required}}
+    if ({{paramName}} == null) {
+        throw new AlgoliaRuntimeException("Missing the required parameter '{{paramName}}' when calling {{operationId}}(Async)");
+    }
+    {{/required}}{{/allParams}}
+
+    Object bodyObj = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+
+    // create path and map variables
+    String requestPath = "{{{path}}}"{{#vendorExtensions}}{{#pathParams}}.replaceAll(
+        {{=<% %>=}}"\\{<%baseName%>\\}"<%={{ }}=%>,
+        {{#x-is-custom-request}}{{{paramName}}}.toString(){{/x-is-custom-request}}{{^x-is-custom-request}}this.escapeString({{{paramName}}}.toString()){{/x-is-custom-request}}
+    ){{/pathParams}}{{/vendorExtensions}};
+
+    {{javaUtilPrefix}}Map<String, String> queryParams = new {{javaUtilPrefix}}HashMap<String, String>();
+    {{javaUtilPrefix}}Map<String, String> headers = new {{javaUtilPrefix}}HashMap<String, String>();
+
+    {{#vendorExtensions}}{{#queryParams}}
+    if ({{paramName}} != null) {
+      {{^x-is-custom-request}}
+        queryParams.put("{{baseName}}", parameterToString({{paramName}}));
+      {{/x-is-custom-request}}
+      {{#x-is-custom-request}}
+        for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+          queryParams.put(parameter.getKey().toString(), parameterToString(parameter.getValue()));
+        }
+      {{/x-is-custom-request}}
+    }
+
+    {{/queryParams}}{{/vendorExtensions}}
+    {{#headerParams}}
+    if ({{paramName}} != null) {
+        headers.put("{{baseName}}", this.parameterToString({{paramName}}));
+    }
+
+    {{/headerParams}}
+    Call call = this.buildCall(requestPath, "{{httpMethod}}", queryParams, bodyObj, headers);
+    Type returnType = new TypeToken<{{{returnType}}}>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
   {{/operation}}
 }

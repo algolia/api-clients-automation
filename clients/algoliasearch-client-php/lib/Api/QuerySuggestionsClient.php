@@ -5,6 +5,7 @@ namespace Algolia\AlgoliaSearch\Api;
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\QuerySuggestionsConfig;
 use Algolia\AlgoliaSearch\ObjectSerializer;
+use Algolia\AlgoliaSearch\RequestOptions\RequestOptionsFactory;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
@@ -49,7 +50,7 @@ class QuerySuggestionsClient
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = explode('-', 'us-eu');
+        $allowedRegions = ['eu', 'us'];
         $config = QuerySuggestionsConfig::create(
             $appId,
             $apiKey,
@@ -73,9 +74,12 @@ class QuerySuggestionsClient
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create(
-                'query-suggestions.' . $config->getRegion() . '.algolia.com'
+            $url = str_replace(
+                '{region}',
+                $config->getRegion(),
+                'query-suggestions.{region}.algolia.com'
             );
+            $clusterHosts = ClusterHosts::create($url);
         }
 
         $apiWrapper = new ApiWrapper(
@@ -96,16 +100,20 @@ class QuerySuggestionsClient
     }
 
     /**
-     * Create a configuration of a Query Suggestions index.
+     * Create a configuration.
      *
      * @param array $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
      *
      * @see \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexWithIndexParam
      *
+     * @param array $requestOptions Request Options
+     *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
      */
-    public function createConfig($querySuggestionsIndexWithIndexParam)
-    {
+    public function createConfig(
+        $querySuggestionsIndexWithIndexParam,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'querySuggestionsIndexWithIndexParam' is set
         if (
             $querySuggestionsIndexWithIndexParam === null ||
@@ -124,12 +132,14 @@ class QuerySuggestionsClient
         if (isset($querySuggestionsIndexWithIndexParam)) {
             $httpBody = $querySuggestionsIndexWithIndexParam;
         }
+        $requestOptions += $queryParams;
 
         return $this->sendRequest(
             'POST',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -138,10 +148,11 @@ class QuerySuggestionsClient
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function del($path, $parameters = null)
+    public function del($path, $parameters = null, $requestOptions = [])
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -155,7 +166,14 @@ class QuerySuggestionsClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -169,22 +187,26 @@ class QuerySuggestionsClient
             $resourcePath = str_replace('{path}', $path, $resourcePath);
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'DELETE',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Delete a configuration of a Query Suggestion&#39;s index.
+     * Delete a configuration.
      *
      * @param string $indexName The index in which to perform the request. (required)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
      */
-    public function deleteConfig($indexName)
+    public function deleteConfig($indexName, $requestOptions = [])
     {
         // verify the required parameter 'indexName' is set
         if (
@@ -209,11 +231,14 @@ class QuerySuggestionsClient
             );
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'DELETE',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -222,10 +247,11 @@ class QuerySuggestionsClient
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function get($path, $parameters = null)
+    public function get($path, $parameters = null, $requestOptions = [])
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -239,7 +265,14 @@ class QuerySuggestionsClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -253,42 +286,50 @@ class QuerySuggestionsClient
             $resourcePath = str_replace('{path}', $path, $resourcePath);
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Get all the configurations of Query Suggestions.
+     * List configurations.
      *
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex[]
      */
-    public function getAllConfigs()
+    public function getAllConfigs($requestOptions = [])
     {
         $resourcePath = '/1/configs';
         $queryParams = [];
         $httpBody = [];
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Get the configuration of a single Query Suggestions index.
+     * Get a single configuration.
      *
      * @param string $indexName The index in which to perform the request. (required)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex
      */
-    public function getConfig($indexName)
+    public function getConfig($indexName, $requestOptions = [])
     {
         // verify the required parameter 'indexName' is set
         if (
@@ -313,22 +354,26 @@ class QuerySuggestionsClient
             );
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Get the status of a Query Suggestion&#39;s index.
+     * Get configuration status.
      *
      * @param string $indexName The index in which to perform the request. (required)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\Status
      */
-    public function getConfigStatus($indexName)
+    public function getConfigStatus($indexName, $requestOptions = [])
     {
         // verify the required parameter 'indexName' is set
         if (
@@ -353,22 +398,26 @@ class QuerySuggestionsClient
             );
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Get the log file of the last build of a single Query Suggestion index.
+     * Get a log file.
      *
      * @param string $indexName The index in which to perform the request. (required)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\LogFile[]
      */
-    public function getLogFile($indexName)
+    public function getLogFile($indexName, $requestOptions = [])
     {
         // verify the required parameter 'indexName' is set
         if (
@@ -393,11 +442,14 @@ class QuerySuggestionsClient
             );
         }
 
+        $requestOptions += $queryParams;
+
         return $this->sendRequest(
             'GET',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -407,11 +459,16 @@ class QuerySuggestionsClient
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function post($path, $parameters = null, $body = null)
-    {
+    public function post(
+        $path,
+        $parameters = null,
+        $body = null,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
@@ -424,7 +481,14 @@ class QuerySuggestionsClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -441,12 +505,14 @@ class QuerySuggestionsClient
         if (isset($body)) {
             $httpBody = $body;
         }
+        $requestOptions += $queryParams;
 
         return $this->sendRequest(
             'POST',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -456,11 +522,16 @@ class QuerySuggestionsClient
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
+     * @param array $requestOptions Request Options
      *
      * @return array<string, mixed>|object
      */
-    public function put($path, $parameters = null, $body = null)
-    {
+    public function put(
+        $path,
+        $parameters = null,
+        $body = null,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
@@ -473,7 +544,14 @@ class QuerySuggestionsClient
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -490,17 +568,19 @@ class QuerySuggestionsClient
         if (isset($body)) {
             $httpBody = $body;
         }
+        $requestOptions += $queryParams;
 
         return $this->sendRequest(
             'PUT',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
-     * Update the configuration of a Query Suggestions index.
+     * Update a configuration.
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $querySuggestionsIndexParam querySuggestionsIndexParam (required)
@@ -510,10 +590,15 @@ class QuerySuggestionsClient
      *
      * @see \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexParam
      *
+     * @param array $requestOptions Request Options
+     *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
      */
-    public function updateConfig($indexName, $querySuggestionsIndexParam)
-    {
+    public function updateConfig(
+        $indexName,
+        $querySuggestionsIndexParam,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'indexName' is set
         if (
             $indexName === null ||
@@ -550,12 +635,14 @@ class QuerySuggestionsClient
         if (isset($querySuggestionsIndexParam)) {
             $httpBody = $querySuggestionsIndexParam;
         }
+        $requestOptions += $queryParams;
 
         return $this->sendRequest(
             'PUT',
             $resourcePath,
             $queryParams,
-            $httpBody
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -563,20 +650,23 @@ class QuerySuggestionsClient
         $method,
         $resourcePath,
         $queryParams,
-        $httpBody
+        $httpBody,
+        $requestOptions
     ) {
         $query = \GuzzleHttp\Psr7\Query::build($queryParams);
 
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,
-                $resourcePath . ($query ? "?{$query}" : '')
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $requestOptions
             );
         } else {
             $request = $this->api->write(
                 $method,
                 $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
+                $httpBody,
+                $requestOptions
             );
         }
 

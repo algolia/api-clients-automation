@@ -49,17 +49,44 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    modelsToRetrieve:
+    modelsToRetrieveEnum:
       type: string
       enum:
         - funnel_stage
         - order_value
         - affinities
-    typesToRetrieve:
+    modelsToRetrieve:
+      type: object
+      required:
+        - modelsToRetrieve
+      properties:
+        modelsToRetrieve:
+          type: array
+          items:
+            $ref: '#/components/schemas/modelsToRetrieveEnum'
+    typesToRetrieveEnum:
       type: string
       enum:
         - properties
         - segments
+    typesToRetrieve:
+      type: object
+      required:
+        - typesToRetrieve
+      properties:
+        typesToRetrieve:
+          type: array
+          items:
+            $ref: '#/components/schemas/typesToRetrieveEnum'
+    allParams:
+      allOf:
+        - $ref: '#/components/schemas/modelsToRetrieve'
+        - $ref: '#/components/schemas/typesToRetrieve'
+    params:
+      oneOf:
+        - $ref: '#/components/schemas/modelsToRetrieve'
+        - $ref: '#/components/schemas/typesToRetrieve'
+        - $ref: '#/components/schemas/allParams'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -92,10 +119,24 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorBase'
 servers:
-  - url: https://predict-api-432xa6wemq-ew.a.run.app
+  - url: https://predict-api-432xa6wemq-{region}.a.run.app
+    variables:
+      region:
+        enum:
+          - ue
+          - ew
+        default: ew
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: profiles
+    x-displayName: Profiles
+    description: Manage users' profiles.
+x-tagGroups:
+  - name: General
+    tags:
+      - profiles
 paths:
   /1{path}:
     get:
@@ -208,6 +249,8 @@ paths:
         - predict
   /1/users/{userID}/fetch:
     post:
+      tags:
+        - predict
       operationId: fetchUserProfile
       description: >-
         Get predictions, properties (raw, computed or custom) and segments
@@ -220,22 +263,7 @@ paths:
         content:
           application/json:
             schema:
-              title: params
-              type: object
-              description: Object with models and types to retrieve.
-              additionalProperties: false
-              properties:
-                modelsToRetrieve:
-                  type: array
-                  description: List with model types for which to retrieve predictions.
-                  items:
-                    $ref: '#/components/schemas/modelsToRetrieve'
-                typesToRetrieve:
-                  type: array
-                  description: List with types to be retrieved.
-                  items:
-                    $ref: '#/components/schemas/typesToRetrieve'
-                  minItems: 1
+              $ref: '#/components/schemas/params'
       responses:
         '200':
           description: OK
@@ -339,5 +367,3 @@ paths:
           $ref: '#/components/responses/UserNotFound'
         '405':
           $ref: '#/components/responses/MethodNotAllowed'
-      tags:
-        - predict
