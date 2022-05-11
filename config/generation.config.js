@@ -30,7 +30,7 @@ module.exports = {
     '!clients/algoliasearch-client-javascript/packages/client-common/**',
 
     'tests/output/javascript/src/methods/**',
-    'tests/output/java/src/test/client/**',
+    'tests/output/javascript/src/client/**',
 
     // PHP
     '!clients/algoliasearch-client-php/*',
