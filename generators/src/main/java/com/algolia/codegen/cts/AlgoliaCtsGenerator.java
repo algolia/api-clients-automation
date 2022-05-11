@@ -2,6 +2,7 @@ package com.algolia.codegen.cts;
 
 import com.algolia.codegen.Utils;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap.Builder;
@@ -64,35 +65,35 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     client = (String) additionalProperties.get("client");
     packageName = (String) additionalProperties.get("packageName");
 
+    JsonNode config = Utils.readJsonFile("config/clients.config.json");
+    TestConfig testConfig = null;
     try {
-      JsonNode config = Json
-        .mapper()
-        .readTree(new File("config/clients.config.json"));
-      TestConfig testConfig = Json
-        .mapper()
-        .treeToValue(config.get(language).get("tests"), TestConfig.class);
-
-      setTemplateDir("tests/CTS/methods/requests/templates/" + language);
-      setOutputDir("tests/output/" + language);
-      String clientName = language.equals("php")
-        ? Utils.createClientName(client, language)
-        : client;
-      supportingFiles.add(
-        new SupportingFile(
-          "requests.mustache",
-          testConfig.outputFolder + "/methods/requests",
-          clientName + testConfig.extension
-        )
-      );
-
-      if (language.equals("javascript")) {
-        supportingFiles.add(
-          new SupportingFile("package.mustache", ".", "package.json")
-        );
-      }
-    } catch (IOException e) {
+      testConfig =
+        Json
+          .mapper()
+          .treeToValue(config.get(language).get("tests"), TestConfig.class);
+    } catch (JsonProcessingException e) {
       e.printStackTrace();
       System.exit(1);
+    }
+
+    setTemplateDir("tests/CTS/methods/requests/templates/" + language);
+    setOutputDir("tests/output/" + language);
+    String clientName = language.equals("php")
+      ? Utils.createClientName(client, language)
+      : client;
+    supportingFiles.add(
+      new SupportingFile(
+        "requests.mustache",
+        testConfig.outputFolder + "/methods/requests",
+        clientName + testConfig.extension
+      )
+    );
+
+    if (language.equals("javascript")) {
+      supportingFiles.add(
+        new SupportingFile("package.mustache", ".", "package.json")
+      );
     }
   }
 
