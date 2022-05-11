@@ -49,6 +49,13 @@ runs:
         path: node_modules
         key: node-modules-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
+    - name: Run composer update
+      if: inputs.type != 'minimal'
+      shell: bash
+      run: |
+        composer update --working-dir=clients/algoliasearch-client-php
+        composer dump-autoload --working-dir=clients/algoliasearch-client-php
+
     - name: Get yarn cache directory path
       shell: bash
       id: yarn-cache-dir
