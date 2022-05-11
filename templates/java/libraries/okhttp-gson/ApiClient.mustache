@@ -195,22 +195,6 @@ public class ApiClient {
     }
 
     /**
-     * Check if the given MIME is a JSON MIME.
-     * JSON MIME examples:
-     *   application/json
-     *   application/json; charset=UTF8
-     *   APPLICATION/JSON
-     *   application/vnd.company+json
-     * "* / *" is also default to JSON
-     * @param mime MIME (Multipurpose Internet Mail Extensions)
-     * @return True if the given MIME is JSON, false otherwise.
-     */
-    public static boolean isJsonMime(String mime) {
-        String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
-        return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
-    }
-
-    /**
      * Escape the given string to be used as URL query value.
      *
      * @param str String to be escaped
@@ -233,25 +217,15 @@ public class ApiClient {
      * @throws AlgoliaRuntimeException If fail to serialize the given object
      */
     public RequestBody serialize(Object obj) throws AlgoliaRuntimeException {
-      if (obj instanceof byte[]) {
-        // Binary (byte array) body parameter support.
-        return RequestBody.create(
-          (byte[]) obj,
-          MediaType.parse(this.contentType)
-        );
-      } else if (isJsonMime(this.contentType)) {
-        String content;
-        if (obj != null) {
-          content = JSON.serialize(obj);
-        } else {
-          content = null;
-        }
-        return RequestBody.create(content, MediaType.parse(this.contentType));
+      String content;
+
+      if (obj != null) {
+        content = JSON.serialize(obj);
       } else {
-        throw new AlgoliaRuntimeException(
-          "Content type \"" + this.contentType + "\" is not supported"
-        );
+        content = null;
       }
+
+      return RequestBody.create(content, MediaType.parse(this.contentType));
     }
 
     /**
