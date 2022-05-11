@@ -28,8 +28,7 @@ public class ApiClient {
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
 
-
-    private String appId, apiKey;
+    private String contentType;
 
     private DateFormat dateFormat;
 
@@ -39,6 +38,8 @@ public class ApiClient {
      * Constructor for ApiClient with custom Requester
      */
     public ApiClient(String appId, String apiKey, Requester requester, String clientName, UserAgent.Segment[] segments) {
+      this.contentType = "application/json";
+
       UserAgent ua = new UserAgent("{{packageVersion}}");
       ua.addSegment(new UserAgent.Segment(clientName, "{{packageVersion}}"));
       if(segments != null) {
@@ -48,8 +49,11 @@ public class ApiClient {
       }
       setUserAgent(ua.toString());
 
-      this.appId = appId;
-      this.apiKey = apiKey;
+      defaultHeaderMap.put("X-Algolia-Application-Id", appId);
+      defaultHeaderMap.put("X-Algolia-API-Key", apiKey);
+      defaultHeaderMap.put("Accept", this.contentType);
+      defaultHeaderMap.put("Content-Type", this.contentType);
+
       this.requester = requester;
     }
 
@@ -221,29 +225,33 @@ public class ApiClient {
     }
 
     /**
-     * Serialize the given Java object into request body according to the object's
-     * class and the request Content-Type.
+     * Serialize the given Java object into request body according to the object's class and the
+     * request Content-Type.
      *
      * @param obj The Java object
-     * @param contentType The request Content-Type
      * @return The serialized request body
      * @throws AlgoliaRuntimeException If fail to serialize the given object
      */
-    public RequestBody serialize(Object obj, String contentType) throws AlgoliaRuntimeException {
-        if (obj instanceof byte[]) {
-            // Binary (byte array) body parameter support.
-            return RequestBody.create((byte[]) obj, MediaType.parse(contentType));
-        } else if (isJsonMime(contentType)) {
-            String content;
-            if (obj != null) {
-                content = JSON.serialize(obj);
-            } else {
-                content = null;
-            }
-            return RequestBody.create(content, MediaType.parse(contentType));
+    public RequestBody serialize(Object obj) throws AlgoliaRuntimeException {
+      if (obj instanceof byte[]) {
+        // Binary (byte array) body parameter support.
+        return RequestBody.create(
+          (byte[]) obj,
+          MediaType.parse(this.contentType)
+        );
+      } else if (isJsonMime(this.contentType)) {
+        String content;
+        if (obj != null) {
+          content = JSON.serialize(obj);
         } else {
-            throw new AlgoliaRuntimeException("Content type \"" + contentType + "\" is not supported");
+          content = null;
         }
+        return RequestBody.create(content, MediaType.parse(this.contentType));
+      } else {
+        throw new AlgoliaRuntimeException(
+          "Content type \"" + this.contentType + "\" is not supported"
+        );
+      }
     }
 
     /**
@@ -310,14 +318,6 @@ public class ApiClient {
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      */
     public Request buildRequest(String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-        headerParams.put("X-Algolia-Application-Id", this.appId);
-        headerParams.put("X-Algolia-API-Key", this.apiKey);
-
-        String contentType = "application/json";
-        headerParams.put("Accept", contentType);
-        headerParams.put("Content-Type", contentType);
-
-
         boolean hasRequestOptions = requestOptions != null;
         final String url = buildUrl(
           path,
@@ -336,15 +336,15 @@ public class ApiClient {
             reqBody = null;
         } else if (body == null) {
             if ("DELETE".equals(method)) {
-                // allow calling DELETE without sending a request body
-                reqBody = null;
+              // allow calling DELETE without sending a request body
+              reqBody = null;
             } else {
-                // use an empty request body (for POST, PUT and PATCH)
-                reqBody = RequestBody.create("", MediaType.parse(contentType));
+              // use an empty request body (for POST, PUT and PATCH)
+              reqBody = RequestBody.create("", MediaType.parse(this.contentType));
             }
-        } else {
-            reqBody = serialize(body, contentType);
-        }
+          } else {
+            reqBody = serialize(body);
+          }
 
         return reqBuilder.method(method, reqBody).build();
     }

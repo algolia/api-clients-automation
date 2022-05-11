@@ -1,6 +1,5 @@
 package com.algolia.utils;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
@@ -9,7 +8,7 @@ import javax.annotation.Nonnull;
  * Request options are used to pass extra parameters, headers, timeout to the request. Parameters
  * set in the request option will override default parameter.
  */
-public class RequestOptions implements Serializable {
+public class RequestOptions {
 
   private final Map<String, String> headers = new HashMap<String, String>();
   private final Map<String, String> queryParams = new HashMap<String, String>();

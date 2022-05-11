@@ -121,7 +121,7 @@ public class {{classname}} extends ApiClient {
   {{! this case handle all the both optional parameters and `requestOptions`  }}
   {{#optionalParams.0}}
   public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}{{#optionalParams.0}},{{/optionalParams.0}} null);
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, null);
   }
   {{/optionalParams.0}}
 
@@ -188,6 +188,10 @@ public class {{classname}} extends ApiClient {
     Call call = this.buildCall(requestPath, "{{httpMethod}}", queryParams, bodyObj, headers, requestOptions);
     Type returnType = new TypeToken<{{{returnType}}}>() {}.getType();
     return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<{{{returnType}}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}} {{/allParams}}) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}null);
   }
   {{/operation}}
 }
