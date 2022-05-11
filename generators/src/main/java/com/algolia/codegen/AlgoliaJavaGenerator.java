@@ -49,6 +49,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       Utils.getClientNameKebabCase(results),
       additionalProperties
     );
+    additionalProperties.put("packageVersion", Utils.getPackageVersion("java"));
 
     return results;
   }

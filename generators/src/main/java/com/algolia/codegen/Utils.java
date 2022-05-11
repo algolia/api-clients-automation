@@ -1,7 +1,11 @@
 package com.algolia.codegen;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Sets;
+import io.swagger.v3.core.util.Json;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import org.openapitools.codegen.CodegenOperation;
@@ -148,5 +152,19 @@ public class Utils {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  // doens't work for javascript
+  public static String getPackageVersion(String language) {
+    try {
+      JsonNode config = Json
+        .mapper()
+        .readTree(new File("config/clients.config.json"));
+      return config.get(language).get("packageVersion").asText();
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    return null;
   }
 }
