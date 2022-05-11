@@ -198,10 +198,12 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       bundle.put("defaultRegion", client.equals("predict") ? "ew" : "us");
       bundle.put("lambda", lambda);
       bundle.put("packageVersionMap", this.getPackageVersionMap());
-      bundle.put(
-        "utilsPackageVersion",
-        this.getJavaScriptUtilsPackageVersion()
-      );
+      if (language.equals("javascript")) {
+        bundle.put(
+          "utilsPackageVersion",
+          this.getJavaScriptUtilsPackageVersion()
+        );
+      }
 
       List<Object> blocks = new ArrayList<>();
       ParametersWithDataType paramsType = new ParametersWithDataType(
