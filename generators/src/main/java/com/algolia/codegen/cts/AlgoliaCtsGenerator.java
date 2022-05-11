@@ -122,14 +122,9 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
   private Map<String, String> getPackageVersionMap() {
     HashMap<String, String> packageVersionMap = new HashMap<>();
-    JsonNode openApiToolsConfig = null;
-    try {
-      openApiToolsConfig =
-        Json.mapper().readTree(new File("config/openapitools.json"));
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
+    JsonNode openApiToolsConfig = Utils.readJsonFile(
+      "config/openapitools.json"
+    );
 
     Iterator<JsonNode> generatorIterator = openApiToolsConfig
       .get("generator-cli")
@@ -148,23 +143,11 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   private String getJavaScriptUtilsPackageVersion() {
-    JsonNode openApiToolsConfig = null;
-    try {
-      openApiToolsConfig =
-        Json.mapper().readTree(new File("config/openapitools.json"));
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
+    JsonNode openApiToolsConfig = Utils.readJsonFile(
+      "config/openapitools.json"
+    );
+    JsonNode clientsConfig = Utils.readJsonFile("config/clients.config.json");
 
-    JsonNode clientsConfig = null;
-    try {
-      clientsConfig =
-        Json.mapper().readTree(new File("config/clients.config.json"));
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
     String mainPackage = clientsConfig
       .get("javascript")
       .get("mainPackage")

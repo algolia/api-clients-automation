@@ -1,7 +1,11 @@
 package com.algolia.codegen;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Sets;
+import io.swagger.v3.core.util.Json;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import org.openapitools.codegen.CodegenOperation;
@@ -148,5 +152,16 @@ public class Utils {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  public static JsonNode readJsonFile(String filePath) {
+    JsonNode json = null;
+    try {
+      json = Json.mapper().readTree(new File(filePath));
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    return json;
   }
 }
