@@ -121,28 +121,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     return lambdas;
   }
 
-  private Map<String, String> getPackageVersionMap() {
-    HashMap<String, String> packageVersionMap = new HashMap<>();
-    JsonNode openApiToolsConfig = Utils.readJsonFile(
-      "config/openapitools.json"
-    );
-
-    Iterator<JsonNode> generatorIterator = openApiToolsConfig
-      .get("generator-cli")
-      .get("generators")
-      .elements();
-    while (generatorIterator.hasNext()) {
-      JsonNode generator = generatorIterator.next();
-      JsonNode additionalProperties = generator.get("additionalProperties");
-      packageVersionMap.put(
-        additionalProperties.get("packageName").asText(),
-        additionalProperties.get("packageVersion").asText()
-      );
-    }
-
-    return packageVersionMap;
-  }
-
   @Override
   public Map<String, Object> postProcessSupportingFileData(
     Map<String, Object> objs
