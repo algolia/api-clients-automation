@@ -27,6 +27,7 @@ export function getCustomGenerator(language: Language): string {
   return clientsConfig[language].customGenerator;
 }
 
+// Returns the version of the package from clients.config.json, except for JavaScript where it returns the version of javascript-search
 export function getPackageVersionDefault(language: Language): string {
   if (language === 'javascript') {
     return openapiConfig['generator-cli'].generators['javascript-search']

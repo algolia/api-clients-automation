@@ -103,7 +103,7 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
   return versionsToRelease;
 }
 
-// of course it's an edge case
+// Bump each client version of the JavaScript client in openapitools.json
 async function updateVersionForJavascript(
   versionsToRelease: VersionsToRelease
 ): Promise<void> {
@@ -148,7 +148,9 @@ async function updateConfigFiles(
 
   // update the other versions in clients.config.json
   LANGUAGES.forEach((lang) => {
-    if (lang === 'javascript' || !versionsToRelease[lang]) return;
+    if (lang === 'javascript' || !versionsToRelease[lang]) {
+      return;
+    }
     const releaseType = versionsToRelease[lang]!.releaseType;
 
     const newVersion = semver.inc(getPackageVersionDefault(lang), releaseType);
