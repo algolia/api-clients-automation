@@ -1,8 +1,6 @@
 package com.algolia.codegen.cts;
 
 import com.algolia.codegen.Utils;
-import com.algolia.codegen.cts.CtsManager;
-import com.algolia.codegen.cts.CtsManagerFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;

@@ -1,7 +1,6 @@
 package com.algolia.codegen.cts;
 
 import com.algolia.codegen.Utils;
-import com.algolia.codegen.cts.CtsManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
