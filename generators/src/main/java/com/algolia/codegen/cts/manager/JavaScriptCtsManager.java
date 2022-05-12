@@ -40,17 +40,11 @@ public class JavaScriptCtsManager extends CtsManager {
     JsonNode openApiToolsConfig = Utils.readJsonFile(
       "config/openapitools.json"
     );
-    JsonNode clientsConfig = Utils.readJsonFile("config/clients.config.json");
-
-    String mainPackage = clientsConfig
-      .get("javascript")
-      .get("mainPackage")
-      .asText();
 
     String utilsPackageVersion = openApiToolsConfig
       .get("generator-cli")
       .get("generators")
-      .get(mainPackage)
+      .get("javascript-search")
       .get("additionalProperties")
       .get("utilsPackageVersion")
       .asText();

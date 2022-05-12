@@ -15,10 +15,11 @@ public abstract class CtsManager {
 
   protected Object[] getFilteredPackageVersions(List<String> packages) {
     HashMap<String, String> result = new HashMap<>();
+
+    // Read config/openapitools.js for JavaScript
     JsonNode openApiToolsConfig = Utils.readJsonFile(
       "config/openapitools.json"
     );
-
     Iterator<JsonNode> generatorIterator = openApiToolsConfig
       .get("generator-cli")
       .get("generators")
@@ -26,10 +27,28 @@ public abstract class CtsManager {
     while (generatorIterator.hasNext()) {
       JsonNode generator = generatorIterator.next();
       JsonNode additionalProperties = generator.get("additionalProperties");
+      if (!additionalProperties.has("packageVersion")) {
+        continue;
+      }
       String packageName = additionalProperties.get("packageName").asText();
       String packageVersion = additionalProperties
         .get("packageVersion")
         .asText();
+      if (packages.contains(packageName)) {
+        result.put(packageName, packageVersion);
+      }
+    }
+
+    JsonNode clientsConfig = Utils.readJsonFile("config/clients.config.json");
+    Iterator<JsonNode> clientsIterator = clientsConfig.elements();
+    while (clientsIterator.hasNext()) {
+      JsonNode client = clientsIterator.next();
+
+      if (!client.has("packageVersion")) {
+        continue;
+      }
+      String packageName = client.get("packageName").asText();
+      String packageVersion = client.get("packageVersion").asText();
       if (packages.contains(packageName)) {
         result.put(packageName, packageVersion);
       }
