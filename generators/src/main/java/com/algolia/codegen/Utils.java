@@ -154,8 +154,14 @@ public class Utils {
     }
   }
 
-  // doens't work for javascript
+  // Get the package version from clients.config.json (doesn't work for JavaScript)
   public static String getPackageVersion(String language) {
+    if (language.equals("javascript")) {
+      throw new GenerationException(
+        "Cannot use getPackageVersion with language=\"javascript\", " +
+        "read openapitools.json instead"
+      );
+    }
     try {
       JsonNode config = Json
         .mapper()
