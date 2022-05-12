@@ -1,6 +1,8 @@
 package com.algolia.codegen.cts;
 
 import com.algolia.codegen.Utils;
+import com.algolia.codegen.cts.CtsManager;
+import com.algolia.codegen.cts.CtsManagerFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -23,6 +25,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   private String language;
   private String client;
   private String packageName;
+  private CtsManager ctsManager;
 
   /**
    * Configures the type of generator.
@@ -64,6 +67,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
     packageName = (String) additionalProperties.get("packageName");
+    ctsManager = CtsManagerFactory.getManager(language);
 
     JsonNode config = Utils.readJsonFile("config/clients.config.json");
     TestConfig testConfig = null;
@@ -90,11 +94,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       )
     );
 
-    if (language.equals("javascript")) {
-      supportingFiles.add(
-        new SupportingFile("package.mustache", ".", "package.json")
-      );
-    }
+    ctsManager.addSupportingFiles(supportingFiles);
   }
 
   @Override
@@ -143,28 +143,6 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     return packageVersionMap;
   }
 
-  private String getJavaScriptUtilsPackageVersion() {
-    JsonNode openApiToolsConfig = Utils.readJsonFile(
-      "config/openapitools.json"
-    );
-    JsonNode clientsConfig = Utils.readJsonFile("config/clients.config.json");
-
-    String mainPackage = clientsConfig
-      .get("javascript")
-      .get("mainPackage")
-      .asText();
-
-    String utilsPackageVersion = openApiToolsConfig
-      .get("generator-cli")
-      .get("generators")
-      .get(mainPackage)
-      .get("additionalProperties")
-      .get("utilsPackageVersion")
-      .asText();
-
-    return utilsPackageVersion;
-  }
-
   @Override
   public Map<String, Object> postProcessSupportingFileData(
     Map<String, Object> objs
@@ -198,13 +176,8 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("defaultRegion", client.equals("predict") ? "ew" : "us");
       bundle.put("lambda", lambda);
-      bundle.put("packageVersionMap", this.getPackageVersionMap());
-      if (language.equals("javascript")) {
-        bundle.put(
-          "utilsPackageVersion",
-          this.getJavaScriptUtilsPackageVersion()
-        );
-      }
+      bundle.put("packageDependencies", ctsManager.getPackageDependencies());
+      ctsManager.addExtraToBundle(bundle);
 
       List<Object> blocks = new ArrayList<>();
       ParametersWithDataType paramsType = new ParametersWithDataType(

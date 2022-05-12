@@ -5,20 +5,9 @@
     "test": "jest"
   },
   "dependencies": {
-    {{#packageVersionMap}}
-    "@experimental-api-clients-automation/algoliasearch-lite": "{{@experimental-api-clients-automation/algoliasearch-lite}}",
-    "@experimental-api-clients-automation/client-abtesting": "{{@experimental-api-clients-automation/client-abtesting}}",
-    "@experimental-api-clients-automation/client-analytics": "{{@experimental-api-clients-automation/client-analytics}}",
+{{{packageDependencies}}},
     "@experimental-api-clients-automation/client-common": "{{utilsPackageVersion}}",
-    "@experimental-api-clients-automation/client-insights": "{{@experimental-api-clients-automation/client-insights}}",
-    "@experimental-api-clients-automation/client-personalization": "{{@experimental-api-clients-automation/client-personalization}}",
-    "@experimental-api-clients-automation/client-predict": "{{@experimental-api-clients-automation/client-predict}}",
-    "@experimental-api-clients-automation/client-query-suggestions": "{{@experimental-api-clients-automation/client-query-suggestions}}",
-    "@experimental-api-clients-automation/client-search": "{{@experimental-api-clients-automation/client-search}}",
-    "@experimental-api-clients-automation/client-sources": "{{@experimental-api-clients-automation/client-sources}}",
-    "@experimental-api-clients-automation/recommend": "{{@experimental-api-clients-automation/recommend}}",
     "@experimental-api-clients-automation/requester-node-http": "{{utilsPackageVersion}}"
-    {{/packageVersionMap}}
   },
   "devDependencies": {
     "@types/jest": "27.4.1",
