@@ -1,13 +1,10 @@
 package com.algolia.api;
 
-import com.algolia.ApiCallback;
 import com.algolia.ApiClient;
-import com.algolia.ApiResponse;
-import com.algolia.Pair;
 import com.algolia.exceptions.*;
 import com.algolia.model.analytics.*;
 import com.algolia.utils.*;
-import com.algolia.utils.echo.*;
+import com.algolia.utils.RequestOptions;
 import com.algolia.utils.retry.CallType;
 import com.algolia.utils.retry.StatefulHost;
 import com.google.gson.reflect.TypeToken;
@@ -17,12 +14,26 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 
 public class AnalyticsClient extends ApiClient {
 
   public AnalyticsClient(String appId, String apiKey) {
     this(appId, apiKey, new HttpRequester(getDefaultHosts(null)), null);
+  }
+
+  public AnalyticsClient(
+    String appId,
+    String apiKey,
+    UserAgent.Segment[] userAgentSegments
+  ) {
+    this(
+      appId,
+      apiKey,
+      new HttpRequester(getDefaultHosts(null)),
+      userAgentSegments
+    );
   }
 
   public AnalyticsClient(String appId, String apiKey, String region) {
@@ -70,59 +81,109 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Build call for del
+   * This method allow you to send requests to the Algolia REST API.
    *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return Object
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  private Call delCall(
+  public Object del(
     String path,
     Map<String, Object> parameters,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
-        );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "DELETE",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    return LaunderThrowable.await(delAsync(path, parameters, requestOptions));
   }
 
-  private Call delValidateBeforeCall(
+  public Object del(String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.del(path, parameters, null);
+  }
+
+  public Object del(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.del(path, null, requestOptions);
+  }
+
+  public Object del(String path) throws AlgoliaRuntimeException {
+    return this.del(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
+   */
+  public CompletableFuture<Object> delAsync(
     String path,
     Map<String, Object> parameters,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
     if (path == null) {
       throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling del(Async)"
       );
     }
 
-    return delCall(path, parameters, callback);
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+
+    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "DELETE",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Object>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<Object> delAsync(
+    String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
+    return this.delAsync(path, parameters, null);
+  }
+
+  public CompletableFuture<Object> delAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.delAsync(path, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> delAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.delAsync(path, null, null);
   }
 
   /**
@@ -131,24 +192,32 @@ public class AnalyticsClient extends ApiClient {
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object del(String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
-    Call req = delValidateBeforeCall(path, parameters, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.Del(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
+  public Object get(
+    String path,
+    Map<String, Object> parameters,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAsync(path, parameters, requestOptions));
   }
 
-  public Object del(String path) throws AlgoliaRuntimeException {
-    return this.del(path, null);
+  public Object get(String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.get(path, parameters, null);
+  }
+
+  public Object get(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.get(path, null, requestOptions);
+  }
+
+  public Object get(String path) throws AlgoliaRuntimeException {
+    return this.get(path, null, null);
   }
 
   /**
@@ -157,198 +226,70 @@ public class AnalyticsClient extends ApiClient {
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call delAsync(
+  public CompletableFuture<Object> getAsync(
     String path,
     Map<String, Object> parameters,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = delValidateBeforeCall(path, parameters, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for get
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getCall(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
-        );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call getValidateBeforeCall(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
     if (path == null) {
       throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling get(Async)"
       );
     }
 
-    return getCall(path, parameters, callback);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @return Object
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public Object get(String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
-    Call req = getValidateBeforeCall(path, parameters, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.Get(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  public Object get(String path) throws AlgoliaRuntimeException {
-    return this.get(path, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call getAsync(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getValidateBeforeCall(path, parameters, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for getAverageClickPosition
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getAverageClickPositionCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetAverageClickPositionResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/clicks/averageClickPosition";
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
-    if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
     }
 
-    if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
-    }
-
-    if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
-    }
-
-    if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Object>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getAverageClickPositionValidateBeforeCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetAverageClickPositionResponse> callback
+  public CompletableFuture<Object> getAsync(
+    String path,
+    Map<String, Object> parameters
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getAverageClickPosition(Async)"
-      );
-    }
+    return this.getAsync(path, parameters, null);
+  }
 
-    return getAverageClickPositionCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
+  public CompletableFuture<Object> getAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getAsync(path, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> getAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.getAsync(path, null, null);
   }
 
   /**
@@ -363,6 +304,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetAverageClickPositionResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -371,31 +314,45 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getAverageClickPositionAsync(
+        index,
+        startDate,
+        endDate,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetAverageClickPositionResponse getAverageClickPosition(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getAverageClickPositionValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetAverageClickPosition(
-        ((CallEcho) req).request()
+    return this.getAverageClickPosition(index, startDate, endDate, tags, null);
+  }
+
+  public GetAverageClickPositionResponse getAverageClickPosition(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getAverageClickPosition(
+        index,
+        null,
+        null,
+        null,
+        requestOptions
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetAverageClickPositionResponse>() {}
-      .getType();
-    ApiResponse<GetAverageClickPositionResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
   }
 
   public GetAverageClickPositionResponse getAverageClickPosition(String index)
     throws AlgoliaRuntimeException {
-    return this.getAverageClickPosition(index, null, null, null);
+    return this.getAverageClickPosition(index, null, null, null, null);
   }
 
   /**
@@ -410,97 +367,95 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getAverageClickPositionAsync(
+  public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetAverageClickPositionResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getAverageClickPositionValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetAverageClickPositionResponse>() {}
-      .getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getAverageClickPosition(Async)"
+      );
+    }
 
-  /**
-   * Build call for getClickPositions
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getClickPositionsCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetClickPositionsResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/clicks/positions";
+    String requestPath = "/2/clicks/averageClickPosition";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetAverageClickPositionResponse>() {}
+      .getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getClickPositionsValidateBeforeCall(
+  public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
     String index,
     String startDate,
     String endDate,
-    String tags,
-    final ApiCallback<GetClickPositionsResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getClickPositions(Async)"
+    return this.getAverageClickPositionAsync(
+        index,
+        startDate,
+        endDate,
+        tags,
+        null
       );
-    }
+  }
 
-    return getClickPositionsCall(index, startDate, endDate, tags, callback);
+  public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionAsync(
+        index,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionAsync(index, null, null, null, null);
   }
 
   /**
@@ -516,6 +471,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetClickPositionsResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -524,29 +481,33 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getClickPositionsAsync(index, startDate, endDate, tags, requestOptions)
+    );
+  }
+
+  public GetClickPositionsResponse getClickPositions(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getClickPositionsValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetClickPositions(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetClickPositionsResponse>() {}.getType();
-    ApiResponse<GetClickPositionsResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getClickPositions(index, startDate, endDate, tags, null);
+  }
+
+  public GetClickPositionsResponse getClickPositions(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getClickPositions(index, null, null, null, requestOptions);
   }
 
   public GetClickPositionsResponse getClickPositions(String index)
     throws AlgoliaRuntimeException {
-    return this.getClickPositions(index, null, null, null);
+    return this.getClickPositions(index, null, null, null, null);
   }
 
   /**
@@ -563,96 +524,82 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getClickPositionsAsync(
+  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetClickPositionsResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getClickPositionsValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetClickPositionsResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getClickPositions(Async)"
+      );
+    }
 
-  /**
-   * Build call for getClickThroughRate
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getClickThroughRateCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetClickThroughRateResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/clicks/clickThroughRate";
+    String requestPath = "/2/clicks/positions";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetClickPositionsResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getClickThroughRateValidateBeforeCall(
+  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
     String index,
     String startDate,
     String endDate,
-    String tags,
-    final ApiCallback<GetClickThroughRateResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getClickThroughRate(Async)"
-      );
-    }
+    return this.getClickPositionsAsync(index, startDate, endDate, tags, null);
+  }
 
-    return getClickThroughRateCall(index, startDate, endDate, tags, callback);
+  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getClickPositionsAsync(index, null, null, null, requestOptions);
+  }
+
+  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getClickPositionsAsync(index, null, null, null, null);
   }
 
   /**
@@ -668,6 +615,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetClickThroughRateResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -676,30 +625,33 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getClickThroughRateAsync(index, startDate, endDate, tags, requestOptions)
+    );
+  }
+
+  public GetClickThroughRateResponse getClickThroughRate(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getClickThroughRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetClickThroughRate(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetClickThroughRateResponse>() {}.getType();
-    ApiResponse<GetClickThroughRateResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+    return this.getClickThroughRate(index, startDate, endDate, tags, null);
+  }
+
+  public GetClickThroughRateResponse getClickThroughRate(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getClickThroughRate(index, null, null, null, requestOptions);
   }
 
   public GetClickThroughRateResponse getClickThroughRate(String index)
     throws AlgoliaRuntimeException {
-    return this.getClickThroughRate(index, null, null, null);
+    return this.getClickThroughRate(index, null, null, null, null);
   }
 
   /**
@@ -715,96 +667,88 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getClickThroughRateAsync(
+  public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetClickThroughRateResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getClickThroughRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetClickThroughRateResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getClickThroughRate(Async)"
+      );
+    }
 
-  /**
-   * Build call for getConversationRate
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getConversationRateCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetConversationRateResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/conversions/conversionRate";
+    String requestPath = "/2/clicks/clickThroughRate";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetClickThroughRateResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getConversationRateValidateBeforeCall(
+  public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(
     String index,
     String startDate,
     String endDate,
-    String tags,
-    final ApiCallback<GetConversationRateResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getConversationRate(Async)"
-      );
-    }
+    return this.getClickThroughRateAsync(index, startDate, endDate, tags, null);
+  }
 
-    return getConversationRateCall(index, startDate, endDate, tags, callback);
+  public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getClickThroughRateAsync(
+        index,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getClickThroughRateAsync(index, null, null, null, null);
   }
 
   /**
@@ -820,6 +764,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetConversationRateResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -828,30 +774,33 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getConversationRateAsync(index, startDate, endDate, tags, requestOptions)
+    );
+  }
+
+  public GetConversationRateResponse getConversationRate(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getConversationRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetConversationRate(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetConversationRateResponse>() {}.getType();
-    ApiResponse<GetConversationRateResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+    return this.getConversationRate(index, startDate, endDate, tags, null);
+  }
+
+  public GetConversationRateResponse getConversationRate(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getConversationRate(index, null, null, null, requestOptions);
   }
 
   public GetConversationRateResponse getConversationRate(String index)
     throws AlgoliaRuntimeException {
-    return this.getConversationRate(index, null, null, null);
+    return this.getConversationRate(index, null, null, null, null);
   }
 
   /**
@@ -867,96 +816,88 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getConversationRateAsync(
+  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetConversationRateResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getConversationRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetConversationRateResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getConversationRate(Async)"
+      );
+    }
 
-  /**
-   * Build call for getNoClickRate
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getNoClickRateCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetNoClickRateResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/searches/noClickRate";
+    String requestPath = "/2/conversions/conversionRate";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetConversationRateResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getNoClickRateValidateBeforeCall(
+  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(
     String index,
     String startDate,
     String endDate,
-    String tags,
-    final ApiCallback<GetNoClickRateResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getNoClickRate(Async)"
-      );
-    }
+    return this.getConversationRateAsync(index, startDate, endDate, tags, null);
+  }
 
-    return getNoClickRateCall(index, startDate, endDate, tags, callback);
+  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getConversationRateAsync(
+        index,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getConversationRateAsync(index, null, null, null, null);
   }
 
   /**
@@ -972,6 +913,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetNoClickRateResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -980,29 +923,33 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getNoClickRateAsync(index, startDate, endDate, tags, requestOptions)
+    );
+  }
+
+  public GetNoClickRateResponse getNoClickRate(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getNoClickRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetNoClickRate(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetNoClickRateResponse>() {}.getType();
-    ApiResponse<GetNoClickRateResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getNoClickRate(index, startDate, endDate, tags, null);
+  }
+
+  public GetNoClickRateResponse getNoClickRate(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getNoClickRate(index, null, null, null, requestOptions);
   }
 
   public GetNoClickRateResponse getNoClickRate(String index)
     throws AlgoliaRuntimeException {
-    return this.getNoClickRate(index, null, null, null);
+    return this.getNoClickRate(index, null, null, null, null);
   }
 
   /**
@@ -1018,96 +965,82 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getNoClickRateAsync(
+  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetNoClickRateResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getNoClickRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetNoClickRateResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getNoClickRate(Async)"
+      );
+    }
 
-  /**
-   * Build call for getNoResultsRate
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getNoResultsRateCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetNoResultsRateResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/searches/noResultRate";
+    String requestPath = "/2/searches/noClickRate";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetNoClickRateResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getNoResultsRateValidateBeforeCall(
+  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
     String index,
     String startDate,
     String endDate,
-    String tags,
-    final ApiCallback<GetNoResultsRateResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getNoResultsRate(Async)"
-      );
-    }
+    return this.getNoClickRateAsync(index, startDate, endDate, tags, null);
+  }
 
-    return getNoResultsRateCall(index, startDate, endDate, tags, callback);
+  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getNoClickRateAsync(index, null, null, null, requestOptions);
+  }
+
+  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getNoClickRateAsync(index, null, null, null, null);
   }
 
   /**
@@ -1123,6 +1056,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetNoResultsRateResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -1131,29 +1066,33 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getNoResultsRateAsync(index, startDate, endDate, tags, requestOptions)
+    );
+  }
+
+  public GetNoResultsRateResponse getNoResultsRate(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getNoResultsRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetNoResultsRate(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetNoResultsRateResponse>() {}.getType();
-    ApiResponse<GetNoResultsRateResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getNoResultsRate(index, startDate, endDate, tags, null);
+  }
+
+  public GetNoResultsRateResponse getNoResultsRate(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getNoResultsRate(index, null, null, null, requestOptions);
   }
 
   public GetNoResultsRateResponse getNoResultsRate(String index)
     throws AlgoliaRuntimeException {
-    return this.getNoResultsRate(index, null, null, null);
+    return this.getNoResultsRate(index, null, null, null, null);
   }
 
   /**
@@ -1169,96 +1108,82 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getNoResultsRateAsync(
+  public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetNoResultsRateResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getNoResultsRateValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetNoResultsRateResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getNoResultsRate(Async)"
+      );
+    }
 
-  /**
-   * Build call for getSearchesCount
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getSearchesCountCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetSearchesCountResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/searches/count";
+    String requestPath = "/2/searches/noResultRate";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetNoResultsRateResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getSearchesCountValidateBeforeCall(
+  public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
     String index,
     String startDate,
     String endDate,
-    String tags,
-    final ApiCallback<GetSearchesCountResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getSearchesCount(Async)"
-      );
-    }
+    return this.getNoResultsRateAsync(index, startDate, endDate, tags, null);
+  }
 
-    return getSearchesCountCall(index, startDate, endDate, tags, callback);
+  public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getNoResultsRateAsync(index, null, null, null, requestOptions);
+  }
+
+  public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getNoResultsRateAsync(index, null, null, null, null);
   }
 
   /**
@@ -1273,6 +1198,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetSearchesCountResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -1281,29 +1208,33 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getSearchesCountAsync(index, startDate, endDate, tags, requestOptions)
+    );
+  }
+
+  public GetSearchesCountResponse getSearchesCount(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getSearchesCountValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetSearchesCount(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetSearchesCountResponse>() {}.getType();
-    ApiResponse<GetSearchesCountResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getSearchesCount(index, startDate, endDate, tags, null);
+  }
+
+  public GetSearchesCountResponse getSearchesCount(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesCount(index, null, null, null, requestOptions);
   }
 
   public GetSearchesCountResponse getSearchesCount(String index)
     throws AlgoliaRuntimeException {
-    return this.getSearchesCount(index, null, null, null);
+    return this.getSearchesCount(index, null, null, null, null);
   }
 
   /**
@@ -1318,116 +1249,82 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getSearchesCountAsync(
+  public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetSearchesCountResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getSearchesCountValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetSearchesCountResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getSearchesCount(Async)"
+      );
+    }
 
-  /**
-   * Build call for getSearchesNoClicks
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getSearchesNoClicksCall(
-    String index,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetSearchesNoClicksResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/searches/noClicks";
+    String requestPath = "/2/searches/count";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
-    }
-
-    if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
-    }
-
-    if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetSearchesCountResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getSearchesNoClicksValidateBeforeCall(
+  public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
     String index,
     String startDate,
     String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetSearchesNoClicksResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getSearchesNoClicks(Async)"
-      );
-    }
+    return this.getSearchesCountAsync(index, startDate, endDate, tags, null);
+  }
 
-    return getSearchesNoClicksCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesCountAsync(index, null, null, null, requestOptions);
+  }
+
+  public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesCountAsync(index, null, null, null, null);
   }
 
   /**
@@ -1446,6 +1343,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetSearchesNoClicksResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -1456,32 +1355,59 @@ public class AnalyticsClient extends ApiClient {
     String endDate,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getSearchesNoClicksAsync(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetSearchesNoClicksResponse getSearchesNoClicks(
+    String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getSearchesNoClicksValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetSearchesNoClicks(
-        ((CallEcho) req).request()
+    return this.getSearchesNoClicks(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetSearchesNoClicksResponse>() {}.getType();
-    ApiResponse<GetSearchesNoClicksResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+  }
+
+  public GetSearchesNoClicksResponse getSearchesNoClicks(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicks(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetSearchesNoClicksResponse getSearchesNoClicks(String index)
     throws AlgoliaRuntimeException {
-    return this.getSearchesNoClicks(index, null, null, null, null, null);
+    return this.getSearchesNoClicks(index, null, null, null, null, null, null);
   }
 
   /**
@@ -1500,120 +1426,118 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getSearchesNoClicksAsync(
+  public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(
     String index,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetSearchesNoClicksResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getSearchesNoClicksValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetSearchesNoClicksResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getSearchesNoClicks(Async)"
+      );
+    }
 
-  /**
-   * Build call for getSearchesNoResults
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getSearchesNoResultsCall(
-    String index,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetSearchesNoResultsResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/searches/noResults";
+    String requestPath = "/2/searches/noClicks";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
+      queryParameters.put("limit", parameterToString(limit));
     }
 
     if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
+      queryParameters.put("offset", parameterToString(offset));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetSearchesNoClicksResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getSearchesNoResultsValidateBeforeCall(
+  public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(
     String index,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
-    String tags,
-    final ApiCallback<GetSearchesNoResultsResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getSearchesNoResults(Async)"
+    return this.getSearchesNoClicksAsync(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
+  }
 
-    return getSearchesNoResultsCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -1631,6 +1555,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetSearchesNoResultsResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -1641,33 +1567,59 @@ public class AnalyticsClient extends ApiClient {
     String endDate,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getSearchesNoResultsAsync(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetSearchesNoResultsResponse getSearchesNoResults(
+    String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getSearchesNoResultsValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetSearchesNoResults(
-        ((CallEcho) req).request()
+    return this.getSearchesNoResults(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetSearchesNoResultsResponse>() {}
-      .getType();
-    ApiResponse<GetSearchesNoResultsResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+  }
+
+  public GetSearchesNoResultsResponse getSearchesNoResults(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoResults(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetSearchesNoResultsResponse getSearchesNoResults(String index)
     throws AlgoliaRuntimeException {
-    return this.getSearchesNoResults(index, null, null, null, null, null);
+    return this.getSearchesNoResults(index, null, null, null, null, null, null);
   }
 
   /**
@@ -1686,83 +1638,119 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getSearchesNoResultsAsync(
+  public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(
     String index,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetSearchesNoResultsResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getSearchesNoResultsValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetSearchesNoResultsResponse>() {}
-      .getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getSearchesNoResults(Async)"
+      );
+    }
 
-  /**
-   * Build call for getStatus
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getStatusCall(
-    String index,
-    final ApiCallback<GetStatusResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/status";
+    String requestPath = "/2/searches/noResults";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
+    if (startDate != null) {
+      queryParameters.put("startDate", parameterToString(startDate));
+    }
 
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
+    if (endDate != null) {
+      queryParameters.put("endDate", parameterToString(endDate));
+    }
+
+    if (limit != null) {
+      queryParameters.put("limit", parameterToString(limit));
+    }
+
+    if (offset != null) {
+      queryParameters.put("offset", parameterToString(offset));
+    }
+
+    if (tags != null) {
+      queryParameters.put("tags", parameterToString(tags));
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetSearchesNoResultsResponse>() {}
+      .getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(
+    String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsAsync(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
   }
 
-  private Call getStatusValidateBeforeCall(
+  public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(
     String index,
-    final ApiCallback<GetStatusResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getStatus(Async)"
+    return this.getSearchesNoResultsAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
       );
-    }
+  }
 
-    return getStatusCall(index, callback);
+  public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -1770,20 +1758,22 @@ public class AnalyticsClient extends ApiClient {
    * recently created and/or no search has been performed yet the updated time will be null.
    *
    * @param index The index name to target. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetStatusResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
+  public GetStatusResponse getStatus(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getStatusAsync(index, requestOptions));
+  }
+
   public GetStatusResponse getStatus(String index)
     throws AlgoliaRuntimeException {
-    Call req = getStatusValidateBeforeCall(index, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetStatus(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetStatusResponse>() {}.getType();
-    ApiResponse<GetStatusResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getStatus(index, null);
   }
 
   /**
@@ -1792,107 +1782,50 @@ public class AnalyticsClient extends ApiClient {
    * be null.
    *
    * @param index The index name to target. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getStatusAsync(
+  public CompletableFuture<GetStatusResponse> getStatusAsync(
     String index,
-    final ApiCallback<GetStatusResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getStatusValidateBeforeCall(index, callback);
-    Type returnType = new TypeToken<GetStatusResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getStatus(Async)"
+      );
+    }
 
-  /**
-   * Build call for getTopCountries
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getTopCountriesCall(
-    String index,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetTopCountriesResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/countries";
+    String requestPath = "/2/status";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
-    if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
-    }
-
-    if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
-    }
-
-    if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
-    }
-
-    if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
-    }
-
-    if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetStatusResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getTopCountriesValidateBeforeCall(
-    String index,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetTopCountriesResponse> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getTopCountries(Async)"
-      );
-    }
-
-    return getTopCountriesCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetStatusResponse> getStatusAsync(String index)
+    throws AlgoliaRuntimeException {
+    return this.getStatusAsync(index, null);
   }
 
   /**
@@ -1910,6 +1843,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetTopCountriesResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -1920,31 +1855,59 @@ public class AnalyticsClient extends ApiClient {
     String endDate,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopCountriesAsync(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetTopCountriesResponse getTopCountries(
+    String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getTopCountriesValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetTopCountries(
-        ((CallEcho) req).request()
+    return this.getTopCountries(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetTopCountriesResponse>() {}.getType();
-    ApiResponse<GetTopCountriesResponse> res = this.execute(call, returnType);
-    return res.getData();
+  }
+
+  public GetTopCountriesResponse getTopCountries(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopCountries(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetTopCountriesResponse getTopCountries(String index)
     throws AlgoliaRuntimeException {
-    return this.getTopCountries(index, null, null, null, null, null);
+    return this.getTopCountries(index, null, null, null, null, null, null);
   }
 
   /**
@@ -1962,127 +1925,110 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getTopCountriesAsync(
+  public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
     String index,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetTopCountriesResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getTopCountriesValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetTopCountriesResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getTopCountries(Async)"
+      );
+    }
 
-  /**
-   * Build call for getTopFilterAttributes
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getTopFilterAttributesCall(
-    String index,
-    String search,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetTopFilterAttributesResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/filters";
+    String requestPath = "/2/countries";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
-    }
-
-    if (search != null) {
-      queryParams.addAll(this.parameterToPair("search", search));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
+      queryParameters.put("limit", parameterToString(limit));
     }
 
     if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
+      queryParameters.put("offset", parameterToString(offset));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetTopCountriesResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getTopFilterAttributesValidateBeforeCall(
+  public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
     String index,
-    String search,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
-    String tags,
-    final ApiCallback<GetTopFilterAttributesResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getTopFilterAttributes(Async)"
+    return this.getTopCountriesAsync(
+        index,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
+  }
 
-    return getTopFilterAttributesCall(
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopCountriesAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getTopCountriesAsync(index, null, null, null, null, null, null);
   }
 
   /**
@@ -2101,6 +2047,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetTopFilterAttributesResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -2112,35 +2060,65 @@ public class AnalyticsClient extends ApiClient {
     String endDate,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopFilterAttributesAsync(
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetTopFilterAttributesResponse getTopFilterAttributes(
+    String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getTopFilterAttributesValidateBeforeCall(
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetTopFilterAttributes(
-        ((CallEcho) req).request()
+    return this.getTopFilterAttributes(
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetTopFilterAttributesResponse>() {}
-      .getType();
-    ApiResponse<GetTopFilterAttributesResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+  }
+
+  public GetTopFilterAttributesResponse getTopFilterAttributes(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributes(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetTopFilterAttributesResponse getTopFilterAttributes(String index)
     throws AlgoliaRuntimeException {
     return this.getTopFilterAttributes(
         index,
+        null,
         null,
         null,
         null,
@@ -2166,12 +2144,13 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getTopFilterAttributesAsync(
+  public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
     String index,
     String search,
     String startDate,
@@ -2179,132 +2158,114 @@ public class AnalyticsClient extends ApiClient {
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetTopFilterAttributesResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getTopFilterAttributesValidateBeforeCall(
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetTopFilterAttributesResponse>() {}
-      .getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getTopFilterAttributes(Async)"
+      );
+    }
 
-  /**
-   * Build call for getTopFilterForAttribute
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getTopFilterForAttributeCall(
-    String attribute,
-    String index,
-    String search,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetTopFilterForAttributeResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath =
-      "/2/filters/{attribute}".replaceAll(
-          "\\{attribute\\}",
-          this.escapeString(attribute.toString())
-        );
+    String requestPath = "/2/filters";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (search != null) {
-      queryParams.addAll(this.parameterToPair("search", search));
+      queryParameters.put("search", parameterToString(search));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
+      queryParameters.put("limit", parameterToString(limit));
     }
 
     if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
+      queryParameters.put("offset", parameterToString(offset));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetTopFilterAttributesResponse>() {}
+      .getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getTopFilterForAttributeValidateBeforeCall(
-    String attribute,
+  public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
     String index,
     String search,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
-    String tags,
-    final ApiCallback<GetTopFilterForAttributeResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'attribute' is set
-    if (attribute == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'attribute' when calling" +
-        " getTopFilterForAttribute(Async)"
+    return this.getTopFilterAttributesAsync(
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
+  }
 
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getTopFilterForAttribute(Async)"
+  public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
       );
-    }
+  }
 
-    return getTopFilterForAttributeCall(
-      attribute,
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -2324,6 +2285,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetTopFilterForAttributeResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -2336,30 +2299,63 @@ public class AnalyticsClient extends ApiClient {
     String endDate,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopFilterForAttributeAsync(
+        attribute,
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetTopFilterForAttributeResponse getTopFilterForAttribute(
+    String attribute,
+    String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getTopFilterForAttributeValidateBeforeCall(
-      attribute,
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetTopFilterForAttribute(
-        ((CallEcho) req).request()
+    return this.getTopFilterForAttribute(
+        attribute,
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetTopFilterForAttributeResponse>() {}
-      .getType();
-    ApiResponse<GetTopFilterForAttributeResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+  }
+
+  public GetTopFilterForAttributeResponse getTopFilterForAttribute(
+    String attribute,
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttribute(
+        attribute,
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetTopFilterForAttributeResponse getTopFilterForAttribute(
@@ -2369,6 +2365,7 @@ public class AnalyticsClient extends ApiClient {
     return this.getTopFilterForAttribute(
         attribute,
         index,
+        null,
         null,
         null,
         null,
@@ -2396,12 +2393,13 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getTopFilterForAttributeAsync(
+  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
     String attribute,
     String index,
     String search,
@@ -2410,118 +2408,131 @@ public class AnalyticsClient extends ApiClient {
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetTopFilterForAttributeResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getTopFilterForAttributeValidateBeforeCall(
-      attribute,
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetTopFilterForAttributeResponse>() {}
-      .getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (attribute == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'attribute' when calling" +
+        " getTopFilterForAttribute(Async)"
+      );
+    }
 
-  /**
-   * Build call for getTopFiltersNoResults
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getTopFiltersNoResultsCall(
-    String index,
-    String search,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetTopFiltersNoResultsResponse> callback
-  ) throws AlgoliaRuntimeException {
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getTopFilterForAttribute(Async)"
+      );
+    }
+
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/filters/noResults";
+    String requestPath =
+      "/2/filters/{attribute}".replaceAll(
+          "\\{attribute\\}",
+          this.escapeString(attribute.toString())
+        );
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (search != null) {
-      queryParams.addAll(this.parameterToPair("search", search));
+      queryParameters.put("search", parameterToString(search));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
+      queryParameters.put("limit", parameterToString(limit));
     }
 
     if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
+      queryParameters.put("offset", parameterToString(offset));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetTopFilterForAttributeResponse>() {}
+      .getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getTopFiltersNoResultsValidateBeforeCall(
+  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
+    String attribute,
     String index,
     String search,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
-    String tags,
-    final ApiCallback<GetTopFiltersNoResultsResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getTopFiltersNoResults(Async)"
+    return this.getTopFilterForAttributeAsync(
+        attribute,
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
+  }
 
-    return getTopFiltersNoResultsCall(
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
+    String attribute,
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeAsync(
+        attribute,
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
+    String attribute,
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeAsync(
+        attribute,
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -2540,6 +2551,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetTopFiltersNoResultsResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -2551,35 +2564,65 @@ public class AnalyticsClient extends ApiClient {
     String endDate,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopFiltersNoResultsAsync(
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetTopFiltersNoResultsResponse getTopFiltersNoResults(
+    String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getTopFiltersNoResultsValidateBeforeCall(
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetTopFiltersNoResults(
-        ((CallEcho) req).request()
+    return this.getTopFiltersNoResults(
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetTopFiltersNoResultsResponse>() {}
-      .getType();
-    ApiResponse<GetTopFiltersNoResultsResponse> res =
-      this.execute(call, returnType);
-    return res.getData();
+  }
+
+  public GetTopFiltersNoResultsResponse getTopFiltersNoResults(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResults(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetTopFiltersNoResultsResponse getTopFiltersNoResults(String index)
     throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResults(
         index,
+        null,
         null,
         null,
         null,
@@ -2605,12 +2648,13 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getTopFiltersNoResultsAsync(
+  public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
     String index,
     String search,
     String startDate,
@@ -2618,126 +2662,114 @@ public class AnalyticsClient extends ApiClient {
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetTopFiltersNoResultsResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getTopFiltersNoResultsValidateBeforeCall(
-      index,
-      search,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetTopFiltersNoResultsResponse>() {}
-      .getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getTopFiltersNoResults(Async)"
+      );
+    }
 
-  /**
-   * Build call for getTopHits
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getTopHitsCall(
-    String index,
-    String search,
-    Boolean clickAnalytics,
-    String startDate,
-    String endDate,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetTopHitsResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/hits";
+    String requestPath = "/2/filters/noResults";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
     }
 
     if (search != null) {
-      queryParams.addAll(this.parameterToPair("search", search));
-    }
-
-    if (clickAnalytics != null) {
-      queryParams.addAll(
-        this.parameterToPair("clickAnalytics", clickAnalytics)
-      );
+      queryParameters.put("search", parameterToString(search));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
+      queryParameters.put("limit", parameterToString(limit));
     }
 
     if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
+      queryParameters.put("offset", parameterToString(offset));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetTopFiltersNoResultsResponse>() {}
+      .getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getTopHitsValidateBeforeCall(
+  public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
     String index,
     String search,
-    Boolean clickAnalytics,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
-    String tags,
-    final ApiCallback<GetTopHitsResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getTopHits(Async)"
+    return this.getTopFiltersNoResultsAsync(
+        index,
+        search,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
+  }
 
-    return getTopHitsCall(
-      index,
-      search,
-      clickAnalytics,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -2758,6 +2790,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetTopHitsResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -2770,31 +2804,77 @@ public class AnalyticsClient extends ApiClient {
     String endDate,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopHitsAsync(
+        index,
+        search,
+        clickAnalytics,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetTopHitsResponse getTopHits(
+    String index,
+    String search,
+    Boolean clickAnalytics,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getTopHitsValidateBeforeCall(
-      index,
-      search,
-      clickAnalytics,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetTopHits(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetTopHitsResponse>() {}.getType();
-    ApiResponse<GetTopHitsResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getTopHits(
+        index,
+        search,
+        clickAnalytics,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
+      );
+  }
+
+  public GetTopHitsResponse getTopHits(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopHits(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetTopHitsResponse getTopHits(String index)
     throws AlgoliaRuntimeException {
-    return this.getTopHits(index, null, null, null, null, null, null, null);
+    return this.getTopHits(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -2815,12 +2895,13 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getTopHitsAsync(
+  public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(
     String index,
     String search,
     Boolean clickAnalytics,
@@ -2829,133 +2910,120 @@ public class AnalyticsClient extends ApiClient {
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetTopHitsResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getTopHitsValidateBeforeCall(
-      index,
-      search,
-      clickAnalytics,
-      startDate,
-      endDate,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetTopHitsResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getTopHits(Async)"
+      );
+    }
 
-  /**
-   * Build call for getTopSearches
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getTopSearchesCall(
-    String index,
-    Boolean clickAnalytics,
-    String startDate,
-    String endDate,
-    OrderBy orderBy,
-    Direction direction,
-    Integer limit,
-    Integer offset,
-    String tags,
-    final ApiCallback<GetTopSearchesResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/searches";
+    String requestPath = "/2/hits";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
+    }
+
+    if (search != null) {
+      queryParameters.put("search", parameterToString(search));
     }
 
     if (clickAnalytics != null) {
-      queryParams.addAll(
-        this.parameterToPair("clickAnalytics", clickAnalytics)
-      );
+      queryParameters.put("clickAnalytics", parameterToString(clickAnalytics));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
-    }
-
-    if (orderBy != null) {
-      queryParams.addAll(this.parameterToPair("orderBy", orderBy));
-    }
-
-    if (direction != null) {
-      queryParams.addAll(this.parameterToPair("direction", direction));
+      queryParameters.put("endDate", parameterToString(endDate));
     }
 
     if (limit != null) {
-      queryParams.addAll(this.parameterToPair("limit", limit));
+      queryParameters.put("limit", parameterToString(limit));
     }
 
     if (offset != null) {
-      queryParams.addAll(this.parameterToPair("offset", offset));
+      queryParameters.put("offset", parameterToString(offset));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetTopHitsResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getTopSearchesValidateBeforeCall(
+  public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(
     String index,
+    String search,
     Boolean clickAnalytics,
     String startDate,
     String endDate,
-    OrderBy orderBy,
-    Direction direction,
     Integer limit,
     Integer offset,
-    String tags,
-    final ApiCallback<GetTopSearchesResponse> callback
+    String tags
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getTopSearches(Async)"
+    return this.getTopHitsAsync(
+        index,
+        search,
+        clickAnalytics,
+        startDate,
+        endDate,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
+  }
 
-    return getTopSearchesCall(
-      index,
-      clickAnalytics,
-      startDate,
-      endDate,
-      orderBy,
-      direction,
-      limit,
-      offset,
-      tags,
-      callback
-    );
+  public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopHitsAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
+  }
+
+  public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(String index)
+    throws AlgoliaRuntimeException {
+    return this.getTopHitsAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -2978,6 +3046,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetTopSearchesResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -2991,35 +3061,73 @@ public class AnalyticsClient extends ApiClient {
     Direction direction,
     Integer limit,
     Integer offset,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopSearchesAsync(
+        index,
+        clickAnalytics,
+        startDate,
+        endDate,
+        orderBy,
+        direction,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  public GetTopSearchesResponse getTopSearches(
+    String index,
+    Boolean clickAnalytics,
+    String startDate,
+    String endDate,
+    OrderBy orderBy,
+    Direction direction,
+    Integer limit,
+    Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getTopSearchesValidateBeforeCall(
-      index,
-      clickAnalytics,
-      startDate,
-      endDate,
-      orderBy,
-      direction,
-      limit,
-      offset,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetTopSearches(
-        ((CallEcho) req).request()
+    return this.getTopSearches(
+        index,
+        clickAnalytics,
+        startDate,
+        endDate,
+        orderBy,
+        direction,
+        limit,
+        offset,
+        tags,
+        null
       );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetTopSearchesResponse>() {}.getType();
-    ApiResponse<GetTopSearchesResponse> res = this.execute(call, returnType);
-    return res.getData();
+  }
+
+  public GetTopSearchesResponse getTopSearches(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopSearches(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
+      );
   }
 
   public GetTopSearchesResponse getTopSearches(String index)
     throws AlgoliaRuntimeException {
     return this.getTopSearches(
         index,
+        null,
         null,
         null,
         null,
@@ -3051,12 +3159,13 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getTopSearchesAsync(
+  public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
     String index,
     Boolean clickAnalytics,
     String startDate,
@@ -3066,91 +3175,129 @@ public class AnalyticsClient extends ApiClient {
     Integer limit,
     Integer offset,
     String tags,
-    final ApiCallback<GetTopSearchesResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getTopSearchesValidateBeforeCall(
-      index,
-      clickAnalytics,
-      startDate,
-      endDate,
-      orderBy,
-      direction,
-      limit,
-      offset,
-      tags,
-      callback
-    );
-    Type returnType = new TypeToken<GetTopSearchesResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getTopSearches(Async)"
+      );
+    }
 
-  /**
-   * Build call for getUsersCount
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getUsersCountCall(
-    String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetUsersCountResponse> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath = "/2/users/count";
+    String requestPath = "/2/searches";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> queryParameters = new HashMap<String, String>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
-      queryParams.addAll(this.parameterToPair("index", index));
+      queryParameters.put("index", parameterToString(index));
+    }
+
+    if (clickAnalytics != null) {
+      queryParameters.put("clickAnalytics", parameterToString(clickAnalytics));
     }
 
     if (startDate != null) {
-      queryParams.addAll(this.parameterToPair("startDate", startDate));
+      queryParameters.put("startDate", parameterToString(startDate));
     }
 
     if (endDate != null) {
-      queryParams.addAll(this.parameterToPair("endDate", endDate));
+      queryParameters.put("endDate", parameterToString(endDate));
+    }
+
+    if (orderBy != null) {
+      queryParameters.put("orderBy", parameterToString(orderBy));
+    }
+
+    if (direction != null) {
+      queryParameters.put("direction", parameterToString(direction));
+    }
+
+    if (limit != null) {
+      queryParameters.put("limit", parameterToString(limit));
+    }
+
+    if (offset != null) {
+      queryParameters.put("offset", parameterToString(offset));
     }
 
     if (tags != null) {
-      queryParams.addAll(this.parameterToPair("tags", tags));
+      queryParameters.put("tags", parameterToString(tags));
     }
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<GetTopSearchesResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
 
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
+  public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
+    String index,
+    Boolean clickAnalytics,
+    String startDate,
+    String endDate,
+    OrderBy orderBy,
+    Direction direction,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopSearchesAsync(
+        index,
+        clickAnalytics,
+        startDate,
+        endDate,
+        orderBy,
+        direction,
+        limit,
+        offset,
+        tags,
+        null
       );
   }
 
-  private Call getUsersCountValidateBeforeCall(
+  public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
     String index,
-    String startDate,
-    String endDate,
-    String tags,
-    final ApiCallback<GetUsersCountResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'index' is set
-    if (index == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'index' when calling getUsersCount(Async)"
+    return this.getTopSearchesAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        requestOptions
       );
-    }
+  }
 
-    return getUsersCountCall(index, startDate, endDate, tags, callback);
+  public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getTopSearchesAsync(
+        index,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
   }
 
   /**
@@ -3165,6 +3312,8 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return GetUsersCountResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -3173,29 +3322,33 @@ public class AnalyticsClient extends ApiClient {
     String index,
     String startDate,
     String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getUsersCountAsync(index, startDate, endDate, tags, requestOptions)
+    );
+  }
+
+  public GetUsersCountResponse getUsersCount(
+    String index,
+    String startDate,
+    String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    Call req = getUsersCountValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.GetUsersCount(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<GetUsersCountResponse>() {}.getType();
-    ApiResponse<GetUsersCountResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getUsersCount(index, startDate, endDate, tags, null);
+  }
+
+  public GetUsersCountResponse getUsersCount(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getUsersCount(index, null, null, null, requestOptions);
   }
 
   public GetUsersCountResponse getUsersCount(String index)
     throws AlgoliaRuntimeException {
-    return this.getUsersCount(index, null, null, null);
+    return this.getUsersCount(index, null, null, null, null);
   }
 
   /**
@@ -3210,86 +3363,195 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
    *     contains characters like spaces or parentheses, it should be URL encoded. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getUsersCountAsync(
+  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(
     String index,
     String startDate,
     String endDate,
     String tags,
-    final ApiCallback<GetUsersCountResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getUsersCountValidateBeforeCall(
-      index,
-      startDate,
-      endDate,
-      tags,
-      callback
-    );
+    if (index == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'index' when calling getUsersCount(Async)"
+      );
+    }
+
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath = "/2/users/count";
+
+    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (index != null) {
+      queryParameters.put("index", parameterToString(index));
+    }
+
+    if (startDate != null) {
+      queryParameters.put("startDate", parameterToString(startDate));
+    }
+
+    if (endDate != null) {
+      queryParameters.put("endDate", parameterToString(endDate));
+    }
+
+    if (tags != null) {
+      queryParameters.put("tags", parameterToString(tags));
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
     Type returnType = new TypeToken<GetUsersCountResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(
+    String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getUsersCountAsync(index, startDate, endDate, tags, null);
+  }
+
+  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(
+    String index,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getUsersCountAsync(index, null, null, null, requestOptions);
+  }
+
+  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.getUsersCountAsync(index, null, null, null, null);
   }
 
   /**
-   * Build call for post
+   * This method allow you to send requests to the Algolia REST API.
    *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return Object
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  private Call postCall(
+  public Object post(
     String path,
     Map<String, Object> parameters,
     Object body,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = body;
-
-    // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
-        );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "POST",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    return LaunderThrowable.await(
+      postAsync(path, parameters, body, requestOptions)
+    );
   }
 
-  private Call postValidateBeforeCall(
+  public Object post(String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.post(path, parameters, body, null);
+  }
+
+  public Object post(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.post(path, null, null, requestOptions);
+  }
+
+  public Object post(String path) throws AlgoliaRuntimeException {
+    return this.post(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
+   */
+  public CompletableFuture<Object> postAsync(
     String path,
     Map<String, Object> parameters,
     Object body,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
     if (path == null) {
       throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling post(Async)"
       );
     }
 
-    return postCall(path, parameters, body, callback);
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+
+    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "POST",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Object>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<Object> postAsync(
+    String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
+    return this.postAsync(path, parameters, body, null);
+  }
+
+  public CompletableFuture<Object> postAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.postAsync(path, null, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> postAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.postAsync(path, null, null, null);
   }
 
   /**
@@ -3299,24 +3561,35 @@ public class AnalyticsClient extends ApiClient {
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object post(String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
-    Call req = postValidateBeforeCall(path, parameters, body, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.Post(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
+  public Object put(
+    String path,
+    Map<String, Object> parameters,
+    Object body,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      putAsync(path, parameters, body, requestOptions)
+    );
   }
 
-  public Object post(String path) throws AlgoliaRuntimeException {
-    return this.post(path, null, null);
+  public Object put(String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.put(path, parameters, body, null);
+  }
+
+  public Object put(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.put(path, null, null, requestOptions);
+  }
+
+  public Object put(String path) throws AlgoliaRuntimeException {
+    return this.put(path, null, null, null);
   }
 
   /**
@@ -3326,129 +3599,71 @@ public class AnalyticsClient extends ApiClient {
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call postAsync(
+  public CompletableFuture<Object> putAsync(
     String path,
     Map<String, Object> parameters,
     Object body,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = postValidateBeforeCall(path, parameters, body, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for put
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call putCall(
-    String path,
-    Map<String, Object> parameters,
-    Object body,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = body;
-
-    // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
-        );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "PUT",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call putValidateBeforeCall(
-    String path,
-    Map<String, Object> parameters,
-    Object body,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
     if (path == null) {
       throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling put(Async)"
       );
     }
 
-    return putCall(path, parameters, body, callback);
-  }
+    Object bodyObj = body;
 
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param body The parameters to send with the custom request. (optional)
-   * @return Object
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public Object put(String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
-    Call req = putValidateBeforeCall(path, parameters, body, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseAnalytics.Put(((CallEcho) req).request());
+    // create path and map variables
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+
+    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
     }
-    Call call = (Call) req;
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "PUT",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
     Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
+    return this.executeAsync(call, returnType);
   }
 
-  public Object put(String path) throws AlgoliaRuntimeException {
-    return this.put(path, null, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param body The parameters to send with the custom request. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call putAsync(
+  public CompletableFuture<Object> putAsync(
     String path,
     Map<String, Object> parameters,
-    Object body,
-    final ApiCallback<Object> callback
+    Object body
   ) throws AlgoliaRuntimeException {
-    Call call = putValidateBeforeCall(path, parameters, body, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
+    return this.putAsync(path, parameters, body, null);
+  }
+
+  public CompletableFuture<Object> putAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.putAsync(path, null, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> putAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.putAsync(path, null, null, null);
   }
 }

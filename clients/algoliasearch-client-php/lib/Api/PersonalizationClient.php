@@ -5,6 +5,7 @@ namespace Algolia\AlgoliaSearch\Api;
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\PersonalizationConfig;
 use Algolia\AlgoliaSearch\ObjectSerializer;
+use Algolia\AlgoliaSearch\RequestOptions\RequestOptionsFactory;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
@@ -103,10 +104,11 @@ class PersonalizationClient
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|object
      */
-    public function del($path, $parameters = null)
+    public function del($path, $parameters = null, $requestOptions = [])
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -116,16 +118,24 @@ class PersonalizationClient
         }
 
         $resourcePath = '/1{path}';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
-                    $queryParams[$key] = $value;
+                    $queryParameters[$key] = $value;
                 }
             } else {
-                $queryParams = $parameters;
+                $queryParameters = $parameters;
             }
         }
 
@@ -137,8 +147,10 @@ class PersonalizationClient
         return $this->sendRequest(
             'DELETE',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -146,10 +158,11 @@ class PersonalizationClient
      * Delete a user profile.
      *
      * @param string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\DeleteUserProfileResponse
      */
-    public function deleteUserProfile($userToken)
+    public function deleteUserProfile($userToken, $requestOptions = [])
     {
         // verify the required parameter 'userToken' is set
         if (
@@ -162,7 +175,8 @@ class PersonalizationClient
         }
 
         $resourcePath = '/1/profiles/{userToken}';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         // path params
@@ -177,8 +191,10 @@ class PersonalizationClient
         return $this->sendRequest(
             'DELETE',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -187,10 +203,11 @@ class PersonalizationClient
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|object
      */
-    public function get($path, $parameters = null)
+    public function get($path, $parameters = null, $requestOptions = [])
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -200,16 +217,24 @@ class PersonalizationClient
         }
 
         $resourcePath = '/1{path}';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
-                    $queryParams[$key] = $value;
+                    $queryParameters[$key] = $value;
                 }
             } else {
-                $queryParams = $parameters;
+                $queryParameters = $parameters;
             }
         }
 
@@ -221,28 +246,34 @@ class PersonalizationClient
         return $this->sendRequest(
             'GET',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
     /**
      * Get the current strategy.
      *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams
      */
-    public function getPersonalizationStrategy()
+    public function getPersonalizationStrategy($requestOptions = [])
     {
         $resourcePath = '/1/strategies/personalization';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         return $this->sendRequest(
             'GET',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -250,10 +281,11 @@ class PersonalizationClient
      * Get a user profile.
      *
      * @param string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\GetUserTokenResponse
      */
-    public function getUserTokenProfile($userToken)
+    public function getUserTokenProfile($userToken, $requestOptions = [])
     {
         // verify the required parameter 'userToken' is set
         if (
@@ -266,7 +298,8 @@ class PersonalizationClient
         }
 
         $resourcePath = '/1/profiles/personalization/{userToken}';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         // path params
@@ -281,8 +314,10 @@ class PersonalizationClient
         return $this->sendRequest(
             'GET',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -292,11 +327,16 @@ class PersonalizationClient
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|object
      */
-    public function post($path, $parameters = null, $body = null)
-    {
+    public function post(
+        $path,
+        $parameters = null,
+        $body = null,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
@@ -305,16 +345,24 @@ class PersonalizationClient
         }
 
         $resourcePath = '/1{path}';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
-                    $queryParams[$key] = $value;
+                    $queryParameters[$key] = $value;
                 }
             } else {
-                $queryParams = $parameters;
+                $queryParameters = $parameters;
             }
         }
 
@@ -330,8 +378,10 @@ class PersonalizationClient
         return $this->sendRequest(
             'POST',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -341,11 +391,16 @@ class PersonalizationClient
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|object
      */
-    public function put($path, $parameters = null, $body = null)
-    {
+    public function put(
+        $path,
+        $parameters = null,
+        $body = null,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
             throw new \InvalidArgumentException(
@@ -354,16 +409,24 @@ class PersonalizationClient
         }
 
         $resourcePath = '/1{path}';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         if ($parameters !== null) {
-            if ('form' === 'form' && is_array($parameters)) {
+            if (
+                is_array($parameters) &&
+                !in_array(
+                    'parameters',
+                    RequestOptionsFactory::getAttributesToFormat(),
+                    true
+                )
+            ) {
                 foreach ($parameters as $key => $value) {
-                    $queryParams[$key] = $value;
+                    $queryParameters[$key] = $value;
                 }
             } else {
-                $queryParams = $parameters;
+                $queryParameters = $parameters;
             }
         }
 
@@ -379,8 +442,10 @@ class PersonalizationClient
         return $this->sendRequest(
             'PUT',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
@@ -394,10 +459,14 @@ class PersonalizationClient
      *
      * @see \Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams
      *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Personalization\SetPersonalizationStrategyResponse
      */
-    public function setPersonalizationStrategy($personalizationStrategyParams)
-    {
+    public function setPersonalizationStrategy(
+        $personalizationStrategyParams,
+        $requestOptions = []
+    ) {
         // verify the required parameter 'personalizationStrategyParams' is set
         if (
             $personalizationStrategyParams === null ||
@@ -410,7 +479,8 @@ class PersonalizationClient
         }
 
         $resourcePath = '/1/strategies/personalization';
-        $queryParams = [];
+        $queryParameters = [];
+        $headers = [];
         $httpBody = [];
 
         if (isset($personalizationStrategyParams)) {
@@ -420,29 +490,53 @@ class PersonalizationClient
         return $this->sendRequest(
             'POST',
             $resourcePath,
-            $queryParams,
-            $httpBody
+            $headers,
+            $queryParameters,
+            $httpBody,
+            $requestOptions
         );
     }
 
     private function sendRequest(
         $method,
         $resourcePath,
-        $queryParams,
-        $httpBody
+        $headers,
+        $queryParameters,
+        $httpBody,
+        $requestOptions
     ) {
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+        if (!isset($requestOptions['headers'])) {
+            $requestOptions['headers'] = [];
+        }
+        if (!isset($requestOptions['queryParameters'])) {
+            $requestOptions['queryParameters'] = [];
+        }
+
+        $requestOptions['headers'] = array_merge(
+            $headers,
+            $requestOptions['headers']
+        );
+        $requestOptions['queryParameters'] = array_merge(
+            $queryParameters,
+            $requestOptions['queryParameters']
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build(
+            $requestOptions['queryParameters']
+        );
 
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,
-                $resourcePath . ($query ? "?{$query}" : '')
+                $resourcePath . ($query ? "?{$query}" : ''),
+                $requestOptions
             );
         } else {
             $request = $this->api->write(
                 $method,
                 $resourcePath . ($query ? "?{$query}" : ''),
-                $httpBody
+                $httpBody,
+                $requestOptions
             );
         }
 

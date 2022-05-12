@@ -3,11 +3,11 @@ package com.algolia.methods.requests;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.algolia.JSON;
-import com.algolia.Pair;
+import com.algolia.EchoRequester;
+import com.algolia.EchoResponse;
 import com.algolia.api.PersonalizationClient;
 import com.algolia.model.personalization.*;
-import com.algolia.utils.echo.*;
+import com.algolia.utils.JSON;
 import com.google.gson.reflect.TypeToken;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,10 +21,12 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class PersonalizationClientTests {
 
   private PersonalizationClient client;
+  private EchoRequester requester;
 
   @BeforeAll
   void init() {
-    client = new PersonalizationClient("appId", "apiKey", new EchoRequester());
+    requester = new EchoRequester();
+    client = new PersonalizationClient("appId", "apiKey", requester);
   }
 
   @Test
@@ -32,13 +34,13 @@ class PersonalizationClientTests {
   void delTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.del(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "DELETE");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "DELETE");
   }
 
   @Test
@@ -51,22 +53,23 @@ class PersonalizationClientTests {
       parameters0.put("query", query1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.del(path0, parameters0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.del(path0, parameters0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "DELETE");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "DELETE");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -75,13 +78,13 @@ class PersonalizationClientTests {
   void deleteUserProfileTest0() {
     String userToken0 = "UserToken";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.deleteUserProfile(userToken0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.deleteUserProfile(userToken0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/profiles/UserToken");
-    assertEquals(req.getMethod(), "DELETE");
+    assertEquals(req.path, "/1/profiles/UserToken");
+    assertEquals(req.method, "DELETE");
   }
 
   @Test
@@ -89,13 +92,13 @@ class PersonalizationClientTests {
   void getTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.get(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "GET");
   }
 
   @Test
@@ -108,35 +111,36 @@ class PersonalizationClientTests {
       parameters0.put("query", query1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.get(path0, parameters0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.get(path0, parameters0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "GET");
 
     Map<String, String> expectedQuery = JSON.deserialize(
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
   @Test
   @DisplayName("get getPersonalizationStrategy")
   void getPersonalizationStrategyTest0() {
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getPersonalizationStrategy();
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getPersonalizationStrategy();
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/strategies/personalization");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/1/strategies/personalization");
+    assertEquals(req.method, "GET");
   }
 
   @Test
@@ -144,13 +148,13 @@ class PersonalizationClientTests {
   void getUserTokenProfileTest0() {
     String userToken0 = "UserToken";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.getUserTokenProfile(userToken0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.getUserTokenProfile(userToken0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/profiles/personalization/UserToken");
-    assertEquals(req.getMethod(), "GET");
+    assertEquals(req.path, "/1/profiles/personalization/UserToken");
+    assertEquals(req.method, "GET");
   }
 
   @Test
@@ -158,13 +162,13 @@ class PersonalizationClientTests {
   void postTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.post(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "POST");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "POST");
   }
 
   @Test
@@ -182,18 +186,18 @@ class PersonalizationClientTests {
       body0.put("body", body1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.post(path0, parameters0, body0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.post(path0, parameters0, body0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "POST");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "POST");
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
         "{\"body\":\"parameters\"}",
-        req.getBody(),
+        req.body,
         JSONCompareMode.STRICT_ORDER
       );
     });
@@ -202,10 +206,11 @@ class PersonalizationClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -214,13 +219,13 @@ class PersonalizationClientTests {
   void putTest0() {
     String path0 = "/test/minimal";
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.put(path0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.put(path0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/minimal");
-    assertEquals(req.getMethod(), "PUT");
+    assertEquals(req.path, "/1/test/minimal");
+    assertEquals(req.method, "PUT");
   }
 
   @Test
@@ -238,18 +243,18 @@ class PersonalizationClientTests {
       body0.put("body", body1);
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.put(path0, parameters0, body0);
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.put(path0, parameters0, body0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/test/all");
-    assertEquals(req.getMethod(), "PUT");
+    assertEquals(req.path, "/1/test/all");
+    assertEquals(req.method, "PUT");
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
         "{\"body\":\"parameters\"}",
-        req.getBody(),
+        req.body,
         JSONCompareMode.STRICT_ORDER
       );
     });
@@ -258,10 +263,11 @@ class PersonalizationClientTests {
       "{\"query\":\"parameters\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> actualQuery = req.getQueryParams();
+    Map<String, String> actualQuery = req.queryParameters;
+
     assertEquals(expectedQuery.size(), actualQuery.size());
-    for (Pair p : actualQuery) {
-      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+      assertEquals(expectedQuery.get(p.getKey()), p.getValue());
     }
   }
 
@@ -302,20 +308,18 @@ class PersonalizationClientTests {
       );
     }
 
-    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.setPersonalizationStrategy(
-          personalizationStrategyParams0
-        );
-      }
-    );
+    assertDoesNotThrow(() -> {
+      client.setPersonalizationStrategy(personalizationStrategyParams0);
+    });
+    EchoResponse req = requester.getLastEchoResponse();
 
-    assertEquals(req.getPath(), "/1/strategies/personalization");
-    assertEquals(req.getMethod(), "POST");
+    assertEquals(req.path, "/1/strategies/personalization");
+    assertEquals(req.method, "POST");
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
         "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}",
-        req.getBody(),
+        req.body,
         JSONCompareMode.STRICT_ORDER
       );
     });

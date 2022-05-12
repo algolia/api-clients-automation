@@ -8,6 +8,7 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -47,6 +48,26 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                     json_encode($request['body']),
                     $recordedRequest->getBody()->getContents()
                 );
+            }
+
+            if (isset($request['queryParameters'])) {
+                $this->assertEquals(
+                    Query::build($request['queryParameters']),
+                    $recordedRequest->getUri()->getQuery()
+                );
+            }
+
+            if (isset($request['headers'])) {
+                foreach ($request['headers'] as $key => $value) {
+                    $this->assertArrayHasKey(
+                        $key,
+                        $recordedRequest->getHeaders()
+                    );
+                    $this->assertEquals(
+                        $recordedRequest->getHeaderLine($key),
+                        $value
+                    );
+                }
             }
         }
     }
@@ -109,7 +130,10 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -164,7 +188,10 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -238,7 +265,10 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'POST',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -278,7 +308,10 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'PUT',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }

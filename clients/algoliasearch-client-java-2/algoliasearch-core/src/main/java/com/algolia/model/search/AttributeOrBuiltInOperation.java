@@ -1,7 +1,7 @@
 package com.algolia.model.search;
 
-import com.algolia.JSON;
 import com.algolia.utils.CompoundType;
+import com.algolia.utils.JSON;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -38,6 +38,20 @@ public abstract class AttributeOrBuiltInOperation implements CompoundType {
     @Override
     public AttributeOrBuiltInOperation read(final JsonReader jsonReader)
       throws IOException {
+      BuiltInOperation builtinoperation = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<BuiltInOperation>() {}.getType()
+      );
+      if (builtinoperation != null) {
+        return AttributeOrBuiltInOperation.ofBuiltInOperation(builtinoperation);
+      }
+      String string = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<String>() {}.getType()
+      );
+      if (string != null) {
+        return AttributeOrBuiltInOperation.ofString(string);
+      }
       return null;
     }
   }

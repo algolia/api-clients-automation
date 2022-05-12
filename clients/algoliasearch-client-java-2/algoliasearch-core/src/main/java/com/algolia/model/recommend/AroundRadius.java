@@ -1,7 +1,7 @@
 package com.algolia.model.recommend;
 
-import com.algolia.JSON;
 import com.algolia.utils.CompoundType;
+import com.algolia.utils.JSON;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -33,6 +33,20 @@ public abstract class AroundRadius implements CompoundType {
 
     @Override
     public AroundRadius read(final JsonReader jsonReader) throws IOException {
+      AroundRadiusAll aroundradiusall = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<AroundRadiusAll>() {}.getType()
+      );
+      if (aroundradiusall != null) {
+        return AroundRadius.ofAroundRadiusAll(aroundradiusall);
+      }
+      Integer integer = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<Integer>() {}.getType()
+      );
+      if (integer != null) {
+        return AroundRadius.ofInteger(integer);
+      }
       return null;
     }
   }

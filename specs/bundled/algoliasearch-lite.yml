@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Search API
   description: API powering the Search feature of Algolia.
-  version: 0.1.0
+  version: 1.0.0
 components:
   securitySchemes:
     appId:
@@ -127,10 +127,10 @@ components:
         type: integer
         nullable: true
         default: null
-    UserIDInQuery:
+    UserIDInHeader:
       name: X-Algolia-User-ID
       description: userID to assign.
-      in: query
+      in: header
       required: true
       schema:
         type: string

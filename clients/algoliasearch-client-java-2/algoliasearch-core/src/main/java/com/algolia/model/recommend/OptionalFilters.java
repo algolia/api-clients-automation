@@ -1,7 +1,7 @@
 package com.algolia.model.recommend;
 
-import com.algolia.JSON;
 import com.algolia.utils.CompoundType;
+import com.algolia.utils.JSON;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -35,6 +35,20 @@ public abstract class OptionalFilters implements CompoundType {
     @Override
     public OptionalFilters read(final JsonReader jsonReader)
       throws IOException {
+      List<List<String>> listliststring = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<List<List<String>>>() {}.getType()
+      );
+      if (listliststring != null) {
+        return OptionalFilters.ofListListString(listliststring);
+      }
+      List<String> liststring = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<List<String>>() {}.getType()
+      );
+      if (liststring != null) {
+        return OptionalFilters.ofListString(liststring);
+      }
       return null;
     }
   }
