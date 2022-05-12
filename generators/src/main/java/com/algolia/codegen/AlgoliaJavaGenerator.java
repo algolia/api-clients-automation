@@ -45,11 +45,19 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       allModels
     );
 
-    Utils.generateServer(
-      Utils.getClientNameKebabCase(results),
-      additionalProperties
-    );
-    additionalProperties.put("packageVersion", Utils.getPackageVersion("java"));
+    try {
+      Utils.generateServer(
+        Utils.getClientNameKebabCase(results),
+        additionalProperties
+      );
+      additionalProperties.put(
+        "packageVersion",
+        Utils.getPackageVersion("java")
+      );
+    } catch (GenerationException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
 
     return results;
   }
