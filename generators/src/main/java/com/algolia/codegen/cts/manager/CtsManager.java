@@ -1,21 +1,19 @@
-package com.algolia.codegen.cts;
+package com.algolia.codegen.cts.manager;
 
 import com.algolia.codegen.Utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
-abstract class CtsManager {
+public abstract class CtsManager {
 
   public abstract void addSupportingFiles(List<SupportingFile> supportingFiles);
 
-  public abstract String getPackageDependencies();
+  public abstract Object[] getPackageDependencies();
 
   public void addExtraToBundle(Map<String, Object> bundle) {}
 
-  protected Map<String, String> getFilteredPackageVersionMap(
-    List<String> packages
-  ) {
+  protected Object[] getFilteredPackageVersions(List<String> packages) {
     HashMap<String, String> result = new HashMap<>();
     JsonNode openApiToolsConfig = Utils.readJsonFile(
       "config/openapitools.json"
@@ -37,6 +35,15 @@ abstract class CtsManager {
       }
     }
 
-    return result;
+    return result
+      .entrySet()
+      .stream()
+      .map(entry -> {
+        Map<String, String> newEntry = new HashMap<>();
+        newEntry.put("packageName", entry.getKey());
+        newEntry.put("packageVersion", entry.getValue());
+        return newEntry;
+      })
+      .toArray(Object[]::new);
   }
 }

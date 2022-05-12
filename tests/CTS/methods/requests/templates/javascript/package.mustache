@@ -5,7 +5,9 @@
     "test": "jest"
   },
   "dependencies": {
-{{{packageDependencies}}},
+    {{#packageDependencies}}
+    "{{{packageName}}}": "{{packageVersion}}",
+    {{/packageDependencies}}
     "@experimental-api-clients-automation/client-common": "{{utilsPackageVersion}}",
     "@experimental-api-clients-automation/requester-node-http": "{{utilsPackageVersion}}"
   },
