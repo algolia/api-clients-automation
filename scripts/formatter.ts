@@ -1,4 +1,4 @@
-import { CI, run } from './common';
+import { CI, run, runComposerUpdate } from './common';
 import { createSpinner } from './oraLog';
 
 export async function formatter(
@@ -25,6 +25,7 @@ export async function formatter(
         && yarn prettier --write ${folder}`;
       break;
     case 'php':
+      await runComposerUpdate(verbose);
       cmd = `yarn run prettier ${folder} --write \
             && PHP_CS_FIXER_IGNORE_ENV=1 ${
               CI ? 'php' : 'php8'
