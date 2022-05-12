@@ -5,9 +5,6 @@ import java.util.*;
 public class CtsManagerFactory {
 
   public static CtsManager getManager(String language) {
-    if (language == null) {
-      return null;
-    }
     switch (language) {
       case "javascript":
         return new JavaScriptCtsManager();
