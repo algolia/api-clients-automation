@@ -29,6 +29,7 @@ module.exports = {
     '!clients/algoliasearch-client-javascript/packages/requester-*/**',
     '!clients/algoliasearch-client-javascript/packages/client-common/**',
 
+    'tests/output/javascript/package.json',
     'tests/output/javascript/src/methods/**',
     'tests/output/javascript/src/client/**',
 
