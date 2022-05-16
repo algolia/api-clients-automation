@@ -187,7 +187,10 @@
     },
     "requestOptions": {
       "queryParameters": {
-        "myParam": ["c", "d"]
+        "myParam": [
+          "c",
+          "d"
+        ]
       }
     },
     "request": {
@@ -215,7 +218,10 @@
     },
     "requestOptions": {
       "queryParameters": {
-        "myParam": [1, 2]
+        "myParam": [
+          1,
+          2
+        ]
       }
     },
     "request": {
