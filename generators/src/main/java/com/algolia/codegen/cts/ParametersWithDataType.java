@@ -401,7 +401,7 @@ public class ParametersWithDataType {
     Map<String, Object> testOutput,
     IJsonSchemaValidationProperties spec
   ) throws CTSException {
-    if(isPrimitiveType(spec)) {
+    if (isPrimitiveType(spec)) {
       transferPrimitiveData(spec, testOutput);
     } else {
       inferDataType(param, null, testOutput);
@@ -486,27 +486,28 @@ public class ParametersWithDataType {
     }
   }
 
-  private void transferPrimitiveData(IJsonSchemaValidationProperties spec, Map<String, Object> output) throws CTSException {
-    switch(getTypeName(spec)) {
+  private void transferPrimitiveData(
+    IJsonSchemaValidationProperties spec,
+    Map<String, Object> output
+  ) throws CTSException {
+    switch (getTypeName(spec)) {
       case "String":
         output.put("isString", true);
         break;
       case "Integer":
-      output.put("isInteger", true);
-      break;
+        output.put("isInteger", true);
+        break;
       case "Long":
-      output.put("isLong", true);
-      break;
+        output.put("isLong", true);
+        break;
       case "Double":
-      output.put("isDouble", true);
-      break;
+        output.put("isDouble", true);
+        break;
       case "Boolean":
-      output.put("isBoolean", true);
-      break;
+        output.put("isBoolean", true);
+        break;
       default:
-        throw new CTSException(
-          "Unknown primitive: " + getTypeName(spec)
-        );
+        throw new CTSException("Unknown primitive: " + getTypeName(spec));
     }
   }
 
