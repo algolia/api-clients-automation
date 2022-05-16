@@ -4,7 +4,10 @@ import type { Request, Requester, EndRequest, Response } from './Requester';
 
 export type Headers = Record<string, string>;
 
-export type QueryParameters = Record<string, string>;
+export type QueryParameters = Record<
+  string,
+  Array<boolean | number | string> | boolean | number | string
+>;
 
 export type RequestOptions = {
   /**

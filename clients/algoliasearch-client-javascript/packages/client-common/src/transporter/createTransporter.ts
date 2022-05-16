@@ -110,8 +110,15 @@ export function createTransporter({
       'x-algolia-agent': userAgent.value,
       ...baseQueryParameters,
       ...dataQueryParameters,
-      ...requestOptions.queryParameters,
     };
+
+    if (requestOptions?.queryParameters) {
+      for (const [key, value] of Object.entries(
+        requestOptions.queryParameters
+      )) {
+        queryParameters[key] = value.toString();
+      }
+    }
 
     let timeoutsCount = 0;
 
