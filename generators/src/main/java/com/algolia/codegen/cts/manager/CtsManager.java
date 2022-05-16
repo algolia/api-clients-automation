@@ -11,7 +11,12 @@ public abstract class CtsManager {
 
   public abstract Object[] getPackageDependencies();
 
-  public void addExtraToBundle(Map<String, Object> bundle) {}
+  protected void addExtraToBundle(Map<String, Object> bundle) {}
+
+  public void addDataToBundle(Map<String, Object> bundle) {
+    bundle.put("packageDependencies", this.getPackageDependencies());
+    this.addExtraToBundle(bundle);
+  }
 
   protected Object[] getFilteredPackageVersions(List<String> packages) {
     HashMap<String, String> result = new HashMap<>();

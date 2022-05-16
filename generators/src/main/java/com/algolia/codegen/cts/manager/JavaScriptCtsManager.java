@@ -32,7 +32,7 @@ public class JavaScriptCtsManager extends CtsManager {
       );
   }
 
-  public void addExtraToBundle(Map<String, Object> bundle) {
+  protected void addExtraToBundle(Map<String, Object> bundle) {
     bundle.put("utilsPackageVersion", this.getUtilsPackageVersion());
   }
 

@@ -154,8 +154,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("defaultRegion", client.equals("predict") ? "ew" : "us");
       bundle.put("lambda", lambda);
-      bundle.put("packageDependencies", ctsManager.getPackageDependencies());
-      ctsManager.addExtraToBundle(bundle);
+      ctsManager.addDataToBundle(bundle);
 
       List<Object> blocks = new ArrayList<>();
       ParametersWithDataType paramsType = new ParametersWithDataType(
