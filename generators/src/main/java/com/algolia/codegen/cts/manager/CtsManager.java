@@ -9,7 +9,7 @@ public abstract class CtsManager {
 
   public abstract void addSupportingFiles(List<SupportingFile> supportingFiles);
 
-  public List<Object> getPackageDependencies() {
+  protected List<Object> getPackageDependencies() {
     return null;
   }
 
