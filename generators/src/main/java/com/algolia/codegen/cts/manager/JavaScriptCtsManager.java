@@ -13,23 +13,35 @@ public class JavaScriptCtsManager extends CtsManager {
     );
   }
 
-  public Object[] getPackageDependencies() {
-    return this.getFilteredPackageVersions(
-        List.of(
-          "@experimental-api-clients-automation/algoliasearch-lite",
-          "@experimental-api-clients-automation/client-abtesting",
-          "@experimental-api-clients-automation/client-analytics",
-          "@experimental-api-clients-automation/client-common",
-          "@experimental-api-clients-automation/client-insights",
-          "@experimental-api-clients-automation/client-personalization",
-          "@experimental-api-clients-automation/client-predict",
-          "@experimental-api-clients-automation/client-query-suggestions",
-          "@experimental-api-clients-automation/client-search",
-          "@experimental-api-clients-automation/client-sources",
-          "@experimental-api-clients-automation/recommend",
-          "@experimental-api-clients-automation/requester-node-http"
-        )
-      );
+  public List<Object> getPackageDependencies() {
+    List<Object> result = new ArrayList<Object>();
+
+    JsonNode openApiToolsConfig = Utils.readJsonFile(
+      "config/openapitools.json"
+    );
+    Iterator<Map.Entry<String, JsonNode>> fieldIterator = openApiToolsConfig
+      .get("generator-cli")
+      .get("generators")
+      .fields();
+
+    while (fieldIterator.hasNext()) {
+      Map.Entry<String, JsonNode> field = fieldIterator.next();
+      if (!field.getKey().startsWith("javascript-")) {
+        continue;
+      }
+      JsonNode generator = field.getValue();
+      JsonNode additionalProperties = generator.get("additionalProperties");
+      String packageName = additionalProperties.get("packageName").asText();
+      String packageVersion = additionalProperties
+        .get("packageVersion")
+        .asText();
+
+      Map<String, String> newEntry = new HashMap<>();
+      newEntry.put("packageName", packageName);
+      newEntry.put("packageVersion", packageVersion);
+      result.add(newEntry);
+    }
+    return result;
   }
 
   protected void addExtraToBundle(Map<String, Object> bundle) {

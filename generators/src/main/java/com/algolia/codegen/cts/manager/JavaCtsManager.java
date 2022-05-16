@@ -6,8 +6,4 @@ import org.openapitools.codegen.SupportingFile;
 public class JavaCtsManager extends CtsManager {
 
   public void addSupportingFiles(List<SupportingFile> supportingFiles) {}
-
-  public Object[] getPackageDependencies() {
-    return null;
-  }
 }

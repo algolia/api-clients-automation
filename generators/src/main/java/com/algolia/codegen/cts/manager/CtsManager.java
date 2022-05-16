@@ -9,7 +9,9 @@ public abstract class CtsManager {
 
   public abstract void addSupportingFiles(List<SupportingFile> supportingFiles);
 
-  public abstract Object[] getPackageDependencies();
+  public List<Object> getPackageDependencies() {
+    return null;
+  }
 
   protected void addExtraToBundle(Map<String, Object> bundle) {}
 
