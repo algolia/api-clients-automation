@@ -401,11 +401,15 @@ public class ParametersWithDataType {
     Map<String, Object> testOutput,
     IJsonSchemaValidationProperties spec
   ) throws CTSException {
-    inferDataType(param, null, testOutput);
-    if (
-      spec instanceof CodegenParameter && ((CodegenParameter) spec).isAnyType
-    ) {
-      testOutput.put("isAnyType", true);
+    if(isPrimitiveType(spec)) {
+      transferPrimitiveData(spec, testOutput);
+    } else {
+      inferDataType(param, null, testOutput);
+      if (
+        spec instanceof CodegenParameter && ((CodegenParameter) spec).isAnyType
+      ) {
+        testOutput.put("isAnyType", true);
+      }
     }
     testOutput.put("value", param);
   }
@@ -439,6 +443,16 @@ public class ParametersWithDataType {
     return false;
   }
 
+  private boolean isPrimitiveType(IJsonSchemaValidationProperties param) {
+    if (param instanceof CodegenParameter) {
+      return ((CodegenParameter) param).isPrimitiveType;
+    }
+    if (param instanceof CodegenProperty) {
+      return ((CodegenProperty) param).isPrimitiveType;
+    }
+    return false;
+  }
+
   private String inferDataType(
     Object param,
     CodegenParameter spec,
@@ -468,6 +482,30 @@ public class ParametersWithDataType {
       default:
         throw new CTSException(
           "Unknown type: " + param.getClass().getSimpleName()
+        );
+    }
+  }
+
+  private void transferPrimitiveData(IJsonSchemaValidationProperties spec, Map<String, Object> output) throws CTSException {
+    switch(getTypeName(spec)) {
+      case "String":
+        output.put("isString", true);
+        break;
+      case "Integer":
+      output.put("isInteger", true);
+      break;
+      case "Long":
+      output.put("isLong", true);
+      break;
+      case "Double":
+      output.put("isDouble", true);
+      break;
+      case "Boolean":
+      output.put("isBoolean", true);
+      break;
+      default:
+        throw new CTSException(
+          "Unknown primitive: " + getTypeName(spec)
         );
     }
   }
