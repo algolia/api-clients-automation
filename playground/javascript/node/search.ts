@@ -1,7 +1,6 @@
 import { searchClient } from '@experimental-api-clients-automation/client-search';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
-import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 dotenv.config({ path: '../../.env' });
 
@@ -12,25 +11,16 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = searchClient(appId, apiKey, {
-  requester: echoRequester(),
-});
+const client = searchClient(appId, apiKey);
 
 client.addUserAgent('Node playground', '0.0.1');
 
 async function testSearch() {
   try {
-    const res = await client.search(
-      {
-        indexName: searchIndex,
-        searchParams: { query: searchQuery },
-      },
-      {
-        queryParameters: {
-          requestOptions: ['c', 'd'],
-        },
-      }
-    );
+    const res = await client.search({
+      indexName: searchIndex,
+      searchParams: { query: searchQuery },
+    });
 
     console.log(`[OK]`, res);
   } catch (e) {
