@@ -54,7 +54,7 @@ class {{client}}Tests {
         {{/request.body}}
 
         {{#request.queryParameters}}
-        Map<String, Object> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
+        Map<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
         Map<String, Object> actualQuery = req.queryParameters;
 
         assertEquals(expectedQuery.size(), actualQuery.size());
