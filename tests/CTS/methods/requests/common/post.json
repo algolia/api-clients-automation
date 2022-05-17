@@ -147,6 +147,34 @@
     }
   },
   {
+    "testName": "requestOptions queryParameters accepts booleans",
+    "parameters": {
+      "path": "/test/requestOptions",
+      "parameters": {
+        "query": "parameters"
+      },
+      "body": {
+        "facet": "filters"
+      }
+    },
+    "requestOptions": {
+      "queryParameters": {
+        "isItWorking": true
+      }
+    },
+    "request": {
+      "path": "/1/test/requestOptions",
+      "method": "POST",
+      "body": {
+        "facet": "filters"
+      },
+      "queryParameters": {
+        "query": "parameters",
+        "isItWorking": "true"
+      }
+    }
+  },
+  {
     "testName": "requestOptions queryParameters accepts integers",
     "parameters": {
       "path": "/test/requestOptions",
@@ -202,6 +230,38 @@
       "queryParameters": {
         "query": "parameters",
         "myParam": "c,d"
+      }
+    }
+  },
+  {
+    "testName": "requestOptions queryParameters accepts list of booleans",
+    "parameters": {
+      "path": "/test/requestOptions",
+      "parameters": {
+        "query": "parameters"
+      },
+      "body": {
+        "facet": "filters"
+      }
+    },
+    "requestOptions": {
+      "queryParameters": {
+        "myParam": [
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/test/requestOptions",
+      "method": "POST",
+      "body": {
+        "facet": "filters"
+      },
+      "queryParameters": {
+        "query": "parameters",
+        "myParam": "true,true,false"
       }
     }
   },

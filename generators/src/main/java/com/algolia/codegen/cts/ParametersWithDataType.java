@@ -53,11 +53,6 @@ public class ParametersWithDataType {
         CodegenParameter objSpec = new CodegenParameter();
         objSpec.dataType =
           inferDataType(req.requestOptions.queryParameters, objSpec, null);
-
-        if (objSpec.dataType == null) {
-          System.out.println(objSpec.dataType);
-        }
-
         requestOptions.put(
           "queryParameters",
           traverseParams(
@@ -535,7 +530,7 @@ public class ParametersWithDataType {
           spec.setItems(baseItems);
         }
         if (output != null) output.put("isArray", true);
-        return "ArrayList";
+        return "List";
       case "LinkedHashMap":
         if (spec != null) spec.baseType = "Object";
         if (output != null) output.put("isFreeFormObject", true);
