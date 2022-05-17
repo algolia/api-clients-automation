@@ -102,8 +102,25 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
     transporter.userAgent.add({ segment, version });
   }
 
+  /*
+  {{#isSearchClient}}
+  function waitForTaskToComplete({
+    indexName,
+    taskID,
+  }: {
+    indexName: string;
+    taskID: string;
+  }): Promise<void> {
+    // nothing
+  }
+  {{/isSearchClient}}
+  */
+
   return {
     addUserAgent,
+    {{#isSearchClient}}
+    waitForTaskToComplete,
+    {{/isSearchClient}}
     {{#operation}}
     /**
     {{#notes}}
