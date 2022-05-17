@@ -116,7 +116,13 @@ export function createTransporter({
       for (const [key, value] of Object.entries(
         requestOptions.queryParameters
       )) {
-        if (Object.prototype.toString.call(value) === '[object Object]') {
+        // We want to keep `undefined` and `null` values,
+        // but also avoid stringifying `object`s, as they are
+        // handled in the `serializeUrl` step right after.
+        if (
+          !value ||
+          Object.prototype.toString.call(value) === '[object Object]'
+        ) {
           queryParameters[key] = value;
         } else {
           queryParameters[key] = value.toString();
