@@ -65,20 +65,15 @@ Before sending anything to Algolia, you need to retrieve your data. You can do t
 <TabItem value="js">
 
 ```js
-const record1 = { name: 'Tom Cruise' };
-const record2 = { name: 'Scarlett Johansson' };
+const records = [{ name: 'Tom Cruise' }, { name: 'Scarlett Johansson' }];
 
-client.saveObject({
-  indexName: '<YOUR_INDEX_NAME>',
-  // Accepts a free form `Record<string, any>` object.
-  body: record1,
-});
-
-client.saveObject({
-  indexName: '<YOUR_INDEX_NAME>',
-  // Accepts a free form `Record<string, any>` object.
-  body: record2,
-});
+for (const record of records) {
+  client.saveObject({
+    indexName: '<YOUR_INDEX_NAME>',
+    // Accepts a free form `Record<string, any>` object.
+    body: record,
+  });
+}
 
 ```
 
@@ -86,18 +81,17 @@ client.saveObject({
 <TabItem value="php">
 
 ```php
-$record1 = ['name' => 'Tom Cruise'];
-$record2 = ['name' => 'Scarlett Johansson'];
+$records = [
+  ['name' => 'Tom Cruise'],
+  ['name' => 'Scarlett Johansson']
+];
 
-$client->saveObject(
-  '<YOUR_INDEX_NAME>',
-  $record1
-);
-
-$client->saveObject(
-  '<YOUR_INDEX_NAME>',
-  $record2
-);
+foreach ($records as $record) {
+  $client->saveObject(
+    '<YOUR_INDEX_NAME>',
+    $record
+  );
+}
 
 ```
 
