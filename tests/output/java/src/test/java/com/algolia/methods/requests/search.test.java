@@ -151,6 +151,16 @@ class SearchClientTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    Map<String, String> expectedHeaders = JSON.deserialize(
+      "{\"x-algolia-user-id\":\"userID\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    Map<String, String> actualHeaders = req.headers;
+
+    for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
+      assertEquals(actualHeaders.get(p.getKey()), p.getValue());
+    }
   }
 
   @Test
@@ -227,6 +237,16 @@ class SearchClientTests {
         JSONCompareMode.STRICT_ORDER
       );
     });
+
+    Map<String, String> expectedHeaders = JSON.deserialize(
+      "{\"x-algolia-user-id\":\"userID\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    Map<String, String> actualHeaders = req.headers;
+
+    for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
+      assertEquals(actualHeaders.get(p.getKey()), p.getValue());
+    }
   }
 
   @Test
@@ -989,7 +1009,7 @@ class SearchClientTests {
   @DisplayName("getTask")
   void getTaskTest0() {
     String indexName0 = "theIndexName";
-    int taskID0 = 123;
+    long taskID0 = 123L;
 
     assertDoesNotThrow(() -> {
       client.getTask(indexName0, taskID0);
