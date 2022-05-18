@@ -272,6 +272,12 @@ jobs:
         with:
           type: minimal
 
+      - name: Download JavaScript utils artifacts
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        uses: ./.github/actions/restore-artifacts
+        with:
+          type: js_utils
+
       - name: Build 'algoliasearch' client
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli build clients javascript algoliasearch

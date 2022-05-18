@@ -17,7 +17,9 @@ export function getAlgoliaAgent({
     version,
   });
 
-  algoliaAgents.forEach((algoliaAgent) => defaultAlgoliaAgent.add(algoliaAgent));
+  algoliaAgents.forEach((algoliaAgent) =>
+    defaultAlgoliaAgent.add(algoliaAgent)
+  );
 
   return defaultAlgoliaAgent;
 }
