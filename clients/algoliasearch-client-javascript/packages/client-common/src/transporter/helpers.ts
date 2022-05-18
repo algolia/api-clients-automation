@@ -1,6 +1,7 @@
 import type {
   Headers,
   Host,
+  QueryParameters,
   Request,
   RequestOptions,
   Response,
@@ -40,9 +41,7 @@ export function serializeUrl(
   return url;
 }
 
-export function serializeQueryParameters(
-  parameters: Readonly<Record<string, any>>
-): string {
+export function serializeQueryParameters(parameters: QueryParameters): string {
   const isObjectOrArray = (value: any): boolean =>
     Object.prototype.toString.call(value) === '[object Object]' ||
     Object.prototype.toString.call(value) === '[object Array]';

@@ -26,13 +26,13 @@ public class AnalyticsClient extends ApiClient {
   public AnalyticsClient(
     String appId,
     String apiKey,
-    UserAgent.Segment[] userAgentSegments
+    AlgoliaAgent.Segment[] algoliaAgentSegments
   ) {
     this(
       appId,
       apiKey,
       new HttpRequester(getDefaultHosts(null)),
-      userAgentSegments
+      algoliaAgentSegments
     );
   }
 
@@ -44,13 +44,13 @@ public class AnalyticsClient extends ApiClient {
     String appId,
     String apiKey,
     String region,
-    UserAgent.Segment[] userAgentSegments
+    AlgoliaAgent.Segment[] algoliaAgentSegments
   ) {
     this(
       appId,
       apiKey,
       new HttpRequester(getDefaultHosts(region)),
-      userAgentSegments
+      algoliaAgentSegments
     );
   }
 
@@ -62,9 +62,9 @@ public class AnalyticsClient extends ApiClient {
     String appId,
     String apiKey,
     Requester requester,
-    UserAgent.Segment[] userAgentSegments
+    AlgoliaAgent.Segment[] algoliaAgentSegments
   ) {
-    super(appId, apiKey, requester, "Analytics", userAgentSegments);
+    super(appId, apiKey, requester, "Analytics", algoliaAgentSegments);
   }
 
   private static List<StatefulHost> getDefaultHosts(String region) {
@@ -142,7 +142,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -248,7 +248,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -391,7 +391,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/clicks/averageClickPosition";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -548,7 +548,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/clicks/positions";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -691,7 +691,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/clicks/clickThroughRate";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -840,7 +840,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/conversions/conversionRate";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -989,7 +989,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/searches/noClickRate";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -1132,7 +1132,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/searches/noResultRate";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -1273,7 +1273,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/searches/count";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -1452,7 +1452,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/searches/noClicks";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -1664,7 +1664,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/searches/noResults";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -1803,7 +1803,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/status";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -1951,7 +1951,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/countries";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -2171,7 +2171,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/filters";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -2432,7 +2432,7 @@ public class AnalyticsClient extends ApiClient {
           this.escapeString(attribute.toString())
         );
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -2675,7 +2675,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/filters/noResults";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -2923,7 +2923,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/hits";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -3188,7 +3188,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/searches";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -3387,7 +3387,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/2/users/count";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (index != null) {
@@ -3509,7 +3509,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -3622,7 +3622,7 @@ public class AnalyticsClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
