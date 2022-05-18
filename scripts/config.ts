@@ -27,13 +27,28 @@ export function getCustomGenerator(language: Language): string {
   return clientsConfig[language].customGenerator;
 }
 
-// Returns the version of the package from clients.config.json, except for JavaScript where it returns the version of javascript-search
+/**
+ * Returns the version of the package from clients.config.json, except for JavaScript where it returns the version of javascript-search.
+ */
 export function getPackageVersionDefault(language: Language): string {
   if (language === 'javascript') {
     return openapiConfig['generator-cli'].generators['javascript-search']
       .additionalProperties.packageVersion;
   }
   return clientsConfig[language].packageVersion;
+}
+
+/**
+ * Returns the value of the `utilsPackageVersion`.
+ *
+ * Currently supported languages other than `javascript` does not have a utils package.
+ */
+export function getUtilsPackageVersionDefault(language: Language): string {
+  if (language !== 'javascript') {
+    return '';
+  }
+
+  return clientsConfig[language].utilsPackageVersion;
 }
 
 export function getGitHubUrl(

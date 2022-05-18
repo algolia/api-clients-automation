@@ -24,6 +24,7 @@ import {
   getGitHubUrl,
   getLanguageFolder,
   getPackageVersionDefault,
+  getUtilsPackageVersionDefault,
 } from '../config';
 import type { Language } from '../types';
 
@@ -113,13 +114,9 @@ async function updateVersionForJavascript(
   if (!versionsToRelease.javascript) {
     return;
   }
+
+  // Sets the new version of the JavaScript client
   const jsVersion = versionsToRelease.javascript;
-  const nextUtilsPackageVersion =
-    semver.inc(
-      openapiConfig['generator-cli'].generators['javascript-search']
-        .additionalProperties.utilsPackageVersion,
-      jsVersion.releaseType
-    ) || '';
   Object.values(GENERATORS)
     .filter((gen) => gen.language === 'javascript')
     .forEach((gen) => {
@@ -136,11 +133,24 @@ async function updateVersionForJavascript(
         );
       }
       additionalProperties.packageVersion = newVersion;
-      additionalProperties.utilsPackageVersion = nextUtilsPackageVersion;
     });
+
   await fsp.writeFile(
     toAbsolutePath('config/openapitools.json'),
     JSON.stringify(openapiConfig, null, 2)
+  );
+
+  // Sets the new version of the utils package
+  const nextUtilsPackageVersion =
+    semver.inc(
+      getUtilsPackageVersionDefault('javascript'),
+      jsVersion.releaseType
+    ) || '';
+
+  clientsConfig.javascript.utilsPackageVersion = nextUtilsPackageVersion;
+  await fsp.writeFile(
+    toAbsolutePath('config/clients.config.json'),
+    JSON.stringify(clientsConfig, null, 2)
   );
 }
 

@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.manager;
 
+import com.algolia.codegen.GenerationException;
 import com.algolia.codegen.Utils;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
@@ -13,13 +14,14 @@ public class JavaCtsManager extends CtsManager {
   }
 
   protected void addExtraToBundle(Map<String, Object> bundle) {
-    bundle.put(
-      "packageVersion",
-      Utils
-        .readJsonFile("config/clients.config.json")
-        .get("java")
-        .get("packageVersion")
-        .asText()
-    );
+    try {
+      bundle.put(
+        "packageVersion",
+        Utils.getClientConfigField("java", "packageVersion")
+      );
+    } catch (GenerationException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
   }
 }
