@@ -10,7 +10,7 @@ import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 
-public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
+public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
 
@@ -82,6 +82,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       Utils.generateServer(
         Utils.getClientNameKebabCase(results),
         additionalProperties
+      );
+      additionalProperties.put(
+        "utilsPackageVersion",
+        Utils.getClientConfigField("javascript", "utilsPackageVersion")
       );
     } catch (GenerationException e) {
       e.printStackTrace();
