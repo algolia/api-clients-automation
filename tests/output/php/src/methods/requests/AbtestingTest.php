@@ -8,6 +8,7 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -47,6 +48,26 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                     json_encode($request['body']),
                     $recordedRequest->getBody()->getContents()
                 );
+            }
+
+            if (isset($request['queryParameters'])) {
+                $this->assertEquals(
+                    Query::build($request['queryParameters']),
+                    $recordedRequest->getUri()->getQuery()
+                );
+            }
+
+            if (isset($request['headers'])) {
+                foreach ($request['headers'] as $key => $value) {
+                    $this->assertArrayHasKey(
+                        $key,
+                        $recordedRequest->getHeaders()
+                    );
+                    $this->assertEquals(
+                        $recordedRequest->getHeaderLine($key),
+                        $value
+                    );
+                }
             }
         }
     }
@@ -137,7 +158,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'DELETE',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -192,7 +216,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/test/all',
                 'method' => 'GET',
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -231,7 +258,8 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/2/abtests',
                 'method' => 'GET',
                 'queryParameters' => json_decode(
-                    "{\"offset\":\"42\",\"limit\":\"21\"}"
+                    "{\"offset\":\"42\",\"limit\":\"21\"}",
+                    true
                 ),
             ],
         ]);
@@ -272,7 +300,315 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'POST',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions can override default query parameters
+     */
+    public function testPost2()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'query' => 'myQueryParameter',
+            ],
+            'headers' => [],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"myQueryParameter\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions merges query parameters with default ones
+     */
+    public function testPost3()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'query2' => 'myQueryParameter',
+            ],
+            'headers' => [],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions can override default headers
+     */
+    public function testPost4()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [],
+            'headers' => [
+                'x-algolia-api-key' => 'myApiKey',
+            ],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
+                'headers' => json_decode(
+                    "{\"x-algolia-api-key\":\"myApiKey\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions merges headers with default ones
+     */
+    public function testPost5()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [],
+            'headers' => [
+                'x-algolia-api-key' => 'myApiKey',
+            ],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
+                'headers' => json_decode(
+                    "{\"x-algolia-api-key\":\"myApiKey\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions queryParameters accepts booleans
+     */
+    public function testPost6()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'isItWorking' => true,
+            ],
+            'headers' => [],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\",\"isItWorking\":\"true\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions queryParameters accepts integers
+     */
+    public function testPost7()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'myParam' => 2,
+            ],
+            'headers' => [],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\",\"myParam\":\"2\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions queryParameters accepts list of string
+     */
+    public function testPost8()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'myParam' => ['c', 'd'],
+            ],
+            'headers' => [],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\",\"myParam\":\"c,d\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions queryParameters accepts list of booleans
+     */
+    public function testPost9()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'myParam' => [true, true, false],
+            ],
+            'headers' => [],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}",
+                    true
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for Post
+     * requestOptions queryParameters accepts list of integers
+     */
+    public function testPost10()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'myParam' => [1, 2],
+            ],
+            'headers' => [],
+        ];
+        $client->post(
+            '/test/requestOptions',
+            ['query' => 'parameters'],
+            ['facet' => 'filters'],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode("{\"facet\":\"filters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\",\"myParam\":\"1,2\"}",
+                    true
+                ),
             ],
         ]);
     }
@@ -312,7 +648,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'PUT',
                 'body' => json_decode("{\"body\":\"parameters\"}"),
-                'queryParameters' => json_decode("{\"query\":\"parameters\"}"),
+                'queryParameters' => json_decode(
+                    "{\"query\":\"parameters\"}",
+                    true
+                ),
             ],
         ]);
     }

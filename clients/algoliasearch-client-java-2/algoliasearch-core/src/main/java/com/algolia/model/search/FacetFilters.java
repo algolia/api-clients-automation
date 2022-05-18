@@ -1,7 +1,7 @@
 package com.algolia.model.search;
 
-import com.algolia.JSON;
 import com.algolia.utils.CompoundType;
+import com.algolia.utils.JSON;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -34,6 +34,20 @@ public abstract class FacetFilters implements CompoundType {
 
     @Override
     public FacetFilters read(final JsonReader jsonReader) throws IOException {
+      List<List<String>> listliststring = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<List<List<String>>>() {}.getType()
+      );
+      if (listliststring != null) {
+        return FacetFilters.ofListListString(listliststring);
+      }
+      List<String> liststring = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<List<String>>() {}.getType()
+      );
+      if (liststring != null) {
+        return FacetFilters.ofListString(liststring);
+      }
       return null;
     }
   }

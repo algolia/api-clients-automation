@@ -1,13 +1,10 @@
 package com.algolia.api;
 
-import com.algolia.ApiCallback;
 import com.algolia.ApiClient;
-import com.algolia.ApiResponse;
-import com.algolia.Pair;
 import com.algolia.exceptions.*;
 import com.algolia.model.querySuggestions.*;
 import com.algolia.utils.*;
-import com.algolia.utils.echo.*;
+import com.algolia.utils.RequestOptions;
 import com.algolia.utils.retry.CallType;
 import com.algolia.utils.retry.StatefulHost;
 import com.google.gson.reflect.TypeToken;
@@ -17,6 +14,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 
 public class QuerySuggestionsClient extends ApiClient {
@@ -69,77 +67,29 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Build call for createConfig
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call createConfigCall(
-    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = querySuggestionsIndexWithIndexParam;
-
-    // create path and map variables
-    String requestPath = "/1/configs";
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "POST",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call createConfigValidateBeforeCall(
-    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'querySuggestionsIndexWithIndexParam' is set
-    if (querySuggestionsIndexWithIndexParam == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'querySuggestionsIndexWithIndexParam' when calling" +
-        " createConfig(Async)"
-      );
-    }
-
-    return createConfigCall(querySuggestionsIndexWithIndexParam, callback);
-  }
-
-  /**
    * Create a configuration of a Query Suggestions index. There's a limit of 100 configurations per
    * application.
    *
    * @param querySuggestionsIndexWithIndexParam (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return SucessResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
   public SucessResponse createConfig(
+    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      createConfigAsync(querySuggestionsIndexWithIndexParam, requestOptions)
+    );
+  }
+
+  public SucessResponse createConfig(
     QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam
   ) throws AlgoliaRuntimeException {
-    Call req = createConfigValidateBeforeCall(
-      querySuggestionsIndexWithIndexParam,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.CreateConfig(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    ApiResponse<SucessResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.createConfig(querySuggestionsIndexWithIndexParam, null);
   }
 
   /**
@@ -147,78 +97,48 @@ public class QuerySuggestionsClient extends ApiClient {
    * 100 configurations per application.
    *
    * @param querySuggestionsIndexWithIndexParam (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call createConfigAsync(
+  public CompletableFuture<SucessResponse> createConfigAsync(
     QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam,
-    final ApiCallback<SucessResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = createConfigValidateBeforeCall(
-      querySuggestionsIndexWithIndexParam,
-      callback
-    );
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (querySuggestionsIndexWithIndexParam == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'querySuggestionsIndexWithIndexParam' when calling" +
+        " createConfig(Async)"
+      );
+    }
 
-  /**
-   * Build call for del
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call delCall(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
+    Object bodyObj = querySuggestionsIndexWithIndexParam;
 
     // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+    String requestPath = "/1/configs";
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
+    Call call =
+      this.buildCall(
+          requestPath,
+          "POST",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
         );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "DELETE",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call delValidateBeforeCall(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
+  public CompletableFuture<SucessResponse> createConfigAsync(
+    QuerySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
-    if (path == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'path' when calling del(Async)"
-      );
-    }
-
-    return delCall(path, parameters, callback);
+    return this.createConfigAsync(querySuggestionsIndexWithIndexParam, null);
   }
 
   /**
@@ -227,24 +147,32 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
+  public Object del(
+    String path,
+    Map<String, Object> parameters,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(delAsync(path, parameters, requestOptions));
+  }
+
   public Object del(String path, Map<String, Object> parameters)
     throws AlgoliaRuntimeException {
-    Call req = delValidateBeforeCall(path, parameters, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Del(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
+    return this.del(path, parameters, null);
+  }
+
+  public Object del(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.del(path, null, requestOptions);
   }
 
   public Object del(String path) throws AlgoliaRuntimeException {
-    return this.del(path, null);
+    return this.del(path, null, null);
   }
 
   /**
@@ -253,70 +181,70 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call delAsync(
+  public CompletableFuture<Object> delAsync(
     String path,
     Map<String, Object> parameters,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = delValidateBeforeCall(path, parameters, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for deleteConfig
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call deleteConfigCall(
-    String indexName,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath =
-      "/1/configs/{indexName}".replaceAll(
-          "\\{indexName\\}",
-          this.escapeString(indexName.toString())
-        );
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "DELETE",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call deleteConfigValidateBeforeCall(
-    String indexName,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
+    if (path == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling deleteConfig(Async)"
+        "Missing the required parameter 'path' when calling del(Async)"
       );
     }
 
-    return deleteConfigCall(indexName, callback);
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "DELETE",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Object>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<Object> delAsync(
+    String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
+    return this.delAsync(path, parameters, null);
+  }
+
+  public CompletableFuture<Object> delAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.delAsync(path, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> delAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.delAsync(path, null, null);
   }
 
   /**
@@ -325,22 +253,22 @@ public class QuerySuggestionsClient extends ApiClient {
    * index does not change - existing suggestions remain untouched.
    *
    * @param indexName The index in which to perform the request. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return SucessResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
+  public SucessResponse deleteConfig(
+    String indexName,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteConfigAsync(indexName, requestOptions));
+  }
+
   public SucessResponse deleteConfig(String indexName)
     throws AlgoliaRuntimeException {
-    Call req = deleteConfigValidateBeforeCall(indexName, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.DeleteConfig(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    ApiResponse<SucessResponse> res = this.execute(call, returnType);
-    return res.getData();
+    return this.deleteConfig(indexName, null);
   }
 
   /**
@@ -349,214 +277,22 @@ public class QuerySuggestionsClient extends ApiClient {
    * doing this, the underlying index does not change - existing suggestions remain untouched.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call deleteConfigAsync(
+  public CompletableFuture<SucessResponse> deleteConfigAsync(
     String indexName,
-    final ApiCallback<SucessResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = deleteConfigValidateBeforeCall(indexName, callback);
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for get
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getCall(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
-        );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call getValidateBeforeCall(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
-    if (path == null) {
+    if (indexName == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'path' when calling get(Async)"
+        "Missing the required parameter 'indexName' when calling deleteConfig(Async)"
       );
     }
 
-    return getCall(path, parameters, callback);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @return Object
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public Object get(String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
-    Call req = getValidateBeforeCall(path, parameters, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Get(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  public Object get(String path) throws AlgoliaRuntimeException {
-    return this.get(path, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call getAsync(
-    String path,
-    Map<String, Object> parameters,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getValidateBeforeCall(path, parameters, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for getAllConfigs
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getAllConfigsCall(
-    final ApiCallback<List<QuerySuggestionsIndex>> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = null;
-
-    // create path and map variables
-    String requestPath = "/1/configs";
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call getAllConfigsValidateBeforeCall(
-    final ApiCallback<List<QuerySuggestionsIndex>> callback
-  ) throws AlgoliaRuntimeException {
-    return getAllConfigsCall(callback);
-  }
-
-  /**
-   * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a
-   * list of its configuration settings.
-   *
-   * @return List&lt;QuerySuggestionsIndex&gt;
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public List<QuerySuggestionsIndex> getAllConfigs()
-    throws AlgoliaRuntimeException {
-    Call req = getAllConfigsValidateBeforeCall(null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetAllConfigs(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<List<QuerySuggestionsIndex>>() {}.getType();
-    ApiResponse<List<QuerySuggestionsIndex>> res =
-      this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) Get all the configurations of Query Suggestions. For each index, you get a
-   * block of JSON with a list of its configuration settings.
-   *
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call getAllConfigsAsync(
-    final ApiCallback<List<QuerySuggestionsIndex>> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getAllConfigsValidateBeforeCall(callback);
-    Type returnType = new TypeToken<List<QuerySuggestionsIndex>>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for getConfig
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getConfigCall(
-    String indexName,
-    final ApiCallback<QuerySuggestionsIndex> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -566,88 +302,313 @@ public class QuerySuggestionsClient extends ApiClient {
           this.escapeString(indexName.toString())
         );
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "DELETE",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getConfigValidateBeforeCall(
-    String indexName,
-    final ApiCallback<QuerySuggestionsIndex> callback
+  public CompletableFuture<SucessResponse> deleteConfigAsync(String indexName)
+    throws AlgoliaRuntimeException {
+    return this.deleteConfigAsync(indexName, null);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return Object
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
+   */
+  public Object get(
+    String path,
+    Map<String, Object> parameters,
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
+    return LaunderThrowable.await(getAsync(path, parameters, requestOptions));
+  }
+
+  public Object get(String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.get(path, parameters, null);
+  }
+
+  public Object get(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.get(path, null, requestOptions);
+  }
+
+  public Object get(String path) throws AlgoliaRuntimeException {
+    return this.get(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
+   */
+  public CompletableFuture<Object> getAsync(
+    String path,
+    Map<String, Object> parameters,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    if (path == null) {
       throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling getConfig(Async)"
+        "Missing the required parameter 'path' when calling get(Async)"
       );
     }
 
-    return getConfigCall(indexName, callback);
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Object>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<Object> getAsync(
+    String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
+    return this.getAsync(path, parameters, null);
+  }
+
+  public CompletableFuture<Object> getAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getAsync(path, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> getAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.getAsync(path, null, null);
+  }
+
+  /**
+   * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a
+   * list of its configuration settings.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return List&lt;QuerySuggestionsIndex&gt;
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
+   */
+  public List<QuerySuggestionsIndex> getAllConfigs(
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAllConfigsAsync(requestOptions));
+  }
+
+  public List<QuerySuggestionsIndex> getAllConfigs()
+    throws AlgoliaRuntimeException {
+    return this.getAllConfigs(null);
+  }
+
+  /**
+   * (asynchronously) Get all the configurations of Query Suggestions. For each index, you get a
+   * block of JSON with a list of its configuration settings.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
+   */
+  public CompletableFuture<List<QuerySuggestionsIndex>> getAllConfigsAsync(
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath = "/1/configs";
+
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<List<QuerySuggestionsIndex>>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<List<QuerySuggestionsIndex>> getAllConfigsAsync()
+    throws AlgoliaRuntimeException {
+    return this.getAllConfigsAsync(null);
   }
 
   /**
    * Get the configuration of a single Query Suggestions index.
    *
    * @param indexName The index in which to perform the request. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return QuerySuggestionsIndex
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
+  public QuerySuggestionsIndex getConfig(
+    String indexName,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getConfigAsync(indexName, requestOptions));
+  }
+
   public QuerySuggestionsIndex getConfig(String indexName)
     throws AlgoliaRuntimeException {
-    Call req = getConfigValidateBeforeCall(indexName, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetConfig(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<QuerySuggestionsIndex>() {}.getType();
-    ApiResponse<QuerySuggestionsIndex> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getConfig(indexName, null);
   }
 
   /**
    * (asynchronously) Get the configuration of a single Query Suggestions index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getConfigAsync(
+  public CompletableFuture<QuerySuggestionsIndex> getConfigAsync(
     String indexName,
-    final ApiCallback<QuerySuggestionsIndex> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getConfigValidateBeforeCall(indexName, callback);
+    if (indexName == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'indexName' when calling getConfig(Async)"
+      );
+    }
+
+    Object bodyObj = null;
+
+    // create path and map variables
+    String requestPath =
+      "/1/configs/{indexName}".replaceAll(
+          "\\{indexName\\}",
+          this.escapeString(indexName.toString())
+        );
+
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
     Type returnType = new TypeToken<QuerySuggestionsIndex>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<QuerySuggestionsIndex> getConfigAsync(
+    String indexName
+  ) throws AlgoliaRuntimeException {
+    return this.getConfigAsync(indexName, null);
   }
 
   /**
-   * Build call for getConfigStatus
+   * Get the status of a Query Suggestion's index. The status includes whether the Query Suggestions
+   * index is currently in the process of being built, and the last build time.
    *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
+   * @param indexName The index in which to perform the request. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return Status
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  private Call getConfigStatusCall(
+  public Status getConfigStatus(
     String indexName,
-    final ApiCallback<Status> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getConfigStatusAsync(indexName, requestOptions)
+    );
+  }
+
+  public Status getConfigStatus(String indexName)
+    throws AlgoliaRuntimeException {
+    return this.getConfigStatus(indexName, null);
+  }
+
+  /**
+   * (asynchronously) Get the status of a Query Suggestion&#39;s index. The status includes whether
+   * the Query Suggestions index is currently in the process of being built, and the last build
+   * time.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
+   */
+  public CompletableFuture<Status> getConfigStatusAsync(
+    String indexName,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    if (indexName == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'indexName' when calling getConfigStatus(Async)"
+      );
+    }
+
     Object bodyObj = null;
 
     // create path and map variables
@@ -657,91 +618,69 @@ public class QuerySuggestionsClient extends ApiClient {
           this.escapeString(indexName.toString())
         );
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Status>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getConfigStatusValidateBeforeCall(
-    String indexName,
-    final ApiCallback<Status> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling getConfigStatus(Async)"
-      );
-    }
-
-    return getConfigStatusCall(indexName, callback);
+  public CompletableFuture<Status> getConfigStatusAsync(String indexName)
+    throws AlgoliaRuntimeException {
+    return this.getConfigStatusAsync(indexName, null);
   }
 
   /**
-   * Get the status of a Query Suggestion's index. The status includes whether the Query Suggestions
-   * index is currently in the process of being built, and the last build time.
+   * Get the log file of the last build of a single Query Suggestion index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @return Status
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return List&lt;LogFile&gt;
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Status getConfigStatus(String indexName)
+  public List<LogFile> getLogFile(
+    String indexName,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getLogFileAsync(indexName, requestOptions));
+  }
+
+  public List<LogFile> getLogFile(String indexName)
     throws AlgoliaRuntimeException {
-    Call req = getConfigStatusValidateBeforeCall(indexName, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetConfigStatus(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Status>() {}.getType();
-    ApiResponse<Status> res = this.execute(call, returnType);
-    return res.getData();
+    return this.getLogFile(indexName, null);
   }
 
   /**
-   * (asynchronously) Get the status of a Query Suggestion&#39;s index. The status includes whether
-   * the Query Suggestions index is currently in the process of being built, and the last build
-   * time.
+   * (asynchronously) Get the log file of the last build of a single Query Suggestion index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getConfigStatusAsync(
+  public CompletableFuture<List<LogFile>> getLogFileAsync(
     String indexName,
-    final ApiCallback<Status> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = getConfigStatusValidateBeforeCall(indexName, callback);
-    Type returnType = new TypeToken<Status>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
+    if (indexName == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'indexName' when calling getLogFile(Async)"
+      );
+    }
 
-  /**
-   * Build call for getLogFile
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call getLogFileCall(
-    String indexName,
-    final ApiCallback<List<LogFile>> callback
-  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -751,133 +690,138 @@ public class QuerySuggestionsClient extends ApiClient {
           this.escapeString(indexName.toString())
         );
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "GET",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "GET",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<List<LogFile>>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call getLogFileValidateBeforeCall(
-    String indexName,
-    final ApiCallback<List<LogFile>> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling getLogFile(Async)"
-      );
-    }
-
-    return getLogFileCall(indexName, callback);
+  public CompletableFuture<List<LogFile>> getLogFileAsync(String indexName)
+    throws AlgoliaRuntimeException {
+    return this.getLogFileAsync(indexName, null);
   }
 
   /**
-   * Get the log file of the last build of a single Query Suggestion index.
+   * This method allow you to send requests to the Algolia REST API.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @return List&lt;LogFile&gt;
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public List<LogFile> getLogFile(String indexName)
+  public Object post(
+    String path,
+    Map<String, Object> parameters,
+    Object body,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      postAsync(path, parameters, body, requestOptions)
+    );
+  }
+
+  public Object post(String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
-    Call req = getLogFileValidateBeforeCall(indexName, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.GetLogFile(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<List<LogFile>>() {}.getType();
-    ApiResponse<List<LogFile>> res = this.execute(call, returnType);
-    return res.getData();
+    return this.post(path, parameters, body, null);
+  }
+
+  public Object post(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.post(path, null, null, requestOptions);
+  }
+
+  public Object post(String path) throws AlgoliaRuntimeException {
+    return this.post(path, null, null, null);
   }
 
   /**
-   * (asynchronously) Get the log file of the last build of a single Query Suggestion index.
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param path The path of the API endpoint to target, anything after the /1 needs to be
+   *     specified. (required)
+   * @param parameters Query parameters to be applied to the current query. (optional)
+   * @param body The parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call getLogFileAsync(
-    String indexName,
-    final ApiCallback<List<LogFile>> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = getLogFileValidateBeforeCall(indexName, callback);
-    Type returnType = new TypeToken<List<LogFile>>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for post
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call postCall(
+  public CompletableFuture<Object> postAsync(
     String path,
     Map<String, Object> parameters,
     Object body,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = body;
-
-    // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
-        );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "POST",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call postValidateBeforeCall(
-    String path,
-    Map<String, Object> parameters,
-    Object body,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
     if (path == null) {
       throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling post(Async)"
       );
     }
 
-    return postCall(path, parameters, body, callback);
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "POST",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Object>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<Object> postAsync(
+    String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
+    return this.postAsync(path, parameters, body, null);
+  }
+
+  public CompletableFuture<Object> postAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.postAsync(path, null, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> postAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.postAsync(path, null, null, null);
   }
 
   /**
@@ -887,24 +831,35 @@ public class QuerySuggestionsClient extends ApiClient {
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object post(String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
-    Call req = postValidateBeforeCall(path, parameters, body, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Post(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
+  public Object put(
+    String path,
+    Map<String, Object> parameters,
+    Object body,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      putAsync(path, parameters, body, requestOptions)
+    );
   }
 
-  public Object post(String path) throws AlgoliaRuntimeException {
-    return this.post(path, null, null);
+  public Object put(String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.put(path, parameters, body, null);
+  }
+
+  public Object put(String path, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.put(path, null, null, requestOptions);
+  }
+
+  public Object put(String path) throws AlgoliaRuntimeException {
+    return this.put(path, null, null, null);
   }
 
   /**
@@ -914,144 +869,131 @@ public class QuerySuggestionsClient extends ApiClient {
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call postAsync(
+  public CompletableFuture<Object> putAsync(
     String path,
     Map<String, Object> parameters,
     Object body,
-    final ApiCallback<Object> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Call call = postValidateBeforeCall(path, parameters, body, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for put
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call putCall(
-    String path,
-    Map<String, Object> parameters,
-    Object body,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Object bodyObj = body;
-
-    // create path and map variables
-    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
-
-    List<Pair> queryParams = new ArrayList<Pair>();
-    Map<String, String> headers = new HashMap<String, String>();
-
-    if (parameters != null) {
-      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-        queryParams.addAll(
-          this.parameterToPair(parameter.getKey(), parameter.getValue())
-        );
-      }
-    }
-
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "PUT",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
-  }
-
-  private Call putValidateBeforeCall(
-    String path,
-    Map<String, Object> parameters,
-    Object body,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'path' is set
     if (path == null) {
       throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling put(Async)"
       );
     }
 
-    return putCall(path, parameters, body, callback);
+    Object bodyObj = body;
+
+    // create path and map variables
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
+
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, String> headers = new HashMap<String, String>();
+
+    if (parameters != null) {
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParameters.put(
+          parameter.getKey().toString(),
+          parameterToString(parameter.getValue())
+        );
+      }
+    }
+
+    Call call =
+      this.buildCall(
+          requestPath,
+          "PUT",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<Object>() {}.getType();
+    return this.executeAsync(call, returnType);
+  }
+
+  public CompletableFuture<Object> putAsync(
+    String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
+    return this.putAsync(path, parameters, body, null);
+  }
+
+  public CompletableFuture<Object> putAsync(
+    String path,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.putAsync(path, null, null, requestOptions);
+  }
+
+  public CompletableFuture<Object> putAsync(String path)
+    throws AlgoliaRuntimeException {
+    return this.putAsync(path, null, null, null);
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * Update the configuration of a Query Suggestions index.
    *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param body The parameters to send with the custom request. (optional)
-   * @return Object
+   * @param indexName The index in which to perform the request. (required)
+   * @param querySuggestionsIndexParam (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return SucessResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object put(String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
-    Call req = putValidateBeforeCall(path, parameters, body, null);
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.Put(((CallEcho) req).request());
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<Object>() {}.getType();
-    ApiResponse<Object> res = this.execute(call, returnType);
-    return res.getData();
+  public SucessResponse updateConfig(
+    String indexName,
+    QuerySuggestionsIndexParam querySuggestionsIndexParam,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      updateConfigAsync(indexName, querySuggestionsIndexParam, requestOptions)
+    );
   }
 
-  public Object put(String path) throws AlgoliaRuntimeException {
-    return this.put(path, null, null);
+  public SucessResponse updateConfig(
+    String indexName,
+    QuerySuggestionsIndexParam querySuggestionsIndexParam
+  ) throws AlgoliaRuntimeException {
+    return this.updateConfig(indexName, querySuggestionsIndexParam, null);
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) Update the configuration of a Query Suggestions index.
    *
-   * @param path The path of the API endpoint to target, anything after the /1 needs to be
-   *     specified. (required)
-   * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param body The parameters to send with the custom request. (optional)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
+   * @param indexName The index in which to perform the request. (required)
+   * @param querySuggestionsIndexParam (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @return The awaitable future
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
    *     body object
    */
-  public Call putAsync(
-    String path,
-    Map<String, Object> parameters,
-    Object body,
-    final ApiCallback<Object> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = putValidateBeforeCall(path, parameters, body, callback);
-    Type returnType = new TypeToken<Object>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
-  }
-
-  /**
-   * Build call for updateConfig
-   *
-   * @param callback Callback for upload/download progress
-   * @return Call to execute
-   * @throws AlgoliaRuntimeException If fail to serialize the request body object
-   */
-  private Call updateConfigCall(
+  public CompletableFuture<SucessResponse> updateConfigAsync(
     String indexName,
     QuerySuggestionsIndexParam querySuggestionsIndexParam,
-    final ApiCallback<SucessResponse> callback
+    RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
+    if (indexName == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'indexName' when calling updateConfig(Async)"
+      );
+    }
+
+    if (querySuggestionsIndexParam == null) {
+      throw new AlgoliaRuntimeException(
+        "Missing the required parameter 'querySuggestionsIndexParam' when calling" +
+        " updateConfig(Async)"
+      );
+    }
+
     Object bodyObj = querySuggestionsIndexParam;
 
     // create path and map variables
@@ -1061,96 +1003,26 @@ public class QuerySuggestionsClient extends ApiClient {
           this.escapeString(indexName.toString())
         );
 
-    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
-    headers.put("Accept", "application/json");
-    headers.put("Content-Type", "application/json");
-
-    return this.buildCall(
-        requestPath,
-        "PUT",
-        queryParams,
-        bodyObj,
-        headers,
-        callback
-      );
+    Call call =
+      this.buildCall(
+          requestPath,
+          "PUT",
+          queryParameters,
+          bodyObj,
+          headers,
+          requestOptions
+        );
+    Type returnType = new TypeToken<SucessResponse>() {}.getType();
+    return this.executeAsync(call, returnType);
   }
 
-  private Call updateConfigValidateBeforeCall(
-    String indexName,
-    QuerySuggestionsIndexParam querySuggestionsIndexParam,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    // verify the required parameter 'indexName' is set
-    if (indexName == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'indexName' when calling updateConfig(Async)"
-      );
-    }
-
-    // verify the required parameter 'querySuggestionsIndexParam' is set
-    if (querySuggestionsIndexParam == null) {
-      throw new AlgoliaRuntimeException(
-        "Missing the required parameter 'querySuggestionsIndexParam' when calling" +
-        " updateConfig(Async)"
-      );
-    }
-
-    return updateConfigCall(indexName, querySuggestionsIndexParam, callback);
-  }
-
-  /**
-   * Update the configuration of a Query Suggestions index.
-   *
-   * @param indexName The index in which to perform the request. (required)
-   * @param querySuggestionsIndexParam (required)
-   * @return SucessResponse
-   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
-   *     deserialize the response body
-   */
-  public SucessResponse updateConfig(
+  public CompletableFuture<SucessResponse> updateConfigAsync(
     String indexName,
     QuerySuggestionsIndexParam querySuggestionsIndexParam
   ) throws AlgoliaRuntimeException {
-    Call req = updateConfigValidateBeforeCall(
-      indexName,
-      querySuggestionsIndexParam,
-      null
-    );
-    if (req instanceof CallEcho) {
-      return new EchoResponseQuerySuggestions.UpdateConfig(
-        ((CallEcho) req).request()
-      );
-    }
-    Call call = (Call) req;
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    ApiResponse<SucessResponse> res = this.execute(call, returnType);
-    return res.getData();
-  }
-
-  /**
-   * (asynchronously) Update the configuration of a Query Suggestions index.
-   *
-   * @param indexName The index in which to perform the request. (required)
-   * @param querySuggestionsIndexParam (required)
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
-   *     body object
-   */
-  public Call updateConfigAsync(
-    String indexName,
-    QuerySuggestionsIndexParam querySuggestionsIndexParam,
-    final ApiCallback<SucessResponse> callback
-  ) throws AlgoliaRuntimeException {
-    Call call = updateConfigValidateBeforeCall(
-      indexName,
-      querySuggestionsIndexParam,
-      callback
-    );
-    Type returnType = new TypeToken<SucessResponse>() {}.getType();
-    this.executeAsync(call, returnType, callback);
-    return call;
+    return this.updateConfigAsync(indexName, querySuggestionsIndexParam, null);
   }
 }

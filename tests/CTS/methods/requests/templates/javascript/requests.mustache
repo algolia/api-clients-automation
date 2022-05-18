@@ -1,22 +1,30 @@
 import { {{client}} } from '{{{import}}}';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
+import type { RequestOptions } from '@experimental-api-clients-automation/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'us', {{/hasRegionalHost}}{ requester: echoRequester() });
+const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
 
 {{#blocks}}
 describe('{{operationId}}', () => {
   {{#tests}}
   test('{{testName}}', async () => {
-    const req = (await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}})) as unknown as EchoResponse;
+    {{#hasRequestOptions}}const requestOptions: RequestOptions = {{{requestOptions}}}{{/hasRequestOptions}}
+
+    const req = (await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}})) as unknown as EchoResponse;
 
     expect(req.path).toEqual('{{{request.path}}}');
     expect(req.method).toEqual('{{{request.method}}}');
     expect(req.data).toEqual({{#request.body}}{{{.}}}{{/request.body}}{{^request.body}}undefined{{/request.body}});
     expect(req.searchParams).toStrictEqual({{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}undefined{{/request.queryParameters}});
+    {{#request.headers}}
+    expect(req.headers).toEqual(
+      expect.objectContaining({{{request.headers}}})
+    );
+    {{/request.headers}}
   });
 
   {{/tests}}

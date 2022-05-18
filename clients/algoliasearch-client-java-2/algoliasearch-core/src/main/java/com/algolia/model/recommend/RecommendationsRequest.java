@@ -1,7 +1,7 @@
 package com.algolia.model.recommend;
 
-import com.algolia.JSON;
 import com.algolia.utils.CompoundType;
+import com.algolia.utils.JSON;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -38,6 +38,22 @@ public abstract class RecommendationsRequest implements CompoundType {
     @Override
     public RecommendationsRequest read(final JsonReader jsonReader)
       throws IOException {
+      RecommendationRequest recommendationrequest = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<RecommendationRequest>() {}.getType()
+      );
+      if (recommendationrequest != null) {
+        return RecommendationsRequest.ofRecommendationRequest(
+          recommendationrequest
+        );
+      }
+      TrendingRequest trendingrequest = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<TrendingRequest>() {}.getType()
+      );
+      if (trendingrequest != null) {
+        return RecommendationsRequest.ofTrendingRequest(trendingrequest);
+      }
       return null;
     }
   }

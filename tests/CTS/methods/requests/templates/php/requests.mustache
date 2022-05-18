@@ -8,6 +8,7 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -42,6 +43,26 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                     $recordedRequest->getBody()->getContents()
                 );
             }
+
+            if (isset($request['queryParameters'])) {
+                $this->assertEquals(
+                    Query::build($request['queryParameters']),
+                    $recordedRequest->getUri()->getQuery()
+                );
+            }
+
+            if (isset($request['headers'])) {
+                foreach ($request['headers'] as $key => $value) {
+                    $this->assertArrayHasKey(
+                        $key,
+                        $recordedRequest->getHeaders()
+                    );
+                    $this->assertEquals(
+                        $recordedRequest->getHeaderLine($key),
+                        $value
+                    );
+                }
+            }
         }
     }
 
@@ -70,8 +91,25 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
     {
         $client = $this->getClient();
+        {{#hasRequestOptions}}
+          $requestOptions = [
+            'queryParameters' => [
+              {{#requestOptionsWithDataType.queryParameters.value.0}}
+                '{{{key}}}' => 
+                {{#isArray}}[{{#value}}{{> requestOptionsParams}}{{^-last}},{{/-last}}{{/value}}]{{/isArray}}
+                {{^isArray}}{{{#value}}}{{> requestOptionsParams}}{{{/value}}}{{/isArray}},
+              {{/requestOptionsWithDataType.queryParameters.value.0}}
+            ],
+            'headers' => [
+              {{#requestOptionsWithDataType.headers}}
+                '{{{key}}}' => '{{{value}}}',
+              {{/requestOptionsWithDataType.headers}}
+            ]
+          ];
+        {{/hasRequestOptions}}
         $client->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}(
         {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
+        {{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
         );{{/hasParameters}}
 
         $this->assertRequests([
@@ -82,8 +120,11 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 "body" => json_decode("{{#lambda.escapequotes}}{{{request.body}}}{{/lambda.escapequotes}}"),
                 {{/request.body}}
                 {{#request.queryParameters}}
-                "queryParameters" => json_decode("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}"),
+                "queryParameters" => json_decode("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}", true),
                 {{/request.queryParameters}}
+                {{#request.headers}}
+                "headers" => json_decode("{{#lambda.escapequotes}}{{{request.headers}}}{{/lambda.escapequotes}}", true),
+                {{/request.headers}}
             ],
         ]);
     }

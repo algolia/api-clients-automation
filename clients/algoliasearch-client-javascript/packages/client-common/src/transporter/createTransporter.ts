@@ -36,7 +36,7 @@ export function createTransporter({
   hostsCache,
   baseHeaders,
   baseQueryParameters,
-  userAgent,
+  algoliaAgent,
   timeouts,
   requester,
   requestsCache,
@@ -106,12 +106,29 @@ export function createTransporter({
         }
       : {};
 
-    const queryParameters = {
-      'x-algolia-agent': userAgent.value,
+    const queryParameters: QueryParameters = {
+      'x-algolia-agent': algoliaAgent.value,
       ...baseQueryParameters,
       ...dataQueryParameters,
-      ...requestOptions.queryParameters,
     };
+
+    if (requestOptions?.queryParameters) {
+      for (const [key, value] of Object.entries(
+        requestOptions.queryParameters
+      )) {
+        // We want to keep `undefined` and `null` values,
+        // but also avoid stringifying `object`s, as they are
+        // handled in the `serializeUrl` step right after.
+        if (
+          !value ||
+          Object.prototype.toString.call(value) === '[object Object]'
+        ) {
+          queryParameters[key] = value;
+        } else {
+          queryParameters[key] = value.toString();
+        }
+      }
+    }
 
     let timeoutsCount = 0;
 
@@ -240,13 +257,13 @@ export function createTransporter({
       cacheable: baseRequestOptions?.cacheable,
       timeout: baseRequestOptions?.timeout,
       queryParameters: {
-        ...baseRequestOptions?.queryParameters,
         ...methodOptions.queryParameters,
+        ...baseRequestOptions?.queryParameters,
       },
       headers: {
         Accept: 'application/json',
-        ...baseRequestOptions?.headers,
         ...methodOptions.headers,
+        ...baseRequestOptions?.headers,
       },
     };
 
@@ -338,7 +355,7 @@ export function createTransporter({
     hostsCache,
     requester,
     timeouts,
-    userAgent,
+    algoliaAgent,
     baseHeaders,
     baseQueryParameters,
     hosts,

@@ -5,10 +5,10 @@ import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
-import clientsConfig from '../config/clients.config.json';
 import openapiConfig from '../config/openapitools.json';
 import releaseConfig from '../config/release.config.json';
 
+import { getPackageVersionDefault } from './config';
 import { createSpinner } from './oraLog';
 import type {
   CheckForCache,
@@ -41,10 +41,7 @@ export const GENERATORS: Record<string, Generator> = {
     additionalProperties: {
       buildFile: 'algoliasearch',
       packageName: '@experimental-api-clients-automation/algoliasearch',
-      packageVersion:
-        openapiConfig['generator-cli'].generators[
-          clientsConfig.javascript.mainPackage
-        ].additionalProperties.packageVersion,
+      packageVersion: getPackageVersionDefault('javascript'),
     },
   },
 };
@@ -59,10 +56,6 @@ Object.entries(openapiConfig['generator-cli'].generators).forEach(
     };
   }
 );
-
-export function getPackageVersion(generator: string): string {
-  return GENERATORS[generator].additionalProperties.packageVersion;
-}
 
 export const LANGUAGES = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.language)),
@@ -92,36 +85,6 @@ export function splitGeneratorKey(
   const client = generatorKey.slice(generatorKey.indexOf('-') + 1);
   return { language, client, key: generatorKey };
 }
-
-type GitHubUrl = (
-  lang: string,
-  options?: {
-    token?: string;
-  }
-) => string;
-
-export const getGitHubUrl: GitHubUrl = (
-  lang: string,
-  { token } = {}
-): string => {
-  const entry = Object.entries(openapiConfig['generator-cli'].generators).find(
-    (_entry) => _entry[0].startsWith(`${lang}-`)
-  );
-
-  if (!entry) {
-    throw new Error(`\`${lang}\` is not found from \`openapitools.json\`.`);
-  }
-  const { gitRepoId } = entry[1];
-
-  // GitHub Action provides a default token for authentication
-  // https://docs.github.com/en/actions/security-guides/automatic-token-authentication
-  // But it has access to only the self repository.
-  // If we want to do something like pushing commits to other repositories,
-  // we need to specify a token with more access.
-  return token
-    ? `https://${token}:${token}@github.com/algolia/${gitRepoId}`
-    : `https://github.com/algolia/${gitRepoId}`;
-};
 
 export function createGeneratorKey({
   language,
@@ -282,5 +245,16 @@ export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
     if (file !== '.git') {
       await remove(path.resolve(dir, file));
     }
+  }
+}
+
+export async function runComposerUpdate(verbose: boolean): Promise<void> {
+  if (!CI) {
+    await run(
+      'composer update --working-dir=clients/algoliasearch-client-php && composer dump-autoload --working-dir=clients/algoliasearch-client-php',
+      {
+        verbose,
+      }
+    );
   }
 }

@@ -53,7 +53,16 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     String client = Utils.getClientNameKebabCase(results);
 
     setDefaultGeneratorOptions(client);
-    Utils.generateServer(client, additionalProperties);
+    try {
+      Utils.generateServer(client, additionalProperties);
+      additionalProperties.put(
+        "packageVersion",
+        Utils.getPackageVersion("php")
+      );
+    } catch (GenerationException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
 
     return results;
   }
@@ -63,6 +72,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     // generator specific options
     setApiNameSuffix(Utils.API_SUFFIX);
     setParameterNamingConvention("camelCase");
+    additionalProperties.put("invokerPackage", "Algolia\\AlgoliaSearch");
 
     super.processOpts();
 
@@ -78,5 +88,9 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
         "Configuration.php"
       )
     );
+  }
+
+  public String getComposerPackageName() {
+    return "algolia/algoliasearch-client-php";
   }
 }

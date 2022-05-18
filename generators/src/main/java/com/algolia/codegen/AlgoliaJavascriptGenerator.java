@@ -26,7 +26,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     // generator specific options
     setSupportsES6(true);
     setModelPropertyNaming("original");
-
+    setApiPackage("src");
     // clear all supported files to avoid unwanted ones
     supportingFiles.clear();
     // model
@@ -59,7 +59,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     additionalProperties.put("apiName", apiName);
     additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
-    additionalProperties.put("userAgent", Utils.capitalize(CLIENT));
+    additionalProperties.put("algoliaAgent", Utils.capitalize(CLIENT));
+    additionalProperties.put("gitRepoId", "algoliasearch-client-javascript");
   }
 
   /** Provides an opportunity to inspect and modify operation data before the code is generated. */
@@ -76,10 +77,49 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     CLIENT = Utils.getClientNameCamelCase(results);
 
     setDefaultGeneratorOptions();
-    Utils.generateServer(
-      Utils.getClientNameKebabCase(results),
-      additionalProperties
-    );
+    try {
+      Utils.generateServer(
+        Utils.getClientNameKebabCase(results),
+        additionalProperties
+      );
+    } catch (GenerationException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+
+    List<CodegenOperation> operations =
+      ((Map<String, List<CodegenOperation>>) results.get("operations")).get(
+          "operation"
+        );
+
+    // We read operations and detect if we should wrap parameters under an object.
+    // We only wrap if there is a mix between body parameters and other parameters.
+    for (CodegenOperation ope : operations) {
+      // Nothing to wrap as there is no parameters
+      if (!ope.hasParams) {
+        continue;
+      }
+
+      boolean hasBodyParams = !ope.bodyParams.isEmpty();
+      boolean hasHeaderParams = !ope.headerParams.isEmpty();
+      boolean hasQueryParams = !ope.queryParams.isEmpty();
+      boolean hasPathParams = !ope.pathParams.isEmpty();
+
+      // If there is nothing but body params, we just check if it's a single param
+      if (
+        hasBodyParams && !hasHeaderParams && !hasQueryParams && !hasPathParams
+      ) {
+        // At this point the single parameter is already an object, to avoid double wrapping
+        // we skip it
+        if (ope.bodyParams.size() == 1 && !ope.bodyParams.get(0).isArray) {
+          ope.vendorExtensions.put("x-is-single-body-param", true);
+          continue;
+        }
+      }
+
+      // Any other cases here are wrapped
+      ope.vendorExtensions.put("x-create-wrapping-object", true);
+    }
 
     return results;
   }

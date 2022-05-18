@@ -45,10 +45,19 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       allModels
     );
 
-    Utils.generateServer(
-      Utils.getClientNameKebabCase(results),
-      additionalProperties
-    );
+    try {
+      Utils.generateServer(
+        Utils.getClientNameKebabCase(results),
+        additionalProperties
+      );
+      additionalProperties.put(
+        "packageVersion",
+        Utils.getPackageVersion("java")
+      );
+    } catch (GenerationException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
 
     return results;
   }
@@ -87,41 +96,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     return models;
   }
 
-  @Override
-  public Map<String, Object> postProcessSupportingFileData(
-    Map<String, Object> objs
-  ) {
-    Map<String, Object> bundle = super.postProcessSupportingFileData(objs);
-    List<Map<String, Object>> apis =
-      ((Map<String, List<Map<String, Object>>>) bundle.get("apiInfo")).get(
-          "apis"
-        );
-
-    for (Map<String, Object> api : apis) {
-      String clientName = (String) api.get("baseName");
-      supportingFiles.add(
-        new SupportingFile(
-          "EchoResponse.mustache",
-          sourceFolder + "/com/algolia/utils/echo",
-          "EchoResponse" + clientName + ".java"
-        )
-      );
-
-      List<CodegenOperation> operations =
-        ((Map<String, List<CodegenOperation>>) api.get("operations")).get(
-            "operation"
-          );
-
-      for (CodegenOperation ope : operations) {
-        ope.returnType =
-          ope.returnType
-            .replace("Map<", "HashMap<")
-            .replace("List<", "ArrayList<");
-      }
-    }
-    return bundle;
-  }
-
   /**
    * Returns human-friendly help for the generator. Provide the consumer with help tips, parameters
    * here
@@ -137,8 +111,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   public void processOpts() {
     // generator specific options
     setDateLibrary("java8");
+    setLibrary("okhttp-gson");
     setSourceFolder("algoliasearch-core/src/main/java");
-    setInvokerPackage("com.algolia");
+    setGroupId("com.algolia");
+    additionalProperties.put("invokerPackage", "com.algolia");
+    setApiPackage("com.algolia.api");
     setApiNameSuffix(Utils.API_SUFFIX);
 
     super.processOpts();
@@ -152,7 +129,13 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     supportingFiles.removeIf(file ->
       file.getTemplateFile().equals("build.gradle.mustache") ||
       file.getTemplateFile().equals("settings.gradle.mustache") ||
-      file.getTemplateFile().equals("gitignore.mustache")
+      file.getTemplateFile().equals("gitignore.mustache") ||
+      file.getTemplateFile().equals("ApiCallback.mustache") ||
+      file.getTemplateFile().equals("ApiResponse.mustache") ||
+      file.getTemplateFile().equals("JSON.mustache") ||
+      file.getTemplateFile().equals("ProgressRequestBody.mustache") ||
+      file.getTemplateFile().equals("ProgressResponseBody.mustache") ||
+      file.getTemplateFile().equals("Pair.mustache")
     );
   }
 

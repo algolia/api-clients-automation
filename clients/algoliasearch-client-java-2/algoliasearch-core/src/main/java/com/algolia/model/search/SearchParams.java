@@ -1,7 +1,7 @@
 package com.algolia.model.search;
 
-import com.algolia.JSON;
 import com.algolia.utils.CompoundType;
+import com.algolia.utils.JSON;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -33,6 +33,20 @@ public abstract class SearchParams implements CompoundType {
 
     @Override
     public SearchParams read(final JsonReader jsonReader) throws IOException {
+      SearchParamsObject searchparamsobject = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<SearchParamsObject>() {}.getType()
+      );
+      if (searchparamsobject != null) {
+        return SearchParams.ofSearchParamsObject(searchparamsobject);
+      }
+      SearchParamsString searchparamsstring = JSON.tryDeserialize(
+        jsonReader,
+        new TypeToken<SearchParamsString>() {}.getType()
+      );
+      if (searchparamsstring != null) {
+        return SearchParams.ofSearchParamsString(searchparamsstring);
+      }
       return null;
     }
   }

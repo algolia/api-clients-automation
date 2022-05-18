@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Search API
   description: API powering the Search feature of Algolia.
-  version: 0.1.0
+  version: 1.0.0
 components:
   securitySchemes:
     appId:
@@ -127,10 +127,10 @@ components:
         type: integer
         nullable: true
         default: null
-    UserIDInQuery:
+    UserIDInHeader:
       name: X-Algolia-User-ID
       description: userID to assign.
-      in: query
+      in: header
       required: true
       schema:
         type: string
@@ -716,16 +716,6 @@ components:
       oneOf:
         - $ref: '#/components/schemas/searchParamsString'
         - $ref: '#/components/schemas/searchParamsObject'
-    abTestID:
-      type: integer
-      description: >-
-        If a search encounters an index that is being A/B tested, abTestID
-        reports the ongoing A/B test ID.
-    abTestVariantID:
-      type: integer
-      description: >-
-        If a search encounters an index that is being A/B tested,
-        abTestVariantID reports the variant ID of the index used.
     nbHits:
       type: integer
       description: Number of hits that the search query matched.
@@ -754,9 +744,15 @@ components:
         - params
       properties:
         abTestID:
-          $ref: '#/components/schemas/abTestID'
+          type: integer
+          description: >-
+            If a search encounters an index that is being A/B tested, abTestID
+            reports the ongoing A/B test ID.
         abTestVariantID:
-          $ref: '#/components/schemas/abTestVariantID'
+          type: integer
+          description: >-
+            If a search encounters an index that is being A/B tested,
+            abTestVariantID reports the variant ID of the index used.
         aroundLatLng:
           type: string
           description: The computed geo location.
@@ -1050,6 +1046,7 @@ components:
         - $ref: '#/components/schemas/baseBrowseResponse'
     taskID:
       type: integer
+      format: int64
       description: taskID of the task to wait for.
     deletedAt:
       type: string
@@ -3564,7 +3561,7 @@ paths:
         A successful response indicates that the operation has been taken into
         account, and the userID is directly usable.
       parameters:
-        - $ref: '#/components/parameters/UserIDInQuery'
+        - $ref: '#/components/parameters/UserIDInHeader'
       requestBody:
         required: true
         content:
@@ -3646,7 +3643,7 @@ paths:
         A successful response indicates that the operation has been taken into
         account, and the userIDs are directly usable.
       parameters:
-        - $ref: '#/components/parameters/UserIDInQuery'
+        - $ref: '#/components/parameters/UserIDInHeader'
       requestBody:
         required: true
         content:
@@ -4244,6 +4241,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
             example: '13235'
       responses:
         '200':

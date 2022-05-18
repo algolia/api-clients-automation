@@ -1,57 +1,79 @@
 package com.algolia.model.predict;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
+import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-/** Gets or Sets typesToRetrieve */
-@JsonAdapter(TypesToRetrieve.Adapter.class)
-public enum TypesToRetrieve {
-  PROPERTIES("properties"),
+/** TypesToRetrieve */
+public class TypesToRetrieve {
 
-  SEGMENTS("segments");
+  @SerializedName("typesToRetrieve")
+  private List<TypesToRetrieveEnum> typesToRetrieve = new ArrayList<>();
 
-  private final String value;
-
-  TypesToRetrieve(String value) {
-    this.value = value;
+  public TypesToRetrieve setTypesToRetrieve(
+    List<TypesToRetrieveEnum> typesToRetrieve
+  ) {
+    this.typesToRetrieve = typesToRetrieve;
+    return this;
   }
 
-  public String getValue() {
-    return value;
+  public TypesToRetrieve addTypesToRetrieve(
+    TypesToRetrieveEnum typesToRetrieveItem
+  ) {
+    this.typesToRetrieve.add(typesToRetrieveItem);
+    return this;
+  }
+
+  /**
+   * Get typesToRetrieve
+   *
+   * @return typesToRetrieve
+   */
+  @javax.annotation.Nonnull
+  public List<TypesToRetrieveEnum> getTypesToRetrieve() {
+    return typesToRetrieve;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    TypesToRetrieve typesToRetrieve = (TypesToRetrieve) o;
+    return Objects.equals(
+      this.typesToRetrieve,
+      typesToRetrieve.typesToRetrieve
+    );
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(typesToRetrieve);
   }
 
   @Override
   public String toString() {
-    return String.valueOf(value);
+    StringBuilder sb = new StringBuilder();
+    sb.append("class TypesToRetrieve {\n");
+    sb
+      .append("    typesToRetrieve: ")
+      .append(toIndentedString(typesToRetrieve))
+      .append("\n");
+    sb.append("}");
+    return sb.toString();
   }
 
-  public static TypesToRetrieve fromValue(String value) {
-    for (TypesToRetrieve b : TypesToRetrieve.values()) {
-      if (b.value.equals(value)) {
-        return b;
-      }
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
     }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
-  }
-
-  public static class Adapter extends TypeAdapter<TypesToRetrieve> {
-
-    @Override
-    public void write(
-      final JsonWriter jsonWriter,
-      final TypesToRetrieve enumeration
-    ) throws IOException {
-      jsonWriter.value(enumeration.getValue());
-    }
-
-    @Override
-    public TypesToRetrieve read(final JsonReader jsonReader)
-      throws IOException {
-      String value = jsonReader.nextString();
-      return TypesToRetrieve.fromValue(value);
-    }
+    return o.toString().replace("\n", "\n    ");
   }
 }

@@ -20,8 +20,8 @@
           "user2"
         ]
       },
-      "queryParameters": {
-        "X-Algolia-User-ID": "userID"
+      "headers": {
+        "x-algolia-user-id": "userID"
       }
     }
   }

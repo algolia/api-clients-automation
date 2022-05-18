@@ -4,9 +4,6 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
-description = 'algoliasearch-client-java-2'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
 repositories {
     mavenCentral()
 }
@@ -21,4 +18,5 @@ dependencies {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:deprecation']
 }
