@@ -45,17 +45,12 @@ public class JavaScriptCtsManager extends CtsManager {
     return result;
   }
 
-  protected void addExtraToBundle(Map<String, Object> bundle) {
+  protected void addExtraToBundle(Map<String, Object> bundle)
+    throws GenerationException {
     bundle.put("packageDependencies", this.getPackageDependencies());
-
-    try {
-      bundle.put(
-        "utilsPackageVersion",
-        Utils.getClientConfigField("javascript", "utilsPackageVersion")
-      );
-    } catch (GenerationException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
+    bundle.put(
+      "utilsPackageVersion",
+      Utils.getClientConfigField("javascript", "utilsPackageVersion")
+    );
   }
 }

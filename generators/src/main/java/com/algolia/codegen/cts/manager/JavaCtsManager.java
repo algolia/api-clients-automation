@@ -13,15 +13,11 @@ public class JavaCtsManager extends CtsManager {
     );
   }
 
-  protected void addExtraToBundle(Map<String, Object> bundle) {
-    try {
-      bundle.put(
-        "packageVersion",
-        Utils.getClientConfigField("java", "packageVersion")
-      );
-    } catch (GenerationException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
+  protected void addExtraToBundle(Map<String, Object> bundle)
+    throws GenerationException {
+    bundle.put(
+      "packageVersion",
+      Utils.getClientConfigField("java", "packageVersion")
+    );
   }
 }
