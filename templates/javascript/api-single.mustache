@@ -3,6 +3,9 @@ import {
   createTransporter,
   getUserAgent,
   shuffle,
+  {{#isSearchClient}}
+  createRetryablePromise,
+  {{/isSearchClient}}
 } from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
@@ -102,24 +105,29 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
     transporter.userAgent.add({ segment, version });
   }
 
-  /*
-  {{#isSearchClient}}
-  function waitForTaskToComplete({
-    indexName,
-    taskID,
-  }: {
-    indexName: string;
-    taskID: string;
-  }): Promise<void> {
-    // nothing
-  }
-  {{/isSearchClient}}
-  */
-
   return {
     addUserAgent,
     {{#isSearchClient}}
-    waitForTaskToComplete,
+    /**
+     * Wait for task to complete with indexName and taskID.
+     *
+     * @summary Wait for task to complete.
+     * @param waitForTaskProps - The waitForTaskProps object.
+     * @param waitForTaskProps.indexName - The index in which to perform the request.
+     * @param waitForTaskProps.taskID - The unique identifier of the task to wait for.
+     */
+    waitForTask({
+      indexName,
+      taskID,
+    }: {
+      indexName: string;
+      taskID: string;
+    }): Promise<void> {
+      return createRetryablePromise<GetTaskResponse>({
+        func: () => this.getTask({ indexName, taskID }),
+        validate: (response) => response.status === 'published',
+      });
+    },
     {{/isSearchClient}}
     {{#operation}}
     /**
