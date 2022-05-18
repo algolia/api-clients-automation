@@ -121,7 +121,7 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
       taskID,
     }: {
       indexName: string;
-      taskID: string;
+      taskID: number;
     }): Promise<GetTaskResponse> {
       return createRetryablePromise<GetTaskResponse>({
         func: () => this.getTask({ indexName, taskID }),
