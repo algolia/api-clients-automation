@@ -21,10 +21,10 @@ import {
   LANGUAGES,
 } from '../common';
 import {
+  getClientsConfigField,
   getGitHubUrl,
   getLanguageFolder,
   getPackageVersionDefault,
-  getUtilsPackageVersionDefault,
 } from '../config';
 import type { Language } from '../types';
 
@@ -141,11 +141,20 @@ async function updateVersionForJavascript(
   );
 
   // Sets the new version of the utils package
-  const nextUtilsPackageVersion =
-    semver.inc(
-      getUtilsPackageVersionDefault('javascript'),
-      jsVersion.releaseType
-    ) || '';
+  const utilsPackageVersion = getClientsConfigField(
+    'javascript',
+    'utilsPackageVersion'
+  );
+  const nextUtilsPackageVersion = semver.inc(
+    utilsPackageVersion,
+    jsVersion.releaseType
+  );
+
+  if (!nextUtilsPackageVersion) {
+    throw new Error(
+      `Failed to bump version ${utilsPackageVersion} by ${jsVersion.releaseType}.`
+    );
+  }
 
   clientsConfig.javascript.utilsPackageVersion = nextUtilsPackageVersion;
   await fsp.writeFile(
