@@ -3316,6 +3316,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@experimental-api-clients-automation/client-common@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@experimental-api-clients-automation/client-common@npm:0.0.1"
+  checksum: 45557d85ec9786f2feffd37e9e5fe627a45d8fc49621f0eb68ebd94c2ca0920a6a37735547f908d7f69e56ceda5970703930e7a0f7f9db48a8aa9ef2df2905bd
+  languageName: node
+  linkType: hard
+
+"@experimental-api-clients-automation/client-crawler@workspace:clients/algoliasearch-client-javascript/packages/client-crawler":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-crawler@workspace:clients/algoliasearch-client-javascript/packages/client-crawler"
+  dependencies:
+    "@experimental-api-clients-automation/client-common": 0.0.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.0.1
+    "@experimental-api-clients-automation/requester-node-http": 0.0.1
+    "@types/node": 16.11.26
+    typescript: 4.6.3
+  languageName: unknown
+  linkType: soft
+
 "@experimental-api-clients-automation/client-insights@0.2.0, @experimental-api-clients-automation/client-insights@workspace:clients/algoliasearch-client-javascript/packages/client-insights":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-insights@workspace:clients/algoliasearch-client-javascript/packages/client-insights"
@@ -3410,6 +3429,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@experimental-api-clients-automation/requester-browser-xhr@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@experimental-api-clients-automation/requester-browser-xhr@npm:0.0.1"
+  dependencies:
+    "@experimental-api-clients-automation/client-common": 0.0.1
+  checksum: bcc6b759e561cdc91911394b6f61f7db151a59783252f45044b294cc450300a8056b440b160d45ba1d7d0d35deecc81a9162e9ec90cf548f9200c7c1f28e3caa
+  languageName: node
+  linkType: hard
+
 "@experimental-api-clients-automation/requester-node-http@0.2.0, @experimental-api-clients-automation/requester-node-http@workspace:clients/algoliasearch-client-javascript/packages/requester-node-http":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/requester-node-http@workspace:clients/algoliasearch-client-javascript/packages/requester-node-http"
@@ -3419,6 +3447,15 @@ __metadata:
     typescript: 4.6.3
   languageName: unknown
   linkType: soft
+
+"@experimental-api-clients-automation/requester-node-http@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@experimental-api-clients-automation/requester-node-http@npm:0.0.1"
+  dependencies:
+    "@experimental-api-clients-automation/client-common": 0.0.1
+  checksum: 9347c1610e8c6a8ca2857d7f5c9dfc3f57cedc719c20a1db0b5734f0a91668c08e63ce58f9ea5a78c48c280df8a1dbab9a992902a54bfc1ea59301ae0688469c
+  languageName: node
+  linkType: hard
 
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.3
