@@ -2,7 +2,7 @@ package {{invokerPackage}};
 
 import com.algolia.utils.Requester;
 import com.algolia.exceptions.*;
-import com.algolia.utils.UserAgent;
+import com.algolia.utils.AlgoliaAgent;
 import com.algolia.utils.JSON;
 import com.algolia.utils.RequestOptions;
 
@@ -37,17 +37,17 @@ public class ApiClient {
     /*
      * Constructor for ApiClient with custom Requester
      */
-    public ApiClient(String appId, String apiKey, Requester requester, String clientName, UserAgent.Segment[] segments) {
+    public ApiClient(String appId, String apiKey, Requester requester, String clientName, AlgoliaAgent.Segment[] segments) {
       this.contentType = "application/json";
 
-      UserAgent ua = new UserAgent("{{packageVersion}}");
-      ua.addSegment(new UserAgent.Segment(clientName, "{{packageVersion}}"));
+      AlgoliaAgent ua = new AlgoliaAgent("{{packageVersion}}");
+      ua.addSegment(new AlgoliaAgent.Segment(clientName, "{{packageVersion}}"));
       if(segments != null) {
-        for(UserAgent.Segment segment : segments) {
+        for(AlgoliaAgent.Segment segment : segments) {
           ua.addSegment(segment);
         }
       }
-      setUserAgent(ua.toString());
+      setAlgoliaAgent(ua.toString());
 
       defaultHeaderMap.put("X-Algolia-Application-Id", appId);
       defaultHeaderMap.put("X-Algolia-API-Key", apiKey);
@@ -64,11 +64,11 @@ public class ApiClient {
     /**
      * Set the User-Agent header's value (by adding to the default header map).
      *
-     * @param userAgent HTTP request's user agent
+     * @param algoliaAgent HTTP request's user agent
      * @return ApiClient
      */
-    public ApiClient setUserAgent(String userAgent) {
-        addDefaultHeader("User-Agent", userAgent);
+    public ApiClient setAlgoliaAgent(String algoliaAgent) {
+        addDefaultHeader("User-Agent", algoliaAgent);
         return this;
     }
 
@@ -273,7 +273,7 @@ public class ApiClient {
      * @return The HTTP call
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, Map<String, String> queryParameters, Object body, Map<String, String> headerParams, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    public Call buildCall(String path, String method, Map<String, Object> queryParameters, Object body, Map<String, String> headerParams, RequestOptions requestOptions) throws AlgoliaRuntimeException {
         Request request = buildRequest(path, method, queryParameters, body, headerParams, requestOptions);
 
         return requester.newCall(request);
@@ -291,7 +291,7 @@ public class ApiClient {
      * @return The HTTP request
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      */
-    public Request buildRequest(String path, String method, Map<String, String> queryParameters, Object body, Map<String, String> headerParams, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    public Request buildRequest(String path, String method, Map<String, Object> queryParameters, Object body, Map<String, String> headerParams, RequestOptions requestOptions) throws AlgoliaRuntimeException {
         boolean hasRequestOptions = requestOptions != null;
         final String url = buildUrl(
           path,
@@ -331,35 +331,26 @@ public class ApiClient {
      * @param extraQueryParameters The query parameters, coming from the requestOptions
      * @return The full URL
      */
-    public String buildUrl(String path, Map<String, String> queryParameters, Map<String, String> extraQueryParameters) {
-        StringBuilder url = new StringBuilder();
-
-        //The real host will be assigned by the retry strategy
-        url.append("http://temp.path").append(path);
-
-        url = parseQueryParameters(path, url, queryParameters);
-        url = parseQueryParameters(path, url, extraQueryParameters);
-
-        return url.toString();
-    }
-
-    /**
-     * Parses the given map of Query Parameters to a given URL.
-     *
-     * @param path The sub path
-     * @param url The url to add queryParameters to
-     * @param queryParameters The query parameters
-     * @return The URL
-     */
-    public StringBuilder parseQueryParameters(
+    public String buildUrl(
       String path,
-      StringBuilder url,
-      Map<String, String> queryParameters
+      Map<String, Object> queryParameters,
+      Map<String, Object> extraQueryParameters
     ) {
+      if (extraQueryParameters != null) {
+        for (Entry<String, Object> param : extraQueryParameters.entrySet()) {
+          queryParameters.put(param.getKey(), param.getValue());
+        }
+      }
+
+      final StringBuilder url = new StringBuilder();
+
+      // The real host will be assigned by the retry strategy
+      url.append("http://temp.path").append(path);
+
       if (queryParameters != null && !queryParameters.isEmpty()) {
         // support (constant) query string in `path`, e.g. "/posts?draft=1"
         String prefix = path.contains("?") ? "&" : "?";
-        for (Entry<String, String> param : queryParameters.entrySet()) {
+        for (Entry<String, Object> param : queryParameters.entrySet()) {
           if (param.getValue() != null) {
             if (prefix != null) {
               url.append(prefix);
@@ -376,7 +367,7 @@ public class ApiClient {
         }
       }
 
-      return url;
+      return url.toString();
     }
 
     /**

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import com.google.gson.reflect.TypeToken;
 
 import com.algolia.utils.JSON;
+import com.algolia.utils.RequestOptions;
 import com.algolia.model.{{import}}.*;
 import com.algolia.api.{{client}};
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -39,8 +40,25 @@ class {{client}}Tests {
     void {{method}}Test{{testIndex}}() {
         {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
 
+        {{#hasRequestOptions}}
+          RequestOptions requestOptions = new RequestOptions();
+          {{#requestOptionsWithDataType.queryParameters.value.0}}
+            {{#isArray}}
+              List<Object> requestOptionsQueryParameters = new ArrayList<>(); 
+              {{#value}}requestOptionsQueryParameters.add({{> requestOptionsParams}});{{/value}}
+              requestOptions.addExtraQueryParameters("{{{key}}}", requestOptionsQueryParameters);
+            {{/isArray}}
+            {{^isArray}}
+              requestOptions.addExtraQueryParameters("{{{key}}}", {{{#value}}}{{> requestOptionsParams}}{{{/value}}});
+            {{/isArray}}
+          {{/requestOptionsWithDataType.queryParameters.value.0}}
+          {{#requestOptionsWithDataType.headers}}
+            requestOptions.addExtraHeader("{{{key}}}", "{{{value}}}");
+          {{/requestOptionsWithDataType.headers}}
+        {{/hasRequestOptions}}
+
         assertDoesNotThrow(() -> {
-            client.{{method}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
+            client.{{method}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
         });
         EchoResponse req = requester.getLastEchoResponse();
 
@@ -55,10 +73,10 @@ class {{client}}Tests {
 
         {{#request.queryParameters}}
         Map<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.queryParameters}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
-        Map<String, String> actualQuery = req.queryParameters;
+        Map<String, Object> actualQuery = req.queryParameters;
 
         assertEquals(expectedQuery.size(), actualQuery.size());
-        for (Map.Entry<String, String> p : actualQuery.entrySet()) {
+        for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
           assertEquals(expectedQuery.get(p.getKey()), p.getValue());
         }
         {{/request.queryParameters}}

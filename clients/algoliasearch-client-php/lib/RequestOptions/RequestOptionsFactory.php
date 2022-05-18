@@ -3,7 +3,7 @@
 namespace Algolia\AlgoliaSearch\RequestOptions;
 
 use Algolia\AlgoliaSearch\Configuration\Configuration;
-use Algolia\AlgoliaSearch\Support\UserAgent;
+use Algolia\AlgoliaSearch\Support\AlgoliaAgent;
 
 final class RequestOptionsFactory
 {
@@ -50,9 +50,9 @@ final class RequestOptionsFactory
             'headers' => [
                 'X-Algolia-Application-Id' => $this->config->getAppId(),
                 'X-Algolia-API-Key' => $this->config->getAlgoliaApiKey(),
-                'User-Agent' => $this->config->getUserAgent() !== null
-                        ? $this->config->getUserAgent()
-                        : UserAgent::get(),
+                'User-Agent' => $this->config->getAlgoliaAgent() !== null
+                        ? $this->config->getAlgoliaAgent()
+                        : AlgoliaAgent::get(),
                 'Content-Type' => 'application/json',
             ],
             'queryParameters' => [],
@@ -63,43 +63,19 @@ final class RequestOptionsFactory
         ];
 
         foreach ($options as $optionName => $value) {
-            if (is_array($value)) {
-                if ($optionName === 'headers') {
-                    $headersToLowerCase = [];
+            if (is_array($value) && $optionName === 'headers') {
+                $headersToLowerCase = [];
 
-                    foreach ($value as $key => $v) {
-                        $headersToLowerCase[mb_strtolower($key)] = $v;
-                    }
-
-                    $normalized[$optionName] = $this->format(
-                        $headersToLowerCase
-                    );
-                } else {
-                    $normalized[$optionName] = $this->format($value);
+                foreach ($value as $key => $v) {
+                    $headersToLowerCase[mb_strtolower($key)] = $v;
                 }
+
+                $normalized[$optionName] = $headersToLowerCase;
             } else {
                 $normalized[$optionName] = $value;
             }
         }
 
         return $normalized;
-    }
-
-    private function format($options)
-    {
-        foreach ($options as $name => $value) {
-            if (in_array($name, self::getAttributesToFormat(), true)) {
-                if (is_array($value)) {
-                    $options[$name] = implode(',', $value);
-                }
-            }
-        }
-
-        return $options;
-    }
-
-    public static function getAttributesToFormat()
-    {
-        return ['attributesToRetrieve', 'type'];
     }
 }
