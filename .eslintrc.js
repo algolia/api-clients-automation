@@ -52,6 +52,9 @@ module.exports = {
             rules: {
               "automation-custom/out-of-line-enum": "error",
               "automation-custom/out-of-line-one-of": "error",
+              "automation-custom/out-of-line-all-of": "error",
+              "automation-custom/out-of-line-any-of": "error",
+
             }
           }
         ]
