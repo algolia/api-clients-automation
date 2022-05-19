@@ -78,7 +78,7 @@ describe('createRetryablePromise', () => {
 
     await expect(promise).rejects.toEqual(
       expect.objectContaining({
-        message: 'The maximum number of trials exceeded.',
+        message: 'The maximum number of trials exceeded. (4/3)',
       })
     );
     expect(calls).toBe(MAX_TRIAL);

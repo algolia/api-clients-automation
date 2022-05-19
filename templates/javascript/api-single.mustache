@@ -14,6 +14,9 @@ import type {
   Request,
   RequestOptions,
   QueryParameters,
+  {{#isSearchClient}}
+  CreateRetryablePromiseOptions,
+  {{/isSearchClient}}
 } from '@experimental-api-clients-automation/client-common';
 
 {{#imports}}
@@ -119,13 +122,15 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
     waitForTask({
       indexName,
       taskID,
+      ...createRetryablePromiseOptions,
     }: {
       indexName: string;
       taskID: number;
-    }): Promise<GetTaskResponse> {
+    } & Omit<CreateRetryablePromiseOptions, 'func' | 'validate'>): Promise<GetTaskResponse> {
       return createRetryablePromise<GetTaskResponse>({
         func: () => this.getTask({ indexName, taskID }),
         validate: (response) => response.status === 'published',
+        ...createRetryablePromiseOptions,
       });
     },
     {{/isSearchClient}}
