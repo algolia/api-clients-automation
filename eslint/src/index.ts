@@ -1,16 +1,13 @@
 import { endWithDot } from './rules/endWithDot';
-import { outOfLineAllOf } from './rules/outOfLineAllOf';
-import { outOfLineAnyOf } from './rules/outOfLineAnyOf';
-import { outOfLineEnum } from './rules/outOfLineEnum';
-import { outOfLineOneOf } from './rules/outOfLineOneOf';
+import { createOutOfLineRule } from './rules/outOfLineRule';
 import { singleQuoteRef } from './rules/singleQuoteRef';
 
 const rules = {
   'end-with-dot': endWithDot,
-  'out-of-line-enum': outOfLineEnum,
-  'out-of-line-one-of': outOfLineOneOf,
-  'out-of-line-all-of': outOfLineAllOf,
-  'out-of-line-any-of': outOfLineAnyOf,
+  'out-of-line-enum': createOutOfLineRule({ property: 'enum' }),
+  'out-of-line-one-of': createOutOfLineRule({ property: 'oneOf' }),
+  'out-of-line-all-of': createOutOfLineRule({ property: 'allOf' }),
+  'out-of-line-any-of': createOutOfLineRule({ property: 'anyOf' }),
   'single-quote-ref': singleQuoteRef,
 };
 

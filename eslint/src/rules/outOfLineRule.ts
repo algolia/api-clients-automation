@@ -5,7 +5,7 @@ import { isPairWithKey } from '../utils';
 export function createOutOfLineRule({
   property,
   description = `${property} must be out of line, not nested inside properties`,
-  messageId = `${property}OutOfLine`,
+  messageId = `${property}NotOutOfLine`,
   message = `${property} must be out of line`,
 }: {
   property: string;
