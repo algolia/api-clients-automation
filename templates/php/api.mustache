@@ -158,7 +158,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         {{#allParams}}
         {{#required}}
         // verify the required parameter '{{paramName}}' is set
-        if (${{paramName}} === null || (is_array(${{paramName}}) && count(${{paramName}}) === 0)) {
+        if (${{paramName}} === null) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter ${{paramName}} when calling {{operationId}}'
             );

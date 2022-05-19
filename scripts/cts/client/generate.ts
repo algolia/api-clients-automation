@@ -36,15 +36,19 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
       throw new Error(`cannot read empty file ${fileName} - ${client} client`);
     }
 
+    let testIndex = 0;
     const tests: Test[] = JSON.parse(fileContent).map((testCase) => {
       if (!testCase.testName) {
         throw new Error(
           `Cannot have a test with no name ${fileName} - ${client} client`
         );
       }
+      testIndex++;
+
       return {
         autoCreateClient: true,
         ...testCase,
+        testIndex,
       };
     });
 
@@ -99,6 +103,7 @@ export async function generateClientTests(
     {
       import: packageName,
       client: `${createClientName(client, language)}Client`,
+      clientPrefix: `${createClientName(client, language)}`,
       blocks: modifyForMustache(testsBlocks),
       hasRegionalHost: hasRegionalHost ? true : undefined,
       defaultRegion: client === 'predict' ? 'ew' : 'us',
@@ -130,13 +135,25 @@ function modifyForMustache(
         };
 
         let modified: ModifiedStepForMustache;
+
         if (step.type === 'method') {
+          const associatedParameters: Array<Record<string, any>> = [];
+
+          for (const p of step.parameters) {
+            Object.entries(p).forEach(([key, value]) => {
+              associatedParameters.push({
+                key,
+                value: JSON.stringify(value),
+              });
+            });
+          }
           modified = {
             type: step.type,
             object: step.object,
             path: step.path,
             expected: step.expected,
             parameters: step.parameters && serializeParameters(step.parameters),
+            associatedParameters,
             ...base,
           };
         } else {

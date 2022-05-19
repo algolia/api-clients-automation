@@ -39,6 +39,7 @@ type MethodStep = {
   object: string;
   path: string[];
   parameters?: any;
+  associatedParameters?: any;
   expected?: Expected;
 };
 

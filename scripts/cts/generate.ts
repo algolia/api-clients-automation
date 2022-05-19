@@ -1,4 +1,4 @@
-import { buildCustomGenerators, run, toAbsolutePath } from '../common';
+import { buildCustomGenerators, toAbsolutePath } from '../common';
 import { getTestOutputFolder } from '../config';
 import { formatter } from '../formatter';
 import { createSpinner } from '../oraLog';
@@ -21,6 +21,7 @@ async function ctsGenerate(gen: Generator, verbose: boolean): Promise<void> {
   spinner.succeed();
   switch (gen.language) {
     case 'javascript':
+    case 'php':
       await generateClientTests(gen, verbose);
       break;
     default:
