@@ -126,11 +126,13 @@ export function create{{capitalizedApiName}}(options: CreateClientOptions{{#hasR
     }: {
       indexName: string;
       taskID: number;
-    } & Omit<CreateRetryablePromiseOptions, 'func' | 'validate'>): Promise<GetTaskResponse> {
-      return createRetryablePromise<GetTaskResponse>({
-        func: () => this.getTask({ indexName, taskID }),
-        validate: (response) => response.status === 'published',
-        ...createRetryablePromiseOptions,
+    } & Omit<CreateRetryablePromiseOptions<GetTaskResponse>, 'func' | 'validate'>): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
+        createRetryablePromise<GetTaskResponse>({
+          ...createRetryablePromiseOptions,
+          func: () => this.getTask({ indexName, taskID }),
+          validate: (response) => response.status === 'published',
+        }).then(() => resolve()).catch(reject);
       });
     },
     {{/isSearchClient}}
