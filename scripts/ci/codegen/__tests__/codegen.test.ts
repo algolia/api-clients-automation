@@ -73,7 +73,7 @@ describe('codegen', () => {
         "### ✗ The generated branch has been deleted.
 
         If the PR has been merged, you can check the generated code on the [\`${MAIN_BRANCH}\` branch](https://github.com/algolia/api-clients-automation/tree/${MAIN_BRANCH}).
-        You can still access the last generated [commit](https://github.com/algolia/api-clients-automation/commit/mocked)."
+        You can still access [the last generated commit](https://github.com/algolia/api-clients-automation/commit/mocked)."
       `);
     });
 
