@@ -1,4 +1,4 @@
-import type { CreateRetryablePromiseOptions } from '../types/CreateRetryablePromise';
+import type { CreateRetryablePromiseOptions } from './types/CreateRetryablePromise';
 
 /**
  * Return a promise that retry a task until it meets the condition.
@@ -14,7 +14,7 @@ export function createRetryablePromise<TResponse>({
   validate,
   maxTrial = 10,
   timeout = (retryCount: number): number => Math.min(retryCount * 10, 1000),
-}: CreateRetryablePromiseOptions): Promise<TResponse> {
+}: CreateRetryablePromiseOptions<TResponse>): Promise<TResponse> {
   let retryCount = 0;
   const retry = (): Promise<TResponse> => {
     return new Promise<TResponse>((resolve, reject) => {
