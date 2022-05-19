@@ -1,0 +1,118 @@
+<?php
+
+namespace Algolia\AlgoliaSearch\Test\Client;
+
+use Algolia\AlgoliaSearch\Api\{{client}};
+use Algolia\AlgoliaSearch\Configuration\{{clientPrefix}}Config;
+use Algolia\AlgoliaSearch\Http\HttpClientInterface;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+/**
+ * Client tests for {{client}}
+ */
+class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
+{
+    public const APP_ID = 'test-app-id';
+    public const API_KEY = 'test-api-key';
+
+    /**
+     * @var RequestInterface[]
+     */
+    private $recordedRequests = [];
+
+    protected function assertRequests(array $requests)
+    {
+        $this->assertGreaterThan(0, count($requests));
+        $this->assertEquals(count($requests), count($this->recordedRequests));
+
+        foreach ($requests as $i => $request) {
+            $recordedRequest = $this->recordedRequests[$i]['request'];
+
+            if (isset($request['host'])) {
+                $this->assertEquals(
+                    $request['host'],
+                    $recordedRequest->getUri()->getHost()
+                );
+            }
+
+            if (isset($request['regexp'])) {
+                $this->assertTrue(
+                    (bool) preg_match(
+                        str_replace('%20', ' ', $request['regexp']),
+                        $recordedRequest->getHeader('User-Agent')[0]
+                    )
+                );
+            }
+
+            if (isset($request['connectTimeout'])) {
+                $this->assertEquals(
+                    $request['connectTimeout'],
+                    $this->recordedRequests[$i]['connectTimeout']
+                );
+            }
+
+            if (isset($request['responseTimeout'])) {
+                $this->assertEquals(
+                    $request['responseTimeout'],
+                    $this->recordedRequests[$i]['responseTimeout']
+                );
+            }
+        }
+    }
+
+    /**
+     * @return {{client}}
+     */
+    private function createClient()
+    {
+        $config = {{clientPrefix}}Config::create(self::APP_ID, self::API_KEY);
+        $api = new ApiWrapper($this, $config, ClusterHosts::createFromAppId(self::APP_ID));
+
+        return new {{client}}($api, $config);
+    }
+
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    {
+        $this->recordedRequests[] = [
+            'request' => $request,
+            'responseTimeout' => $timeout,
+            'connectTimeout' => $connectTimeout,
+        ];
+
+        return new Response(200, [], '{}');
+    }
+
+    {{#blocks}}
+    {{#tests}}
+    /**
+    * Test case : {{{testName}}}
+    */
+    public function test{{testIndex}}()
+    {
+        $client = $this->createClient();
+        {{#steps}}
+        {{#expectedError}}
+
+        {{/expectedError}}
+        {{^expectedError}}
+            {{object}}->{{{path}}}{{^associatedParameters}}();{{/associatedParameters}}{{#associatedParameters}}(
+            {{> params}}
+            );{{/associatedParameters}}
+
+            {{#expected}}
+            $this->assertRequests([
+                {{> expected}}
+            ]);
+            {{/expected}}
+
+        {{/expectedError}}
+        {{/steps}}
+    }
+
+    {{/tests}}
+    {{/blocks}}
+}
