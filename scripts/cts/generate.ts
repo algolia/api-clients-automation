@@ -1,4 +1,4 @@
-import { buildCustomGenerators, toAbsolutePath } from '../common';
+import { buildCustomGenerators, run, toAbsolutePath } from '../common';
 import { getTestOutputFolder } from '../config';
 import { formatter } from '../formatter';
 import { createSpinner } from '../oraLog';
