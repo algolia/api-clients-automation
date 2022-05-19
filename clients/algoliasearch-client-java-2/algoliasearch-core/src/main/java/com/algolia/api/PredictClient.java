@@ -27,13 +27,13 @@ public class PredictClient extends ApiClient {
     String appId,
     String apiKey,
     String region,
-    UserAgent.Segment[] userAgentSegments
+    AlgoliaAgent.Segment[] algoliaAgentSegments
   ) {
     this(
       appId,
       apiKey,
       new HttpRequester(getDefaultHosts(region)),
-      userAgentSegments
+      algoliaAgentSegments
     );
   }
 
@@ -45,9 +45,9 @@ public class PredictClient extends ApiClient {
     String appId,
     String apiKey,
     Requester requester,
-    UserAgent.Segment[] userAgentSegments
+    AlgoliaAgent.Segment[] algoliaAgentSegments
   ) {
-    super(appId, apiKey, requester, "Predict", userAgentSegments);
+    super(appId, apiKey, requester, "Predict", algoliaAgentSegments);
   }
 
   private static List<StatefulHost> getDefaultHosts(String region) {
@@ -124,7 +124,7 @@ public class PredictClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -237,7 +237,7 @@ public class PredictClient extends ApiClient {
           this.escapeString(userID.toString())
         );
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     Call call =
@@ -322,7 +322,7 @@ public class PredictClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -434,7 +434,7 @@ public class PredictClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -547,7 +547,7 @@ public class PredictClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {

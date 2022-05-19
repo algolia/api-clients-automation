@@ -30,13 +30,13 @@ public class RecommendClient extends ApiClient {
   public RecommendClient(
     String appId,
     String apiKey,
-    UserAgent.Segment[] userAgentSegments
+    AlgoliaAgent.Segment[] algoliaAgentSegments
   ) {
     this(
       appId,
       apiKey,
       new HttpRequester(getDefaultHosts(appId)),
-      userAgentSegments
+      algoliaAgentSegments
     );
   }
 
@@ -48,9 +48,9 @@ public class RecommendClient extends ApiClient {
     String appId,
     String apiKey,
     Requester requester,
-    UserAgent.Segment[] userAgentSegments
+    AlgoliaAgent.Segment[] algoliaAgentSegments
   ) {
-    super(appId, apiKey, requester, "Recommend", userAgentSegments);
+    super(appId, apiKey, requester, "Recommend", algoliaAgentSegments);
   }
 
   private static List<StatefulHost> getDefaultHosts(String appId) {
@@ -162,7 +162,7 @@ public class RecommendClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -268,7 +268,7 @@ public class RecommendClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -364,7 +364,7 @@ public class RecommendClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1/indexes/*/recommendations";
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     Call call =
@@ -454,7 +454,7 @@ public class RecommendClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
@@ -567,7 +567,7 @@ public class RecommendClient extends ApiClient {
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, Object> queryParameters = new HashMap<String, Object>();
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {

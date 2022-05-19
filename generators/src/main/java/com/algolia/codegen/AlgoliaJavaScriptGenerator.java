@@ -10,7 +10,7 @@ import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 
-public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
+public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
 
@@ -59,7 +59,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     additionalProperties.put("apiName", apiName);
     additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
-    additionalProperties.put("userAgent", Utils.capitalize(CLIENT));
+    additionalProperties.put("algoliaAgent", Utils.capitalize(CLIENT));
     additionalProperties.put("gitRepoId", "algoliasearch-client-javascript");
   }
 
@@ -81,6 +81,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       Utils.generateServer(
         Utils.getClientNameKebabCase(results),
         additionalProperties
+      );
+      additionalProperties.put(
+        "utilsPackageVersion",
+        Utils.getClientConfigField("javascript", "utilsPackageVersion")
       );
     } catch (GenerationException e) {
       e.printStackTrace();
