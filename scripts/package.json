@@ -11,7 +11,8 @@
     "setRunVariables": "ts-node ci/githubActions/setRunVariables.ts",
     "spreadGeneration": "ts-node ci/codegen/spreadGeneration.ts",
     "test": "jest",
-    "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts"
+    "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts",
+    "renovateWeeklyPR": "ts-node ci/githubActuons/renovateWeeklyPR.ts"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "10.0.3",
