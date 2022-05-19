@@ -216,5 +216,19 @@ public class {{classname}} extends ApiClient {
   }
   {{/optionalParams.0}}
   {{/operation}}
+
+  {{#isSearchClient}}
+  public void waitForTask(String indexName, Long taskID, RequestOptions requestOptions) {
+    TaskUtils.retryUntil(() -> {
+      return this.getTaskAsync(indexName, taskID, requestOptions);
+    }, (GetTaskResponse task) -> {
+      return task.getStatus() == TaskStatus.PUBLISHED;
+    });
+  }
+
+  public void waitForTask(String indexName, Long taskID) {
+    this.waitForTask(indexName, taskID, null);
+  }
+  {{/isSearchClient}}
 }
 {{/operations}}

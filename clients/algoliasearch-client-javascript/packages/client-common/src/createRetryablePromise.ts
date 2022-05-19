@@ -12,8 +12,8 @@ import type { CreateRetryablePromiseOptions } from './types/CreateRetryablePromi
 export function createRetryablePromise<TResponse>({
   func,
   validate,
-  maxTrial = 10,
-  timeout = (retryCount: number): number => Math.min(retryCount * 10, 1000),
+  maxTrial = 50,
+  timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
 }: CreateRetryablePromiseOptions<TResponse>): Promise<TResponse> {
   let retryCount = 0;
   const retry = (): Promise<TResponse> => {
