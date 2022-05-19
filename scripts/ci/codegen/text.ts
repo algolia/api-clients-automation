@@ -5,7 +5,7 @@ export default {
   notification: {
     header: '### 🔨 The codegen job will run at the end of the CI.',
     body: (): string =>
-      '_Make sure your last commit does not contains generated code, it will be automatically pushed by our CI._',
+      '_Make sure your last commit does not contain generated code, it will be automatically pushed by our CI._',
   },
   noGen: {
     header: '### ✗ No code generated.',
