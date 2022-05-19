@@ -56,7 +56,7 @@ describe('codegen', () => {
       expect(await getCommentBody('notification')).toMatchInlineSnapshot(`
         "### 🔨 The codegen job will run at the end of the CI.
 
-        _Make sure your last commit does not contains generated code, it will be automatically pushed by our CI._"
+        _Make sure your last commit does not contain generated code, it will be automatically pushed by our CI._"
       `);
     });
 
