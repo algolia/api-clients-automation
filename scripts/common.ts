@@ -1,6 +1,7 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
+import { Octokit } from '@octokit/rest';
 import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
@@ -26,6 +27,7 @@ export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);
 export const BUNDLE_WITH_DOC = process.env.BUNDLE_WITH_DOC === 'true';
+export const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
@@ -257,4 +259,25 @@ export async function runComposerUpdate(verbose: boolean): Promise<void> {
       }
     );
   }
+}
+
+export function ensureGitHubToken(): void {
+  if (!GITHUB_TOKEN)
+    throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
+}
+
+export function getOctokit(): Octokit {
+  ensureGitHubToken();
+  return new Octokit({
+    auth: `token ${GITHUB_TOKEN}`,
+  });
+}
+
+export function wait(waitTime: number): Promise<void> {
+  if (waitTime <= 0) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    setTimeout(resolve, waitTime);
+  });
 }
