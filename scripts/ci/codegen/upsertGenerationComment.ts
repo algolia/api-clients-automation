@@ -9,38 +9,37 @@ const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const octokit = getOctokit(process.env.GITHUB_TOKEN!);
 
 const args = process.argv.slice(2);
-const allowedTriggers = ['notification', 'codegen', 'noGen', 'cleanup'];
+const allowedTriggers = [
+  'notification',
+  'codegen',
+  'noGen',
+  'cleanup',
+] as const;
 
-type Trigger = keyof typeof commentText;
+type Trigger = typeof allowedTriggers[number];
 
 export async function getCommentBody(trigger: Trigger): Promise<string> {
-  // All of the case where we are not pushing generated code.
-  if (
-    trigger === 'notification' ||
-    trigger === 'noGen' ||
-    trigger === 'cleanup'
-  ) {
-    return `${commentText[trigger].header}
+  let generatedBranch = await run('git branch --show-current');
 
-${commentText[trigger].body}`;
+  // `cleanup` is triggered on PR close, which runs on `main`, so we lose the
+  // branch name context at this point
+  if (generatedBranch === 'main' && process.env.HEAD_BRANCH) {
+    generatedBranch = `generated/${process.env.HEAD_BRANCH}`;
   }
 
-  // We are on a codegen step on a pull request here
-  const generatedBranch = await run('git branch --show-current');
   const baseBranch = generatedBranch.replace('generated/', '');
   const baseCommit = await run(`git show ${baseBranch} -s --format=%H`);
-
   const generatedCommit = await run(
     `git show ${generatedBranch} -s --format=%H`
   );
 
-  return `${commentText.codegen.header}
+  return `${commentText[trigger].header}
 
-${commentText.codegen.body(
+${commentText[trigger].body(
+  generatedCommit,
   generatedBranch,
   baseCommit,
-  PR_NUMBER,
-  generatedCommit
+  PR_NUMBER
 )}`;
 }
 

@@ -40,8 +40,8 @@ tags:
     description: Manage your Api Keys.
   - name: Clusters
     description: Clusters operations.
-  - name: Dictionnaries
-    description: Dictionnaries operations.
+  - name: Dictionaries
+    description: Dictionaries operations.
   - name: Indices
     description: Manage indices.
   - name: Records
@@ -68,7 +68,7 @@ x-tagGroups:
     tags:
       - Rules
       - Synonyms
-      - Dictionnaries
+      - Dictionaries
   - name: Others
     tags:
       - Api Keys
@@ -89,9 +89,9 @@ paths:
   # ### Search Endpoints ###
   # ########################
   /1/indexes/{indexName}/query:
-    $ref: 'paths/search/search.yml'
+    $ref: 'paths/search/searchSingleIndex.yml'
   /1/indexes/*/queries:
-    $ref: 'paths/search/multipleQueries.yml'
+    $ref: 'paths/search/search.yml'
   /1/indexes/{indexName}/facets/{facetName}/query:
     $ref: 'paths/search/searchForFacetValues.yml'
   /1/indexes/{indexName}/browse:
