@@ -102,9 +102,9 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 
         {{/expectedError}}
         {{^expectedError}}
-            $client->{{{path}}}{{^associatedParameters}}();{{/associatedParameters}}([{{#associatedParameters}}
+            $client->{{{path}}}{{^associatedParameters}}();{{/associatedParameters}}{{#associatedParameters}}([
             {{> params}}
-            {{/associatedParameters}}]);
+            ]){{/associatedParameters}};
 
             {{#expected}}
             $this->assertRequests([

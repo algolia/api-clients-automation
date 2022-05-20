@@ -84,10 +84,11 @@ export function getOutputPath({
   client: string;
   testPath: string;
 }): string {
+  const clientName = createClientName(client, language);
   return toAbsolutePath(
     `tests/output/${language}/${getTestOutputFolder(
       language
-    )}/${testPath}/${client}${getTestExtension(language)}`
+    )}/${testPath}/${clientName}${getTestExtension(language)}`
   );
 }
 
