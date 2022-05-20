@@ -2,7 +2,7 @@ post:
   tags:
     - Synonyms
   operationId: searchSynonyms
-  x-use-read-method: true
+  x-use-read-transporter: true
   summary: Search synonyms.
   description: Search or browse all synonyms, optionally filtering them by type.
   parameters:

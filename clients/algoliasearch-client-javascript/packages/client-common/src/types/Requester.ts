@@ -11,7 +11,7 @@ export type Request = {
    * Some POST methods in the Algolia REST API uses the `read` transporter.
    * This information is defined at the spec level.
    */
-  useReadMethod?: boolean;
+  useReadTransporter?: boolean;
 };
 
 export type EndRequest = {

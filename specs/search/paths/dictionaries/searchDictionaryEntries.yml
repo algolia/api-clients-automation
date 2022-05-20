@@ -2,7 +2,7 @@ post:
   tags:
     - Dictionaries
   operationId: searchDictionaryEntries
-  x-use-read-method: true
+  x-use-read-transporter: true
   description: Search the dictionary entries.
   summary: Search a dictionary entries.
   parameters:
