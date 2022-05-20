@@ -20,7 +20,10 @@ export type VersionsWithoutReleaseType = {
 export type PassedCommit = {
   hash: string;
   type: string;
-  lang: Language;
+  /**
+   * A commit can be scoped to a language, or the specs, which impacts all clients.
+   */
+  lang: Language | 'specs';
   message: string;
   raw: string;
 };

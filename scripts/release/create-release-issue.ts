@@ -102,15 +102,17 @@ export function parseCommit(commit: string): Commit {
   message = message.slice(message.indexOf(':') + 1).trim();
   type = matchResult[1];
   const lang = matchResult[2] as Language;
+  // A spec commit should be added to every clients, as it mostly imply a client change.
+  const allowedLanguages = [...LANGUAGES, 'specs'];
 
-  if (!LANGUAGES.includes(lang)) {
+  if (!allowedLanguages.includes(lang)) {
     return { error: 'unknown-language-scope' };
   }
 
   return {
     hash,
     type, // `fix` | `feat` | `chore` | ...
-    lang, // `javascript` | `php` | `java` | ...
+    lang, // `specs` | `javascript` | `php` | `java` | ...
     message,
     raw: commit,
   };
@@ -126,7 +128,9 @@ export function decideReleaseStrategy({
 }): Versions {
   return Object.entries(versions).reduce(
     (versionsWithReleaseType: Versions, [lang, version]) => {
-      const commitsPerLang = commits.filter((commit) => commit.lang === lang);
+      const commitsPerLang = commits.filter(
+        (commit) => commit.lang === lang || commit.lang === 'specs'
+      );
       const currentVersion = versions[lang].current;
 
       if (commitsPerLang.length === 0) {
