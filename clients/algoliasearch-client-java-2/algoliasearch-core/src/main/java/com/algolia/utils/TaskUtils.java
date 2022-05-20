@@ -9,6 +9,11 @@ import java.util.function.Supplier;
 
 public class TaskUtils {
 
+  public static final int DEFAULT_MAX_TRIAL = 50;
+  public static final IntUnaryOperator DEFAULT_TIMEOUT = (int retries) -> {
+    return Math.min(retries * 200, 5000);
+  };
+
   public static <TResponse> void retryUntil(
     Supplier<CompletableFuture<TResponse>> func,
     Predicate<TResponse> validate,
@@ -19,7 +24,6 @@ public class TaskUtils {
     while (retryCount < maxTrial) {
       try {
         TResponse resp = func.get().get();
-        System.out.println(resp);
         if (validate.test(resp)) {
           return;
         }
@@ -28,7 +32,6 @@ public class TaskUtils {
         return;
       }
       try {
-        System.out.println("sleeping for " + timeout.applyAsInt(retryCount));
         Thread.sleep(timeout.applyAsInt(retryCount));
       } catch (InterruptedException ignored) {
         // Restore interrupted state...
@@ -43,20 +46,6 @@ public class TaskUtils {
       "/" +
       maxTrial +
       ")"
-    );
-  }
-
-  public static <TResponse> void retryUntil(
-    Supplier<CompletableFuture<TResponse>> func,
-    Predicate<TResponse> validate
-  ) {
-    retryUntil(
-      func,
-      validate,
-      50,
-      (int retries) -> {
-        return Math.min(retries * 200, 5000);
-      }
     );
   }
 }
