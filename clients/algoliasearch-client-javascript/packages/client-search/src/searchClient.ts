@@ -2528,11 +2528,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchForFacetValues(
-      {
-        indexName,
-        facetName,
-        searchForFacetValuesRequest,
-      }: SearchForFacetValuesProps,
+      { indexName, facetName, ...data }: SearchForFacetValuesProps,
       requestOptions?: RequestOptions
     ): Promise<SearchForFacetValuesResponse> {
       if (!indexName) {
@@ -2556,7 +2552,7 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
-        data: searchForFacetValuesRequest,
+        data,
       };
 
       return transporter.request(
@@ -3374,17 +3370,17 @@ export type SearchDictionaryEntriesProps = {
   searchDictionaryEntriesParams: SearchDictionaryEntriesParams;
 };
 
-export type SearchForFacetValuesProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * The facet name.
-   */
-  facetName: string;
-  searchForFacetValuesRequest?: SearchForFacetValuesRequest;
-};
+export type SearchForFacetValuesProps = SearchForFacetValuesRequest &
+  SearchParams & {
+    /**
+     * The index in which to perform the request.
+     */
+    indexName: string;
+    /**
+     * The facet name.
+     */
+    facetName: string;
+  };
 
 export type SearchRulesProps = {
   /**
