@@ -5,7 +5,6 @@ import commentText from './text';
 
 const BOT_NAME = 'algolia-bot';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
-const octokit = getOctokit();
 
 const args = process.argv.slice(2);
 const allowedTriggers = [
@@ -46,6 +45,7 @@ ${commentText[trigger].body(
  * Adds or updates a comment on a pull request.
  */
 export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
+  const octokit = getOctokit();
   if (!trigger || allowedTriggers.includes(trigger) === false) {
     throw new Error(
       `'upsertGenerationComment' requires a 'trigger' parameter (${allowedTriggers.join(

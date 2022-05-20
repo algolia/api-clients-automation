@@ -1,3 +1,5 @@
+import { Octokit } from '@octokit/rest';
+
 import * as common from '../../../common';
 import { cleanGeneratedBranch } from '../cleanGeneratedBranch';
 import { pushGeneratedCode } from '../pushGeneratedCode';
@@ -28,6 +30,17 @@ describe('codegen', () => {
   });
 
   describe('upsertGenerationComment', () => {
+    beforeEach(() => {
+      // can't seem to mock `ensureGitHubToken` directly
+      jest
+        .spyOn(common, 'getOctokit')
+        .mockImplementation(() => new Octokit({ auth: `token mocked` }));
+    });
+
+    afterEach(() => {
+      jest.spyOn(common, 'getOctokit').mockRestore();
+    });
+
     it('throws without parameter', async () => {
       await expect(
         // @ts-expect-error a parameter is required
@@ -38,8 +51,6 @@ describe('codegen', () => {
     });
 
     it('throws without PR_NUMBER environment variable', async () => {
-      process.env.GITHUB_TOKEN = 'foo';
-
       await expect(upsertGenerationComment('codegen')).rejects.toThrow(
         '`upsertGenerationComment` requires a `PR_NUMBER` environment variable.'
       );

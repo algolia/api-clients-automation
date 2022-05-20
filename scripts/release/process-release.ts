@@ -20,7 +20,6 @@ import {
   GENERATORS,
   LANGUAGES,
   getOctokit,
-  ensureGitHubToken,
   GITHUB_TOKEN,
 } from '../common';
 import {
@@ -252,8 +251,6 @@ async function isAuthorizedRelease(): Promise<boolean> {
 }
 
 async function processRelease(): Promise<void> {
-  ensureGitHubToken();
-
   if (!process.env.EVENT_NUMBER) {
     throw new Error('Environment variable `EVENT_NUMBER` does not exist.');
   }
