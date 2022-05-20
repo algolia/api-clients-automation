@@ -1,7 +1,6 @@
 import { searchClient } from '@experimental-api-clients-automation/client-search';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
-import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 dotenv.config({ path: '../../.env' });
 
