@@ -8,7 +8,6 @@ import {
   run,
   toAbsolutePath,
   REPO_URL,
-  GITHUB_TOKEN,
   ensureGitHubToken,
 } from '../../common';
 import { getLanguageFolder } from '../../config';
@@ -62,7 +61,7 @@ export function cleanUpCommitMessage(commitMessage: string): string {
 }
 
 async function spreadGeneration(): Promise<void> {
-  ensureGitHubToken();
+  const githubToken = ensureGitHubToken();
 
   const lastCommitMessage = await run('git log -1 --format="%s"');
   const author = (
@@ -81,7 +80,7 @@ async function spreadGeneration(): Promise<void> {
   for (const lang of langs) {
     const { tempGitDir } = await cloneRepository({
       lang,
-      githubToken: GITHUB_TOKEN!,
+      githubToken,
       tempDir: process.env.RUNNER_TEMP!,
     });
 

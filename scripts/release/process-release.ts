@@ -20,7 +20,7 @@ import {
   GENERATORS,
   LANGUAGES,
   getOctokit,
-  GITHUB_TOKEN,
+  ensureGitHubToken,
 } from '../common';
 import {
   getClientsConfigField,
@@ -251,6 +251,8 @@ async function isAuthorizedRelease(): Promise<boolean> {
 }
 
 async function processRelease(): Promise<void> {
+  const githubToken = ensureGitHubToken();
+
   if (!process.env.EVENT_NUMBER) {
     throw new Error('Environment variable `EVENT_NUMBER` does not exist.');
   }
@@ -305,7 +307,7 @@ async function processRelease(): Promise<void> {
   )) {
     const { tempGitDir } = await cloneRepository({
       lang: lang as Language,
-      githubToken: GITHUB_TOKEN!,
+      githubToken,
       tempDir: process.env.RUNNER_TEMP!,
     });
 

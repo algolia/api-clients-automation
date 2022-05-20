@@ -27,7 +27,6 @@ export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);
 export const BUNDLE_WITH_DOC = process.env.BUNDLE_WITH_DOC === 'true';
-export const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
