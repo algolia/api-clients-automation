@@ -1,5 +1,3 @@
-import { Octokit } from '@octokit/rest';
-
 import * as common from '../../../common';
 import { cleanGeneratedBranch } from '../cleanGeneratedBranch';
 import { pushGeneratedCode } from '../pushGeneratedCode';
@@ -23,6 +21,7 @@ describe('codegen', () => {
 
   describe('pushGeneratedCode', () => {
     it('throws without GITHUB_TOKEN environment variable', async () => {
+      process.env.GITHUB_TOKEN = '';
       await expect(pushGeneratedCode()).rejects.toThrow(
         'Environment variable `GITHUB_TOKEN` does not exist.'
       );
@@ -30,15 +29,8 @@ describe('codegen', () => {
   });
 
   describe('upsertGenerationComment', () => {
-    beforeEach(() => {
-      // can't seem to mock `ensureGitHubToken` directly
-      jest
-        .spyOn(common, 'getOctokit')
-        .mockImplementation(() => new Octokit({ auth: `token mocked` }));
-    });
-
-    afterEach(() => {
-      jest.spyOn(common, 'getOctokit').mockRestore();
+    beforeAll(() => {
+      process.env.GITHUB_TOKEN = 'mocked';
     });
 
     it('throws without parameter', async () => {

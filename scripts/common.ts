@@ -261,15 +261,18 @@ export async function runComposerUpdate(verbose: boolean): Promise<void> {
   }
 }
 
-export function ensureGitHubToken(): void {
-  if (!GITHUB_TOKEN)
+export function ensureGitHubToken(): string {
+  // use process.env here to mock with jest
+  if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
+  }
+  return process.env.GITHUB_TOKEN;
 }
 
 export function getOctokit(): Octokit {
-  ensureGitHubToken();
+  const token = ensureGitHubToken();
   return new Octokit({
-    auth: `token ${GITHUB_TOKEN}`,
+    auth: `token ${token}`,
   });
 }
 
