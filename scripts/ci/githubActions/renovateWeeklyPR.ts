@@ -91,7 +91,9 @@ async function createPR(octokit: Octokit): Promise<any> {
   const date = new Date();
   date.setDate(date.getDate() + 3);
 
-  const title = `fix: dependencies ${date.toISOString().split('T')[0]}`;
+  const title = `chore(scripts): dependencies ${
+    date.toISOString().split('T')[0]
+  }`;
   const { data } = await octokit.pulls.create({
     repo: REPO,
     owner: OWNER,
