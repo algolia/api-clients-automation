@@ -21,7 +21,7 @@ describe('create release issue', () => {
     it('parses commit', () => {
       expect(parseCommit(`b2501882 fix(javascript): fix the thing`)).toEqual({
         hash: 'b2501882',
-        lang: 'javascript',
+        scope: 'javascript',
         message: 'fix the thing',
         raw: 'b2501882 fix(javascript): fix the thing',
         type: 'fix',
@@ -31,7 +31,7 @@ describe('create release issue', () => {
     it('considers `specs` as a lang commit', () => {
       expect(parseCommit(`b2501882 fix(specs): fix the thing`)).toEqual({
         hash: 'b2501882',
-        lang: 'specs',
+        scope: 'specs',
         message: 'fix the thing',
         raw: 'b2501882 fix(specs): fix the thing',
         type: 'fix',
@@ -149,7 +149,7 @@ describe('create release issue', () => {
           {
             hash: 'b2501882',
             type: 'feat',
-            lang: 'javascript',
+            scope: 'javascript',
             message: 'update the API (BREAKING CHANGE)',
             raw: 'b2501882 feat(javascript): update the API (BREAKING CHANGE)',
           },
@@ -176,7 +176,7 @@ describe('create release issue', () => {
           {
             hash: 'b2501882',
             type: 'feat',
-            lang: 'php',
+            scope: 'php',
             message: 'update the API',
             raw: 'b2501882 feat(php): update the API',
           },
@@ -203,7 +203,7 @@ describe('create release issue', () => {
           {
             hash: 'b2501882',
             type: 'fix',
-            lang: 'java',
+            scope: 'java',
             message: 'fix some bug',
             raw: 'b2501882 fix(java): fix some bug',
           },
@@ -230,7 +230,7 @@ describe('create release issue', () => {
           {
             hash: 'b2501882',
             type: 'fix',
-            lang: 'java',
+            scope: 'java',
             message: 'fix some bug',
             raw: 'b2501882 fix(java): fix some bug',
           },
@@ -259,7 +259,7 @@ describe('create release issue', () => {
           {
             hash: 'b2501882',
             type: 'fix',
-            lang: 'specs',
+            scope: 'specs',
             message: 'fix some descriptions',
             raw: 'b2501882 fix(specs): fix some descriptions',
           },
@@ -291,14 +291,14 @@ describe('create release issue', () => {
           {
             hash: 'b2501882',
             type: 'fix',
-            lang: 'php',
+            scope: 'php',
             message: 'fix some descriptions',
             raw: 'b2501882 feat(php): fix some descriptions',
           },
           {
             hash: 'b2501882',
             type: 'feat',
-            lang: 'specs',
+            scope: 'specs',
             message: 'add some descriptions',
             raw: 'b2501882 feat(specs): add some descriptions',
           },
@@ -330,7 +330,7 @@ describe('create release issue', () => {
           {
             hash: 'b2501882',
             type: 'chore',
-            lang: 'javascript',
+            scope: 'javascript',
             message: 'update devDevpendencies',
             raw: 'b2501882 chore(javascript): update devDevpendencies',
           },
