@@ -67,10 +67,12 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     /**
      * @return {{client}}
      */
-    private function createClient()
+    private function createClient($region = '{{{defaultRegion}}}')
     {
         $config = {{clientPrefix}}Config::create(self::APP_ID, self::API_KEY);
-        $api = new ApiWrapper($this, $config, ClusterHosts::createFromAppId(self::APP_ID));
+        {{^hasRegionalHost}}$clusterHosts = ClusterHosts::createFromAppId(self::APP_ID);{{/hasRegionalHost}}
+        {{#hasRegionalHost}}$clusterHosts = ClusterHosts::create(str_replace('{region}',$region ,'analytics.{region}.algolia.com'));{{/hasRegionalHost}}
+        $api = new ApiWrapper($this, $config, $clusterHosts);
 
         return new {{client}}($api, $config);
     }
@@ -95,13 +97,14 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient();
         {{#steps}}
+        {{#isMethod}}
         {{#expectedError}}
 
         {{/expectedError}}
         {{^expectedError}}
-            {{object}}->{{{path}}}{{^associatedParameters}}();{{/associatedParameters}}{{#associatedParameters}}(
+            $client->{{{path}}}{{^associatedParameters}}();{{/associatedParameters}}([{{#associatedParameters}}
             {{> params}}
-            );{{/associatedParameters}}
+            {{/associatedParameters}}]);
 
             {{#expected}}
             $this->assertRequests([
@@ -110,6 +113,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
             {{/expected}}
 
         {{/expectedError}}
+        {{/isMethod}}
         {{/steps}}
     }
 

@@ -97,7 +97,9 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $url = str_replace('{region}', $config->getRegion(), '{{{host}}}');
+            $url = $config->getRegion() !== '' ?
+                str_replace('{region}', $config->getRegion(), '{{{host}}}') :
+                '{{{hostWithFallback}}}';
             $clusterHosts = ClusterHosts::create($url);
         }
         {{/useCache}}

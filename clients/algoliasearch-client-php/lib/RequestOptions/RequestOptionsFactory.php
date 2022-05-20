@@ -70,9 +70,15 @@ final class RequestOptionsFactory
                     $headersToLowerCase[mb_strtolower($key)] = $v;
                 }
 
-                $normalized[$optionName] = array_merge($normalized[$optionName], $headersToLowerCase);
+                $normalized[$optionName] = array_merge(
+                    $normalized[$optionName],
+                    $headersToLowerCase
+                );
             } else {
-                $normalized[$optionName] = array_merge($normalized[$optionName], $value);
+                $normalized[$optionName] = array_merge(
+                    $normalized[$optionName],
+                    $value
+                );
             }
         }
 

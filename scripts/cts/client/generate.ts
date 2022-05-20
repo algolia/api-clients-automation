@@ -11,13 +11,17 @@ import {
   getOutputPath,
   loadTemplates,
   createClientName,
+  capitalize,
 } from '../utils';
 
 import type { TestsBlock, Test, ModifiedStepForMustache } from './types';
 
 const testPath = 'client';
 
-async function loadTests(client: string): Promise<TestsBlock[]> {
+async function loadTests(
+  client: string,
+  language: string
+): Promise<TestsBlock[]> {
   const testsBlocks: TestsBlock[] = [];
   const clientPath = toAbsolutePath(`tests/CTS/client/${client}`);
 
@@ -27,6 +31,10 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
 
   for await (const file of walk(clientPath)) {
     if (!file.name.endsWith('.json')) {
+      continue;
+    }
+    // Temporarily bypass paramters check for PHP
+    if (language === 'php' && file.name === 'parameters.json') {
       continue;
     }
     const fileName = file.name.replace('.json', '');
@@ -48,7 +56,7 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
       return {
         autoCreateClient: true,
         ...testCase,
-        testIndex,
+        testIndex: capitalize(fileName) + testIndex,
       };
     });
 
@@ -73,7 +81,7 @@ export async function generateClientTests(
     { text: 'generating client tests', indent: 4 },
     verbose
   ).start();
-  const testsBlocks = await loadTests(client);
+  const testsBlocks = await loadTests(client, language);
 
   await createOutputDir({ language, testPath });
 
@@ -140,10 +148,13 @@ function modifyForMustache(
           const associatedParameters: Array<Record<string, any>> = [];
 
           for (const p of step.parameters) {
+            let i = 0;
             Object.entries(p).forEach(([key, value]) => {
               associatedParameters.push({
                 key,
+                isObject: typeof value === 'object',
                 value: JSON.stringify(value),
+                '-last': ++i === Object.entries(p).length,
               });
             });
           }
