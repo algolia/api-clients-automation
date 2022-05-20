@@ -89,7 +89,7 @@ export function createTransporter({
     requestOptions: RequestOptions
   ): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
-    const isRead = request?.useReadTransporter || request.method === 'GET';
+    const isRead = request.useReadTransporter || request.method === 'GET';
 
     /**
      * First we prepare the payload that do not depend from hosts.
