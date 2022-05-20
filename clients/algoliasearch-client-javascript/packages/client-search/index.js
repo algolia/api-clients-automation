@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/no-commonjs,import/extensions
-module.exports = require('./builds/browser');
+module.exports = require('./dist/client-search.cjs.node.js');
