@@ -32,6 +32,7 @@ searchForFacetsOptions:
   required:
     - indexName
     - type
+    - facet
 
 searchForHitsOptions:
   # We provide this option because TypeScript can't distinguish union with optional keys
