@@ -300,6 +300,10 @@ async function processRelease(): Promise<void> {
     });
   }
 
+  // We need to run a `yarn install` at this point in case the JavaScript client has changed,
+  // otherwise we will grab dependencies from the remote
+  await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install');
+
   // We push commits to each repository AFTER all the generations are done.
   // Otherwise, we will end up having broken release.
   for (const [lang, { current, releaseType }] of Object.entries(
