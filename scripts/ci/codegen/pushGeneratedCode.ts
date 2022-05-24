@@ -6,6 +6,9 @@ import { getNbGitDiff } from '../utils';
 import text from './text';
 
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
+const IS_RELEASE_COMMIT =
+  process.env.IS_RELEASE_COMMIT?.startsWith(text.commitPrepareReleaseMessage) ||
+  false;
 
 async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');
@@ -60,15 +63,20 @@ export async function pushGeneratedCode(): Promise<void> {
     return;
   }
 
-  const commitMessage = await run(`git show -s ${baseBranch} --format="${
-    text.commitStartMessage
-  } %H. ${isMainBranch ? '[skip ci]' : ''}
+  const commitMessage = IS_RELEASE_COMMIT
+    ? `${text.commitReleaseMessage}
+
+Co-authored-by: %an <%ae>
+%(trailers:key=Co-authored-by)`
+    : await run(`git show -s ${baseBranch} --format="${
+        text.commitStartMessage
+      } %H. ${isMainBranch ? '[skip ci]' : ''}
 
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)"`);
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
-  await run(`git add .`);
+  await run('git add .');
   await run(`git commit -m "${commitMessage}"`);
   await run(`git push origin ${branchToPush}`);
 

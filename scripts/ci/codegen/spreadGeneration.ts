@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import execa from 'execa';
 import { copy } from 'fs-extra';
 
 import {
@@ -10,12 +11,16 @@ import {
   REPO_URL,
   ensureGitHubToken,
 } from '../../common';
-import { getLanguageFolder } from '../../config';
+import { getLanguageFolder, getPackageVersionDefault } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
 import type { Language } from '../../types';
 import { getNbGitDiff } from '../utils';
 
 import text from './text';
+
+const IS_RELEASE_COMMIT =
+  process.env.IS_RELEASE_COMMIT?.startsWith(text.commitPrepareReleaseMessage) ||
+  false;
 
 export function decideWhereToSpread(commitMessage: string): Language[] {
   if (commitMessage.startsWith('chore: release')) {
@@ -60,6 +65,16 @@ export function cleanUpCommitMessage(commitMessage: string): string {
   return [prCommit[1], `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
+function formatGitTag({
+  lang,
+  version,
+}: {
+  lang: Language | 'go';
+  version: string;
+}): string {
+  return lang === 'go' ? `v${version}` : version;
+}
+
 async function spreadGeneration(): Promise<void> {
   const githubToken = ensureGitHubToken();
 
@@ -100,14 +115,23 @@ async function spreadGeneration(): Promise<void> {
       continue;
     }
 
+    const version = getPackageVersionDefault(lang);
+    const tag = formatGitTag({ lang, version });
+    const message = IS_RELEASE_COMMIT ? `chore: release ${tag}` : commitMessage;
+
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
     await gitCommit({
-      message: commitMessage,
+      message,
       coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
-    await run(`git push`, { cwd: tempGitDir });
+    await execa('git', ['tag', tag], {
+      cwd: tempGitDir,
+    });
+    await run(IS_RELEASE_COMMIT ? 'git push --follow-tags' : 'git push', {
+      cwd: tempGitDir,
+    });
     console.log(`✅ Spread the generation to ${lang} repository.`);
   }
 }

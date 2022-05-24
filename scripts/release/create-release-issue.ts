@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import semver from 'semver';
 
 import generationCommitText from '../ci/codegen/text';
+import { getNbGitDiff } from '../ci/utils';
 import {
   LANGUAGES,
   ROOT_ENV_PATH,
@@ -17,6 +18,7 @@ import {
 import { getPackageVersionDefault } from '../config';
 
 import { RELEASED_TAG } from './common';
+import { processRelease } from './process-release';
 import TEXT from './text';
 import type {
   Versions,
@@ -49,9 +51,8 @@ export function getVersionChangesText(versions: Versions): string {
     }
 
     const next = semver.inc(current, releaseType!);
-    const checked = skipRelease ? ' ' : 'x';
     return [
-      `- [${checked}] ${lang}: ${current} -> \`${releaseType}\` _(e.g. ${next})_`,
+      `- ${lang}: ${current} -> **\`${releaseType}\` _(e.g. ${next})_**`,
       skipRelease && TEXT.descriptionForSkippedLang,
     ]
       .filter(Boolean)
@@ -196,33 +197,16 @@ export function decideReleaseStrategy({
 }
 /* eslint-enable no-param-reassign */
 
-async function createReleaseIssue(): Promise<void> {
-  ensureGitHubToken();
-
-  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
-    throw new Error(
-      `You can run this script only from \`${MAIN_BRANCH}\` branch.`
-    );
-  }
-
-  await run(`git rev-parse --verify refs/tags/${RELEASED_TAG}`, {
-    errorMessage: '`released` tag is missing in this repository.',
-  });
-
-  console.log('Pulling from origin...');
-  await run('git fetch origin');
-  await run('git pull');
-
-  const commitsWithUnknownLanguageScope: string[] = [];
-  const commitsWithoutLanguageScope: string[] = [];
-
-  // Remove the local tag, and fetch it from the remote.
-  // We move the `released` tag as we release, so we need to make it up-to-date.
-  await run(`git tag -d ${RELEASED_TAG}`);
-  await run(
-    `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
-  );
-
+/**
+ * Returns commits separated in categories used to compute the next release version.
+ *
+ * Gracefully exits if there is none.
+ */
+async function getCommits(): Promise<{
+  validCommits: PassedCommit[];
+  commitsWithoutLanguageScope: string[];
+  commitsWithUnknownLanguageScope: string[];
+}> {
   // Reading commits since last release
   const latestCommits = (
     await run(`git log --oneline --abbrev=8 ${RELEASED_TAG}..${MAIN_BRANCH}`)
@@ -230,14 +214,8 @@ async function createReleaseIssue(): Promise<void> {
     .split('\n')
     .filter(Boolean);
 
-  if (latestCommits.length === 0) {
-    console.log(
-      chalk.bgYellow('[INFO]'),
-      `Skipping release because no commit has been added since \`releated\` tag.`
-    );
-    // eslint-disable-next-line no-process-exit
-    process.exit(0);
-  }
+  const commitsWithoutLanguageScope: string[] = [];
+  const commitsWithUnknownLanguageScope: string[] = [];
 
   const validCommits = latestCommits
     .map((commitMessage) => {
@@ -265,18 +243,74 @@ async function createReleaseIssue(): Promise<void> {
     })
     .filter(Boolean) as PassedCommit[];
 
+  if (validCommits.length === 0) {
+    console.log(
+      chalk.bgYellow('[INFO]'),
+      `Skipping release because no valid commit has been added since \`releated\` tag.`
+    );
+    // eslint-disable-next-line no-process-exit
+    process.exit(0);
+  }
+
+  return {
+    validCommits,
+    commitsWithUnknownLanguageScope,
+    commitsWithoutLanguageScope,
+  };
+}
+
+async function createReleaseIssue(): Promise<void> {
+  ensureGitHubToken();
+
+  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
+    throw new Error(
+      `You can run this script only from \`${MAIN_BRANCH}\` branch.`
+    );
+  }
+
+  if (
+    (await getNbGitDiff({
+      head: null,
+    })) !== 0
+  ) {
+    throw new Error(
+      'Working directory is not clean. Commit all the changes first.'
+    );
+  }
+
+  await run(`git rev-parse --verify refs/tags/${RELEASED_TAG}`, {
+    errorMessage: '`released` tag is missing in this repository.',
+  });
+
+  console.log('Pulling from origin...');
+  await run('git fetch origin');
+  await run('git pull');
+
+  // Remove the local tag, and fetch it from the remote.
+  // We move the `released` tag as we release, so we need to make it up-to-date.
+  await run(`git tag -d ${RELEASED_TAG}`);
+  await run(
+    `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
+  );
+
+  console.log('Searching for valid commits...');
+  const {
+    validCommits,
+    commitsWithUnknownLanguageScope,
+    commitsWithoutLanguageScope,
+  } = await getCommits();
+
   const versions = decideReleaseStrategy({
     versions: readVersions(),
     commits: validCommits,
   });
-
   const versionChanges = getVersionChangesText(versions);
-
   const skippedCommits = getSkippedCommitsText({
     commitsWithoutLanguageScope,
     commitsWithUnknownLanguageScope,
   });
 
+  console.log('Creating changelogs...');
   const changelogs = LANGUAGES.filter(
     (lang) => !versions[lang].noCommit && versions[lang].current
   )
@@ -299,42 +333,54 @@ async function createReleaseIssue(): Promise<void> {
 
   const body = [
     TEXT.header,
+    TEXT.summary,
     TEXT.versionChangeHeader,
     versionChanges,
-    TEXT.descriptionVersionChanges,
-    TEXT.indenpendentVersioning,
     TEXT.changelogHeader,
-    TEXT.changelogDescription,
     changelogs,
     TEXT.skippedCommitsHeader,
     skippedCommits,
-    TEXT.approvalHeader,
-    TEXT.approval,
   ].join('\n\n');
 
+  const date = new Date().toISOString().split('T')[0];
+  const headBranch = `chore/prepare-release-${date}`;
+
+  console.log('Updating config files...');
+  await processRelease(body, headBranch);
+
+  console.log('Creating pull request...');
   const octokit = getOctokit();
 
-  octokit.rest.issues
-    .create({
+  try {
+    const {
+      data: { number, html_url: url, ...rest },
+    } = await octokit.rest.pulls.create({
       owner: OWNER,
       repo: REPO,
-      title: `chore: release ${new Date().toISOString().split('T')[0]}`,
+      title: `chore: prepare release ${date}`,
       body,
-    })
-    .then((result) => {
-      const {
-        data: { number, html_url: url },
-      } = result;
-
-      console.log('');
-      console.log(`Release issue #${number} is ready for review.`);
-      console.log(`  > ${url}`);
-    })
-    .catch((error) => {
-      console.log('Unable to create the release issue');
-
-      throw new Error(error);
+      base: 'main',
+      head: headBranch,
     });
+
+    console.log(rest);
+
+    console.log(`Release PR #${number} is ready for review.`);
+    console.log(`  > ${url}`);
+  } catch (e) {
+    throw new Error(`Unable to create the release PR: ${e}`);
+  }
+
+  // remove old `released` tag
+  await run(
+    `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
+  );
+  await run(`git tag -d ${RELEASED_TAG}`);
+  await run(`git push --delete origin ${RELEASED_TAG}`);
+
+  // create new `released` tag
+  await run(`git tag released`);
+  await run(`git push --tags`);
 }
 
 // JS version of `if __name__ == '__main__'`
