@@ -63,14 +63,15 @@ export async function pushGeneratedCode(): Promise<void> {
     return;
   }
 
-  const commitMessage = IS_RELEASE_COMMIT
-    ? `${text.commitReleaseMessage}
+  const commitMessage =
+    IS_RELEASE_COMMIT && isMainBranch
+      ? `${text.commitReleaseMessage}
 
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)`
-    : await run(`git show -s ${baseBranch} --format="${
-        text.commitStartMessage
-      } %H. ${isMainBranch ? '[skip ci]' : ''}
+      : await run(`git show -s ${baseBranch} --format="${
+          text.commitStartMessage
+        } %H. ${isMainBranch ? '[skip ci]' : ''}
 
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)"`);
