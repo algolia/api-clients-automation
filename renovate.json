@@ -21,15 +21,8 @@
     }
   ],
   "ignorePaths": [
-    "**/client-abtesting/**",
-    "**/client-analytics/**",
-    "**/client-insights/**",
-    "**/client-personalisation/**",
-    "**/client-predict/**",
-    "**/client-query-suggestions/**",
-    "**/client-search/**",
-    "**/client-sources/**",
-    "**/recommend/**"
+    "!clients/algoliasearch-client-javascript/requester-*/**",
+    "!clients/algoliasearch-client-javascript/client-common/**"
   ],
   "prHourlyLimit": 10,
   "prConcurrentLimit": 50
