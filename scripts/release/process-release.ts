@@ -24,8 +24,7 @@ import {
 } from '../config';
 import type { Language } from '../types';
 
-import { getMarkdownSection } from './common';
-import type { VersionsToRelease } from './types';
+import type { Changelog, VersionsToRelease } from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
@@ -120,7 +119,7 @@ async function updateChangelog({
   next,
 }: {
   lang: Language;
-  changelog: string;
+  changelog: Changelog;
   current: string;
   next: string;
 }): Promise<void> {
@@ -133,10 +132,9 @@ async function updateChangelog({
   const changelogHeader = `## [${next}](${getGitHubUrl(
     lang
   )}/compare/${current}...${next})`;
-  const newChangelog = getMarkdownSection(changelog, `### ${lang}`);
   await fsp.writeFile(
     changelogPath,
-    [changelogHeader, newChangelog, existingContent].join('\n\n')
+    [changelogHeader, changelog[lang], existingContent].join('\n\n')
   );
 }
 
@@ -184,15 +182,17 @@ export function getVersionsToRelease(
  */
 export async function processRelease(
   versionChanges: string,
-  changelog: string,
+  changelog: Changelog,
   headBranch: string
 ): Promise<void> {
-  if (await gitBranchExists(headBranch)) {
-    await run(`git fetch origin ${headBranch}`);
-    await run(`git push -d origin ${headBranch}`);
-  }
+  if (!process.env.LOCAL_TEST_DEV) {
+    if (await gitBranchExists(headBranch)) {
+      await run(`git fetch origin ${headBranch}`);
+      await run(`git push -d origin ${headBranch}`);
+    }
 
-  await run(`git checkout -b ${headBranch}`);
+    await run(`git checkout -b ${headBranch}`);
+  }
 
   const versionsToRelease = getVersionsToRelease(versionChanges);
 
@@ -232,12 +232,14 @@ export async function processRelease(
     });
   }
 
-  console.log(`Pushing updated configs to ${headBranch}`);
-  await run(`git add .`, { verbose: true });
-  await run(
-    `CI=true git commit -m "${headBranch.replace('chore/', 'chore: ')}"`,
-    { verbose: true }
-  );
-  await run(`git push origin ${headBranch}`, { verbose: true });
-  await run(`git checkout ${MAIN_BRANCH}`, { verbose: true });
+  if (!process.env.LOCAL_TEST_DEV) {
+    console.log(`Pushing updated configs to ${headBranch}`);
+    await run(`git add .`, { verbose: true });
+    await run(
+      `CI=true git commit -m "${headBranch.replace('chore/', 'chore: ')}"`,
+      { verbose: true }
+    );
+    await run(`git push origin ${headBranch}`, { verbose: true });
+    await run(`git checkout ${MAIN_BRANCH}`, { verbose: true });
+  }
 }

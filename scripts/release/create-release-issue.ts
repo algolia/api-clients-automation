@@ -26,6 +26,7 @@ import type {
   PassedCommit,
   Commit,
   Scope,
+  Changelog,
 } from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
@@ -316,25 +317,24 @@ async function createReleaseIssue(): Promise<void> {
   });
 
   console.log('Creating changelogs...');
-  const changelogs = LANGUAGES.filter(
-    (lang) => !versions[lang].noCommit && versions[lang].current
-  )
-    .flatMap((lang) => {
-      if (versions[lang].noCommit) {
-        return [];
-      }
+  const changelog: Changelog = LANGUAGES.reduce((currentChangelog, lang) => {
+    if (versions[lang].noCommit) {
+      return changelog;
+    }
 
-      return [
-        `### ${lang}`,
-        ...validCommits
-          .filter(
-            (commit) =>
-              commit.scope === lang || COMMON_SCOPES.includes(commit.scope)
-          )
-          .map((commit) => `- ${commit.raw}`),
-      ];
-    })
-    .join('\n');
+    return {
+      ...currentChangelog,
+      [lang]: validCommits
+        .filter(
+          (commit) =>
+            commit.scope === lang || COMMON_SCOPES.includes(commit.scope)
+        )
+        .map((commit) => `- ${commit.raw}`)
+        .join('\n'),
+    };
+  }, {} as Changelog);
+
+  console.log(changelog);
 
   // The body of the PR
   const body = [
@@ -350,7 +350,7 @@ async function createReleaseIssue(): Promise<void> {
   const headBranch = `chore/prepare-release-${date}`;
 
   console.log('Updating config files...');
-  await processRelease(versionChanges, changelogs, headBranch);
+  await processRelease(versionChanges, changelog, headBranch);
 
   console.log('Creating pull request...');
   const octokit = getOctokit();
