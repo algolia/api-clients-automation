@@ -14,6 +14,7 @@ import {
   REPO,
   getOctokit,
   ensureGitHubToken,
+  TODAY,
 } from '../common';
 import { getPackageVersionDefault } from '../config';
 
@@ -332,8 +333,7 @@ async function createReleaseIssue(): Promise<void> {
     };
   }, {} as Changelog);
 
-  const date = new Date().toISOString().split('T')[0];
-  const headBranch = `chore/prepare-release-${date}`;
+  const headBranch = `chore/prepare-release-${TODAY}`;
 
   console.log('Updating config files...');
   await processRelease(versionChanges, changelog, headBranch);
@@ -347,7 +347,7 @@ async function createReleaseIssue(): Promise<void> {
     } = await octokit.rest.pulls.create({
       owner: OWNER,
       repo: REPO,
-      title: `chore: prepare release ${date}`,
+      title: `chore: prepare release ${TODAY}`,
       body: [
         TEXT.header,
         TEXT.summary,

@@ -23,8 +23,9 @@ import { getNbGitDiff } from '../utils';
 import text from './text';
 
 const IS_RELEASE_COMMIT =
-  process.env.IS_RELEASE_COMMIT?.startsWith(text.commitPrepareReleaseMessage) ||
-  false;
+  process.env.HEAD_COMMIT_MESSAGE?.startsWith(
+    text.commitPrepareReleaseMessage
+  ) || false;
 
 export function decideWhereToSpread(commitMessage: string): Language[] {
   if (commitMessage.startsWith('chore: release')) {
@@ -67,16 +68,6 @@ export function cleanUpCommitMessage(commitMessage: string): string {
   }
 
   return [prCommit[1], `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
-}
-
-function formatGitTag({
-  lang,
-  version,
-}: {
-  lang: Language | 'go';
-  version: string;
-}): string {
-  return lang === 'go' ? `v${version}` : version;
 }
 
 async function spreadGeneration(): Promise<void> {
@@ -135,8 +126,9 @@ async function spreadGeneration(): Promise<void> {
     }
 
     const version = getPackageVersionDefault(lang);
-    const tag = formatGitTag({ lang, version });
-    const message = IS_RELEASE_COMMIT ? `chore: release ${tag}` : commitMessage;
+    const message = IS_RELEASE_COMMIT
+      ? `chore: release ${version}`
+      : commitMessage;
 
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
@@ -145,7 +137,7 @@ async function spreadGeneration(): Promise<void> {
       coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
-    await execa('git', ['tag', tag], {
+    await execa('git', ['tag', version], {
       cwd: tempGitDir,
     });
     await run(IS_RELEASE_COMMIT ? 'git push --follow-tags' : 'git push', {

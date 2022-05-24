@@ -7,8 +7,9 @@ import text from './text';
 
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const IS_RELEASE_COMMIT =
-  process.env.IS_RELEASE_COMMIT?.startsWith(text.commitPrepareReleaseMessage) ||
-  false;
+  process.env.HEAD_COMMIT_MESSAGE?.startsWith(
+    text.commitPrepareReleaseMessage
+  ) || false;
 
 async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');
@@ -63,22 +64,20 @@ export async function pushGeneratedCode(): Promise<void> {
     return;
   }
 
-  const commitMessage =
-    IS_RELEASE_COMMIT && isMainBranch
-      ? `${text.commitReleaseMessage}
+  const skipCi = isMainBranch ? '[skip ci]' : '';
+  let message = await run(
+    `git show -s ${baseBranch} --format="${text.commitStartMessage} %H. ${skipCi}"`
+  );
 
-Co-authored-by: %an <%ae>
-%(trailers:key=Co-authored-by)`
-      : await run(`git show -s ${baseBranch} --format="${
-          text.commitStartMessage
-        } %H. ${isMainBranch ? '[skip ci]' : ''}
+  if (IS_RELEASE_COMMIT && isMainBranch) {
+    message = text.commitReleaseMessage;
+  }
 
-Co-authored-by: %an <%ae>
-%(trailers:key=Co-authored-by)"`);
+  message += `\n\nCo-authored-by: %an <%ae>\n%(trailers:key=Co-authored-by)`;
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
   await run('git add .');
-  await run(`git commit -m "${commitMessage}"`);
+  await run(`git commit -m "${message}"`);
   await run(`git push origin ${branchToPush}`);
 
   if (PR_NUMBER) {
