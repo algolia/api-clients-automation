@@ -265,20 +265,22 @@ async function getCommits(): Promise<{
 async function createReleaseIssue(): Promise<void> {
   ensureGitHubToken();
 
-  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
-    throw new Error(
-      `You can run this script only from \`${MAIN_BRANCH}\` branch.`
-    );
-  }
+  if (!process.env.LOCAL_TEST_DEV) {
+    if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
+      throw new Error(
+        `You can run this script only from \`${MAIN_BRANCH}\` branch.`
+      );
+    }
 
-  if (
-    (await getNbGitDiff({
-      head: null,
-    })) !== 0
-  ) {
-    throw new Error(
-      'Working directory is not clean. Commit all the changes first.'
-    );
+    if (
+      (await getNbGitDiff({
+        head: null,
+      })) !== 0
+    ) {
+      throw new Error(
+        'Working directory is not clean. Commit all the changes first.'
+      );
+    }
   }
 
   await run(`git rev-parse --verify refs/tags/${RELEASED_TAG}`, {
