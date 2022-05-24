@@ -5,7 +5,9 @@
   ],
   "enabledManagers": [
     "npm",
-    "nvm"
+    "nvm",
+    "gradle",
+    "composer"
   ],
   "baseBranches": [
     "chore/renovateBaseBranch"
@@ -17,6 +19,17 @@
       ],
       "rangeStrategy": "bump"
     }
+  ],
+  "ignorePaths": [
+    "**/client-abtesting/**",
+    "**/client-analytics/**",
+    "**/client-insights/**",
+    "**/client-personalisation/**",
+    "**/client-predict/**",
+    "**/client-query-suggestions/**",
+    "**/client-search/**",
+    "**/client-sources/**",
+    "**/recommend/**"
   ],
   "prHourlyLimit": 10,
   "prConcurrentLimit": 50
