@@ -185,14 +185,12 @@ export async function processRelease(
   changelog: Changelog,
   headBranch: string
 ): Promise<void> {
-  if (!process.env.LOCAL_TEST_DEV) {
-    if (await gitBranchExists(headBranch)) {
-      await run(`git fetch origin ${headBranch}`);
-      await run(`git push -d origin ${headBranch}`);
-    }
-
-    await run(`git checkout -b ${headBranch}`);
+  if (await gitBranchExists(headBranch)) {
+    await run(`git fetch origin ${headBranch}`);
+    await run(`git push -d origin ${headBranch}`);
   }
+
+  await run(`git checkout -b ${headBranch}`);
 
   const versionsToRelease = getVersionsToRelease(versionChanges);
 
@@ -232,14 +230,12 @@ export async function processRelease(
     });
   }
 
-  if (!process.env.LOCAL_TEST_DEV) {
-    console.log(`Pushing updated configs to ${headBranch}`);
-    await run(`git add .`, { verbose: true });
-    await run(
-      `CI=true git commit -m "${headBranch.replace('chore/', 'chore: ')}"`,
-      { verbose: true }
-    );
-    await run(`git push origin ${headBranch}`, { verbose: true });
-    await run(`git checkout ${MAIN_BRANCH}`, { verbose: true });
-  }
+  console.log(`Pushing updated configs to ${headBranch}`);
+  await run(`git add .`, { verbose: true });
+  await run(
+    `CI=true git commit -m "${headBranch.replace('chore/', 'chore: ')}"`,
+    { verbose: true }
+  );
+  await run(`git push origin ${headBranch}`, { verbose: true });
+  await run(`git checkout ${MAIN_BRANCH}`, { verbose: true });
 }

@@ -104,13 +104,14 @@ export function parseCommit(commit: string): Commit {
   let message = commit.slice(LENGTH_SHA1 + 1);
   let type = message.slice(0, message.indexOf(':'));
   const matchResult = type.match(/(.+)\((.+)\)/);
-  if (!matchResult) {
-    if (commit.startsWith(generationCommitText.commitStartMessage)) {
-      return {
-        error: 'generation-commit',
-      };
-    }
 
+  if (commit.startsWith(generationCommitText.commitStartMessage)) {
+    return {
+      error: 'generation-commit',
+    };
+  }
+
+  if (!matchResult) {
     return {
       error: 'missing-language-scope',
     };
@@ -334,8 +335,6 @@ async function createReleaseIssue(): Promise<void> {
     };
   }, {} as Changelog);
 
-  console.log(changelog);
-
   // The body of the PR
   const body = [
     TEXT.header,
@@ -357,7 +356,7 @@ async function createReleaseIssue(): Promise<void> {
 
   try {
     const {
-      data: { number, html_url: url, ...rest },
+      data: { number, html_url: url },
     } = await octokit.rest.pulls.create({
       owner: OWNER,
       repo: REPO,
@@ -366,8 +365,6 @@ async function createReleaseIssue(): Promise<void> {
       base: 'main',
       head: headBranch,
     });
-
-    console.log(rest);
 
     console.log(`Release PR #${number} is ready for review.`);
     console.log(`  > ${url}`);
