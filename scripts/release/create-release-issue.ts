@@ -209,8 +209,7 @@ export function decideReleaseStrategy({
  */
 async function getCommits(): Promise<{
   validCommits: PassedCommit[];
-  commitsWithoutLanguageScope: string[];
-  commitsWithUnknownLanguageScope: string[];
+  skippedCommits: string;
 }> {
   // Reading commits since last release
   const latestCommits = (
@@ -259,8 +258,10 @@ async function getCommits(): Promise<{
 
   return {
     validCommits,
-    commitsWithUnknownLanguageScope,
-    commitsWithoutLanguageScope,
+    skippedCommits: getSkippedCommitsText({
+      commitsWithoutLanguageScope,
+      commitsWithUnknownLanguageScope,
+    }),
   };
 }
 
@@ -300,24 +301,16 @@ async function createReleaseIssue(): Promise<void> {
     `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
   );
 
-  console.log('Searching for valid commits...');
-  const {
-    validCommits,
-    commitsWithUnknownLanguageScope,
-    commitsWithoutLanguageScope,
-  } = await getCommits();
+  console.log('Search for commits since last release...');
+  const { validCommits, skippedCommits } = await getCommits();
 
   const versions = decideReleaseStrategy({
     versions: readVersions(),
     commits: validCommits,
   });
   const versionChanges = getVersionChangesText(versions);
-  const skippedCommits = getSkippedCommitsText({
-    commitsWithoutLanguageScope,
-    commitsWithUnknownLanguageScope,
-  });
 
-  console.log('Creating changelogs...');
+  console.log('Creating changelogs for all languages...');
   const changelog: Changelog = LANGUAGES.reduce((currentChangelog, lang) => {
     if (versions[lang].noCommit) {
       return changelog;
@@ -335,16 +328,6 @@ async function createReleaseIssue(): Promise<void> {
     };
   }, {} as Changelog);
 
-  // The body of the PR
-  const body = [
-    TEXT.header,
-    TEXT.summary,
-    TEXT.versionChangeHeader,
-    versionChanges,
-    TEXT.skippedCommitsHeader,
-    skippedCommits,
-  ].join('\n\n');
-
   const date = new Date().toISOString().split('T')[0];
   const headBranch = `chore/prepare-release-${date}`;
 
@@ -361,7 +344,14 @@ async function createReleaseIssue(): Promise<void> {
       owner: OWNER,
       repo: REPO,
       title: `chore: prepare release ${date}`,
-      body,
+      body: [
+        TEXT.header,
+        TEXT.summary,
+        TEXT.versionChangeHeader,
+        versionChanges,
+        TEXT.skippedCommitsHeader,
+        skippedCommits,
+      ].join('\n\n'),
       base: 'main',
       head: headBranch,
     });
@@ -371,17 +361,6 @@ async function createReleaseIssue(): Promise<void> {
   } catch (e) {
     throw new Error(`Unable to create the release PR: ${e}`);
   }
-
-  // remove old `released` tag
-  await run(
-    `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
-  );
-  await run(`git tag -d ${RELEASED_TAG}`);
-  await run(`git push --delete origin ${RELEASED_TAG}`);
-
-  // create new `released` tag
-  await run(`git tag released`);
-  await run(`git push --tags`);
 }
 
 // JS version of `if __name__ == '__main__'`

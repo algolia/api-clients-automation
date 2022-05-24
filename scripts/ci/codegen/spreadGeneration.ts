@@ -12,7 +12,11 @@ import {
   ensureGitHubToken,
 } from '../../common';
 import { getLanguageFolder, getPackageVersionDefault } from '../../config';
-import { cloneRepository, configureGitHubAuthor } from '../../release/common';
+import {
+  cloneRepository,
+  configureGitHubAuthor,
+  RELEASED_TAG,
+} from '../../release/common';
 import type { Language } from '../../types';
 import { getNbGitDiff } from '../utils';
 
@@ -91,6 +95,21 @@ async function spreadGeneration(): Promise<void> {
 
   const commitMessage = cleanUpCommitMessage(lastCommitMessage);
   const langs = decideWhereToSpread(lastCommitMessage);
+
+  // At this point, we know the release will happen on every clients
+  // So we want to set the released tag at the monorepo level too.
+  if (IS_RELEASE_COMMIT) {
+    // remove old `released` tag
+    await run(
+      `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
+    );
+    await run(`git tag -d ${RELEASED_TAG}`);
+    await run(`git push --delete origin ${RELEASED_TAG}`);
+
+    // create new `released` tag
+    await run(`git tag released`);
+    await run(`git push --tags`);
+  }
 
   for (const lang of langs) {
     const { tempGitDir } = await cloneRepository({
