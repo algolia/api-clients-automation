@@ -265,10 +265,12 @@ async function getCommits(): Promise<{
 async function createReleaseIssue(): Promise<void> {
   ensureGitHubToken();
 
-  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
-    throw new Error(
-      `You can run this script only from \`${MAIN_BRANCH}\` branch.`
-    );
+  if (!process.env.DEV) {
+    if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
+      throw new Error(
+        `You can run this script only from \`${MAIN_BRANCH}\` branch.`
+      );
+    }
   }
 
   if (
