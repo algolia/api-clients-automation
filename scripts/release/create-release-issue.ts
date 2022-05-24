@@ -248,8 +248,8 @@ async function getCommits(): Promise<{
 
   if (validCommits.length === 0) {
     console.log(
-      chalk.bgYellow('[INFO]'),
-      `Skipping release because no valid commit has been added since \`releated\` tag.`
+      chalk.black.bgYellow('[INFO]'),
+      `Skipping release because no valid commit has been added since \`released\` tag.`
     );
     // eslint-disable-next-line no-process-exit
     process.exit(0);
@@ -265,12 +265,10 @@ async function getCommits(): Promise<{
 async function createReleaseIssue(): Promise<void> {
   ensureGitHubToken();
 
-  if (!process.env.DEV) {
-    if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
-      throw new Error(
-        `You can run this script only from \`${MAIN_BRANCH}\` branch.`
-      );
-    }
+  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
+    throw new Error(
+      `You can run this script only from \`${MAIN_BRANCH}\` branch.`
+    );
   }
 
   if (
@@ -336,13 +334,12 @@ async function createReleaseIssue(): Promise<void> {
     })
     .join('\n');
 
+  // The body of the PR
   const body = [
     TEXT.header,
     TEXT.summary,
     TEXT.versionChangeHeader,
     versionChanges,
-    TEXT.changelogHeader,
-    changelogs,
     TEXT.skippedCommitsHeader,
     skippedCommits,
   ].join('\n\n');
@@ -351,7 +348,7 @@ async function createReleaseIssue(): Promise<void> {
   const headBranch = `chore/prepare-release-${date}`;
 
   console.log('Updating config files...');
-  await processRelease(body, headBranch);
+  await processRelease(versionChanges, changelogs, headBranch);
 
   console.log('Creating pull request...');
   const octokit = getOctokit();

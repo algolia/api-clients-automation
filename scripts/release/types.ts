@@ -43,11 +43,6 @@ export type VersionsToRelease = {
   };
 };
 
-export type BeforeClientGenerationCommand = (params: {
-  releaseType: ReleaseType;
-  dir: string;
-}) => Promise<void>;
-
 export type BeforeClientCommitCommand = (params: {
   dir: string;
 }) => Promise<void>;
