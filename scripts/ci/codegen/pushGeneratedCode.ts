@@ -68,12 +68,18 @@ export async function pushGeneratedCode(): Promise<void> {
   let message = await run(
     `git show -s ${baseBranch} --format="${text.commitStartMessage} %H. ${skipCi}"`
   );
+  const authors = await run(
+    `git show -s ${baseBranch} --format="
+
+Co-authored-by: %an <%ae>
+%(trailers:key=Co-authored-by)"`
+  );
 
   if (IS_RELEASE_COMMIT && isMainBranch) {
     message = text.commitReleaseMessage;
   }
 
-  message += `\n\nCo-authored-by: %an <%ae>\n%(trailers:key=Co-authored-by)`;
+  message += authors;
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
   await run('git add .');
