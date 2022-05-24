@@ -315,13 +315,13 @@ async function createReleaseIssue(): Promise<void> {
   const versionChanges = getVersionChangesText(versions);
 
   console.log('Creating changelogs for all languages...');
-  const changelog: Changelog = LANGUAGES.reduce((currentChangelog, lang) => {
+  const changelog: Changelog = LANGUAGES.reduce((newChangelog, lang) => {
     if (versions[lang].noCommit) {
-      return changelog;
+      return newChangelog;
     }
 
     return {
-      ...currentChangelog,
+      ...newChangelog,
       [lang]: validCommits
         .filter(
           (commit) =>
