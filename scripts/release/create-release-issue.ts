@@ -51,12 +51,15 @@ export function getVersionChangesText(versions: Versions): string {
     }
 
     const next = semver.inc(current, releaseType!);
-    return [
-      `- ${lang}: ${current} -> **\`${releaseType}\` _(e.g. ${next})_**`,
-      skipRelease && TEXT.descriptionForSkippedLang,
-    ]
-      .filter(Boolean)
-      .join('\n');
+
+    if (skipRelease) {
+      return [
+        `- ~${lang}: ${current} -> **\`${releaseType}\` _(e.g. ${next})_**~`,
+        TEXT.descriptionForSkippedLang,
+      ].join('\n');
+    }
+
+    return `- ${lang}: ${current} -> **\`${releaseType}\` _(e.g. ${next})_**`;
   }).join('\n');
 }
 

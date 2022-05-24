@@ -8,7 +8,7 @@ import {
 } from '../create-release-issue';
 
 describe('create release issue', () => {
-  it('reads versions openapitools.json', () => {
+  it('reads versions of the current language', () => {
     expect(readVersions()).toEqual({
       java: {
         current: expect.any(String),
@@ -80,9 +80,9 @@ describe('create release issue', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-      "- [x] javascript: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
-      - [x] java: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
-      - [x] php: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_"
+      "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+      - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+      - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
     `);
     });
 
@@ -106,8 +106,8 @@ describe('create release issue', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-      "- [x] javascript: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
-      - [x] java: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
+      "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+      - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
       - ~php: 0.0.1 (no commit)~"
     `);
     });
@@ -132,10 +132,10 @@ describe('create release issue', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-      "- [x] javascript: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
-      - [ ] java: 0.0.1 -> \`patch\` _(e.g. 0.0.2)_
+      "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+      - ~java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**~
         - No \`feat\` or \`fix\` commit, thus unchecked by default.
-      - [x] php: 0.0.1 -> \`minor\` _(e.g. 0.1.0)_"
+      - php: 0.0.1 -> **\`minor\` _(e.g. 0.1.0)_**"
     `);
     });
   });

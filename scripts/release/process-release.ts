@@ -158,10 +158,20 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .forEach((line) => {
-      const result = line.match(/- \[x\] (.+): (.+) -> `(.+)`/);
+      // This character means we've skipped the release of this language
+      if (line.includes('~')) {
+        return;
+      }
+
+      // example of string to match:
+      // - javascript: 0.0.1 -> **`patch` _(e.g. 0.0.2)_**
+      //     ^         ^           ^
+      const result = line.match(/- (.+): (.+) -> \*\*`(.+)`/);
+
       if (!result) {
         return;
       }
+
       const [, lang, current, releaseType] = result;
       if (!['major', 'minor', 'patch', 'prerelease'].includes(releaseType)) {
         throw new Error(
