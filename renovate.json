@@ -22,8 +22,8 @@
   ],
   "ignorePaths": [
     "**/client-abtesting/**",
-    "**/client-algoliasearch/**",
-    "**/client-algoliasearch-lite/**",
+    "**/algoliasearch/**",
+    "**/algoliasearch-lite/**",
     "**/client-analytics/**",
     "**/client-insights/**",
     "**/client-personalisation/**",
