@@ -105,7 +105,11 @@ export function parseCommit(commit: string): Commit {
   let type = message.slice(0, message.indexOf(':'));
   const matchResult = type.match(/(.+)\((.+)\)/);
 
-  if (commit.startsWith(generationCommitText.commitStartMessage)) {
+  if (
+    message
+      .toLocaleLowerCase()
+      .startsWith(generationCommitText.commitStartMessage)
+  ) {
     return {
       error: 'generation-commit',
     };

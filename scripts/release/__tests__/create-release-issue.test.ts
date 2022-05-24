@@ -53,7 +53,19 @@ describe('create release issue', () => {
 
     it('returns error when it is a generated commit', () => {
       expect(
-        parseCommit(`${generationCommitText.commitStartMessage} ABCDEF`)
+        parseCommit(
+          `49662518 ${generationCommitText.commitStartMessage} ABCDEF`
+        )
+      ).toEqual({
+        error: 'generation-commit',
+      });
+    });
+
+    it('returns error when it is a generated commit, even with other casing', () => {
+      expect(
+        parseCommit(
+          `49662518 ${generationCommitText.commitStartMessage.toLocaleUpperCase()} ABCDEF`
+        )
       ).toEqual({
         error: 'generation-commit',
       });
