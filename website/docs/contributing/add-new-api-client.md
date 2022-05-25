@@ -38,7 +38,7 @@ Path definition of the paths defined in the [spec file](#specyml-file).
 
 ### Send extra options to the template
 
-You might want to send extra information to the generators that have no link with your REST API. To do so, you can add parameters starting matching `x-my-parameter-name` that will be available in the template under `vendorExtensions`.
+You might want to send extra information to the generators that have no link with your REST API. To do so, you can add parameters starting with `x-` at the root level of your spec, which will be available in the mustache template under the `vendorExtensions` object.
 
 [Example in the `search.yml` spec](https://github.com/algolia/api-clients-automation/blob/main/specs/search/paths/search/search.yml#L5) and how it is used [in a mustache file](https://github.com/algolia/api-clients-automation/blob/bf4271246f9282d3c11dd46918e74cb86d9c96dc/templates/java/libraries/okhttp-gson/api.mustache#L196).
 
@@ -63,22 +63,18 @@ Generators are referenced by key with the following pattern `<languageName>-<cli
 
 Below are the options you need to **make sure to define for your client**, other options are automatically added by our generator.
 
-| Option              |         File          |  Type  |        Language         |                       Example                        | Definition                                                                                                           |
-| ------------------- | :-------------------: | :----: | :---------------------: | :--------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
-| output              |  `openapitools.json`  | string |           All           |           `path/to/client/client-sources`            | The output path of the client.                                                                                       |
-| packageName         |  `openapitools.json`  | string |           All           |                   `AlgoliaSearch`                    | Name of the API package, used in [CTS](/docs/contributing/testing/common-test-suite).                                |
-| packageVersion      |  `openapitools.json`  | string |       JavaScript        |                       `1.2.3`                        | The version you'd like to publish the first iteration of the generated client. It will be automatically incremented. |
-| utilsPackageVersion | `clients.config.json` | string |       JavaScript        |                       `1.2.3`                        | The version of the utils package. Every utils package should have synchronized version.                              |
-| packageVersion      | `clients.config.json` | string | All (except JavaScript) |                       `1.2.3`                        | The version you'd like to publish the first iteration of the generated client. It will be automatically incremented. |
-| gitRepoId           | `clients.config.json` | string |           All           |          `algoliasearch-client-javascript`           | The name of the repository.                                                                                          |
-| folder              | `clients.config.json` | string |           All           |        `clients/algoliasearch-client-java-2`         | The path to the folder that will host the generated code.                                                            |
-| modelFolder         | `clients.config.json` | string |           All           | `algoliasearch-core/src/main/java/com/algolia/model` | The path to the `model` folder that will host the generated code.                                                    |
-| apiFolder           | `clients.config.json` | string |           All           |  `algoliasearch-core/src/main/java/com/algolia/api`  | The path to the `api` folder that will host the generated code.                                                      |
-| customGenerator     | `clients.config.json` | string |           All           |                    `algolia-php`                     | The name of the generator used to generate code.                                                                     |
-
-### GitHub actions
-
-If you have successfully configured the configuration files above, you shouldn't have to change anything in the GitHub actions to make the CI work.
+| Option                |         File          |        Language         | Description                                                                                                          |
+| --------------------- | :-------------------: | :---------------------: | -------------------------------------------------------------------------------------------------------------------- |
+| `output`              |  `openapitools.json`  |           All           | The output path of the client.                                                                                       |
+| `packageName`         |  `openapitools.json`  |           All           | Name of the API package, used in [CTS](/docs/contributing/testing/common-test-suite).                                |
+| `packageVersion`      |  `openapitools.json`  |       JavaScript        | The version you'd like to publish the first iteration of the generated client. It will be automatically incremented. |
+| `utilsPackageVersion` | `clients.config.json` |       JavaScript        | The version of the utils package. Every utils package should have synchronized version.                              |
+| `packageVersion`      | `clients.config.json` | All (except JavaScript) | The version you'd like to publish the first iteration of the generated client. It will be automatically incremented. |
+| `gitRepoId`           | `clients.config.json` |           All           | The name of the repository.                                                                                          |
+| `folder`              | `clients.config.json` |           All           | The path to the folder that will host the generated code.                                                            |
+| `modelFolder`         | `clients.config.json` |           All           | The path to the `model` folder that will host the generated code.                                                    |
+| `apiFolder`           | `clients.config.json` |           All           | The path to the `api` folder that will host the generated code.                                                      |
+| `customGenerator`     | `clients.config.json` |           All           | The name of the generator used to generate code.                                                                     |
 
 ## 3. Generate new client
 
