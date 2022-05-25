@@ -83,14 +83,21 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
       continue;
     }
 
-    const testOutputBase = `./tests/output/${language}/${getTestOutputFolder(
-      language
-    )}`;
-    const testsToDelete = `${testOutputBase}/client ${testOutputBase}/methods`;
-    const testsToStore =
-      language === 'javascript'
-        ? `${testsToDelete} ./tests/output/${language}/package.json`
-        : testsToDelete;
+    const testsBasePath = `./tests/output/${language}`;
+    const testsOutputBase = `${testsBasePath}/${getTestOutputFolder(language)}`;
+    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/methods`;
+    let testsToStore = testsToDelete;
+
+    switch (language) {
+      case 'javascript':
+        testsToStore = `${testsToDelete} ${testsBasePath}/package.json`;
+        break;
+      case 'java':
+        testsToStore = `${testsToDelete} ${testsBasePath}/build.gradle`;
+        break;
+      default:
+        break;
+    }
 
     clientMatrix.client.push({
       language,
