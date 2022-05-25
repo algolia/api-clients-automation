@@ -86,6 +86,11 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
     const testOutputBase = `./tests/output/${language}/${getTestOutputFolder(
       language
     )}`;
+    const testsToDelete = `${testOutputBase}/client ${testOutputBase}/methods`;
+    const testsToStore =
+      language === 'javascript'
+        ? `${testsToDelete} ./tests/output/${language}/package.json`
+        : testsToDelete;
 
     clientMatrix.client.push({
       language,
@@ -97,7 +102,8 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
         `templates/${language}`,
         `generators/src`,
       ]),
-      testsOutputPath: `${testOutputBase}/client ${testOutputBase}/methods`,
+      testsToDelete,
+      testsToStore,
     });
     console.log(`::set-output name=RUN_GEN_${language.toUpperCase()}::true`);
   }
