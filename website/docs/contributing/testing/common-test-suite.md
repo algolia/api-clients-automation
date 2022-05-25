@@ -38,9 +38,13 @@ The test generation script requires a JSON file name from the `operationId` (e.g
     // Extra options sent with your method
     "requestOptions": {
       // Merged with transporter query parameters
-      "queryParameters": {},
+      "queryParameters": {
+        "anOtherParam": true
+      },
       // Merged with transporter headers
-      "headers": {}
+      "headers": {
+        "x-header": "test"
+      }
     },
     // The payload of the request
     "request": {
@@ -48,10 +52,11 @@ The test generation script requires a JSON file name from the `operationId` (e.g
       "method": "POST",
       "body": { "query": "the string to search" },
       "queryParameters": {
-        "otherParam": "22"
+        "otherParam": "22",
+        "anOtherParam": "true"
       },
       "headers": {
-        "x-algolia-api-key": "******"
+        "x-header": "test"
       }
     }
   }
@@ -171,9 +176,9 @@ When writing your template, here is a list of variables accessible from `mustach
 
 ## Add common tests to every clients
 
-You might want to test how every clients behaves, without having to duplicate the same tests. We provide 4 methods on every clients, common to all languages, that are called [`custom requests`](/docs/clients/guides/requests-to-non-supported-endpoint).
+You might want to test how every clients behaves, without having to duplicate the same tests. We provide 4 methods on every clients, common to all languages.
 
-You can find [the `common` folder](https://github.com/algolia/api-clients-automation/tree/main/tests/CTS/methods/requests/common) in the CTS too, which will [adding a test](#how-to-add-test) in this folder will generate tests for all the clients.
+You can find [the common folder](https://github.com/algolia/api-clients-automation/tree/main/tests/CTS/methods/requests/common) in the CTS too. [Adding a test](#how-to-add-test) in this folder will generate tests for all the clients.
 
 ## Get the list of remaining CTS to implement
 
