@@ -28,12 +28,6 @@ describe('spread generation', () => {
       });
     });
 
-    it('spreads to javascript if the scope is javascript', () => {
-      expect(decideWhereToSpread('fix(javascript): fix something')).toEqual([
-        'javascript',
-      ]);
-    });
-
     it('spreads to all if scope is not specific language', () => {
       ['cts', 'spec', 'script', 'ci'].forEach((scope) => {
         expect(decideWhereToSpread(`fix(${scope}): fix something`)).toEqual(
