@@ -1,6 +1,5 @@
 ## [0.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.2.0...0.3.0)
 
-### javascript
 - b8e6be72 fix(specs): correctly pass `searchParams` to the request (#531)
 - 000f62d9 refactor(javascript): type setTimeout in a way compatible with node & browser (#527)
 - bf427124 fix(specs): allow `POST` methods to send `read` requests (#525)
@@ -14,10 +13,8 @@
 
 ## [0.1.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.1.0...0.1.1)
 
-### javascript
 - c80d0647 fix(spec): predict server (#441)
 - 12f246e7 chore: use `Client` suffix (#386)
 - be7400be fix(javascript): update version (#448)
 - b9677335 fix(javascript): add missing descriptions (#416)
 - cd565ca3 chore(javascript): fix npm publish issue (#409)
-
