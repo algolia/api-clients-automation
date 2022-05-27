@@ -2,16 +2,18 @@ package com.algolia.codegen.cts.manager;
 
 import java.util.*;
 
-public class CtsManagerFactory {
+public class CTSManagerFactory {
 
-  public static CtsManager getManager(String language) {
+  private CTSManagerFactory() {}
+
+  public static CTSManager getManager(String language, String client) {
     switch (language) {
       case "javascript":
-        return new JavaScriptCtsManager();
+        return new JavaScriptCTSManager(client);
       case "java":
-        return new JavaCtsManager();
+        return new JavaCTSManager(client);
       case "php":
-        return new PhpCtsManager();
+        return new PhpCTSManager();
     }
     return null;
   }
