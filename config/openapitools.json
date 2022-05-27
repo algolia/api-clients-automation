@@ -26,7 +26,7 @@
         "additionalProperties": {
           "packageName": "@experimental-api-clients-automation/recommend",
           "buildFile": "recommend",
-          "packageVersion": "0.4.0",
+          "packageVersion": "0.4.0"
         }
       },
       "javascript-personalization": {
