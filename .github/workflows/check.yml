@@ -286,7 +286,7 @@ jobs:
         run: yarn cli build clients javascript algoliasearch
 
       - name: Zip artifact before storing
-        run: zip -r -y client-javascript-algoliasearch.zip clients/algoliasearch-client-javascript/packages/algoliasearch/ -x "**/node_modules/**" "**/node_modules/.**" "clients/algoliasearch-client-javascript/.yarn/**" "**/.github/**"
+        run: zip -r -y client-javascript-algoliasearch.zip clients/algoliasearch-client-javascript/packages/algoliasearch/ -x "**/node_modules**" "clients/algoliasearch-client-javascript/.yarn**" "**/.github**"
 
       - name: Store JavaScript 'algoliasearch' client
         uses: actions/upload-artifact@v3
