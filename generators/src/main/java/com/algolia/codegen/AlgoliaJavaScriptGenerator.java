@@ -24,7 +24,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
   public void processOpts() {
     super.processOpts();
 
-    CLIENT = (String) additionalProperties.get("client");
+    CLIENT = Utils.toCamelCase((String) additionalProperties.get("client"));
 
     // generator specific options
     setSupportsES6(true);
@@ -68,7 +68,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
     setDefaultGeneratorOptions();
     try {
-      Utils.generateServer(CLIENT, additionalProperties);
+      Utils.generateServer((String) additionalProperties.get("client"), additionalProperties);
       additionalProperties.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "utilsPackageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
