@@ -11,7 +11,7 @@ __metadata:
   dependencies:
     "@openapitools/openapi-generator-cli": 2.5.1
     "@prettier/plugin-php": 0.18.6
-    "@redocly/openapi-cli": 1.0.0-beta.93
+    "@redocly/openapi-cli": 1.0.0-beta.94
     "@typescript-eslint/eslint-plugin": 5.18.0
     "@typescript-eslint/parser": 5.18.0
     babel-eslint: 10.1.0
@@ -5719,11 +5719,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-cli@npm:1.0.0-beta.93":
-  version: 1.0.0-beta.93
-  resolution: "@redocly/openapi-cli@npm:1.0.0-beta.93"
+"@redocly/openapi-cli@npm:1.0.0-beta.94":
+  version: 1.0.0-beta.94
+  resolution: "@redocly/openapi-cli@npm:1.0.0-beta.94"
   dependencies:
-    "@redocly/openapi-core": 1.0.0-beta.93
+    "@redocly/openapi-core": 1.0.0-beta.94
     "@types/node": ^14.11.8
     assert-node-version: ^1.0.3
     chokidar: ^3.5.1
@@ -5736,13 +5736,13 @@ __metadata:
     yargs: 17.0.1
   bin:
     openapi: bin/cli.js
-  checksum: 83439ddda1142c1871a0b25369a97152a31859f3705483ab48191700bc30e8d5093858cf4a23cf9699d8b81172ce096873505bd8b3f5b59ea3bc0a38578582c7
+  checksum: 9085a1b2b61fc16bbbdd17a8dfb87df7c056831d854b92aaa695e2ffe4b9d8d7c83825b8a9bae7bd93c12343ca93795ef8a01eda79e14a4cbfb51cebef0a5122
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:1.0.0-beta.93":
-  version: 1.0.0-beta.93
-  resolution: "@redocly/openapi-core@npm:1.0.0-beta.93"
+"@redocly/openapi-core@npm:1.0.0-beta.94":
+  version: 1.0.0-beta.94
+  resolution: "@redocly/openapi-core@npm:1.0.0-beta.94"
   dependencies:
     "@redocly/ajv": ^8.6.4
     "@types/node": ^14.11.8
@@ -5754,7 +5754,7 @@ __metadata:
     node-fetch: ^2.6.1
     pluralize: ^8.0.0
     yaml-ast-parser: 0.0.43
-  checksum: 3c60dfea9888b0081b02b0381ce7f652f09bcfcad5554687743b0cce5edb846165f8248f6d58daf718c86792be1697494c7420112a2a085990342f7f2eba4751
+  checksum: 14b40f87185392c74f4290529c5432d9717a554f720783f903cb05328dfe13dbb93b22746b899c420db4d14a41fc67e0106f060a3bb543a64482fe5068ae9ba8
   languageName: node
   linkType: hard
 
