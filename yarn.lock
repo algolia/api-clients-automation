@@ -31,7 +31,7 @@ __metadata:
     json: 11.0.0
     mustache: 4.2.0
     prettier: 2.6.2
-    prettier-plugin-java: 1.6.1
+    prettier-plugin-java: 1.6.2
     renovate-config-algolia: 2.1.10
     typescript: 4.6.3
   languageName: unknown
@@ -13488,13 +13488,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"java-parser@npm:2.0.1":
-  version: 2.0.1
-  resolution: "java-parser@npm:2.0.1"
+"java-parser@npm:2.0.2":
+  version: 2.0.2
+  resolution: "java-parser@npm:2.0.2"
   dependencies:
     chevrotain: 6.5.0
     lodash: 4.17.21
-  checksum: e9d708e5a3d285c977a4de9ae154389dc658857bb6eedf9aebc740fab20ec5e43e8f19a74208c222ca10bcdcbba19862c86bd3770af9501b245f83d652916a47
+  checksum: 324f58cc6886493c9b2bd9363c50e3b89e8e0487d87e1c3d4e94158ba08d2f296fe50e9ee034f4479de74ba894e6b7dac13e2821b18b12552a9abfa524528c43
   languageName: node
   linkType: hard
 
@@ -17753,14 +17753,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:1.6.1":
-  version: 1.6.1
-  resolution: "prettier-plugin-java@npm:1.6.1"
+"prettier-plugin-java@npm:1.6.2":
+  version: 1.6.2
+  resolution: "prettier-plugin-java@npm:1.6.2"
   dependencies:
-    java-parser: 2.0.1
+    java-parser: 2.0.2
     lodash: 4.17.21
     prettier: 2.3.1
-  checksum: c36708a190115549e8158c8740404224e11fe63fd075f0ad6aa589453d583b10bba9c6a4b6498f259aaa1ccfb4528ec763ebaff48beaf04f9198b95abced706d
+  checksum: e6f7ab6209d9d42f8b03d1b9c8293d59b736470559d2ef833940cab68bfd42e159879e1cfd2f2f130007c29126f14ef41ba640fadf655f8945ef1a2716ec5a46
   languageName: node
   linkType: hard
 
