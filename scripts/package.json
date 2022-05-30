@@ -14,7 +14,7 @@
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts"
   },
   "devDependencies": {
-    "@apidevtools/swagger-parser": "10.0.3",
+    "@apidevtools/swagger-parser": "10.1.0",
     "@octokit/rest": "18.12.0",
     "@types/folder-hash": "4.0.1",
     "@types/inquirer": "8.2.1",
