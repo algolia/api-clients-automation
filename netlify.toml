@@ -1,5 +1,5 @@
 [build]
-  command="BUNDLE_WITH_DOC=true DOCKER=true yarn cli build specs all && yarn website:build"
+  command="yarn website:build"
   publish="website/build"
   ignore="bash ./scripts/website/netlify-ignore-build.sh"
 
