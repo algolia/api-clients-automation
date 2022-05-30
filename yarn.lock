@@ -8769,6 +8769,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk@npm:5.0.1":
+  version: 5.0.1
+  resolution: "chalk@npm:5.0.1"
+  checksum: 7b45300372b908f0471fbf7389ce2f5de8d85bb949026fd51a1b95b10d0ed32c7ed5aab36dd5e9d2bf3191867909b4404cef75c5f4d2d1daeeacd301dd280b76
+  languageName: node
+  linkType: hard
+
 "chalk@npm:^2.0.0":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
@@ -19646,7 +19653,7 @@ __metadata:
     "@types/mustache": 4.1.2
     "@types/node": 16.11.26
     "@types/semver": 7.3.9
-    chalk: 4.1.2
+    chalk: 5.0.1
     commander: 9.3.0
     dotenv: 16.0.1
     eslint: 8.12.0
