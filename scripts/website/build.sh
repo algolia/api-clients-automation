@@ -1,11 +1,7 @@
 #!/bin/bash
 
-FILE=website/yarn.lock
-
-# create lock file if not found
-if [[ ! -f "$FILE" ]]; then
-  touch $FILE
-fi
+# treat website as independant yarn project
+touch website/yarn.lock
 
 # build doc specs
 yarn website:build-specs

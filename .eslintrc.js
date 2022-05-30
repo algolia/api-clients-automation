@@ -1,6 +1,6 @@
+// eslint-disable-next-line import/no-commonjs
 module.exports = {
   ignorePatterns: [
-    '.eslintrc.js',
     '**/node_modules',
     '**/build',
     '**/dist',
