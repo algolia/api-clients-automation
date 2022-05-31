@@ -5,6 +5,7 @@ namespace {{apiPackage}};
 use {{invokerPackage}}\Algolia;
 use {{invokerPackage}}\ApiException;
 use {{invokerPackage}}\Configuration\{{configClassname}};
+use {{invokerPackage}}\Exceptions\ExceededRetriesException;
 use {{invokerPackage}}\ObjectSerializer;
 use {{invokerPackage}}\RetryStrategy\ApiWrapper;
 use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
@@ -264,6 +265,81 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     }
 
     {{/operation}}
+
+    {{#isSearchClient}}
+    /**
+     * Get Task information
+     *
+     * @param string $indexName Index name
+     * @param int $taskId Task Id
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return array
+     */
+    public function getTaskInformation($indexName, $taskId, $requestOptions = [])
+    {
+        if (!$indexName) {
+            throw new \InvalidArgumentException('indexName cannot be empty');
+        }
+
+        if (!$taskId) {
+            throw new \InvalidArgumentException('taskID cannot be empty');
+        }
+
+        $resourcePath = str_replace(
+            ['{indexName}', '{taskID}'],
+            [ObjectSerializer::toPathValue($indexName), ObjectSerializer::toPathValue($taskId)],
+            '/1/indexes/{$indexName}/task/{taskID}'
+        );
+
+        return $this->api->sendRequest(
+            'GET',
+            $resourcePath,
+            '',
+            $requestOptions
+        );
+    }
+
+    /**
+     * Wait for a task to complete with `indexName` and `taskID`.
+     *
+     * @param string $indexName Index name
+     * @param int $taskId Task Id
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     * @param int|null $maxTrial Maximum number of trials 
+     * @param int|null $timeout Timeout 
+     *
+     * @return void
+     *
+     * @throws ExceededRetriesException
+     */
+    public function waitForTask($indexName, $taskId, $requestOptions = [], $maxTrial = null, $timeout = null)
+    {
+        if ($timeout === null) {
+            $timeout = $this->config->getWaitTaskTimeBeforeRetry();
+        }
+
+        if ($maxTrial === null) {
+            $maxTrial = $this->config->getDefaultMaxTrial();
+        }
+        
+        $retry = 1;
+
+        while ($retry < $maxTrial) {
+            $res = $this->getTaskInformation($indexName, $taskId, $requestOptions);
+
+            if ('published' === $res['status']) {
+                return;
+            }
+
+            $retry++;
+            $factor = ceil($retry / 10);
+            usleep($factor * $timeout); // 0.1 second
+        }
+
+        throw new ExceededRetriesException('Maximum number of trials (' . $maxTrial . ') exceeded.');
+    }
+    {{/isSearchClient}}
 
     private function sendRequest($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)
     {
