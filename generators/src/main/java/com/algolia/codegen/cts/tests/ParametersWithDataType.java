@@ -35,10 +35,10 @@ public class ParametersWithDataType {
     bundle.put("parameters", Json.mapper().writeValueAsString(parameters));
 
     List<Object> parametersWithDataType = new ArrayList<>();
-    
+
     for (Entry<String, Object> param : parameters.entrySet()) {
       CodegenParameter specParam = null;
-      if(operation != null) {
+      if (operation != null) {
         for (CodegenParameter sp : operation.allParams) {
           if (sp.paramName.equals(param.getKey())) {
             specParam = sp;
@@ -55,8 +55,12 @@ public class ParametersWithDataType {
     bundle.put("parametersWithDataType", parametersWithDataType);
   }
 
-  public void enhanceRootParameters(Map<String, Object> parameters, String paramName, IJsonSchemaValidationProperties spec, Map<String, Object> bundle)
-    throws CTSException, JsonMappingException, JsonProcessingException {
+  public void enhanceRootParameters(
+    Map<String, Object> parameters,
+    String paramName,
+    IJsonSchemaValidationProperties spec,
+    Map<String, Object> bundle
+  ) throws CTSException, JsonMappingException, JsonProcessingException {
     if (parameters == null || parameters.size() == 0) {
       return;
     }
@@ -76,7 +80,7 @@ public class ParametersWithDataType {
     String parent,
     int suffix
   ) throws CTSException {
-    if(spec == null) {
+    if (spec == null) {
       return traverseParams(paramName, param, parent, suffix);
     }
     String baseType = getTypeName(spec);
@@ -132,15 +136,8 @@ public class ParametersWithDataType {
     return testOutput;
   }
 
-  /**
-   * Same method but with inference only
-   */
-  private Map<String, Object> traverseParams(
-    String paramName,
-    Object param,
-    String parent,
-    int suffix
-  ) throws CTSException {
+  /** Same method but with inference only */
+  private Map<String, Object> traverseParams(String paramName, Object param, String parent, int suffix) throws CTSException {
     String finalParamName = paramName;
     if (language.equals("java") && paramName.startsWith("_")) {
       finalParamName = paramName.substring(1);
@@ -293,12 +290,7 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handleObject(
-    String paramName,
-    Object param,
-    Map<String, Object> testOutput,
-    int suffix
-  ) throws CTSException {
+  private void handleObject(String paramName, Object param, Map<String, Object> testOutput, int suffix) throws CTSException {
     Map<String, Object> vars = (Map<String, Object>) param;
 
     List<Object> values = new ArrayList<>();
