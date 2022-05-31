@@ -66,7 +66,28 @@ public class TestsRequest implements TestsGenerator {
 
       List<Object> tests = new ArrayList<>();
       for (int i = 0; i < op.length; i++) {
-        Map<String, Object> test = paramsType.buildJSONForRequest(operationId, op[i], entry.getValue(), i);
+        Map<String, Object> test = new HashMap<>();
+        Request req = op[i];
+        test.put("method", operationId);
+        test.put("testName", req.testName == null ? operationId : req.testName);
+        test.put("testIndex", i);
+        test.put("request", req.request);
+        test.put("hasParameters", req.parameters.size() != 0);
+
+        if (req.requestOptions != null) {
+          test.put("hasRequestOptions", true);
+          Map<String, Object> requestOptions = new HashMap<>();
+          paramsType.enhanceParameters(req.requestOptions, requestOptions, null);
+          test.put("requestOptions", requestOptions);
+        }
+
+        CodegenOperation ope = entry.getValue();
+        // special case if there is only bodyParam which is not an array
+        if (ope.allParams.size() == 1 && ope.bodyParams.size() == 1 && !ope.bodyParam.isArray) {
+          paramsType.enhanceRootParameters(req.parameters, ope.bodyParam.paramName, ope.bodyParam, test);
+        } else {
+          paramsType.enhanceParameters(req.parameters, test, ope);
+        }
         tests.add(test);
       }
       Map<String, Object> testObj = new HashMap<>();
@@ -74,6 +95,7 @@ public class TestsRequest implements TestsGenerator {
       testObj.put("operationId", operationId);
       blocks.add(testObj);
     }
-    bundle.put("blocks", blocks);
+
+    bundle.put("blocksRequests", blocks);
   }
 }

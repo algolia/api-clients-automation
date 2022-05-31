@@ -81,7 +81,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         return new {{client}}($api, $config);
     }
 
-    {{#blocks}}
+    {{#blocksRequests}}
     {{#tests}}
 
     /**
@@ -94,16 +94,16 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         {{#hasRequestOptions}}
           $requestOptions = [
             'queryParameters' => [
-              {{#requestOptionsWithDataType.queryParameters.value.0}}
+              {{#requestOptions.parametersWithDataType.queryParameters.value.0}}
                 '{{{key}}}' => 
                 {{#isArray}}[{{#value}}{{> requests/requestOptionsParams}}{{^-last}},{{/-last}}{{/value}}]{{/isArray}}
                 {{^isArray}}{{{#value}}}{{> requests/requestOptionsParams}}{{{/value}}}{{/isArray}},
-              {{/requestOptionsWithDataType.queryParameters.value.0}}
+              {{/requestOptions.parametersWithDataType.queryParameters.value.0}}
             ],
             'headers' => [
-              {{#requestOptionsWithDataType.headers}}
+              {{#requestOptions.parametersWithDataType.headers}}
                 '{{{key}}}' => '{{{value}}}',
-              {{/requestOptionsWithDataType.headers}}
+              {{/requestOptions.parametersWithDataType.headers}}
             ]
           ];
         {{/hasRequestOptions}}
@@ -129,5 +129,5 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         ]);
     }
     {{/tests}}
-    {{/blocks}}
+    {{/blocksRequests}}
 }
