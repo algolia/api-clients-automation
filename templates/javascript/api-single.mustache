@@ -84,15 +84,15 @@ function getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function create{{capitalizedApiName}}({
-    appId,
-    apiKey,
+    appId: appIdOption,
+    apiKey: apiKeyOption,
     authMode,
-    algoliaAgents,{{#hasRegionalHost}} region,{{/hasRegionalHost}}
+    algoliaAgents,{{#hasRegionalHost}} region: regionOption,{{/hasRegionalHost}}
     ...options
   }: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
-  const auth = createAuth(appId, apiKey, authMode);
+  const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
-    hosts: getDefaultHosts({{^hasRegionalHost}}appId{{/hasRegionalHost}}{{#hasRegionalHost}}region{{/hasRegionalHost}}),
+    hosts: getDefaultHosts({{^hasRegionalHost}}appId{{/hasRegionalHost}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),
     ...options,
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents: algoliaAgents,
