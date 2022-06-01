@@ -48,6 +48,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     ctsManager.addSupportingFiles(supportingFiles);
 
     testsGenerators.add(new TestsRequest(language, client));
+    testsGenerators.add(new TestsClient(language, client));
 
     for (TestsGenerator testGen : testsGenerators) {
       testGen.addSupportingFiles(supportingFiles, outputFolder, extension);

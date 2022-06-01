@@ -79,13 +79,13 @@ public class TestsRequest implements TestsGenerator {
           Map<String, Object> requestOptions = new HashMap<>();
           if (req.requestOptions.queryParameters != null) {
             Map<String, Object> queryParameters = new HashMap<>();
-            paramsType.enhanceParameters(req.requestOptions.queryParameters, queryParameters, null);
+            paramsType.enhanceParameters(req.requestOptions.queryParameters, queryParameters);
             requestOptions.put("queryParameters", queryParameters);
           }
           if (req.requestOptions.headers != null) {
             Map<String, Object> headers = new HashMap<>();
             // convert the headers to an acceptable type
-            paramsType.enhanceParameters(new HashMap<String, Object>(req.requestOptions.headers), headers, null);
+            paramsType.enhanceParameters(new HashMap<String, Object>(req.requestOptions.headers), headers);
             requestOptions.put("headers", headers);
           }
           test.put("requestOptions", requestOptions);
@@ -94,7 +94,7 @@ public class TestsRequest implements TestsGenerator {
         CodegenOperation ope = entry.getValue();
         // special case if there is only bodyParam which is not an array
         if (ope.allParams.size() == 1 && ope.bodyParams.size() == 1 && !ope.bodyParam.isArray) {
-          paramsType.enhanceRootParameters(req.parameters, ope.bodyParam.paramName, ope.bodyParam, test);
+          paramsType.enhanceParameters(req.parameters, test, ope.bodyParam, ope.bodyParam.paramName);
         } else {
           paramsType.enhanceParameters(req.parameters, test, ope);
         }
