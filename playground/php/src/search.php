@@ -10,10 +10,12 @@ $client = SearchClient::create(
 );
 $indexName = getenv('SEARCH_INDEX');
 
-var_dump(
-    $client->search([
-        'requests' => [
-            ['indexName' => $indexName, 'query' => getenv('SEARCH_QUERY')],
-        ],
-    ])
+
+$response = $client->saveObject(
+    $indexName,
+    ['objectID' => "111", 'name' => 'John Doe'],
 );
+
+var_dump($response);
+
+$client->waitForTask($indexName, $response['taskID']);

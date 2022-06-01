@@ -295,7 +295,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         return $this->api->sendRequest(
             'GET',
             $resourcePath,
-            '',
+            [],
             $requestOptions
         );
     }
@@ -320,7 +320,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         }
 
         if ($maxTrial === null) {
-            $maxTrial = $this->config->getDefaultMaxTrial();
+            $maxTrial = $this->config->getDefaultMaxRetries();
         }
         
         $retry = 1;

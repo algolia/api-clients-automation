@@ -4,8 +4,8 @@ namespace Algolia\AlgoliaSearch\Configuration;
 
 class SearchConfig extends Configuration
 {
-    private $defaultWaitTaskTimeBeforeRetry = 100000;
-    private $defaultMaxTrial = 10;
+    private $defaultWaitTaskTimeBeforeRetry = 50000;
+    private $defaultMaxRetries = 50;
 
     public static function create($appId, $apiKey)
     {
@@ -27,7 +27,7 @@ class SearchConfig extends Configuration
             'writeTimeout' => $this->defaultWriteTimeout,
             'connectTimeout' => $this->defaultConnectTimeout,
             'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
-            'defaultMaxTrial' => $this->defaultMaxTrial,
+            'defaultMaxRetries' => $this->defaultMaxRetries,
             'defaultHeaders' => [],
             'defaultForwardToReplicas' => null,
             'batchSize' => 1000,
@@ -39,8 +39,8 @@ class SearchConfig extends Configuration
         return $this->config['waitTaskTimeBeforeRetry'];
     }
 
-    public function getDefaultMaxTrial()
+    public function getDefaultMaxRetries()
     {
-        return $this->config['defaultMaxTrial'];
+        return $this->config['defaultMaxRetries'];
     }
 }
