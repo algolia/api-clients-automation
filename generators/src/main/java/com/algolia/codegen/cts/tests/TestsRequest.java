@@ -27,6 +27,11 @@ public class TestsRequest implements TestsGenerator {
       clientName = "search";
     }
 
+    File templates = new File("templates/" + language + "/tests/requests/requests.mustache");
+    if (!templates.exists()) {
+      throw new CTSException("Templates not found for requests test at: " + templates.getAbsolutePath(), true);
+    }
+
     File dir = new File("tests/CTS/methods/requests/" + clientName);
     File commonTestDir = new File("tests/CTS/methods/requests/common");
     if (!dir.exists()) {

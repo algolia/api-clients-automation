@@ -98,7 +98,19 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       ctsManager.addDataToBundle(bundle);
 
       for (TestsGenerator testGen : testsGenerators) {
-        testGen.run(models, operations, bundle);
+        try {
+          testGen.run(models, operations, bundle);
+        } catch (CTSException e) {
+          if (e.isSkipable()) {
+            System.out.println(e.getMessage());
+            System.exit(0);
+          }
+          e.printStackTrace();
+          System.exit(1);
+        } catch (Exception e) {
+          e.printStackTrace();
+          System.exit(1);
+        }
       }
 
       return bundle;

@@ -30,6 +30,11 @@ public class TestsClient implements TestsGenerator {
       throw new CTSException("Don't generate test for algoliasearch-lite for now", true);
     }
 
+    File templates = new File("templates/" + language + "/tests/client/suite.mustache");
+    if (!templates.exists()) {
+      throw new CTSException("Templates not found for client test at: " + templates.getAbsolutePath(), true);
+    }
+
     File dir = new File("tests/CTS/client/" + clientName);
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
