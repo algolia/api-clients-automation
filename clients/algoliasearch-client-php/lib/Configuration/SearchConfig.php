@@ -4,7 +4,7 @@ namespace Algolia\AlgoliaSearch\Configuration;
 
 class SearchConfig extends Configuration
 {
-    private $defaultWaitTaskTimeBeforeRetry = 50000;
+    private $defaultWaitTaskTimeBeforeRetry = 5000; // 5 sec in milliseconds
     private $defaultMaxRetries = 50;
 
     public static function create($appId, $apiKey)
