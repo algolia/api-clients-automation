@@ -32,27 +32,32 @@ function getDefaultHosts(region: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createPersonalizationClient(
-  options: CreateClientOptions & { region: Region }
-) {
-  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+export function createPersonalizationClient({
+  appId: appIdOption,
+  apiKey: apiKeyOption,
+  authMode,
+  algoliaAgents,
+  region: regionOption,
+  ...options
+}: CreateClientOptions & { region: Region }) {
+  const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
-    hosts: options?.hosts ?? getDefaultHosts(options.region),
-    hostsCache: options.hostsCache,
-    requestsCache: options.requestsCache,
-    responsesCache: options.responsesCache,
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-    },
-    baseQueryParameters: auth.queryParameters(),
+    hosts: getDefaultHosts(regionOption),
+    ...options,
     algoliaAgent: getAlgoliaAgent({
-      algoliaAgents: options.algoliaAgents,
+      algoliaAgents,
       client: 'Personalization',
       version: apiClientVersion,
     }),
-    timeouts: options.timeouts,
-    requester: options.requester,
+    baseHeaders: {
+      'content-type': 'text/plain',
+      ...auth.headers(),
+      ...options.baseHeaders,
+    },
+    baseQueryParameters: {
+      ...auth.queryParameters(),
+      ...options.baseQueryParameters,
+    },
   });
 
   function addAlgoliaAgent(segment: string, version?: string): void {
@@ -85,16 +90,11 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -125,16 +125,11 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -161,16 +156,11 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -189,16 +179,11 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -229,16 +214,11 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -266,17 +246,12 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -304,17 +279,12 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -357,17 +327,12 @@ export function createPersonalizationClient(
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: personalizationStrategyParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
   };
 }

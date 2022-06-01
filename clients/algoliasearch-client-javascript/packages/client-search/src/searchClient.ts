@@ -113,25 +113,31 @@ function getDefaultHosts(appId: string): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createSearchClient(options: CreateClientOptions) {
-  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+export function createSearchClient({
+  appId: appIdOption,
+  apiKey: apiKeyOption,
+  authMode,
+  algoliaAgents,
+  ...options
+}: CreateClientOptions) {
+  const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
-    hosts: options?.hosts ?? getDefaultHosts(options.appId),
-    hostsCache: options.hostsCache,
-    requestsCache: options.requestsCache,
-    responsesCache: options.responsesCache,
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-    },
-    baseQueryParameters: auth.queryParameters(),
+    hosts: getDefaultHosts(appIdOption),
+    ...options,
     algoliaAgent: getAlgoliaAgent({
-      algoliaAgents: options.algoliaAgents,
+      algoliaAgents,
       client: 'Search',
       version: apiClientVersion,
     }),
-    timeouts: options.timeouts,
-    requester: options.requester,
+    baseHeaders: {
+      'content-type': 'text/plain',
+      ...auth.headers(),
+      ...options.baseHeaders,
+    },
+    baseQueryParameters: {
+      ...auth.queryParameters(),
+      ...options.baseQueryParameters,
+    },
   });
 
   function addAlgoliaAgent(segment: string, version?: string): void {
@@ -199,17 +205,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: apiKey,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -253,17 +254,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -290,17 +286,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: source,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -345,17 +336,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: assignUserIdParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -393,17 +379,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: batchWriteParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -453,17 +434,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: batchAssignUserIdsParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -510,17 +486,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: batchDictionaryEntriesParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -573,17 +544,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: rule,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -615,17 +581,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: browseRequest,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -661,16 +622,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -701,16 +657,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -746,16 +697,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -782,16 +728,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -822,16 +763,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -869,17 +805,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -910,16 +841,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -956,16 +882,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1007,16 +928,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1047,16 +963,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1098,16 +1009,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1134,16 +1040,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1174,16 +1075,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1202,16 +1098,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1230,16 +1121,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1280,16 +1166,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1331,16 +1212,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1367,19 +1243,14 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: getObjectsParams,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1416,16 +1287,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1456,16 +1322,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1482,16 +1343,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1528,16 +1384,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1574,16 +1425,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1602,16 +1448,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1642,16 +1483,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1677,16 +1513,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1703,16 +1534,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1731,16 +1557,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1766,16 +1587,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1806,16 +1622,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1842,17 +1653,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: batchParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1901,17 +1707,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: operationIndexParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1965,17 +1766,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: attributeOrBuiltInOperation,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2003,17 +1799,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2041,17 +1832,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2082,16 +1868,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2119,17 +1900,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: source,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2160,16 +1936,11 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2207,17 +1978,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2277,17 +2043,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: rule,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2342,17 +2103,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: synonymHit,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2406,17 +2162,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: synonymHit,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2449,19 +2200,14 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchMethodParams,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2508,19 +2254,14 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchDictionaryEntriesParams,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2562,19 +2303,14 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchForFacetValuesRequest,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2612,19 +2348,14 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchRulesParams,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2662,19 +2393,14 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchParams,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2725,18 +2451,13 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2769,19 +2490,14 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchUserIdsParams,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2814,17 +2530,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: dictionarySettingsParams,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2867,17 +2578,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: indexSettings,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -2921,17 +2627,12 @@ export function createSearchClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: apiKey,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
   };
 }
