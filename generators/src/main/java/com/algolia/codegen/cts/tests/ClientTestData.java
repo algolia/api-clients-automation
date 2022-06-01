@@ -23,7 +23,7 @@ class Expected {
 
   public Object error;
   public Match match;
-  public String testSubject = "result";
+  public String testSubject;
 }
 
 class Match {

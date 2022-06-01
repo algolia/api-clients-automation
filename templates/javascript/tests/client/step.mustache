@@ -1,10 +1,10 @@
 {{#isCreateClient}}
-  {{> client/createClient}}
-  const $client = result;
+  const result{{stepIndex}} = {{> client/createClient}}
+  const $client = result{{stepIndex}};
 {{/isCreateClient}}
 {{#isVariable}}
-  {{> client/variable}}
+  const result{{stepIndex}} = {{> client/variable}}
 {{/isVariable}}
 {{#isMethod}}
-  await {{> client/method}}
+  const result{{stepIndex}} = await {{> client/method}}
 {{/isMethod}}

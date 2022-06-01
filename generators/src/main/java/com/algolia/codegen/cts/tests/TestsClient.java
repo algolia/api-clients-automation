@@ -64,6 +64,7 @@ public class TestsClient implements TestsGenerator {
         List<Object> steps = new ArrayList<>();
         testOut.put("testName", test.testName);
         testOut.put("autoCreateClient", test.autoCreateClient);
+        int stepIndex = 0;
         for (Step step : test.steps) {
           Map<String, Object> stepOut = new HashMap<>();
           if (step.type.equals("createClient")) {
@@ -78,12 +79,16 @@ public class TestsClient implements TestsGenerator {
           stepOut.put("path", step.path);
           paramsType.enhanceParameters(step.parameters, stepOut);
 
-          switch (step.expected.testSubject) {
-            case "userAgent":
-              stepOut.put("testUserAgent", true);
-              break;
-            default:
-              stepOut.put("testSubject", step.expected.testSubject);
+          if (step.expected.testSubject == null) {
+            stepOut.put("testSubject", "result" + stepIndex);
+          } else {
+            switch (step.expected.testSubject) {
+              case "userAgent":
+                stepOut.put("testUserAgent", true);
+                break;
+              default:
+                stepOut.put("testSubject", step.expected.testSubject);
+            }
           }
           if (step.expected.error != null) {
             stepOut.put("isError", true);
@@ -98,7 +103,7 @@ public class TestsClient implements TestsGenerator {
             }
             stepOut.put("match", match);
           }
-
+          stepOut.put("stepIndex", stepIndex++);
           steps.add(stepOut);
         }
         testOut.put("steps", steps);
