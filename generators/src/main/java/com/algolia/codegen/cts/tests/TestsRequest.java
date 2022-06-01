@@ -77,7 +77,17 @@ public class TestsRequest implements TestsGenerator {
         if (req.requestOptions != null) {
           test.put("hasRequestOptions", true);
           Map<String, Object> requestOptions = new HashMap<>();
-          paramsType.enhanceParameters(req.requestOptions, requestOptions, null);
+          if (req.requestOptions.queryParameters != null) {
+            Map<String, Object> queryParameters = new HashMap<>();
+            paramsType.enhanceParameters(req.requestOptions.queryParameters, queryParameters, null);
+            requestOptions.put("queryParameters", queryParameters);
+          }
+          if (req.requestOptions.headers != null) {
+            Map<String, Object> headers = new HashMap<>();
+            // convert the headers to an acceptable type
+            paramsType.enhanceParameters(new HashMap<String, Object>(req.requestOptions.headers), headers, null);
+            requestOptions.put("headers", headers);
+          }
           test.put("requestOptions", requestOptions);
         }
 
@@ -95,7 +105,6 @@ public class TestsRequest implements TestsGenerator {
       testObj.put("operationId", operationId);
       blocks.add(testObj);
     }
-
     bundle.put("blocksRequests", blocks);
   }
 }

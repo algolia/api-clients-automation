@@ -12,7 +12,10 @@ const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}
 describe('{{operationId}}', () => {
   {{#tests}}
   test('{{testName}}', async () => {
-    {{#hasRequestOptions}}const requestOptions: RequestOptions = {{{requestOptions.parameters}}}{{/hasRequestOptions}}
+    {{#hasRequestOptions}}const requestOptions: RequestOptions = {
+      {{#requestOptions.queryParameters.parameters}}queryParameters: {{{.}}},{{/requestOptions.queryParameters.parameters}}
+      {{#requestOptions.headers.parameters}}headers: {{{.}}}{{/requestOptions.headers.parameters}}
+    };{{/hasRequestOptions}}
 
     const req = (await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}})) as unknown as EchoResponse;
 

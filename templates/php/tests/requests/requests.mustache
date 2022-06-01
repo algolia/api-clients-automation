@@ -94,16 +94,14 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         {{#hasRequestOptions}}
           $requestOptions = [
             'queryParameters' => [
-              {{#requestOptions.parametersWithDataType.queryParameters.value.0}}
-                '{{{key}}}' => 
-                {{#isArray}}[{{#value}}{{> requests/requestOptionsParams}}{{^-last}},{{/-last}}{{/value}}]{{/isArray}}
-                {{^isArray}}{{{#value}}}{{> requests/requestOptionsParams}}{{{/value}}}{{/isArray}},
-              {{/requestOptions.parametersWithDataType.queryParameters.value.0}}
+              {{#requestOptions.queryParameters.parametersWithDataType}}
+                '{{{key}}}' => {{> requests/requestOptionsParams}},
+              {{/requestOptions.queryParameters.parametersWithDataType}}
             ],
             'headers' => [
-              {{#requestOptions.parametersWithDataType.headers}}
+              {{#requestOptions.headers.parametersWithDataType}}
                 '{{{key}}}' => '{{{value}}}',
-              {{/requestOptions.parametersWithDataType.headers}}
+              {{/requestOptions.headers.parametersWithDataType}}
             ]
           ];
         {{/hasRequestOptions}}

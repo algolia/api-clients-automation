@@ -42,19 +42,12 @@ class {{client}}Tests {
 
         {{#hasRequestOptions}}
           RequestOptions requestOptions = new RequestOptions();
-          {{#requestOptions.parametersWithDataType.queryParameters.value.0}}
-            {{#isArray}}
-              List<Object> requestOptionsQueryParameters = new ArrayList<>(); 
-              {{#value}}requestOptionsQueryParameters.add({{> requests/requestOptionsParams}});{{/value}}
-              requestOptions.addExtraQueryParameters("{{{key}}}", requestOptionsQueryParameters);
-            {{/isArray}}
-            {{^isArray}}
-              requestOptions.addExtraQueryParameters("{{{key}}}", {{{#value}}}{{> requests/requestOptionsParams}}{{{/value}}});
-            {{/isArray}}
-          {{/requestOptions.parametersWithDataType.queryParameters.value.0}}
-          {{#requestOptions.parametersWithDataType.headers}}
+          {{#requestOptions.queryParameters.parametersWithDataType}}
+            requestOptions.addExtraQueryParameters("{{{key}}}", {{> requests/requestOptionsParams}});
+          {{/requestOptions.queryParameters.parametersWithDataType}}
+          {{#requestOptions.headers.parametersWithDataType}}
             requestOptions.addExtraHeader("{{{key}}}", "{{{value}}}");
-          {{/requestOptions.parametersWithDataType.headers}}
+          {{/requestOptions.headers.parametersWithDataType}}
         {{/hasRequestOptions}}
 
         assertDoesNotThrow(() -> {

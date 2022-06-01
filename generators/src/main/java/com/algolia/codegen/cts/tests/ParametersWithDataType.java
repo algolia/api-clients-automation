@@ -154,7 +154,7 @@ public class ParametersWithDataType {
     // cannot determine objectName with inference
     // testOutput.put("objectName", Utils.capitalize(baseType));
 
-    if (param.getClass().isArray()) {
+    if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, suffix);
     } else if (param instanceof Map) {
       handleObject(paramName, param, testOutput, suffix);
