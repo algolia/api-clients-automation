@@ -99,7 +99,7 @@ final class Helpers
      * @param callable $validate Condition to be met to stop the retry
      * @param int $maxRetries Max number of retries
      * @param int $timeout Timeout
-     * @param string $timeout name of the method to call to calculate the timeout
+     * @param string $timeoutCalculation name of the method to call to calculate the timeout
      *
      * @throws ExceededRetriesException
      *
