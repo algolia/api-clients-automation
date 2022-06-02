@@ -103,7 +103,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
         } catch (CTSException e) {
           if (e.isSkipable()) {
             System.out.println(e.getMessage());
-            System.exit(0);
+            continue;
           }
           e.printStackTrace();
           System.exit(1);

@@ -30,9 +30,8 @@ public class TestsClient implements TestsGenerator {
       throw new CTSException("Don't generate test for algoliasearch-lite for now", true);
     }
 
-    File templates = new File("templates/" + language + "/tests/client/suite.mustache");
-    if (!templates.exists()) {
-      throw new CTSException("Templates not found for client test at: " + templates.getAbsolutePath(), true);
+    if (!available()) {
+      throw new CTSException("Templates not found for client test", true);
     }
 
     File dir = new File("tests/CTS/client/" + clientName);
@@ -46,7 +45,16 @@ public class TestsClient implements TestsGenerator {
   }
 
   @Override
+  public boolean available() {
+    File templates = new File("templates/" + language + "/tests/client/suite.mustache");
+    return templates.exists();
+  }
+
+  @Override
   public void addSupportingFiles(List<SupportingFile> supportingFiles, String outputFolder, String extension) {
+    if (!available()) {
+      return;
+    }
     String clientName = language.equals("php") ? Utils.createClientName(client, language) : client;
     supportingFiles.add(new SupportingFile("client/suite.mustache", outputFolder + "/client", clientName + extension));
   }

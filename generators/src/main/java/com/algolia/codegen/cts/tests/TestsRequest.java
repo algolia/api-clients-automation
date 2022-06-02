@@ -27,9 +27,8 @@ public class TestsRequest implements TestsGenerator {
       clientName = "search";
     }
 
-    File templates = new File("templates/" + language + "/tests/requests/requests.mustache");
-    if (!templates.exists()) {
-      throw new CTSException("Templates not found for requests test at: " + templates.getAbsolutePath(), true);
+    if (!available()) {
+      throw new CTSException("Templates not found for requests test", true);
     }
 
     File dir = new File("tests/CTS/methods/requests/" + clientName);
@@ -50,7 +49,16 @@ public class TestsRequest implements TestsGenerator {
   }
 
   @Override
+  public boolean available() {
+    File templates = new File("templates/" + language + "/tests/requests/requests.mustache");
+    return templates.exists();
+  }
+
+  @Override
   public void addSupportingFiles(List<SupportingFile> supportingFiles, String outputFolder, String extension) {
+    if (!available()) {
+      return;
+    }
     String clientName = language.equals("php") ? Utils.createClientName(client, language) : client;
     supportingFiles.add(new SupportingFile("requests/requests.mustache", outputFolder + "/methods/requests", clientName + extension));
   }
