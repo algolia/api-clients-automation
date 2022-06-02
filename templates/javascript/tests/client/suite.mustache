@@ -23,6 +23,7 @@ describe('{{testType}}', () => {
             {{#isError}}
               try {
                 {{> client/step}}
+                throw new Error('test is expected to throw error');
               } catch(e) {
                 expect(e.message).toMatch("{{{expectedError}}}");
               }
