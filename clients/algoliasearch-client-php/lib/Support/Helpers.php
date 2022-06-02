@@ -76,6 +76,21 @@ final class Helpers
     }
 
     /**
+     * Define timeout before retry
+     *
+     * @param int $defaultTimeout
+     * @param int $retries
+     *
+     * @return float|int
+     */
+    private static function defineTimeout($defaultTimeout, $retries)
+    {
+        // minimum between timeout and 200 milliseconds * number of retries
+        // Convert into microseconds for usleep (* 1000)
+        return min($defaultTimeout, $retries * 200) * 1000;
+    }
+
+    /**
      * Generic helper which retries a function until some conditions are met
      *
      * @param object $object Object calling the function
@@ -100,17 +115,19 @@ final class Helpers
         $retry = 1;
 
         while ($retry < $maxRetries) {
-            $res = call_user_func_array([$object, $function], $args);
+            try {
+                $res = call_user_func_array([$object, $function], $args);
 
-            if ($validate($res)) {
+                if ($validate($res)) {
+                    return;
+                }
+            } catch (\Exception $e) {
+                // if the task is interrupted, just return
                 return;
             }
 
             $retry++;
-            // minimum between timeout and 200 milliseconds * number of retries
-            $timeout = min($timeout, $retry * 200);
-            // Convert into microseconds for usleep
-            usleep($timeout * 1000);
+            usleep(self::defineTimeout($timeout, $retry));
         }
 
         throw new ExceededRetriesException(
