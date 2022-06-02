@@ -22,22 +22,15 @@ public class TestsClient implements TestsGenerator {
   }
 
   private Map<String, ClientTestData[]> loadCTS() throws Exception {
-    Map<String, ClientTestData[]> cts = new HashMap<>();
-    String clientName = client;
-    // This special case allow us to read the `search` CTS to generated the tests for the
-    // `algoliasearch-lite` client, which is only available in JavaScript
-    if (language.equals("javascript") && client.equals("algoliasearch-lite")) {
-      throw new CTSException("Don't generate test for algoliasearch-lite for now", true);
-    }
-
     if (!available()) {
       throw new CTSException("Templates not found for client test", true);
     }
 
-    File dir = new File("tests/CTS/client/" + clientName);
+    File dir = new File("tests/CTS/client/" + client);
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
     }
+    Map<String, ClientTestData[]> cts = new HashMap<>();
     for (File f : dir.listFiles()) {
       cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(f, ClientTestData[].class));
     }
@@ -46,6 +39,11 @@ public class TestsClient implements TestsGenerator {
 
   @Override
   public boolean available() {
+    // no algoliasearch-lite client test for now
+    if (language.equals("javascript") && client.equals("algoliasearch-lite")) {
+      return false;
+    }
+
     File templates = new File("templates/" + language + "/tests/client/suite.mustache");
     return templates.exists();
   }

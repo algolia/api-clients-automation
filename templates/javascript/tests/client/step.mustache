@@ -1,6 +1,5 @@
 {{#isCreateClient}}
-  const result{{stepIndex}} = {{> client/createClient}}
-  const $client = result{{stepIndex}};
+  {{> client/createClient}}
 {{/isCreateClient}}
 {{#isVariable}}
   const result{{stepIndex}} = {{> client/variable}}
