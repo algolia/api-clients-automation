@@ -2,6 +2,8 @@
 
 namespace Algolia\AlgoliaSearch\Support;
 
+use Algolia\AlgoliaSearch\Exceptions\ExceededRetriesException;
+
 final class Helpers
 {
     /**
@@ -71,5 +73,48 @@ final class Helpers
         }
 
         return $data;
+    }
+
+    /**
+     * Generic helper which retries a function until some conditions are met
+     *
+     * @param object $object Object calling the function
+     * @param string $function Function to be called
+     * @param array $args Arguments to be passed to the function
+     * @param callable $validate Condition to be met to stop the retry
+     * @param int $maxRetries Max number of retries
+     * @param int $timeout Timeout
+     *
+     * @throws ExceededRetriesException
+     *
+     * @return void
+     */
+    public static function retryUntil(
+        $object,
+        $function,
+        array $args,
+        callable $validate,
+        $maxRetries,
+        $timeout
+    ) {
+        $retry = 1;
+
+        while ($retry < $maxRetries) {
+            $res = call_user_func_array([$object, $function], $args);
+
+            if ($validate($res)) {
+                return;
+            }
+
+            $retry++;
+            // minimum between timeout and 200 milliseconds * number of retries
+            $timeout = min($timeout, $retry * 200);
+            // Convert into microseconds for usleep
+            usleep($timeout * 1000);
+        }
+
+        throw new ExceededRetriesException(
+            'Maximum number of retries (' . $maxRetries . ') exceeded.'
+        );
     }
 }

@@ -10,6 +10,7 @@ use {{invokerPackage}}\ObjectSerializer;
 use {{invokerPackage}}\RetryStrategy\ApiWrapper;
 use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
 use {{invokerPackage}}\RetryStrategy\ClusterHosts;
+use {{invokerPackage}}\Support\Helpers;
 
 /**
  * {{classname}} Class Doc Comment
@@ -274,11 +275,11 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
      * @param int $taskId Task Id
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      * @param int|null $maxRetries Maximum number of retries
-     * @param int|null $timeout Timeout 
-     *
-     * @return void
+     * @param int|null $timeout Timeout
      *
      * @throws ExceededRetriesException
+     *
+     * @return void
      */
     public function waitForTask($indexName, $taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
     {
@@ -289,24 +290,15 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         if ($maxRetries === null) {
             $maxRetries = $this->config->getDefaultMaxRetries();
         }
-        
-        $retry = 1;
 
-        while ($retry < $maxRetries) {
-            $res = $this->getTask($indexName, $taskId, $requestOptions);
-
-            if ('published' === $res['status']) {
-                return;
-            }
-
-            $retry++;
-            // minimum between timeout and 200 milliseconds * number of retries
-            $timeout = min($timeout, $retry * 200);
-            // Convert into microseconds for usleep
-            usleep($timeout * 1000);
-        }
-
-        throw new ExceededRetriesException('Maximum number of retries (' . $maxRetries . ') exceeded.');
+        Helpers::retryUntil(
+            $this,
+            'getTask',
+            [$indexName, $taskId, $requestOptions],
+            function($res) {return 'published' === $res['status'];},
+            $maxRetries,
+            $timeout
+        );
     }
     {{/isSearchClient}}
 
