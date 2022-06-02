@@ -83,7 +83,7 @@ final class Helpers
      *
      * @return float|int
      */
-    private static function defineTimeout($defaultTimeout, $retries)
+    private static function linearTimeout($defaultTimeout, $retries)
     {
         // minimum between timeout and 200 milliseconds * number of retries
         // Convert into microseconds for usleep (* 1000)
@@ -99,6 +99,7 @@ final class Helpers
      * @param callable $validate Condition to be met to stop the retry
      * @param int $maxRetries Max number of retries
      * @param int $timeout Timeout
+     * @param string $timeout name of the method to call to calculate the timeout
      *
      * @throws ExceededRetriesException
      *
@@ -110,9 +111,10 @@ final class Helpers
         array $args,
         callable $validate,
         $maxRetries,
-        $timeout
+        $timeout,
+        $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout'
     ) {
-        $retry = 1;
+        $retry = 0;
 
         while ($retry < $maxRetries) {
             try {
@@ -127,7 +129,7 @@ final class Helpers
             }
 
             $retry++;
-            usleep(self::defineTimeout($timeout, $retry));
+            usleep(call_user_func_array($timeoutCalculation, [$timeout, $retry]));
         }
 
         throw new ExceededRetriesException(
