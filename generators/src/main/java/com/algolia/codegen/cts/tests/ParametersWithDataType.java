@@ -52,12 +52,12 @@ public class ParametersWithDataType {
       spec = operation.bodyParam;
       paramName = operation.bodyParam.paramName;
     }
-    
+
     List<Map<String, Object>> parametersWithDataType = new ArrayList<>();
     Map<String, Object> parametersWithDataTypeMap = new HashMap<>();
 
     if (paramName == null) {
-      if(parameters != null) {
+      if (parameters != null) {
         for (Entry<String, Object> param : parameters.entrySet()) {
           CodegenParameter specParam = null;
           if (operation != null) {
@@ -133,7 +133,7 @@ public class ParametersWithDataType {
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
 
-    if(param == null) {
+    if (param == null) {
       handleNull(testOutput);
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, suffix);
@@ -171,8 +171,8 @@ public class ParametersWithDataType {
     testOutput.put("parent", parent);
     // cannot determine objectName with inference
     // testOutput.put("objectName", Utils.capitalize(baseType));
-    
-    if(param == null) {
+
+    if (param == null) {
       handleNull(testOutput);
     } else if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, suffix);
@@ -187,7 +187,8 @@ public class ParametersWithDataType {
   private Map<String, Object> createDefaultOutput() {
     Map<String, Object> testOutput = new HashMap<>();
 
-    // we need to set all types to false otherwise mustache will read the one from the parent context and run into a infinite loop
+    // we need to set all types to false otherwise mustache will read the one from the parent
+    // context and run into a infinite loop
     testOutput.put("isObject", false);
     testOutput.put("isArray", false);
     testOutput.put("isNull", false);
