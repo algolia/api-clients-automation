@@ -31,7 +31,7 @@ class {{client}}RequestsTests {
     @BeforeAll
     void init() {
         requester = new EchoRequester();
-        client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}new ClientOptions().setRequester(requester));
+        client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}ClientOptions.build().setRequester(requester));
     }
 
     {{#blocksRequests}}

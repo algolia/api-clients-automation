@@ -9,8 +9,10 @@ public class ClientOptions {
   private AlgoliaAgent.Segment[] algoliaAgentSegments;
   private List<StatefulHost> hosts;
 
-  public ClientOptions() {
-    this.requester = requester;
+  private ClientOptions() {}
+
+  public static ClientOptions build() {
+    return new ClientOptions();
   }
 
   public Requester getRequester() {

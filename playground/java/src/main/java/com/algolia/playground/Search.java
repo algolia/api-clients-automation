@@ -18,7 +18,7 @@ public class Search {
     SearchClient client = new SearchClient(
       dotenv.get("ALGOLIA_APPLICATION_ID"),
       dotenv.get("ALGOLIA_SEARCH_KEY"),
-      new ClientOptions()
+      ClientOptions.build()
         .setAlgoliaAgentSegments(
           new AlgoliaAgent.Segment[] {
             new AlgoliaAgent.Segment("test", "8.0.0"),
