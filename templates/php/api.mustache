@@ -98,7 +98,9 @@ use {{invokerPackage}}\Support\Helpers;
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $url = str_replace('{region}', $config->getRegion(), '{{{host}}}');
+            $url = $config->getRegion() !== '' ?
+                str_replace('{region}', $config->getRegion(), '{{{host}}}') :
+                '{{{hostWithFallback}}}';
             $clusterHosts = ClusterHosts::create($url);
         }
         {{/useCache}}
@@ -158,7 +160,7 @@ use {{invokerPackage}}\Support\Helpers;
         {{#allParams}}
         {{#required}}
         // verify the required parameter '{{paramName}}' is set
-        if (${{paramName}} === null || (is_array(${{paramName}}) && count(${{paramName}}) === 0)) {
+        if (${{paramName}} === null) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter ${{paramName}} when calling {{operationId}}'
             );

@@ -1,0 +1,11 @@
+{{#match}}
+    {{#objectContaining}}
+        json_decode('{{{objectContaining}}}', true),
+    {{/objectContaining}}
+
+    {{#regexp}}
+        [
+            'regexp' => '{{{regexp}}}',
+        ]
+    {{/regexp}}
+{{/match}}
