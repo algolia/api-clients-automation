@@ -1,0 +1,68 @@
+package com.algolia.client;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.util.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.BeforeAll;
+import com.google.gson.reflect.TypeToken;
+
+import com.algolia.utils.JSON;
+import com.algolia.utils.ClientOptions;
+import com.algolia.utils.RequestOptions;
+import com.algolia.model.{{import}}.*;
+import com.algolia.api.{{client}};
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
+import com.algolia.EchoRequester;
+import com.algolia.EchoResponse;
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class {{client}}ClientTests {
+  private EchoRequester requester = new EchoRequester();
+
+  {{client}} createClient() {
+      return new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}ClientOptions.build().setRequester(requester));
+  }
+
+  {{#blocksClient}}
+  {{#tests}}
+  @Test
+  @DisplayName("{{{testName}}}")
+  void {{testType}}Test{{testIndex}}() {
+    {{#autoCreateClient}}
+      {{client}} $client = createClient();
+    {{/autoCreateClient}}
+
+    {{#steps}}
+      {{#isError}}
+       {
+          Exception exception = assertThrows(Exception.class, () -> {
+            {{> client/step}}
+          });
+          assertEquals("{{{expectedError}}}", exception.getMessage());
+        }
+      {{/isError}}
+      {{^isError}}
+        {{> client/step}}
+        {{#match}}
+          {{#regexp}}
+            {
+              String regexp = "{{#lambda.escapeslash}}{{{regexp}}}{{/lambda.escapeslash}}";
+              assertTrue({{> client/testSubject}}.matches(regexp), "Expected " + {{> client/testSubject}} + " to match the following regex: " + regexp);
+            }
+          {{/regexp}}
+        {{/match}}
+      {{/isError}}
+    {{/steps}}
+  }
+  {{/tests}}
+  {{/blocksClient}}
+}

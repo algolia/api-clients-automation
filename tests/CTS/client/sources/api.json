@@ -48,7 +48,7 @@
         "expected": {
           "testSubject": "userAgent",
           "match": {
-            "regexp": "/Algolia%20for%20(.+)%20\\(\\d+\\.\\d+\\.\\d+\\)/"
+            "regexp": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Sources (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
           }
         }
       }

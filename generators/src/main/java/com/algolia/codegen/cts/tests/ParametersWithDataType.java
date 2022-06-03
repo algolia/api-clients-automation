@@ -41,16 +41,10 @@ public class ParametersWithDataType {
    */
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle, CodegenOperation operation)
     throws CTSException, JsonMappingException, JsonProcessingException {
-    if (parameters == null) {
-      return;
-    }
-    if (parameters.size() == 0) {
+    if (parameters != null && parameters.size() == 0) {
       bundle.put("parameters", "{}");
       return;
     }
-    List<Map<String, Object>> parametersWithDataType = new ArrayList<>();
-    Map<String, Object> parametersWithDataTypeMap = new HashMap<>();
-
     IJsonSchemaValidationProperties spec = null;
     String paramName = null;
     // special case if there is only bodyParam which is not an array
@@ -58,24 +52,29 @@ public class ParametersWithDataType {
       spec = operation.bodyParam;
       paramName = operation.bodyParam.paramName;
     }
+    
+    List<Map<String, Object>> parametersWithDataType = new ArrayList<>();
+    Map<String, Object> parametersWithDataTypeMap = new HashMap<>();
 
     if (paramName == null) {
-      for (Entry<String, Object> param : parameters.entrySet()) {
-        CodegenParameter specParam = null;
-        if (operation != null) {
-          for (CodegenParameter sp : operation.allParams) {
-            if (sp.paramName.equals(param.getKey())) {
-              specParam = sp;
-              break;
+      if(parameters != null) {
+        for (Entry<String, Object> param : parameters.entrySet()) {
+          CodegenParameter specParam = null;
+          if (operation != null) {
+            for (CodegenParameter sp : operation.allParams) {
+              if (sp.paramName.equals(param.getKey())) {
+                specParam = sp;
+                break;
+              }
+            }
+            if (specParam == null) {
+              throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
             }
           }
-          if (specParam == null) {
-            throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
-          }
+          Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0);
+          parametersWithDataType.add(paramWithType);
+          parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
         }
-        Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0);
-        parametersWithDataType.add(paramWithType);
-        parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
       }
     } else {
       Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0);
@@ -134,7 +133,9 @@ public class ParametersWithDataType {
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
 
-    if (spec.getIsArray()) {
+    if(param == null) {
+      handleNull(testOutput);
+    } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, suffix);
     } else if (isEnum(spec)) {
       handleEnum(param, testOutput);
@@ -170,8 +171,10 @@ public class ParametersWithDataType {
     testOutput.put("parent", parent);
     // cannot determine objectName with inference
     // testOutput.put("objectName", Utils.capitalize(baseType));
-
-    if (param instanceof List) {
+    
+    if(param == null) {
+      handleNull(testOutput);
+    } else if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, suffix);
     } else if (param instanceof Map) {
       handleObject(paramName, param, testOutput, suffix);
@@ -184,10 +187,10 @@ public class ParametersWithDataType {
   private Map<String, Object> createDefaultOutput() {
     Map<String, Object> testOutput = new HashMap<>();
 
-    // we need to set all types to false otherwise mustache will read the one from the parent
-    // context and run into a infinite loop
+    // we need to set all types to false otherwise mustache will read the one from the parent context and run into a infinite loop
     testOutput.put("isObject", false);
     testOutput.put("isArray", false);
+    testOutput.put("isNull", false);
     testOutput.put("isFreeFormObject", false);
     testOutput.put("isAnyType", false);
     testOutput.put("isString", false);
@@ -200,6 +203,10 @@ public class ParametersWithDataType {
     testOutput.put("oneOfModel", false);
 
     return testOutput;
+  }
+
+  private void handleNull(Map<String, Object> testOutput) {
+    testOutput.put("isNull", true);
   }
 
   private void handleArray(

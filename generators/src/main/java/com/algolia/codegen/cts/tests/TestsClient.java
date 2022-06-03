@@ -125,6 +125,7 @@ public class TestsClient implements TestsGenerator {
       testObj.put("testType", blockEntry.getKey());
       blocks.add(testObj);
     }
+    //Json.prettyPrint(blocks);
     bundle.put("blocksClient", blocks);
   }
 }

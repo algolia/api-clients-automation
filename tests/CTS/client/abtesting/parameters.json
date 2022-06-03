@@ -16,7 +16,7 @@
         "object": "$client",
         "path": "getABTest",
         "parameters": {
-          "id": "test"
+          "id": 123
         },
         "expected": {
           "match": {

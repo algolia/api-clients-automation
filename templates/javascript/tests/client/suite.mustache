@@ -36,7 +36,7 @@ describe('{{testType}}', () => {
                   {{/objectContaining}}
 
                   {{#regexp}}
-                    expect({{> client/testSubject}}).toMatch({{{regexp}}});
+                    expect({{> client/testSubject}}).toMatch(/{{{regexp}}}/);
                   {{/regexp}}
                 {{/match}}
             {{/isError}}
