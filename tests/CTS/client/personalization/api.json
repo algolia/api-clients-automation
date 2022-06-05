@@ -8,10 +8,8 @@
         "path": "getPersonalizationStrategy",
         "parameters": {},
         "expected": {
-          "testSubject": "userAgent",
-          "match": {
-            "regexp": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Personalization (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
-          }
+          "type": "userAgent",
+          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Personalization (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
         }
       }
     ]
@@ -25,11 +23,10 @@
         "path": "getPersonalizationStrategy",
         "parameters": {},
         "expected": {
+          "type": "timeouts",
           "match": {
-            "objectContaining": {
-              "connectTimeout": 2,
-              "responseTimeout": 5
-            }
+            "connectTimeout": 2,
+            "responseTimeout": 5
           }
         }
       }

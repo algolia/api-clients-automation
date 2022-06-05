@@ -19,11 +19,8 @@
           "id": 123
         },
         "expected": {
-          "match": {
-            "objectContaining": {
-              "host": "analytics.algolia.com"
-            }
-          }
+          "type": "host",
+          "match": "analytics.algolia.com"
         }
       }
     ]

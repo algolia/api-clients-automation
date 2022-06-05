@@ -92,29 +92,33 @@ public class TestsClient implements TestsGenerator {
           stepOut.put("path", step.path);
           paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
-          if (step.expected.testSubject == null) {
-            stepOut.put("testSubject", "result");
-          } else {
-            switch (step.expected.testSubject) {
+          if (step.expected.type != null) {
+            switch (step.expected.type) {
               case "userAgent":
                 stepOut.put("testUserAgent", true);
                 break;
+              case "host":
+                stepOut.put("testHost", true);
+                break;
+              case "timeouts":
+                stepOut.put("testTimeouts", true);
+                break;
               default:
-                stepOut.put("testSubject", step.expected.testSubject);
+                stepOut.put("testResult", true);
+                break;
             }
           }
           if (step.expected.error != null) {
             stepOut.put("isError", true);
             stepOut.put("expectedError", step.expected.error);
           } else if (step.expected.match != null) {
-            Map<String, Object> match = new HashMap<>();
-            match.put("regexp", step.expected.match.regexp);
-            if (step.expected.match.objectContaining != null) {
-              Map<String, Object> objectContaining = new HashMap<>();
-              paramsType.enhanceParameters(step.expected.match.objectContaining, objectContaining);
-              match.put("objectContaining", objectContaining);
+            if (step.expected.match instanceof Map) {
+              Map<String, Object> match = new HashMap<>();
+              paramsType.enhanceParameters((Map<String, Object>) step.expected.match, match);
+              stepOut.put("match", match);
+            } else {
+              stepOut.put("match", step.expected.match);
             }
-            stepOut.put("match", match);
           }
           steps.add(stepOut);
         }
@@ -125,7 +129,6 @@ public class TestsClient implements TestsGenerator {
       testObj.put("testType", blockEntry.getKey());
       blocks.add(testObj);
     }
-    // Json.prettyPrint(blocks);
     bundle.put("blocksClient", blocks);
   }
 }

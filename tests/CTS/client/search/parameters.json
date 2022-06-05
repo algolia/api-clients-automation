@@ -40,17 +40,6 @@
         "expected": {
           "error": "Parameter `apiKey` is required when calling `addApiKey`."
         }
-      },
-      {
-        "type": "method",
-        "object": "$client",
-        "path": "addApiKey",
-        "parameters": {
-          "acl": null
-        },
-        "expected": {
-          "error": "Parameter `apiKey.acl` is required when calling `addApiKey`."
-        }
       }
     ]
   },

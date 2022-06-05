@@ -19,11 +19,8 @@
           "index": "my-index"
         },
         "expected": {
-          "match": {
-            "objectContaining": {
-              "host": "analytics.algolia.com"
-            }
-          }
+          "type": "host",
+          "match": "analytics.algolia.com"
         }
       }
     ]

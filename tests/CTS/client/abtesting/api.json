@@ -17,10 +17,8 @@
           "endAt": "2022-02-01T13:37:01Z"
         },
         "expected": {
-          "testSubject": "userAgent",
-          "match": {
-            "regexp": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Abtesting (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
-          }
+          "type": "userAgent",
+          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Abtesting (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
         }
       }
     ]
@@ -43,11 +41,10 @@
           "endAt": "2022-02-01T13:37:01Z"
         },
         "expected": {
+          "type": "timeouts",
           "match": {
-            "objectContaining": {
-              "connectTimeout": 2,
-              "responseTimeout": 30
-            }
+            "connectTimeout": 2,
+            "responseTimeout": 30
           }
         }
       }

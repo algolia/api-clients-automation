@@ -1,7 +1,16 @@
 [
   {
     "testName": "calls api with correct host",
+    "autoCreateClient": false,
     "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key"
+        },
+        "expected": {}
+      },
       {
         "type": "method",
         "object": "$client",
@@ -10,11 +19,8 @@
           "requests": []
         },
         "expected": {
-          "match": {
-            "objectContaining": {
-              "host": "test-app-id-dsn.algolia.net"
-            }
-          }
+          "type": "host",
+          "match": "test-app-id-dsn.algolia.net"
         }
       }
     ]
@@ -30,10 +36,8 @@
           "requests": []
         },
         "expected": {
-          "testSubject": "userAgent",
-          "match": {
-            "regexp": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Recommend (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
-          }
+          "type": "userAgent",
+          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Recommend (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
         }
       }
     ]
@@ -49,11 +53,10 @@
           "requests": []
         },
         "expected": {
+          "type": "timeouts",
           "match": {
-            "objectContaining": {
-              "connectTimeout": 2,
-              "responseTimeout": 5
-            }
+            "connectTimeout": 2,
+            "responseTimeout": 5
           }
         }
       }
