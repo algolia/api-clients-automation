@@ -11,7 +11,7 @@
         },
         "expected": {
           "type": "userAgent",
-          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; QuerySuggestions (\\(\\d+\\.\\d+\\.\\d+\\)))(; (\\w)+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
+          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; QuerySuggestions (\\(\\d+\\.\\d+\\.\\d+\\)))(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
         }
       }
     ]
