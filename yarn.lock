@@ -12007,10 +12007,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openapi-types@npm:11.0.1":
-  version: 11.0.1
-  resolution: "openapi-types@npm:11.0.1"
-  checksum: 182c5b28199a0d030bf5f64b9c23f65dc800cdc845ae09c40aa5e03b862634a02526d5092af53bf853514af778ee2f36dead741e0521e01f944cf7f50927e14e
+"openapi-types@npm:12.0.0":
+  version: 12.0.0
+  resolution: "openapi-types@npm:12.0.0"
+  checksum: 8d22cb3727e892ad8f9782210360627f6cde92a53c229407d897f0252543a937aed59bfd7a4bee291b50547d7a4e836290ee35eaebc3978c873c601de9ace5b6
   languageName: node
   linkType: hard
 
@@ -13472,7 +13472,7 @@ __metadata:
     js-yaml: 4.1.0
     micromatch: 4.0.5
     mustache: 4.2.0
-    openapi-types: 11.0.1
+    openapi-types: 12.0.0
     ora-classic: 5.4.2
     semver: 7.3.7
     ts-jest: 28.0.4
