@@ -64,8 +64,19 @@ export type AlgoliaAgent = {
 };
 
 export type Timeouts = {
+  /**
+   * Timeout in milliseconds before the connection is established.
+   */
   connect: number;
+
+  /**
+   * Timeout in milliseconds before reading the response on a read request.
+   */
   read: number;
+
+  /**
+   * Timeout in milliseconds before reading the response on a write request.
+   */
   write: number;
 };
 
