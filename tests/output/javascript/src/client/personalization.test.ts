@@ -18,9 +18,9 @@ describe('api', () => {
   test('calls api with correct user agent', async () => {
     const $client = createClient();
 
-    const result0 = await $client.getPersonalizationStrategy({});
+    const result = await $client.getPersonalizationStrategy({});
 
-    expect(result0.algoliaAgent).toMatch(
+    expect(result.algoliaAgent).toMatch(
       /Algolia%20for%20(.+)%20\(\d+\.\d+\.\d+\)/
     );
   });
@@ -28,10 +28,10 @@ describe('api', () => {
   test('calls api with correct timeouts', async () => {
     const $client = createClient();
 
-    const result0 = await $client.getPersonalizationStrategy({});
+    const result = await $client.getPersonalizationStrategy({});
 
-    expect(result0).toEqual(
-      expect.objectContaining({ connectTimeout: 2, responseTimeout: 5 })
+    expect(result).toEqual(
+      expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
     );
   });
 });
