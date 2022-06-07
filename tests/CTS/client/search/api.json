@@ -67,8 +67,8 @@
         "expected": {
           "type": "timeouts",
           "match": {
-            "connectTimeout": 2,
-            "responseTimeout": 5
+            "connectTimeout": 2000,
+            "responseTimeout": 5000
           }
         }
       }
