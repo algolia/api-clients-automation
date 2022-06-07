@@ -1,6 +1,32 @@
 [
   {
-    "testName": "calls api with correct host",
+    "testName": "calls api with correct read host",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key"
+        },
+        "expected": {}
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "get",
+        "parameters": {
+          "path": "/test"
+        },
+        "expected": {
+          "type": "host",
+          "match": "test-app-id-dsn.algolia.net"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "calls api with correct write host",
     "autoCreateClient": false,
     "steps": [
       {
@@ -20,7 +46,7 @@
         },
         "expected": {
           "type": "host",
-          "match": "test-app-id-dsn.algolia.net"
+          "match": "test-app-id.algolia.net"
         }
       }
     ]
