@@ -9,9 +9,14 @@ import type {
   Requester,
 } from '@experimental-api-clients-automation/client-common';
 import {
+  DEFAULT_CONNECT_TIMEOUT_NODE,
+  DEFAULT_READ_TIMEOUT_NODE,
+  DEFAULT_WRITE_TIMEOUT_NODE,
+,
   createMemoryCache,
   createNullCache,
 } from '@experimental-api-clients-automation/client-common';
+
 import type {
   PersonalizationClient,
   Region as PersonalizationRegion,
@@ -41,9 +46,9 @@ export function algoliasearch(
 
   const commonOptions: Omit<CreateClientOptions, 'apiKey' | 'appId'> = {
     timeouts: {
-      connect: 2000,
-      read: 5000,
-      write: 30000,
+      connect: DEFAULT_CONNECT_TIMEOUT_NODE,
+      read: DEFAULT_READ_TIMEOUT_NODE,
+      write: DEFAULT_WRITE_TIMEOUT_NODE,
     },
     requester: options?.requester ?? createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],

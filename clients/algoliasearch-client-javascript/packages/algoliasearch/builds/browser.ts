@@ -12,6 +12,9 @@ import {
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@experimental-api-clients-automation/client-common';
 import type {
   PersonalizationClient,
@@ -42,9 +45,9 @@ export function algoliasearch(
 
   const commonOptions: Omit<CreateClientOptions, 'apiKey' | 'appId'> = {
     timeouts: {
-      connect: 1000,
-      read: 2000,
-      write: 30000,
+      connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
+      read: DEFAULT_READ_TIMEOUT_BROWSER,
+      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
     requester: options?.requester ?? createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
