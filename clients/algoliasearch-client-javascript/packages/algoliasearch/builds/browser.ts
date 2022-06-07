@@ -32,11 +32,11 @@ export function algoliasearch(
   apiKey: string,
   options?: { requester?: Requester; hosts?: Host[] }
 ) {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 
