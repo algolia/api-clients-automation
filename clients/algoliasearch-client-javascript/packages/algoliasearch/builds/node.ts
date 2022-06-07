@@ -12,11 +12,9 @@ import {
   DEFAULT_CONNECT_TIMEOUT_NODE,
   DEFAULT_READ_TIMEOUT_NODE,
   DEFAULT_WRITE_TIMEOUT_NODE,
-,
   createMemoryCache,
   createNullCache,
 } from '@experimental-api-clients-automation/client-common';
-
 import type {
   PersonalizationClient,
   Region as PersonalizationRegion,
