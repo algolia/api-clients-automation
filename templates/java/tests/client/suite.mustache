@@ -44,7 +44,7 @@ class {{client}}ClientTests {
         {{> client/step}}
         {{#match}}
           {{#testUserAgent}} {
-            String regexp = "{{#lambda.escapeslash}}{{{match}}}{{/lambda.escapeslash}}";
+            String regexp = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}";
             assertTrue(result.headers.get("user-agent").matches(regexp), "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp);
           }{{/testUserAgent}}
           {{#testTimeouts}}
