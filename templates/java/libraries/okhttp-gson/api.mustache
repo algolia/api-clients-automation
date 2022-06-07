@@ -53,9 +53,9 @@ public class {{classname}} extends ApiClient {
       } else {
         this.setHosts(options.getHosts());
       }
-      this.setConnectTimeout(2);
-      this.setReadTimeout(5);
-      this.setWriteTimeout(30);
+      this.setConnectTimeout(2000);
+      this.setReadTimeout(5000);
+      this.setWriteTimeout(30000);
     }
     
     {{/hasRegionalHost}}
@@ -71,9 +71,9 @@ public class {{classname}} extends ApiClient {
       } else {
         this.setHosts(options.getHosts());
       }
-      this.setConnectTimeout(2);
-      this.setReadTimeout(5);
-      this.setWriteTimeout(30);
+      this.setConnectTimeout(2000);
+      this.setReadTimeout(5000);
+      this.setWriteTimeout(30000);
     }
     {{/hasRegionalHost}}
 
