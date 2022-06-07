@@ -14,50 +14,13 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "getRecommendations",
+        "path": "post",
         "parameters": {
-          "requests": []
+          "path": "/test"
         },
         "expected": {
           "type": "host",
           "match": "test-app-id-dsn.algolia.net"
-        }
-      }
-    ]
-  },
-  {
-    "testName": "calls api with correct user agent",
-    "steps": [
-      {
-        "type": "method",
-        "object": "$client",
-        "path": "getRecommendations",
-        "parameters": {
-          "requests": []
-        },
-        "expected": {
-          "type": "userAgent",
-          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Recommend (\\(\\d+\\.\\d+\\.\\d+\\)))(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
-        }
-      }
-    ]
-  },
-  {
-    "testName": "calls api with correct timeouts",
-    "steps": [
-      {
-        "type": "method",
-        "object": "$client",
-        "path": "getRecommendations",
-        "parameters": {
-          "requests": []
-        },
-        "expected": {
-          "type": "timeouts",
-          "match": {
-            "connectTimeout": 2000,
-            "responseTimeout": 5000
-          }
         }
       }
     ]

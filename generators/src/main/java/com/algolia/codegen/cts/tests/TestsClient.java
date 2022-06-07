@@ -2,7 +2,6 @@ package com.algolia.codegen.cts.tests;
 
 import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.CTSException;
-import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,29 +11,10 @@ import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 
-public class TestsClient implements TestsGenerator {
-
-  private final String language, client;
+public class TestsClient extends TestsGenerator {
 
   public TestsClient(String language, String client) {
-    this.language = language;
-    this.client = client;
-  }
-
-  private Map<String, ClientTestData[]> loadCTS() throws Exception {
-    if (!available()) {
-      throw new CTSException("Templates not found for client test", true);
-    }
-
-    File dir = new File("tests/CTS/client/" + client);
-    if (!dir.exists()) {
-      throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
-    }
-    Map<String, ClientTestData[]> cts = new HashMap<>();
-    for (File f : dir.listFiles()) {
-      cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(f, ClientTestData[].class));
-    }
-    return cts;
+    super(language, client);
   }
 
   @Override
@@ -58,7 +38,7 @@ public class TestsClient implements TestsGenerator {
   }
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, ClientTestData[]> cts = loadCTS();
+    Map<String, ClientTestData[]> cts = loadCTS("client", client, ClientTestData[].class);
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language);
 
     List<Object> blocks = new ArrayList<>();

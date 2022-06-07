@@ -5,74 +5,13 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "postIngestUrl",
+        "path": "post",
         "parameters": {
-          "type": "csv",
-          "input": {
-            "url": "https://example.com/file.csv"
-          },
-          "target": {
-            "type": "search",
-            "indexName": "pageviews",
-            "operation": "replace"
-          }
+          "path": "/test"
         },
         "expected": {
           "type": "host",
           "match": "data.us.algolia.com"
-        }
-      }
-    ]
-  },
-  {
-    "testName": "calls api with correct user agent",
-    "steps": [
-      {
-        "type": "method",
-        "object": "$client",
-        "path": "postIngestUrl",
-        "parameters": {
-          "type": "csv",
-          "input": {
-            "url": "https://example.com/file.csv"
-          },
-          "target": {
-            "type": "search",
-            "indexName": "pageviews",
-            "operation": "replace"
-          }
-        },
-        "expected": {
-          "type": "userAgent",
-          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Sources (\\(\\d+\\.\\d+\\.\\d+\\)))(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
-        }
-      }
-    ]
-  },
-  {
-    "testName": "calls api with correct timeouts",
-    "steps": [
-      {
-        "type": "method",
-        "object": "$client",
-        "path": "postIngestUrl",
-        "parameters": {
-          "type": "csv",
-          "input": {
-            "url": "https://example.com/file.csv"
-          },
-          "target": {
-            "type": "search",
-            "indexName": "pageviews",
-            "operation": "replace"
-          }
-        },
-        "expected": {
-          "type": "timeouts",
-          "match": {
-            "connectTimeout": 2000,
-            "responseTimeout": 30000
-          }
         }
       }
     ]
