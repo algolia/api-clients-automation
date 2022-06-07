@@ -121,16 +121,6 @@ const { taskID } = await client.saveObject({
 
 // Poll the task status with defaults values
 await client.waitForTask({ indexName: '<YOUR_INDEX_NAME>', taskID });
-
-// Poll the task status with your options
-await client.waitForTask({
-  indexName: '<YOUR_INDEX_NAME>',
-  taskID,
-  // Number of maximum retries to do
-  maxTrial: 100,
-  // The time to wait between tries
-  timeout: (retryCount: number): number => Math.min(retryCount * 200, 5000),
-});
 ```
 
 </TabItem>

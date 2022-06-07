@@ -5,7 +5,7 @@ title: Wait for a task to finish
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-> The `waitForTask` method is only available in the `search` client context, as we don't awaitable tasks in other clients.
+> The `waitForTask` method is only available in the `search` client context.
 
 Some operations related to the Algolia index are not always instantaneous. Doing such operations with our API clients will provide a `taskID` in the response body, so you can later know what is the status of your operation.
 
