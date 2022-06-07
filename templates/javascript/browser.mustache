@@ -43,9 +43,9 @@ export function {{apiName}}(
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
     timeouts: {
-      connect: 1,
-      read: 2,
-      write: 30,
+      connect: 1000,
+      read: 2000,
+      write: 30000,
     },
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],

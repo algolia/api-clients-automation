@@ -41,9 +41,9 @@ export function algoliasearch(
 
   const commonOptions: Omit<CreateClientOptions, 'apiKey' | 'appId'> = {
     timeouts: {
-      connect: 2,
-      read: 5,
-      write: 30,
+      connect: 2000,
+      read: 5000,
+      write: 30000,
     },
     requester: options?.requester ?? createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],

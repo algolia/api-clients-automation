@@ -43,9 +43,9 @@ export function {{apiName}}(
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
     timeouts: {
-      connect: 2,
-      read: 5,
-      write: 30,
+      connect: 2000,
+      read: 5000,
+      write: 30000,
     },
     requester: createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],

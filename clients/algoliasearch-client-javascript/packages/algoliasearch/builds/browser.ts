@@ -42,9 +42,9 @@ export function algoliasearch(
 
   const commonOptions: Omit<CreateClientOptions, 'apiKey' | 'appId'> = {
     timeouts: {
-      connect: 1,
-      read: 2,
-      write: 30,
+      connect: 1000,
+      read: 2000,
+      write: 30000,
     },
     requester: options?.requester ?? createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
