@@ -1,6 +1,6 @@
 [
   {
-    "testName": "calls api with correct host",
+    "testName": "calls api with correct read host",
     "autoCreateClient": false,
     "steps": [
       {
@@ -14,62 +14,13 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "search",
+        "path": "get",
         "parameters": {
-          "requests": [
-            {
-              "indexName": "my-index"
-            }
-          ]
+          "path": "/test"
         },
         "expected": {
           "type": "host",
           "match": "test-app-id-dsn.algolia.net"
-        }
-      }
-    ]
-  },
-  {
-    "testName": "calls api with correct user agent",
-    "steps": [
-      {
-        "type": "method",
-        "object": "$client",
-        "path": "search",
-        "parameters": {
-          "requests": [
-            {
-              "indexName": "my-index"
-            }
-          ]
-        },
-        "expected": {
-          "type": "userAgent",
-          "match": "^Algolia for (Java|JavaScript) \\(\\d+\\.\\d+\\.\\d+\\)(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+\\)))(; [a-zA-Z. ]+ (\\(\\d+\\.\\d+\\.\\d+\\))?)*$"
-        }
-      }
-    ]
-  },
-  {
-    "testName": "calls api with correct timeouts",
-    "steps": [
-      {
-        "type": "method",
-        "object": "$client",
-        "path": "search",
-        "parameters": {
-          "requests": [
-            {
-              "indexName": "my-index"
-            }
-          ]
-        },
-        "expected": {
-          "type": "timeouts",
-          "match": {
-            "connectTimeout": 2000,
-            "responseTimeout": 5000
-          }
         }
       }
     ]
