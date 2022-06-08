@@ -51,7 +51,7 @@ public class EchoInterceptor {
           lastResponse = null;
         }
         Response.Builder builder = new Response.Builder();
-        builder.code(this.httpCode);
+        builder.code(httpCode);
         builder.request(request);
         builder.protocol(Protocol.HTTP_2);
         builder.message("EchoMessage");
