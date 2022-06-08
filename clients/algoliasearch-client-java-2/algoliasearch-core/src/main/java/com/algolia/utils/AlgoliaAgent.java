@@ -9,9 +9,11 @@ public class AlgoliaAgent {
 
   private String finalValue;
 
-  public AlgoliaAgent(String clientVersion) {
+  public AlgoliaAgent(String clientVersion, String clientName) {
     this.finalValue = String.format("Algolia for Java (%s)", clientVersion);
     this.segments = new LinkedHashSet<String>();
+
+    this.addSegment(new Segment(clientName, clientVersion));
     this.addSegment(new Segment("JVM", System.getProperty("java.version")));
   }
 
