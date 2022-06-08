@@ -15,6 +15,15 @@ const run = async (command, { cwd } = {}) => {
   );
 };
 
+function getPatterns() {
+  const patterns = GENERATED_FILE_PATTERNS;
+  for (const [language, { tests }] of Object.entries(clientConfig)) {
+    patterns.push(`tests/output/${language}/${tests.outputFolder}/client/**`);
+    patterns.push(`tests/output/${language}/${tests.outputFolder}/methods/**`);
+  }
+  return patterns;
+}
+
 async function preCommit() {
   // when merging, we want to stage all the files
   if ((await run('git merge HEAD')) !== 'Already up to date.') {
@@ -24,13 +33,8 @@ async function preCommit() {
   const stagedFiles = (
     await run('git diff --name-only --cached --diff-filter=d')
   ).split('\n');
-  const patterns = GENERATED_FILE_PATTERNS;
-  for (const [language, { tests }] of Object.entries(clientConfig)) {
-    patterns.push(`tests/output/${language}/${tests.outputFolder}/client/**`);
-    patterns.push(`tests/output/${language}/${tests.outputFolder}/methods/**`);
-  }
 
-  const toUnstage = micromatch.match(stagedFiles, patterns);
+  const toUnstage = micromatch.match(stagedFiles, getPatterns());
 
   for (const file of toUnstage) {
     // eslint-disable-next-line no-console
@@ -46,3 +50,5 @@ async function preCommit() {
 if (require.main === module && !process.env.CI) {
   preCommit();
 }
+
+module.exports = { getPatterns };
