@@ -151,11 +151,15 @@ export function parseCommit(commit: string): Commit {
 /**
  * Returns the next version of the client.
  */
-function getNextVersion(
+export function getNextVersion(
   current: string,
-  releaseType: semver.ReleaseType,
+  releaseType: semver.ReleaseType | null,
   isSnapShotVersion: boolean = false
 ): string {
+  if (releaseType === null) {
+    return current;
+  }
+
   let nextVersion: string | null = current;
 
   if (!isSnapShotVersion) {
@@ -199,6 +203,7 @@ export function decideReleaseStrategy({
           ...version,
           noCommit: true,
           releaseType: null,
+          next: getNextVersion(currentVersion, null),
         };
         return versionsWithReleaseType;
       }
