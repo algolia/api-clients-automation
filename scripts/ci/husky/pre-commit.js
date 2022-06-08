@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const chalk = require('chalk');
@@ -30,6 +31,9 @@ async function preCommit() {
     await run('git merge HEAD');
   } catch (e) {
     if (e.exitCode === 128) {
+      console.log(
+        'Skipping the pre-commit check because a merge is in progress'
+      );
       return;
     }
   }
@@ -41,7 +45,6 @@ async function preCommit() {
   const toUnstage = micromatch.match(stagedFiles, getPatterns());
 
   for (const file of toUnstage) {
-    // eslint-disable-next-line no-console
     console.log(
       chalk.black.bgYellow('[INFO]'),
       `Generated file found, unstaging: ${file}`
