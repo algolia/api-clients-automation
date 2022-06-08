@@ -17,6 +17,15 @@ import okio.Buffer;
 public class EchoInterceptor {
 
   private EchoResponse lastResponse;
+  private int httpCode;
+
+  public EchoInterceptor(int httpCode) {
+    this.httpCode = httpCode;
+  }
+
+  public EchoInterceptor() {
+    this(200);
+  }
 
   public Interceptor getEchoInterceptor() {
     return new Interceptor() {
@@ -42,7 +51,7 @@ public class EchoInterceptor {
           lastResponse = null;
         }
         Response.Builder builder = new Response.Builder();
-        builder.code(200);
+        builder.code(this.httpCode);
         builder.request(request);
         builder.protocol(Protocol.HTTP_2);
         builder.message("EchoMessage");
@@ -87,5 +96,9 @@ public class EchoInterceptor {
 
   public EchoResponse getLastResponse() {
     return this.lastResponse;
+  }
+
+  public void setHttpCode(int httpCode) {
+    this.httpCode = httpCode;
   }
 }
