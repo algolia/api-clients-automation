@@ -10,10 +10,10 @@ final class AlgoliaAgent
 
     private static $customSegments = [];
 
-    public static function get()
+    public static function get($clientName)
     {
         if (null === self::$value) {
-            self::$value = self::getComputedValue();
+            self::$value = self::getComputedValue($clientName);
         }
 
         return self::$value;
@@ -25,11 +25,11 @@ final class AlgoliaAgent
         self::$customSegments[trim($segment, ' ')] = trim($version, ' ');
     }
 
-    private static function getComputedValue()
+    private static function getComputedValue($clientName)
     {
         $ua = [];
         $segments = array_merge(
-            self::getDefaultSegments(),
+            self::getDefaultSegments($clientName),
             self::$customSegments
         );
 
@@ -40,11 +40,12 @@ final class AlgoliaAgent
         return implode('; ', $ua);
     }
 
-    private static function getDefaultSegments()
+    private static function getDefaultSegments($clientName)
     {
         $segments = [];
 
         $segments['Algolia for PHP'] = Algolia::VERSION;
+        $segments[$clientName] = Algolia::VERSION;
         $segments['PHP'] = rtrim(
             str_replace(PHP_EXTRA_VERSION, '', PHP_VERSION),
             '-'

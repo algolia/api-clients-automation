@@ -2,6 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\RequestOptions;
 
+use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\Configuration;
 use Algolia\AlgoliaSearch\Support\AlgoliaAgent;
 
@@ -52,7 +53,7 @@ final class RequestOptionsFactory
                 'x-algolia-api-key' => $this->config->getAlgoliaApiKey(),
                 'User-Agent' => $this->config->getAlgoliaAgent() !== null
                         ? $this->config->getAlgoliaAgent()
-                        : AlgoliaAgent::get(),
+                        : AlgoliaAgent::get($this->config->getClientName()),
                 'Content-Type' => 'application/json',
             ],
             'queryParameters' => [],

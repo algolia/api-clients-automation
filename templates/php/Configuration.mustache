@@ -54,6 +54,8 @@ abstract class Configuration
 
     protected $defaultConnectTimeout = 2;
 
+    protected $clientName;
+
     public function __construct(array $config = [])
     {
         if(isset($config['apiKey'])) {
@@ -277,5 +279,15 @@ abstract class Configuration
     public function getAlgoliaAgent()
     {
         return $this->algoliaAgent;
+    }
+
+    /**
+     * Gets the name of the client which the config belongs to
+     *
+     * @return string client name
+     */
+    public function getClientName()
+    {
+        return $this->clientName;
     }
 }

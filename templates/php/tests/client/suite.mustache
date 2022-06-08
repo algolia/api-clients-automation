@@ -39,10 +39,10 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 );
             }
 
-            if (isset($request['regexp'])) {
+            if (isset($request['userAgent'])) {
                 $this->assertTrue(
                     (bool) preg_match(
-                        str_replace('%20', ' ', $request['regexp']),
+                        '/' . $request['userAgent'] . '/',
                         $recordedRequest->getHeader('User-Agent')[0]
                     )
                 );
@@ -81,42 +81,53 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {
         $this->recordedRequests[] = [
             'request' => $request,
-            'responseTimeout' => $timeout,
-            'connectTimeout' => $connectTimeout,
+            'responseTimeout' => $timeout * 1000,
+            'connectTimeout' => $connectTimeout * 1000,
         ];
 
         return new Response(200, [], '{}');
     }
 
-    {{#blocks}}
+    {{#blocksClient}}
     {{#tests}}
     /**
     * Test case : {{{testName}}}
     */
-    public function test{{testIndex}}()
+    public function test{{testIndex}}{{testType}}()
     {
         $client = $this->createClient();
         {{#steps}}
         {{#isMethod}}
-        {{#expectedError}}
+            {{#isError}}
 
-        {{/expectedError}}
-        {{^expectedError}}
-            $client->{{{path}}}{{^associatedParameters}}();{{/associatedParameters}}{{#associatedParameters}}([
-            {{> params}}
-            ]){{/associatedParameters}};
-
-            {{#expected}}
-            $this->assertRequests([
-                {{> expected}}
-            ]);
-            {{/expected}}
-
-        {{/expectedError}}
+            {{/isError}}
+            {{^isError}}
+                $client->{{{path}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}{{#parametersWithDataType}}(
+                {{> generateParams}}
+                ){{/parametersWithDataType}};
+                {{#match}}
+                    $this->assertRequests([
+                        [
+                        {{#testUserAgent}}
+                            'userAgent' => '{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}',
+                        {{/testUserAgent}}
+                        {{#testHost}}
+                            'host' => '{{{match}}}',
+                        {{/testHost}}
+                        {{#testTimeouts}}
+                            'connectTimeout' => {{{match.parametersWithDataTypeMap.connectTimeout.value}}},
+                            'responseTimeout' => {{{match.parametersWithDataTypeMap.responseTimeout.value}}},
+                        {{/testTimeouts}}
+                        {{#testResult}}
+                        {{/testResult}}
+                        ]
+                    ]);
+                {{/match}}
+            {{/isError}}
         {{/isMethod}}
         {{/steps}}
     }
 
     {{/tests}}
-    {{/blocks}}
+    {{/blocksClient}}
 }
