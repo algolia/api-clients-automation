@@ -42,7 +42,7 @@ public abstract class ApiClient {
         this.algoliaAgent.addSegment(segment);
       }
     }
-    resetUserAgent();
+    refreshUserAgent();
 
     addDefaultHeader("X-Algolia-Application-Id", appId);
     addDefaultHeader("X-Algolia-API-Key", apiKey);
@@ -55,7 +55,7 @@ public abstract class ApiClient {
     }
   }
 
-  private void resetUserAgent() {
+  private void refreshUserAgent() {
     addDefaultHeader("User-Agent", this.algoliaAgent.toString());
   }
 
@@ -67,7 +67,7 @@ public abstract class ApiClient {
    */
   public ApiClient addAlgoliaAgent(AlgoliaAgent.Segment segment) {
     algoliaAgent.addSegment(segment);
-    resetUserAgent();
+    refreshUserAgent();
     return this;
   }
 
@@ -79,7 +79,7 @@ public abstract class ApiClient {
    */
   public ApiClient removeAlgoliaAgent(AlgoliaAgent.Segment segment) {
     algoliaAgent.removeSegment(segment);
-    resetUserAgent();
+    refreshUserAgent();
     return this;
   }
 
