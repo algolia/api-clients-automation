@@ -26,8 +26,12 @@ function getPatterns() {
 
 async function preCommit() {
   // when merging, we want to stage all the files
-  if ((await run('git merge HEAD')) !== 'Already up to date.') {
-    return;
+  try {
+    await run('git merge HEAD');
+  } catch (e) {
+    if (e.exitCode === 128) {
+      return;
+    }
   }
 
   const stagedFiles = (
