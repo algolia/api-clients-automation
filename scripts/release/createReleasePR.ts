@@ -153,8 +153,7 @@ export function parseCommit(commit: string): Commit {
  */
 export function getNextVersion(
   current: string,
-  releaseType: semver.ReleaseType | null,
-  isSnapShotVersion: boolean = false
+  releaseType: semver.ReleaseType | null
 ): string {
   if (releaseType === null) {
     return current;
@@ -162,7 +161,8 @@ export function getNextVersion(
 
   let nextVersion: string | null = current;
 
-  if (!isSnapShotVersion) {
+  // snapshots should not be bumped as prerelease
+  if (!current.endsWith('-SNAPSHOT')) {
     nextVersion = semver.inc(current, releaseType);
   } else {
     nextVersion = `${semver.inc(
@@ -195,8 +195,6 @@ export function decideReleaseStrategy({
           commit.scope === lang || COMMON_SCOPES.includes(commit.scope)
       );
       const currentVersion = versions[lang].current;
-      const isSnapShotVersion =
-        lang === 'java' && currentVersion.endsWith('-SNAPSHOT');
 
       if (commitsPerLang.length === 0) {
         versionsWithReleaseType[lang] = {
@@ -210,7 +208,11 @@ export function decideReleaseStrategy({
 
       console.log(`Deciding next version bump for ${lang}.`);
 
-      if (!isSnapShotVersion && semver.prerelease(currentVersion)) {
+      // snapshots should not be bumped as prerelease
+      if (
+        semver.prerelease(currentVersion) &&
+        !currentVersion.endsWith('-SNAPSHOT')
+      ) {
         // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
         versionsWithReleaseType[lang] = {
           ...version,
@@ -228,7 +230,7 @@ export function decideReleaseStrategy({
         versionsWithReleaseType[lang] = {
           ...version,
           releaseType: 'major',
-          next: getNextVersion(currentVersion, 'major', isSnapShotVersion),
+          next: getNextVersion(currentVersion, 'major'),
         };
         return versionsWithReleaseType;
       }
@@ -238,7 +240,7 @@ export function decideReleaseStrategy({
         versionsWithReleaseType[lang] = {
           ...version,
           releaseType: 'minor',
-          next: getNextVersion(currentVersion, 'minor', isSnapShotVersion),
+          next: getNextVersion(currentVersion, 'minor'),
         };
         return versionsWithReleaseType;
       }
@@ -247,7 +249,7 @@ export function decideReleaseStrategy({
         ...version,
         releaseType: 'patch',
         ...(commitTypes.has('fix') ? undefined : { skipRelease: true }),
-        next: getNextVersion(currentVersion, 'patch', isSnapShotVersion),
+        next: getNextVersion(currentVersion, 'patch'),
       };
       return versionsWithReleaseType;
     },
