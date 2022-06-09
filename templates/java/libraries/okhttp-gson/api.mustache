@@ -47,7 +47,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, String region, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", options);
+      super(appId, apiKey, "{{{baseName}}}", "{{{packageVersion}}}", options);
       if (options.getHosts() == null) {
         this.setHosts(getDefaultHosts(region));
       } else {
@@ -65,7 +65,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
-        super(appId, apiKey, "{{{baseName}}}", options);
+        super(appId, apiKey, "{{{baseName}}}", "{{{packageVersion}}}", options);
       if (options.getHosts() == null) {
         this.setHosts(getDefaultHosts(appId));
       } else {
@@ -254,24 +254,24 @@ public class {{classname}} extends ApiClient {
   {{/operation}}
 
   {{#isSearchClient}}
-  public void waitForTask(String indexName, Long taskID, RequestOptions requestOptions, int maxTrial, IntUnaryOperator timeout) {
+  public void waitForTask(String indexName, Long taskID, RequestOptions requestOptions, int maxRetries, IntUnaryOperator timeout) {
     TaskUtils.retryUntil(() -> {
       return this.getTaskAsync(indexName, taskID, requestOptions);
     }, (GetTaskResponse task) -> {
       return task.getStatus() == TaskStatus.PUBLISHED;
-    }, maxTrial, timeout);
+    }, maxRetries, timeout);
   }
 
   public void waitForTask(String indexName, Long taskID, RequestOptions requestOptions) {
-    this.waitForTask(indexName, taskID, requestOptions, TaskUtils.DEFAULT_MAX_TRIAL, TaskUtils.DEFAULT_TIMEOUT);
+    this.waitForTask(indexName, taskID, requestOptions, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT);
   }
 
-  public void waitForTask(String indexName, Long taskID, int maxTrial, IntUnaryOperator timeout) {
-    this.waitForTask(indexName, taskID, null, maxTrial, timeout);
+  public void waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout) {
+    this.waitForTask(indexName, taskID, null, maxRetries, timeout);
   }
 
   public void waitForTask(String indexName, Long taskID) {
-    this.waitForTask(indexName, taskID, null, TaskUtils.DEFAULT_MAX_TRIAL, TaskUtils.DEFAULT_TIMEOUT);
+    this.waitForTask(indexName, taskID, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT);
   }
   {{/isSearchClient}}
 }

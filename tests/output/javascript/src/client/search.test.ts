@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable require-await */
+/* eslint-disable @typescript-eslint/no-unused-vars, require-await */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { SearchClient } from '@experimental-api-clients-automation/client-search';
 import { searchClient } from '@experimental-api-clients-automation/client-search';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
+import type { EchoResponse } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
@@ -13,39 +13,41 @@ function createClient(): SearchClient {
 }
 
 describe('api', () => {
-  test('calls api with correct host', async () => {
-    const $client = createClient();
-
-    const result = await $client.search({
-      requests: [{ indexName: 'my-index' }],
+  test('calls api with correct read host', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      requester: echoRequester(),
     });
 
-    expect(result).toEqual(
-      expect.objectContaining({ host: 'test-app-id-dsn.algolia.net' })
-    );
-  });
+    const result = (await $client.get({
+      path: '/test',
+    })) as unknown as EchoResponse;
 
+    expect(result.host).toEqual('test-app-id-dsn.algolia.net');
+  });
+});
+
+describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
     const $client = createClient();
 
-    const result = await $client.search({
-      requests: [{ indexName: 'my-index' }],
-    });
+    const result = (await $client.post({
+      path: '/test',
+    })) as unknown as EchoResponse;
 
-    expect(result.algoliaAgent).toMatch(
-      /Algolia%20for%20(.+)%20\(\d+\.\d+\.\d+\)/
+    expect(decodeURI(result.algoliaAgent)).toMatch(
+      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-.*)?\)(; [a-zA-Z. ]+ (\(\d+\.\d+\.\d+(-.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-.*)?\)))(; [a-zA-Z. ]+ (\(\d+\.\d+\.\d+(-.*)?\))?)*$/
     );
   });
 
   test('calls api with correct timeouts', async () => {
     const $client = createClient();
 
-    const result = await $client.search({
-      requests: [{ indexName: 'my-index' }],
-    });
+    const result = (await $client.post({
+      path: '/test',
+    })) as unknown as EchoResponse;
 
     expect(result).toEqual(
-      expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
+      expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
     );
   });
 });
@@ -57,7 +59,7 @@ describe('parameters', () => {
 
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect(e.message).toMatch('`appId` is missing.');
+      expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
       const $client = searchClient('', 'my-api-key', {
@@ -66,7 +68,7 @@ describe('parameters', () => {
 
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect(e.message).toMatch('`appId` is missing.');
+      expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
       const $client = searchClient('my-app-id', '', {
@@ -75,7 +77,7 @@ describe('parameters', () => {
 
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect(e.message).toMatch('`apiKey` is missing.');
+      expect((e as Error).message).toMatch('`apiKey` is missing.');
     }
   });
 
@@ -83,21 +85,12 @@ describe('parameters', () => {
     const $client = createClient();
 
     try {
-      const result = await $client.addApiKey();
+      const result = (await $client.addApiKey(null)) as unknown as EchoResponse;
 
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect(e.message).toMatch(
+      expect((e as Error).message).toMatch(
         'Parameter `apiKey` is required when calling `addApiKey`.'
-      );
-    }
-    try {
-      const result = await $client.addApiKey({});
-
-      throw new Error('test is expected to throw error');
-    } catch (e) {
-      expect(e.message).toMatch(
-        'Parameter `apiKey.acl` is required when calling `addApiKey`.'
       );
     }
   });
@@ -106,38 +99,38 @@ describe('parameters', () => {
     const $client = createClient();
 
     try {
-      const result = await $client.addOrUpdateObject({
+      const result = (await $client.addOrUpdateObject({
         objectID: 'my-object-id',
         body: {},
-      });
+      })) as unknown as EchoResponse;
 
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect(e.message).toMatch(
+      expect((e as Error).message).toMatch(
         'Parameter `indexName` is required when calling `addOrUpdateObject`.'
       );
     }
     try {
-      const result = await $client.addOrUpdateObject({
+      const result = (await $client.addOrUpdateObject({
         indexName: 'my-index-name',
         body: {},
-      });
+      })) as unknown as EchoResponse;
 
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect(e.message).toMatch(
+      expect((e as Error).message).toMatch(
         'Parameter `objectID` is required when calling `addOrUpdateObject`.'
       );
     }
     try {
-      const result = await $client.addOrUpdateObject({
+      const result = (await $client.addOrUpdateObject({
         indexName: 'my-index-name',
         objectID: 'my-object-id',
-      });
+      })) as unknown as EchoResponse;
 
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect(e.message).toMatch(
+      expect((e as Error).message).toMatch(
         'Parameter `body` is required when calling `addOrUpdateObject`.'
       );
     }

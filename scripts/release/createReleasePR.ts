@@ -22,7 +22,7 @@ import { RELEASED_TAG } from './common';
 import TEXT from './text';
 import type {
   Versions,
-  VersionsWithoutReleaseType,
+  VersionsBeforeBump,
   PassedCommit,
   Commit,
   Scope,
@@ -32,9 +32,9 @@ import { updateAPIVersions } from './updateAPIVersions';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
-const COMMON_SCOPES = ['specs'];
+export const COMMON_SCOPES = ['specs', 'clients'];
 
-export function readVersions(): VersionsWithoutReleaseType {
+export function readVersions(): VersionsBeforeBump {
   return Object.fromEntries(
     LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }])
   );
@@ -42,7 +42,8 @@ export function readVersions(): VersionsWithoutReleaseType {
 
 export function getVersionChangesText(versions: Versions): string {
   return LANGUAGES.map((lang) => {
-    const { current, releaseType, noCommit, skipRelease } = versions[lang];
+    const { current, releaseType, noCommit, skipRelease, next } =
+      versions[lang];
 
     if (noCommit) {
       return `- ~${lang}: ${current} (${TEXT.noCommit})~`;
@@ -51,8 +52,6 @@ export function getVersionChangesText(versions: Versions): string {
     if (!current) {
       return `- ~${lang}: (${TEXT.currentVersionNotFound})~`;
     }
-
-    const next = semver.inc(current, releaseType!);
 
     if (skipRelease) {
       return [
@@ -143,10 +142,46 @@ export function parseCommit(commit: string): Commit {
   return {
     hash,
     type, // `fix` | `feat` | `chore` | ...
-    scope, // `specs` | `javascript` | `php` | `java` | ...
+    scope, // `clients` | `specs` | `javascript` | `php` | `java` | ...
     message,
     raw: commit,
   };
+}
+
+/**
+ * Returns the next version of the client.
+ */
+export function getNextVersion(
+  current: string,
+  releaseType: semver.ReleaseType | null
+): string {
+  if (releaseType === null) {
+    return current;
+  }
+
+  let nextVersion: string | null = current;
+
+  // snapshots should not be bumped as prerelease
+  if (!current.endsWith('-SNAPSHOT')) {
+    nextVersion = semver.inc(current, releaseType);
+  } else {
+    nextVersion = `${semver.inc(
+      current.replace('-SNAPSHOT', ''),
+      releaseType
+    )}-SNAPSHOT`;
+  }
+
+  if (!nextVersion) {
+    throw new Error(
+      `Unable to bump version: '${current}' with release type: '${releaseType}'`
+    );
+  }
+
+  console.log(
+    `Next version is '${nextVersion}', release type: '${releaseType}'`
+  );
+
+  return nextVersion;
 }
 
 /* eslint-disable no-param-reassign */
@@ -154,7 +189,7 @@ export function decideReleaseStrategy({
   versions,
   commits,
 }: {
-  versions: VersionsWithoutReleaseType;
+  versions: VersionsBeforeBump;
   commits: PassedCommit[];
 }): Versions {
   return Object.entries(versions).reduce(
@@ -170,15 +205,23 @@ export function decideReleaseStrategy({
           ...version,
           noCommit: true,
           releaseType: null,
+          next: getNextVersion(currentVersion, null),
         };
         return versionsWithReleaseType;
       }
 
-      if (semver.prerelease(currentVersion)) {
+      console.log(`Deciding next version bump for ${lang}.`);
+
+      // snapshots should not be bumped as prerelease
+      if (
+        semver.prerelease(currentVersion) &&
+        !currentVersion.endsWith('-SNAPSHOT')
+      ) {
         // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
         versionsWithReleaseType[lang] = {
           ...version,
           releaseType: 'prerelease',
+          next: getNextVersion(currentVersion, 'prerelease'),
         };
         return versionsWithReleaseType;
       }
@@ -191,6 +234,7 @@ export function decideReleaseStrategy({
         versionsWithReleaseType[lang] = {
           ...version,
           releaseType: 'major',
+          next: getNextVersion(currentVersion, 'major'),
         };
         return versionsWithReleaseType;
       }
@@ -200,6 +244,7 @@ export function decideReleaseStrategy({
         versionsWithReleaseType[lang] = {
           ...version,
           releaseType: 'minor',
+          next: getNextVersion(currentVersion, 'minor'),
         };
         return versionsWithReleaseType;
       }
@@ -208,6 +253,7 @@ export function decideReleaseStrategy({
         ...version,
         releaseType: 'patch',
         ...(commitTypes.has('fix') ? undefined : { skipRelease: true }),
+        next: getNextVersion(currentVersion, 'patch'),
       };
       return versionsWithReleaseType;
     },
@@ -345,7 +391,7 @@ async function createReleasePR(): Promise<void> {
   const headBranch = `chore/prepare-release-${TODAY}`;
 
   console.log('Updating config files...');
-  await updateAPIVersions(versionChanges, changelog, headBranch);
+  await updateAPIVersions(versions, changelog, headBranch);
 
   console.log('Creating pull request...');
   const octokit = getOctokit();

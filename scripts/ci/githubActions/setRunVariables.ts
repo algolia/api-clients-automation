@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { CLIENTS_JS_UTILS } from '../../common';
 import { getLanguageFolder } from '../../config';
 
 import { isBaseChanged } from './utils';
@@ -13,6 +14,7 @@ const CLIENTS_COMMON_FILES = [
   'config/clients.config.json',
   'generators/src/main/java/com/algolia/codegen/Utils.java',
   'generators/src/main/java/com/algolia/codegen/cts',
+  'tests/CTS',
 ];
 
 /**
@@ -52,11 +54,9 @@ export const DEPENDENCIES = {
   JS_COMMON_TESTS_CHANGED: [
     `${JS_CLIENT_FOLDER}/packages/client-common/src/__tests__`,
   ],
-  JAVASCRIPT_UTILS_CHANGED: [
-    `${JS_CLIENT_FOLDER}/packages/client-common`,
-    `${JS_CLIENT_FOLDER}/packages/requester-browser-xhr`,
-    `${JS_CLIENT_FOLDER}/packages/requester-node-http`,
-  ],
+  JAVASCRIPT_UTILS_CHANGED: CLIENTS_JS_UTILS.map(
+    (clientName) => `${JS_CLIENT_FOLDER}/packages/${clientName}`
+  ),
   JAVASCRIPT_CLIENT_CHANGED: [
     ...CLIENTS_COMMON_FILES,
     JS_CLIENT_FOLDER,
@@ -64,21 +64,18 @@ export const DEPENDENCIES = {
     'generators/src/main/java/com/algolia/codegen/AlgoliaJavaScriptGenerator.java',
     `:!${JS_CLIENT_FOLDER}/.github`,
     `:!${JS_CLIENT_FOLDER}/README.md`,
-    'tests/CTS/methods/requests/templates/javascript',
   ],
   JAVA_CLIENT_CHANGED: [
     ...CLIENTS_COMMON_FILES,
     JAVA_CLIENT_FOLDER,
     'templates/java',
     'generators/src/main/java/com/algolia/codegen/AlgoliaJavaGenerator.java',
-    'tests/CTS/methods/requests/templates/java',
   ],
   PHP_CLIENT_CHANGED: [
     ...CLIENTS_COMMON_FILES,
     PHP_CLIENT_FOLDER,
     'templates/php',
     'generators/src/main/java/com/algolia/codegen/AlgoliaPhpGenerator.java',
-    'tests/CTS/methods/requests/templates/php',
   ],
 };
 

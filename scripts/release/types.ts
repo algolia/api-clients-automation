@@ -5,6 +5,7 @@ import type { Language } from '../types';
 export type Version = {
   current: string;
   releaseType: ReleaseType | null;
+  next: string | null;
   skipRelease?: boolean;
   noCommit?: boolean;
 };
@@ -13,17 +14,17 @@ export type Versions = {
   [lang: string]: Version;
 };
 
-export type VersionsWithoutReleaseType = {
-  [lang: string]: Omit<Version, 'releaseType'>;
+export type VersionsBeforeBump = {
+  [lang: string]: Omit<Version, 'next' | 'releaseType'>;
 };
 
-export type Scope = Language | 'specs';
+export type Scope = Language | 'clients' | 'specs';
 
 export type PassedCommit = {
   hash: string;
   type: string;
   /**
-   * A commit can be scoped to a language, or the specs, which impacts all clients.
+   * A commit can be scoped to a language. When scoped to `clients` or `specs`, it impacts all clients.
    */
   scope: Scope;
   message: string;
@@ -39,6 +40,7 @@ export type Commit =
 export type VersionsToRelease = {
   [lang in Language]?: {
     current: string;
+    next: string;
     releaseType: ReleaseType;
   };
 };
