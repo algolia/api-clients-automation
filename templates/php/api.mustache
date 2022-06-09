@@ -50,10 +50,18 @@ use {{invokerPackage}}\Support\Helpers;
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}];
+        $allowedRegions = self::getAllowedRegions();
         $config = {{configClassname}}::create($appId, $apiKey, $region, $allowedRegions);
 
         return static::createWithConfig($config);
+    }
+
+    /**
+     * Returns the allowed regions for the config
+     */
+    public static function getAllowedRegions()
+    {
+        return [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}];
     }
     {{/hasRegionalHost}}
 
@@ -91,11 +99,11 @@ use {{invokerPackage}}\Support\Helpers;
     /**
      * Gets the cluster hosts depending on the config
      *
-     * @param InsightsConfig $config
+     * @param {{configClassname}} $config
      *
      * @return ClusterHosts
      */
-    public static function getClusterHosts(InsightsConfig $config)
+    public static function getClusterHosts({{configClassname}} $config)
     {
         {{#useCache}}
         $cacheKey = sprintf('%s-clusterHosts-%s', __CLASS__, $config->getAppId());
@@ -174,7 +182,7 @@ use {{invokerPackage}}\Support\Helpers;
         // verify the required parameter '{{paramName}}' is set
         if (${{paramName}} === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter ${{paramName}} when calling {{operationId}}'
+                'Parameter `{{paramName}}` is required when calling `{{operationId}}`.'
             );
         }
         {{/required}}

@@ -17,7 +17,10 @@ abstract class ConfigWithRegion extends Configuration
             $allowedRegions !== null &&
             !in_array($region, $allowedRegions, true)
         ) {
-            throw new AlgoliaException('Specified region is not allowed.');
+            throw new AlgoliaException(
+                '`region` must be one of the following: ' .
+                    implode(', ', $allowedRegions)
+            );
         }
 
         $config = [

@@ -69,9 +69,19 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
      */
     private function createClient($region = '{{{defaultRegion}}}')
     {
-        $config = {{clientPrefix}}Config::create(self::APP_ID, self::API_KEY);
-        {{^hasRegionalHost}}$clusterHosts = ClusterHosts::createFromAppId(self::APP_ID);{{/hasRegionalHost}}
-        {{#hasRegionalHost}}$clusterHosts = InsightsClient::getClusterHosts($config);{{/hasRegionalHost}}
+        {{^hasRegionalHost}}
+            $config = {{clientPrefix}}Config::create(self::APP_ID, self::API_KEY);
+            $clusterHosts = ClusterHosts::createFromAppId(self::APP_ID);
+        {{/hasRegionalHost}}
+        {{#hasRegionalHost}}
+            $config = {{clientPrefix}}Config::create(
+                self::APP_ID, 
+                self::API_KEY, 
+                $region,
+                {{client}}::getAllowedRegions()
+            );
+            $clusterHosts = {{client}}::getClusterHosts($config);
+        {{/hasRegionalHost}}
         $api = new ApiWrapper($this, $config, $clusterHosts);
 
         return new {{client}}($api, $config);
@@ -95,36 +105,58 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     */
     public function test{{testIndex}}{{testType}}()
     {
-        $client = $this->createClient(null);
+        {{#autoCreateClient}}
+            $client = $this->createClient(null);
+        {{/autoCreateClient}}
         {{#steps}}
-        {{#isMethod}}
-            {{#isError}}
-
-            {{/isError}}
-            {{^isError}}
-                $client->{{{path}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}{{#parametersWithDataType}}(
-                {{> generateParams}}
-                ){{/parametersWithDataType}};
-                {{#match}}
-                    $this->assertRequests([
-                        [
-                        {{#testUserAgent}}
-                            'userAgent' => '{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}',
-                        {{/testUserAgent}}
-                        {{#testHost}}
-                            'host' => '{{{match}}}',
-                        {{/testHost}}
-                        {{#testTimeouts}}
-                            'connectTimeout' => {{{match.parametersWithDataTypeMap.connectTimeout.value}}},
-                            'responseTimeout' => {{{match.parametersWithDataTypeMap.responseTimeout.value}}},
-                        {{/testTimeouts}}
-                        {{#testResult}}
-                        {{/testResult}}
-                        ]
-                    ]);
-                {{/match}}
-            {{/isError}}
-        {{/isMethod}}
+            {{#isCreateClient}}
+                {{#isError}}
+                    try {
+                        $client = $this->createClient({{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}});
+                    } catch (\Exception $e) {
+                        $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
+                    }
+                {{/isError}}
+                {{^isError}}
+                    $client = $this->createClient({{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}});
+                    // Make sure everything went fine without errors
+                    $this->assertIsObject($client);
+                {{/isError}}
+            {{/isCreateClient}}
+            {{#isMethod}}
+                {{#isError}}
+                try {
+                    $client->{{{path}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}({{#parametersWithDataType}}
+                    {{> generateParams}}
+                    {{/parametersWithDataType}});
+                } catch (\Exception $e) {
+                    $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
+                }
+                {{/isError}}
+                {{^isError}}
+                    $client->{{{path}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}({{#parametersWithDataType}}
+                    {{> generateParams}}
+                    {{/parametersWithDataType}});
+                    {{#match}}
+                        $this->assertRequests([
+                            [
+                            {{#testUserAgent}}
+                                'userAgent' => '{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}',
+                            {{/testUserAgent}}
+                            {{#testHost}}
+                                'host' => '{{{match}}}',
+                            {{/testHost}}
+                            {{#testTimeouts}}
+                                'connectTimeout' => {{{match.parametersWithDataTypeMap.connectTimeout.value}}},
+                                'responseTimeout' => {{{match.parametersWithDataTypeMap.responseTimeout.value}}},
+                            {{/testTimeouts}}
+                            {{#testResult}}
+                            {{/testResult}}
+                            ]
+                        ]);
+                    {{/match}}
+                {{/isError}}
+            {{/isMethod}}
         {{/steps}}
     }
 

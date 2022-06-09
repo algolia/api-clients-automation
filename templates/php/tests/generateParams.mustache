@@ -1,4 +1,7 @@
 {{^isFirstLevel}}{{^hasGeneratedKey}}"{{{key}}}" => {{/hasGeneratedKey}}{{/isFirstLevel}}
+{{#isNull}}
+  null,
+{{/isNull}}
 {{#isString}}
   "{{{value}}}",
 {{/isString}}
