@@ -71,7 +71,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {
         $config = {{clientPrefix}}Config::create(self::APP_ID, self::API_KEY);
         {{^hasRegionalHost}}$clusterHosts = ClusterHosts::createFromAppId(self::APP_ID);{{/hasRegionalHost}}
-        {{#hasRegionalHost}}$clusterHosts = ClusterHosts::create(str_replace('{region}',$region ,'analytics.{region}.algolia.com'));{{/hasRegionalHost}}
+        {{#hasRegionalHost}}$clusterHosts = InsightsClient::getClusterHosts($config);{{/hasRegionalHost}}
         $api = new ApiWrapper($this, $config, $clusterHosts);
 
         return new {{client}}($api, $config);
@@ -95,7 +95,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     */
     public function test{{testIndex}}{{testType}}()
     {
-        $client = $this->createClient();
+        $client = $this->createClient(null);
         {{#steps}}
         {{#isMethod}}
             {{#isError}}

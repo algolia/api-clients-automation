@@ -12,16 +12,22 @@ final class AlgoliaAgent
 
     public static function get($clientName)
     {
-        if (null === self::$value) {
-            self::$value = self::getComputedValue($clientName);
+        if (
+            !isset(self::$value[$clientName]) ||
+            null === self::$value[$clientName]
+        ) {
+            self::$value[$clientName] = self::getComputedValue($clientName);
         }
 
-        return self::$value;
+        return self::$value[$clientName];
     }
 
-    public static function addCustomAlgoliaAgent($segment, $version)
-    {
-        self::$value = null;
+    public static function addCustomAlgoliaAgent(
+        $clientName,
+        $segment,
+        $version
+    ) {
+        self::$value[$clientName] = null;
         self::$customSegments[trim($segment, ' ')] = trim($version, ' ');
     }
 

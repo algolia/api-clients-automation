@@ -2,7 +2,6 @@
 
 namespace Algolia\AlgoliaSearch\RequestOptions;
 
-use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\Configuration;
 use Algolia\AlgoliaSearch\Support\AlgoliaAgent;
 
