@@ -35,6 +35,19 @@ jobs:
         with:
           type: matrix
 
+      - name: Test
+        id: snapshot
+        run: |
+          cd clients/algoliasearch-client-java-2
+          if [[ $(cat ./gradle.properties | grep 'VERSION_NAME=.*-SNAPSHOT') ]]; then
+            echo "::set-output name=IS_SNAPSHOT::true"
+          fi
+
+      - name: test 2
+        run: |
+          echo "result:"
+          echo ${{ steps.snapshot.outputs.IS_SNAPSHOT }}
+
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
