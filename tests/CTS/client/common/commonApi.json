@@ -17,12 +17,32 @@
     ]
   },
   {
-    "testName": "calls api with correct timeouts",
+    "testName": "calls api with correct read timeouts",
     "steps": [
       {
         "type": "method",
         "object": "$client",
         "path": "post",
+        "parameters": {
+          "path": "/test"
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 1000,
+            "responseTimeout": 5000
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "calls api with correct write timeouts",
+    "steps": [
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "get",
         "parameters": {
           "path": "/test"
         },
