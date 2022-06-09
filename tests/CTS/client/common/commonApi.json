@@ -22,14 +22,14 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "post",
+        "path": "get",
         "parameters": {
           "path": "/test"
         },
         "expected": {
           "type": "timeouts",
           "match": {
-            "connectTimeout": 1000,
+            "connectTimeout": 2000,
             "responseTimeout": 5000
           }
         }
@@ -42,7 +42,7 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "get",
+        "path": "post",
         "parameters": {
           "path": "/test"
         },
