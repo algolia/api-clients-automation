@@ -64,7 +64,7 @@
           "region": "not_a_region"
         },
         "expected": {
-          "error": "`region` must be one of the following: us, de"
+          "error": "`region` must be one of the following: de, us"
         }
       }
     ]

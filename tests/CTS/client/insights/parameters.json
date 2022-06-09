@@ -47,7 +47,7 @@
         },
         "expected": {
           "type": "host",
-          "match": "insights.us.algolia.com"
+          "match": "insights.us.algolia.io"
         }
       }
     ]
@@ -64,7 +64,7 @@
           "region": "not_a_region"
         },
         "expected": {
-          "error": "`region` must be one of the following: eu, us"
+          "error": "`region` must be one of the following: de, us"
         }
       }
     ]
