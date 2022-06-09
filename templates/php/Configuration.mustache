@@ -2,6 +2,8 @@
 
 namespace {{invokerPackage}}\Configuration;
 
+use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
+
 /**
  * Configuration Class Doc Comment
  * PHP version 7.3
@@ -58,15 +60,19 @@ abstract class Configuration
 
     public function __construct(array $config = [])
     {
-        if(isset($config['apiKey'])) {
-            $this->setAlgoliaApiKey($config['apiKey']);
-            $this->setApiKey('x-algolia-api-key', $config['apiKey']);
+        if (!isset($config['appId']) || $config['appId'] === '') {
+            throw new AlgoliaException('`appId` is missing.');
         }
 
-        if(isset($config['appId'])) {
-            $this->setAppId($config['appId']);
-            $this->setApiKey('x-algolia-application-id', $config['appId']);
+        if (!isset($config['apiKey'])  || $config['apiKey'] === '') {
+            throw new AlgoliaException('`apiKey` is missing.');
         }
+
+        $this->setAlgoliaApiKey($config['apiKey']);
+        $this->setApiKey('x-algolia-api-key', $config['apiKey']);
+
+        $this->setAppId($config['appId']);
+        $this->setApiKey('x-algolia-application-id', $config['appId']);
 
         $config += $this->getDefaultConfiguration();
         $this->config = $config;

@@ -67,16 +67,16 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     /**
      * @return {{client}}
      */
-    private function createClient($region = '{{{defaultRegion}}}')
+    private function createClient($appId, $apiKey, $region = '{{{defaultRegion}}}')
     {
         {{^hasRegionalHost}}
-            $config = {{clientPrefix}}Config::create(self::APP_ID, self::API_KEY);
-            $clusterHosts = ClusterHosts::createFromAppId(self::APP_ID);
+            $config = {{clientPrefix}}Config::create($appId, $apiKey);
+            $clusterHosts = ClusterHosts::createFromAppId($appId);
         {{/hasRegionalHost}}
         {{#hasRegionalHost}}
             $config = {{clientPrefix}}Config::create(
-                self::APP_ID, 
-                self::API_KEY, 
+                $appId, 
+                $apiKey, 
                 $region,
                 {{client}}::getAllowedRegions()
             );
@@ -106,19 +106,27 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     public function test{{testIndex}}{{testType}}()
     {
         {{#autoCreateClient}}
-            $client = $this->createClient(null);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
         {{/autoCreateClient}}
         {{#steps}}
             {{#isCreateClient}}
                 {{#isError}}
                     try {
-                        $client = $this->createClient({{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}});
+                        $client = $this->createClient(
+                            {{#parametersWithDataTypeMap.appId}}"{{parametersWithDataTypeMap.appId.value}}"{{/parametersWithDataTypeMap.appId}}{{^parametersWithDataTypeMap.appId}}null{{/parametersWithDataTypeMap.appId}},
+                            {{#parametersWithDataTypeMap.apiKey}}"{{parametersWithDataTypeMap.apiKey.value}}"{{/parametersWithDataTypeMap.apiKey}}{{^parametersWithDataTypeMap.apiKey}}null{{/parametersWithDataTypeMap.apiKey}},
+                            {{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}}
+                        );
                     } catch (\Exception $e) {
                         $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
                     }
                 {{/isError}}
                 {{^isError}}
-                    $client = $this->createClient({{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}});
+                    $client = $this->createClient(
+                        {{#parametersWithDataTypeMap.appId}}"{{parametersWithDataTypeMap.appId.value}}"{{/parametersWithDataTypeMap.appId}}{{^parametersWithDataTypeMap.appId}}null{{/parametersWithDataTypeMap.appId}},
+                        {{#parametersWithDataTypeMap.apiKey}}"{{parametersWithDataTypeMap.apiKey.value}}"{{/parametersWithDataTypeMap.apiKey}}{{^parametersWithDataTypeMap.apiKey}}null{{/parametersWithDataTypeMap.apiKey}},
+                        {{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}}
+                    );
                     // Make sure everything went fine without errors
                     $this->assertIsObject($client);
                 {{/isError}}
