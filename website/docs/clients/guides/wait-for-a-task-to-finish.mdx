@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 Some operations related to the Algolia index are not always instantaneous. Doing such operations with our API clients will provide a `taskID` in the response body, so you can later know what is the status of your operation.
 
-We provide a `waitForTask` helper method for you to easily fetch the task status.
+We provide a `waitForTask` helper method for you to easily wait for a specific task status.
 
 <Tabs
   groupId="language"
@@ -40,7 +40,7 @@ await client.waitForTask({
   indexName: '<YOUR_INDEX_NAME>',
   taskID,
   // Number of maximum retries to do
-  maxTrial: 100,
+  maxRetries: 100,
   // The time to wait between tries
   timeout: (retryCount: number): number => Math.min(retryCount * 200, 5000),
 });

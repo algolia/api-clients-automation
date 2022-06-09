@@ -80,7 +80,7 @@ const sidebars = {
         'clients/guides/customized-client-usage',
         'clients/guides/wait-for-a-task-to-finish',
         'clients/guides/copy-or-move-index',
-        'clients/guides/copy-index-to-an-other-application',
+        'clients/guides/copy-index-to-another-application',
       ],
     },
   ],

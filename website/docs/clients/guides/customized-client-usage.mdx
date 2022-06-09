@@ -5,11 +5,11 @@ title: Customized client usage
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-You might want to customize how the API client works, by providing extra information to your request, adding user-agents or use your own HTTP requester.
+You might want to customize how the API client works, by providing additional information to your request, adding user-agents or use your own HTTP requester.
 
-## Send extra information in your request with `requestOptions`
+## Send additional information in your request with `requestOptions`
 
-The `requestOptions` parameter allows you to merge extra information with the client transporter, such as `headers` or `query parameters`.
+The `requestOptions` parameter allows you to merge additional information with the client transporter, such as `headers` or `query parameters`.
 
 **Note: `requestOptions` overrides the default parameters that were previously set in the method and client.**
 
@@ -23,7 +23,6 @@ The `requestOptions` parameter allows you to merge extra information with the cl
 <TabItem value="javascript">
 
 ```js
-// This request payload will contain the `extra-header` header, but override the `hitsPerPage` value.
 await client.search(
   {
     requests: [
@@ -35,9 +34,11 @@ await client.search(
     ],
   },
   {
+    // This header is added to the request
     headers: {
-      'extra-header': 'hello',
+      'additional-header': 'hello',
     },
+    // As we re-define `hitsPerPage`, it will override the value defined in the method's parameters.
     queryParameters: {
       hitsPerPage: 100,
     },
