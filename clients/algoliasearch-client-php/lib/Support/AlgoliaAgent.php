@@ -12,10 +12,7 @@ final class AlgoliaAgent
 
     public static function get($clientName)
     {
-        if (
-            !isset(self::$value[$clientName]) ||
-            null === self::$value[$clientName]
-        ) {
+        if (!isset(self::$value[$clientName])) {
             self::$value[$clientName] = self::getComputedValue($clientName);
         }
 
