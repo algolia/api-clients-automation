@@ -112,21 +112,13 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
             {{#isCreateClient}}
                 {{#isError}}
                     try {
-                        $client = $this->createClient(
-                            {{#parametersWithDataTypeMap.appId}}"{{parametersWithDataTypeMap.appId.value}}"{{/parametersWithDataTypeMap.appId}}{{^parametersWithDataTypeMap.appId}}null{{/parametersWithDataTypeMap.appId}},
-                            {{#parametersWithDataTypeMap.apiKey}}"{{parametersWithDataTypeMap.apiKey.value}}"{{/parametersWithDataTypeMap.apiKey}}{{^parametersWithDataTypeMap.apiKey}}null{{/parametersWithDataTypeMap.apiKey}},
-                            {{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}}
-                        );
+                        {{> client/createClient}}
                     } catch (\Exception $e) {
                         $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
                     }
                 {{/isError}}
                 {{^isError}}
-                    $client = $this->createClient(
-                        {{#parametersWithDataTypeMap.appId}}"{{parametersWithDataTypeMap.appId.value}}"{{/parametersWithDataTypeMap.appId}}{{^parametersWithDataTypeMap.appId}}null{{/parametersWithDataTypeMap.appId}},
-                        {{#parametersWithDataTypeMap.apiKey}}"{{parametersWithDataTypeMap.apiKey.value}}"{{/parametersWithDataTypeMap.apiKey}}{{^parametersWithDataTypeMap.apiKey}}null{{/parametersWithDataTypeMap.apiKey}},
-                        {{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}}
-                    );
+                    {{> client/createClient}}
                     // Make sure everything went fine without errors
                     $this->assertIsObject($client);
                 {{/isError}}
@@ -134,17 +126,13 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
             {{#isMethod}}
                 {{#isError}}
                 try {
-                    $client->{{{path}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}({{#parametersWithDataType}}
-                    {{> generateParams}}
-                    {{/parametersWithDataType}});
+                    {{> client/method}}
                 } catch (\Exception $e) {
                     $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
                 }
                 {{/isError}}
                 {{^isError}}
-                    $client->{{{path}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}({{#parametersWithDataType}}
-                    {{> generateParams}}
-                    {{/parametersWithDataType}});
+                    {{> client/method}}
                     {{#match}}
                         $this->assertRequests([
                             [
