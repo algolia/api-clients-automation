@@ -36,6 +36,7 @@ export function {{apiName}}(
     throw new Error("`region` is missing.");
   }
   {{/fallbackToAliasHost}}
+  
   if (region && (typeof region !== 'string' || !REGIONS.includes(region))) {
     throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
