@@ -17,7 +17,7 @@
     ]
   },
   {
-    "testName": "calls api with correct read timeouts",
+    "testName": "calls api with default read timeouts",
     "steps": [
       {
         "type": "method",
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "testName": "calls api with correct write timeouts",
+    "testName": "calls api with default write timeouts",
     "steps": [
       {
         "type": "method",
