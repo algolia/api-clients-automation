@@ -8,8 +8,7 @@ import { SearchParamsObject } from './searchParamsObject';
  * @deprecated The `search` method now accepts flat `searchParams` at the root of the method.
  */
 type LegacySearchParams = {
-  params?: Exclude<SearchParamsObject, 'query'>;
-  query?: SearchParamsObject['query'];
+  params?: SearchParamsObject;
 };
 
 /**

@@ -46,8 +46,8 @@ async function testAlgoliasearch() {
     const resWithLegacySignature: SearchResponses = await client.search([
       {
         indexName: searchIndex,
-        query: searchQuery,
         params: {
+          query: searchQuery,
           hitsPerPage: 50,
         },
       },
