@@ -6,7 +6,9 @@ import { {{classname}} } from '{{filename}}';
 
 {{#operations}}
 {{#operation}}
-{{#vendorExtensions.x-create-wrapping-object}}
+
+{{#vendorExtensions}}
+{{#x-create-wrapping-object}}
 /**
  * Properties for the `{{nickname}}` method.
  */
@@ -20,7 +22,11 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
     {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
   {{/allParams}}
 }
-{{/vendorExtensions.x-create-wrapping-object}}
+{{/x-create-wrapping-object}}
+
+{{#x-legacy-signature}}{{> legacySearchCompatible/model}}{{/x-legacy-signature}}
+
+{{/vendorExtensions}}
 
 {{/operation}}
 {{/operations}}

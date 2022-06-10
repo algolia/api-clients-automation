@@ -294,6 +294,10 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli build clients javascript algoliasearch
 
+      - name: Run 'algoliasearch' client tests
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: yarn workspace @experimental-api-clients-automation/algoliasearch test
+
       - name: Zip artifact before storing
         run: zip -r -y client-javascript-algoliasearch.zip clients/algoliasearch-client-javascript/packages/algoliasearch/ -x "**/node_modules**" "clients/algoliasearch-client-javascript/.yarn**" "**/.github**"
 
