@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/jest": "27.5.2",
+    "@types/jest": "28.1.1",
     "@types/node": "16.11.39",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
