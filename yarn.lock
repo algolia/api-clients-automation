@@ -1453,7 +1453,7 @@ __metadata:
     "@experimental-api-clients-automation/client-search": 0.4.0
     "@experimental-api-clients-automation/requester-browser-xhr": 0.4.0
     "@experimental-api-clients-automation/requester-node-http": 0.4.0
-    "@types/node": 16.11.26
+    "@types/node": 16.11.39
     typescript: 4.6.3
   languageName: unknown
   linkType: soft
@@ -1509,7 +1509,7 @@ __metadata:
   resolution: "@experimental-api-clients-automation/client-common@workspace:clients/algoliasearch-client-javascript/packages/client-common"
   dependencies:
     "@types/jest": 27.5.2
-    "@types/node": 16.11.38
+    "@types/node": 16.11.39
     jest: 28.1.1
     jest-environment-jsdom: 28.1.1
     typescript: 4.6.3
@@ -1689,7 +1689,7 @@ __metadata:
   resolution: "@experimental-api-clients-automation/requester-browser-xhr@workspace:clients/algoliasearch-client-javascript/packages/requester-browser-xhr"
   dependencies:
     "@experimental-api-clients-automation/client-common": 0.4.0
-    "@types/node": 16.11.38
+    "@types/node": 16.11.39
     typescript: 4.6.3
   languageName: unknown
   linkType: soft
@@ -1708,7 +1708,7 @@ __metadata:
   resolution: "@experimental-api-clients-automation/requester-node-http@workspace:clients/algoliasearch-client-javascript/packages/requester-node-http"
   dependencies:
     "@experimental-api-clients-automation/client-common": 0.4.0
-    "@types/node": 16.11.38
+    "@types/node": 16.11.39
     typescript: 4.6.3
   languageName: unknown
   linkType: soft
@@ -4585,17 +4585,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.26":
-  version: 16.11.26
-  resolution: "@types/node@npm:16.11.26"
-  checksum: 57757caaba3f0d95de82198cb276a1002c49b710108c932a1d02d7c91ff2fa57cfe2dd19fde60853b6dd90b0964b3cf35557981d2628e20aed6a909057aedfe6
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:16.11.38":
   version: 16.11.38
   resolution: "@types/node@npm:16.11.38"
   checksum: 471df020162098602fd77014c458e84f01f7faff3cddcc2b7739312a8b4f103bc0fab3dfc03641233d9f627c47fd82dfabc9b86413ef680e193c36b9aed322e6
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:16.11.39":
+  version: 16.11.39
+  resolution: "@types/node@npm:16.11.39"
+  checksum: bc97b9773ac6b3194800f990b349fad7f66c6126dacef59291b10a2c8b6813d6f67f947b7e12a6c9952790f7065d576fe38355b8fe034a6af60f317cfc570f69
   languageName: node
   linkType: hard
 
@@ -12651,7 +12651,7 @@ __metadata:
     "@types/js-yaml": 4.0.5
     "@types/micromatch": 4.0.2
     "@types/mustache": 4.1.3
-    "@types/node": 16.11.38
+    "@types/node": 16.11.39
     "@types/semver": 7.3.9
     chalk: 4.1.2
     commander: 9.3.0
