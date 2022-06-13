@@ -131,9 +131,6 @@ outputs:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_PHP }}
 
-  RUN_JS_ALGOLIASEARCH:
-    description: Determine if the `client-javascript-algoliasearch` job should run
-    value: ${{ steps.js-utils.outputs.RUN_JS_ALGOLIASEARCH }}
   RUN_JS_UTILS:
     description: Whether to build JS client common folders when RUN_JS is false
     value: ${{ steps.js-utils.outputs.RUN_JS_UTILS }}
