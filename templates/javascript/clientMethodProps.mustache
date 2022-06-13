@@ -4,6 +4,9 @@
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
 
+{{! Imports for the legacy search method signature }}
+{{#operations}}{{#operation}}{{#vendorExtensions.x-legacy-signature}}{{> api/operation/legacySearchCompatible/imports}}{{/vendorExtensions.x-legacy-signature}}{{/operation}}{{/operations}}
+
 {{#operations}}
 {{#operation}}
 
