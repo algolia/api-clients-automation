@@ -1517,7 +1517,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-common@workspace:clients/algoliasearch-client-javascript/packages/client-common"
   dependencies:
-    "@types/jest": 27.5.2
+    "@types/jest": 28.1.1
     "@types/node": 16.11.39
     jest: 28.1.1
     jest-environment-jsdom: 28.1.1
@@ -4567,6 +4567,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jest@npm:28.1.1":
+  version: 28.1.1
+  resolution: "@types/jest@npm:28.1.1"
+  dependencies:
+    jest-matcher-utils: ^27.0.0
+    pretty-format: ^27.0.0
+  checksum: 0a8b045a7b660372decc807c390d3f99a2b12bb1659a1cd593afe04557f4b7c235b0576a5e35b1577710d20e42759d3d8755eb8bed6edc8733f47007e75a5509
+  languageName: node
+  linkType: hard
+
 "@types/js-yaml@npm:4.0.5":
   version: 4.0.5
   resolution: "@types/js-yaml@npm:4.0.5"
@@ -5044,7 +5054,7 @@ __metadata:
     "@babel/runtime": 7.18.3
     "@rollup/plugin-babel": 5.3.1
     "@rollup/plugin-node-resolve": 13.3.0
-    "@types/jest": 27.5.2
+    "@types/jest": 28.1.1
     "@types/rollup-plugin-node-globals": 1.4.1
     "@types/semver": 7.3.9
     bundlesize2: 0.0.31
@@ -7155,7 +7165,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "eslint-plugin-automation-custom@workspace:eslint"
   dependencies:
-    "@types/jest": 27.5.2
+    "@types/jest": 28.1.1
     eslint: 8.17.0
     jest: 28.1.1
     ts-jest: 28.0.4
@@ -12704,7 +12714,7 @@ __metadata:
     "@octokit/rest": 18.12.0
     "@types/folder-hash": 4.0.1
     "@types/inquirer": 8.2.1
-    "@types/jest": 27.5.2
+    "@types/jest": 28.1.1
     "@types/js-yaml": 4.0.5
     "@types/micromatch": 4.0.2
     "@types/mustache": 4.1.3
