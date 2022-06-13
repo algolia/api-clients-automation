@@ -228,7 +228,6 @@ class RetainFieldMapFactory implements TypeAdapterFactory {
         IdentityHashMap.class,
         WeakHashMap.class,
         EnumMap.class,
-        AbstractMap.class
       };
       for (Class c : endClasses) {
         if (willFindClass == c) return false;
