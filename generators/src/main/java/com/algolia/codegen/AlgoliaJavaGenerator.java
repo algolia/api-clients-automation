@@ -8,6 +8,7 @@ import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.JavaClientCodegen;
 import org.openapitools.codegen.utils.ModelUtils;
+import org.openapitools.codegen.model.ModelsMap;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
@@ -45,23 +46,14 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       file.getTemplateFile().equals("ApiClient.mustache") ||
       file.getTemplateFile().equals("ApiCallback.mustache") ||
       file.getTemplateFile().equals("ApiResponse.mustache") ||
+      file.getTemplateFile().equals("AbstractOpenApiSchema.mustache") ||
+      file.getTemplateFile().equals("maven.yml.mustache") ||
       file.getTemplateFile().equals("JSON.mustache") ||
       file.getTemplateFile().equals("ProgressRequestBody.mustache") ||
       file.getTemplateFile().equals("ProgressResponseBody.mustache") ||
       file.getTemplateFile().equals("Pair.mustache")
     );
-  }
 
-  @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
-  }
-
-  @Override
-  public Map<String, Object> postProcessOperationsWithModels(Map<String, Object> objs, List<Object> allModels) {
-    Map<String, Object> results = super.postProcessOperationsWithModels(objs, allModels);
-
-    String client = (String) additionalProperties.get("client");
     additionalProperties.put("isSearchClient", client.equals("search"));
 
     try {
@@ -72,16 +64,19 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       e.printStackTrace();
       System.exit(1);
     }
-
-    return results;
   }
 
   @Override
-  public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
-    Map<String, Object> models = super.postProcessAllModels(objs);
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+  }
 
-    for (Object modelContainer : models.values()) {
-      CodegenModel model = ((Map<String, List<Map<String, CodegenModel>>>) modelContainer).get("models").get(0).get("model");
+  @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+
+    for (ModelsMap modelContainer : models.values()) {
+      CodegenModel model = modelContainer.getModels().get(0).getModel();
       if (!model.oneOf.isEmpty()) {
         List<HashMap<String, String>> oneOfList = new ArrayList();
 

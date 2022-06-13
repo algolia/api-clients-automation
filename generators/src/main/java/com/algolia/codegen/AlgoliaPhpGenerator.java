@@ -31,6 +31,15 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("Configuration.mustache"));
 
     supportingFiles.add(new SupportingFile("Configuration.mustache", "lib/Configuration", "Configuration.php"));
+
+    setDefaultGeneratorOptions(client);
+    try {
+      Utils.generateServer(client, additionalProperties);
+      additionalProperties.put("packageVersion", Utils.getClientConfigField("php", "packageVersion"));
+    } catch (GeneratorException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
   }
 
   @Override
@@ -45,25 +54,6 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     }
     additionalProperties.put("isSearchClient", client.equals("search"));
     additionalProperties.put("configClassname", Utils.createClientName(client, "php") + "Config");
-  }
-
-  /** Provides an opportunity to inspect and modify operation data before the code is generated. */
-  @Override
-  public Map<String, Object> postProcessOperationsWithModels(Map<String, Object> objs, List<Object> allModels) {
-    Map<String, Object> results = super.postProcessOperationsWithModels(objs, allModels);
-
-    String client = (String) additionalProperties.get("client");
-
-    setDefaultGeneratorOptions(client);
-    try {
-      Utils.generateServer(client, additionalProperties);
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("php", "packageVersion"));
-    } catch (GeneratorException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
-
-    return results;
   }
 
   public String getComposerPackageName() {

@@ -11,6 +11,9 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.openapitools.codegen.*;
+import org.openapitools.codegen.model.OperationsMap;
+import org.openapitools.codegen.model.ModelsMap;
+import org.openapitools.codegen.model.ModelMap;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaCTSGenerator extends DefaultCodegen {
@@ -56,12 +59,12 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
   }
 
   @Override
-  public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
-    Map<String, Object> mod = super.postProcessAllModels(objs);
-    for (Entry<String, Object> entry : mod.entrySet()) {
-      List<Object> innerModel = ((Map<String, List<Object>>) entry.getValue()).get("models");
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> mod = super.postProcessAllModels(objs);
+    for (Entry<String, ModelsMap> entry : mod.entrySet()) {
+      List<ModelMap> innerModel = entry.getValue().getModels();
       if (!innerModel.isEmpty()) {
-        models.put(entry.getKey(), (CodegenModel) ((Map<String, Object>) innerModel.get(0)).get("model"));
+        models.put(entry.getKey(), innerModel.get(0).getModel());
       }
     }
     return mod;
