@@ -2,7 +2,7 @@
 title: Wait for a task to finish
 ---
 
-import { TabsLanguage, languagesTabValuesNoPHP } from '../../../src/components/TabsLanguage';
+import { TabsLanguage } from '../../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
 
 > The `waitForTask` method is only available in the `search` client context.
@@ -11,7 +11,7 @@ Some operations related to the Algolia index are not always instantaneous. Doing
 
 We provide a `waitForTask` helper method for you to easily wait for a specific task status.
 
-<TabsLanguage values={languagesTabValuesNoPHP}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js

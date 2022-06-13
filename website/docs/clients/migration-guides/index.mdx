@@ -10,7 +10,7 @@ The amount of changes in this new version is significant. If you were using a ve
 
 :::
 
-import { TabsLanguage, languagesTabValues, languagesTabValuesNoPHP } from '../../../src/components/TabsLanguage';
+import { TabsLanguage } from '../../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
 
 This document lists every known breaking change, not all of them may affect your application.
@@ -31,7 +31,7 @@ The `indexName` parameter is now **required** when calling those methods.
 
 </td><td width="600px">
 
-<TabsLanguage values={languagesTabValues}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js
@@ -116,7 +116,7 @@ You can now optionally configure how the wait logic behaves by passing the `task
 
 </td><td width="600px">
 
-<TabsLanguage values={languagesTabValuesNoPHP}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js
@@ -169,7 +169,7 @@ You can also decide what `scope` of the `source` index should be copied, [read m
 
 </td><td width="600px">
 
-<TabsLanguage values={languagesTabValuesNoPHP}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js

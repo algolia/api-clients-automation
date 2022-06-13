@@ -2,7 +2,7 @@
 title: Filtering your search
 ---
 
-import { TabsLanguage, languagesTabValues } from '../../../src/components/TabsLanguage';
+import { TabsLanguage } from '../../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
 
 Filtering is primarily used in the context of front-end search. We call this faceting, where filters are displayed on the search UI as clickable items, allowing users to select one or more filters. This enables a more refined, drilled-down search experience.
@@ -13,7 +13,7 @@ Filtering is primarily used in the context of front-end search. We call this fac
 
 Initially, filter attributes must be defined as facets, using the `attributesForFaceting` parameter. This can be done using the `setSettings` method.
 
-<TabsLanguage values={languagesTabValues}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js
@@ -63,7 +63,7 @@ The actual filtering of records is performed at query time, not at indexing time
 
 #### Filtering by string using the `filters` field
 
-<TabsLanguage values={languagesTabValues}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js
@@ -187,7 +187,7 @@ client.search(
 
 #### Filtering by string using the `facetFilters` field
 
-<TabsLanguage values={languagesTabValues}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js

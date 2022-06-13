@@ -8,14 +8,14 @@ This method is made to be used within **the same Algolia application**, for cros
 
 :::
 
-import { TabsLanguage, languagesTabValuesNoPHP } from '../../../src/components/TabsLanguage';
+import { TabsLanguage } from '../../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
 
 ## Copy an index
 
 When you copy an index, it doesn’t copy the associated analytics data. The new index starts fresh. Be careful when using the `operationIndex` method with the `copy` parameter to overwrite an existing index, as it associates the existing analytics data of the overwritten index with the new one.
 
-<TabsLanguage values={languagesTabValuesNoPHP}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js
@@ -59,7 +59,7 @@ client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
 
 Changing the name of an index doesn’t change the name of the index’s analytics. The new name references new analytics; the old and new analytics aren’t merged. If you want to preserve an index’s analytics history, you need to keep using the old name.
 
-<TabsLanguage values={languagesTabValuesNoPHP}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js
@@ -105,7 +105,7 @@ When the scope is absent from the request, the index will be fully copied, but y
 
 The available scopes are: `rules`, `settings`, `synonyms`. You can provide one or many.
 
-<TabsLanguage values={languagesTabValuesNoPHP}>
+<TabsLanguage>
 <TabItem value="javascript">
 
 ```js

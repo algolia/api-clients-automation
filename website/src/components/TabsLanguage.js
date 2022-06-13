@@ -7,11 +7,6 @@ export const languagesTabValues = [
   { label: 'Java', value: 'java' },
 ];
 
-export const languagesTabValuesNoPHP = [
-  { label: 'JavaScript', value: 'javascript' },
-  { label: 'Java', value: 'java' },
-];
-
 export function TabsLanguage(props) {
   return (
     <Tabs groupId="language" defaultValue="java" values={props.values}>
@@ -19,3 +14,7 @@ export function TabsLanguage(props) {
     </Tabs>
   );
 }
+
+TabsLanguage.defaultProps = {
+  values: languagesTabValues,
+};
