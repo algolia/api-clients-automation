@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 # Uncomment the line below to enable artifacts debugging
-# env:
-#   ACTIONS_RUNNER_DEBUG: true
+env:
+  ACTIONS_RUNNER_DEBUG: true
 
 jobs:
   setup:
@@ -58,6 +58,20 @@ jobs:
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - name: Check script linting
+        run: yarn scripts:lint
+
+      - name: Test scripts
+        run: yarn scripts:test
+
+      - name: Test custom eslint plugin
+        run: yarn workspace eslint-plugin-automation-custom test
 
   specs:
     runs-on: ubuntu-20.04

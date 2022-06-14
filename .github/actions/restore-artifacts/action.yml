@@ -19,6 +19,12 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Download clients-java artifact
+      if: ${{ inputs.java == 'true' && inputs.type == 'all' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: clients-java
+
     # Clients and tests
     - name: Download clients and tests artifacts
       if: ${{ inputs.type == 'all' }}
