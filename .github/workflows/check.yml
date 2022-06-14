@@ -245,7 +245,6 @@ jobs:
           type: all
           matrix: ${{ toJSON(needs.setup.outputs.GEN_MATRIX) }}
           token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-          runId: ${{ env.GITHUB_RUN_ID }}
 
       - name: Setup
         uses: ./.github/actions/setup
