@@ -20,7 +20,7 @@ runs:
   using: composite
   steps:
     - name: Download clients-java artifact
-      if: ${{ inputs.java == 'true' && inputs.type == 'all' }}
+      if: ${{ inputs.type == 'all' }}
       uses: actions/download-artifact@v3
       with:
         name: clients-java
