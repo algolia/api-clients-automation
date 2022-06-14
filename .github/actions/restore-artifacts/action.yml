@@ -9,14 +9,8 @@ inputs:
   type:
     description: Type of artifacts to restore (`all` | `specs` | `js_utils`)
     required: false
-  php:
-    description: Whether this job ran or not
-    required: false
-  java:
-    description: Whether this job ran or not
-    required: false
-  javascript:
-    description: Whether this job ran or not
+  matrix:
+    description: The matrix of language clients to download
     required: false
 
 runs:
@@ -56,7 +50,13 @@ runs:
     - name: Download clients and tests artifacts
       if: ${{ inputs.type == 'all' }}
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
       run: |
         echo "Downloading test artifact"
         gh api -H "Accept: application/vnd.github.v3+json" \
           /repos/algolia/api-clients-automation/actions/artifacts/clients-java/zip
+
+        echo ${{ inputs.matrix }} | jq -c '.client []' | while read client; do
+          echo $client
+        done
