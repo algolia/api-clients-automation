@@ -7,8 +7,8 @@ import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.JavaClientCodegen;
-import org.openapitools.codegen.utils.ModelUtils;
 import org.openapitools.codegen.model.ModelsMap;
+import org.openapitools.codegen.utils.ModelUtils;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
@@ -22,8 +22,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   public void processOpts() {
     // generator specific options
     String client = (String) additionalProperties.get("client");
-    setDateLibrary("java8");
-    setLibrary("okhttp-gson");
     setSourceFolder("algoliasearch-core/src/main/java");
     setGroupId("com.algolia");
     setModelPackage("com.algolia.model." + Utils.camelize(client));
@@ -64,6 +62,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  @Override
+  protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, Schema schema) {
+    super.addParentContainer(codegenModel, codegenModel.name, schema);
   }
 
   @Override

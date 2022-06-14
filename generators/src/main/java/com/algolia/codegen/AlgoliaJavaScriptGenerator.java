@@ -2,19 +2,13 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
-import java.util.Map;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
-import org.openapitools.codegen.utils.ModelUtils;
-import org.openapitools.codegen.model.OperationsMap;
-import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.ModelMap;
-
+import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 

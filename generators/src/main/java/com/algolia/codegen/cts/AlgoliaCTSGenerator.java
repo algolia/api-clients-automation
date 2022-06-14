@@ -11,9 +11,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.openapitools.codegen.*;
-import org.openapitools.codegen.model.OperationsMap;
-import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.ModelMap;
+import org.openapitools.codegen.model.ModelsMap;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaCTSGenerator extends DefaultCodegen {

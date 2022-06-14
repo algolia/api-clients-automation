@@ -4,7 +4,6 @@ import com.algolia.codegen.exceptions.*;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
-import java.util.Map;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.PhpClientCodegen;
