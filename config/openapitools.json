@@ -6,8 +6,7 @@
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-search",
         "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-search",
-          "buildFile": "client-search",
+          "packageName": "client-search",
           "packageVersion": "0.5.0"
         }
       },
@@ -15,8 +14,7 @@
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/algoliasearch-lite",
         "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/algoliasearch-lite",
-          "buildFile": "algoliasearch-lite",
+          "packageName": "algoliasearch-lite",
           "packageVersion": "0.5.0"
         }
       },
@@ -24,64 +22,56 @@
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/recommend",
         "reservedWordsMappings": "queryParameters=queryParameters",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/recommend",
-          "buildFile": "recommend",
+          "packageName": "recommend",
           "packageVersion": "0.5.0"
         }
       },
       "javascript-personalization": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-personalization",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-personalization",
-          "buildFile": "client-personalization",
+          "packageName": "client-personalization",
           "packageVersion": "0.5.0"
         }
       },
       "javascript-analytics": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-analytics",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-analytics",
-          "buildFile": "client-analytics",
+          "packageName": "client-analytics",
           "packageVersion": "0.5.0"
         }
       },
       "javascript-insights": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-insights",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-insights",
-          "buildFile": "client-insights",
+          "packageName": "client-insights",
           "packageVersion": "0.5.0"
         }
       },
       "javascript-abtesting": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-abtesting",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-abtesting",
-          "buildFile": "client-abtesting",
+          "packageName": "client-abtesting",
           "packageVersion": "0.5.0"
         }
       },
       "javascript-query-suggestions": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-query-suggestions",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-query-suggestions",
-          "buildFile": "client-query-suggestions",
+          "packageName": "client-query-suggestions",
           "packageVersion": "0.5.0"
         }
       },
       "javascript-sources": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-sources",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-sources",
-          "buildFile": "client-sources",
+          "packageName": "client-sources",
           "packageVersion": "0.5.0"
         }
       },
       "javascript-predict": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-predict",
         "additionalProperties": {
-          "packageName": "@experimental-api-clients-automation/client-predict",
-          "buildFile": "client-predict",
+          "packageName": "client-predict",
           "packageVersion": "0.5.0"
         }
       },

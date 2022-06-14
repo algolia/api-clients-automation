@@ -6,7 +6,7 @@
   },
   "dependencies": {
     {{#packageDependencies}}
-    "{{{packageName}}}": "{{packageVersion}}",
+    "{{{npmNamespace}}}/{{{packageName}}}": "{{packageVersion}}",
     {{/packageDependencies}}
     "{{{npmNamespace}}}/client-common": "{{utilsPackageVersion}}",
     "{{{npmNamespace}}}/requester-node-http": "{{utilsPackageVersion}}"

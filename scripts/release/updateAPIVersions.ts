@@ -65,7 +65,7 @@ async function updateVersionForJavascript(
   );
 
   if (!nodePgPackageFile || !browserPgPackageFile) {
-    throw new Error('Failed to bump playground package files');
+    throw new Error('Failed to read playground package files');
   }
 
   // Sets the new version of the JavaScript client

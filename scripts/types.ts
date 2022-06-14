@@ -28,7 +28,6 @@ export type Generator = Record<string, any> & {
 
 export type AdditionalProperties = Partial<{
   packageName: string;
-  hasRegionalHost: boolean;
 }> &
   Record<string, any>;
 
