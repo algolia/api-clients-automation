@@ -244,6 +244,7 @@ jobs:
         with:
           type: all
           matrix: ${{ toJSON(needs.setup.outputs.GEN_MATRIX) }}
+          token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Setup
         uses: ./.github/actions/setup

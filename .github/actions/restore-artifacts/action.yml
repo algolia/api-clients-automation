@@ -12,6 +12,9 @@ inputs:
   matrix:
     description: The matrix of language clients to download
     required: false
+  token:
+    description: GITHUB_TOKEN from secrets (not accessible from here)
+    required: false
 
 runs:
   using: composite
@@ -51,7 +54,7 @@ runs:
       if: ${{ inputs.type == 'all' }}
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.token }}
       run: |
         echo "Downloading test artifact"
         gh api -H "Accept: application/vnd.github.v3+json" \
