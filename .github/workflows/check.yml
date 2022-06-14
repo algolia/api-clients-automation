@@ -78,20 +78,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup
-        uses: ./.github/actions/setup
-        with:
-          type: minimal
-
-      - name: Check script linting
-        run: yarn scripts:lint
-
-      - name: Test scripts
-        run: yarn scripts:test
-
-      - name: Test custom eslint plugin
-        run: yarn workspace eslint-plugin-automation-custom test
-
   specs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
@@ -100,30 +86,6 @@ jobs:
       matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
-
-      - name: Cache bundled specs
-        id: cache
-        uses: actions/cache@v3
-        with:
-          key: ${{ matrix.client.cacheKey }}
-          path: ${{ matrix.client.bundledPath }}
-
-      - name: Setup
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        uses: ./.github/actions/setup
-        with:
-          type: minimal
-
-      - name: Building specs
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: yarn cli build specs ${{ matrix.client.toRun }}
-
-      - name: Store bundled specs
-        uses: actions/upload-artifact@v3
-        with:
-          if-no-files-found: error
-          name: specs
-          path: ${{ matrix.client.bundledPath }}
 
   client_javascript_utils:
     timeout-minutes: 10
@@ -138,38 +100,6 @@ jobs:
           - requester-node-http
     steps:
       - uses: actions/checkout@v2
-
-      - name: Cache '${{ matrix.client }}' client folder
-        id: cache
-        uses: actions/cache@v3
-        with:
-          key: |
-            ${{ matrix.client }}-${{ hashFiles(
-              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client),
-              'yarn.lock'
-            )}}
-          path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
-
-      - name: Setup
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        uses: ./.github/actions/setup
-        with:
-          type: minimal
-
-      - name: Build '${{ matrix.client }}' client
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: yarn workspace algoliasearch-client-javascript build ${{ matrix.client }}
-
-      - name: Run tests for 'client-common'
-        if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client == 'client-common' }}
-        run: yarn workspace @experimental-api-clients-automation/client-common test
-
-      - name: Store '${{ matrix.client }}' JavaScript utils package
-        uses: actions/upload-artifact@v3
-        with:
-          if-no-files-found: error
-          name: client-javascript-utils-${{ matrix.client }}
-          path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
 
   client_gen:
     timeout-minutes: 15
@@ -195,19 +125,6 @@ jobs:
         with:
           key: ${{ matrix.client.cacheKey }}
           path: ${{ matrix.client.path }}
-
-      - name: Download specs artifacts
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        uses: ./.github/actions/restore-artifacts
-        with:
-          type: specs
-
-        # Always download the utils for js, in case they changed we want to include them in the zip
-      - name: Download JavaScript utils artifacts
-        if: ${{ matrix.client.language == 'javascript' }}
-        uses: ./.github/actions/restore-artifacts
-        with:
-          type: js_utils
 
       - name: Zip artifact before storing
         run:
