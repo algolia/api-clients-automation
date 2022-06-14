@@ -11,10 +11,14 @@ public class JavaScriptCTSManager implements CTSManager {
 
   private final String client;
   private final JsonNode openApiToolsConfig;
+  private final String packageName;
 
   public JavaScriptCTSManager(String client) {
     this.client = client;
     this.openApiToolsConfig = Utils.readJsonFile("config/openapitools.json").get("generator-cli").get("generators");
+
+    String output = this.openApiToolsConfig.get("javascript-" + client).get("output").asText();
+    this.packageName = Utils.getClientConfigField("javascript", "npmNamespace") + "/" + output.substring(output.lastIndexOf('/') + 1);
   }
 
   @Override
@@ -26,7 +30,7 @@ public class JavaScriptCTSManager implements CTSManager {
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("packageDependencies", this.getPackageDependencies());
     bundle.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "utilsPackageVersion"));
-    bundle.put("import", openApiToolsConfig.get("javascript-" + client).get("additionalProperties").get("packageName").asText());
+    bundle.put("import", this.packageName);
   }
 
   private List<Map<String, String>> getPackageDependencies() {
@@ -38,8 +42,9 @@ public class JavaScriptCTSManager implements CTSManager {
       }
       JsonNode generator = field.getValue();
       JsonNode additionalProperties = generator.get("additionalProperties");
-      String packageName = additionalProperties.get("packageName").asText();
+      String output = generator.get("output").asText();
       String packageVersion = additionalProperties.get("packageVersion").asText();
+      String packageName = output.substring(output.lastIndexOf('/') + 1);
 
       Map<String, String> newEntry = new HashMap<>();
       newEntry.put("packageName", packageName);
