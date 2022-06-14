@@ -15,6 +15,9 @@ inputs:
   token:
     description: GITHUB_TOKEN from secrets (not accessible from here)
     required: false
+  runId:
+    description: The GITHUB_RUN_ID
+    required: false
 
 runs:
   using: composite
@@ -65,7 +68,7 @@ runs:
           rm -rf $(jq -r '.testToDelete' <<< $client) || true
 
           # Get the artifact id
-          id=$(gh api -H "Accept: application/vnd.github.v3+json" /repos/algolia/api-clients-automation/actions/runs/${{ env.GITHUB_RUN_ID }}/artifacts -q ".artifacts [] | select(.name==\"$artifact\") | .id")
+          id=$(gh api -H "Accept: application/vnd.github.v3+json" /repos/algolia/api-clients-automation/actions/runs/${{ inputs.runId }}/artifacts -q ".artifacts [] | select(.name==\"$artifact\") | .id")
           gh api -H "Accept: application/vnd.github.v3+json" /repos/algolia/api-clients-automation/actions/artifacts/$id/zip > $artifact.zip
           unzip -q -o $artifact.zip && rm $artifact.zip
         done
