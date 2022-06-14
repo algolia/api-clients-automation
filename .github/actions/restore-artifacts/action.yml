@@ -57,12 +57,12 @@ runs:
         GITHUB_TOKEN: ${{ inputs.token }}
       run: |
         echo ${{ inputs.matrix }} | jq -c '.client []' | while read client; do
-          language=$(jq '.language' <<< $client)
+          language=$(jq -r '.language' <<< $client)
           artifact="clients-$language"
           echo "Downloading $artifact artifacts"
 
-          rm -rf $(jq '.path' <<< $client)
-          rm -rf $(jq '.testToDelete' <<< $client) || true
+          rm -rf $(jq -r '.path' <<< $client)
+          rm -rf $(jq -r '.testToDelete' <<< $client) || true
 
           # Get the artifact id
           id=$(gh api -H "Accept: application/vnd.github.v3+json" /repos/algolia/api-clients-automation/actions/runs/${{ env.GITHUB_RUN_ID }}/artifacts -q ".artifacts [] | select(.name==\"$artifact\") | .id")
