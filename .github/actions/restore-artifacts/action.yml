@@ -56,9 +56,6 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       run: |
-        echo "Downloading test artifact"
-        gh api -H "Accept: application/vnd.github.v3+json" /repos/algolia/api-clients-automation/actions/artifacts/clients-java/zip
-
         echo ${{ inputs.matrix }} | jq -c '.client []' | while read client; do
           language=$(jq '.language' <<< $client)
           artifact="clients-$language"
