@@ -52,38 +52,11 @@ runs:
         name: client-javascript-utils-requester-node-http
         path: clients/algoliasearch-client-javascript/packages/requester-node-http/
 
-    # JavaScript
-    - name: Download clients-javascript artifact
-      if: ${{ inputs.javascript == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v3
-      with:
-        name: clients-javascript
-
-    - name: Unzip clients-javascript artifact
-      if: ${{ inputs.javascript == 'true' && inputs.type == 'all' }}
+    # Clients and tests
+    - name: Download clients and tests artifacts
+      if: ${{ inputs.type == 'all' }}
       shell: bash
-      run: unzip -q -o clients-javascript.zip && rm clients-javascript.zip
-
-    # PHP
-    - name: Download clients-php artifact
-      if: ${{ inputs.php == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v3
-      with:
-        name: clients-php
-
-    - name: Unzip clients-php artifact
-      if: ${{ inputs.php == 'true' && inputs.type == 'all' }}
-      shell: bash
-      run: unzip -q -o clients-php.zip && rm clients-php.zip
-
-    # Java
-    - name: Download clients-java artifact
-      if: ${{ inputs.java == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v3
-      with:
-        name: clients-java
-
-    - name: Unzip clients-java artifact
-      if: ${{ inputs.java == 'true' && inputs.type == 'all' }}
-      shell: bash
-      run: unzip -q -o clients-java.zip && rm clients-java.zip
+      run: |
+        echo "Downloading test artifact"
+        gh api -H "Accept: application/vnd.github.v3+json" \
+          /repos/algolia/api-clients-automation/actions/artifacts/clients-java/zip
