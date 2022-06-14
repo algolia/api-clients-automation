@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
-import { run, OWNER, REPO, getOctokit } from '../../common.js';
+import type { Octokit } from '@octokit/rest';
+
+import { run, OWNER, REPO, getOctokit } from '../../common';
 
 import commentText from './text.js';
 
@@ -7,7 +9,14 @@ const BOT_NAME = 'algolia-bot';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 
 const args = process.argv.slice(2);
-const allowedTriggers = ['notification', 'codegen', 'noGen', 'cleanup'] as const;
+const allowedTriggers = [
+  'notification',
+  'codegen',
+  'noGen',
+  'cleanup',
+  'noGenButShouldHave',
+  'genBuShouldNotHave',
+] as const;
 
 type Trigger = (typeof allowedTriggers)[number];
 
@@ -29,6 +38,19 @@ export async function getCommentBody(trigger: Trigger): Promise<string> {
 ${commentText[trigger].body(generatedCommit, generatedBranch, baseCommit, PR_NUMBER)}`;
 }
 
+async function shouldHaveGeneratedCode(octokit: Octokit): Promise<boolean> {
+  const pr = await octokit.rest.pulls.get({
+    owner: OWNER,
+    repo: REPO,
+    pull_number: PR_NUMBER,
+  });
+  const description = pr.data.body;
+  if (!description) {
+    throw new Error('PR Description is empty');
+  }
+  return description.includes('- [x] Should generate code');
+}
+
 /**
  * Adds or updates a comment on a pull request.
  */
@@ -46,6 +68,20 @@ export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
 
   console.log(`Upserting comment for trigger: ${trigger}`);
 
+  const shouldHaveGenerated = await shouldHaveGeneratedCode(octokit);
+
+  if (trigger === 'noGen' && shouldHaveGenerated) {
+    writeComment('noGenButShouldHave', octokit);
+    throw new Error('Expected code generation but no generated code was found');
+  } else if (trigger === 'codegen' && !shouldHaveGenerated) {
+    writeComment('genBuShouldNotHave', octokit);
+    throw new Error('No code generation was expected');
+  } else {
+    writeComment(trigger, octokit);
+  }
+}
+
+async function writeComment(trigger: Trigger, octokit: Octokit): Promise<void> {
   try {
     const baseOctokitConfig = {
       owner: OWNER,

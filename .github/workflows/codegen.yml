@@ -2,7 +2,7 @@ name: Codegen
 
 on:
   pull_request:
-    types: [opened, synchronize, closed]
+    types: [opened, synchronize, edited, closed]
 
 jobs:
   notification:
@@ -22,6 +22,30 @@ jobs:
 
       - name: Add notification comment
         run: yarn workspace scripts upsertGenerationComment notification
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          PR_NUMBER: ${{ github.event.number }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+
+  assertGeneration:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    if: (github.event.action == 'edited') && github.event.number
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - name: Check generation checkbox
+        run: |
+          # TODO: Check if there is a gen commit
+          yarn workspace scripts upsertGenerationComment noGen
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}

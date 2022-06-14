@@ -17,6 +17,12 @@ export default {
     body: (): string =>
       `_If you believe this is an issue on our side, please [open an issue](${REPO_URL}/issues/new?template=Bug_report.md)._`,
   },
+  noGenButSHouldHave: {
+    header: '### ✗ No code generated but code generation was expected.',
+    body: (): string =>
+      `If no code generation was expected, uncheck the box in the PR descrition named \`Should generated code\`.
+_If you believe this is an issue on our side, please [open an issue](${REPO_URL}/issues/new?template=Bug_report.md)._`,
+  },
   cleanup: {
     header: '### ✗ The generated branch has been deleted.',
     body: (
@@ -33,6 +39,23 @@ You can still access the code generated on \`${branch}\` via [this commit](${REP
       commit: string,
       eventNumber: number
     ): string => `
+|  Name | Link |
+|---------------------------------|------------------------|
+| 🔨 Triggered by | [\`${commit}\`](${REPO_URL}/pull/${eventNumber}/commits/${commit}) |
+| 🔍 Generated code | [\`${generatedCommit}\`](${REPO_URL}/commit/${generatedCommit}) |
+| 🌲 Generated branch | [\`${branch}\`](${REPO_URL}/tree/${branch}) |
+`,
+  },
+  genBuShouldNotHave: {
+    header: '### ✗ Code generated but was not expected',
+    body: (
+      generatedCommit: string,
+      branch: string,
+      commit: string,
+      eventNumber: number
+    ): string => `
+If code generation was expected, check the box in the PR descrition named \`Should generated code\`.
+
 |  Name | Link |
 |---------------------------------|------------------------|
 | 🔨 Triggered by | [\`${commit}\`](${REPO_URL}/pull/${eventNumber}/commits/${commit}) |
