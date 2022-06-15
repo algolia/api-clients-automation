@@ -35,7 +35,7 @@ get:
                 description: A list of searches without clicks with their date, rate and counts.
                 items:
                   type: object
-                  title: noClickEvent
+                  title: noClickRateEvent
                   additionalProperties: false
                   required:
                     - rate
