@@ -48,7 +48,7 @@ post:
                 type: array
                 description: List of user object matching the query.
                 items:
-                  title: userObject
+                  title: userHit
                   type: object
                   properties:
                     userID:

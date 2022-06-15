@@ -28,7 +28,7 @@ get:
                 description: A list of countries with their count.
                 items:
                   type: object
-                  title: analyticsCountry
+                  title: Country
                   additionalProperties: false
                   required:
                     - country
