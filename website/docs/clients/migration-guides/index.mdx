@@ -293,14 +293,11 @@ BatchWriteParams batchParams = new BatchWriteParams();
 List<BatchOperation> requests = new ArrayList<>();
 
 for (Map<String, Object> record : records) {
-  BatchOperation request = new BatchOperation();
-  Map<String, String> body = new HashMap<>();
-
-  request.setAction("addObject");
-  // Accepts a free form `Map<String, Object>`.
-  request.setBody(record);
-
-  requests.add(request);
+  requests.add(new BatchOperation()
+    .setAction(Action.ADD_OBJECT)
+    // Accepts a free form `Map<String, Object>`.
+    .setBody(record)
+  );
 }
 
 batchParams.setRequests(requests);
