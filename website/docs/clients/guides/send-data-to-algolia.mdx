@@ -93,7 +93,11 @@ foreach ($records as $record) {
 <TabItem value="java">
 
 ```java
-List<Map<String, Object>> records = Arrays.asList(Collections.singletonMap("name", "Tom Cruise"), Collections.singletonMap("name", "Scarlett Johansson"));
+Map<String, Object> obj1 = new HashMap<>();
+obj1.put("name", "Tom Cruise");
+Map<String, Object> obj2 = new HashMap<>();
+obj2.put("name", "Scarlett Johansson");
+List<Map<String, Object>> records = Arrays.asList(obj1, obj2);
 
 for (Map<String, Object> record : records) {
   client.saveObject(

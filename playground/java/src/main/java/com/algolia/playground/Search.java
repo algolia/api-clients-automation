@@ -3,7 +3,6 @@ package com.algolia.playground;
 import com.algolia.api.SearchClient;
 import com.algolia.exceptions.*;
 import com.algolia.model.search.*;
-import com.algolia.utils.AlgoliaAgent;
 import com.algolia.utils.ClientOptions;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
@@ -17,8 +16,9 @@ public class Search {
 
     SearchClient client = new SearchClient(
       dotenv.get("ALGOLIA_APPLICATION_ID"),
-      dotenv.get("ALGOLIA_SEARCH_KEY"),
-      ClientOptions.build()
+      dotenv.get("ALGOLIA_ADMIN_KEY"),
+      ClientOptions
+        .build()
         .addAlgoliaAgentSegment("test", "8.0.0")
         .addAlgoliaAgentSegment("JVM", "11.0.14")
         .addAlgoliaAgentSegment("no version")
@@ -28,13 +28,14 @@ public class Search {
     String query = dotenv.get("SEARCH_QUERY");
 
     try {
-      List<Map<String, Object>> records = Arrays.asList(Collections.singletonMap("name", "Tom Cruise"), Collections.singletonMap("name", "Scarlett Johansson"));
+      Map<String, Object> obj1 = new HashMap<>();
+      obj1.put("name", "Tom Cruise");
+      Map<String, Object> obj2 = new HashMap<>();
+      obj2.put("name", "Scarlett Johansson");
+      List<Map<String, Object>> records = Arrays.asList(obj1, obj2);
 
       for (Map<String, Object> record : records) {
-        client.saveObject(
-          indexName,
-          record
-        );
+        client.saveObject(indexName, record);
       }
 
       SearchMethodParams searchMethodParams = new SearchMethodParams();
