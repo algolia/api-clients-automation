@@ -3,9 +3,9 @@ if (searchMethodParams && Array.isArray(searchMethodParams)) {
     requests: searchMethodParams.map(({ params, ...legacyRequest }) => {
       if (legacyRequest.type === 'facet') {
         return {
+          type: 'facet',
           ...legacyRequest,
           ...params,
-          type: 'facet',
         };
       }
 
