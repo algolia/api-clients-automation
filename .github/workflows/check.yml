@@ -244,7 +244,7 @@ jobs:
       - name: Zip artifact before storing
         run:
           zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} -x \
-          "**/node_modules/**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**"
+          "**/node_modules**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**"
 
       - name: Store ${{ matrix.client.language }} clients
         uses: actions/upload-artifact@v3
