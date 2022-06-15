@@ -10,6 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 class Actor {
+
   String name;
 
   Actor(String name) {
@@ -36,24 +37,17 @@ public class Search {
     String query = dotenv.get("SEARCH_QUERY");
 
     try {
-      List<Actor> records = Arrays.asList(
-  new Actor("Tom Cruise"),
-  new Actor("Scarlett Johansson")
-);
+      List<Actor> records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));
 
+      List<BatchOperation> batch = new ArrayList<>();
 
-List<BatchOperation> batch = new ArrayList<>();
+      for (Actor record : records) {
+        batch.add(new BatchOperation().setAction(Action.ADD_OBJECT).setBody(record));
+      }
 
-for (Actor record : records) {
-  batch.add(new BatchOperation()
-    .setAction(Action.ADD_OBJECT)
-    .setBody(record)
-  );
-}
+      BatchResponse response = client.batch(indexName, new BatchWriteParams().setRequests(batch));
 
-BatchResponse response = client.batch(indexName, new BatchWriteParams().setRequests(batch));
-
-client.waitForTask(indexName, response.getTaskID());
+      client.waitForTask(indexName, response.getTaskID());
 
       SearchMethodParams searchMethodParams = new SearchMethodParams();
       List<SearchQuery> requests = new ArrayList<>();
