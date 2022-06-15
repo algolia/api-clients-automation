@@ -131,16 +131,15 @@ class Actor {
 }
 
 // The records retrieved by any of your data sources
-List<Map<String, Object>> records = Arrays.asList(
+List<Actor> records = Arrays.asList(
   new Actor("Tom Cruise"),
   new Actor("Scarlett Johansson")
 );
 
 // Here we construct the request to be sent to Algolia with the `batch` method
-BatchWriteParams batchParams = new BatchWriteParams();
 List<BatchOperation> requests = new ArrayList<>();
 
-for (Map<String, Object> record : records) {
+for (Actor record : records) {
   requests.add(new BatchOperation()
     .setAction(Action.ADD_OBJECT)
     // Accepts any serializable class.
@@ -148,9 +147,7 @@ for (Map<String, Object> record : records) {
   );
 }
 
-batchParams.setRequests(requests);
-
-BatchResponse response = client.batch("<YOUR_INDEX_NAME>", batchParams);
+BatchResponse response = client.batch("<YOUR_INDEX_NAME>", new BatchWriteParams().setRequests(batch));
 
 // Wait for indexing to be finished
 client.waitForTask("<YOUR_INDEX_NAME>", response.getTaskID());

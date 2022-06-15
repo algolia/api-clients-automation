@@ -9,6 +9,14 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+class Actor {
+  String name;
+
+  Actor(String name) {
+    this.name = name;
+  }
+}
+
 public class Search {
 
   public static void main(String[] args) {
@@ -28,15 +36,24 @@ public class Search {
     String query = dotenv.get("SEARCH_QUERY");
 
     try {
-      Map<String, Object> obj1 = new HashMap<>();
-      obj1.put("name", "Tom Cruise");
-      Map<String, Object> obj2 = new HashMap<>();
-      obj2.put("name", "Scarlett Johansson");
-      List<Map<String, Object>> records = Arrays.asList(obj1, obj2);
+      List<Actor> records = Arrays.asList(
+  new Actor("Tom Cruise"),
+  new Actor("Scarlett Johansson")
+);
 
-      for (Map<String, Object> record : records) {
-        client.saveObject(indexName, record);
-      }
+
+List<BatchOperation> batch = new ArrayList<>();
+
+for (Actor record : records) {
+  batch.add(new BatchOperation()
+    .setAction(Action.ADD_OBJECT)
+    .setBody(record)
+  );
+}
+
+BatchResponse response = client.batch(indexName, new BatchWriteParams().setRequests(batch));
+
+client.waitForTask(indexName, response.getTaskID());
 
       SearchMethodParams searchMethodParams = new SearchMethodParams();
       List<SearchQuery> requests = new ArrayList<>();
