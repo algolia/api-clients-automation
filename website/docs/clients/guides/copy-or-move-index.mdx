@@ -36,6 +36,27 @@ await client.waitForTask({ indexName: '<SOURCE_INDEX_NAME>', taskID });
 ```
 
 </TabItem>
+<TabItem value="php">
+
+```php
+$client = SearchClient::create(
+    '<YOUR_APP_ID>',
+    '<YOUR_APP_ID>'
+);
+
+$response = $client->operationIndex(
+    '<SOURCE_INDEX_NAME>',
+     [
+        'operation' => 'copy',
+        'destination' => '<DESTINATION_INDEX_NAME>',
+     ]
+);
+
+// Poll the task status with defaults values
+$client->waitForTask('<SOURCE_INDEX_NAME>', $response['taskID']);
+```
+
+</TabItem>
 <TabItem value="java">
 
 ```java
@@ -77,6 +98,27 @@ const { taskID } = await client.operationIndex({
 
 // Poll the task status until it's done
 await client.waitForTask({ indexName: '<SOURCE_INDEX_NAME>', taskID });
+```
+
+</TabItem>
+<TabItem value="php">
+
+```php
+$client = SearchClient::create(
+    '<YOUR_APP_ID>',
+    '<YOUR_APP_ID>'
+);
+
+$response = $client->operationIndex(
+    '<SOURCE_INDEX_NAME>',
+    [
+        'operation' => 'move',
+        'destination' => '<DESTINATION_INDEX_NAME>',
+    ]
+);
+
+// Poll the task status with defaults values
+$client->waitForTask('<SOURCE_INDEX_NAME>', $response['taskID']);
 ```
 
 </TabItem>
@@ -124,6 +166,28 @@ const { taskID } = await client.operationIndex({
 
 // Poll the task status until it's done
 await client.waitForTask({ indexName: '<SOURCE_INDEX_NAME>', taskID });
+```
+
+</TabItem>
+<TabItem value="php">
+
+```php
+$client = SearchClient::create(
+    '<YOUR_APP_ID>',
+    '<YOUR_APP_ID>'
+);
+
+$response = $client->operationIndex(
+    '<SOURCE_INDEX_NAME>',
+    [
+        'operation' => 'move',
+        'destination' => '<DESTINATION_INDEX_NAME>',
+        'scope' => ['rules'],
+    ]
+);
+
+// Poll the task status with defaults values
+$client->waitForTask('<SOURCE_INDEX_NAME>', $response['taskID']);
 ```
 
 </TabItem>
