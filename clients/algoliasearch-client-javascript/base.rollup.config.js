@@ -125,7 +125,7 @@ export function getPackageConfigs() {
         external: ['dom'],
         dependencies: [
           ...commonConfig.dependencies,
-          '@experimental-api-clients-automation/requester-browser-xhr',
+          `${NPM_ORG}/requester-browser-xhr`,
         ],
         globals: {
           [packageName]: packageName,
@@ -138,7 +138,7 @@ export function getPackageConfigs() {
         formats: NODE_FORMATS,
         dependencies: [
           ...commonConfig.dependencies,
-          '@experimental-api-clients-automation/requester-node-http',
+          `${NPM_ORG}/requester-node-http`,
         ],
       },
     ];
