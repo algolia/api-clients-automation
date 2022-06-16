@@ -17,6 +17,8 @@ const packageConfigs = getPackageConfigs();
 const rollupConfig = [];
 
 packageConfigs.forEach((packageConfig) => {
+  let checkForTypes = true;
+
   const clientPath = path.resolve('packages', packageConfig.package);
   const clientPackageJson = JSON.parse(
     fs.readFileSync(path.resolve(clientPath, 'package.json'))
@@ -32,8 +34,6 @@ packageConfigs.forEach((packageConfig) => {
   });
 
   packageConfig.formats.forEach((format) => {
-    // Avoid generating types multiple times.
-    let areTypesGenerated = false;
     const isUmdBuild = format === 'umd-browser';
     const isEsmBrowserBuild = format === 'esm-browser';
 
@@ -87,12 +87,12 @@ packageConfigs.forEach((packageConfig) => {
         }),
         nodeResolve(),
         ts({
-          check: !areTypesGenerated,
+          check: checkForTypes,
           tsconfig: path.resolve(clientPath, 'tsconfig.json'),
           tsconfigOverride: {
             compilerOptions: {
-              declaration: !areTypesGenerated,
-              declarationMap: !areTypesGenerated,
+              declaration: checkForTypes,
+              declarationMap: checkForTypes,
             },
           },
         }),
@@ -107,7 +107,7 @@ packageConfigs.forEach((packageConfig) => {
       },
     });
 
-    areTypesGenerated = true;
+    checkForTypes = false;
   });
 });
 
