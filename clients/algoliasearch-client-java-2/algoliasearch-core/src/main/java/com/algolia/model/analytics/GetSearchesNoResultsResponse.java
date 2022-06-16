@@ -1,7 +1,6 @@
 package com.algolia.model.analytics;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,14 +8,14 @@ import java.util.Objects;
 public class GetSearchesNoResultsResponse {
 
   @SerializedName("searches")
-  private List<GetSearchesNoResultsResponseSearches> searches = new ArrayList<>();
+  private List<SearchNoResultEvent> searches;
 
-  public GetSearchesNoResultsResponse setSearches(List<GetSearchesNoResultsResponseSearches> searches) {
+  public GetSearchesNoResultsResponse setSearches(List<SearchNoResultEvent> searches) {
     this.searches = searches;
     return this;
   }
 
-  public GetSearchesNoResultsResponse addSearches(GetSearchesNoResultsResponseSearches searchesItem) {
+  public GetSearchesNoResultsResponse addSearches(SearchNoResultEvent searchesItem) {
     this.searches.add(searchesItem);
     return this;
   }
@@ -27,7 +26,7 @@ public class GetSearchesNoResultsResponse {
    * @return searches
    */
   @javax.annotation.Nonnull
-  public List<GetSearchesNoResultsResponseSearches> getSearches() {
+  public List<SearchNoResultEvent> getSearches() {
     return searches;
   }
 

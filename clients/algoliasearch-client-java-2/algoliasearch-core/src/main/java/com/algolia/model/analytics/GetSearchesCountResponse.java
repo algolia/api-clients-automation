@@ -1,7 +1,6 @@
 package com.algolia.model.analytics;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ public class GetSearchesCountResponse {
   private Integer count;
 
   @SerializedName("dates")
-  private List<GetSearchesCountResponseDates> dates = new ArrayList<>();
+  private List<SearchEvent> dates;
 
   public GetSearchesCountResponse setCount(Integer count) {
     this.count = count;
@@ -29,12 +28,12 @@ public class GetSearchesCountResponse {
     return count;
   }
 
-  public GetSearchesCountResponse setDates(List<GetSearchesCountResponseDates> dates) {
+  public GetSearchesCountResponse setDates(List<SearchEvent> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetSearchesCountResponse addDates(GetSearchesCountResponseDates datesItem) {
+  public GetSearchesCountResponse addDates(SearchEvent datesItem) {
     this.dates.add(datesItem);
     return this;
   }
@@ -45,7 +44,7 @@ public class GetSearchesCountResponse {
    * @return dates
    */
   @javax.annotation.Nonnull
-  public List<GetSearchesCountResponseDates> getDates() {
+  public List<SearchEvent> getDates() {
     return dates;
   }
 

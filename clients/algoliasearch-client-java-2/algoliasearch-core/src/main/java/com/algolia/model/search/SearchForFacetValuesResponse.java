@@ -1,7 +1,6 @@
 package com.algolia.model.search;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,14 +8,14 @@ import java.util.Objects;
 public class SearchForFacetValuesResponse {
 
   @SerializedName("facetHits")
-  private List<SearchForFacetValuesResponseFacetHits> facetHits = new ArrayList<>();
+  private List<FacetHits> facetHits;
 
-  public SearchForFacetValuesResponse setFacetHits(List<SearchForFacetValuesResponseFacetHits> facetHits) {
+  public SearchForFacetValuesResponse setFacetHits(List<FacetHits> facetHits) {
     this.facetHits = facetHits;
     return this;
   }
 
-  public SearchForFacetValuesResponse addFacetHits(SearchForFacetValuesResponseFacetHits facetHitsItem) {
+  public SearchForFacetValuesResponse addFacetHits(FacetHits facetHitsItem) {
     this.facetHits.add(facetHitsItem);
     return this;
   }
@@ -27,7 +26,7 @@ public class SearchForFacetValuesResponse {
    * @return facetHits
    */
   @javax.annotation.Nonnull
-  public List<SearchForFacetValuesResponseFacetHits> getFacetHits() {
+  public List<FacetHits> getFacetHits() {
     return facetHits;
   }
 

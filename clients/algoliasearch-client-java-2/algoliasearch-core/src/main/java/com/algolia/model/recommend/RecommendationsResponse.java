@@ -1,7 +1,6 @@
 package com.algolia.model.recommend;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +31,13 @@ public class RecommendationsResponse {
   private Boolean exhaustiveTypo;
 
   @SerializedName("facets")
-  private Map<String, Map<String, String>> facets = null;
+  private Map<String, Map<String, String>> facets;
 
   @SerializedName("facets_stats")
-  private Map<String, BaseSearchResponseFacetsStats> facetsStats = null;
+  private Map<String, FacetsStats> facetsStats;
 
   @SerializedName("hitsPerPage")
-  private Integer hitsPerPage = 20;
+  private Integer hitsPerPage;
 
   @SerializedName("index")
   private String index;
@@ -59,7 +58,7 @@ public class RecommendationsResponse {
   private Integer nbSortedHits;
 
   @SerializedName("page")
-  private Integer page = 0;
+  private Integer page;
 
   @SerializedName("params")
   private String params;
@@ -71,7 +70,7 @@ public class RecommendationsResponse {
   private Integer processingTimeMS;
 
   @SerializedName("query")
-  private String query = "";
+  private String query;
 
   @SerializedName("queryAfterRemoval")
   private String queryAfterRemoval;
@@ -80,10 +79,10 @@ public class RecommendationsResponse {
   private String serverUsed;
 
   @SerializedName("userData")
-  private Object userData = new Object();
+  private Object userData;
 
   @SerializedName("hits")
-  private List<RecommendHit> hits = new ArrayList<>();
+  private List<RecommendHit> hits;
 
   public RecommendationsResponse setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
@@ -217,12 +216,12 @@ public class RecommendationsResponse {
     return facets;
   }
 
-  public RecommendationsResponse setFacetsStats(Map<String, BaseSearchResponseFacetsStats> facetsStats) {
+  public RecommendationsResponse setFacetsStats(Map<String, FacetsStats> facetsStats) {
     this.facetsStats = facetsStats;
     return this;
   }
 
-  public RecommendationsResponse putFacetsStats(String key, BaseSearchResponseFacetsStats facetsStatsItem) {
+  public RecommendationsResponse putFacetsStats(String key, FacetsStats facetsStatsItem) {
     if (this.facetsStats == null) {
       this.facetsStats = new HashMap<>();
     }
@@ -236,7 +235,7 @@ public class RecommendationsResponse {
    * @return facetsStats
    */
   @javax.annotation.Nullable
-  public Map<String, BaseSearchResponseFacetsStats> getFacetsStats() {
+  public Map<String, FacetsStats> getFacetsStats() {
     return facetsStats;
   }
 

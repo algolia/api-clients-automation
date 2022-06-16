@@ -1,7 +1,6 @@
 package com.algolia.model.analytics;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +17,7 @@ public class GetClickThroughRateResponse {
   private Integer trackedSearchCount;
 
   @SerializedName("dates")
-  private List<GetClickThroughRateResponseDates> dates = new ArrayList<>();
+  private List<ClickThroughRateEvent> dates;
 
   public GetClickThroughRateResponse setRate(Double rate) {
     this.rate = rate;
@@ -65,12 +64,12 @@ public class GetClickThroughRateResponse {
     return trackedSearchCount;
   }
 
-  public GetClickThroughRateResponse setDates(List<GetClickThroughRateResponseDates> dates) {
+  public GetClickThroughRateResponse setDates(List<ClickThroughRateEvent> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetClickThroughRateResponse addDates(GetClickThroughRateResponseDates datesItem) {
+  public GetClickThroughRateResponse addDates(ClickThroughRateEvent datesItem) {
     this.dates.add(datesItem);
     return this;
   }
@@ -81,7 +80,7 @@ public class GetClickThroughRateResponse {
    * @return dates
    */
   @javax.annotation.Nonnull
-  public List<GetClickThroughRateResponseDates> getDates() {
+  public List<ClickThroughRateEvent> getDates() {
     return dates;
   }
 
