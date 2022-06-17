@@ -117,7 +117,7 @@ $client = SearchClient::create(
     '<YOUR_APP_ID>'
 );
 
-// This will append `; my user agent (optional version)` to the current value of `x-algolia-agent` for every requests
+// This will append `; my user agent (optional version)` to the current value of `User-Agent` for every requests
 Algolia\AlgoliaSearch\Support\AlgoliaAgent::addAlgoliaAgent(
     $client->getClientConfig()->getClientName(),
     "my user agent",

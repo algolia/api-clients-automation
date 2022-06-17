@@ -5,7 +5,7 @@ title: PHP
 | Previous             | Latest                                 | Description                                                                                                                                                                                                               |
 | -------------------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `"algolia/algoliasearch-client-php": "^3.2"`           | `"algolia/algoliasearch-client-php": "^4.0@alpha"`  | **During the beta phase**, the clients are available under the package 4.x.x-alpha , you can find a full list [here](https://packagist.org/packages/algolia/algoliasearch-client-php).      |
-| `Algolia\AlgoliaSearch`             | `Algolia\AlgoliaSearch\Api`                         | Exported clients have now the name suffixed by `Api`.                                                                                                                                                                                |
+| `Algolia\AlgoliaSearch`             | `Algolia\AlgoliaSearch\Api`                         | Exported clients have now the namespace suffixed by `Api`.                                                                                                                                                                                |
 
 ### Usage
 

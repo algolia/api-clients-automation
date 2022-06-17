@@ -220,6 +220,7 @@ $client = SearchClient::create(
 $response = $client->operationIndex(
     '<SOURCE_INDEX_NAME>',
     [
+        // Enum for either `copy` or `move`
         'operation' => 'copy', // 'move'
         'destination' => '<DESTINATION_INDEX_NAME>'
     ]
