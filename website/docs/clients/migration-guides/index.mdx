@@ -198,9 +198,9 @@ const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 const { taskID } = await client.operationIndex({
   indexName: '<SOURCE_INDEX_NAME>',
   operationIndexParams: {
-    destination: '<DESTINATION_INDEX_NAME>',
     // Enum for either `copy` or `move`
     operation: 'copy', // 'move'
+    destination: '<DESTINATION_INDEX_NAME>',
   },
 });
 
@@ -238,8 +238,8 @@ import com.algolia.model.search.*;
 UpdatedAtResponse response = client.operationIndex(
   "<SOURCE_INDEX_NAME>",
   new OperationIndexParams()
-    .setDestination("<DESTINATION_INDEX_NAME>")
     .setOperation(OperationType.COPY) // or MOVE
+    .setDestination("<DESTINATION_INDEX_NAME>")
 );
 
 // Poll the task status until it's done

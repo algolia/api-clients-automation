@@ -50,7 +50,7 @@ $client->search(
             [
                 'indexName' => '<YOUR_INDEX_NAME>',
                 'query' => '<YOUR_QUERY>',
-                'facets' => ['author', 'genre'],
+                'hitsPerPage' => 50,
             ],
         ]
     ],
@@ -118,7 +118,7 @@ $client = SearchClient::create(
 );
 
 // This will append `; my user agent (optional version)` to the current value of `x-algolia-agent` for every requests
-Algolia\AlgoliaSearch\Support\AlgoliaAgent::addCustomAlgoliaAgent(
+Algolia\AlgoliaSearch\Support\AlgoliaAgent::addAlgoliaAgent(
     $client->getClientConfig()->getClientName(),
     "my user agent",
     "optional version"
