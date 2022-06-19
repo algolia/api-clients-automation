@@ -11,7 +11,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/jest": "28.1.1",
+    "@types/jest": "28.1.2",
     "eslint": "8.17.0",
     "jest": "28.1.1",
     "ts-jest": "28.0.4",
