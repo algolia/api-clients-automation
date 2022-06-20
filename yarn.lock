@@ -6877,7 +6877,7 @@ __metadata:
     "@types/jest": 28.1.2
     eslint: 8.17.0
     jest: 28.1.1
-    ts-jest: 28.0.4
+    ts-jest: 28.0.5
     ts-node: 10.8.1
     typescript: 4.7.3
   languageName: unknown
@@ -12041,7 +12041,7 @@ __metadata:
     openapi-types: 12.0.0
     ora-classic: 5.4.2
     semver: 7.3.7
-    ts-jest: 28.0.4
+    ts-jest: 28.0.5
     ts-node: 10.8.1
     typescript: 4.7.3
   languageName: unknown
@@ -12829,6 +12829,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-jest@npm:28.0.5":
+  version: 28.0.5
+  resolution: "ts-jest@npm:28.0.5"
+  dependencies:
+    bs-logger: 0.x
+    fast-json-stable-stringify: 2.x
+    jest-util: ^28.0.0
+    json5: ^2.2.1
+    lodash.memoize: 4.x
+    make-error: 1.x
+    semver: 7.x
+    yargs-parser: ^21.0.1
+  peerDependencies:
+    "@babel/core": ">=7.0.0-beta.0 <8"
+    babel-jest: ^28.0.0
+    jest: ^28.0.0
+    typescript: ">=4.3"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    babel-jest:
+      optional: true
+    esbuild:
+      optional: true
+  bin:
+    ts-jest: cli.js
+  checksum: 53e05db5b7e1e4f4137c47594f902f5caf585ebc73dda67c4552c1ed784d4fde532c5693a61d877d9462290c7965233c2124050b0f00fd4c85cde9bb1a51c974
+  languageName: node
+  linkType: hard
+
 "ts-node@npm:10.8.1":
   version: 10.8.1
   resolution: "ts-node@npm:10.8.1"
@@ -13594,7 +13624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^21.0.0":
+"yargs-parser@npm:^21.0.0, yargs-parser@npm:^21.0.1":
   version: 21.0.1
   resolution: "yargs-parser@npm:21.0.1"
   checksum: c3ea2ed12cad0377ce3096b3f138df8267edf7b1aa7d710cd502fe16af417bafe4443dd71b28158c22fcd1be5dfd0e86319597e47badf42ff83815485887323a
