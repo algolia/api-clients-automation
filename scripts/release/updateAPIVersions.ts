@@ -72,34 +72,33 @@ async function updateVersionForJavascript(
   Object.values(GENERATORS)
     .filter((gen) => gen.language === 'javascript')
     .forEach((gen) => {
-      const additionalProperties = gen.additionalProperties;
+      const { additionalProperties } = gen;
       const newVersion = semver.inc(
         additionalProperties.packageVersion,
         jsVersion.releaseType
       );
+      const packageName = `${clientsConfig.javascript.npmNamespace}/${additionalProperties.packageName}`;
 
       if (!newVersion) {
         throw new Error(
-          `Failed to bump version ${additionalProperties.packageVersion} by ${jsVersion.releaseType}.`
+          `Failed to bump '${packageName}' by '${jsVersion.releaseType}'.`
         );
       }
 
       additionalProperties.packageVersion = newVersion;
 
-      if (!additionalProperties.packageName) {
+      if (!packageName) {
         throw new Error(
-          `Package name is missing for JavaScript - ${gen.client}.`
+          `Package name is missing for JavaScript - ${packageName}.`
         );
       }
 
-      if (nodePgPackageFile.dependencies[additionalProperties.packageName]) {
-        nodePgPackageFile.dependencies[additionalProperties.packageName] =
-          newVersion;
+      if (nodePgPackageFile.dependencies[packageName]) {
+        nodePgPackageFile.dependencies[packageName] = newVersion;
       }
 
-      if (browserPgPackageFile.dependencies[additionalProperties.packageName]) {
-        browserPgPackageFile.dependencies[additionalProperties.packageName] =
-          newVersion;
+      if (browserPgPackageFile.dependencies[packageName]) {
+        browserPgPackageFile.dependencies[packageName] = newVersion;
       }
 
       // We don't want this field to be in the final file, it only exists
