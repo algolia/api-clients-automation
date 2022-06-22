@@ -1,3 +1,7 @@
+## [4.0.0-alpha.3](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.2...4.0.0-alpha.3)
+
+- c4d1ccff feat(php): Add all config classes generation (#730)
+
 ## [4.0.0-alpha.2](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.1...4.0.0-alpha.2)
 
 - 61343d52 fix(specs): correct type for `typoTolerance` (#722)
