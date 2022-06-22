@@ -23,6 +23,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     setParameterNamingConvention("camelCase");
     additionalProperties.put("modelPackage", "Model\\" + Utils.createClientName(client, "php"));
     additionalProperties.put("invokerPackage", "Algolia\\AlgoliaSearch");
+    additionalProperties.put("clientName", Utils.createClientName(client, "php"));
 
     super.processOpts();
 
@@ -30,6 +31,11 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("Configuration.mustache"));
 
     supportingFiles.add(new SupportingFile("Configuration.mustache", "lib/Configuration", "Configuration.php"));
+    supportingFiles.add(new SupportingFile("ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
+
+    supportingFiles.add(
+      new SupportingFile("client_config.mustache", "lib/Configuration", Utils.createClientName(client, "php") + "Config.php")
+    );
 
     setDefaultGeneratorOptions(client);
     try {
