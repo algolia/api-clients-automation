@@ -15,15 +15,19 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     return "algolia-php";
   }
 
+  public String getClientName(String client) {
+    return Utils.createClientName(client, "php");
+  }
+
   @Override
   public void processOpts() {
     // generator specific options
     String client = (String) additionalProperties.get("client");
     setApiNameSuffix(Utils.API_SUFFIX);
     setParameterNamingConvention("camelCase");
-    additionalProperties.put("modelPackage", "Model\\" + Utils.createClientName(client, "php"));
+    additionalProperties.put("modelPackage", "Model\\" + getClientName(client));
     additionalProperties.put("invokerPackage", "Algolia\\AlgoliaSearch");
-    additionalProperties.put("clientName", Utils.createClientName(client, "php"));
+    additionalProperties.put("clientName", getClientName(client));
 
     super.processOpts();
 
@@ -34,7 +38,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.add(new SupportingFile("ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
 
     supportingFiles.add(
-      new SupportingFile("client_config.mustache", "lib/Configuration", Utils.createClientName(client, "php") + "Config.php")
+      new SupportingFile("client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php")
     );
 
     setDefaultGeneratorOptions(client);
@@ -58,7 +62,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
       additionalProperties.put("useCache", true);
     }
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("configClassname", Utils.createClientName(client, "php") + "Config");
+    additionalProperties.put("configClassname", getClientName(client) + "Config");
   }
 
   public String getComposerPackageName() {
