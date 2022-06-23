@@ -55,7 +55,8 @@ runs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        key: yarn-cache-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
+        # let yarn handle the cache hash
+        key: yarn-cache-${{ env.CACHE_VERSION }}
 
     - name: Cache node modules
       uses: actions/cache@v3
@@ -79,7 +80,8 @@ runs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.yarn-cache-dir-client.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
-        key: yarn-cache-client-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
+        # let yarn handle the cache hash
+        key: yarn-cache-client-${{ env.CACHE_VERSION }}
 
     - name: Cache js-client node modules
       if: ${{ inputs.language == 'javascript' }}

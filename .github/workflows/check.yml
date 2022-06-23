@@ -159,7 +159,7 @@ jobs:
 
       - name: Build '${{ matrix.client }}' client
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: cd clients/algoliasearch-client-javascript yarn build ${{ matrix.client }}
+        run: cd clients/algoliasearch-client-javascript && yarn build ${{ matrix.client }}
 
       - name: Run tests for 'client-common'
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client == 'client-common' }}
@@ -253,7 +253,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
-          key: yarn-cache-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('tests/output/javascript/yarn.lock') }}
+          # let yarn handle the cache hash
+          key: yarn-cache-tests-${{ env.CACHE_VERSION }}
 
       - name: Cache js-client node modules
         if: ${{ matrix.client.language == 'javascript' }}
