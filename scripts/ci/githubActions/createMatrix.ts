@@ -92,7 +92,6 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
 
     switch (language) {
       case 'javascript':
-        testsToStore = `${testsToDelete} ${testsBasePath}/package.json`;
         toBuild = toBuild.filter((client) => client !== 'lite');
         break;
       case 'java':

@@ -18,13 +18,19 @@ async function buildPerClient(
   switch (language) {
     case 'javascript':
       await run(
-        `yarn workspace ${npmNamespace}/${additionalProperties.packageName} clean`,
+        `cd ${getLanguageFolder(language)} && yarn workspace ${npmNamespace}/${
+          additionalProperties.packageName
+        } clean`,
         {
           verbose,
         }
       );
       await run(
-        `SKIP_UTILS=true yarn workspace algoliasearch-client-javascript build ${npmNamespace}/${additionalProperties.packageName}`,
+        `cd ${getLanguageFolder(
+          language
+        )} && SKIP_UTILS=true yarn build ${npmNamespace}/${
+          additionalProperties.packageName
+        }`,
         { verbose }
       );
       break;
@@ -71,10 +77,10 @@ export async function buildClients(
       verbose
     ).start();
 
-    await run('yarn workspace algoliasearch-client-javascript clean:utils', {
+    await run(`cd ${getLanguageFolder('javascript')} && yarn clean:utils`, {
       verbose,
     });
-    await run('yarn workspace algoliasearch-client-javascript build:utils', {
+    await run(`cd ${getLanguageFolder('javascript')} && yarn build:utils`, {
       verbose,
     });
 
@@ -82,15 +88,11 @@ export async function buildClients(
   }
 
   await Promise.all([
-    Promise.all(
-      generators
-        .filter(({ language }) => multiBuildLanguage.has(language))
-        .map((gen) => buildPerClient(gen, verbose))
-    ),
-    Promise.all(
-      langs
-        .filter((lang) => !multiBuildLanguage.has(lang))
-        .map((lang) => buildAllClients(lang, verbose))
-    ),
+    ...generators
+      .filter(({ language }) => multiBuildLanguage.has(language))
+      .map((gen) => buildPerClient(gen, verbose)),
+    ...langs
+      .filter((lang) => !multiBuildLanguage.has(lang))
+      .map((lang) => buildAllClients(lang, verbose)),
   ]);
 }
