@@ -7,7 +7,7 @@ export const PROMPT_ALL = 'all';
 export const PROMPT_LANGUAGES = [PROMPT_ALL, ...LANGUAGES];
 export const PROMPT_CLIENTS = [PROMPT_ALL, ...CLIENTS];
 
-export type LangArg = Language | 'all' | undefined;
+export type LangArg = Language | typeof PROMPT_ALL | undefined;
 
 export type PromptDecision = {
   language: Language | 'all';
@@ -24,10 +24,7 @@ type Prompt = {
   interactive: boolean;
 };
 
-export function getClientChoices(
-  job: Job,
-  language?: Language | 'all'
-): string[] {
+export function getClientChoices(job: Job, language?: LangArg): string[] {
   const withoutAlgoliaSearch = PROMPT_CLIENTS.filter(
     (client) => client !== 'algoliasearch'
   );
