@@ -5,6 +5,13 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
+  "files": [
+    "dist",
+    "builds",
+    "lite",
+    "index.js",
+    "index.d.ts"
+  ],
   "exports": {
     ".": {
       "node": {
