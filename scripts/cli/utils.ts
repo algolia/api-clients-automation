@@ -3,14 +3,15 @@ import inquirer from 'inquirer';
 import { CLIENTS, GENERATORS, LANGUAGES } from '../common';
 import type { Generator, Language } from '../types';
 
-export const PROMPT_ALL = 'all';
-export const PROMPT_LANGUAGES = [PROMPT_ALL, ...LANGUAGES];
-export const PROMPT_CLIENTS = [PROMPT_ALL, ...CLIENTS];
+export const ALL = 'all';
+export const PROMPT_LANGUAGES = [ALL, ...LANGUAGES];
+export const PROMPT_CLIENTS = [ALL, ...CLIENTS];
 
-export type LangArg = Language | typeof PROMPT_ALL | undefined;
+export type AllLanguage = Language | typeof ALL;
+export type LangArg = AllLanguage | undefined;
 
 export type PromptDecision = {
-  language: Language | 'all';
+  language: AllLanguage;
   client: string[];
   clientList: string[];
 };
@@ -33,7 +34,7 @@ export function getClientChoices(job: Job, language?: LangArg): string[] {
     return job === 'specs' ? withoutAlgoliaSearch : PROMPT_CLIENTS;
   }
 
-  const isJavaScript = language === PROMPT_ALL || language === 'javascript';
+  const isJavaScript = language === ALL || language === 'javascript';
 
   switch (job) {
     // We don't need to build `lite` client as it's a subset of the `algoliasearch` one
@@ -64,12 +65,12 @@ export function generatorList({
   client,
   clientList,
 }: {
-  language: Language | 'all';
+  language: AllLanguage;
   client: string[];
   clientList: string[];
 }): Generator[] {
-  const langsTodo = language === PROMPT_ALL ? LANGUAGES : [language];
-  const clientsTodo = client[0] === PROMPT_ALL ? clientList : client;
+  const langsTodo = language === ALL ? LANGUAGES : [language];
+  const clientsTodo = client[0] === ALL ? clientList : client;
 
   return langsTodo
     .flatMap((lang) => clientsTodo.map((cli) => GENERATORS[`${lang}-${cli}`]))
@@ -83,8 +84,8 @@ export async function prompt({
   interactive,
 }: Prompt): Promise<PromptDecision> {
   const decision: PromptDecision = {
-    client: [PROMPT_ALL],
-    language: PROMPT_ALL,
+    client: [ALL],
+    language: ALL,
     clientList: [],
   };
 
@@ -95,7 +96,7 @@ export async function prompt({
           type: 'list',
           name: 'language',
           message: 'Select a language',
-          default: PROMPT_ALL,
+          default: ALL,
           choices: LANGUAGES,
         },
       ]);
@@ -115,7 +116,7 @@ export async function prompt({
           type: 'list',
           name: 'client',
           message: 'Select a client',
-          default: PROMPT_ALL,
+          default: ALL,
           choices: decision.clientList,
         },
       ]);

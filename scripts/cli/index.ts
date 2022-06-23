@@ -11,7 +11,7 @@ import { playground } from '../playground';
 
 import type { Job, LangArg } from './utils';
 import {
-  PROMPT_ALL,
+  ALL,
   getClientChoices,
   generatorList,
   prompt,
@@ -127,7 +127,7 @@ buildCommand
       { verbose, interactive, skipCache, outputJson }
     ) => {
       const { client, clientList } = await prompt({
-        langArg: 'all',
+        langArg: ALL,
         clientArg,
         job: 'specs',
         interactive,
@@ -137,7 +137,7 @@ buildCommand
 
       // ignore cache when building from cli
       await buildSpecs(
-        client[0] === PROMPT_ALL ? clientList : client,
+        client[0] === ALL ? clientList : client,
         outputFormat,
         Boolean(verbose),
         !skipCache
@@ -179,15 +179,12 @@ ctsCommand
   .action(async (langArg: LangArg, { verbose, interactive }) => {
     const { language } = await prompt({
       langArg,
-      clientArg: [PROMPT_ALL],
+      clientArg: [ALL],
       job: 'generate',
       interactive,
     });
 
-    await runCts(
-      language === PROMPT_ALL ? LANGUAGES : [language],
-      Boolean(verbose)
-    );
+    await runCts(language === ALL ? LANGUAGES : [language], Boolean(verbose));
   });
 
 program
