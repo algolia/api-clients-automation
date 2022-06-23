@@ -71,14 +71,14 @@ runs:
     - name: Get yarn js-client cache directory path
       if: ${{ inputs.language == 'javascript' }}
       shell: bash
-      id: yarn-cache-dir
+      id: yarn-cache-dir-client
       run: echo "::set-output name=dir::$(cd clients/algoliasearch-client-javascript && yarn config get cacheFolder)"
 
     - name: Restore Yarn js-client
       if: ${{ inputs.language == 'javascript' }}
       uses: actions/cache@v3
       with:
-        path: ${{ steps.yarn-cache-dir.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
+        path: ${{ steps.yarn-cache-dir-client.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
         key: yarn-cache-client-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
 
     - name: Cache js-client node modules

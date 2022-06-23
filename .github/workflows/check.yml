@@ -245,14 +245,14 @@ jobs:
       - name: Get yarn js test cache directory path
         if: ${{ matrix.client.language == 'javascript' }}
         shell: bash
-        id: yarn-cache-dir
+        id: yarn-cache-dir-tests
         run: echo "::set-output name=dir::$(cd tests/output/javascript && yarn config get cacheFolder)"
 
       - name: Restore Yarn js tests
         if: ${{ matrix.client.language == 'javascript' }}
         uses: actions/cache@v3
         with:
-          path: ${{ steps.yarn-cache-dir.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
+          path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           key: yarn-cache-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Cache js-client node modules
