@@ -59,7 +59,7 @@ public class RetryStrategy {
               continue;
             }
             String message = response.message();
-            if (response.body()) {
+            if (response.body() != null) {
               message = response.body().string();
             }
             throw new AlgoliaApiException(message, response.code());
