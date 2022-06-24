@@ -25,7 +25,7 @@ async function buildPerClient(
         }
       );
       await run(
-        ` SKIP_UTILS=true yarn build ${npmNamespace}/${additionalProperties.packageName}`,
+        `SKIP_UTILS=true yarn build ${npmNamespace}/${additionalProperties.packageName}`,
         { verbose, cwd: getLanguageFolder(language) }
       );
       break;
