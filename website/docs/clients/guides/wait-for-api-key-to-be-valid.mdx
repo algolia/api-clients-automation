@@ -28,14 +28,24 @@ const { key } = await client.addApiKey({
 // Poll the task status with defaults values
 await client.waitForApiKey({ operation: 'add', key });
 
-// Poll the task status with your options
-await client.waitForTask({
-  operation: 'add',
+// The fields to update on your API key
+const updatesToPerform: ApiKey = {
+  acl: ['analytics', 'search'],
+  indexes: ['products'],
+};
+
+// Call for update
+await client.updateApiKey({
   key,
-  // Number of maximum retries to do
-  maxRetries: 100,
-  // The time to wait between tries
-  timeout: (retryCount: number): number => Math.min(retryCount * 200, 5000),
+  apiKey: updatesToPerform,
+});
+
+// Wait for update to be done
+await client.waitForApiKey({
+  operation: 'update',
+  key,
+  // We provide the updated fields to check if the changes have been applied
+  apiKey: updatesToPerform,
 });
 ```
 
