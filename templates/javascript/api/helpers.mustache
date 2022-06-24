@@ -34,27 +34,25 @@ waitForApiKey({
   ...createRetryablePromiseOptions
 }: WaitForApiKeyOptions): Promise<ApiError | Key> {
   if (operation === 'update') {
-    const validate = (response: ApiKey): boolean => {
-      for (const [entry, values] of Object.entries(apiKey)) {
-        if (Array.isArray(values)) {
-          if (
-            values.length === response[entry].length &&
-            values.every((val, index) => val === response[entry][index])
-          ) {
-            return true;
-          }
-        } else if (values === response[entry]) {
-          return true;
-        }
-      }
-
-      return false;
-    };
-
     return createRetryablePromise({
       ...createRetryablePromiseOptions,
       func: () => this.getApiKey({ key }),
-      validate,
+      validate: (response) =>  {
+        for (const [entry, values] of Object.entries(apiKey)) {
+          if (Array.isArray(values)) {
+            if (
+              values.length === response[entry].length &&
+              values.every((val, index) => val === response[entry][index])
+            ) {
+              return true;
+            }
+          } else if (values === response[entry]) {
+            return true;
+          }
+        }
+
+        return false;
+      },
     });
   }
 
