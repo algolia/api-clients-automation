@@ -72,11 +72,11 @@ export async function buildClients(
       verbose
     ).start();
 
-    await run(`yarn clean:utils`, {
+    await run('yarn clean:utils', {
       verbose,
       cwd: getLanguageFolder('javascript'),
     });
-    await run(`yarn build:utils`, {
+    await run('yarn build:utils', {
       verbose,
       cwd: getLanguageFolder('javascript'),
     });
