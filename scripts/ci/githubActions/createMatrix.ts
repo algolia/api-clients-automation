@@ -84,8 +84,10 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
       continue;
     }
 
-    const testsBasePath = `./tests/output/${language}`;
-    const testsOutputBase = `${testsBasePath}/${getTestOutputFolder(language)}`;
+    const testsRootFolder = `tests/output/${language}`;
+    const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(
+      language
+    )}`;
     const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/methods`;
     let testsToStore = testsToDelete;
     let toBuild = matrix[language].toRun;
@@ -95,7 +97,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
         toBuild = toBuild.filter((client) => client !== 'lite');
         break;
       case 'java':
-        testsToStore = `${testsToDelete} ${testsBasePath}/build.gradle`;
+        testsToStore = `${testsToDelete} ${testsRootFolder}/build.gradle`;
         break;
       default:
         break;
@@ -112,6 +114,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
         `templates/${language}`,
         `generators/src`,
       ]),
+      testsRootFolder,
       testsToDelete,
       testsToStore,
     });

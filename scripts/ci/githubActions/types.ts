@@ -34,6 +34,10 @@ export type ClientMatrix = BaseMatrix & {
    */
   language: string;
   /**
+   * The root of the test folder.
+   */
+  testsRootFolder: string;
+  /**
    * The test output path to delete before running the CTS generation.
    */
   testsToDelete: string;
