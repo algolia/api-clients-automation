@@ -96,6 +96,8 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs: setup
+    env:
+      matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -103,8 +105,8 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          key: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).cacheKey }}
-          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          key: ${{ matrix.cacheKey }}
+          path: ${{ matrix.bundledPath }}
 
       - name: Setup
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -114,14 +116,14 @@ jobs:
 
       - name: Building specs
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }}
+        run: yarn cli build specs ${{ matrix.toRun }}
 
       - name: Store bundled specs
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
           name: specs
-          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          path: ${{ matrix.bundledPath }}
 
   client_javascript_utils:
     timeout-minutes: 10
