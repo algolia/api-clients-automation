@@ -250,7 +250,7 @@ jobs:
         if: ${{ matrix.client.language == 'javascript' }}
         uses: actions/cache@v3
         with:
-          path: ${{ steps.yarn-cache-dir-tests.outputs.dir || '${{ matrix.client.testsRootFolder }}/.yarn/cache' }}
+          path: ${{ steps.yarn-cache-dir-tests.outputs.dir || format('{0}/.yarn/cache', matrix.client.testsRootFolder) }}
           # let yarn handle the cache hash
           key: yarn-cache-tests-${{ env.CACHE_VERSION }}
 
@@ -259,7 +259,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ matrix.client.testsRootFolder }}/node_modules
-          key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('${{ matrix.client.testsRootFolder }}/yarn.lock') }}
+          key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles(format('{0}/.yarn.lock', matrix.client.testsRootFolder)) }}
 
       - name: Run CTS
         run: yarn cli cts run ${{ matrix.client.language }}
