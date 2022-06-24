@@ -18,20 +18,15 @@ async function buildPerClient(
   switch (language) {
     case 'javascript':
       await run(
-        `cd ${getLanguageFolder(language)} && yarn workspace ${npmNamespace}/${
-          additionalProperties.packageName
-        } clean`,
+        `yarn workspace ${npmNamespace}/${additionalProperties.packageName} clean`,
         {
           verbose,
+          cwd: getLanguageFolder(language),
         }
       );
       await run(
-        `cd ${getLanguageFolder(
-          language
-        )} && SKIP_UTILS=true yarn build ${npmNamespace}/${
-          additionalProperties.packageName
-        }`,
-        { verbose }
+        ` SKIP_UTILS=true yarn build ${npmNamespace}/${additionalProperties.packageName}`,
+        { verbose, cwd: getLanguageFolder(language) }
       );
       break;
     default:
@@ -77,11 +72,13 @@ export async function buildClients(
       verbose
     ).start();
 
-    await run(`cd ${getLanguageFolder('javascript')} && yarn clean:utils`, {
+    await run(`yarn clean:utils`, {
       verbose,
+      cwd: getLanguageFolder('javascript'),
     });
-    await run(`cd ${getLanguageFolder('javascript')} && yarn build:utils`, {
+    await run(`yarn build:utils`, {
       verbose,
+      cwd: getLanguageFolder('javascript'),
     });
 
     spinner.succeed();

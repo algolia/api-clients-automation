@@ -103,8 +103,8 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          key: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).client[0].cacheKey }}
-          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).client[0].bundledPath }}
+          key: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).cacheKey }}
+          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
 
       - name: Setup
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -114,14 +114,14 @@ jobs:
 
       - name: Building specs
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).client[0].toRun }}
+        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }}
 
       - name: Store bundled specs
         uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
           name: specs
-          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).client[0].bundledPath }}
+          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
 
   client_javascript_utils:
     timeout-minutes: 10
@@ -217,9 +217,9 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
-      - name: Update `yarn.lock` for JavaScript release
-        if: ${{ matrix.client.language == 'javascript' && (startsWith(github.head_ref, 'chore/prepare-release-') || github.ref == 'refs/heads/main') }}
-        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+      - name: Update `yarn.lock` for JavaScript
+        if: ${{ matrix.client.language == 'javascript' }}
+        run: cd clients/algoliasearch-client-javascript YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
       - name: Build clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language != 'php' }}
@@ -254,7 +254,7 @@ jobs:
           # let yarn handle the cache hash
           key: yarn-cache-tests-${{ env.CACHE_VERSION }}
 
-      - name: Cache js-client node modules
+      - name: Cache js tests node modules
         if: ${{ matrix.client.language == 'javascript' }}
         uses: actions/cache@v3
         with:

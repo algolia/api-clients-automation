@@ -8,8 +8,9 @@ async function runCtsOne(language: string, verbose: boolean): Promise<void> {
   ).start();
   switch (language) {
     case 'javascript':
-      await run('cd tests/output/javascript && yarn install && yarn test', {
+      await run('yarn install && yarn test', {
         verbose,
+        cwd: 'tests/output/javascript',
       });
       break;
     case 'java':

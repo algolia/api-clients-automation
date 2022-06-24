@@ -515,41 +515,23 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@experimental-api-clients-automation/algoliasearch@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/algoliasearch@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-analytics": 0.6.1
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/client-personalization": 0.6.1
-    "@experimental-api-clients-automation/client-search": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: f2a173fae4b7c8b2d96b47937a0fb95da7bfeb6fafcb7dd7804e53c0de5f97c4d9aaf0767ae6ae032d16f3c10de7c211dca083591adc25dd5b304387667852c2
+"@experimental-api-clients-automation/algoliasearch@link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/algoliasearch@link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/client-abtesting@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-abtesting@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: 5f728b0b5bf6f618d17e927507e60eab8524dbc14a4989424c05f767f6c39d4eb530849c8eb30efd87e5465d23e967604e0df3274e8fddf41a93a8e89b85b4fe
+"@experimental-api-clients-automation/client-abtesting@link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-abtesting@link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/client-analytics@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-analytics@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: 3cf0fe2d3889f6f6c009c731b432a4178efe7fb82d284f6170234213301473560d412b7d0199aee0fc94913122a4bab07fe2fa384c5dbbf7303d506e0ab51089
+"@experimental-api-clients-automation/client-analytics@link:../../../clients/algoliasearch-client-javascript/packages/client-analytics::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-analytics@link:../../../clients/algoliasearch-client-javascript/packages/client-analytics::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@experimental-api-clients-automation/client-common@link:../../../clients/algoliasearch-client-javascript/packages/client-common::locator=javascript-browser-playground%40workspace%3Aplayground%2Fjavascript%2Fbrowser":
   version: 0.0.0-use.local
@@ -557,56 +539,35 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@experimental-api-clients-automation/client-common@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-common@npm:0.6.1"
-  checksum: f4a14e667c60450a5429cc9720432e8c332c4a058a658e0c96292f98bdd774dd2da647cd8c6f858ea76516483d875daf3727864badac7d31133781dead3a776e
+"@experimental-api-clients-automation/client-common@link:../../../clients/algoliasearch-client-javascript/packages/client-common::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-common@link:../../../clients/algoliasearch-client-javascript/packages/client-common::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/client-insights@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-insights@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: 69bd68976f030f17a1eb86241d7b297e34e022b7b86960d2ff805e375e7cb44d6824b0f3599f931ce201a3c29f259adac9bfd27454846fe2297c0ae09d0d0a28
+"@experimental-api-clients-automation/client-insights@link:../../../clients/algoliasearch-client-javascript/packages/client-insights::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-insights@link:../../../clients/algoliasearch-client-javascript/packages/client-insights::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/client-personalization@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-personalization@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: bd6324a952ccbbd8ae94f983dbd965b34312a8837b540ad16e6a76dc57c5ed195b49c1c8e15f42b0b002269b38baf8ddcc34876337587d907cf67180243e8592
+"@experimental-api-clients-automation/client-personalization@link:../../../clients/algoliasearch-client-javascript/packages/client-personalization::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-personalization@link:../../../clients/algoliasearch-client-javascript/packages/client-personalization::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/client-predict@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-predict@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: e92927247abd33ee09c3d89246717cd91148ef1675ef13c98af745ad0cc0e6bcc7441a2105f97d22a8a7bbd5094407ba25971f6ff08fe92bec71178a0ffe5f22
+"@experimental-api-clients-automation/client-predict@link:../../../clients/algoliasearch-client-javascript/packages/client-predict::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-predict@link:../../../clients/algoliasearch-client-javascript/packages/client-predict::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/client-query-suggestions@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-query-suggestions@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: dfa59790833ce1a4d4cd0f6bcb703c35b03ddf44caa83246908845a4f23c06e0d215111c6923adc7f9b194086f18931f23186b94e95275723157d029d7b854cf
+"@experimental-api-clients-automation/client-query-suggestions@link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-query-suggestions@link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@experimental-api-clients-automation/client-search@link:../../../clients/algoliasearch-client-javascript/packages/client-search::locator=javascript-browser-playground%40workspace%3Aplayground%2Fjavascript%2Fbrowser":
   version: 0.0.0-use.local
@@ -614,38 +575,23 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@experimental-api-clients-automation/client-search@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-search@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: a0aeecc475f2360b34061c38c0f86ba8bf1b3659e2be6915aebbca1173f12e7aa8cf7c788bd27ede0abc2abbff00067c5464a161ff5cafb7be29530c46b33c80
+"@experimental-api-clients-automation/client-search@link:../../../clients/algoliasearch-client-javascript/packages/client-search::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-search@link:../../../clients/algoliasearch-client-javascript/packages/client-search::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/client-sources@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/client-sources@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: fa1224c9c6bd0888922b8e3aa484e56b492cd96e7bc37914cbc49d717961190b97571d2c39f67333c69ec1446f91fa80086bdb2478b3d7241a3b5dbae01ecdc0
+"@experimental-api-clients-automation/client-sources@link:../../../clients/algoliasearch-client-javascript/packages/client-sources::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/client-sources@link:../../../clients/algoliasearch-client-javascript/packages/client-sources::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@experimental-api-clients-automation/recommend@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/recommend@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
-  checksum: e43d897917a4828bdb2f579a188d42daad437c2ff793dd9737d04fb783451ed3186806ccbb5ac84ed92963b0d30a76fff30ae6309171345d2cae78425c06e067
+"@experimental-api-clients-automation/recommend@link:../../../clients/algoliasearch-client-javascript/packages/recommend::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/recommend@link:../../../clients/algoliasearch-client-javascript/packages/recommend::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@experimental-api-clients-automation/requester-browser-xhr@link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http::locator=javascript-browser-playground%40workspace%3Aplayground%2Fjavascript%2Fbrowser":
   version: 0.0.0-use.local
@@ -653,23 +599,11 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@experimental-api-clients-automation/requester-browser-xhr@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/requester-browser-xhr@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-  checksum: 9eebdbeed0e53086901a484e7c96519d1e8799d0bf878d95d8a667e956c1d82ffc49be90b75d2b99a747948382d4e5fd0cecac68933d1e561283c88fbe6d940f
+"@experimental-api-clients-automation/requester-node-http@link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@experimental-api-clients-automation/requester-node-http@link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
   languageName: node
-  linkType: hard
-
-"@experimental-api-clients-automation/requester-node-http@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@experimental-api-clients-automation/requester-node-http@npm:0.6.1"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.6.1
-  checksum: 84a2715847e5f554478d290700479ece62ecf44d0313a4a5e3b62878933514966cfa7dc60a3cd6a35edc55164b55054d67621ff625fe9b3af93fd32536329f80
-  languageName: node
-  linkType: hard
+  linkType: soft
 
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
@@ -5515,18 +5449,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "javascript-playground@workspace:playground/javascript/node"
   dependencies:
-    "@experimental-api-clients-automation/algoliasearch": 0.6.1
-    "@experimental-api-clients-automation/client-abtesting": 0.6.1
-    "@experimental-api-clients-automation/client-analytics": 0.6.1
-    "@experimental-api-clients-automation/client-common": 0.6.1
-    "@experimental-api-clients-automation/client-insights": 0.6.1
-    "@experimental-api-clients-automation/client-personalization": 0.6.1
-    "@experimental-api-clients-automation/client-predict": 0.6.1
-    "@experimental-api-clients-automation/client-query-suggestions": 0.6.1
-    "@experimental-api-clients-automation/client-search": 0.6.1
-    "@experimental-api-clients-automation/client-sources": 0.6.1
-    "@experimental-api-clients-automation/recommend": 0.6.1
-    "@experimental-api-clients-automation/requester-node-http": 0.6.1
+    "@experimental-api-clients-automation/algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
+    "@experimental-api-clients-automation/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting"
+    "@experimental-api-clients-automation/client-analytics": "link:../../../clients/algoliasearch-client-javascript/packages/client-analytics"
+    "@experimental-api-clients-automation/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common"
+    "@experimental-api-clients-automation/client-insights": "link:../../../clients/algoliasearch-client-javascript/packages/client-insights"
+    "@experimental-api-clients-automation/client-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/client-personalization"
+    "@experimental-api-clients-automation/client-predict": "link:../../../clients/algoliasearch-client-javascript/packages/client-predict"
+    "@experimental-api-clients-automation/client-query-suggestions": "link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions"
+    "@experimental-api-clients-automation/client-search": "link:../../../clients/algoliasearch-client-javascript/packages/client-search"
+    "@experimental-api-clients-automation/client-sources": "link:../../../clients/algoliasearch-client-javascript/packages/client-sources"
+    "@experimental-api-clients-automation/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend"
+    "@experimental-api-clients-automation/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     dotenv: 16.0.1
     ts-node: 10.8.1
     typescript: 4.7.4

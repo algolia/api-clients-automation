@@ -206,12 +206,10 @@ export async function updateAPIVersions(
       After that, we generate clients with new versions. And then, we copy all of them over to JS repository.
       */
     if (lang === 'javascript') {
-      await run(
-        `cd ${getLanguageFolder(lang)} && yarn release:bump ${releaseType}`,
-        {
-          verbose: true,
-        }
-      );
+      await run(`yarn release:bump ${releaseType}`, {
+        verbose: true,
+        cwd: getLanguageFolder(lang),
+      });
     }
 
     await updateChangelog({
@@ -226,11 +224,11 @@ export async function updateAPIVersions(
   const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .', { verbose: true });
   if (process.env.LOCAL_TEST_DEV) {
-    await run(`CI=true git commit -m "${commitMessage} [skip ci]"`, {
+    await run(`CI=false git commit -m "${commitMessage} [skip ci]"`, {
       verbose: true,
     });
   } else {
-    await run(`CI=true git commit -m "${commitMessage}"`, { verbose: true });
+    await run(`CI=false git commit -m "${commitMessage}"`, { verbose: true });
   }
 
   await run(`git push origin ${headBranch}`, { verbose: true });
