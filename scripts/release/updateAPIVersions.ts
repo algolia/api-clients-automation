@@ -224,7 +224,7 @@ export async function updateAPIVersions(
   const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .', { verbose: true });
   if (process.env.LOCAL_TEST_DEV) {
-    await run(`CI=false git commit -m "${commitMessage} [skip ci]"`, {
+    await run(`git commit -m "${commitMessage} [skip ci]"`, {
       verbose: true,
     });
   } else {
