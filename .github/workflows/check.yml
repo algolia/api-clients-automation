@@ -148,6 +148,9 @@ jobs:
             )}}
           path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
 
+      - name: Remove generated clients
+        run: cd clients/algoliasearch-client-javascript/packages && ls . | grep -v -E "(client-common|requester-)" | xargs rm -rf
+
       - name: Setup
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/setup
@@ -208,6 +211,14 @@ jobs:
         with:
           type: js_utils
 
+      - name: Remove generated clients
+        if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' }}
+        run: |
+          cd ${{ matrix.client.path }}/packages
+          ls . | grep -v -E "(client-common|requester-|algoliasearch)" | xargs rm -rf
+          rm -rf algoliasearch/lite
+          mv algoliasearch/package.json algoliasearch/package.json.tmp
+
       - name: Setup
         uses: ./.github/actions/setup
         with:
@@ -217,9 +228,9 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
-      - name: Update `yarn.lock` for JavaScript
+      - name: Restore the algoliasearch package.json
         if: ${{ matrix.client.language == 'javascript' }}
-        run: cd ${{ matrix.client.path }} && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        run: mv ${{ matrix.client.path }}/packages/algoliasearch/package.json.tmp ${{ matrix.client.path }}/packages/algoliasearch/package.json
 
       - name: Build clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language != 'php' }}

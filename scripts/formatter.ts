@@ -13,6 +13,12 @@ export async function formatter(
   let cmd = '';
   switch (language) {
     case 'javascript':
+      if (CI) {
+        await run(
+          'cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install',
+          { verbose }
+        );
+      }
       cmd = `yarn eslint --ext=ts,json ${folder} --fix --no-error-on-unmatched-pattern`;
       break;
     case 'java':
