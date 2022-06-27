@@ -16,17 +16,13 @@ export type PromptDecision = {
   clientList: string[];
 };
 
-export type Job = 'build' | 'generate' | 'specs';
-
 type Prompt = {
   langArg: LangArg;
   clientArg: string[];
-  job: Job;
   interactive: boolean;
 };
 
 export function getClientChoices(
-  job: Job,
   language?: LangArg,
   clientList = PROMPT_CLIENTS
 ): string[] {
@@ -34,22 +30,9 @@ export function getClientChoices(
     (client) => client !== 'algoliasearch'
   );
 
-  if (!language) {
-    return clientList;
-  }
-
-  const isJavaScript = language === ALL || language === 'javascript';
-  const clients = isJavaScript ? clientList : withoutAlgoliaSearch;
-
-  switch (job) {
-    // We don't need to build `lite` client as it's a subset of the `algoliasearch` one
-    case 'build':
-      return clients;
-    case 'specs':
-    case 'generate':
-    default:
-      return clients;
-  }
+  return language === ALL || language === 'javascript'
+    ? clientList
+    : withoutAlgoliaSearch;
 }
 
 export function generatorList({
@@ -72,7 +55,6 @@ export function generatorList({
 export async function prompt({
   langArg,
   clientArg,
-  job,
   interactive,
 }: Prompt): Promise<PromptDecision> {
   const decision: PromptDecision = {
@@ -99,7 +81,7 @@ export async function prompt({
     decision.language = langArg;
   }
 
-  decision.clientList = getClientChoices(job, decision.language, CLIENTS);
+  decision.clientList = getClientChoices(decision.language, CLIENTS);
 
   if (!clientArg || !clientArg.length) {
     if (interactive) {
@@ -109,7 +91,7 @@ export async function prompt({
           name: 'client',
           message: 'Select a client',
           default: ALL,
-          choices: getClientChoices(job, decision.language),
+          choices: getClientChoices(decision.language),
         },
       ]);
 
@@ -119,7 +101,7 @@ export async function prompt({
     clientArg.forEach((client) => {
       if (!PROMPT_CLIENTS.includes(client)) {
         throw new Error(
-          `The '${clientArg}' client can't run with the given job: '${job}'.\n\nAllowed choices are: ${decision.clientList.join(
+          `The '${clientArg}' client does not exist.\n\nAllowed choices are: ${decision.clientList.join(
             ', '
           )}`
         );
