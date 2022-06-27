@@ -31,9 +31,6 @@ const args = {
     PROMPT_LANGUAGES
   ),
   clients: new Argument('[client...]', 'The client').choices(
-    getClientChoices()
-  ),
-  allClients: new Argument('[client...]', 'The client').choices(
     getClientChoices('all')
   ),
   client: new Argument('[client]', 'The client').choices(PROMPT_CLIENTS),
@@ -118,7 +115,7 @@ buildCommand
 buildCommand
   .command('specs')
   .description('Build a specified spec')
-  .addArgument(args.allClients)
+  .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
   .option(flags.interactive.flag, flags.interactive.description)
   .option(flags.skipCache.flag, flags.skipCache.description)

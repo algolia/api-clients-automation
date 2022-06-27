@@ -99,11 +99,11 @@ export async function prompt({
     }
   } else {
     clientArg.forEach((client) => {
-      if (!PROMPT_CLIENTS.includes(client)) {
+      if (!decision.clientList.includes(client)) {
         throw new Error(
-          `The '${clientArg}' client does not exist.\n\nAllowed choices are: ${decision.clientList.join(
-            ', '
-          )}`
+          `The '${clientArg}' client does not exist for ${
+            decision.language
+          }.\n\nAllowed choices are: ${decision.clientList.join(', ')}`
         );
       }
     });
