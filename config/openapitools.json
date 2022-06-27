@@ -4,14 +4,14 @@
     "generators": {
       "javascript-algoliasearch": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/algoliasearch",
-        "reservedWordsMappings": "queryParameters=queryParameters,delete=delete",
+        "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions,delete=delete",
         "additionalProperties": {
           "packageVersion": "0.6.1"
         }
       },
       "javascript-search": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-search",
-        "reservedWordsMappings": "queryParameters=queryParameters,delete=delete",
+        "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions,delete=delete",
         "additionalProperties": {
           "packageVersion": "0.6.1"
         }
