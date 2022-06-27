@@ -41,17 +41,17 @@ waitForApiKey({
         for (const [entry, values] of Object.entries(apiKey)) {
           if (Array.isArray(values)) {
             if (
-              values.length === response[entry].length &&
-              values.every((val, index) => val === response[entry][index])
+              values.length !== response[entry].length ||
+              values.some((val, index) => val !== response[entry][index])
             ) {
-              return true;
+              return false;
             }
-          } else if (values === response[entry]) {
-            return true;
+          } else if (values !== response[entry]) {
+            return false;
           }
         }
 
-        return false;
+        return true;
       },
     });
   }
