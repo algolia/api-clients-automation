@@ -154,6 +154,8 @@ jobs:
         with:
           type: minimal
           language: javascript
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
       - name: Build '${{ matrix.client }}' client
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
