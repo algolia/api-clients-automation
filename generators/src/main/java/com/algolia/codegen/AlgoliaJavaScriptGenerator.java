@@ -47,22 +47,30 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
     // `client` related files, `algoliasearch` have it's own logic below
     if (!isAlgoliasearchClient) {
-      // builds
-      supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "builds", "browser.ts"));
-      supportingFiles.add(new SupportingFile("client/builds/node.mustache", "builds", "node.ts"));
-
       // models
       supportingFiles.add(new SupportingFile("client/model/clientMethodProps.mustache", "model", "clientMethodProps.ts"));
       supportingFiles.add(new SupportingFile("client/model/modelBarrel.mustache", "model", "index.ts"));
+
+      // builds
+      supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "builds", "browser.ts"));
+      supportingFiles.add(new SupportingFile("client/builds/node.mustache", "builds", "node.ts"));
     }
     // `algoliasearch` related files
     else {
-      // builds
+      // `algoliasearch` builds
       supportingFiles.add(new SupportingFile("algoliasearch/builds/browser.mustache", "builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/node.mustache", "builds", "node.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/models.mustache", "builds", "models.ts"));
 
-      // root `lite` export files
+      // `lite` builds
+      supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "lite/builds", "browser.ts"));
+      supportingFiles.add(new SupportingFile("client/builds/node.mustache", "lite/builds", "node.ts"));
+
+      // `lite` models
+      supportingFiles.add(new SupportingFile("client/model/clientMethodProps.mustache", "lite/model", "clientMethodProps.ts"));
+      supportingFiles.add(new SupportingFile("client/model/modelBarrel.mustache", "lite/model", "index.ts"));
+
+      // `lite root export files
       supportingFiles.add(new SupportingFile("algoliasearch/lite.mustache", "", "lite.js"));
       supportingFiles.add(new SupportingFile("algoliasearch/lite.d.mustache", "", "lite.d.ts"));
     }
