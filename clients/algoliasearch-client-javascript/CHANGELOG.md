@@ -1,3 +1,7 @@
+## [0.6.2](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.1...0.6.2)
+
+- d7fcc6d3 fix(javascript): import lite resolution (#737)
+
 ## [0.6.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.0...0.6.1)
 
 - 5b70ec1a fix(javascript): publish `algoliasearch` dist (#735)
