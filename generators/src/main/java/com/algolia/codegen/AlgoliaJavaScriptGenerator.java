@@ -13,6 +13,7 @@ import org.openapitools.codegen.model.OperationsMap;
 public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
+  private boolean isAlgoliasearchClient;
 
   @Override
   public String getName() {
@@ -24,6 +25,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     super.processOpts();
 
     CLIENT = Utils.camelize((String) additionalProperties.get("client"));
+    isAlgoliasearchClient = CLIENT.equals("algoliasearch");
 
     // generator specific options
     setSupportsES6(true);
@@ -35,21 +37,57 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     // clear all supported files to avoid unwanted ones
     supportingFiles.clear();
 
-    supportingFiles.add(new SupportingFile("clientMethodProps.mustache", "model", "clientMethodProps.ts"));
-    supportingFiles.add(new SupportingFile("modelBarrel.mustache", "model", "index.ts"));
-    supportingFiles.add(new SupportingFile("browser.mustache", "builds", "browser.ts"));
-    supportingFiles.add(new SupportingFile("node.mustache", "builds", "node.ts"));
+    // Files common to both generations
+    supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
+    supportingFiles.add(new SupportingFile("tsconfig.mustache", "", "tsconfig.json"));
 
-    // root
+    // root export files
     supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
     supportingFiles.add(new SupportingFile("index.d.mustache", "", "index.d.ts"));
 
-    // the `lite` package is a subfolder of `algoliasearch`, which does not require
-    // those package-related files, as they are present at an higher level.
-    if (!CLIENT.equals("lite")) {
-      supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
-      supportingFiles.add(new SupportingFile("tsconfig.mustache", "", "tsconfig.json"));
+    // `client` related files, `algoliasearch` have it's own logic below
+    if (!isAlgoliasearchClient) {
+      // builds
+      supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "builds", "browser.ts"));
+      supportingFiles.add(new SupportingFile("client/builds/node.mustache", "builds", "node.ts"));
+
+      // models
+      supportingFiles.add(new SupportingFile("client/model/clientMethodProps.mustache", "model", "clientMethodProps.ts"));
+      supportingFiles.add(new SupportingFile("client/model/modelBarrel.mustache", "model", "index.ts"));
     }
+    // `algoliasearch` related files
+    else {
+      // builds
+      supportingFiles.add(new SupportingFile("algoliasearch/builds/browser.mustache", "builds", "browser.ts"));
+      supportingFiles.add(new SupportingFile("algoliasearch/builds/node.mustache", "builds", "node.ts"));
+      supportingFiles.add(new SupportingFile("algoliasearch/builds/models.mustache", "builds", "models.ts"));
+
+      // root `lite` export files
+      supportingFiles.add(new SupportingFile("algoliasearch/lite.mustache", "", "lite.js"));
+      supportingFiles.add(new SupportingFile("algoliasearch/lite.d.mustache", "", "lite.d.ts"));
+    }
+  }
+
+  @Override
+  public String apiFileFolder() {
+    String fileFolder = super.apiFileFolder();
+
+    if (!isAlgoliasearchClient) {
+      return fileFolder;
+    }
+
+    return fileFolder.replace("src", "lite/src");
+  }
+
+  @Override
+  public String modelFileFolder() {
+    String fileFolder = super.modelFileFolder();
+
+    if (!isAlgoliasearchClient) {
+      return fileFolder;
+    }
+
+    return fileFolder.replace("model", "lite/model");
   }
 
   @Override
@@ -66,7 +104,17 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("algoliaAgent", Utils.capitalize(CLIENT));
     additionalProperties.put("gitRepoId", "algoliasearch-client-javascript");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
-    additionalProperties.put("isLiteClient", CLIENT.equals("lite"));
+
+    if (isAlgoliasearchClient) {
+      additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
+      additionalProperties.put("analyticsVersion", Utils.getOpenApiToolsField("javascript", "analytics", "packageVersion"));
+      additionalProperties.put("personalizationVersion", Utils.getOpenApiToolsField("javascript", "personalization", "packageVersion"));
+      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("javascript", "search", "packageVersion"));
+
+      apiName = "lite" + Utils.API_SUFFIX;
+      additionalProperties.put("apiName", apiName);
+      additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
+    }
   }
 
   /** Provides an opportunity to inspect and modify operation data before the code is generated. */
@@ -128,7 +176,9 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
       return "Default" + Utils.API_SUFFIX;
     }
 
-    return Utils.capitalize(CLIENT + Utils.API_SUFFIX);
+    String endClient = isAlgoliasearchClient ? "lite" : CLIENT;
+
+    return Utils.capitalize(endClient + Utils.API_SUFFIX);
   }
 
   /** The `apiFileName` is in camelCase. */
@@ -138,7 +188,9 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
       return "default" + Utils.API_SUFFIX;
     }
 
-    return CLIENT + Utils.API_SUFFIX;
+    String endClient = isAlgoliasearchClient ? "lite" : CLIENT;
+
+    return endClient + Utils.API_SUFFIX;
   }
 
   /** The `apiFileName` is in camelCase. */

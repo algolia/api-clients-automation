@@ -35,32 +35,20 @@ export function getClientChoices(
   );
 
   if (!language) {
-    return job === 'specs' ? withoutAlgoliaSearch : clientList;
+    return clientList;
   }
 
   const isJavaScript = language === ALL || language === 'javascript';
+  const clients = isJavaScript ? clientList : withoutAlgoliaSearch;
 
   switch (job) {
     // We don't need to build `lite` client as it's a subset of the `algoliasearch` one
     case 'build':
-      // Only `JavaScript` provide a lite client, others can build anything but it.
-      if (isJavaScript) {
-        return clientList.filter((client) => client !== 'lite');
-      }
-
-      return withoutAlgoliaSearch.filter((client) => client !== 'lite');
-    // `algoliasearch` is not built from specs, it's an aggregation of clients
+      return clients;
     case 'specs':
-      return withoutAlgoliaSearch;
     case 'generate':
-      // Only `JavaScript` provide a lite client, others can build anything but it.
-      if (isJavaScript) {
-        return withoutAlgoliaSearch;
-      }
-
-      return withoutAlgoliaSearch.filter((client) => client !== 'lite');
     default:
-      return clientList;
+      return clients;
   }
 }
 
