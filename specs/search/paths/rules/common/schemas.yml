@@ -116,11 +116,9 @@ params:
     query:
       $ref: '#/query'
     automaticFacetFilters:
-      description: Names of facets to which automatic filtering must be applied; they must match the facet name of a facet value placeholder in the query pattern.
       $ref: '#/automaticFacetFilters'
     automaticOptionalFacetFilters:
-      description: Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
-      $ref: '#/automaticFacetFilters'
+      $ref: '#/automaticOptionalFacetFilters'
     renderingContent:
       $ref: '../../../../common/schemas/IndexSettings.yml#/renderingContent'
 
@@ -164,6 +162,7 @@ editType:
   enum: [remove, replace]
 
 automaticFacetFilters:
+  description: Names of facets to which automatic filtering must be applied; they must match the facet name of a facet value placeholder in the query pattern.
   oneOf:
     - type: array
       items:
@@ -171,6 +170,10 @@ automaticFacetFilters:
     - type: array
       items:
         type: string
+
+automaticOptionalFacetFilters:
+  description: Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
+  $ref: '#/automaticFacetFilters'
 
 automaticFacetFilter:
   type: object
