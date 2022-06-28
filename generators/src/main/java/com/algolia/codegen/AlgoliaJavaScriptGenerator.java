@@ -115,13 +115,16 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
 
     if (isAlgoliasearchClient) {
+      // Files used to create the package.json of the algoliasearch package
       additionalProperties.put("analyticsVersion", Utils.getOpenApiToolsField("javascript", "analytics", "packageVersion"));
       additionalProperties.put("personalizationVersion", Utils.getOpenApiToolsField("javascript", "personalization", "packageVersion"));
       additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("javascript", "search", "packageVersion"));
 
+      // Files used to generate the `lite` client
       apiName = "lite" + Utils.API_SUFFIX;
       additionalProperties.put("apiName", apiName);
       additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
+      additionalProperties.put("algoliaAgent", "Lite");
     }
   }
 
