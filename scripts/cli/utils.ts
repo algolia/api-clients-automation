@@ -99,7 +99,7 @@ export async function prompt({
     }
   } else {
     clientArg.forEach((client) => {
-      if (!decision.clientList.includes(client)) {
+      if (![ALL, ...decision.clientList].includes(client)) {
         throw new Error(
           `The '${clientArg}' client does not exist for ${
             decision.language

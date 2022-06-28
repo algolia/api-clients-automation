@@ -86,8 +86,6 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
     let testsToStore = testsToDelete;
 
     switch (language) {
-      case 'javascript':
-        break;
       case 'java':
         testsToStore = `${testsToDelete} ${testsRootFolder}/build.gradle`;
         break;
