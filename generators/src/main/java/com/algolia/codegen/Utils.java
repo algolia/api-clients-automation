@@ -147,4 +147,13 @@ public class Utils {
       throw new ConfigException("Cannot read json file " + filePath, e);
     }
   }
+
+  /**
+   * If more than 2 variant are List<?>, the types are compatible and we cannot create override of
+   * the `of` method, so we need to explicit the `of` method name, like `ofListofString` and
+   * `ofListofList`.
+   */
+  public static boolean shouldOneOfUseExplicitName(Collection<String> oneOf) {
+    return oneOf.stream().filter(type -> type != null && type.startsWith("List")).count() >= 2;
+  }
 }
