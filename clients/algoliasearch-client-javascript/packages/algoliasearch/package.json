@@ -1,12 +1,13 @@
 {
   "name": "@experimental-api-clients-automation/algoliasearch",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "node": {
         "import": "./dist/algoliasearch.esm.node.js",
         "module": "./dist/algoliasearch.esm.node.js",
@@ -21,6 +22,7 @@
       }
     },
     "./lite": {
+      "types": "./lite.d.ts",
       "node": {
         "import": "./dist/lite/lite.esm.node.js",
         "module": "./dist/lite/lite.esm.node.js",
@@ -39,29 +41,29 @@
   "unpkg": "./dist/algoliasearch.umd.js",
   "browser": {
     "./index.js": "./dist/algoliasearch.umd.js",
-    "./lite.js": "./dist/lite/lite.umd.js",
-    "./lite/index.js": "./dist/lite/lite.umd.js"
+    "./lite.js": "./dist/lite/lite.umd.js"
   },
-  "types": "./index.d.ts",
+  "types": "index.d.ts",
   "files": [
     "dist",
     "builds",
-    "lite",
     "index.js",
+    "index.d.ts",
+    "lite",
     "lite.js",
-    "index.d.ts"
+    "lite.d.ts"
   ],
   "scripts": {
     "clean": "rm -rf ./dist",
     "test": "jest"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-analytics": "0.6.1",
-    "@experimental-api-clients-automation/client-common": "0.6.1",
-    "@experimental-api-clients-automation/client-personalization": "0.6.1",
-    "@experimental-api-clients-automation/client-search": "0.6.1",
-    "@experimental-api-clients-automation/requester-browser-xhr": "0.6.1",
-    "@experimental-api-clients-automation/requester-node-http": "0.6.1"
+    "@experimental-api-clients-automation/client-analytics": "0.7.0",
+    "@experimental-api-clients-automation/client-common": "0.7.0",
+    "@experimental-api-clients-automation/client-personalization": "0.7.0",
+    "@experimental-api-clients-automation/client-search": "0.7.0",
+    "@experimental-api-clients-automation/requester-browser-xhr": "0.7.0",
+    "@experimental-api-clients-automation/requester-node-http": "0.7.0"
   },
   "devDependencies": {
     "@types/jest": "28.1.3",
