@@ -95,7 +95,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         model.vendorExtensions.put("x-is-one-of-interface", true);
         model.vendorExtensions.put("x-one-of-list", oneOfList);
 
-        model.vendorExtensions.put("x-one-of-explicit-name", Utils.shouldOneOfUseExplicitName(model.oneOf));
+        model.vendorExtensions.put("x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
       }
     }
 

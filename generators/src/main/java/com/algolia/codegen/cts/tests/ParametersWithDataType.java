@@ -282,13 +282,12 @@ public class ParametersWithDataType {
       }
 
       boolean useExplicitName = false;
-      if (model.getComposedSchemas() == null) {
-        useExplicitName = Utils.shouldOneOfUseExplicitName(model.oneOf);
-      } else {
+      CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
+      if (composedSchemas != null && composedSchemas.getOneOf() != null && composedSchemas.getOneOf().size() > 0) {
         useExplicitName =
-          Utils.shouldOneOfUseExplicitName(
-            model.getComposedSchemas().getOneOf().stream().map(x -> getTypeName(x)).collect(Collectors.toList())
-          );
+          Utils.shouldUseExplicitOneOfName(composedSchemas.getOneOf().stream().map(x -> getTypeName(x)).collect(Collectors.toList()));
+      } else {
+        useExplicitName = Utils.shouldUseExplicitOneOfName(model.oneOf);
       }
 
       oneOfModel.put("parentClassName", Utils.capitalize(baseType));
