@@ -1,14 +1,21 @@
 import type { Response, StackFrame } from '../types';
 
-export class ErrorWithStackTrace extends Error {
-  stackTrace: StackFrame[];
+export class AlgoliaError extends Error {
   name: string;
 
-  constructor(message: string, stackTrace: StackFrame[], name: string) {
+  constructor(message: string, name: string) {
     super(message);
+    this.name = name ?? 'AlgoliaError';
+  }
+}
+
+export class ErrorWithStackTrace extends AlgoliaError {
+  stackTrace: StackFrame[];
+
+  constructor(message: string, stackTrace: StackFrame[], name: string) {
+    super(message, name);
     // the array and object should be frozen to reflect the stackTrace at the time of the error
     this.stackTrace = stackTrace;
-    this.name = name ?? 'ErrorWithStackTrace';
   }
 }
 
@@ -31,13 +38,11 @@ export class ApiError extends ErrorWithStackTrace {
   }
 }
 
-export class DeserializationError extends Error {
+export class DeserializationError extends AlgoliaError {
   response: Response;
-  name: string;
 
   constructor(message: string, response: Response) {
-    super(message);
+    super(message, 'DeserializationError');
     this.response = response;
-    this.name = 'DeserializationError';
   }
 }
