@@ -80,18 +80,6 @@ packageConfigs.forEach((packageConfig) => {
       ];
     }
 
-    const clientCommonPlugins =
-      packageConfig.package === 'client-common'
-        ? [
-            babel({
-              babelrc: false,
-              extensions: ['.ts'],
-              exclude: 'node_modules/**',
-              plugins: ['@babel/plugin-proposal-class-properties'],
-            }),
-          ]
-        : [];
-
     rollupConfig.push({
       input: path.resolve(clientPath, packageConfig.input),
       external: [...packageConfig.dependencies, ...packageConfig.external],
@@ -113,7 +101,6 @@ packageConfigs.forEach((packageConfig) => {
         }),
         ...umdConfig.transpilerPlugins,
         ...umdConfig.compressorPlugins,
-        ...clientCommonPlugins,
       ],
       output: bundlers[format],
       onwarn(msg, warn) {
