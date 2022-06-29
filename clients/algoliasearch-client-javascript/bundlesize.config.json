@@ -18,7 +18,7 @@
     },
     {
       "path": "packages/client-insights/dist/client-insights.umd.js",
-      "maxSize": "3.75KB"
+      "maxSize": "3.80KB"
     },
     {
       "path": "packages/client-personalization/dist/client-personalization.umd.js",
@@ -30,7 +30,7 @@
     },
     {
       "path": "packages/client-search/dist/client-search.umd.js",
-      "maxSize": "6.55KB"
+      "maxSize": "6.60KB"
     },
     {
       "path": "packages/client-sources/dist/client-sources.umd.js",
