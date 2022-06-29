@@ -144,7 +144,8 @@ This parameter **must** be the last parameter of a method, and allow a user to o
 
 ### Requesters
 
-> TODO: informations
+The requester needs to be configurable, or overwriten completely and use a user defined requester.
+The default requester must be the classic HTTP requester, and it's possible to provide other alternatives like an Echo Requester that just send the request back.
 
 ### Logger
 
