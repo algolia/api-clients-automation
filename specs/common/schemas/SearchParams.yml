@@ -137,7 +137,7 @@ baseSearchParams:
       description: Enables contextual rules.
       default: []
       x-categories: 
-      - Rules
+        - Rules
     personalizationImpact:
       type: integer
       description: Define the impact of the Personalization feature.
