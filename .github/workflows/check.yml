@@ -214,7 +214,11 @@ jobs:
 
       - name: Remove generated clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' }}
-        run: cd ${{ matrix.client.path }}/packages && ls | grep -v -E "(client-common|requester-*)" | xargs rm -rf
+        run: |
+          cd ${{ matrix.client.path }}/packages
+          ls | grep -v -E "(client-common|requester-*|algoliasearch)" | xargs rm -rf
+          cd algoliasearch
+          ls | grep -v -E "(__tests__|jest.config.ts)" | xargs rm -rf
 
       - name: Setup
         uses: ./.github/actions/setup
