@@ -5,7 +5,7 @@ title: Common Test Suite
 # Common Test Suite
 
 The CTS gather multiple types of tests that make sure our API clients generate the correct requests and throws the correct error, it does not aim at testing the engine.
-It is automatically generated for all languages, from JSON files and the specs.
+It is automatically generated for all languages from JSON files and ensure properties are valid by checking specs.
 
 :::info
 
@@ -72,7 +72,7 @@ The test generation script requires a JSON file name from the `operationId` (e.g
 And that's it! If the name of the file matches an `operationId` in the spec, a test will be generated and will be calling the method name `operationId`.
 
 The list of `queryParameters` must match exactly the actual value, the CTS has to check the number of query parameters and the value of each.
-It's important to ensure the number of parameters because the API clients must not set default values, they should be handled by the engine.
+**It's important to ensure the number of parameters because the API clients must not set default values, they should be handled by the engine.**
 
 ### Clients tests
 
@@ -190,16 +190,16 @@ When writing your template, here is a list of variables accessible from `mustach
 ```
 
 As well as lambdas to transform strings:
- - escapeQuotes - Escapes double quotes characters, replaces `"` with `\"`.
- - escapeSlash - Escapes backward slash characters, replaces `\` with `\\`.
- - lowercase - Converts all of the characters in this fragment to lower case using the rules of the ROOT locale.
- - uppercase - Converts all of the characters in this fragment to upper case using the rules of the ROOT locale.
- - titlecase - Converts text in a fragment to title case. For example once upon a time to Once Upon A Time.
- - camelcase - Converts text in a fragment to camelCase. For example Input-text to inputText.
- - indented - Prepends 4 spaces indention from second line of a fragment on. First line will be indented by Mustache.
- - indented_8 - Prepends 8 spaces indention from second line of a fragment on. First line will be indented by Mustache.
- - indented_12 - Prepends 12 spaces indention from second line of a fragment on. First line will be indented by Mustache.
- - indented_16 - Prepends 16 spaces indention from second line of a fragment on. First line will be indented by Mustache.
+ - `escapeQuotes` - Escapes double quotes characters, replaces `"` with `\"`.
+ - `escapeSlash` - Escapes backward slash characters, replaces `\` with `\\`.
+ - `lowercase` - Converts all of the characters in this fragment to lower case using the rules of the ROOT locale.
+ - `uppercase` - Converts all of the characters in this fragment to upper case using the rules of the ROOT locale.
+ - `titlecase` - Converts text in a fragment to title case. For example once upon a time to Once Upon A Time.
+ - `camelcase` - Converts text in a fragment to camelCase. For example Input-text to inputText.
+ - `indented` - Prepends 4 spaces indention from second line of a fragment on. First line will be indented by Mustache.
+ - `indented_8` - Prepends 8 spaces indention from second line of a fragment on. First line will be indented by Mustache.
+ - `indented_12` - Prepends 12 spaces indention from second line of a fragment on. First line will be indented by Mustache.
+ - `indented_16` - Prepends 16 spaces indention from second line of a fragment on. First line will be indented by Mustache.
 
 If specific values are needed for a specific languages, or custom generated files, they can be added using a custom CTS manager:
  - [javascript](https://github.com/algolia/api-clients-automation/blob/main/generators/src/main/java/com/algolia/codegen/cts/manager/JavaScriptCTSManager.java)
