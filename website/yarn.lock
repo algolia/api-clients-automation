@@ -4821,14 +4821,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docusaurus-preset-shiki-twoslash@npm:1.1.37":
-  version: 1.1.37
-  resolution: "docusaurus-preset-shiki-twoslash@npm:1.1.37"
+"docusaurus-preset-shiki-twoslash@npm:1.1.38":
+  version: 1.1.38
+  resolution: "docusaurus-preset-shiki-twoslash@npm:1.1.38"
   dependencies:
     copy-text-to-clipboard: ^3.0.1
-    remark-shiki-twoslash: 3.0.9
+    remark-shiki-twoslash: 3.1.0
     typescript: ">3"
-  checksum: 91510cf67401b00980a0f808756f766c7500d1b52ee6e1892aa6636a0178bfd3a0b02c45d2c57cb3054010b9efceb3e06e069fd6ab3aea5f507b4a24a1a0f68b
+  checksum: 94be72b30dbc584542765ec37e215f4752e3970010e2085b16e01fd7c5a53a739eee63eed90a00f726df310cb1884ba5c4e28d8b3e4e8a63bc3becfd9d8134e5
   languageName: node
   linkType: hard
 
@@ -7095,15 +7095,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "lru-cache@npm:5.1.1"
-  dependencies:
-    yallist: ^3.0.2
-  checksum: c154ae1cbb0c2206d1501a0e94df349653c92c8cbb25236d7e85190bcaf4567a03ac6eb43166fabfa36fd35623694da7233e88d9601fbf411a9a481d85dbd2cb
-  languageName: node
-  linkType: hard
-
 "lru-cache@npm:^6.0.0":
   version: 6.0.0
   resolution: "lru-cache@npm:6.0.0"
@@ -7902,15 +7893,6 @@ __metadata:
   dependencies:
     mimic-fn: ^2.1.0
   checksum: 2478859ef817fc5d4e9c2f9e5728512ddd1dbc9fb7829ad263765bb6d3b91ce699d6e2332eef6b7dff183c2f490bd3349f1666427eaba4469fba0ac38dfd0d34
-  languageName: node
-  linkType: hard
-
-"onigasm@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "onigasm@npm:2.2.5"
-  dependencies:
-    lru-cache: ^5.1.1
-  checksum: 97aedde610ef561f05853609d6a5b720ec1e123f867bdac1b38b5aeb3bc90ed60209678c75a5f0f9821aa793c720b6d17aabfb956e26ab115ee9b81d6e56bdf7
   languageName: node
   linkType: hard
 
@@ -9449,20 +9431,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-shiki-twoslash@npm:3.0.9":
-  version: 3.0.9
-  resolution: "remark-shiki-twoslash@npm:3.0.9"
+"remark-shiki-twoslash@npm:3.1.0":
+  version: 3.1.0
+  resolution: "remark-shiki-twoslash@npm:3.1.0"
   dependencies:
     "@typescript/twoslash": 3.1.0
     "@typescript/vfs": 1.3.4
     fenceparser: ^1.1.0
     regenerator-runtime: ^0.13.7
-    shiki: 0.9.11
-    shiki-twoslash: 3.0.2
+    shiki: 0.10.1
+    shiki-twoslash: 3.1.0
     tslib: 2.1.0
     typescript: ">3"
     unist-util-visit: ^2.0.0
-  checksum: 93979869e45282dd0d2bbf6605bee04bec38c5d3a7a4dc1a5f95597b2bdb0c2669d7fb3191e98c865f00777efba1af761cd2398de625c589f9c58e3981a812bd
+  checksum: 46e91d504f2942233f550bc29f8a4068278982c62d70f344247ff6ee94cdb6092813e9352f082587b5ffb2dae0a9f74e51056962cd37edf1db9f07ec94255f43
   languageName: node
   linkType: hard
 
@@ -9951,26 +9933,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki-twoslash@npm:3.0.2":
-  version: 3.0.2
-  resolution: "shiki-twoslash@npm:3.0.2"
+"shiki-twoslash@npm:3.1.0":
+  version: 3.1.0
+  resolution: "shiki-twoslash@npm:3.1.0"
   dependencies:
     "@typescript/twoslash": 3.1.0
     "@typescript/vfs": 1.3.4
-    shiki: 0.9.11
+    shiki: 0.10.1
     typescript: ">3"
-  checksum: cf11a381d7290d7d11e3ccbd2225ade464011b3e5d7ed177d2be3058f297b6fbd4e56fa025a5ded34c885900b298d8157a6e4807bb67e7a97287d6c41ca56235
+  checksum: db013c3645838269e81092e5a13cfb60a0723d8da81ec2e34206e942ec3e8e77cbafeb4a59c4792c43006e419fcbc869fd714dea0e5b18bbc2c5287cf2290731
   languageName: node
   linkType: hard
 
-"shiki@npm:0.9.11":
-  version: 0.9.11
-  resolution: "shiki@npm:0.9.11"
+"shiki@npm:0.10.1":
+  version: 0.10.1
+  resolution: "shiki@npm:0.10.1"
   dependencies:
     jsonc-parser: ^3.0.0
-    onigasm: ^2.2.5
+    vscode-oniguruma: ^1.6.1
     vscode-textmate: 5.2.0
-  checksum: 04f0e3bce401bcd7dab43d71827bbc9c00e2e76c3a94f36f2b434d41c1570ab8d3c8491789aba360b625f86b6ff8a8f7daf2c39a1ae7589f7236718a7399ab50
+  checksum: fb746f3cb3de7e545e3b10a6cb658d3938f840e4ccc9a3c90ceb7e69a8f89dbb432171faac1e9f02a03f103684dad88ee5e54b5c4964fa6b579fca6e8e26424d
   languageName: node
   linkType: hard
 
@@ -11133,6 +11115,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vscode-oniguruma@npm:^1.6.1":
+  version: 1.6.2
+  resolution: "vscode-oniguruma@npm:1.6.2"
+  checksum: 6b754acdafd5b68242ea5938bb00a32effc16c77f471d4f0f337d879d0e8e592622998e2441f42d9a7ff799c1593f31c11f26ca8d9bf9917e3ca881d3c1f3e19
+  languageName: node
+  linkType: hard
+
 "vscode-textmate@npm:5.2.0":
   version: 5.2.0
   resolution: "vscode-textmate@npm:5.2.0"
@@ -11343,7 +11332,7 @@ __metadata:
     "@docusaurus/types": 2.0.0-beta.21
     "@mdx-js/react": ^1.6.22
     clsx: ^1.1.1
-    docusaurus-preset-shiki-twoslash: 1.1.37
+    docusaurus-preset-shiki-twoslash: 1.1.38
     react: 18.2.0
     react-dom: 18.2.0
     redocusaurus: 1.2.2
@@ -11534,13 +11523,6 @@ __metadata:
   version: 5.0.8
   resolution: "y18n@npm:5.0.8"
   checksum: 54f0fb95621ee60898a38c572c515659e51cc9d9f787fb109cef6fde4befbe1c4602dc999d30110feee37456ad0f1660fa2edcfde6a9a740f86a290999550d30
-  languageName: node
-  linkType: hard
-
-"yallist@npm:^3.0.2":
-  version: 3.1.1
-  resolution: "yallist@npm:3.1.1"
-  checksum: 48f7bb00dc19fc635a13a39fe547f527b10c9290e7b3e836b9a8f1ca04d4d342e85714416b3c2ab74949c9c66f9cebb0473e6bc353b79035356103b47641285d
   languageName: node
   linkType: hard
 
