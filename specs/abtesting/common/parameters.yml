@@ -22,7 +22,7 @@ endAt:
 
 createdAt:
   type: string
-  description: Create date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
+  description: Creation date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
 
 updatedAt:
   type: string
