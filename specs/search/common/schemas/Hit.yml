@@ -8,9 +8,9 @@ hit:
     objectID:
       $ref: '../../../common/parameters.yml#/objectID'
     _highlightResult:
-      $ref: '#/highlightResult'
+      $ref: '#/highlightResultMap'
     _snippetResult:
-      $ref: '#/snippetResult'
+      $ref: '#/snippetResultMap'
     _rankingInfo:
       $ref: '#/rankingInfo'
     _distinctSeqID:
@@ -22,7 +22,6 @@ _distinctSeqID:
 
 highlightResult:
   type: object
-  description: Highlighted attributes.
   additionalProperties: false
   properties:
     value:
@@ -37,15 +36,35 @@ highlightResult:
     fullyHighlighted:
       type: boolean
       description: Whether the entire attribute value is highlighted.
+  required:
+    - value
+    - matchLevel
+    - matchedWords
+    - fullyHighlighted
+
+highlightResultMap:
+  type: object
+  description: Highlighted attributes.
+  additionalProperties:
+    $ref: '#/highlightResult'
 
 snippetResult:
   type: object
+  title: snippetResult
   additionalProperties: false
   properties:
     value:
       $ref: '#/highlightedValue'
     matchLevel:
       $ref: '#/matchLevel'
+  required:
+    - value
+    - matchLevel
+
+snippetResultMap:
+  type: object
+  additionalProperties:
+    $ref: '#/snippetResult'
 
 rankingInfo:
   type: object
