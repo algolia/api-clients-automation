@@ -20,7 +20,7 @@ hit:
 _distinctSeqID:
   type: integer
 
-highlightResult:
+highlightResultOption:
   type: object
   description: Show highlighted section and words matched on a query.
   additionalProperties: false
@@ -41,7 +41,13 @@ highlightResult:
     - value
     - matchLevel
     - matchedWords
-    - fullyHighlighted
+
+highlightResult:
+  oneOf:
+    - $ref: '#/highlightResultOption'
+    - type: array
+      items:
+        $ref: '#/highlightResultOption'
 
 highlightResultMap:
   type: object
@@ -49,7 +55,7 @@ highlightResultMap:
   additionalProperties:
     $ref: '#/highlightResult'
 
-snippetResult:
+snippetResultOption:
   type: object
   description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
   additionalProperties: false
@@ -61,6 +67,13 @@ snippetResult:
   required:
     - value
     - matchLevel
+
+snippetResult:
+  oneOf:
+    - $ref: '#/snippetResultOption'
+    - type: array
+      items:
+        $ref: '#/snippetResultOption'
 
 snippetResultMap:
   type: object
