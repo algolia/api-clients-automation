@@ -22,6 +22,7 @@ _distinctSeqID:
 
 highlightResult:
   type: object
+  description: Show highlighted section and words matched on a query.
   additionalProperties: false
   properties:
     value:
@@ -44,13 +45,13 @@ highlightResult:
 
 highlightResultMap:
   type: object
-  description: Highlighted attributes.
+  description: Show highlighted section and words matched on a query.
   additionalProperties:
     $ref: '#/highlightResult'
 
 snippetResult:
   type: object
-  title: snippetResult
+  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
   additionalProperties: false
   properties:
     value:
@@ -63,6 +64,7 @@ snippetResult:
 
 snippetResultMap:
   type: object
+  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
   additionalProperties:
     $ref: '#/snippetResult'
 
