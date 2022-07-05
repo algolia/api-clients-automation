@@ -26,6 +26,7 @@ export type PassedCommit = {
    * A commit can be scoped to a language. When scoped to `clients` or `specs`, it impacts all clients.
    */
   scope: Scope;
+  author: string;
   message: string;
   raw: string;
 };
@@ -33,8 +34,8 @@ export type PassedCommit = {
 export type Commit =
   | PassedCommit
   | { error: 'generation-commit' }
-  | { error: 'missing-language-scope' }
-  | { error: 'unknown-language-scope' };
+  | { error: 'missing-language-scope'; message: string }
+  | { error: 'unknown-language-scope'; message: string };
 
 export type VersionsToRelease = {
   [lang in Language]?: {
