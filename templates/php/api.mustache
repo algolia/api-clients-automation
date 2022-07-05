@@ -322,6 +322,44 @@ use {{invokerPackage}}\Support\Helpers;
             $timeout
         );
     }
+
+    /**
+     * Wait for an API key to be valid, updated or deleted based on a given `operation`.
+     *
+     * @param string $operation the `operation` that was done on a `key`
+     * @param string $key the `key` that has been added, deleted or updated
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     * @param int|null $maxRetries Maximum number of retries
+     * @param int|null $timeout Timeout
+     *
+     * @throws ExceededRetriesException
+     *
+     * @return void
+     */
+    public function waitForApiKey(
+        $operation,
+        $key,
+        $requestOptions = [],
+        $maxRetries = null,
+        $timeout = null
+    ) {
+        if ($timeout === null) {
+            $timeout = $this->config->getWaitTaskTimeBeforeRetry();
+        }
+
+        if ($maxRetries === null) {
+            $maxRetries = $this->config->getDefaultMaxRetries();
+        }
+
+        Helpers::retryForApiKeyUntil(
+            $this,
+            $key, 
+            $requestOptions,
+            $operation,
+            $maxRetries,
+            $timeout
+        );
+    }
     {{/isSearchClient}}
 
     private function sendRequest($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)
