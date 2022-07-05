@@ -62,37 +62,35 @@ public abstract class {{classname}} implements CompoundType {
             JsonNode tree = jp.readValueAsTree();
             {{{classname}}} deserialized = null;
            
-            boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
             int match = 0;
             JsonToken token = tree.traverse(jp.getCodec()).nextToken();
+            String currentType = "";
             {{#vendorExtensions.x-one-of-list}}
             // deserialize {{{type}}}
             try {
                 boolean attemptParsing = true;
-                String currentType = new TypeReference<{{{type}}}>() {}.getType().getTypeName();
-                // ensure that we respect type coercion as set on the client ObjectMapper
-                if (currentType.equals("Integer") || currentType.equals("Long") || currentType.equals("Float") || currentType.equals("Double") || currentType.equals("Boolean") || currentType.equals("String")) {
-                    attemptParsing = typeCoercion;
-                    if (!attemptParsing) {
-                        attemptParsing |= ((currentType.equals("Integer") || currentType.equals("Long")) && token == JsonToken.VALUE_NUMBER_INT);
-                        attemptParsing |= ((currentType.equals("Float") || currentType.equals("Double")) && token == JsonToken.VALUE_NUMBER_FLOAT);
-                        attemptParsing |= (currentType.equals("Boolean") && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
-                        attemptParsing |= (currentType.equals("String") && token == JsonToken.VALUE_STRING);
-                        {{#isNullable}}
-                        attemptParsing |= (token == JsonToken.VALUE_NULL);
-                        {{/isNullable}}
-                    }
-                }
-                if (attemptParsing) {
+                currentType = "{{{type}}}";
+                if (((currentType.equals("Integer") || currentType.equals("Long")) && token == JsonToken.VALUE_NUMBER_INT) |
+                    ((currentType.equals("Float") || currentType.equals("Double")) && token == JsonToken.VALUE_NUMBER_FLOAT) |
+                    (currentType.equals("Boolean") && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE)) |
+                    (currentType.equals("String") && token == JsonToken.VALUE_STRING) |
+                    (currentType.startsWith("List<") && token == JsonToken.START_ARRAY)
+                    {{#isNullable}}
+                        | (token == JsonToken.VALUE_NULL)
+                    {{/isNullable}}) {
                     deserialized = {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(({{{type}}}) tree.traverse(jp.getCodec()).readValueAs(new TypeReference<{{{type}}}>() {}));
-                    // TODO: there is no validation against JSON schema constraints
-                    // (min, max, enum, pattern...), this does not perform a strict JSON
-                    // validation, which means the 'match' count may be higher than it should be.
                     match++;
+                } else if (token == JsonToken.START_OBJECT) {
+                  try {
+                    deserialized = {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(({{{type}}}) tree.traverse(jp.getCodec()).readValueAs(new TypeReference<{{{type}}}>() {}));
+                    match++;
+                  } catch(IOException e) {
+                    // do nothing
+                  }
                 }
             } catch (Exception e) {
                 // deserialization failed, continue
-                System.err.println("Failed to deserialize oneOf {{{type}}}");
+                System.err.println("Failed to deserialize oneOf {{{type}}} (error: " + e.getMessage() + ") (type: " + currentType + ")");
             }
 
             {{/vendorExtensions.x-one-of-list}}
