@@ -143,10 +143,11 @@ final class Helpers
     /**
      * Helper for Api keys which retries a function until some conditions are met
      *
+     * @param string $operation
      * @param SearchClient $searchClient search client
      * @param string $key
+     * @param array $apiKey
      * @param array $requestOptions
-     * @param string $operation
      * @param int $maxRetries Max number of retries
      * @param int $timeout Timeout
      * @param string $timeoutCalculation name of the method to call to calculate the timeout
@@ -156,10 +157,11 @@ final class Helpers
      * @return void
      */
     public static function retryForApiKeyUntil(
+        $operation,
         $searchClient,
         $key,
+        $apiKey,
         $requestOptions,
-        $operation,
         $maxRetries,
         $timeout,
         $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout'
@@ -177,8 +179,7 @@ final class Helpers
 
                 // In case of an update, check if the key has been updated as it should be
                 if ($operation === 'update') {
-                    $keyParams = self::filterOnlyKeyParams($requestOptions);
-                    if (self::isKeyUpdated($response['key'], $keyParams)) {
+                    if (self::isKeyUpdated($response['key'], $apiKey)) {
                         return;
                     }
                 }
@@ -214,25 +215,5 @@ final class Helpers
         }
 
         return $upToDate;
-    }
-
-    private static function filterOnlyKeyParams($requestOptions)
-    {
-        $validKeyParams = [
-            'acl',
-            'indexes',
-            'referers',
-            'restrictSources',
-            'queryParameters',
-            'description',
-            'validity',
-            'maxQueriesPerIPPerHour',
-            'maxHitsPerQuery',
-        ];
-
-        return array_intersect_key(
-            $requestOptions,
-            array_flip($validKeyParams)
-        );
     }
 }
