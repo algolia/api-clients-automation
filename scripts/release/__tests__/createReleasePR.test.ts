@@ -24,6 +24,10 @@ const buildTestCommit = (
 };
 
 describe('createReleasePR', () => {
+  beforeAll(() => {
+    process.env.GITHUB_TOKEN = 'mocked';
+  });
+
   it('reads versions of the current language', () => {
     expect(readVersions()).toEqual({
       java: {
