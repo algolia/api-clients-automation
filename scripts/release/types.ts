@@ -29,6 +29,7 @@ export type PassedCommit = {
   author: string;
   message: string;
   raw: string;
+  prNumber: string | undefined;
 };
 
 export type Commit =

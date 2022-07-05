@@ -117,6 +117,12 @@ export async function parseCommit(commit: string): Promise<Commit> {
   const [hash, authorName, authorEmail, message] = commit.split('|');
   const commitScope = message.slice(0, message.indexOf(':'));
   const typeAndScope = commitScope.match(/(.+)\((.+)\)/);
+  const prNumber = message.match(/#(\d+)/);
+  let commitMessage = message;
+
+  if (prNumber) {
+    commitMessage = message.replace(`(#${prNumber[1]})`, '').trim();
+  }
 
   // We skip generation commits as they do not appear in changelogs
   if (
@@ -159,7 +165,8 @@ export async function parseCommit(commit: string): Promise<Commit> {
     hash,
     type: typeAndScope[1], // `fix` | `feat` | `chore` | ...
     scope, // `clients` | `specs` | `javascript` | `php` | `java` | ...
-    message,
+    message: commitMessage,
+    prNumber: prNumber ? prNumber[1] : undefined,
     raw: commit,
     author: fetchedUsers[authorEmail],
   };
@@ -411,9 +418,18 @@ async function createReleasePR(): Promise<void> {
         continue;
       }
 
-      changelogCommits.push(
-        `- [${validCommit.hash}](https://github.com/${OWNER}/${REPO}/commit/${validCommit.hash}) ${validCommit.message} by ${validCommit.author}`
-      );
+      const changelogCommit = [
+        `[${validCommit.hash}](https://github.com/${OWNER}/${REPO}/commit/${validCommit.hash})`,
+        validCommit.message,
+        validCommit.prNumber
+          ? `([#${validCommit.prNumber}](https://github.com/${OWNER}/${REPO}/pull/${validCommit.prNumber}))`
+          : undefined,
+        `by ${validCommit.author}`,
+      ]
+        .filter(Boolean)
+        .join(' ');
+
+      changelogCommits.push(`- ${changelogCommit}`);
     }
 
     return {

@@ -16,7 +16,7 @@ const buildTestCommit = (
     message: string;
   }> = {}
 ): string => {
-  const { type = 'fix', scope, message = 'fix the thing' } = options;
+  const { type = 'fix', scope, message = 'fix the thing (#123)' } = options;
   const baseTestCommit = `b2501882|${gitAuthor.name}|${gitAuthor.email}`;
   const typeAndScope = `${type}${scope ? `(${scope})` : ''}`;
 
@@ -45,6 +45,7 @@ describe('createReleasePR', () => {
         hash: 'b2501882',
         scope: 'javascript',
         message: 'fix(javascript): fix the thing',
+        prNumber: '123',
         raw: testCommit,
         type: 'fix',
         author: `[${gitAuthor.name}](${gitAuthor.email})`,
@@ -57,6 +58,7 @@ describe('createReleasePR', () => {
         hash: 'b2501882',
         scope: 'specs',
         message: 'fix(specs): fix the thing',
+        prNumber: '123',
         raw: testCommit,
         type: 'fix',
         author: `[${gitAuthor.name}](${gitAuthor.email})`,
