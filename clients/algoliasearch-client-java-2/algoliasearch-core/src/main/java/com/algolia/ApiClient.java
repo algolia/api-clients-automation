@@ -190,14 +190,13 @@ public abstract class ApiClient {
    * @param param Parameter
    * @return String representation of the parameter
    */
-  public String parameterToString(Object param) {
+  public String parameterToString(Object param) throws UnsupportedOperationException {
     if (param == null) {
       return "";
     } else if (param instanceof Date || param instanceof OffsetDateTime || param instanceof LocalDate) {
-      // Serialize to json string and remove the " enclosing characters
-      // String jsonStr = JSON.serialize(param);
-      // return jsonStr.substring(1, jsonStr.length() - 1);
-      return "mock";
+      // note: date comes as string for now, we should never have to serialize one
+      // maybe we could accetp them as Date object and in that case use jackson serialization
+      throw new UnsupportedOperationException("Date must come as string (already serialized)");
     } else if (param instanceof Collection) {
       StringJoiner b = new StringJoiner(",");
       for (Object o : (Collection) param) {
