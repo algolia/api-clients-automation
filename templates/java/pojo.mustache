@@ -20,39 +20,13 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
     {{/mostInnerItems}}
     {{/isContainer}}
     {{/isEnum}}
-  {{#gson}}
-  @SerializedName("{{baseName}}")
-  {{/gson}}
+  @JsonProperty("{{baseName}}")
   {{#isContainer}}
   private {{{datatypeWithEnum}}} {{name}};
   {{/isContainer}}
   {{^isContainer}}
   {{#isDiscriminator}}protected{{/isDiscriminator}}{{^isDiscriminator}}private{{/isDiscriminator}} {{{datatypeWithEnum}}} {{name}};
   {{/isContainer}}
-
-  {{/vars}}
-  {{#parcelableModel}}
-  public {{classname}}() {
-  {{#parent}}
-    super();
-  {{/parent}}
-  {{#gson}}
-  {{#discriminator}}
-    this.{{{discriminatorName}}} = this.getClass().getSimpleName();
-  {{/discriminator}}
-  {{/gson}}
-  }
-  {{/parcelableModel}}
-  {{^parcelableModel}}
-  {{#gson}}
-  {{#discriminator}}
-  public {{classname}}() {
-    this.{{{discriminatorName}}} = this.getClass().getSimpleName();
-  }
-  {{/discriminator}}
-  {{/gson}}
-  {{/parcelableModel}}
-  {{#vars}}
 
   {{^isReadOnly}}
   public {{classname}} {{setter}}({{{datatypeWithEnum}}} {{name}}) {
@@ -117,9 +91,6 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
 {{^required}}
   @javax.annotation.Nullable
 {{/required}}
-{{#jsonb}}
-  @JsonbProperty("{{baseName}}")
-{{/jsonb}}
   public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};
   }

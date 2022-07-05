@@ -3,9 +3,10 @@ package com.algolia;
 import com.algolia.exceptions.*;
 import com.algolia.utils.*;
 import com.algolia.utils.retry.StatefulHost;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -194,8 +195,9 @@ public abstract class ApiClient {
       return "";
     } else if (param instanceof Date || param instanceof OffsetDateTime || param instanceof LocalDate) {
       // Serialize to json string and remove the " enclosing characters
-      String jsonStr = JSON.serialize(param);
-      return jsonStr.substring(1, jsonStr.length() - 1);
+      // String jsonStr = JSON.serialize(param);
+      // return jsonStr.substring(1, jsonStr.length() - 1);
+      return "mock";
     } else if (param instanceof Collection) {
       StringJoiner b = new StringJoiner(",");
       for (Object o : (Collection) param) {
@@ -233,7 +235,11 @@ public abstract class ApiClient {
     String content;
 
     if (obj != null) {
-      content = JSON.serialize(obj);
+      try {
+        content = JSON.getMapper().writeValueAsString(obj);
+      } catch (JsonProcessingException e) {
+        throw new AlgoliaRuntimeException(e);
+      }
     } else {
       content = null;
     }
@@ -246,9 +252,9 @@ public abstract class ApiClient {
    *
    * @param <T> Type
    * @param returnType Return type
-   * @see #execute(Call, Type)
+   * @see #execute(Call, TypeReference)
    */
-  public <T> CompletableFuture<T> executeAsync(Call call, final Type returnType) {
+  public <T> CompletableFuture<T> executeAsync(Call call, final TypeReference returnType) {
     final CompletableFuture<T> future = new CompletableFuture<>();
     call.enqueue(
       new Callback() {
