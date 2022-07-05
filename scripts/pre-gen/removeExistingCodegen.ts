@@ -20,7 +20,19 @@ export async function removeExistingCodegen(
 
   switch (language) {
     case 'java':
-      clientModel = client;
+      if (client === 'query-suggestions') {
+        // eslint-disable-next-line no-warning-comments
+        // TODO: temporary solution, remove in next PR
+        await run(
+          `rm -rf ${toAbsolutePath(
+            path.resolve('..', output, baseModelFolder, 'querySuggestions')
+          )}`,
+          {
+            verbose,
+          }
+        );
+      }
+      clientModel = client.replace('-', '');
       clientApi = `${clientName}*.java`;
       break;
     case 'php':
