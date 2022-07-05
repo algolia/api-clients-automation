@@ -100,7 +100,6 @@ public class HttpRequester implements Requester {
       contentType = "application/json";
     }
     try {
-      System.out.println(respBody);
       return (T) JSON.getMapper().readValue(respBody, returnType);
     } catch (JsonProcessingException e) {
       throw new AlgoliaRuntimeException(e);
