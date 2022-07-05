@@ -38,7 +38,7 @@ public Map<String, Object> getAdditionalProperties() {
 }
 
 @JsonAnySetter
-public {{classname}} setAdditionalProperties(String name, Object value) {
+public {{classname}} setAdditionalProperty(String name, Object value) {
   this.additionalProperties.put(name, value);
   return this;
 }
