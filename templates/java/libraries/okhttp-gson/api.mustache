@@ -297,6 +297,96 @@ public class {{classname}} extends ApiClient {
   public void waitForTask(String indexName, Long taskID) {
     this.waitForTask(indexName, taskID, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT);
   }
+
+  public Key waitForApiKey(
+    ApiKeyOperation operation,
+    String key,
+    ApiKey apiKey,
+    int maxRetries,
+    IntUnaryOperator timeout,
+    RequestOptions requestOptions
+  ) {
+    if (operation == ApiKeyOperation.UPDATE) {
+      if (apiKey == null) {
+        throw new AlgoliaRetryException("`apiKey` is required when waiting for an `update` operation.");
+      }
+
+      return TaskUtils.retryUntil(
+        () -> {
+          return this.getApiKey(key, requestOptions);
+        },
+        (Key respKey) -> {
+          ApiKey sameType = new ApiKey()
+            .setAcl(respKey.getAcl())
+            .setDescription(respKey.getDescription())
+            .setIndexes(respKey.getIndexes())
+            .setMaxHitsPerQuery(respKey.getMaxHitsPerQuery())
+            .setMaxQueriesPerIPPerHour(respKey.getMaxQueriesPerIPPerHour())
+            .setQueryParameters(respKey.getQueryParameters())
+            .setReferers(respKey.getReferers())
+            .setValidity(respKey.getValidity());
+          return apiKey.equals(sameType);
+        },
+        maxRetries,
+        timeout
+      );
+    }
+
+    final Key[] addedKey = new Key[] { null };
+
+    TaskUtils.retryUntil(
+      () -> {
+        try {
+          addedKey[0] = this.getApiKey(key, requestOptions);
+          return -2;
+        } catch (AlgoliaApiException e) {
+          return e.getHttpErrorCode();
+        }
+      },
+      (Integer status) -> {
+        switch (operation) {
+          case ApiKeyOperation.ADD:
+            return status == -2 || status != 404;
+          case ApiKeyOperation.DELETE:
+            return status == 404;
+          default:
+            return false;
+        }
+      },
+      maxRetries,
+      timeout
+    );
+
+    return addedKey[0];
+  }
+
+  public Key waitForApiKey(ApiKeyOperation operation, String key, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+    return this.waitForApiKey(operation, key, null, maxRetries, timeout, requestOptions);
+  }
+
+  public Key waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, RequestOptions requestOptions) {
+    return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  }
+
+  public Key waitForApiKey(ApiKeyOperation operation, String key, RequestOptions requestOptions) {
+    return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  }
+
+  public Key waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForApiKey(operation, key, apiKey, maxRetries, timeout, null);
+  }
+
+  public Key waitForApiKey(ApiKeyOperation operation, String key, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForApiKey(operation, key, null, maxRetries, timeout, null);
+  }
+
+  public Key waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey) {
+    return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  }
+
+  public Key waitForApiKey(ApiKeyOperation operation, String key) {
+    return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  }
   {{/isSearchClient}}
 }
 {{/operations}}
