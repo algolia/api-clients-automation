@@ -329,9 +329,9 @@ use {{invokerPackage}}\Support\Helpers;
      * @param string $operation the `operation` that was done on a `key`
      * @param string $key the `key` that has been added, deleted or updated
      * @param array $apiKey Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      * @param int|null $maxRetries Maximum number of retries
      * @param int|null $timeout Timeout
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @throws ExceededRetriesException
      *
@@ -341,9 +341,9 @@ use {{invokerPackage}}\Support\Helpers;
         $operation,
         $key,
         $apiKey = null,
-        $requestOptions = [],
         $maxRetries = null,
-        $timeout = null
+        $timeout = null,
+        $requestOptions = []
     ) {
         if ($timeout === null) {
             $timeout = $this->config->getWaitTaskTimeBeforeRetry();
@@ -358,9 +358,10 @@ use {{invokerPackage}}\Support\Helpers;
             $this,
             $key,
             $apiKey,
-            $requestOptions,
             $maxRetries,
-            $timeout
+            $timeout,
+            null,
+            $requestOptions
         );
     }
     {{/isSearchClient}}

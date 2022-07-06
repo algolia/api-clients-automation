@@ -4,6 +4,7 @@ namespace Algolia\AlgoliaSearch\Support;
 
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Exceptions\ExceededRetriesException;
+use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
 final class Helpers
 {
@@ -147,24 +148,25 @@ final class Helpers
      * @param SearchClient $searchClient search client
      * @param string $key
      * @param array $apiKey
-     * @param array $requestOptions
      * @param int $maxRetries Max number of retries
      * @param int $timeout Timeout
      * @param string $timeoutCalculation name of the method to call to calculate the timeout
+     * @param array $requestOptions
      *
      * @throws ExceededRetriesException
      *
      * @return void
+     *
      */
     public static function retryForApiKeyUntil(
         $operation,
         $searchClient,
         $key,
         $apiKey,
-        $requestOptions,
         $maxRetries,
         $timeout,
-        $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout'
+        $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout',
+        $requestOptions = []
     ) {
         $retry = 0;
 
@@ -185,9 +187,12 @@ final class Helpers
                 }
 
                 // Else try again ...
-            } catch (\Exception $e) {
+            } catch (NotFoundException $e) {
                 // In case of a deletion, if there was an error, the $key has been deleted as it should be
-                if ($operation === 'delete') {
+                if (
+                    $operation === 'delete' &&
+                    $e->getMessage() === 'Key does not exist'
+                ) {
                     return;
                 }
 

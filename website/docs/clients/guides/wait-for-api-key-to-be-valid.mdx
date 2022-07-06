@@ -47,6 +47,12 @@ await client.waitForApiKey({
   // We provide the updated fields to check if the changes have been applied
   apiKey: updatesToPerform,
 });
+
+// Call for delete
+await client.deleteApiKey({ key });
+
+// Wait for delete to be done
+await client.waitForApiKey({ operation: 'delete', key });
 ```
 
 </TabItem>
@@ -57,7 +63,7 @@ await client.waitForApiKey({
 ```php
 $client = SearchClient::create(
     '<YOUR_APP_ID>',
-    '<YOUR_APP_ID>'
+    '<YOUR_API_KEY>'
 );
 
 $response = $client->addApiKey([
