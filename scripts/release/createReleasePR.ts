@@ -35,7 +35,6 @@ import { updateAPIVersions } from './updateAPIVersions';
 dotenv.config({ path: ROOT_ENV_PATH });
 
 export const COMMON_SCOPES = ['specs', 'clients'];
-const octokit = getOctokit();
 
 // Prevent fetching the same user multiple times
 const fetchedUsers: Record<string, string> = {};
@@ -148,6 +147,7 @@ export async function parseCommit(commit: string): Promise<Commit> {
 
   // Retrieve the author GitHub username if publicly available
   if (!fetchedUsers[authorEmail]) {
+    const octokit = getOctokit();
     const { data } = await octokit.search.users({
       q: authorEmail,
     });
@@ -465,6 +465,7 @@ async function createReleasePR(): Promise<void> {
   await run(`git checkout ${MAIN_BRANCH}`, { verbose: true });
 
   console.log('Creating prepare release pull request...');
+  const octokit = getOctokit();
   const { data } = await octokit.pulls.create({
     owner: OWNER,
     repo: REPO,

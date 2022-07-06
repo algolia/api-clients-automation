@@ -2,10 +2,6 @@ import { getNextVersion } from '../createReleasePR';
 import { getVersionsToRelease } from '../updateAPIVersions';
 
 describe('updateAPIversions', () => {
-  beforeAll(() => {
-    process.env.GITHUB_TOKEN = 'mocked';
-  });
-
   it('gets versions to release', () => {
     const versions = getVersionsToRelease({
       javascript: {

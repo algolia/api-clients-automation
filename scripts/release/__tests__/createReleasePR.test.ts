@@ -1,4 +1,5 @@
 import { gitAuthor } from '../../../config/release.config.json';
+import * as common from '../../common';
 import {
   parseCommit,
   getVersionChangesText,
@@ -25,7 +26,22 @@ const buildTestCommit = (
 
 describe('createReleasePR', () => {
   beforeAll(() => {
-    process.env.GITHUB_TOKEN = 'mocked';
+    // Mock `getOctokit` to bypass the API call and credential requirements
+    jest.spyOn(common, 'getOctokit').mockImplementation((): any => {
+      return {
+        search: {
+          users: (): any => ({
+            data: {
+              total_count: 0,
+            },
+          }),
+        },
+      };
+    });
+  });
+
+  afterAll(() => {
+    jest.spyOn(common, 'getOctokit').mockRestore();
   });
 
   it('reads versions of the current language', () => {
