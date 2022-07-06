@@ -1,3 +1,12 @@
+## [0.9.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.8.0...0.9.0)
+
+- [5a499849](https://github.com/algolia/api-clients-automation/commit/5a499849) fix(specs): add renderingContent to search response ([#787](https://github.com/algolia/api-clients-automation/pull/787)) by [@millotp](https://github.com/millotp/)
+- [6b50ef0b](https://github.com/algolia/api-clients-automation/commit/6b50ef0b) feat(javascript): add `abtesting` client, better `init` usage ([#784](https://github.com/algolia/api-clients-automation/pull/784)) by [@shortcuts](https://github.com/shortcuts/)
+- [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult ([#783](https://github.com/algolia/api-clients-automation/pull/783)) by [@millotp](https://github.com/millotp/)
+- [a11e84da](https://github.com/algolia/api-clients-automation/commit/a11e84da) fix(specs): fix missing params and types ([#772](https://github.com/algolia/api-clients-automation/pull/772)) by [@shortcuts](https://github.com/shortcuts/)
+- [bc14a8c5](https://github.com/algolia/api-clients-automation/commit/bc14a8c5) feat(specs): Add tags to the settings and search params ([#768](https://github.com/algolia/api-clients-automation/pull/768)) by [@clemfromspace](https://github.com/clemfromspace/)
+- [77c80e20](https://github.com/algolia/api-clients-automation/commit/77c80e20) fix(javascript): add class-proposal plugin for `client-common` ([#765](https://github.com/algolia/api-clients-automation/pull/765)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [0.8.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.7.2...0.8.0)
 
 - [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult (#783)

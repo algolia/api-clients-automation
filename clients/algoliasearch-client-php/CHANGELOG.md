@@ -1,3 +1,10 @@
+## [4.0.0-alpha.6](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.5...4.0.0-alpha.6)
+
+- [5a499849](https://github.com/algolia/api-clients-automation/commit/5a499849) fix(specs): add renderingContent to search response ([#787](https://github.com/algolia/api-clients-automation/pull/787)) by [@millotp](https://github.com/millotp/)
+- [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult ([#783](https://github.com/algolia/api-clients-automation/pull/783)) by [@millotp](https://github.com/millotp/)
+- [a11e84da](https://github.com/algolia/api-clients-automation/commit/a11e84da) fix(specs): fix missing params and types ([#772](https://github.com/algolia/api-clients-automation/pull/772)) by [@shortcuts](https://github.com/shortcuts/)
+- [bc14a8c5](https://github.com/algolia/api-clients-automation/commit/bc14a8c5) feat(specs): Add tags to the settings and search params ([#768](https://github.com/algolia/api-clients-automation/pull/768)) by [@clemfromspace](https://github.com/clemfromspace/)
+
 ## [4.0.0-alpha.5](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.4...4.0.0-alpha.5)
 
 - [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult (#783)
