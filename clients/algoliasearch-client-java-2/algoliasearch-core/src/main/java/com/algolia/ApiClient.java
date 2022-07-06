@@ -195,7 +195,7 @@ public abstract class ApiClient {
       return "";
     } else if (param instanceof Date || param instanceof OffsetDateTime || param instanceof LocalDate) {
       // note: date comes as string for now, we should never have to serialize one
-      // maybe we could accetp them as Date object and in that case use jackson serialization
+      // maybe we could accept them as Date object and in that case use jackson serialization
       throw new UnsupportedOperationException("Date must come as string (already serialized)");
     } else if (param instanceof Collection) {
       StringJoiner b = new StringJoiner(",");
