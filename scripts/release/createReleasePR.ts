@@ -425,7 +425,7 @@ async function createReleasePR(): Promise<void> {
         validCommit.prNumber
           ? `([#${validCommit.prNumber}](https://github.com/${OWNER}/${REPO}/pull/${validCommit.prNumber}))`
           : undefined,
-        `by ${validCommit.author}`,
+        validCommit.author ? `by ${validCommit.author}` : undefined,
       ]
         .filter(Boolean)
         .join(' ');
