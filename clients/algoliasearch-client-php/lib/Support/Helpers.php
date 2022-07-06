@@ -179,7 +179,7 @@ final class Helpers
 
                 // In case of an update, check if the key has been updated as it should be
                 if ($operation === 'update') {
-                    if (self::isKeyUpdated($response['key'], $apiKey)) {
+                    if (self::isKeyUpdated($response, $apiKey)) {
                         return;
                     }
                 }

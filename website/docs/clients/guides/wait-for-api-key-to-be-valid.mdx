@@ -60,17 +60,19 @@ $client = SearchClient::create(
     '<YOUR_APP_ID>'
 );
 
-$key = $client->addApiKey([
-    acl: ['analytics', 'browse', 'editSettings'],
+$response = $client->addApiKey([
+    'acl' => ['analytics', 'browse', 'editSettings'],
 ]);
+
+$key = $response['key'];
 
 // Poll the task status with defaults values
 $client->waitForApiKey('add', $key);
 
 // The fields to update on your API key
 $updatesToPerform = [
-  acl: ['analytics', 'search'],
-  indexes: ['products'],
+  'acl' => ['analytics', 'search'],
+  'indexes' => ['products'],
 ];
 
 // Call for update
@@ -78,6 +80,13 @@ $client->updateApiKey($key, $updatesToPerform);
 
 // Wait for update to be done
 $client->waitForApiKey('update', $key, $updatesToPerform);
+
+// Call for delete
+$client->deleteApiKey($key);
+
+// Wait for delete to be done
+$client->waitForApiKey('delete', $key);
+
 ```
 
 </TabItem>
