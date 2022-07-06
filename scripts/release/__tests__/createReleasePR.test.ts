@@ -18,7 +18,7 @@ const buildTestCommit = (
   }> = {}
 ): string => {
   const { type = 'fix', scope, message = 'fix the thing (#123)' } = options;
-  const baseTestCommit = `b2501882|${gitAuthor.name}|${gitAuthor.email}`;
+  const baseTestCommit = `b2501882|${gitAuthor.email}`;
   const typeAndScope = `${type}${scope ? `(${scope})` : ''}`;
 
   return `${baseTestCommit}|${typeAndScope}: ${message}`;
@@ -29,10 +29,12 @@ describe('createReleasePR', () => {
     // Mock `getOctokit` to bypass the API call and credential requirements
     jest.spyOn(common, 'getOctokit').mockImplementation((): any => {
       return {
-        search: {
-          users: (): any => ({
+        pulls: {
+          get: (): any => ({
             data: {
-              total_count: 0,
+              user: {
+                login: gitAuthor.name,
+              },
             },
           }),
         },
@@ -61,10 +63,10 @@ describe('createReleasePR', () => {
         hash: 'b2501882',
         scope: 'javascript',
         message: 'fix(javascript): fix the thing',
-        prNumber: '123',
+        prNumber: 123,
         raw: testCommit,
         type: 'fix',
-        author: `[${gitAuthor.name}](${gitAuthor.email})`,
+        author: `[@${gitAuthor.name}](https://github.com/${gitAuthor.name}/)`,
       });
     });
 
@@ -74,10 +76,10 @@ describe('createReleasePR', () => {
         hash: 'b2501882',
         scope: 'specs',
         message: 'fix(specs): fix the thing',
-        prNumber: '123',
+        prNumber: 123,
         raw: testCommit,
         type: 'fix',
-        author: `[${gitAuthor.name}](${gitAuthor.email})`,
+        author: `[@${gitAuthor.name}](https://github.com/${gitAuthor.name}/)`,
       });
     });
 

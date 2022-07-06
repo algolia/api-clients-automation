@@ -113,14 +113,15 @@ export function getSkippedCommitsText({
 }
 
 export async function parseCommit(commit: string): Promise<Commit> {
-  const [hash, authorName, authorEmail, message] = commit.split('|');
+  const [hash, authorEmail, message] = commit.split('|');
   const commitScope = message.slice(0, message.indexOf(':'));
   const typeAndScope = commitScope.match(/(.+)\((.+)\)/);
-  const prNumber = message.match(/#(\d+)/);
+  const prNumberMatch = message.match(/#(\d+)/);
+  const prNumber = prNumberMatch ? parseInt(prNumberMatch[1], 10) : 0;
   let commitMessage = message;
 
   if (prNumber) {
-    commitMessage = message.replace(`(#${prNumber[1]})`, '').trim();
+    commitMessage = message.replace(`(#${prNumber})`, '').trim();
   }
 
   // We skip generation commits as they do not appear in changelogs
@@ -146,18 +147,18 @@ export async function parseCommit(commit: string): Promise<Commit> {
   }
 
   // Retrieve the author GitHub username if publicly available
-  if (!fetchedUsers[authorEmail]) {
+  if (!fetchedUsers[authorEmail] && prNumber) {
     const octokit = getOctokit();
-    const { data } = await octokit.search.users({
-      q: authorEmail,
+    const { data } = await octokit.pulls.get({
+      owner: OWNER,
+      repo: REPO,
+      pull_number: prNumber,
     });
 
-    if (data.total_count === 0) {
-      fetchedUsers[authorEmail] = `[${authorName}](${authorEmail})`;
-    } else {
+    if (data.user) {
       fetchedUsers[
         authorEmail
-      ] = `[@${data.items[0].login}](https://github.com/${data.items[0].login}/)`;
+      ] = `[@${data.user.login}](https://github.com/${data.user.login}/)`;
     }
   }
 
@@ -166,7 +167,7 @@ export async function parseCommit(commit: string): Promise<Commit> {
     type: typeAndScope[1], // `fix` | `feat` | `chore` | ...
     scope, // `clients` | `specs` | `javascript` | `php` | `java` | ...
     message: commitMessage,
-    prNumber: prNumber ? prNumber[1] : undefined,
+    prNumber,
     raw: commit,
     author: fetchedUsers[authorEmail],
   };
@@ -298,7 +299,7 @@ async function getCommits(): Promise<{
   // Reading commits since last release
   const latestCommits = (
     await run(
-      `git log --pretty=format:"%h|%an|%ae|%s" ${RELEASED_TAG}..${MAIN_BRANCH}`
+      `git log --pretty=format:"%h|%ae|%s" ${RELEASED_TAG}..${MAIN_BRANCH}`
     )
   )
     .split('\n')
