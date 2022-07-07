@@ -280,7 +280,7 @@ public class {{classname}} extends ApiClient {
   {{#isSearchClient}}
   public void waitForTask(String indexName, Long taskID, RequestOptions requestOptions, int maxRetries, IntUnaryOperator timeout) {
     TaskUtils.retryUntil(() -> {
-      return this.getTaskAsync(indexName, taskID, requestOptions);
+      return this.getTask(indexName, taskID, requestOptions);
     }, (GetTaskResponse task) -> {
       return task.getStatus() == TaskStatus.PUBLISHED;
     }, maxRetries, timeout);
@@ -345,9 +345,9 @@ public class {{classname}} extends ApiClient {
       },
       (Integer status) -> {
         switch (operation) {
-          case ApiKeyOperation.ADD:
+          case ADD:
             return status == -2 || status != 404;
-          case ApiKeyOperation.DELETE:
+          case DELETE:
             return status == 404;
           default:
             return false;
