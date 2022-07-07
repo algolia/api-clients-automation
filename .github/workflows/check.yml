@@ -31,6 +31,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: check that custom actions are built
+        run: |
+          yarn workspace scripts build:actions
+          diff=$(git status --porcelain ./scripts/ci/actions | wc -l)
+
+          if [[ $diff > 0 ]]; then
+            echo "Build the custom github actions by running `yarn workspace scripts build:actions`"
+          fi
+
+          exit $diff
+
       - name: Setup
         id: setup
         uses: ./.github/actions/setup

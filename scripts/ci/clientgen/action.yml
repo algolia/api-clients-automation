@@ -1,0 +1,10 @@
+name: notification
+description: Manage the codegen comment
+author: algolia
+inputs:
+  milliseconds: # change this
+    required: true
+    description: test
+runs:
+  using: 'node16'
+  main: './builddir/index.js'

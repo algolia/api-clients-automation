@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "build:actions": "ncc build ci/clientgen/src/index.ts --source-map --transpile-only -o ci/clientgen/builddir",
     "cleanGeneratedBranch": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/cleanGeneratedBranch.js",
     "createMatrix": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/createMatrix.js",
     "createReleasePR": "NODE_NO_WARNINGS=1 RELEASE=true node dist/scripts/release/createReleasePR.js",
