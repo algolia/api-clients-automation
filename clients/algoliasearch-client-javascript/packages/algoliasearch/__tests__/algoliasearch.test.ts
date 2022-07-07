@@ -44,6 +44,28 @@ describe('api', () => {
     expect(client.search).not.toBeUndefined();
   });
 
+  describe('_ua', () => {
+    it('provides a backward compatible `_ua` variable at the root of the client', () => {
+      expect(client._ua).toEqual(
+        expect.stringContaining(
+          `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`
+        )
+      );
+    });
+
+    it('keeps `_ua` updated with the transporter algolia agent', () => {
+      expect(client._ua).toEqual(
+        expect.stringMatching(/.*; Node\.js \(.*\)$/g)
+      );
+
+      client.addAlgoliaAgent('Jest', '0.0.1');
+
+      expect(client._ua).toEqual(
+        expect.stringMatching(/.*; Jest \(0\.0\.1\)$/g)
+      );
+    });
+  });
+
   it('exposes the search client transporter for the algoliasearch client', () => {
     expect(client.transporter).not.toBeUndefined();
     expect(client.transporter).toEqual({
