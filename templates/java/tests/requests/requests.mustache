@@ -11,10 +11,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.BeforeAll;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import com.algolia.utils.JSON;
+import com.algolia.utils.JSONBuilder;
 import com.algolia.utils.ClientOptions;
 import com.algolia.utils.RequestOptions;
 import com.algolia.model.{{import}}.*;
@@ -30,9 +31,11 @@ import com.algolia.EchoResponse;
 class {{client}}RequestsTests {
     private {{client}} client;
     private EchoInterceptor echo;
+    private ObjectMapper json;
 
     @BeforeAll
     void init() {
+        json = new JSONBuilder().failOnUnknown(true).build();
         HttpRequester requester = new HttpRequester();
         echo = new EchoInterceptor();
         requester.addInterceptor(echo.getEchoInterceptor());
@@ -72,7 +75,7 @@ class {{client}}RequestsTests {
 
         {{#request.queryParameters}}
         try {
-          Map<String, String> expectedQuery = JSON.getMapper().readValue("{{#lambda.escapeQuotes}}{{{request.queryParameters}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
+          Map<String, String> expectedQuery = json.readValue("{{#lambda.escapeQuotes}}{{{request.queryParameters}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
           Map<String, Object> actualQuery = req.queryParameters;
 
           assertEquals(expectedQuery.size(), actualQuery.size());
@@ -86,7 +89,7 @@ class {{client}}RequestsTests {
 
         {{#request.headers}}
         try {
-          Map<String, String> expectedHeaders = JSON.getMapper().readValue("{{#lambda.escapeQuotes}}{{{request.headers}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
+          Map<String, String> expectedHeaders = json.readValue("{{#lambda.escapeQuotes}}{{{request.headers}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
           Map<String, String> actualHeaders = req.headers;
 
           for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {

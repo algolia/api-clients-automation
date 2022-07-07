@@ -3,6 +3,7 @@ package com.algolia.utils;
 import com.algolia.exceptions.*;
 import com.algolia.utils.retry.RetryStrategy;
 import com.algolia.utils.retry.StatefulHost;
+import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class HttpRequester implements Requester {
   private OkHttpClient httpClient;
   private HttpLoggingInterceptor loggingInterceptor;
   private LogLevel level;
+  private ObjectMapper json;
 
   public HttpRequester() {
     this.retryStrategy = new RetryStrategy();
@@ -35,6 +37,8 @@ public class HttpRequester implements Requester {
     builder.retryOnConnectionFailure(false);
 
     httpClient = builder.build();
+
+    this.json = new JSONBuilder().build();
   }
 
   @Override
@@ -100,7 +104,7 @@ public class HttpRequester implements Requester {
       contentType = "application/json";
     }
     try {
-      return (T) JSON.getMapper().readValue(respBody, returnType);
+      return (T) json.readValue(respBody, returnType);
     } catch (JsonProcessingException e) {
       throw new AlgoliaRuntimeException(e);
     }

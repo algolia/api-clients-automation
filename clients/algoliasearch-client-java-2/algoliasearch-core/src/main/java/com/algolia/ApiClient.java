@@ -4,6 +4,7 @@ import com.algolia.exceptions.*;
 import com.algolia.utils.*;
 import com.algolia.utils.retry.StatefulHost;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -25,6 +26,7 @@ public abstract class ApiClient {
   private String contentType;
 
   private Requester requester;
+  private ObjectMapper json;
 
   public ApiClient(String appId, String apiKey, String clientName, String version, ClientOptions options) {
     if (appId == null || appId.length() == 0) {
@@ -55,6 +57,8 @@ public abstract class ApiClient {
     } else {
       this.requester = new HttpRequester();
     }
+
+    this.json = new JSONBuilder().build();
   }
 
   private void refreshUserAgent() {
@@ -235,7 +239,7 @@ public abstract class ApiClient {
 
     if (obj != null) {
       try {
-        content = JSON.getMapper().writeValueAsString(obj);
+        content = json.writeValueAsString(obj);
       } catch (JsonProcessingException e) {
         throw new AlgoliaRuntimeException(e);
       }
