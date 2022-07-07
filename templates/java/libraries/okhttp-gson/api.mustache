@@ -356,11 +356,13 @@ public class {{classname}} extends ApiClient {
         throw new AlgoliaRetryException("`apiKey` is required when waiting for an `update` operation.");
       }
 
+      // when updating an api key, we poll the api until we receive a different key
       return TaskUtils.retryUntil(
         () -> {
           return this.getApiKey(key, requestOptions);
         },
         (Key respKey) -> {
+          // we need to convert to an ApiKey object to use the `equals` method
           ApiKey sameType = new ApiKey()
             .setAcl(respKey.getAcl())
             .setDescription(respKey.getDescription())
@@ -370,6 +372,7 @@ public class {{classname}} extends ApiClient {
             .setQueryParameters(respKey.getQueryParameters())
             .setReferers(respKey.getReferers())
             .setValidity(respKey.getValidity());
+
           return apiKey.equals(sameType);
         },
         maxRetries,
@@ -377,12 +380,15 @@ public class {{classname}} extends ApiClient {
       );
     }
 
+    // bypass lambda restriction to modify final object
     final Key[] addedKey = new Key[] { null };
 
+    // check the status of the getApiKey method
     TaskUtils.retryUntil(
       () -> {
         try {
           addedKey[0] = this.getApiKey(key, requestOptions);
+          // magic number to signify we found the key
           return -2;
         } catch (AlgoliaApiException e) {
           return e.getHttpErrorCode();
@@ -391,10 +397,13 @@ public class {{classname}} extends ApiClient {
       (Integer status) -> {
         switch (operation) {
           case ADD:
+            // stop either when the key is created or when we don't receive 404
             return status == -2 || status != 404;
           case DELETE:
+            // stop when the key is not found
             return status == 404;
           default:
+            // continue
             return false;
         }
       },
