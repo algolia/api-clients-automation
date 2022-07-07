@@ -4,7 +4,7 @@ import {
   getAlgoliaAgent,
   shuffle,
   createRetryablePromise,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -13,7 +13,7 @@ import type {
   RequestOptions,
   QueryParameters,
   ApiError,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
@@ -114,7 +114,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '0.8.0';
+export const apiClientVersion = '5.0.0-alpha.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -192,34 +192,42 @@ export function createSearchClient({
      * @param waitForTaskOptions - The waitForTaskOptions object.
      * @param waitForTaskOptions.indexName - The `indexName` where the operation was performed.
      * @param waitForTaskOptions.taskID - The `taskID` returned in the method response.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
-    waitForTask({
-      indexName,
-      taskID,
-      ...createRetryablePromiseOptions
-    }: WaitForTaskOptions): Promise<GetTaskResponse> {
+    waitForTask(
+      {
+        indexName,
+        taskID,
+        ...createRetryablePromiseOptions
+      }: WaitForTaskOptions,
+      requestOptions?: RequestOptions
+    ): Promise<GetTaskResponse> {
       return createRetryablePromise({
         ...createRetryablePromiseOptions,
-        func: () => this.getTask({ indexName, taskID }),
+        func: () => this.getTask({ indexName, taskID }, requestOptions),
         validate: (response) => response.status === 'published',
       });
     },
 
     /**
-     * Helper: Wait for an API key to be valid, updated or deleted based on a given `operation`.
+     * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
      *
      * @summary Wait for an API key task to be processed.
      * @param waitForApiKeyOptions - The waitForApiKeyOptions object.
      * @param waitForApiKeyOptions.operation - The `operation` that was done on a `key`.
      * @param waitForApiKeyOptions.key - The `key` that has been added, deleted or updated.
      * @param waitForApiKeyOptions.apiKey - Necessary to know if an `update` operation has been processed, compare fields of the response with it.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
      */
-    waitForApiKey({
-      operation,
-      key,
-      apiKey,
-      ...createRetryablePromiseOptions
-    }: WaitForApiKeyOptions): Promise<ApiError | Key> {
+    waitForApiKey(
+      {
+        operation,
+        key,
+        apiKey,
+        ...createRetryablePromiseOptions
+      }: WaitForApiKeyOptions,
+      requestOptions?: RequestOptions
+    ): Promise<ApiError | Key> {
       if (operation === 'update') {
         if (!apiKey) {
           throw new Error(
@@ -229,7 +237,7 @@ export function createSearchClient({
 
         return createRetryablePromise({
           ...createRetryablePromiseOptions,
-          func: () => this.getApiKey({ key }),
+          func: () => this.getApiKey({ key }, requestOptions),
           validate: (response) => {
             for (const field of Object.keys(apiKey)) {
               if (Array.isArray(apiKey[field])) {
@@ -252,7 +260,8 @@ export function createSearchClient({
 
       return createRetryablePromise({
         ...createRetryablePromiseOptions,
-        func: () => this.getApiKey({ key }).catch((error) => error),
+        func: () =>
+          this.getApiKey({ key }, requestOptions).catch((error) => error),
         validate: (error: ApiError) =>
           operation === 'add' ? error.status !== 404 : error.status === 404,
       });

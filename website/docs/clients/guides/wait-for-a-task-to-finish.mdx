@@ -15,7 +15,7 @@ We provide a `waitForTask` helper method for you to easily wait for a specific t
 <TabItem value="javascript">
 
 ```js
-import { algoliasearch } from '@experimental-api-clients-automation/algoliasearch';
+import { algoliasearch } from 'algoliasearch';
 
 const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -35,7 +35,7 @@ await client.waitForTask({
   taskID,
   // Number of maximum retries to do
   maxRetries: 100,
-  // The time to wait between tries
+  // The time to wait between retries
   timeout: (retryCount: number): number => Math.min(retryCount * 200, 5000),
 });
 ```
@@ -46,7 +46,7 @@ await client.waitForTask({
 ```php
 $client = SearchClient::create(
     '<YOUR_APP_ID>',
-    '<YOUR_APP_ID>'
+    '<YOUR_API_KEY>'
 );
 
 $response = $client->saveObject(
@@ -68,7 +68,7 @@ Algolia\AlgoliaSearch\Support\Helpers::retryUntil(
     },
     100, // Number of maximum retries to do
     5000, // Default timeout
-    // Calculation of the time to wait between tries
+    // Calculation of the time to wait between retries
     function ($timeout, $retryCount) {
         return min($retryCount * 200, $timeout) * 1000;
     }
@@ -97,7 +97,7 @@ await client.waitForTask(
   response.getTaskID(),
   // Number of maximum retries to do
   100,
-  // The time to wait between tries
+  // The time to wait between retries
   retryCount -> {
     return Math.min(retryCount * 200, 5000);
   }
