@@ -4071,6 +4071,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:1.2.1":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
+  languageName: node
+  linkType: hard
+
 "clsx@npm:^1.1.0, clsx@npm:^1.1.1":
   version: 1.2.0
   resolution: "clsx@npm:1.2.0"
@@ -11366,7 +11373,7 @@ __metadata:
     "@docusaurus/preset-classic": 2.0.0-beta.21
     "@docusaurus/types": 2.0.0-beta.21
     "@mdx-js/react": ^1.6.22
-    clsx: ^1.1.1
+    clsx: 1.2.1
     docusaurus-preset-shiki-twoslash: 1.1.38
     react: 18.2.0
     react-dom: 18.2.0
