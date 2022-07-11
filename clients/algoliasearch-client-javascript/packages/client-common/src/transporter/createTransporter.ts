@@ -112,7 +112,6 @@ export function createTransporter({
       ...dataQueryParameters,
     };
 
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (requestOptions && requestOptions.queryParameters) {
       for (const key of Object.keys(requestOptions.queryParameters)) {
         // We want to keep `undefined` and `null` values,
