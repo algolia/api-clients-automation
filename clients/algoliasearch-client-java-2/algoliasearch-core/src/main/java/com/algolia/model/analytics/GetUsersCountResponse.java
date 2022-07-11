@@ -1,17 +1,18 @@
 package com.algolia.model.analytics;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** GetUsersCountResponse */
 public class GetUsersCountResponse {
 
-  @SerializedName("count")
+  @JsonProperty("count")
   private Integer count;
 
-  @SerializedName("dates")
-  private List<UserWithDate> dates;
+  @JsonProperty("dates")
+  private List<UserWithDate> dates = new ArrayList<>();
 
   public GetUsersCountResponse setCount(Integer count) {
     this.count = count;

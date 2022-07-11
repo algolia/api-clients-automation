@@ -1,14 +1,15 @@
 package com.algolia.model.search;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** ListApiKeysResponse */
 public class ListApiKeysResponse {
 
-  @SerializedName("keys")
-  private List<Key> keys;
+  @JsonProperty("keys")
+  private List<Key> keys = new ArrayList<>();
 
   public ListApiKeysResponse setKeys(List<Key> keys) {
     this.keys = keys;

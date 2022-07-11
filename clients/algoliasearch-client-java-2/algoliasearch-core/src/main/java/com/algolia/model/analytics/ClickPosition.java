@@ -1,16 +1,17 @@
 package com.algolia.model.analytics;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** ClickPosition */
 public class ClickPosition {
 
-  @SerializedName("position")
-  private List<Integer> position;
+  @JsonProperty("position")
+  private List<Integer> position = new ArrayList<>();
 
-  @SerializedName("clickCount")
+  @JsonProperty("clickCount")
   private Integer clickCount;
 
   public ClickPosition setPosition(List<Integer> position) {

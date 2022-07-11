@@ -1,16 +1,17 @@
 package com.algolia.model.search;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** SearchMethodParams */
 public class SearchMethodParams {
 
-  @SerializedName("requests")
-  private List<SearchQuery> requests;
+  @JsonProperty("requests")
+  private List<SearchQuery> requests = new ArrayList<>();
 
-  @SerializedName("strategy")
+  @JsonProperty("strategy")
   private SearchStrategy strategy;
 
   public SearchMethodParams setRequests(List<SearchQuery> requests) {

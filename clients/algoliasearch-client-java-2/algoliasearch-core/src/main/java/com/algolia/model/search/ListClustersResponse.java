@@ -1,14 +1,15 @@
 package com.algolia.model.search;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Array of clusters. */
 public class ListClustersResponse {
 
-  @SerializedName("topUsers")
-  private List<String> topUsers;
+  @JsonProperty("topUsers")
+  private List<String> topUsers = new ArrayList<>();
 
   public ListClustersResponse setTopUsers(List<String> topUsers) {
     this.topUsers = topUsers;

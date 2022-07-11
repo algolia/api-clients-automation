@@ -1,35 +1,36 @@
 package com.algolia.model.querysuggestions;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Source index with replicas used to generate a Query Suggestions index. */
 public class SourceIndexWithReplicas {
 
-  @SerializedName("replicas")
+  @JsonProperty("replicas")
   private Boolean replicas;
 
-  @SerializedName("indexName")
+  @JsonProperty("indexName")
   private String indexName;
 
-  @SerializedName("analyticsTags")
-  private List<String> analyticsTags;
+  @JsonProperty("analyticsTags")
+  private List<String> analyticsTags = new ArrayList<>();
 
-  @SerializedName("facets")
-  private List<Object> facets;
+  @JsonProperty("facets")
+  private List<Object> facets = new ArrayList<>();
 
-  @SerializedName("minHits")
+  @JsonProperty("minHits")
   private Integer minHits;
 
-  @SerializedName("minLetters")
+  @JsonProperty("minLetters")
   private Integer minLetters;
 
-  @SerializedName("generate")
-  private List<List<String>> generate;
+  @JsonProperty("generate")
+  private List<List<String>> generate = new ArrayList<>();
 
-  @SerializedName("external")
-  private List<SourceIndexExternal> external;
+  @JsonProperty("external")
+  private List<SourceIndexExternal> external = new ArrayList<>();
 
   public SourceIndexWithReplicas setReplicas(Boolean replicas) {
     this.replicas = replicas;

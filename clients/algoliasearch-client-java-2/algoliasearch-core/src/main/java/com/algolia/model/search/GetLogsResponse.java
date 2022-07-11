@@ -1,14 +1,15 @@
 package com.algolia.model.search;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** GetLogsResponse */
 public class GetLogsResponse {
 
-  @SerializedName("logs")
-  private List<Log> logs;
+  @JsonProperty("logs")
+  private List<Log> logs = new ArrayList<>();
 
   public GetLogsResponse setLogs(List<Log> logs) {
     this.logs = logs;

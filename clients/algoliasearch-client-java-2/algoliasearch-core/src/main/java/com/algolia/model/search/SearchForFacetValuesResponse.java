@@ -1,14 +1,15 @@
 package com.algolia.model.search;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** SearchForFacetValuesResponse */
 public class SearchForFacetValuesResponse {
 
-  @SerializedName("facetHits")
-  private List<FacetHits> facetHits;
+  @JsonProperty("facetHits")
+  private List<FacetHits> facetHits = new ArrayList<>();
 
   public SearchForFacetValuesResponse setFacetHits(List<FacetHits> facetHits) {
     this.facetHits = facetHits;

@@ -1,14 +1,15 @@
 package com.algolia.model.analytics;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** TopSearchesResponseWithAnalytics */
 public class TopSearchesResponseWithAnalytics {
 
-  @SerializedName("searches")
-  private List<TopSearchWithAnalytics> searches;
+  @JsonProperty("searches")
+  private List<TopSearchWithAnalytics> searches = new ArrayList<>();
 
   public TopSearchesResponseWithAnalytics setSearches(List<TopSearchWithAnalytics> searches) {
     this.searches = searches;

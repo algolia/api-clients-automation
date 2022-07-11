@@ -1,14 +1,15 @@
 package com.algolia.model.recommend;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** The `getRecommendations` parameters. */
 public class GetRecommendationsParams {
 
-  @SerializedName("requests")
-  private List<RecommendationsRequest> requests;
+  @JsonProperty("requests")
+  private List<RecommendationsRequest> requests = new ArrayList<>();
 
   public GetRecommendationsParams setRequests(List<RecommendationsRequest> requests) {
     this.requests = requests;

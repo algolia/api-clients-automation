@@ -1,19 +1,20 @@
 package com.algolia.model.abtesting;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** ListABTestsResponse */
 public class ListABTestsResponse {
 
-  @SerializedName("abtests")
-  private List<ABTest> abtests;
+  @JsonProperty("abtests")
+  private List<ABTest> abtests = new ArrayList<>();
 
-  @SerializedName("count")
+  @JsonProperty("count")
   private Integer count;
 
-  @SerializedName("total")
+  @JsonProperty("total")
   private Integer total;
 
   public ListABTestsResponse setAbtests(List<ABTest> abtests) {

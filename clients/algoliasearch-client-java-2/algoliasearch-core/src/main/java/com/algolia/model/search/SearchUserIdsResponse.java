@@ -1,25 +1,26 @@
 package com.algolia.model.search;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** userIDs data. */
 public class SearchUserIdsResponse {
 
-  @SerializedName("hits")
-  private List<UserHit> hits;
+  @JsonProperty("hits")
+  private List<UserHit> hits = new ArrayList<>();
 
-  @SerializedName("nbHits")
+  @JsonProperty("nbHits")
   private Integer nbHits;
 
-  @SerializedName("page")
+  @JsonProperty("page")
   private Integer page;
 
-  @SerializedName("hitsPerPage")
+  @JsonProperty("hitsPerPage")
   private Integer hitsPerPage;
 
-  @SerializedName("updatedAt")
+  @JsonProperty("updatedAt")
   private String updatedAt;
 
   public SearchUserIdsResponse setHits(List<UserHit> hits) {

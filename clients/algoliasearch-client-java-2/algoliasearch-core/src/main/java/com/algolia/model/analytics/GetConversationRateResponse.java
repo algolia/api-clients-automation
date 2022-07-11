@@ -1,23 +1,24 @@
 package com.algolia.model.analytics;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** GetConversationRateResponse */
 public class GetConversationRateResponse {
 
-  @SerializedName("rate")
+  @JsonProperty("rate")
   private Double rate;
 
-  @SerializedName("trackedSearchCount")
+  @JsonProperty("trackedSearchCount")
   private Integer trackedSearchCount;
 
-  @SerializedName("conversionCount")
+  @JsonProperty("conversionCount")
   private Integer conversionCount;
 
-  @SerializedName("dates")
-  private List<ConversionRateEvent> dates;
+  @JsonProperty("dates")
+  private List<ConversionRateEvent> dates = new ArrayList<>();
 
   public GetConversationRateResponse setRate(Double rate) {
     this.rate = rate;
