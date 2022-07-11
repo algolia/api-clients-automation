@@ -96,10 +96,10 @@ module.exports = {
       rules: {
         // disabled
         'no-bitwise': 0,
-        '@typescript-eslint/no-namespace': 0,
         'max-classes-per-file': 0,
         'no-continue': 0,
         '@typescript-eslint/prefer-enum-initializers': 0,
+        '@typescript-eslint/no-namespace': 0,
 
         'unused-imports/no-unused-imports-ts': 2,
         '@typescript-eslint/no-unused-vars': 2,
