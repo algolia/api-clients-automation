@@ -45,29 +45,22 @@ yarn docker:setup
 
 ### CLI
 
-You can make changes locally and run commands through the docker container.
+The CLI allows your to make changes locally and run commands through the docker container.
 
-[Specs CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/specs-commands) • [Clients CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/clients-commands) • [CTS CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/cts-commands)
+- [Specs CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/specs-commands)
+- [Clients CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/clients-commands)
+- [CTS CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/cts-commands)
 
-#### Build and validate specs
+### Guides and requirements
 
-```bash
-yarn docker build specs <client | all>
-```
+Read the guides and requirements to:
 
-[Read more on our documentation](https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client)
-
-#### Generate clients based on the [`specs`](./specs/)
-
-```bash
-yarn docker generate <language | all> <client | all>
-```
-
-[Read more on our documentation](https://api-clients-automation.netlify.app/docs/contributing/add-new-language)
+- [Add a new client](https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client)
+- [Add a new language](https://api-clients-automation.netlify.app/docs/contributing/add-new-api-language)
 
 ### Tests
 
-You can test our generated clients by running:
+Test the generated clients by running:
 
 - The [`playground`](./playground) ([Playground](https://api-clients-automation.netlify.app/docs/contributing/testing/playground.md))
 - The [`Common Test Suite`](./tests/) ([Common Test Suite](https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite.md)).
