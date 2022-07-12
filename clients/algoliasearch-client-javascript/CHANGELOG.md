@@ -1,3 +1,12 @@
+## [5.0.0-alpha.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.0...5.0.0-alpha.1)
+
+- [7bb39283](https://github.com/algolia/api-clients-automation/commit/7bb39283) feat(javascript): expose transporter, remove nullish coalescing and optional chaining ([#799](https://github.com/algolia/api-clients-automation/pull/799)) by [@shortcuts](https://github.com/shortcuts/)
+- [750721d0](https://github.com/algolia/api-clients-automation/commit/750721d0) fix(javascript): provide `requestOptions` to helper methods ([#797](https://github.com/algolia/api-clients-automation/pull/797)) by [@shortcuts](https://github.com/shortcuts/)
+- [0076edcc](https://github.com/algolia/api-clients-automation/commit/0076edcc) fix(javascript): rename `predict` package ([#796](https://github.com/algolia/api-clients-automation/pull/796)) by [@shortcuts](https://github.com/shortcuts/)
+- [df222d7c](https://github.com/algolia/api-clients-automation/commit/df222d7c) feat(javascript): use `@algolia` NPM namespace ([#785](https://github.com/algolia/api-clients-automation/pull/785)) by [@shortcuts](https://github.com/shortcuts/)
+- [5a499849](https://github.com/algolia/api-clients-automation/commit/5a499849) fix(specs): add renderingContent to search response ([#787](https://github.com/algolia/api-clients-automation/pull/787)) by [@millotp](https://github.com/millotp/)
+- [6b50ef0b](https://github.com/algolia/api-clients-automation/commit/6b50ef0b) feat(javascript): add `abtesting` client, better `init` usage ([#784](https://github.com/algolia/api-clients-automation/pull/784)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [0.8.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.7.2...0.8.0)
 
 - [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult ([#783](https://github.com/algolia/api-clients-automation/pull/783)) by [@millotp](https://github.com/millotp/)
