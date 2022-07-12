@@ -38,7 +38,7 @@ function Hero() {
           Contribute
         </Button>,
         <iframe
-          src="https://ghbtns.com/github-btn.html?user=algolia&amp;repo=docsearch&amp;type=star&amp;count=true&amp;size=large"
+          src="https://ghbtns.com/github-btn.html?user=algolia&amp;repo=api-clients-automation&amp;type=star&amp;count=true&amp;size=large"
           width={160}
           height={30}
           title="GitHub Stars"
