@@ -35,7 +35,7 @@
         "openapitools.json"
       ],
       "matchStrings": [
-        "\\s\"version\": \"(?<currentValue>.*)\",?\\s"
+        "\\s\"version\": \"(?<currentValue>.*?)\",?\\s"
       ],
       "depNameTemplate": "org.openapitools:openapi-generator-cli",
       "datasourceTemplate": "maven"
@@ -46,7 +46,7 @@
         "package.mustache"
       ],
       "matchStrings": [
-        "\\s\"(?<depName>.*)\": \"(?<currentValue>.*)\",?\\s"
+        "\\s\"(?<depName>.*?)\": \"(?<currentValue>.*?)\",?\\s"
       ],
       "datasourceTemplate": "npm"
     },
@@ -57,7 +57,7 @@
         ".github/actions/setup/action.yml"
       ],
       "matchStrings": [
-        "https://github.com/google/google-java-format/releases/download/v(?<currentValue>.*)/google-java-format-(?<currentValue>.*)-all-deps.jar"
+        "https://github.com/google/google-java-format/releases/download/v(?<currentValue>.*?)/google-java-format-(?<currentValue>.*?)-all-deps.jar"
       ],
       "depNameTemplate": "google/google-java-format",
       "datasourceTemplate": "github-releases"
