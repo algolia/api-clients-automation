@@ -16,13 +16,7 @@ export async function formatter(
       cmd = `yarn eslint --ext=ts,json ${folder} --fix --no-error-on-unmatched-pattern`;
       break;
     case 'java':
-      cmd = `find ${folder} -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
-        --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
-        --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
-        --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
-        --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
-        -jar /tmp/java-formatter.jar -r \
-        && yarn prettier --write ${folder}`;
+      cmd = `find ${folder} -type f -name "*.java" | xargs java -jar /tmp/java-formatter.jar -r && yarn prettier --write ${folder}`;
       break;
     case 'php':
       await runComposerUpdate(verbose);
