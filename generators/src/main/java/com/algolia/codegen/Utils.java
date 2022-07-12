@@ -181,12 +181,13 @@ public class Utils {
   }
 
   /**
-   * Sets a `generationBanner` variable on the mustache templates, to display the generation banner on generated files.
+   * Sets a `generationBanner` variable on the mustache templates, to display the generation banner
+   * on generated files.
    */
   public static void setGenerationBanner(Map<String, Object> additionalProperties) {
     additionalProperties.put(
       "generationBanner",
-      "This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation."
+      "This file is generated, manual changes will be lost - read more on" + " https://github.com/algolia/api-clients-automation."
     );
   }
 }
