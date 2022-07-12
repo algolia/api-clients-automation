@@ -93,12 +93,12 @@ The resulting User Agent is the concatenation of `base`, then `client` and all t
 
 For example, if we have:
 
- - base: `Algolia for Java (4.0.0)`
- - client: `; Search (4.0.0)`
- - segment: 
-    - `; JVM (11.0.14)`
-    - `; experimental`
-    - `; test (8.0.0-beta)`
+- base: `Algolia for Java (4.0.0)`
+- client: `; Search (4.0.0)`
+- segment:
+  - `; JVM (11.0.14)`
+  - `; experimental`
+  - `; test (8.0.0-beta)`
 
 Then the resulting User Agent is (the order is arbitrary):
 
@@ -109,6 +109,7 @@ Algolia for Java (4.0.0); JVM (11.0.14); Search (4.0.0); experimental ; test (8.
 You can take a look at the Java implementation [here](https://github.com/algolia/api-clients-automation/pull/347).
 
 The `User-Agent` MUST match the following regular expression:
+
 ```regex
 ^Algolia for <LANGUAGE> \\(\\d+\\.\\d+\\.\\d+(-.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-.*)?\\))?)*(; <CLIENT> (\\(\\d+\\.\\d+\\.\\d+(-.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-.*)?\\))?)*$
 ```
@@ -150,3 +151,9 @@ The default requester must be the classic HTTP requester, and it's possible to p
 ### Logger
 
 > TODO: informations
+
+### Generated file banner
+
+The banner **should** be added at the very top of every generated files, to avoid confusion for our user, but also redirect them to the `api-clients-automation` monorepo, where the contribution happens.
+
+To do so, a `generationBanner` variable is available on every `mustache` templates, see [the initial implementation](https://github.com/algolia/api-clients-automation/pull/816) for more context.
