@@ -4,7 +4,7 @@
 
 The Algolia API clients are generated from [OpenAPI specs](https://swagger.io/specification/), leveraging the open-source [openapi-generator](https://openapi-generator.tech/) tool.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/09af048d-a19a-44db-9312-84172b73599e/deploy-status?branch=main)](https://app.netlify.com/sites/api-clients-automation/deploys) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
 
 <p align="center">
   <strong>
@@ -62,8 +62,8 @@ Read the guides and requirements to:
 
 Test the generated clients by running:
 
-- The [`playground`](./playground) ([Playground](https://api-clients-automation.netlify.app/docs/contributing/testing/playground.md))
-- The [`Common Test Suite`](./tests/) ([Common Test Suite](https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite.md)).
+- The [`playground`](./playground) (see [documentation](https://api-clients-automation.netlify.app/docs/contributing/testing/playground.md))
+- The [`Common Test Suite`](./tests/) (see [documentation](https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite.md)).
 
 For full documentation, visit the **[online documentation](https://api-clients-automation.netlify.app/docs/contributing/introduction)**.
 
