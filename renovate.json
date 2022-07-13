@@ -74,7 +74,7 @@
       "description": "Update yarn version (won't work because we need to download the script but gives an alert at least)",
       "fileMatch": ".yarnrc.yml",
       "matchStrings": [
-        "yarnPath: \\.yarn\/releases\/yarn-(?<currentValue>.*?)\\.cjs"
+        "yarn\/releases\/yarn-(?<currentValue>.*?)"
       ],
       "depNameTemplate": "yarnpkg/berry",
       "datasourceTemplate": "github-releases"
