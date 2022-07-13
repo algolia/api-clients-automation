@@ -45,7 +45,7 @@ yarn docker:setup
 
 ### CLI
 
-The CLI allows your to make changes locally and run commands through the docker container.
+The CLI allows you to make changes locally and run commands through the docker container.
 
 - [Specs CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/specs-commands)
 - [Clients CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/clients-commands)
