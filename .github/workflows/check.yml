@@ -54,6 +54,9 @@ jobs:
           yarn eslint --ext=json .
           echo 'Use yarn fix:json to fix issues'
 
+      - name: Validate renovate.json
+        uses: rinchsan/renovate-config-validator@v0
+
     outputs:
       RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
 
