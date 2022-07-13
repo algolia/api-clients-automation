@@ -57,7 +57,7 @@
         ".github/actions/setup/action.yml"
       ],
       "matchStrings": [
-        "google-java-format/releases/download/v(?<currentValue>.*?)/google-java-format-(.*?)-all-deps",
+        "google-java-format/releases/download/v(?<currentValue>.*?)/google-java-format-",
         "google-java-format/releases/download/v(.*?)/google-java-format-(?<currentValue>.*?)-all-deps"
       ],
       "depNameTemplate": "google/google-java-format",
