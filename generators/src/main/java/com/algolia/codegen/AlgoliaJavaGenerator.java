@@ -7,7 +7,9 @@ import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.JavaClientCodegen;
+import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
+import org.openapitools.codegen.model.OperationsMap;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
@@ -82,6 +84,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
     for (ModelsMap modelContainer : models.values()) {
       CodegenModel model = modelContainer.getModels().get(0).getModel();
+
       if (!model.oneOf.isEmpty()) {
         List<HashMap<String, String>> oneOfList = new ArrayList();
 
@@ -101,7 +104,18 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       }
     }
 
+    GenericPropagator.propagateGenericsToModels(models);
+
     return models;
+  }
+
+  @Override
+  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
+    OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+
+    GenericPropagator.propagateGenericsToOperations(operations, models);
+
+    return operations;
   }
 
   @Override
