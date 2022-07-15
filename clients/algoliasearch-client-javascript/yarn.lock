@@ -34,7 +34,7 @@ __metadata:
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
     "@types/jest": 28.1.4
-    "@types/node": 16.11.43
+    "@types/node": 16.11.44
     jest: 28.1.2
     jest-environment-jsdom: 28.1.2
     ts-jest: 28.0.5
@@ -131,7 +131,7 @@ __metadata:
   resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.0
-    "@types/node": 16.11.43
+    "@types/node": 16.11.44
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -141,7 +141,7 @@ __metadata:
   resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.0
-    "@types/node": 16.11.43
+    "@types/node": 16.11.44
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -3218,6 +3218,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:16.11.44":
+  version: 16.11.44
+  resolution: "@types/node@npm:16.11.44"
+  checksum: 6fc2214bab40bbab1d76e02bd2fbcc1b5ed0ae383b4c892bcde6c231734582fca8a45185eb1b0283bae434600d3e44bdacbbdc05725661910e6372778e1881c1
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -3428,7 +3435,7 @@ __metadata:
     "@rollup/plugin-babel": 5.3.1
     "@rollup/plugin-node-resolve": 13.3.0
     "@types/jest": 28.1.4
-    "@types/node": 16.11.43
+    "@types/node": 16.11.44
     "@types/rollup-plugin-node-globals": 1.4.1
     "@types/semver": 7.3.10
     bundlesize2: 0.0.31
