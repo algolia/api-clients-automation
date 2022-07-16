@@ -2298,10 +2298,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/folder-hash@npm:4.0.1":
-  version: 4.0.1
-  resolution: "@types/folder-hash@npm:4.0.1"
-  checksum: df14059d4ba6bde347e078f3d00a2a93965d5e5eb9c9f9c3457b1505fb6bb6fca08083bab20cd7221d2b19c0bcf5a60dc7819720bd8f3ed226b75c3a08dae227
+"@types/folder-hash@npm:4.0.2":
+  version: 4.0.2
+  resolution: "@types/folder-hash@npm:4.0.2"
+  checksum: 5ce73a1ea59300469d14df4ca82e4b5605883d945fb344a12aebd1acce3f1936f63cd153c22f99e06c190992159c42421681a9a95e6cfd1858cd69b76db90f18
   languageName: node
   linkType: hard
 
@@ -7430,7 +7430,7 @@ __metadata:
   dependencies:
     "@apidevtools/swagger-parser": 10.1.0
     "@octokit/rest": 19.0.3
-    "@types/folder-hash": 4.0.1
+    "@types/folder-hash": 4.0.2
     "@types/inquirer": 8.2.1
     "@types/jest": 28.1.4
     "@types/js-yaml": 4.0.5
