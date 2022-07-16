@@ -5286,16 +5286,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docusaurus-plugin-redoc@npm:1.2.1":
-  version: 1.2.1
-  resolution: "docusaurus-plugin-redoc@npm:1.2.1"
+"docusaurus-plugin-redoc@npm:1.2.3":
+  version: 1.2.3
+  resolution: "docusaurus-plugin-redoc@npm:1.2.3"
   dependencies:
     "@redocly/openapi-core": 1.0.0-beta.102
     joi: ^17.5.0
     redoc: 2.0.0-rc.72
   peerDependencies:
     "@docusaurus/utils": ^2.0.0-beta.18
-  checksum: 5cd07cb15d602fc48e3127e728ba4aecdae77a0dc6b18e4f74bdd921cf101edb28dfca98675c35d9581c1e812f9ecf3c7a7f89dba3c05698916868fed85bc840
+  checksum: c6abf995da7e3085d7a32419acb6243b7e7151ada1af599a7b1502c90202d38467deb69f74b978d2809a33d26577eed799d6db9b6d48f12f981773e6712c058c
   languageName: node
   linkType: hard
 
@@ -5310,9 +5310,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docusaurus-theme-redoc@npm:1.2.2":
-  version: 1.2.2
-  resolution: "docusaurus-theme-redoc@npm:1.2.2"
+"docusaurus-theme-redoc@npm:1.3.0":
+  version: 1.3.0
+  resolution: "docusaurus-theme-redoc@npm:1.3.0"
   dependencies:
     clsx: ^1.1.1
     copyfiles: ^2.4.1
@@ -5322,7 +5322,7 @@ __metadata:
     styled-components: ^5.3.5
   peerDependencies:
     "@docusaurus/theme-common": ^2.0.0-beta.18
-  checksum: 463735b2a348cde2ec86ba4ee3f533477783e2ffdc412d9f42600c11be9d3d929558b8e00efc067be6bdc2da1d310d872ca4b845b8e3f72120d04590e3f6c3d6
+  checksum: 9d835ced6ffe9170801e4d3ebdb01d0d1a2a8320b9e3bc18a96d93dabee13f030b696fb12d7d1f6776bac14ff01d308a3cf7a01d169dd28d635d81513a8762ed
   languageName: node
   linkType: hard
 
@@ -10527,16 +10527,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redocusaurus@npm:1.2.2":
-  version: 1.2.2
-  resolution: "redocusaurus@npm:1.2.2"
+"redocusaurus@npm:1.3.0":
+  version: 1.3.0
+  resolution: "redocusaurus@npm:1.3.0"
   dependencies:
-    docusaurus-plugin-redoc: 1.2.1
-    docusaurus-theme-redoc: 1.2.2
+    docusaurus-plugin-redoc: 1.2.3
+    docusaurus-theme-redoc: 1.3.0
   peerDependencies:
     "@docusaurus/theme-common": ^2.0.0-beta.18
     "@docusaurus/utils": ^2.0.0-beta.18
-  checksum: 182d7065e92bd1dfbe10c05f384adb2e9d67e098a30effd53a6543b545930f22c9bddc54bc3c1b27b262751198ec39828560d1f9b0d1f8e09dd941773cb94333
+  checksum: c7ebe353e444b9fab2698e2658138f2fdf575048132a78d690dc6aa5a4e27320751f9a79d9788cd70e4c7787db4c3f6f153656e3878edd4fedda6b371907bd26
   languageName: node
   linkType: hard
 
@@ -12812,7 +12812,7 @@ __metadata:
     docusaurus-preset-shiki-twoslash: 1.1.38
     react: 18.2.0
     react-dom: 18.2.0
-    redocusaurus: 1.2.2
+    redocusaurus: 1.3.0
   languageName: unknown
   linkType: soft
 
