@@ -24,7 +24,7 @@
     "@types/node": "16.11.43",
     "@types/semver": "7.3.10",
     "chalk": "4.1.2",
-    "commander": "9.3.0",
+    "commander": "9.4.0",
     "dotenv": "16.0.1",
     "eslint": "8.19.0",
     "execa": "5.1.1",
