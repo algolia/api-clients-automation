@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@types/jest": "28.1.4",
-    "@types/node": "16.11.43",
+    "@types/node": "16.11.45",
     "jest": "28.1.2",
     "jest-environment-jsdom": "28.1.2",
     "ts-jest": "28.0.7",
