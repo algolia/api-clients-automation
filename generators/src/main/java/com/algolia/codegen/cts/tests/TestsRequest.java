@@ -35,8 +35,7 @@ public class TestsRequest extends TestsGenerator {
     if (!available()) {
       return;
     }
-    String clientName = language.equals("php") ? Utils.createClientName(client, language) : client;
-    supportingFiles.add(new SupportingFile("requests/requests.mustache", outputFolder + "/methods/requests", clientName + extension));
+    supportingFiles.add(new SupportingFile("requests/requests.mustache", outputFolder + "/methods/requests", Utils.createClientName(client, language) + extension));
   }
 
   @Override

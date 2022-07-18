@@ -88,8 +88,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
     )}`;
     const testsToDelete = matrix[language].toRun
       .map((client) => {
-        const clientName =
-          language === 'php' ? createClientName(client, language) : client;
+        const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
         return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/methods/requests/${clientName}${extension}`;
       })
