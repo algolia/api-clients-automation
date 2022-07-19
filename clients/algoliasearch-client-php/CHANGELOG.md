@@ -1,3 +1,9 @@
+## [4.0.0-alpha.6](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.5...4.0.0-alpha.6)
+
+- [4b557380](https://github.com/algolia/api-clients-automation/commit/4b557380) fix(clients): add generation banner to generated files ([#816](https://github.com/algolia/api-clients-automation/pull/816)) by [@shortcuts](https://github.com/shortcuts/)
+- [d21c3b70](https://github.com/algolia/api-clients-automation/commit/d21c3b70) feat(php): add `waitForApiKey` method ([#792](https://github.com/algolia/api-clients-automation/pull/792)) by [@damcou](https://github.com/damcou/)
+- [5a499849](https://github.com/algolia/api-clients-automation/commit/5a499849) fix(specs): add renderingContent to search response ([#787](https://github.com/algolia/api-clients-automation/pull/787)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-alpha.5](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.4...4.0.0-alpha.5)
 
 - [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult ([#783](https://github.com/algolia/api-clients-automation/pull/783)) by [@millotp](https://github.com/millotp/)

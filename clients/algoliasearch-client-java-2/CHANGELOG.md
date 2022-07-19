@@ -1,3 +1,11 @@
+## [4.4.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.3.0-SNAPSHOT...4.4.0-SNAPSHOT)
+
+- [4b557380](https://github.com/algolia/api-clients-automation/commit/4b557380) fix(clients): add generation banner to generated files ([#816](https://github.com/algolia/api-clients-automation/pull/816)) by [@shortcuts](https://github.com/shortcuts/)
+- [cbdfd385](https://github.com/algolia/api-clients-automation/commit/cbdfd385) feat(java): convert from gson to jackson ([#771](https://github.com/algolia/api-clients-automation/pull/771)) by [@millotp](https://github.com/millotp/)
+- [64a34c79](https://github.com/algolia/api-clients-automation/commit/64a34c79) feat(java): waitForApiKey ([#798](https://github.com/algolia/api-clients-automation/pull/798)) by [@millotp](https://github.com/millotp/)
+- [d6ba122e](https://github.com/algolia/api-clients-automation/commit/d6ba122e) feat(java): use lowercase for model package ([#789](https://github.com/algolia/api-clients-automation/pull/789)) by [@millotp](https://github.com/millotp/)
+- [5a499849](https://github.com/algolia/api-clients-automation/commit/5a499849) fix(specs): add renderingContent to search response ([#787](https://github.com/algolia/api-clients-automation/pull/787)) by [@millotp](https://github.com/millotp/)
+
 ## [4.3.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.2.4-SNAPSHOT...4.3.0-SNAPSHOT)
 
 - [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult ([#783](https://github.com/algolia/api-clients-automation/pull/783)) by [@millotp](https://github.com/millotp/)
