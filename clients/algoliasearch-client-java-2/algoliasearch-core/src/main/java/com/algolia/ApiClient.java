@@ -239,7 +239,11 @@ public abstract class ApiClient {
 
     if (obj != null) {
       try {
-        content = json.writeValueAsString(obj);
+        if (obj.getClass().getName().equals("java.lang.Object")) {
+          content = "{}";
+        } else {
+          content = json.writeValueAsString(obj);
+        }
       } catch (JsonProcessingException e) {
         throw new AlgoliaRuntimeException(e);
       }
