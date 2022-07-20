@@ -247,10 +247,7 @@ export function createTransporter({
      * A read request is either a `GET` request, or a request that we make
      * via the `read` transporter (e.g. `search`).
      */
-    const isRead = Boolean(
-      request.useReadTransporter || request.method === 'GET'
-    );
-
+    const isRead = request.useReadTransporter || request.method === 'GET';
     if (!isRead) {
       /**
        * On write requests, no cache mechanisms are applied, and we
@@ -273,7 +270,7 @@ export function createTransporter({
      * request is "cacheable" - should be cached. Note that, once again,
      * the user can force this option.
      */
-    const cacheable = Boolean(requestOptions.cacheable || request.cacheable);
+    const cacheable = requestOptions.cacheable || request.cacheable;
 
     /**
      * If is not "cacheable", we immediately trigger the retryable request, no
