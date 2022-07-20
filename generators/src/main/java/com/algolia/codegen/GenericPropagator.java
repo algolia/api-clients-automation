@@ -18,10 +18,8 @@ public class GenericPropagator {
    */
   private static void setIsTrueGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
-      System.out.println("model is true generic " + ((CodegenModel) property).name);
       ((CodegenModel) property).vendorExtensions.put("x-true-generic", true);
     } else if (property instanceof CodegenProperty) {
-      System.out.println("property is true generic " + ((CodegenProperty) property).name);
       ((CodegenProperty) property).vendorExtensions.put("x-true-generic", true);
     }
   }
@@ -32,10 +30,8 @@ public class GenericPropagator {
    */
   private static void setHasChildGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
-      System.out.println("model has child generic " + ((CodegenModel) property).name);
       ((CodegenModel) property).vendorExtensions.put("x-has-child-generic", true);
     } else if (property instanceof CodegenProperty) {
-      System.out.println("property has child generic " + ((CodegenProperty) property).name);
       ((CodegenProperty) property).vendorExtensions.put("x-has-child-generic", true);
     }
   }
