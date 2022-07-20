@@ -90,7 +90,12 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
       .map((client) => {
         const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/methods/requests/${clientName}${extension}`;
+        // REMOVE THIS IN NEXT PR !!
+        const oldPath =
+          language === 'php' ? createClientName(client, language) : client;
+        const tmpPath = `${testsOutputBase}/client/${oldPath}${extension} ${testsOutputBase}/methods/requests/${oldPath}${extension}`;
+
+        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/methods/requests/${clientName}${extension} ${tmpPath}`;
       })
       .join(' ');
     let testsToStore = testsToDelete;

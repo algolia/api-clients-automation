@@ -18,8 +18,10 @@ public class GenericPropagator {
    */
   private static void setIsTrueGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
+      System.out.println("model is true generic " + ((CodegenModel) property).name);
       ((CodegenModel) property).vendorExtensions.put("x-true-generic", true);
     } else if (property instanceof CodegenProperty) {
+      System.out.println("property is true generic " + ((CodegenProperty) property).name);
       ((CodegenProperty) property).vendorExtensions.put("x-true-generic", true);
     }
   }
@@ -30,8 +32,10 @@ public class GenericPropagator {
    */
   private static void setHasChildGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
+      System.out.println("model has child generic " + ((CodegenModel) property).name);
       ((CodegenModel) property).vendorExtensions.put("x-has-child-generic", true);
     } else if (property instanceof CodegenProperty) {
+      System.out.println("property has child generic " + ((CodegenProperty) property).name);
       ((CodegenProperty) property).vendorExtensions.put("x-has-child-generic", true);
     }
   }
@@ -115,7 +119,7 @@ public class GenericPropagator {
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
       for (ModelMap modelMap : models) {
         CodegenModel model = modelMap.getModel();
-        if (ope.returnType.equals(model.classname) && hasGeneric(model)) {
+        if (ope.returnType.toLowerCase().equals(model.name.toLowerCase()) && hasGeneric(model)) {
           ope.vendorExtensions.put("x-is-generic", true);
           // we use {{#optionalParams.0}} to check for optionalParams, so we loose the
           // vendorExtensions at the operation level
