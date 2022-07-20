@@ -1,10 +1,10 @@
 package com.algolia.codegen.cts;
 
+import com.algolia.codegen.GenericPropagator;
 import com.algolia.codegen.Utils;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.manager.CTSManagerFactory;
 import com.algolia.codegen.cts.tests.*;
-import io.swagger.v3.oas.models.Operation;
 import com.algolia.codegen.exceptions.*;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
@@ -12,10 +12,9 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.openapitools.codegen.*;
-import org.openapitools.codegen.model.OperationsMap;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
-import com.algolia.codegen.GenericPropagator;
+import org.openapitools.codegen.model.OperationsMap;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaCTSGenerator extends DefaultCodegen {

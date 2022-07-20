@@ -86,8 +86,8 @@ public class TestsRequest extends TestsGenerator {
         }
 
         CodegenOperation ope = entry.getValue();
-        test.put("isGeneric", (boolean)ope.vendorExtensions.getOrDefault("x-is-generic", false));
-        
+        test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+
         paramsType.enhanceParameters(req.parameters, test, ope);
         tests.add(test);
       }

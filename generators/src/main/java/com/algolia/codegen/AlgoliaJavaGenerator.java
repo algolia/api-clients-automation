@@ -70,7 +70,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
   @Override
   protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, Schema schema) {
-    //this is needed to preserve additionalProperties: true
+    // this is needed to preserve additionalProperties: true
     super.addParentContainer(codegenModel, codegenModel.name, schema);
   }
 
