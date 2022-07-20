@@ -35,7 +35,13 @@ public class TestsRequest extends TestsGenerator {
     if (!available()) {
       return;
     }
-    supportingFiles.add(new SupportingFile("requests/requests.mustache", outputFolder + "/methods/requests", Utils.createClientName(client, language) + extension));
+    supportingFiles.add(
+      new SupportingFile(
+        "requests/requests.mustache",
+        outputFolder + "/methods/requests",
+        Utils.createClientName(client, language) + extension
+      )
+    );
   }
 
   @Override

@@ -12,6 +12,10 @@ public class GenericPropagator {
   // Only static use of this class
   private GenericPropagator() {}
 
+  /**
+   * Add the property x-true-generic to a model or property, meaning it should be replaced with T
+   * directly
+   */
   private static void setIsTrueGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
       ((CodegenModel) property).vendorExtensions.put("x-true-generic", true);
@@ -20,6 +24,10 @@ public class GenericPropagator {
     }
   }
 
+  /**
+   * Add the property x-has-child-generic to a model or property, meaning one of it's members is
+   * generic and it should propagate the T
+   */
   private static void setHasChildGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
       ((CodegenModel) property).vendorExtensions.put("x-has-child-generic", true);
@@ -44,8 +52,8 @@ public class GenericPropagator {
   }
 
   private static CodegenModel propertyToModel(Map<String, ModelsMap> models, CodegenProperty prop) {
-    // openapi generator returns some weird error when looking for primitive type, so we filter them
-    // by hand
+    // openapi generator returns some weird error when looking for primitive type,
+    // so we filter them by hand
     if (prop == null || prop.openApiType.equals("boolean") || prop.openApiType.equals("object") || !models.containsKey(prop.openApiType)) {
       return null;
     }
@@ -85,6 +93,7 @@ public class GenericPropagator {
     return false;
   }
 
+  /** Models and their members will be marked with either x-true-generic or x-has-child-generic */
   public static void propagateGenericsToModels(Map<String, ModelsMap> models) {
     // We propagate generics in two phases:
     // 1. We mark the direct parent of the generic model to replace it with T
@@ -101,6 +110,7 @@ public class GenericPropagator {
     }
   }
 
+  /** Mark operations with a generic return type with x-is-generic */
   public static void propagateGenericsToOperations(OperationsMap operations, List<ModelMap> models) {
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
       for (ModelMap modelMap : models) {

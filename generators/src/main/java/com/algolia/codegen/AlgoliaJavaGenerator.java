@@ -120,7 +120,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
   @Override
   public String toEnumVarName(String value, String datatype) {
-    if ("String".equals(datatype)) {
+    if ("String".equals(datatype) && !value.matches("[A-Z0-9_]+")) {
       // convert camelCase77String to CAMEL_CASE_77_STRING
       return value.replaceAll("-", "_").replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2").toUpperCase(Locale.ROOT);
     }

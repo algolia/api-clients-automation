@@ -33,7 +33,9 @@ public class TestsClient extends TestsGenerator {
     if (!available()) {
       return;
     }
-    supportingFiles.add(new SupportingFile("client/suite.mustache", outputFolder + "/client", Utils.createClientName(client, language) + extension));
+    supportingFiles.add(
+      new SupportingFile("client/suite.mustache", outputFolder + "/client", Utils.createClientName(client, language) + extension)
+    );
   }
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
