@@ -84,6 +84,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
 
     for (ModelsMap modelContainer : models.values()) {
+      // modelContainers always have 1 and only 1 model in our specs
       CodegenModel model = modelContainer.getModels().get(0).getModel();
 
       if (!model.oneOf.isEmpty()) {
@@ -105,17 +106,13 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       }
     }
 
-    GenericPropagator.propagateGenericsToModels(models);
-
     return models;
   }
 
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-
-    GenericPropagator.propagateGenericsToOperations(operations, models);
-
+    GenericPropagator.propagateGenerics(operations, models);
     return operations;
   }
 
