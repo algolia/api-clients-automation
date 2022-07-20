@@ -23,6 +23,9 @@ public class JSONBuilder {
     mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+
+    // Allow defaulting a POST body property to an empty Object instance
+    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     return mapper;
   }
 }

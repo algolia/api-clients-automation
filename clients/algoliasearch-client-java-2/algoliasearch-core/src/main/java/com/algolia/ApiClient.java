@@ -244,7 +244,8 @@ public abstract class ApiClient {
         throw new AlgoliaRuntimeException(e);
       }
     } else {
-      content = null;
+      // We can't send a null body with okhttp, so we default it to an empty string
+      content = "";
     }
 
     return RequestBody.create(content, MediaType.parse(this.contentType));
@@ -343,16 +344,10 @@ public abstract class ApiClient {
     processHeaderParams(headerParams, hasRequestOptions ? requestOptions.getExtraHeaders() : null, reqBuilder);
 
     RequestBody reqBody;
-    if (!HttpMethod.permitsRequestBody(method)) {
+    // We rely on `permitsRequestBody` to tell us if we should provide a body
+    // but also set it for DELETE methods
+    if (!HttpMethod.permitsRequestBody(method) || (method.equals("DELETE") && body == null)) {
       reqBody = null;
-    } else if (body == null) {
-      if ("DELETE".equals(method)) {
-        // allow calling DELETE without sending a request body
-        reqBody = null;
-      } else {
-        // use an empty request body (for POST, PUT and PATCH)
-        reqBody = RequestBody.create("", MediaType.parse(this.contentType));
-      }
     } else {
       reqBody = serialize(body);
     }
