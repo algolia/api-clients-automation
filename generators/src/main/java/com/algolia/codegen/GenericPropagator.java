@@ -13,14 +13,14 @@ public class GenericPropagator {
   private GenericPropagator() {}
 
   /**
-   * Add the property x-true-generic to a model or property, meaning it should be replaced with T
+   * Add the property x-propagated-generic to a model or property, meaning it should be replaced with T
    * directly
    */
-  private static void setIsTrueGeneric(IJsonSchemaValidationProperties property) {
+  private static void setPropagatedGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
-      ((CodegenModel) property).vendorExtensions.put("x-true-generic", true);
+      ((CodegenModel) property).vendorExtensions.put("x-propagated-generic", true);
     } else if (property instanceof CodegenProperty) {
-      ((CodegenProperty) property).vendorExtensions.put("x-true-generic", true);
+      ((CodegenProperty) property).vendorExtensions.put("x-propagated-generic", true);
     }
   }
 
@@ -37,18 +37,18 @@ public class GenericPropagator {
   }
 
   /**
-   * @return true if the vendor extensions of the property contains either x-true-generic or
+   * @return true if the vendor extensions of the property contains either x-propagated-generic or
    *     x-has-child-generic
    */
   private static boolean hasGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
       return (
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-true-generic", false) ||
+        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
         (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
       );
     } else if (property instanceof CodegenProperty) {
       return (
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-true-generic", false) ||
+        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
         (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
       );
     }
@@ -64,18 +64,18 @@ public class GenericPropagator {
     return models.get(prop.openApiType);
   }
 
-  private static boolean markTrueGeneric(IJsonSchemaValidationProperties model) {
+  private static boolean markPropagatedGeneric(IJsonSchemaValidationProperties model) {
     CodegenProperty items = model.getItems();
     // if the items itself isn't generic, we recurse on it's items and properties until we reach the
     // end or find a generic property
-    if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markTrueGeneric(items))) {
-      setIsTrueGeneric(model);
+    if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items))) {
+      setPropagatedGeneric(model);
       return true;
     }
     for (CodegenProperty var : model.getVars()) {
       // same thing for the var, if it's not a generic, we recurse on it until we find one
-      if ((boolean) var.vendorExtensions.getOrDefault("x-is-generic", false) || markTrueGeneric(var)) {
-        setIsTrueGeneric(model);
+      if ((boolean) var.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(var)) {
+        setPropagatedGeneric(model);
         return true;
       }
     }
@@ -121,7 +121,7 @@ public class GenericPropagator {
     return modelsMap;
   }
 
-  /** Models and their members will be marked with either x-true-generic or x-has-child-generic */
+  /** Models and their members will be marked with either x-propagated-generic or x-has-child-generic */
   public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
     // We propagate generics in two phases:
     // 1. We mark the direct parent of the generic model to replace it with T
@@ -130,7 +130,7 @@ public class GenericPropagator {
     Map<String, CodegenModel> models = convertToMap(modelsMap);
 
     for (CodegenModel model : models.values()) {
-      markTrueGeneric(model);
+      markPropagatedGeneric(model);
     }
 
     for (CodegenModel model : models.values()) {
