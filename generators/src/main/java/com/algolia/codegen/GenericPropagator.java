@@ -37,8 +37,8 @@ public class GenericPropagator {
   }
 
   /**
-   * @return true if the vendor extensions of the property contains 
-   *         either x-true-generic or x-has-child-generic
+   * @return true if the vendor extensions of the property contains either x-true-generic or
+   *     x-has-child-generic
    */
   private static boolean hasGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
