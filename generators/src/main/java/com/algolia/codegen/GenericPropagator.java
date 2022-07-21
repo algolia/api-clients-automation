@@ -108,7 +108,7 @@ public class GenericPropagator {
     }
     for (CodegenProperty prop : composedSchemas) {
       if (hasGeneric(propertyToModel(models, prop))) {
-        prop.vendorExtensions.put("x-has-child-generic", true);
+        setHasChildGeneric(prop);
       }
     }
   }
