@@ -48,11 +48,11 @@ export type Response = {
    */
   content: string;
   /**
-   * Wether the API call is timed out or not.
+   * Whether the API call is timed out or not.
    */
   isTimedOut: boolean;
   /**
-   * The status code of the response.
+   * The HTTP status code of the response.
    */
   status: number;
 };
