@@ -11,18 +11,24 @@ import { {{classname}} } from '{{filename}}';
 /**
 * {{{description}}}
 */{{/description}}
-export type {{classname}} = {{#oneOf}}{{{.}}} {{^-last}}|{{/-last}} {{/oneOf}}{{#allOf}}{{{.}}} {{^-last}}&{{/-last}} {{/allOf}};
+export type {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} = {{#composedSchemas.oneOf}}{{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{^-last}}|{{/-last}} {{/composedSchemas.oneOf}}
+{{#composedSchemas.allOf}}{{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{^-last}}&{{/-last}} {{/composedSchemas.allOf}};
 {{/interfaces.size}}{{^interfaces.size}}
 {{#description}}
 /**
 * {{{description}}}
 */{{/description}}{{^isEnum}}
-export type {{classname}} = {{#parent}} {{{.}}} & {{/parent}} {
+export type {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} = {{#parent}} {{{.}}} & {{/parent}} {
 {{#vars}}{{#description}}
     /**
     * {{{description}}}
     */{{/description}}
-    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}{{{nameInCamelCase}}}{{#isArray}}[]{{/isArray}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};{{/vars}}
+    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}{{{nameInCamelCase}}}{{#isArray}}[]{{/isArray}}{{/isEnum}}
+    {{^isEnum}}{{#vendorExtensions.x-propagated-generic}}(T & {{{complexType}}}){{#isArray}}[]{{/isArray}}{{/vendorExtensions.x-propagated-generic}}
+    {{^vendorExtensions.x-propagated-generic}}
+      {{#vendorExtensions.x-has-child-generic}}{{{complexType}}}<T>{{#isArray}}[]{{/isArray}}{{/vendorExtensions.x-has-child-generic}}
+      {{^vendorExtensions.x-has-child-generic}}{{{dataType}}}{{/vendorExtensions.x-has-child-generic}}
+    {{/vendorExtensions.x-propagated-generic}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};{{/vars}}
 } {{#vendorExtensions.x-is-SearchForHitsOptions}} & { facet?: never; maxFacetHits?: never; facetQuery?: never }; {{/vendorExtensions.x-is-SearchForHitsOptions}}
 {{/isEnum}}
 {{#hasEnums}}{{#vars}}{{#isEnum}}export type {{classname}}{{nameInCamelCase}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}{{/vars}}{{/hasEnums}}
