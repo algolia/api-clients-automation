@@ -13,8 +13,8 @@ public class GenericPropagator {
   private GenericPropagator() {}
 
   /**
-   * Add the property x-propagated-generic to a model or property, meaning it should be replaced with T
-   * directly
+   * Add the property x-propagated-generic to a model or property, meaning it should be replaced
+   * with T directly
    */
   private static void setPropagatedGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
@@ -121,7 +121,9 @@ public class GenericPropagator {
     return modelsMap;
   }
 
-  /** Models and their members will be marked with either x-propagated-generic or x-has-child-generic */
+  /**
+   * Models and their members will be marked with either x-propagated-generic or x-has-child-generic
+   */
   public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
     // We propagate generics in two phases:
     // 1. We mark the direct parent of the generic model to replace it with T
