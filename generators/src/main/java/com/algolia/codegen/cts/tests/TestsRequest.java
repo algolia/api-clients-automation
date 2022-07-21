@@ -65,6 +65,23 @@ public class TestsRequest extends TestsGenerator {
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId : req.testName);
         test.put("testIndex", i);
+
+        CodegenOperation ope = entry.getValue();
+        test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+
+        // We check on the spec if body parameters should be present in the CTS
+        // If so, we change the `null` default to an empty object, so we know if
+        // tests are properly written
+        if (ope.bodyParams.size() != 0 && req.request.body == null) {
+          req.request.body = "{}";
+        }
+
+        // In a case of a `GET` or `DELETE` request, we want to assert if the body
+        // is correctly parsed (absent from the payload)
+        if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
+          test.put("assertNullBody", true);
+        }
+
         test.put("request", req.request);
         test.put("hasParameters", req.parameters.size() != 0);
 
@@ -84,9 +101,6 @@ public class TestsRequest extends TestsGenerator {
           }
           test.put("requestOptions", requestOptions);
         }
-
-        CodegenOperation ope = entry.getValue();
-        test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
 
         paramsType.enhanceParameters(req.parameters, test, ope);
         tests.add(test);
