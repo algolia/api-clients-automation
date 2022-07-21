@@ -12,16 +12,20 @@ public class GenericPropagator {
   // Only static use of this class
   private GenericPropagator() {}
 
+  private static void setVendorExtension(IJsonSchemaValidationProperties property, String key, Object value) {
+    if (property instanceof CodegenModel) {
+      ((CodegenModel) property).vendorExtensions.put(key, value);
+    } else if (property instanceof CodegenProperty) {
+      ((CodegenProperty) property).vendorExtensions.put(key, value);
+    }
+  }
+
   /**
    * Add the property x-propagated-generic to a model or property, meaning it should be replaced
    * with T directly
    */
   private static void setPropagatedGeneric(IJsonSchemaValidationProperties property) {
-    if (property instanceof CodegenModel) {
-      ((CodegenModel) property).vendorExtensions.put("x-propagated-generic", true);
-    } else if (property instanceof CodegenProperty) {
-      ((CodegenProperty) property).vendorExtensions.put("x-propagated-generic", true);
-    }
+    setVendorExtension(property, "x-propagated-generic", true);
   }
 
   /**
@@ -29,11 +33,7 @@ public class GenericPropagator {
    * generic and it should propagate the T
    */
   private static void setHasChildGeneric(IJsonSchemaValidationProperties property) {
-    if (property instanceof CodegenModel) {
-      ((CodegenModel) property).vendorExtensions.put("x-has-child-generic", true);
-    } else if (property instanceof CodegenProperty) {
-      ((CodegenProperty) property).vendorExtensions.put("x-has-child-generic", true);
-    }
+    setVendorExtension(property, "x-has-child-generic", true);
   }
 
   /**
@@ -66,7 +66,7 @@ public class GenericPropagator {
 
   private static boolean markPropagatedGeneric(IJsonSchemaValidationProperties model) {
     CodegenProperty items = model.getItems();
-    // if the items itself isn't generic, we recurse on it's items and properties until we reach the
+    // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
     if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items))) {
       setPropagatedGeneric(model);
@@ -84,7 +84,7 @@ public class GenericPropagator {
 
   private static boolean propagateGenericRecursive(Map<String, CodegenModel> models, IJsonSchemaValidationProperties property) {
     CodegenProperty items = property.getItems();
-    // if the items itself isn't generic, we recurse on it's items and properties (and it's
+    // if items itself isn't generic, we recurse on its items and properties (and it's
     // equivalent model if we find one) until we reach the end or find a generic property.
     // We need to check the model too because the tree isn't complete sometime, depending on the ref
     // in the spec, so we get the model with the same name and recurse.
