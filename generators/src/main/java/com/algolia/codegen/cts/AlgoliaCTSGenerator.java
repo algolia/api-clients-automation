@@ -68,6 +68,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
         models.put(entry.getKey(), innerModel.get(0).getModel());
       }
     }
+    GenericPropagator.propagateGenericsToModels(mod);
     return mod;
   }
 
@@ -165,7 +166,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    GenericPropagator.propagateGenerics(operations, models);
+    GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
   }
 

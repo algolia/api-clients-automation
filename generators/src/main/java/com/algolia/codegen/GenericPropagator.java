@@ -3,8 +3,7 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import java.util.*;
 import org.openapitools.codegen.*;
-import org.openapitools.codegen.model.ModelMap;
-import org.openapitools.codegen.model.OperationsMap;
+import org.openapitools.codegen.model.*;
 
 public class GenericPropagator {
 
@@ -38,8 +37,8 @@ public class GenericPropagator {
   }
 
   /**
-   * @return true if the vendor extensions of the property contains either x-true-generic or
-   *     x-has-child-generic
+   * @return true if the vendor extensions of the property contains 
+   *         either x-true-generic or x-has-child-generic
    */
   private static boolean hasGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
@@ -103,11 +102,32 @@ public class GenericPropagator {
     return false;
   }
 
+  private static Map<String, CodegenModel> convertToMap(Map<String, ModelsMap> models) {
+    Map<String, CodegenModel> modelsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    for (ModelsMap modelMap : models.values()) {
+      // modelContainers always have 1 and only 1 model in our specs
+      CodegenModel model = modelMap.getModels().get(0).getModel();
+      modelsMap.put(model.name, model);
+    }
+    return modelsMap;
+  }
+
+  private static Map<String, CodegenModel> convertToMap(List<ModelMap> models) {
+    Map<String, CodegenModel> modelsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    for (ModelMap modelMap : models) {
+      CodegenModel model = modelMap.getModel();
+      modelsMap.put(model.name, model);
+    }
+    return modelsMap;
+  }
+
   /** Models and their members will be marked with either x-true-generic or x-has-child-generic */
-  private static void propagateGenericsToModels(Map<String, CodegenModel> models) {
+  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
     // We propagate generics in two phases:
     // 1. We mark the direct parent of the generic model to replace it with T
     // 2. We tell each parent with generic properties to pass that generic type all the way down
+
+    Map<String, CodegenModel> models = convertToMap(modelsMap);
 
     for (CodegenModel model : models.values()) {
       markTrueGeneric(model);
@@ -119,7 +139,8 @@ public class GenericPropagator {
   }
 
   /** Mark operations with a generic return type with x-is-generic */
-  private static void propagateGenericsToOperations(OperationsMap operations, Map<String, CodegenModel> models) {
+  public static void propagateGenericsToOperations(OperationsMap operations, List<ModelMap> allModels) {
+    Map<String, CodegenModel> models = convertToMap(allModels);
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
       CodegenModel returnType = models.get(ope.returnType);
       if (returnType != null && hasGeneric(returnType)) {
@@ -131,15 +152,5 @@ public class GenericPropagator {
         }
       }
     }
-  }
-
-  public static void propagateGenerics(OperationsMap operations, List<ModelMap> models) {
-    Map<String, CodegenModel> modelsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    for (ModelMap modelMap : models) {
-      CodegenModel model = modelMap.getModel();
-      modelsMap.put(model.name, model);
-    }
-    propagateGenericsToModels(modelsMap);
-    propagateGenericsToOperations(operations, modelsMap);
   }
 }
