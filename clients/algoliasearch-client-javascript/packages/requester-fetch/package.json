@@ -1,12 +1,12 @@
 {
-  "name": "@algolia/requester-browser-xhr",
+  "name": "@algolia/requester-fetch",
   "version": "5.0.0-alpha.0",
-  "description": "Promise-based request library for browser using xhr.",
+  "description": "Promise-based request library using Fetch.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "dist/requester-browser-xhr.cjs.js",
-  "module": "dist/requester-browser-xhr.esm.node.js",
+  "main": "dist/requester-fetch.cjs.js",
+  "module": "dist/requester-fetch.esm.node.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -23,11 +23,11 @@
   "devDependencies": {
     "@types/jest": "28.1.6",
     "@types/node": "16.11.45",
+    "cross-fetch": "3.1.5",
     "jest": "28.1.3",
-    "jest-environment-jsdom": "28.1.3",
+    "nock": "13.2.9",
     "ts-jest": "28.0.5",
-    "typescript": "4.7.4",
-    "xhr-mock": "2.5.1"
+    "typescript": "4.7.4"
   },
   "engines": {
     "node": ">= 14.0.0"
