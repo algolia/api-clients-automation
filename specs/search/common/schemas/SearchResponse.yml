@@ -26,12 +26,13 @@ searchHits:
       type: array
       items:
         $ref: 'Hit.yml#/hit'
+  required:
+    - hits
 
 baseSearchResponse:
   type: object
   additionalProperties: false
   required:
-    - hits
     - nbHits
     - page
     - nbPages
@@ -70,7 +71,7 @@ baseSearchResponse:
       additionalProperties:
         type: object
         additionalProperties:
-          type: string
+          type: integer
       description: A mapping of each facet name to the corresponding facet counts.
       example:
         category:
