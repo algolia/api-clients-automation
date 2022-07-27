@@ -48,7 +48,7 @@ baseSearchResponse:
       description: If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
     abTestVariantID:
       type: integer
-      description: If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used.
+      description: If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used (starting at 1).
     aroundLatLng:
       type: string
       description: The computed geo location.
