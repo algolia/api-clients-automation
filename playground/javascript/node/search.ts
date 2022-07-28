@@ -7,7 +7,7 @@ dotenv.config({ path: '../../.env' });
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
 
-const searchIndex = process.env.SEARCH_INDEX || 'test_index';
+const indexName = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
@@ -15,9 +15,19 @@ const client = searchClient(appId, apiKey);
 
 client.addAlgoliaAgent('Node playground', '0.0.1');
 
+type TObject = {
+  name: string;
+};
+
 async function testSearch() {
   try {
-    const res = await client.search<{ name: string }>({ requests: [{ indexName: searchIndex, query: searchQuery }] });
+    const res = await client.search<TObject>({
+      requests: [{ indexName, query: searchQuery }],
+    });
+
+    await client.browse({ indexName });
+
+    await client.searchSingleIndex({ indexName, searchParams: {} });
 
     console.log(`[OK]`, res.results[0].hits![0].name);
   } catch (e: any) {
