@@ -56,8 +56,8 @@ post:
                   type: object
                   description: Fetched object.
                   x-is-generic: true
-              required:
-                - results
+            required:
+              - results
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
