@@ -26,7 +26,7 @@ __metadata:
     eslint-plugin-json-format: 2.0.1
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-unused-imports: 2.0.0
-    eslint-plugin-yml: 1.0.0
+    eslint-plugin-yml: 1.1.0
     husky: 8.0.1
     json: 11.0.0
     lint-staged: 13.0.3
@@ -4111,17 +4111,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:1.0.0":
-  version: 1.0.0
-  resolution: "eslint-plugin-yml@npm:1.0.0"
+"eslint-plugin-yml@npm:1.1.0":
+  version: 1.1.0
+  resolution: "eslint-plugin-yml@npm:1.1.0"
   dependencies:
     debug: ^4.3.2
     lodash: ^4.17.21
     natural-compare: ^1.4.0
-    yaml-eslint-parser: ^1.0.0
+    yaml-eslint-parser: ^1.1.0
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: b345604d1ebbe0b61887c22d998d0217ae0b662072ecbc5f532513b61bcae2df1dc8bf5459c23f63cc38d223b8bebdf6382eefcbe30a46dec8adbc07e693d54e
+  checksum: 08a72ec2235fdebe0c4f3c9a2525c5a565f5029f9034bfe25c9727b3a2ac3ca9bfe90c1690e008e802991aff62f38edeb2ca1f81e268ea0b332bd1179d2d96b5
   languageName: node
   linkType: hard
 
@@ -8717,14 +8717,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml-eslint-parser@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "yaml-eslint-parser@npm:1.0.1"
+"yaml-eslint-parser@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "yaml-eslint-parser@npm:1.1.0"
   dependencies:
     eslint-visitor-keys: ^3.0.0
     lodash: ^4.17.21
     yaml: ^2.0.0
-  checksum: 48290ce20c8524e56798ed35113021d4cb1d4f3d6361a945d65a00753202b57dfd17fc400d4c21cc6915e7f79b2fd0cd85af3a267304aabfbdb165357e6edd5f
+  checksum: ee9c164ef3cff040566ec774bb35bd5bc351427225f80b92525e7e028a5c0d906bf370003d1357323d04ebcfe91c27a40ab45d27326b01dcfdfff74bfefbb5ae
   languageName: node
   linkType: hard
 
