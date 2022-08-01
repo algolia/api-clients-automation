@@ -1,21 +1,36 @@
 /**
- * Helper: Wait for a task to complete with `indexName` and `taskID`.
+ * Helper: Wait for a task to be published (completed) for a given `indexName` and `taskID`.
  *
- * @summary Wait for a task to complete.
+ * @summary Wait for a task to be published (completed).
  * @param waitForTaskOptions - The waitForTaskOptions object.
  * @param waitForTaskOptions.indexName - The `indexName` where the operation was performed.
  * @param waitForTaskOptions.taskID - The `taskID` returned in the method response.
+ * @param waitForTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+ * @param waitForTaskOptions.timeout - The function to decide how long to wait between retries.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
-waitForTask({
-  indexName,
-  taskID,
-  ...createRetryablePromiseOptions
-}: WaitForTaskOptions, requestOptions?: RequestOptions): Promise<GetTaskResponse> {
-  return createRetryablePromise({
-    ...createRetryablePromiseOptions,
+waitForTask(
+  {
+    indexName,
+    taskID,
+    maxRetries = 50,
+    timeout = (retryCount: number): number =>
+      Math.min(retryCount * 200, 5000),
+  }: WaitForTaskOptions,
+  requestOptions?: RequestOptions
+): Promise<GetTaskResponse> {
+  let retryCount = 0;
+
+  return createIterablePromise({
     func: () => this.getTask({ indexName, taskID }, requestOptions),
     validate: (response) => response.status === 'published',
+    aggregator: () => (retryCount += 1),
+    error: {
+      validate: () => retryCount >= maxRetries,
+      message: () =>
+        `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+    },
+    timeout: () => timeout(retryCount),
   });
 },
 
@@ -27,14 +42,32 @@ waitForTask({
  * @param waitForApiKeyOptions.operation - The `operation` that was done on a `key`.
  * @param waitForApiKeyOptions.key - The `key` that has been added, deleted or updated.
  * @param waitForApiKeyOptions.apiKey - Necessary to know if an `update` operation has been processed, compare fields of the response with it.
+ * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 50 by default.
+ * @param waitForApiKeyOptions.timeout - The function to decide how long to wait between retries.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
  */
-waitForApiKey({
-  operation,
-  key,
-  apiKey,
-  ...createRetryablePromiseOptions
-}: WaitForApiKeyOptions, requestOptions?: RequestOptions): Promise<ApiError | Key> {
+waitForApiKey(
+  {
+    operation,
+    key,
+    apiKey,
+    maxRetries = 50,
+    timeout = (retryCount: number): number =>
+      Math.min(retryCount * 200, 5000),
+  }: WaitForApiKeyOptions,
+  requestOptions?: RequestOptions
+): Promise<ApiError | Key> {
+  let retryCount = 0;
+  const baseIteratorOptions: IterableOptions<ApiError | Key> = {
+    aggregator: () => (retryCount += 1),
+    error: {
+      validate: () => retryCount >= maxRetries,
+      message: () =>
+        `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+    },
+    timeout: () => timeout(retryCount),
+  };
+
   if (operation === 'update') {
     if (!apiKey) {
       throw new Error(
@@ -42,8 +75,8 @@ waitForApiKey({
       );
     }
 
-    return createRetryablePromise({
-      ...createRetryablePromiseOptions,
+    return createIterablePromise({
+      ...baseIteratorOptions,
       func: () => this.getApiKey({ key }, requestOptions),
       validate: (response) => {
         for (const field of Object.keys(apiKey)) {
@@ -65,9 +98,10 @@ waitForApiKey({
     });
   }
 
-  return createRetryablePromise({
-    ...createRetryablePromiseOptions,
-    func: () => this.getApiKey({ key }, requestOptions).catch((error) => error),
+  return createIterablePromise({
+    ...baseIteratorOptions,
+    func: () =>
+      this.getApiKey({ key }, requestOptions).catch((error) => error),
     validate: (error: ApiError) =>
       operation === 'add' ? error.status !== 404 : error.status === 404,
   });
