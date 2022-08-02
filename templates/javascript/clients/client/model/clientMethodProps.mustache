@@ -40,6 +40,14 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
 {{/operations}}
 
 {{#isSearchClient}}
+/**
+ * The `browseObjects`, `browseRules`, `browseSynonyms` options.
+ */
+export type BrowseOptions<T> = Partial<
+  Pick<CreateIterablePromise<T>, 'validate'>
+> &
+  Required<Pick<CreateIterablePromise<T>, 'aggregator'>>;
+
 type WaitForOptions<T> = Omit<
   CreateIterablePromise<T>,
   'func' | 'timeout' | 'validate'
