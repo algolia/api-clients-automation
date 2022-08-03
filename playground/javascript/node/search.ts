@@ -1,11 +1,5 @@
-import {
-  BrowseResponse,
-  Rule,
-  searchClient,
-  SearchRulesResponse,
-  SearchSynonymsResponse,
-} from '@algolia/client-search';
-import { ApiError, createIterablePromise } from '@algolia/client-common';
+import { searchClient } from '@algolia/client-search';
+import { ApiError } from '@algolia/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });
@@ -23,15 +17,9 @@ client.addAlgoliaAgent('Node playground', '0.0.1');
 
 async function testSearch() {
   try {
-    const records: Record<string, any> = [];
+    const res = await client.search<{ name: string }>({ requests: [{ indexName: searchIndex, query: searchQuery }] });
 
-    await client.browseObjects({
-      indexName: 'gatsbyjs',
-
-      aggregator: (response) => records.push(...response.hits),
-    });
-
-    console.log(records, records.length);
+    console.log(`[OK]`, res.results[0].hits![0].name);
   } catch (e: any) {
     // Instance of
     if (e instanceof ApiError) {
