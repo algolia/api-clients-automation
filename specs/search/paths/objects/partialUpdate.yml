@@ -29,7 +29,6 @@ post:
           type: array
           items:
             type: object
-            title: attributeToUpdate
             description: Attribute to update.
             additionalProperties:
               $ref: 'common/schemas.yml#/attributeOrBuiltInOperation'
