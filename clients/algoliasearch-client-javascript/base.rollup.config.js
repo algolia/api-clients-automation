@@ -11,6 +11,10 @@ const NPM_ORG = '@algolia/';
 const BROWSER_FORMATS = ['esm-browser', 'umd'];
 const NODE_FORMATS = ['esm-node', 'cjs'];
 
+// A mapping that saves the types that have already been checked during the build process
+// it avoid checking/generating the same types multiple times
+const TYPES_TO_CHECK = {};
+
 // Utils package with default options
 const UTILS = {
   'client-common': {
@@ -86,31 +90,27 @@ function createBundlers({ output, isLiteClient }) {
 function getBaseConfigs(pkg) {
   const packageName = pkg.name.replace(NPM_ORG, '');
   const isUtils = UTILS[packageName] !== undefined;
+  const commonConfig = {
+    external: pkg.dependencies ? Object.keys(pkg.dependencies) : [],
+    package: packageName,
+    name: pkg.name,
+    output: packageName,
+    plugins: [],
+  };
 
   if (isUtils) {
     return [
       {
+        ...commonConfig,
         ...UTILS[packageName],
         formats: NODE_FORMATS,
         input: 'index.ts',
-        dependencies: pkg.dependencies ? Object.keys(pkg.dependencies) : [],
-        package: packageName,
-        name: pkg.name,
-        output: packageName,
       },
     ];
   }
 
   const baseConfigs = [];
   const isAlgoliasearchClient = packageName === 'algoliasearch';
-  const commonConfig = {
-    package: packageName,
-    name: pkg.name,
-    output: packageName,
-    dependencies: pkg.dependencies ? Object.keys(pkg.dependencies) : [],
-    external: [],
-    plugins: [],
-  };
   const configPerEnv = {
     browser: {
       ...commonConfig,
@@ -140,7 +140,7 @@ function getBaseConfigs(pkg) {
         name: litePackageName,
         output: 'lite',
         input: 'lite/builds/browser.ts',
-        dependencies: [
+        external: [
           `${NPM_ORG}client-common`,
           `${NPM_ORG}requester-browser-xhr`,
         ],
@@ -156,21 +156,56 @@ function getBaseConfigs(pkg) {
         name: litePackageName,
         output: 'lite',
         input: 'lite/builds/node.ts',
-        dependencies: [
-          `${NPM_ORG}client-common`,
-          `${NPM_ORG}requester-node-http`,
-        ],
+        external: [`${NPM_ORG}client-common`, `${NPM_ORG}requester-node-http`],
       }
     );
   }
 
-  return [...baseConfigs, configPerEnv.browser, configPerEnv.node];
+  return [configPerEnv.browser, configPerEnv.node, ...baseConfigs];
+}
+
+/**
+ * Decides whether the currently built client should check for types or not.
+ */
+function shouldCheckForTypes(name, currentFormat, isLiteClient) {
+  const defaults = {
+    node: true,
+    browser: true,
+    lite: true,
+  };
+
+  // Initialize with defaults
+  if (!TYPES_TO_CHECK[name]) {
+    TYPES_TO_CHECK[name] = defaults;
+  }
+
+  const isBrowserFormat = BROWSER_FORMATS.includes(currentFormat);
+  const isNodeFormat = NODE_FORMATS.includes(currentFormat);
+
+  if (isBrowserFormat && TYPES_TO_CHECK[name].browser) {
+    TYPES_TO_CHECK[name].browser = false;
+
+    return true;
+  }
+
+  if (isNodeFormat && TYPES_TO_CHECK[name].node) {
+    TYPES_TO_CHECK[name].node = false;
+
+    return true;
+  }
+
+  if (isLiteClient && TYPES_TO_CHECK[name].lite) {
+    TYPES_TO_CHECK[name].lite = false;
+
+    return true;
+  }
+
+  return false;
 }
 
 export function buildConfigs(pkg) {
   const baseConfigs = getBaseConfigs(pkg);
   const rollupConfig = [];
-  let checkForTypes = true;
 
   baseConfigs.forEach((baseConfig) => {
     const isLiteClient = baseConfig.name === 'algoliasearch/lite';
@@ -180,6 +215,11 @@ export function buildConfigs(pkg) {
     });
 
     baseConfig.formats.forEach((format) => {
+      const checkForTypes = shouldCheckForTypes(
+        baseConfig.name,
+        format,
+        isLiteClient
+      );
       const isUmdBuild = format === 'umd';
       const isEsmBrowserBuild = format === 'esm-browser';
       const umdConfig = {
@@ -189,7 +229,7 @@ export function buildConfigs(pkg) {
 
       if (isUmdBuild || isEsmBrowserBuild) {
         // eslint-disable-next-line no-param-reassign
-        baseConfig.dependencies = [];
+        baseConfig.external = [];
       }
 
       if (isUmdBuild) {
@@ -204,7 +244,7 @@ export function buildConfigs(pkg) {
           babel({
             babelrc: false,
             babelHelpers: 'runtime',
-            extensions: ['.ts'],
+            extensions: ['builds/*.ts', 'src/*.ts', 'model/*.ts', 'index.ts'],
             exclude: 'node_modules/**',
             presets: [
               [
@@ -223,7 +263,7 @@ export function buildConfigs(pkg) {
 
       rollupConfig.push({
         input: baseConfig.input,
-        external: [...baseConfig.dependencies, ...baseConfig.external],
+        external: baseConfig.external,
         plugins: [
           globals({
             global: true,
@@ -231,7 +271,7 @@ export function buildConfigs(pkg) {
           nodeResolve(),
           ts({
             check: checkForTypes,
-            tsconfig: 'tsconfig.json',
+            tsconfig: isLiteClient ? 'lite/tsconfig.json' : 'tsconfig.json',
             tsconfigOverride: {
               compilerOptions: {
                 declaration: checkForTypes,
@@ -251,8 +291,6 @@ export function buildConfigs(pkg) {
           }
         },
       });
-
-      checkForTypes = false;
     });
   });
 

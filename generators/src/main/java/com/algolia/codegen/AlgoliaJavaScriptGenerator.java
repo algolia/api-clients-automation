@@ -79,6 +79,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
       // `lite root export files
       supportingFiles.add(new SupportingFile("algoliasearch/lite.mustache", "", "lite.js"));
       supportingFiles.add(new SupportingFile("algoliasearch/lite.d.mustache", "", "lite.d.ts"));
+      supportingFiles.add(new SupportingFile("algoliasearch/lite.tsconfig.mustache", "", "lite/tsconfig.json"));
     }
   }
 
