@@ -222,7 +222,7 @@ jobs:
 
       - name: Build clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language != 'php' }}
-        run: yarn cli build clients ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: ${{ matrix.client.buildCommand }}
 
       - name: Test JavaScript bundle size
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' && startsWith(env.head_ref, 'chore/prepare-release-') }}
