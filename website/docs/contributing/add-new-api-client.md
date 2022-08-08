@@ -8,8 +8,6 @@ Make sure to first [setup the repository tooling](/docs/contributing/setup-repos
 
 :::
 
-# Add a new API client
-
 Adding a new API client requires some manual steps in order to have a properly working client:
 
 1. [Writing specs](#1-writing-specs)
@@ -40,34 +38,34 @@ We recommend to have a look at [existing spec files](https://github.com/algolia/
 
 > Example with the [search client spec](https://github.com/algolia/api-clients-automation/blob/main/specs/search/)
 
-#### `spec.yml` file
+#### **`spec.yml` file**
 
 The `spec.yml` file is the entry point of the client spec, it contains `servers`, `paths` and other specific information of the API. We recommend to copy an existing [`spec.yml` file](https://github.com/algolia/api-clients-automation/blob/main/specs/search/spec.yml) to get started.
 
-#### `<clientName>`/common folder
+#### **`<clientName>`/common folder**
 
 Same as [the `common` folder](#common-spec-folder) but only related to the current client.
 
-#### `<clientName>`/paths folder
+#### **`<clientName>`/paths folder**
 
 Path definition of the paths defined in the [spec file](#specyml-file). See [guidelines](#guidelines).
 
 ### Troubleshooting
 
-#### Force the name of a `requestBody`
+#### **Force the name of a `requestBody`**
 
 > [Detailed issue](https://github.com/algolia/api-clients-automation/issues/891)
 
-In some cases, you can encounter wrongly named `requestBody` from the specs, which is due to:
+In some cases, you can encounter wrongly named `requestBody` from the specs, which could be due to:
 
 - The type is too complex/too broad to be generated. (e.g. [An object with `additionalProperties`](https://github.com/algolia/api-clients-automation/tree/main/specs/search/paths/objects/partialUpdate.yml#L24-L33))
-- The body is an alias of its sub type (e.g. [A list of sub models](https://github.com/algolia/api-clients-automation/tree/main/specs/search/paths/rules/saveRules.yml#L12-L20))
+- The type is an alias of its model (e.g. [A list of `model`](https://github.com/algolia/api-clients-automation/tree/main/specs/search/paths/rules/saveRules.yml#L12-L20))
 
-The `x-codegen-request-body-name` property can be added at the root of the spec, to force the name of the generated `requestBody` property.
+The [`x-codegen-request-body-name`](https://openapi-generator.tech/docs/swagger-codegen-migration/#body-parameter-name) property can be added at the root of the spec, to force the name of the generated `requestBody` property.
 
 You can find an example of this implementation [on this PR](https://github.com/algolia/api-clients-automation/pull/896).
 
-#### Send additional options to the template
+#### **Send additional options to the template**
 
 You might want to send additional information to the generators. To do so, you can add parameters starting with an `x-` at the root level of your spec, which will be available in the `mustache` template under the `vendorExtensions` object.
 
@@ -77,11 +75,11 @@ You might want to send additional information to the generators. To do so, you c
 
 > The generator follows its own configuration file named `config/openapitools.json`
 
-### Generation config
+### Configs
 
 [`config/openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/config/openapitools.json) and [`config/clients.config.json`](https://github.com/algolia/api-clients-automation/blob/main/config/clients.config.json) hosts the configuration of all of the generated clients with their available languages and extra information.
 
-#### `generators`
+#### Settings
 
 Generators are referenced by key with the following pattern `<languageName>-<clientName>`. You can copy an existing object of a client and replace the `<clientName>` value with the one you'd like to generate.
 
