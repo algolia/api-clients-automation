@@ -1,4 +1,8 @@
-import fs from 'fs';
+import babel from '@rollup/plugin-babel';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import globals from 'rollup-plugin-node-globals';
+import { terser } from 'rollup-plugin-terser';
+import ts from 'rollup-plugin-typescript2';
 
 // Org where the packages are pushed
 const NPM_ORG = '@algolia/';
@@ -10,203 +14,46 @@ const NODE_FORMATS = ['esm-node', 'cjs'];
 // Utils package with default options
 const UTILS = {
   'client-common': {
-    dependencies: [],
+    external: [],
+    plugins: [
+      babel({
+        babelrc: false,
+        extensions: ['.ts'],
+        exclude: 'node_modules/**',
+        plugins: ['@babel/plugin-proposal-class-properties'],
+      }),
+    ],
   },
   'requester-browser-xhr': {
     external: ['dom'],
-    dependencies: [`${NPM_ORG}client-common`],
+    plugins: [],
   },
   'requester-fetch': {
     external: ['dom'],
-    dependencies: [`${NPM_ORG}client-common`],
+    plugins: [],
   },
   'requester-node-http': {
     external: ['https', 'http', 'url'],
-    dependencies: [`${NPM_ORG}client-common`],
+    plugins: [],
   },
 };
 
 /**
- * Returns the `UTILS` packages configuration with their default bundler options.
- */
-function getUtilConfigs() {
-  const commonOptions = {
-    input: 'index.ts',
-    formats: NODE_FORMATS,
-    external: [],
-  };
-
-  return Object.entries(UTILS).map(([key, utilOptions]) => {
-    return {
-      ...commonOptions,
-      ...utilOptions,
-      output: key,
-      package: key,
-      name: `${NPM_ORG}${key}`,
-    };
-  });
-}
-
-/**
- * Whether to build the given `utilClient` or not.
- */
-function shouldBuildUtil(utilClient) {
-  if (process.env.SKIP_UTILS === 'true') {
-    return false;
-  }
-
-  if (!process.env.CI) {
-    return true;
-  }
-
-  // Checking existence of `dist` folder doesn't really guarantee the built files are up-to-date.
-  // However, on the CI, it's very likely.
-  return !fs.existsSync(path.resolve('packages', utilClient, 'dist'));
-}
-
-/**
- * Reads available packages in the monorepo.
- */
-function getAvailableClients(client) {
-  const availableClients = fs
-    .readdirSync('packages/')
-    .filter((packageName) => !Object.keys(UTILS).includes(packageName));
-
-  return client === 'all'
-    ? availableClients
-    : availableClients.filter((availableClient) => availableClient === client);
-}
-
-/**
- * Returns the packages to bundled based on environment variables and run conditions.
- */
-export function getPackageConfigs() {
-  const UTIL_CONFIGS = getUtilConfigs();
-  const CLIENT = process.env.CLIENT.replace(NPM_ORG, '');
-
-  if (CLIENT === 'utils') {
-    return UTIL_CONFIGS;
-  }
-
-  if (Object.keys(UTILS).includes(CLIENT)) {
-    return UTIL_CONFIGS.filter((config) => config.package === CLIENT);
-  }
-
-  const availableClients = getAvailableClients(CLIENT);
-
-  if (availableClients.length === 0) {
-    throw new Error(`No clients matches '${CLIENT}'.`);
-  }
-
-  const configs = availableClients.flatMap((packageName) => {
-    const isAlgoliasearchClient = packageName === 'algoliasearch';
-    const commonConfig = {
-      package: packageName,
-      name: `${NPM_ORG}${packageName}`,
-      output: packageName,
-      dependencies: [`${NPM_ORG}client-common`],
-      external: [],
-    };
-    let liteBuildConfig = [];
-
-    // This non-generated client is an aggregation of client, hence does not follow
-    // the same build process.
-    if (isAlgoliasearchClient) {
-      const litePackageName = `${packageName}/lite`;
-      // `algoliasearch/lite` related
-      liteBuildConfig = [
-        {
-          ...commonConfig,
-          package: litePackageName,
-          name: litePackageName,
-          output: 'lite',
-          input: 'lite/builds/browser.ts',
-          formats: BROWSER_FORMATS,
-          external: ['dom'],
-          dependencies: [
-            ...commonConfig.dependencies,
-            `${NPM_ORG}requester-browser-xhr`,
-          ],
-          globals: {
-            [litePackageName]: litePackageName,
-          },
-        },
-        // Node build
-        {
-          ...commonConfig,
-          package: litePackageName,
-          name: litePackageName,
-          output: 'lite',
-          input: 'lite/builds/node.ts',
-          formats: NODE_FORMATS,
-          dependencies: [
-            ...commonConfig.dependencies,
-            `${NPM_ORG}requester-node-http`,
-          ],
-        },
-      ];
-
-      // `algoliasearch` related
-      commonConfig.name = packageName;
-      commonConfig.dependencies = [
-        `${NPM_ORG}client-analytics`,
-        `${NPM_ORG}client-common`,
-        `${NPM_ORG}client-personalization`,
-        `${NPM_ORG}client-search`,
-      ];
-    }
-
-    return [
-      ...liteBuildConfig,
-      // Browser build
-      {
-        ...commonConfig,
-        input: 'builds/browser.ts',
-        formats: BROWSER_FORMATS,
-        external: ['dom'],
-        dependencies: [
-          ...commonConfig.dependencies,
-          `${NPM_ORG}requester-browser-xhr`,
-        ],
-        globals: {
-          [packageName]: packageName,
-        },
-      },
-      // Node build
-      {
-        ...commonConfig,
-        input: 'builds/node.ts',
-        formats: NODE_FORMATS,
-        dependencies: [
-          ...commonConfig.dependencies,
-          `${NPM_ORG}requester-node-http`,
-        ],
-      },
-    ];
-  });
-
-  return [
-    ...UTIL_CONFIGS.filter((config) => shouldBuildUtil(config.package)),
-    ...configs,
-  ];
-}
-
-/**
  * Returns the license at the top of the UMD bundled file.
  */
-export function createLicense(name, version) {
+function createLicense(name, version) {
   return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
 }
 
 /**
  * Bundlers with their output format and file name for the given client.
  */
-export function createBundlers({ output, clientPath, isLiteClient }) {
+function createBundlers({ output, isLiteClient }) {
   const commonOptions = {
     exports: 'named',
   };
 
-  const path = isLiteClient ? `${clientPath}/dist/lite` : `${clientPath}/dist`;
+  const path = isLiteClient ? `./dist/lite` : `./dist`;
 
   return {
     'esm-node': {
@@ -231,4 +78,183 @@ export function createBundlers({ output, clientPath, isLiteClient }) {
       format: 'cjs',
     },
   };
+}
+
+/**
+ * Build configs to iterate on based on the package.json information.
+ */
+function getBaseConfigs(pkg) {
+  const packageName = pkg.name.replace(NPM_ORG, '');
+  const isUtils = UTILS[packageName] !== undefined;
+
+  if (isUtils) {
+    return [
+      {
+        ...UTILS[packageName],
+        formats: NODE_FORMATS,
+        input: 'index.ts',
+        dependencies: pkg.dependencies ? Object.keys(pkg.dependencies) : [],
+        package: packageName,
+        name: pkg.name,
+        output: packageName,
+      },
+    ];
+  }
+
+  const baseConfigs = [];
+  const isAlgoliasearchClient = packageName === 'algoliasearch';
+  const commonConfig = {
+    package: packageName,
+    name: pkg.name,
+    output: packageName,
+    dependencies: pkg.dependencies ? Object.keys(pkg.dependencies) : [],
+    external: [],
+    plugins: [],
+  };
+  const configPerEnv = {
+    browser: {
+      ...commonConfig,
+      input: 'builds/browser.ts',
+      formats: BROWSER_FORMATS,
+      external: ['dom'],
+      globals: {
+        [packageName]: packageName,
+      },
+    },
+    node: {
+      ...commonConfig,
+      input: 'builds/node.ts',
+      formats: NODE_FORMATS,
+    },
+  };
+
+  // This non-generated client is an aggregation of client, hence does not follow
+  // the same build process.
+  if (isAlgoliasearchClient) {
+    const litePackageName = `${packageName}/lite`;
+    baseConfigs.push(
+      {
+        ...commonConfig,
+        ...configPerEnv.browser,
+        package: litePackageName,
+        name: litePackageName,
+        output: 'lite',
+        input: 'lite/builds/browser.ts',
+        dependencies: [
+          `${NPM_ORG}client-common`,
+          `${NPM_ORG}requester-browser-xhr`,
+        ],
+        globals: {
+          [litePackageName]: litePackageName,
+        },
+      },
+      // Node build
+      {
+        ...commonConfig,
+        ...configPerEnv.node,
+        package: litePackageName,
+        name: litePackageName,
+        output: 'lite',
+        input: 'lite/builds/node.ts',
+        dependencies: [
+          `${NPM_ORG}client-common`,
+          `${NPM_ORG}requester-node-http`,
+        ],
+      }
+    );
+  }
+
+  return [...baseConfigs, configPerEnv.browser, configPerEnv.node];
+}
+
+export function buildConfigs(pkg) {
+  const baseConfigs = getBaseConfigs(pkg);
+  const rollupConfig = [];
+  let checkForTypes = true;
+
+  baseConfigs.forEach((baseConfig) => {
+    const isLiteClient = baseConfig.name === 'algoliasearch/lite';
+    const bundlers = createBundlers({
+      output: baseConfig.output,
+      isLiteClient,
+    });
+
+    baseConfig.formats.forEach((format) => {
+      const isUmdBuild = format === 'umd';
+      const isEsmBrowserBuild = format === 'esm-browser';
+      const umdConfig = {
+        compressorPlugins: [],
+        transpilerPlugins: [],
+      };
+
+      if (isUmdBuild || isEsmBrowserBuild) {
+        // eslint-disable-next-line no-param-reassign
+        baseConfig.dependencies = [];
+      }
+
+      if (isUmdBuild) {
+        bundlers[format].name = baseConfig.name;
+        bundlers[format].banner = createLicense(
+          baseConfig.package,
+          pkg.version
+        );
+
+        umdConfig.compressorPlugins = [terser()];
+        umdConfig.transpilerPlugins = [
+          babel({
+            babelrc: false,
+            babelHelpers: 'runtime',
+            extensions: ['.ts'],
+            exclude: 'node_modules/**',
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    browsers: ['> .5%', 'ie >= 11'],
+                  },
+                },
+              ],
+            ],
+            plugins: ['@babel/plugin-transform-runtime'],
+          }),
+        ];
+      }
+
+      rollupConfig.push({
+        input: baseConfig.input,
+        external: [...baseConfig.dependencies, ...baseConfig.external],
+        plugins: [
+          globals({
+            global: true,
+          }),
+          nodeResolve(),
+          ts({
+            check: checkForTypes,
+            tsconfig: 'tsconfig.json',
+            tsconfigOverride: {
+              compilerOptions: {
+                declaration: checkForTypes,
+                declarationMap: checkForTypes,
+                noEmit: !checkForTypes,
+              },
+            },
+          }),
+          ...umdConfig.transpilerPlugins,
+          ...umdConfig.compressorPlugins,
+          ...baseConfig.plugins,
+        ],
+        output: bundlers[format],
+        onwarn(msg, warn) {
+          if (!/Circular/.test(msg)) {
+            warn(msg);
+          }
+        },
+      });
+
+      checkForTypes = false;
+    });
+  });
+
+  return rollupConfig;
 }

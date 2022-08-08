@@ -162,7 +162,7 @@ jobs:
 
       - name: Build '${{ matrix.client }}' client
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: cd clients/algoliasearch-client-javascript && yarn build ${{ matrix.client }}
+        run: cd clients/algoliasearch-client-javascript && yarn build:many @algolia/${{ matrix.client }}
 
       - name: Run tests for '${{ matrix.client }}'
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
