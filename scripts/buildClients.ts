@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { CI, run } from './common';
+import { run } from './common';
 import { getClientsConfigField, getLanguageFolder } from './config';
 import { createSpinner } from './oraLog';
 import type { Generator, Language } from './types';
@@ -10,7 +10,7 @@ import type { Generator, Language } from './types';
 async function buildClient(
   language: Language,
   gens: Generator[],
-  { verbose, skipUtils }: { verbose: boolean; skipUtils: boolean }
+  { verbose }: { verbose: boolean; skipUtils: boolean }
 ): Promise<void> {
   const cwd = getLanguageFolder(language);
   const spinner = createSpinner(`building '${language}'`, verbose).start();
@@ -23,17 +23,6 @@ async function buildClient(
     case 'php':
       break;
     case 'javascript':
-      if (!CI && !skipUtils) {
-        spinner.text = "building 'JavaScript' utils";
-
-        await run('yarn build:utils', {
-          verbose: true,
-          cwd,
-        });
-      }
-
-      spinner.text = "building 'JavaScript' clients";
-
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
       const toRun = gens
         .map(({ additionalProperties: { packageName } }) =>

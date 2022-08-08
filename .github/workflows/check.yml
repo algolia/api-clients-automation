@@ -168,13 +168,6 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: cd clients/algoliasearch-client-javascript && yarn workspace @algolia/${{ matrix.client }} test
 
-      - name: Store '${{ matrix.client }}' JavaScript utils package
-        uses: actions/upload-artifact@v3
-        with:
-          if-no-files-found: error
-          name: client-javascript-utils-${{ matrix.client }}
-          path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
-
   client_gen:
     timeout-minutes: 15
     runs-on: ubuntu-20.04
@@ -205,13 +198,6 @@ jobs:
         uses: ./.github/actions/restore-artifacts
         with:
           type: specs
-
-        # Always download the utils for js, in case they changed we want to include them in the zip
-      - name: Download JavaScript utils artifacts
-        if: ${{ matrix.client.language == 'javascript' }}
-        uses: ./.github/actions/restore-artifacts
-        with:
-          type: js_utils
 
       - name: Remove generated clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' && startsWith(env.head_ref, 'chore/prepare-release-') }}
