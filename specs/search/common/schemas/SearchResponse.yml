@@ -37,7 +37,6 @@ baseSearchResponse:
     - hitsPerPage
     - processingTimeMS
     - exhaustiveNbHits
-    - exhaustiveTypo
     - query
     - params
   properties:
