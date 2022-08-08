@@ -91,11 +91,12 @@ function getBaseConfigs(pkg) {
   const packageName = pkg.name.replace(NPM_ORG, '');
   const isUtils = UTILS[packageName] !== undefined;
   const commonConfig = {
-    external: pkg.dependencies ? Object.keys(pkg.dependencies) : [],
+    dependencies: pkg.dependencies ? Object.keys(pkg.dependencies) : [],
     package: packageName,
     name: pkg.name,
     output: packageName,
     plugins: [],
+    external: [],
   };
 
   if (isUtils) {
@@ -140,7 +141,7 @@ function getBaseConfigs(pkg) {
         name: litePackageName,
         output: 'lite',
         input: 'lite/builds/browser.ts',
-        external: [
+        dependencies: [
           `${NPM_ORG}client-common`,
           `${NPM_ORG}requester-browser-xhr`,
         ],
@@ -156,7 +157,10 @@ function getBaseConfigs(pkg) {
         name: litePackageName,
         output: 'lite',
         input: 'lite/builds/node.ts',
-        external: [`${NPM_ORG}client-common`, `${NPM_ORG}requester-node-http`],
+        dependencies: [
+          `${NPM_ORG}client-common`,
+          `${NPM_ORG}requester-node-http`,
+        ],
       }
     );
   }
@@ -229,7 +233,7 @@ export function buildConfigs(pkg) {
 
       if (isUmdBuild || isEsmBrowserBuild) {
         // eslint-disable-next-line no-param-reassign
-        baseConfig.external = [];
+        baseConfig.dependencies = [];
       }
 
       if (isUmdBuild) {
@@ -263,7 +267,7 @@ export function buildConfigs(pkg) {
 
       rollupConfig.push({
         input: baseConfig.input,
-        external: baseConfig.external,
+        external: [...baseConfig.external, ...baseConfig.dependencies],
         plugins: [
           globals({
             global: true,
