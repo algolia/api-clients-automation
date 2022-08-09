@@ -56,7 +56,7 @@ export async function generate(
     spinner.succeed();
   }
 
-  for (const lang of langs) {
-    await formatter(lang, getLanguageFolder(lang), verbose);
-  }
+  await Promise.all(
+    langs.map((lang) => formatter(lang, getLanguageFolder(lang), verbose))
+  );
 }

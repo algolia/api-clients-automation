@@ -13,7 +13,7 @@
     "testName": "browse with search parameters",
     "parameters": {
       "indexName": "indexName",
-      "searchParams": {
+      "browseParams": {
         "query": "myQuery",
         "facetFilters": [
           "tags:algolia"
@@ -28,6 +28,22 @@
         "facetFilters": [
           "tags:algolia"
         ]
+      }
+    }
+  },
+  {
+    "testName": "browse allow a cursor in parameters",
+    "parameters": {
+      "indexName": "indexName",
+      "browseParams": {
+        "cursor": "test"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/browse",
+      "method": "POST",
+      "body": {
+        "cursor": "test"
       }
     }
   }
