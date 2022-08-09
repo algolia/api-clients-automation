@@ -15,14 +15,7 @@ post:
     content:
       application/json:
         schema:
-          title: browseRequest
-          type: object
-          additionalProperties: false
-          properties:
-            params:
-              $ref: '../../../common/schemas/SearchParams.yml#/paramsAsString'
-            cursor:
-              $ref: '../../../common/schemas/SearchParams.yml#/cursor'
+          $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
       description: OK
