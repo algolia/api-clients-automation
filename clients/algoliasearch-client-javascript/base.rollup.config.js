@@ -85,7 +85,7 @@ function createBundlers({ output, isLiteClient }) {
 }
 
 /**
- * Build configs to iterate on based on the package.json information.
+ * Build configs to iterate on based on the given `package.json`.
  */
 function getBaseConfigs(pkg) {
   const packageName = pkg.name.replace(NPM_ORG, '');
@@ -97,6 +97,7 @@ function getBaseConfigs(pkg) {
     output: packageName,
     plugins: [],
     external: [],
+    formats: NODE_FORMATS,
   };
 
   if (isUtils) {
@@ -104,13 +105,11 @@ function getBaseConfigs(pkg) {
       {
         ...commonConfig,
         ...UTILS[packageName],
-        formats: NODE_FORMATS,
         input: 'index.ts',
       },
     ];
   }
 
-  const baseConfigs = [];
   const isAlgoliasearchClient = packageName === 'algoliasearch';
   const configPerEnv = {
     browser: {
@@ -125,47 +124,52 @@ function getBaseConfigs(pkg) {
     node: {
       ...commonConfig,
       input: 'builds/node.ts',
-      formats: NODE_FORMATS,
     },
   };
 
-  // This non-generated client is an aggregation of client, hence does not follow
-  // the same build process.
-  if (isAlgoliasearchClient) {
-    const litePackageName = `${packageName}/lite`;
-    baseConfigs.push(
-      {
-        ...commonConfig,
-        ...configPerEnv.browser,
-        package: litePackageName,
-        name: litePackageName,
-        output: 'lite',
-        input: 'lite/builds/browser.ts',
-        dependencies: [
-          `${NPM_ORG}client-common`,
-          `${NPM_ORG}requester-browser-xhr`,
-        ],
-        globals: {
-          [litePackageName]: litePackageName,
-        },
-      },
-      // Node build
-      {
-        ...commonConfig,
-        ...configPerEnv.node,
-        package: litePackageName,
-        name: litePackageName,
-        output: 'lite',
-        input: 'lite/builds/node.ts',
-        dependencies: [
-          `${NPM_ORG}client-common`,
-          `${NPM_ORG}requester-node-http`,
-        ],
-      }
-    );
+  if (!isAlgoliasearchClient) {
+    return [configPerEnv.browser, configPerEnv.node];
   }
 
-  return [configPerEnv.browser, configPerEnv.node, ...baseConfigs];
+  /**
+   * Algoliasearch is am aggregation of sub clients, plus provide a `lite` version
+   * that needs its own build.
+   */
+  const litePackageName = `${packageName}/lite`;
+  return [
+    // algoliasearch client configs
+    configPerEnv.browser,
+    configPerEnv.node,
+    // lite client configs
+    {
+      ...commonConfig,
+      ...configPerEnv.browser,
+      package: litePackageName,
+      name: litePackageName,
+      output: 'lite',
+      input: 'lite/builds/browser.ts',
+      dependencies: [
+        `${NPM_ORG}client-common`,
+        `${NPM_ORG}requester-browser-xhr`,
+      ],
+      globals: {
+        [litePackageName]: litePackageName,
+      },
+    },
+    // Node build
+    {
+      ...commonConfig,
+      ...configPerEnv.node,
+      package: litePackageName,
+      name: litePackageName,
+      output: 'lite',
+      input: 'lite/builds/node.ts',
+      dependencies: [
+        `${NPM_ORG}client-common`,
+        `${NPM_ORG}requester-node-http`,
+      ],
+    },
+  ];
 }
 
 /**
@@ -179,20 +183,18 @@ function shouldCheckForTypes(name, currentFormat, isLiteClient) {
   };
 
   // Initialize with defaults
-  if (!TYPES_TO_CHECK[name]) {
+  if (TYPES_TO_CHECK[name] === undefined) {
     TYPES_TO_CHECK[name] = defaults;
   }
 
-  const isBrowserFormat = BROWSER_FORMATS.includes(currentFormat);
-  const isNodeFormat = NODE_FORMATS.includes(currentFormat);
-
-  if (isBrowserFormat && TYPES_TO_CHECK[name].browser) {
+  // We then set the value for the key to false when it matches its build format
+  if (BROWSER_FORMATS.includes(currentFormat) && TYPES_TO_CHECK[name].browser) {
     TYPES_TO_CHECK[name].browser = false;
 
     return true;
   }
 
-  if (isNodeFormat && TYPES_TO_CHECK[name].node) {
+  if (NODE_FORMATS.includes(currentFormat) && TYPES_TO_CHECK[name].node) {
     TYPES_TO_CHECK[name].node = false;
 
     return true;

@@ -107,8 +107,15 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
       case 'java':
         testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
-      // The CI runs on a node docker image, therefore it's not needed to run via the CLI
+      /**
+       * The CI runs on a node docker image, therefore it's not needed to run
+       * via the CLI for the JavaScript client.
+       */
       case 'javascript':
+        const npmNamespace = getClientsConfigField(
+          'javascript',
+          'npmNamespace'
+        );
         const packages = matrix[language].toRun.map((client) => {
           const packageName =
             GENERATORS[`${language}-${client}`].additionalProperties
@@ -117,10 +124,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
           // `algoliasearch` is not preceded by `@algolia`
           return client === 'algoliasearch'
             ? packageName
-            : `${getClientsConfigField(
-                'javascript',
-                'npmNamespace'
-              )}/${packageName}`;
+            : `${npmNamespace}/${packageName}`;
         });
 
         buildCommand = `cd ${
