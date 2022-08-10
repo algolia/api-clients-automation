@@ -9,7 +9,7 @@ if (!apiKey || typeof apiKey !== 'string') {
 {{#hasRegionalHost}}
 {{^fallbackToAliasHost}}
 if (!region) {
-  throw new Error("`region` is missing.");
+  throw new Error(`\`region\` is missing. Must be one of the following: ${REGIONS.join(', )}`);
 }
 {{/fallbackToAliasHost}}
   
