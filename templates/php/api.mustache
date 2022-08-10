@@ -54,7 +54,7 @@ use {{invokerPackage}}\Support\Helpers;
         $allowedRegions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}];
 
         if (
-            {{^fallbackToAliasHost}}$region == null ||{{/fallbackToAliasHost}}
+            {{^fallbackToAliasHost}}$region === null ||{{/fallbackToAliasHost}}
             ($region !== null && !in_array($region, $allowedRegions, true))
         ) {
             throw new AlgoliaException(
