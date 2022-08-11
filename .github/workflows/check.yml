@@ -225,7 +225,7 @@ jobs:
         run: ${{ matrix.client.buildCommand }}
 
       - name: Check JavaScript client size
-        uses: andresz1/size-limit-action@v1
+        uses: andresz1/size-limit-action@v1.7.0
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
