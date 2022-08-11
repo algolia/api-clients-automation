@@ -230,7 +230,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           skip_step: build
-          script: yarn test:size --json
+          build_script: build:all
           directory: clients/algoliasearch-client-javascript
 
       - name: Run JavaScript 'algoliasearch' client tests
