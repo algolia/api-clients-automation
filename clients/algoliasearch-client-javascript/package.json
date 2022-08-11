@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "",
     "build:all": "lerna run build --parallel",
     "build:many": "lerna run build --parallel --scope ${0:-'{@algolia/*,algoliasearch}'}",
     "clean": "lerna run clean --parallel",

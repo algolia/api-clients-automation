@@ -229,7 +229,7 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          skip_step: build:all
+          skip_step: build
           script: yarn test:size --json
           directory: clients/algoliasearch-client-javascript
 
