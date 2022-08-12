@@ -15,7 +15,7 @@ const { algoliasearch } = require('algoliasearch');
       indexName,
       body: { objectID: randomId },
     });
-    client.waitForTask({ indexName, taskID: task.taskID });
+    await client.waitForTask({ indexName, taskID: task.taskID });
   } catch (err) {
     console.error(err);
     process.exit(1);
