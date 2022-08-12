@@ -8,7 +8,7 @@ const benny = require('benny');
 
 (async () => {
   const options = {
-    minSamples: 1,
+    minSamples: 10,
   };
   const env = {
     APP_ID: process.env.APP_ID,

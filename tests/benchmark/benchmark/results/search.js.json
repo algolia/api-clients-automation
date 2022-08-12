@@ -1,33 +1,42 @@
 {
   "name": "search-js",
-  "date": "2022-08-12T17:21:13.028Z",
+  "date": "2022-08-12T17:24:32.470Z",
   "version": null,
   "results": [
     {
       "name": "v4",
-      "ops": 0.31,
-      "margin": 0,
+      "ops": 0.4,
+      "margin": 21.54,
       "options": {
         "delay": 0.005,
         "initCount": 1,
         "minTime": 0.05,
         "maxTime": 5,
-        "minSamples": 1
+        "minSamples": 10
       },
-      "samples": 1,
+      "samples": 10,
       "promise": false,
       "details": {
-        "min": 3.270024583,
-        "max": 3.270024583,
-        "mean": 3.270024583,
-        "median": 3.270024583,
-        "standardDeviation": 0,
-        "marginOfError": 0,
-        "relativeMarginOfError": 0,
-        "standardErrorOfMean": 0,
-        "sampleVariance": 0,
+        "min": 0.608538834,
+        "max": 3.341571875,
+        "mean": 2.798848871,
+        "median": 3.2329276460000003,
+        "standardDeviation": 0.8429596004349209,
+        "marginOfError": 0.6029750771734137,
+        "relativeMarginOfError": 21.543681169107813,
+        "standardErrorOfMean": 0.2665672312879813,
+        "sampleVariance": 0.7105808879654014,
         "sampleResults": [
-          3.270024583
+          0.608538834,
+          2.475943667,
+          2.58865275,
+          2.619483334,
+          3.21819375,
+          3.247661542,
+          3.259037417,
+          3.288890291,
+          3.34051525,
+          3.341571875
         ]
       },
       "completed": true,
@@ -35,33 +44,42 @@
     },
     {
       "name": "v5",
-      "ops": 0.29,
-      "margin": 0,
+      "ops": 0.3,
+      "margin": 20.36,
       "options": {
         "delay": 0.005,
         "initCount": 1,
         "minTime": 0.05,
         "maxTime": 5,
-        "minSamples": 1
+        "minSamples": 10
       },
-      "samples": 1,
+      "samples": 10,
       "promise": false,
       "details": {
-        "min": 3.4014942919999998,
-        "max": 3.4014942919999998,
-        "mean": 3.4014942919999998,
-        "median": 3.4014942919999998,
-        "standardDeviation": 0,
-        "marginOfError": 0,
-        "relativeMarginOfError": 0,
-        "standardErrorOfMean": 0,
-        "sampleVariance": 0,
+        "min": 0.903967208,
+        "max": 3.5000984170000002,
+        "mean": 2.9626879833,
+        "median": 3.398041771,
+        "standardDeviation": 0.8432797098625656,
+        "marginOfError": 0.6032040537539504,
+        "relativeMarginOfError": 20.36002633939432,
+        "standardErrorOfMean": 0.2666684587771664,
+        "sampleVariance": 0.7111206690658929,
         "sampleResults": [
-          3.4014942919999998
+          0.903967208,
+          2.3828057080000002,
+          2.383653042,
+          3.367364083,
+          3.385099917,
+          3.410983625,
+          3.421290875,
+          3.4249985,
+          3.446618458,
+          3.5000984170000002
         ]
       },
       "completed": true,
-      "percentSlower": 6.45
+      "percentSlower": 25
     }
   ],
   "fastest": {
