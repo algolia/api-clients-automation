@@ -1,0 +1,78 @@
+{
+  "name": "search-js",
+  "date": "2022-08-12T17:12:31.287Z",
+  "version": null,
+  "results": [
+    {
+      "name": "v4",
+      "ops": 0.8,
+      "margin": 42.07,
+      "options": {
+        "delay": 0.005,
+        "initCount": 1,
+        "minTime": 0.05,
+        "maxTime": 5,
+        "minSamples": 1
+      },
+      "samples": 3,
+      "promise": false,
+      "details": {
+        "min": 1.025847917,
+        "max": 1.402926042,
+        "mean": 1.2751323613333334,
+        "median": 1.396623125,
+        "standardDeviation": 0.2159096624299415,
+        "marginOfError": 0.536392623920816,
+        "relativeMarginOfError": 42.06564276668037,
+        "standardErrorOfMean": 0.12465550172456796,
+        "sampleVariance": 0.04661698233061129,
+        "sampleResults": [
+          1.025847917,
+          1.396623125,
+          1.402926042
+        ]
+      },
+      "completed": true,
+      "percentSlower": 0
+    },
+    {
+      "name": "v5",
+      "ops": 0.5,
+      "margin": 1024.93,
+      "options": {
+        "delay": 0.005,
+        "initCount": 1,
+        "minTime": 0.05,
+        "maxTime": 5,
+        "minSamples": 1
+      },
+      "samples": 2,
+      "promise": false,
+      "details": {
+        "min": 0.362265541,
+        "max": 3.384986833,
+        "mean": 1.8736261870000002,
+        "median": 1.8736261870000002,
+        "standardDeviation": 2.137386723210162,
+        "marginOfError": 19.203348368076,
+        "relativeMarginOfError": 1024.929545782229,
+        "standardErrorOfMean": 1.511360646,
+        "sampleVariance": 4.5684220045550745,
+        "sampleResults": [
+          0.362265541,
+          3.384986833
+        ]
+      },
+      "completed": true,
+      "percentSlower": 37.5
+    }
+  ],
+  "fastest": {
+    "name": "v4",
+    "index": 0
+  },
+  "slowest": {
+    "name": "v5",
+    "index": 1
+  }
+}

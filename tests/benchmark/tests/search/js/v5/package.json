@@ -1,0 +1,14 @@
+{
+  "name": "v5",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "algoliasearch": "5.0.0-alpha.10"
+  }
+}
