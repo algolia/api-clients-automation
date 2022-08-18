@@ -178,7 +178,8 @@ client.saveObject("<YOUR_INDEX_NAME>", body);
 SearchMethodParams searchMethodParams = new SearchMethodParams();
 SearchQueries requests = new SearchQueries();
 requests.setIndexName("<YOUR_INDEX_NAME>");
-requests.setQuery("my aloglia object");
+// Typo tolerant search
+requests.setQuery("my aloglia ojbect");
 searchMethodParams.setRequests(requests);
 
 try {
