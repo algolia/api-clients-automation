@@ -3,6 +3,7 @@
 $env = require_once('../loadEnv.php');
 
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\Support\Helpers;
 
 $client = SearchClient::create(
     $env['ALGOLIA_APPLICATION_ID'],
@@ -27,3 +28,39 @@ var_dump(
         ],
     ])
 );
+
+// browse records
+$results = Helpers::browseObjects(
+    $indexName,
+    $client,
+);
+
+$objects = [];
+foreach ($results as $object) {
+    $objects[] = $object;
+}
+var_dump($objects);
+
+// browse synonyms
+$results = Helpers::browseSynonyms(
+    $indexName,
+    $client,
+);
+
+$synonyms = [];
+foreach ($results as $synonym) {
+    $synonyms[] = $synonym;
+}
+var_dump($synonyms);
+
+// browse rules
+$results = Helpers::browseRules(
+    $indexName,
+    $client,
+);
+
+$rules = [];
+foreach ($results as $rule) {
+    $rules[] = $rule;
+}
+var_dump($rules);

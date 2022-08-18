@@ -5,6 +5,9 @@ namespace Algolia\AlgoliaSearch\Support;
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Exceptions\ExceededRetriesException;
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
+use Algolia\AlgoliaSearch\Iterators\ObjectIterator;
+use Algolia\AlgoliaSearch\Iterators\RuleIterator;
+use Algolia\AlgoliaSearch\Iterators\SynonymIterator;
 
 final class Helpers
 {
@@ -220,5 +223,47 @@ final class Helpers
         }
 
         return $upToDate;
+    }
+
+    /**
+     * Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
+     *
+     * @param string $indexName Index name
+     * @param SearchClient $searchClient Search client
+     * @param array $requestOptions Request options
+     *
+     * @return ObjectIterator
+     */
+    public static function browseObjects($indexName, $searchClient, $requestOptions = [])
+    {
+        return new ObjectIterator($indexName, $searchClient, $requestOptions);
+    }
+
+    /**
+     * Helper: Iterate on the `searchRules` method of the client to allow aggregating rules of an index.
+     *
+     * @param string $indexName Index name
+     * @param SearchClient $searchClient Search client
+     * @param array $requestOptions Request options
+     *
+     * @return RuleIterator
+     */
+    public static function browseRules($indexName, $searchClient, $requestOptions = [])
+    {
+        return new RuleIterator($indexName, $searchClient, $requestOptions);
+    }
+
+    /**
+     * Helper: Iterate on the `searchSynonyms` method of the client to allow aggregating rules of an index.
+     *
+     * @param string $indexName Index name
+     * @param SearchClient $searchClient Search client
+     * @param array $requestOptions Request options
+     *
+     * @return SynonymIterator
+     */
+    public static function browseSynonyms($indexName, $searchClient, $requestOptions = [])
+    {
+        return new SynonymIterator($indexName, $searchClient, $requestOptions);
     }
 }
