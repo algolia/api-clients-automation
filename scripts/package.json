@@ -13,7 +13,7 @@
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts"
   },
   "devDependencies": {
-    "@octokit/rest": "19.0.3",
+    "@octokit/rest": "19.0.4",
     "@types/folder-hash": "4.0.2",
     "@types/inquirer": "8.2.2",
     "@types/jest": "28.1.6",
