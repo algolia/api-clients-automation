@@ -22,7 +22,7 @@
     "@babel/runtime": "7.18.9",
     "@rollup/plugin-babel": "5.3.1",
     "@rollup/plugin-node-resolve": "13.3.0",
-    "@types/jest": "28.1.6",
+    "@types/jest": "28.1.7",
     "@types/node": "16.11.47",
     "@types/rollup-plugin-node-globals": "1.4.1",
     "@types/semver": "7.3.10",
