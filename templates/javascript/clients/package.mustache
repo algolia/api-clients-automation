@@ -6,11 +6,27 @@
   {{^isAlgoliasearchClient}}
   "name": "{{{npmNamespace}}}/{{packageName}}",
   "description": "JavaScript client for {{packageName}}",
-  "main": "index.js",
-  "jsdelivr": "dist/{{packageName}}.umd.js",
-  "unpkg": "dist/{{packageName}}.umd.js",
-  "module": "dist/{{packageName}}.esm.node.js",
-  "browser": "dist/{{packageName}}.umd.js",
+  "main": "./index.js",
+  "umd:main": "./dist/{{packageName}}.umd.js",
+  "jsdelivr": "./dist/{{packageName}}.umd.js",
+  "unpkg": "./dist/{{packageName}}.umd.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/{{packageName}}.esm.node.js",
+        "module": "./dist/{{packageName}}.esm.node.js",
+        "require": "./dist/{{packageName}}.cjs.js",
+        "default": "./dist/{{packageName}}.cjs.js"
+      },
+      "default": {
+        "umd": "./dist/{{packageName}}.umd.js",
+        "module": "./dist/{{packageName}}.esm.browser.js",
+        "import": "./dist/{{packageName}}.esm.browser.js",
+        "default": "./dist/{{packageName}}.umd.js"
+      }
+    }
+  },
   "files": [
     "dist",
     "model",
@@ -44,7 +60,7 @@
         "require": "./dist/algoliasearch.cjs.js",
         "default": "./dist/algoliasearch.cjs.js"
       },
-      "browser": {
+      "default": {
         "umd": "./dist/algoliasearch.umd.js",
         "module": "./dist/algoliasearch.esm.browser.js",
         "import": "./dist/algoliasearch.esm.browser.js",
@@ -59,7 +75,7 @@
         "require": "./dist/lite/lite.cjs.js",
         "default": "./dist/lite/lite.cjs.js"
       },
-      "browser": {
+      "default": {
         "umd": "./dist/lite/lite.umd.js",
         "module": "./dist/lite/lite.esm.browser.js",
         "import": "./dist/lite/lite.esm.browser.js",
