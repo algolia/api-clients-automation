@@ -6,7 +6,9 @@ final class ObjectIterator extends AbstractAlgoliaIterator
 {
     public function getCursor()
     {
-        return isset($this->response['cursor']) ? $this->response['cursor'] : null;
+        return isset($this->response['cursor'])
+            ? $this->response['cursor']
+            : null;
     }
 
     /**
@@ -33,10 +35,7 @@ final class ObjectIterator extends AbstractAlgoliaIterator
 
         $this->response = $this->searchClient->browse(
             $this->indexName,
-            array_merge(
-                $this->requestOptions,
-                $cursor
-            )
+            array_merge($this->requestOptions, $cursor)
         );
 
         $this->batchKey = 0;

@@ -13,16 +13,16 @@ final class RuleIterator extends AbstractAlgoliaIterator
 
     protected function fetchNextPage()
     {
-        if (is_array($this->response) && $this->key >= $this->response['nbHits']) {
+        if (
+            is_array($this->response) &&
+            $this->key >= $this->response['nbHits']
+        ) {
             return;
         }
 
         $this->response = $this->searchClient->searchRules(
             $this->indexName,
-            array_merge(
-                $this->requestOptions,
-                ['page' => $this->page]
-            )
+            array_merge($this->requestOptions, ['page' => $this->page])
         );
 
         $this->batchKey = 0;

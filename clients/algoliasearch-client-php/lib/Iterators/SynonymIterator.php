@@ -13,7 +13,10 @@ final class SynonymIterator extends AbstractAlgoliaIterator
 
     protected function fetchNextPage()
     {
-        if (is_array($this->response) && $this->key >= $this->response['nbHits']) {
+        if (
+            is_array($this->response) &&
+            $this->key >= $this->response['nbHits']
+        ) {
             return;
         }
 

@@ -52,8 +52,11 @@ abstract class AbstractAlgoliaIterator implements \Iterator
      */
     abstract protected function formatHit(array $hit);
 
-    public function __construct($indexName, SearchClient $searchClient, $requestOptions = [])
-    {
+    public function __construct(
+        $indexName,
+        SearchClient $searchClient,
+        $requestOptions = []
+    ) {
         $this->indexName = $indexName;
         $this->searchClient = $searchClient;
         $this->requestOptions = $requestOptions + [
