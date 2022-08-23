@@ -3,14 +3,13 @@
   "repository": "{{gitUserId}}/{{gitRepoId}}",
   "license": "MIT",
   "author": "Algolia",
+  "types": "./index.d.ts",
   {{^isAlgoliasearchClient}}
   "name": "{{{npmNamespace}}}/{{packageName}}",
   "description": "JavaScript client for {{packageName}}",
-  "main": "./index.js",
-  "umd:main": "./dist/{{packageName}}.umd.js",
   "jsdelivr": "./dist/{{packageName}}.umd.js",
   "unpkg": "./dist/{{packageName}}.umd.js",
-  "types": "./index.d.ts",
+  "browser": "./dist/{{packageName}}.umd.js",
   "exports": {
     ".": {
       "node": {
@@ -26,7 +25,8 @@
         "default": "./dist/{{packageName}}.umd.js"
       }
     },
-    "./src/*": "./src/*"
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
   },
   "files": [
     "dist",
@@ -52,6 +52,12 @@
   {{#isAlgoliasearchClient}}
   "name": "{{packageName}}",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
+  "jsdelivr": "./dist/algoliasearch.umd.js",
+  "unpkg": "./dist/algoliasearch.umd.js",
+  "browser": {
+    "./index.js": "./dist/algoliasearch.umd.js",
+    "./lite.js": "./dist/lite/lite.umd.js"
+  },
   "exports": {
     ".": {
       "types": "./index.d.ts",
@@ -83,12 +89,6 @@
         "default": "./dist/lite/lite.umd.js"
       }
     }
-  },
-  "jsdelivr": "./dist/algoliasearch.umd.js",
-  "unpkg": "./dist/algoliasearch.umd.js",
-  "browser": {
-    "./index.js": "./dist/algoliasearch.umd.js",
-    "./lite.js": "./dist/lite/lite.umd.js"
   },
   "files": [
     "dist",
@@ -122,7 +122,6 @@
     "rollup": "2.78.1"
   },
   {{/isAlgoliasearchClient}}
-  "types": "index.d.ts",
   "engines": {
     "node": ">= 14.0.0"
   }
