@@ -1,16 +1,32 @@
 {
   "name": "@algolia/client-analytics",
-  "version": "5.0.0-alpha.10",
+  "version": "5.0.0-alpha.11",
   "description": "JavaScript client for client-analytics",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "index.js",
-  "jsdelivr": "dist/client-analytics.umd.js",
-  "unpkg": "dist/client-analytics.umd.js",
-  "module": "dist/client-analytics.esm.node.js",
-  "browser": "dist/client-analytics.umd.js",
-  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/client-analytics.esm.node.js",
+        "module": "./dist/client-analytics.esm.node.js",
+        "require": "./dist/client-analytics.cjs.js",
+        "default": "./dist/client-analytics.cjs.js"
+      },
+      "default": {
+        "umd": "./dist/client-analytics.umd.js",
+        "module": "./dist/client-analytics.esm.browser.js",
+        "import": "./dist/client-analytics.esm.browser.js",
+        "default": "./dist/client-analytics.umd.js"
+      }
+    },
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
+  },
+  "jsdelivr": "./dist/client-analytics.umd.js",
+  "unpkg": "./dist/client-analytics.umd.js",
+  "browser": "./dist/client-analytics.umd.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",
@@ -22,13 +38,13 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.10",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.10",
-    "@algolia/requester-node-http": "5.0.0-alpha.10"
+    "@algolia/client-common": "5.0.0-alpha.11",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.11",
+    "@algolia/requester-node-http": "5.0.0-alpha.11"
   },
   "devDependencies": {
     "@types/node": "16.11.47",
-    "rollup": "2.77.2",
+    "rollup": "2.78.1",
     "typescript": "4.7.4"
   },
   "engines": {

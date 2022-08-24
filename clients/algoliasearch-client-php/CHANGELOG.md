@@ -1,3 +1,11 @@
+## [4.0.0-alpha.15](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.14...4.0.0-alpha.15)
+
+- [1a24f336](https://github.com/algolia/api-clients-automation/commit/1a24f336) feat(php): add iterator helper methods ([#936](https://github.com/algolia/api-clients-automation/pull/936)) by [@damcou](https://github.com/damcou/)
+
+## [4.0.0-alpha.14](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.13...4.0.0-alpha.14)
+
+- [7d518b21](https://github.com/algolia/api-clients-automation/commit/7d518b21) docs(php): update migration guide for PHP ([#935](https://github.com/algolia/api-clients-automation/pull/935)) by [@damcou](https://github.com/damcou/)
+
 ## [4.0.0-alpha.13](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.12...4.0.0-alpha.13)
 
 - [4c1596df](https://github.com/algolia/api-clients-automation/commit/4c1596df) fix(clients): list available regions when region is missing ([#916](https://github.com/algolia/api-clients-automation/pull/916)) by [@shortcuts](https://github.com/shortcuts/)
