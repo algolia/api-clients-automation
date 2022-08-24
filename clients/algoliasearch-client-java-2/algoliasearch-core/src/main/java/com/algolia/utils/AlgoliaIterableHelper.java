@@ -16,7 +16,7 @@ public class AlgoliaIterableHelper {
 
           @Override
           public boolean hasNext() {
-             if(isFirstRequest || (_hasNext.getAsBoolean() && !currentIterator.hasNext())) {
+            if (isFirstRequest || (_hasNext.getAsBoolean() && !currentIterator.hasNext())) {
               currentIterator = executeQuery.get();
               isFirstRequest = false;
             }
@@ -25,7 +25,7 @@ public class AlgoliaIterableHelper {
 
           @Override
           public T next() {
-            if(currentIterator == null || !currentIterator.hasNext()) {
+            if (currentIterator == null || !currentIterator.hasNext()) {
               currentIterator = executeQuery.get();
               isFirstRequest = false;
             }
