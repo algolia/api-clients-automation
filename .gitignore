@@ -30,4 +30,4 @@ dist
 
 generators/bin
 
-tests/benchmark/benchmark/results/*/json
+tests/benchmark/benchmark/results/*.json
