@@ -13,6 +13,7 @@ const benny = require('benny');
   const env = {
     APP_ID: process.env.APP_ID,
     API_KEY: process.env.API_KEY,
+    NUM_RECORDS: process.env.NUM_RECORDS,
   };
 
   await benny.suite(

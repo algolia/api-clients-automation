@@ -7,15 +7,20 @@ const { algoliasearch } = require('algoliasearch');
   try {
     const appId = process.env.APP_ID;
     const apiKey = process.env.API_KEY;
+    const recordsNum = parseInt(process.env.NUM_RECORDS || '1', 10);
     const randomId = (Math.random() + 1).toString(36).substring(7);
     const client = algoliasearch(appId, apiKey);
-    const indexName = `bench.search.js.v4.${randomId}`;
+    const indexName = `bench.search.js.v5.${randomId}`;
 
-    const task = await client.saveObject({
-      indexName,
-      body: { objectID: randomId },
+    const records = new Array(recordsNum).fill(1);
+    const saves = records.map(async (_, i) => {
+      const task = await client.saveObject({
+        indexName,
+        body: { objectID: `${i}--${randomId}` },
+      });
+      await client.waitForTask({ indexName, taskID: task.taskID });
     });
-    await client.waitForTask({ indexName, taskID: task.taskID });
+    await Promise.all(saves);
   } catch (err) {
     console.error(err);
     process.exit(1);
