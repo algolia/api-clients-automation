@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "bench": "node ./search.js.js",
+    "cleanIndices": "node ./cleanIndex.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
