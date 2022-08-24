@@ -1,0 +1,98 @@
+{
+  "name": "search-js",
+  "date": "2022-08-24T09:42:11.157Z",
+  "version": null,
+  "results": [
+    {
+      "name": "v4",
+      "ops": 1.2,
+      "margin": 13,
+      "options": {
+        "delay": 0.005,
+        "initCount": 1,
+        "minTime": 0.05,
+        "maxTime": 5,
+        "minSamples": 10
+      },
+      "samples": 12,
+      "promise": false,
+      "details": {
+        "min": 0.544262925,
+        "max": 1.148489707,
+        "mean": 0.8537821315833334,
+        "median": 0.870679076,
+        "standardDeviation": 0.1747021734949806,
+        "marginOfError": 0.11100121375832141,
+        "relativeMarginOfError": 13.001116988999334,
+        "standardErrorOfMean": 0.05043217344766988,
+        "sampleVariance": 0.0305208494238703,
+        "sampleResults": [
+          0.544262925,
+          0.713582508,
+          0.722792477,
+          0.727238138,
+          0.738569353,
+          0.828584635,
+          0.912773517,
+          0.916355647,
+          0.922612772,
+          0.969945461,
+          1.100178439,
+          1.148489707
+        ]
+      },
+      "completed": true,
+      "percentSlower": 7.69
+    },
+    {
+      "name": "v5",
+      "ops": 1.3,
+      "margin": 20.65,
+      "options": {
+        "delay": 0.005,
+        "initCount": 1,
+        "minTime": 0.05,
+        "maxTime": 5,
+        "minSamples": 10
+      },
+      "samples": 13,
+      "promise": false,
+      "details": {
+        "min": 0.477144825,
+        "max": 1.176132841,
+        "mean": 0.7476574912307693,
+        "median": 0.657850017,
+        "standardDeviation": 0.2554436775462204,
+        "marginOfError": 0.15437632995569733,
+        "relativeMarginOfError": 20.64800149351384,
+        "standardErrorOfMean": 0.0708473290296913,
+        "sampleVariance": 0.06525147239833741,
+        "sampleResults": [
+          0.477144825,
+          0.489156411,
+          0.490303288,
+          0.493654178,
+          0.549389749,
+          0.554289227,
+          0.657850017,
+          0.914483663,
+          0.958503944,
+          0.962024875,
+          0.995153835,
+          1.001460533,
+          1.176132841
+        ]
+      },
+      "completed": true,
+      "percentSlower": 0
+    }
+  ],
+  "fastest": {
+    "name": "v5",
+    "index": 1
+  },
+  "slowest": {
+    "name": "v4",
+    "index": 0
+  }
+}

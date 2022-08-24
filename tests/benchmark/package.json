@@ -8,7 +8,12 @@
   "directories": {
     "test": "tests"
   },
+  "workspaces": [
+    "tests/search/js/v4",
+    "tests/search/js/v5"
+  ],
   "scripts": {
+    "bench": "node ./search.js.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
