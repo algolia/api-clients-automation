@@ -65,18 +65,21 @@ post:
                       value:
                         type: array
                         items:
-                          title: affinities
+                          title: affinity
                           type: object
                           properties:
                             name:
                               type: string
+                              required: true
                             value:
                               type: string
+                              required: true
                             probability:
                               type: number
                               format: double
                               minimum: 0
                               maximum: 1
+                              required: true
                       lastUpdatedAt:
                         type: string
               properties:
