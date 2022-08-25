@@ -19,7 +19,7 @@ servers:
         default: ew
       description: >
         Region where your Predict data is stored and processed:
-          * `we` - europe-west
+          * `ew` - europe-west
           * `ue` - us-east
 security:
   - appId: []
