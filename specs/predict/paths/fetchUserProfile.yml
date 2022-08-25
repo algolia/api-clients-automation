@@ -48,6 +48,9 @@ post:
                               maximum: 1
                       lastUpdatedAt:
                         type: string
+                    required:
+                      - value
+                      - lastUpdatedAt
                   order_value:
                     type: object
                     description: Prediction for the **order_value** model.
@@ -58,6 +61,9 @@ post:
                         minimum: 0
                       lastUpdatedAt:
                         type: string
+                    required:
+                      - value
+                      - lastUpdatedAt
                   affinities:
                     type: object
                     description: Prediction for the **affinities** model.
@@ -70,18 +76,18 @@ post:
                           properties:
                             name:
                               type: string
-                              required: true
                             value:
                               type: string
-                              required: true
                             probability:
                               type: number
                               format: double
                               minimum: 0
                               maximum: 1
-                              required: true
                       lastUpdatedAt:
                         type: string
+                    required:
+                      - value
+                      - lastUpdatedAt
               properties:
                 type: object
                 title: properties
