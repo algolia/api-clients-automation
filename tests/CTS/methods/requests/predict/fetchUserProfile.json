@@ -4,7 +4,7 @@
     "parameters": {
       "userID": "user1",
       "params": {
-        "modelsToRetrieve": [
+        "modelsToRetrieveParam": [
           "funnel_stage",
           "order_value",
           "affinities"
@@ -15,7 +15,7 @@
       "path": "/1/users/user1/fetch",
       "method": "POST",
       "body": {
-        "modelsToRetrieve": [
+        "modelsToRetrieveParam": [
           "funnel_stage",
           "order_value",
           "affinities"
@@ -28,7 +28,7 @@
     "parameters": {
       "userID": "user1",
       "params": {
-        "typesToRetrieve": [
+        "typesToRetrieveParam": [
           "properties",
           "segments"
         ]
@@ -38,7 +38,7 @@
       "path": "/1/users/user1/fetch",
       "method": "POST",
       "body": {
-        "typesToRetrieve": [
+        "typesToRetrieveParam": [
           "properties",
           "segments"
         ]
@@ -50,12 +50,12 @@
     "parameters": {
       "userID": "user1",
       "params": {
-        "modelsToRetrieve": [
+        "modelsToRetrieveParam": [
           "funnel_stage",
           "order_value",
           "affinities"
         ],
-        "typesToRetrieve": [
+        "typesToRetrieveParam": [
           "properties",
           "segments"
         ]
@@ -65,12 +65,12 @@
       "path": "/1/users/user1/fetch",
       "method": "POST",
       "body": {
-        "modelsToRetrieve": [
+        "modelsToRetrieveParam": [
           "funnel_stage",
           "order_value",
           "affinities"
         ],
-        "typesToRetrieve": [
+        "typesToRetrieveParam": [
           "properties",
           "segments"
         ]
