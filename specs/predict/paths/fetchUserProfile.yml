@@ -46,6 +46,9 @@ post:
                               format: double
                               minimum: 0
                               maximum: 1
+                          required:
+                            - name
+                            - probability
                       lastUpdatedAt:
                         type: string
                     required:
@@ -83,6 +86,10 @@ post:
                               format: double
                               minimum: 0
                               maximum: 1
+                          required:
+                            - name
+                            - value
+                            - probability
                       lastUpdatedAt:
                         type: string
                     required:
