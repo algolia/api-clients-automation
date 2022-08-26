@@ -14,7 +14,7 @@ modelsToRetrieveParam:
   required:
     - modelsToRetrieveParam
   properties:
-    modelsToRetrieveParam:
+    modelsToRetrieve:
       type: array
       items:
         $ref: '#/modelsToRetrieve'
@@ -24,7 +24,7 @@ typesToRetrieveParam:
   required:
     - typesToRetrieveParam
   properties:
-    typesToRetrieveParam:
+    typesToRetrieve:
       type: array
       items:
         $ref: '#/typesToRetrieve'
