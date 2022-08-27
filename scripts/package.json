@@ -16,7 +16,7 @@
     "@octokit/rest": "19.0.4",
     "@types/folder-hash": "4.0.2",
     "@types/inquirer": "8.2.3",
-    "@types/jest": "28.1.7",
+    "@types/jest": "28.1.8",
     "@types/js-yaml": "4.0.5",
     "@types/micromatch": "4.0.2",
     "@types/mustache": "4.2.1",
