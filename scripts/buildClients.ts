@@ -24,15 +24,18 @@ async function buildClient(
       break;
     case 'javascript':
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
-      const toRun = gens
-        .map(({ additionalProperties: { packageName } }) =>
+      const packageNames = gens.map(
+        ({ additionalProperties: { packageName } }) =>
           packageName === 'algoliasearch'
             ? packageName
             : `${npmNamespace}/${packageName}`
-        )
-        .join(',');
+      );
+      const toRun =
+        packageNames.length === 1
+          ? packageNames[0]
+          : `'{${packageNames.join(',')}}'`;
 
-      await run(`yarn build:many '{${toRun}}'`, {
+      await run(`yarn build:many ${toRun}`, {
         verbose: true,
         cwd,
       });

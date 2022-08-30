@@ -116,7 +116,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
           'javascript',
           'npmNamespace'
         );
-        const packages = matrix[language].toRun.map((client) => {
+        const packageNames = matrix[language].toRun.map((client) => {
           const packageName =
             GENERATORS[`${language}-${client}`].additionalProperties
               .packageName;
@@ -126,10 +126,12 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
             ? packageName
             : `${npmNamespace}/${packageName}`;
         });
+        const packages =
+          packageNames.length === 1
+            ? packageNames[0]
+            : `'{${packageNames.join(',')}}'`;
 
-        buildCommand = `cd ${
-          matrix[language].path
-        } && yarn build:many '{${packages.join(',')}}'`;
+        buildCommand = `cd ${matrix[language].path} && yarn build:many ${packages}`;
         break;
       default:
         break;
