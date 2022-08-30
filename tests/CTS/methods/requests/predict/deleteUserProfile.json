@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "deleteUserProfile",
+    "parameters": {
+      "userID": "user1"
+    },
+    "request": {
+      "path": "/1/users/user1/delete",
+      "method": "DELETE"
+    }
+  }
+]
