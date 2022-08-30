@@ -126,12 +126,10 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
             ? packageName
             : `${npmNamespace}/${packageName}`;
         });
-        const packages =
-          packageNames.length === 1
-            ? packageNames[0]
-            : `'{${packageNames.join(',')}}'`;
 
-        buildCommand = `cd ${matrix[language].path} && yarn build:many ${packages}`;
+        buildCommand = `cd ${
+          matrix[language].path
+        } && yarn build:many '{${packageNames.join(',')},}'`;
         break;
       default:
         break;

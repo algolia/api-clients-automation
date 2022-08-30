@@ -30,12 +30,8 @@ async function buildClient(
             ? packageName
             : `${npmNamespace}/${packageName}`
       );
-      const toRun =
-        packageNames.length === 1
-          ? packageNames[0]
-          : `'{${packageNames.join(',')}}'`;
 
-      await run(`yarn build:many ${toRun}`, {
+      await run(`yarn build:many '{${packageNames.join(',')},}'`, {
         verbose: true,
         cwd,
       });
