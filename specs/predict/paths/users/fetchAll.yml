@@ -1,0 +1,45 @@
+post:
+  tags:
+    - profiles
+  operationId: fetchAllUserProfiles
+  description: Get all users with predictions in the provided application.
+  summary: Get all user profiles.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/Params.yml#/fetchAllUsersParams'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: fetchAllUserProfilesResponse
+            type: object
+            required:
+              - users
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: '../../common/parameters.yml#/userProfile'
+              previousPageToken:
+                type: string
+                description: 'The token is used to navigate backward in the user list. To navigate from the current user list to the previous page, the API generates the previous page token and it sends the token in the response, beside the current user list. NOTE: This body param cannot be used with `nextPageToken` at the same time.'
+              nextPageToken:
+                type: string
+                description: 'The token is used to navigate forward in the user list. To navigate from the current user list to the next page, the API generates the next page token and it sends the token in the response, beside the current user list. NOTE: This body param cannot be used with `previousPageToken` at the same time.'
+    '400':
+      description: Could not parse the request body.
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/ErrorBase.yml'
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'

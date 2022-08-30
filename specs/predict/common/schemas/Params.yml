@@ -9,6 +9,14 @@ allParams:
     - $ref: '#/modelsToRetrieveParam'
     - $ref: '#/typesToRetrieveParam'
 
+fetchAllUsersParams:
+  oneOf:
+    - $ref: '#/modelsToRetrieveParam'
+    - $ref: '#/typesToRetrieveParam'
+    - $ref: '#/nextPageToken'
+    - $ref: '#/previousPageToken'
+    - $ref: '#/limit'
+
 modelsToRetrieveParam:
   type: object
   required:
@@ -36,3 +44,12 @@ modelsToRetrieve:
 typesToRetrieve:
   type: string
   enum: [properties, segments]
+
+nextPageToken:
+  type: string
+
+previousPageToken:
+  type: string
+
+limit:
+  type: integer
