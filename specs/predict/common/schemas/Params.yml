@@ -13,9 +13,9 @@ fetchAllUsersParams:
   oneOf:
     - $ref: '#/modelsToRetrieveParam'
     - $ref: '#/typesToRetrieveParam'
-    - $ref: '#/nextPageToken'
-    - $ref: '#/previousPageToken'
-    - $ref: '#/limit'
+    - $ref: '#/nextPageTokenParam'
+    - $ref: '#/previousPageTokenParam'
+    - $ref: '#/limitParam'
 
 modelsToRetrieveParam:
   type: object
@@ -36,6 +36,30 @@ typesToRetrieveParam:
       type: array
       items:
         $ref: '#/typesToRetrieve'
+
+nextPageTokenParam:
+  type: object
+  required:
+    - nextPageTokenParam
+  properties:
+    nextPageToken:
+      $ref: '#/nextPageToken'
+
+previousPageTokenParam:
+  type: object
+  required:
+    - previousPageTokenParam
+  properties:
+    previousPageToken:
+      $ref: '#/previousPageToken'
+
+limitParam:
+  type: object
+  required:
+    - limitParam
+  properties:
+    limit:
+      $ref: '#/limit'
 
 modelsToRetrieve:
   type: string

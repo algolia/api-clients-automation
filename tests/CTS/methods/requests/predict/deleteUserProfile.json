@@ -6,7 +6,8 @@
     },
     "request": {
       "path": "/1/users/user1/delete",
-      "method": "DELETE"
+      "method": "DELETE",
+      "userID": "user1"
     }
   }
 ]
