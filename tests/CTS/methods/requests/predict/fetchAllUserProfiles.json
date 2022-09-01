@@ -11,11 +11,13 @@
     "request": {
       "path": "/1/users",
       "method": "POST",
-      "modelsToRetrieve": [
-        "funnel_stage",
-        "order_value",
-        "affinities"
-      ]
+      "body": {
+        "modelsToRetrieve": [
+          "funnel_stage",
+          "order_value",
+          "affinities"
+        ]
+      }
     }
   },
   {
@@ -29,10 +31,12 @@
     "request": {
       "path": "/1/users",
       "method": "POST",
-      "typesToRetrieve": [
-        "properties",
-        "segments"
-      ]
+      "body": {
+        "typesToRetrieve": [
+          "properties",
+          "segments"
+        ]
+      }
     }
   },
   {
@@ -43,7 +47,9 @@
     "request": {
       "path": "/1/users",
       "method": "POST",
-      "limit": 10
+      "body": {
+        "limit": 10
+      }
     }
   },
   {
@@ -54,7 +60,9 @@
     "request": {
       "path": "/1/users",
       "method": "POST",
-      "nextPageToken": "nextPageTokenExample123"
+      "body": {
+        "nextPageToken": "nextPageTokenExample123"
+      }
     }
   },
   {
@@ -65,7 +73,9 @@
     "request": {
       "path": "/1/users",
       "method": "POST",
-      "previousPageToken": "previousPageTokenExample123"
+      "body": {
+        "previousPageToken": "previousPageTokenExample123"
+      }
     }
   }
 ]
