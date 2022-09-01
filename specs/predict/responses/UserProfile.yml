@@ -10,11 +10,11 @@ userProfile:
       title: predictions
       properties:
         funnel_stage:
-          $ref: '#/funnel_stage'
+          $ref: '#/predictionsfunnelStage'
         order_value:
-          $ref: '#/order_value'
+          $ref: '#/predictionsOrderValue'
         affinities:
-          $ref: '#/affinities'
+          $ref: '#/predictionsAffinities'
     properties:
       type: object
       title: properties
@@ -57,7 +57,7 @@ error:
   required:
     - error
 
-funnel_stage:
+predictionsfunnelStage:
   oneOf:
     - $ref: '#/funnelStageSuccess'
     - $ref: '#/error'
@@ -88,7 +88,7 @@ funnelStageSuccess:
     - value
     - lastUpdatedAt
 
-order_value:
+predictionsOrderValue:
   oneOf:
     - $ref: '#/orderValueSuccess'
     - $ref: '#/error'
@@ -107,7 +107,7 @@ orderValueSuccess:
     - value
     - lastUpdatedAt
 
-affinities:
+predictionsAffinities:
   oneOf:
     - $ref: '#/affinitiesSuccess'
     - $ref: '#/error'
