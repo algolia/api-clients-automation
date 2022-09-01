@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/Params.yml#/fetchAllUsersParams'
+          $ref: '../../common/schemas/Params.yml#/fetchAllUserProfilesParams'
   responses:
     '200':
       description: OK

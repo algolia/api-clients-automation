@@ -9,7 +9,7 @@ allParams:
     - $ref: '#/modelsToRetrieveParam'
     - $ref: '#/typesToRetrieveParam'
 
-fetchAllUsersParams:
+fetchAllUserProfilesParams:
   oneOf:
     - $ref: '#/modelsToRetrieveParam'
     - $ref: '#/typesToRetrieveParam'
