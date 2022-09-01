@@ -39,9 +39,8 @@ userProfile:
                   - probability
             lastUpdatedAt:
               type: string
-          required:
-            - value
-            - lastUpdatedAt
+            error:
+              type: string
         order_value:
           type: object
           description: Prediction for the **order_value** model.
@@ -52,9 +51,8 @@ userProfile:
               minimum: 0
             lastUpdatedAt:
               type: string
-          required:
-            - value
-            - lastUpdatedAt
+            error:
+              type: string
         affinities:
           type: object
           description: Prediction for the **affinities** model.
@@ -80,9 +78,8 @@ userProfile:
                   - probability
             lastUpdatedAt:
               type: string
-          required:
-            - value
-            - lastUpdatedAt
+            error:
+              type: string
     properties:
       type: object
       title: properties
