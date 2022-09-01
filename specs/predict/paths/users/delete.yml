@@ -16,6 +16,7 @@ delete:
             type: object
             required:
               - user
+              - deletedUntil
             properties:
               user:
                 type: string
