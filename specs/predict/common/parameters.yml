@@ -8,6 +8,8 @@ userID:
 
 userProfile:
   type: object
+  required:
+    - user
   properties:
     user:
       type: string
