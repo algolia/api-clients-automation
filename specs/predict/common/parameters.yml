@@ -100,6 +100,9 @@ userProfile:
     segments:
       type: object
       title: segments
+      required:
+        - computed
+        - custom
       description: Segments that the user belongs to.
       properties:
         computed:
