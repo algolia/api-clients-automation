@@ -40,7 +40,7 @@ __metadata:
     jest: 29.0.2
     jest-environment-jsdom: 29.0.2
     ts-jest: 28.0.8
-    typescript: 4.8.2
+    typescript: 4.8.3
   languageName: unknown
   linkType: soft
 
@@ -145,7 +145,7 @@ __metadata:
     jest: 29.0.2
     jest-environment-jsdom: 29.0.2
     ts-jest: 28.0.8
-    typescript: 4.8.2
+    typescript: 4.8.3
     xhr-mock: 2.5.1
   languageName: unknown
   linkType: soft
@@ -161,7 +161,7 @@ __metadata:
     jest: 29.0.2
     nock: 13.2.9
     ts-jest: 28.0.8
-    typescript: 4.8.2
+    typescript: 4.8.3
   languageName: unknown
   linkType: soft
 
@@ -175,7 +175,7 @@ __metadata:
     jest: 29.0.2
     nock: 13.2.9
     ts-jest: 28.0.8
-    typescript: 4.8.2
+    typescript: 4.8.3
   languageName: unknown
   linkType: soft
 
@@ -3748,7 +3748,7 @@ __metadata:
     rollup-plugin-typescript2: 0.33.0
     semver: 7.3.7
     ts-node: 10.9.1
-    typescript: 4.8.2
+    typescript: 4.8.3
   languageName: unknown
   linkType: soft
 
@@ -10389,7 +10389,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^3 || ^4":
+"typescript@npm:4.8.3, typescript@npm:^3 || ^4":
   version: 4.8.3
   resolution: "typescript@npm:4.8.3"
   bin:
@@ -10409,7 +10409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^3 || ^4#~builtin<compat/typescript>":
+"typescript@patch:typescript@4.8.3#~builtin<compat/typescript>, typescript@patch:typescript@^3 || ^4#~builtin<compat/typescript>":
   version: 4.8.3
   resolution: "typescript@patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=a1c5e5"
   bin:
