@@ -14,8 +14,8 @@ servers:
     variables:
       region:
         enum:
-          - us
           - eu
+          - us
         default: eu
         description: >
           Region where your Predict data is stored and processed:
