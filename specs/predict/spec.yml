@@ -52,5 +52,8 @@ paths:
   /1/users:
     $ref: 'paths/users/fetchAll.yml'
 
+  # ######################
+  # ### Model request ###
+  # ######################
   /1/predict/modeltypes:
-    $ref: 'paths/predict/getAvailableModelTypes.yml'
+    $ref: 'paths/models/getAvailableModelTypes.yml'

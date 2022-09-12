@@ -3,7 +3,7 @@
     "testName": "get available model types",
     "parameters": {},
     "request": {
-      "path": "/1/predict/modeltype",
+      "path": "/1/predict/modeltypes",
       "method": "GET"
     }
   }
