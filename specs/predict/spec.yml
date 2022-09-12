@@ -20,7 +20,7 @@ servers:
         description: >
           Region where your Predict data is stored and processed:
             * `eu` - Europe
-            * `us` - United States
+            * `us` - United States.
 security:
   - appId: []
     apiKey: []
