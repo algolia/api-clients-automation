@@ -106,7 +106,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       bundle.put("client", Utils.createClientName(importClientName, language) + "Client");
       bundle.put("clientPrefix", Utils.createClientName(importClientName, language));
       bundle.put("hasRegionalHost", hasRegionalHost);
-      bundle.put("defaultRegion", client.equals("predict") ? "ew" : "us");
+      bundle.put("defaultRegion", client.equals("predict") ? "eu" : "us");
       bundle.put("lambda", lambda);
 
       ctsManager.addDataToBundle(bundle);
