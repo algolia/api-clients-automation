@@ -10,7 +10,7 @@ components:
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
-  - url: https://predict-{region}.algolia.com
+  - url: https://predict.{region}.algolia.com
     variables:
       region:
         enum:
