@@ -23,6 +23,26 @@ activateModelParams:
     - sourceID
     - index
 
+updateModelParams:
+  type: object
+  properties:
+    name:
+      $ref: '#/name'
+    affinities:
+      type: array
+      items:
+        $ref: '#/affinities'
+    contentAttributes:
+      type: array
+      items:
+        $ref: '#/contentAttributes'
+    status:
+      $ref: '#/status'
+  required:
+    - modelID
+    - sourceID
+    - index
+
 type:
   type: string
   enum: ['funnel_stage', 'order_value', 'affinities']
@@ -47,3 +67,10 @@ affinities:
 contentAttributes:
   type: string
   description: List of items attributes that will be used for embeddings, for ex. titles or descriptions.
+
+status:
+  type: string
+  enum: [active, inactive]
+  description: |
+    `active` - model is running and generating predictions. The active value is allowed only if the current status of the model is `inactive`. \
+    `inactive` - model training and inference have been paused. The inactive value is allowed only if the current status of the model is `active`.

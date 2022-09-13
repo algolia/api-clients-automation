@@ -1,0 +1,63 @@
+get:
+  tags:
+    - models
+  operationId: getModelInstanceConfig
+  summary: Get a model’s instance configuration.
+  description: Get the configuration for a model that was activated.
+  parameters:
+    - $ref: '../../common/parameters.yml#/modelID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getModelInstanceConfigResponse
+            $ref: '../../responses/Models.yml#/modelInstance'
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '404':
+      $ref: '../../responses/ModelNotFound.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'
+
+post:
+  tags:
+    - models
+  operationId: updateModelInstance
+  summary: Update a model instance.
+  description: Update a model’s configuration.
+  parameters:
+    - $ref: '../../common/parameters.yml#/modelID'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/modelsParams.yml#/updateModelParams'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: updateModelInstanceResponse
+            type: object
+            additionalProperties: false
+            properties:
+              modelID:
+                type: string
+                description: The ID of the model.
+              updatedAt:
+                type: string
+                description: The time the model was updated.
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '404':
+      $ref: '../../responses/ModelNotFound.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'
