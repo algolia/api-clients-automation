@@ -63,3 +63,6 @@ paths:
 
   /1/predict/models:
     $ref: 'paths/models/models.yml'
+
+  /1/predict/models/{modelID}/metrics:
+    $ref: 'paths/models/getModelMetrics.yml'

@@ -56,3 +56,25 @@ getModelInstanceConfigStatus:
     `active` - model is running and generating prediction. \
     `invalid` - model has failed training (ex. can’t retrieve data from source). An additional error field will be set for this status. \
     `inactive` - model has been deactivated from the dashboard. Pipelines still exist but they are not currently running.
+
+modelMetrics:
+  type: object
+  additionalProperties: false
+  properties:
+    precision:
+      type: number
+      format: double
+    recall:
+      type: number
+      format: double
+    mrr:
+      type: number
+      format: double
+    coverage:
+      type: number
+      format: double
+    f1_score:
+      type: number
+      format: double
+    updatedAt:
+      type: string
