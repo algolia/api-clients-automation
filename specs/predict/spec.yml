@@ -47,3 +47,6 @@ paths:
 
   /1/users:
     $ref: 'paths/users/fetchAll.yml'
+
+  /1/segments/{segmentID}:
+    $ref: 'paths/segments/fetch.yml'

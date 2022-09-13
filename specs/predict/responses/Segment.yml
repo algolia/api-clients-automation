@@ -1,0 +1,34 @@
+segment:
+  type: object
+  required:
+    - id
+    - name
+    - conditions
+    - status
+    - type
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    conditions:
+      type: string
+    status:
+      $ref: '#/segmentStatus'
+    type:
+      $ref: '#/segmentType'
+    errorMessage:
+      type: string
+
+segmentStatus:
+  type: string
+  enum:
+    - active
+    - pending
+    - failed
+
+segmentType:
+  type: string
+  enum:
+    - computed
+    - custom
