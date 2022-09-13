@@ -57,3 +57,6 @@ paths:
   # ######################
   /1/predict/modeltypes:
     $ref: 'paths/models/getAvailableModelTypes.yml'
+
+  /1/predict/models/{modelID}:
+    $ref: 'paths/models/getModelInstanceConfig.yml'

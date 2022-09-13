@@ -1,0 +1,59 @@
+get:
+  tags:
+    - models
+  operationId: getModelInstanceConfig
+  summary: Get a model’s instance configuration.
+  description: Get the configuration for a model that was activated.
+  parameters:
+    - $ref: '../../common/parameters.yml#/modelID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getModelInstanceConfigResponse
+            type: object
+            properties:
+              modelID:
+                type: string
+                description: ID of the model.
+              name:
+                type: string
+                description: Name of model instance.
+              type:
+                type: string
+                description: Type of the model.
+              sourceID:
+                type: string
+              index:
+                type: string
+              affinities:
+                type: array
+                items:
+                  type: string
+                  description: Affinities within this model instance.
+              contentAttributes:
+                type: array
+                items:
+                  type: string
+              lastTrained:
+                type: string
+                description: The time this model instance was last trained.
+              lastInference:
+                type: string
+                description: The time this model instance generated its last inference.
+              error:
+                type: string
+              status:
+                type: string
+                $ref: '../../responses/Models.yml#/getModelInstanceConfigStatus'
+
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '404':
+      $ref: '../../responses/ModelNotFound.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'

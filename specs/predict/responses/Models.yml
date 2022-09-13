@@ -1,0 +1,3 @@
+getModelInstanceConfigStatus:
+  type: string
+  enum: [pending, active, invalid, error, inactive]
