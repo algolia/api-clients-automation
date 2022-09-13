@@ -1,0 +1,22 @@
+get:
+  tags:
+    - models
+  operationId: getListModelInstance
+  summary: Get a list of model instances.
+  description: Get a list of all model instances.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getListModelInstanceResponse
+            type: array
+            items:
+              $ref: '../../responses/Models.yml#/modelInstance'
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'

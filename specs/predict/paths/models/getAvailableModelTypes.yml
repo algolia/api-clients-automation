@@ -10,9 +10,11 @@ get:
       content:
         application/json:
           schema:
+            title: getAvailableModelTypesResponse
             type: array
             items:
               type: object
+              additionalProperties: false
               properties:
                 name:
                   type: string
@@ -27,6 +29,7 @@ get:
                     $ref: '../../responses/ModelTypes.yml#/compatibleSources'
                 dataRequirements:
                   type: object
+                  additionalProperties: false
                   properties:
                     minUsers:
                       type: integer
@@ -34,6 +37,14 @@ get:
                     minDays:
                       type: integer
                       description: Minimum number of days model needs to run.
+                  required:
+                    - minUsers
+                    - minDays
+              required:
+                - name
+                - type
+                - compatibleSources
+                - dataRequirements
     '401':
       $ref: '../../responses/InvalidCredentials.yml'
     '422':
