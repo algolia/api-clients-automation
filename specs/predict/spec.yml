@@ -59,7 +59,7 @@ paths:
     $ref: 'paths/models/getAvailableModelTypes.yml'
 
   /1/predict/models/{modelID}:
-    $ref: 'paths/models/specificModels.yml'
+    $ref: 'paths/models/modelInstances.yml'
 
   /1/predict/models:
     $ref: 'paths/models/models.yml'

@@ -26,10 +26,10 @@ modelInstance:
         type: string
     lastTrained:
       type: string
-      description: The time this model instance was last trained.
+      description: The date and time this model instance was last trained.
     lastInference:
       type: string
-      description: The time this model instance generated its last inference.
+      description: The date and time this model instance generated its last inference.
     error:
       type: string
     status:
@@ -45,7 +45,6 @@ modelInstance:
     - contentAttributes
     - lastTrained
     - lastInference
-    - error
     - status
 
 getModelInstanceConfigStatus:

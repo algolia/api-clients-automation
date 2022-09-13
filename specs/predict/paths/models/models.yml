@@ -1,8 +1,8 @@
 get:
   tags:
     - models
-  operationId: getListModelInstance
-  summary: Get a list of model instances.
+  operationId: getModelInstances
+  summary: Get model instances.
   description: Get a list of all model instances.
   responses:
     '200':
@@ -10,7 +10,7 @@ get:
       content:
         application/json:
           schema:
-            title: getListModelInstanceResponse
+            title: getModelInstancesResponse
             type: array
             items:
               $ref: '../../responses/Models.yml#/modelInstance'
