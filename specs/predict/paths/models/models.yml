@@ -1,0 +1,61 @@
+get:
+  tags:
+    - models
+  operationId: getListModelInstance
+  summary: Get a list of model instances.
+  description: Get a list of all model instances.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getListModelInstanceResponse
+            type: array
+            items:
+              $ref: '../../responses/Models.yml#/modelInstance'
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'
+
+post:
+  tags:
+    - models
+  operationId: activateModelInstance
+  summary: Activate a model instance.
+  description: >
+    Activate an existing model template. This action triggers the training and inference pipelines for the selected model. 
+    The model is added with `status=pending`.
+    If a model with the exact same source & index already exists, the API endpoint returns an error.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/modelsParams.yml#/activateModelParams'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: activateModelInstanceResponse
+            type: object
+            additionalProperties: false
+            properties:
+              modelID:
+                type: string
+                description: The ID of the model.
+              updatedAt:
+                type: string
+                description: The time the model was updated.
+
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'

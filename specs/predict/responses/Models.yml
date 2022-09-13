@@ -51,3 +51,8 @@ modelInstance:
 getModelInstanceConfigStatus:
   type: string
   enum: [pending, active, invalid, error, inactive]
+  description: |
+    `pending` - model has just been created and the pipelines are being set up for the first train & inference. \
+    `active` - model is running and generating prediction. \
+    `invalid` - model has failed training (ex. can’t retrieve data from source). An additional error field will be set for this status. \
+    `inactive` - model has been deactivated from the dashboard. Pipelines still exist but they are not currently running.

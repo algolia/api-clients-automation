@@ -1,0 +1,49 @@
+activateModelParams:
+  type: object
+  properties:
+    type:
+      $ref: '#/type'
+    name:
+      $ref: '#/name'
+    sourceID:
+      $ref: '#/sourceID'
+    index:
+      $ref: '#/index'
+    affinities:
+      type: array
+      items:
+        $ref: '#/affinities'
+    contentAttributes:
+      type: array
+      items:
+        $ref: '#/contentAttributes'
+  required:
+    - type
+    - name
+    - sourceID
+    - index
+
+type:
+  type: string
+  enum: ['funnel_stage', 'order_value', 'affinities']
+  description: The model's type.
+
+name:
+  type: string
+  description: The model’s instance name.
+
+sourceID:
+  type: string
+  description: The data source ID, as returned by the (external) sources API.
+
+index:
+  type: string
+  description: The index name.
+
+affinities:
+  type: string
+  description: List of items attributes that will be used as affinities. This param is required if `type=affinities`.
+
+contentAttributes:
+  type: string
+  description: List of items attributes that will be used for embeddings, for ex. titles or descriptions.

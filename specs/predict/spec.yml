@@ -62,4 +62,4 @@ paths:
     $ref: 'paths/models/getModelInstanceConfig.yml'
 
   /1/predict/models:
-    $ref: 'paths/models/getListModelInstance.yml'
+    $ref: 'paths/models/models.yml'
