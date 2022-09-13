@@ -52,6 +52,9 @@ post:
               updatedAt:
                 type: string
                 description: The time the model was updated.
+            required:
+              - modelID
+              - updatedAt
 
     '401':
       $ref: '../../responses/InvalidCredentials.yml'

@@ -53,6 +53,45 @@ post:
               updatedAt:
                 type: string
                 description: The time the model was updated.
+            required:
+              - modelID
+              - updatedAt
+    '401':
+      $ref: '../../responses/InvalidCredentials.yml'
+    '404':
+      $ref: '../../responses/ModelNotFound.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'
+
+delete:
+  tags:
+    - models
+  operationId: deleteModelInstance
+  summary: Delete a model instance.
+  description: Delete the model’s configuration, pipelines and generated predictions.
+  parameters:
+    - $ref: '../../common/parameters.yml#/modelID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: deleteModelInstanceResponse
+            type: object
+            additionalProperties: false
+            properties:
+              modelID:
+                type: string
+                description: The ID of the model.
+              deletedUntil:
+                type: string
+                description: The date until which you can safely consider the data as being deleted.
+            required:
+              - modelID
+              - deletedUntil
     '401':
       $ref: '../../responses/InvalidCredentials.yml'
     '404':
