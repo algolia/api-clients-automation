@@ -10,6 +10,18 @@ updateSegmentResponse:
     updatedAt:
       $ref: '#/updatedAt'
 
+deleteSegmentResponse:
+  title: deleteSegmentResponse
+  type: object
+  required:
+    - segmentID
+    - deletedUntil
+  properties:
+    segmentID:
+      $ref: '#/segmentID'
+    deletedUntil:
+      $ref: '#/deletedUntil'
+
 segment:
   type: object
   required:
@@ -52,3 +64,7 @@ segmentID:
 updatedAt:
   type: string
   description: The date and time at which the segment was last updated.
+
+deletedUntil:
+  type: string
+  description: The date and time at which the segment will be re-ingested.

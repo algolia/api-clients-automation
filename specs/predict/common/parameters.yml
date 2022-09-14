@@ -13,6 +13,7 @@ segmentID:
   schema:
     type: string
   description: The ID of the Segment to fetch.
+
 type:
   name: type
   in: query

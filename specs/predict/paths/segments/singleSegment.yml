@@ -52,3 +52,30 @@ post:
       $ref: '../../../common/responses/StatusUnprocessableEntity.yml'
     '500':
       $ref: '../../../common/responses/InternalError.yml'
+
+delete:
+  tags:
+    - segments
+  operationId: deleteSegment
+  summary: Delete a segment's configuration.
+  description: |
+    Delete the segment’s configuration. User intents (predictions) from the segment are not deleted. All segment types (computed or custom) can be deleted.
+    
+    When the query is successful, the HTTP response is 200 OK and returns the date until which you can safely consider the data as being deleted.
+  parameters:
+    - $ref: '../../common/parameters.yml#/segmentID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/Segment.yml#/deleteSegmentResponse'
+    '401':
+      $ref: '../../../common/responses/Unauthorized.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+    '422':
+      $ref: '../../../common/responses/StatusUnprocessableEntity.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'
