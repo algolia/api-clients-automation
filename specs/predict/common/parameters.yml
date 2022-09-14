@@ -5,6 +5,7 @@ userID:
   schema:
     type: string
   description: User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
+
 segmentID:
   name: segmentID
   in: path
@@ -18,3 +19,11 @@ type:
   schema:
     $ref: '../responses/Segment.yml#/segmentType'
   description: The type of segments to fetch.
+
+modelID:
+  name: modelID
+  in: path
+  required: true
+  schema:
+    type: string
+  description: The ID of the model to retrieve.

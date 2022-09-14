@@ -25,6 +25,9 @@ security:
   - appId: []
     apiKey: []
 tags:
+  - name: models
+    x-displayName: Models
+    description: Manage models.
   - name: profiles
     x-displayName: Profiles
     description: Manage users' profiles.
@@ -35,6 +38,7 @@ x-tagGroups:
   - name: General
     tags:
       - profiles
+      - models
       - segments
 paths:
   # ######################
@@ -56,8 +60,23 @@ paths:
     $ref: 'paths/users/fetchAll.yml'
 
   # ######################
-  # ### Segments request ###
+  # ### Model request ###
   # ######################
+  /1/predict/modeltypes:
+    $ref: 'paths/models/getAvailableModelTypes.yml'
+
+  /1/predict/models/{modelID}:
+    $ref: 'paths/models/modelInstances.yml'
+
+  /1/predict/models:
+    $ref: 'paths/models/models.yml'
+
+  /1/predict/models/{modelID}/metrics:
+    $ref: 'paths/models/getModelMetrics.yml'
+
+  # ########################
+  # ### Segments request ###
+  # ########################
   /1/segments/{segmentID}:
     $ref: 'paths/segments/fetch.yml'
 
