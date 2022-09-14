@@ -78,7 +78,7 @@ paths:
   # ### Segments request ###
   # ########################
   /1/segments/{segmentID}:
-    $ref: 'paths/segments/fetch.yml'
+    $ref: 'paths/segments/singleSegment.yml'
 
   /1/segments:
     $ref: 'paths/segments/allSegments.yml'

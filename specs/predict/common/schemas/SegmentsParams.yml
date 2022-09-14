@@ -1,21 +1,19 @@
 createSegmentParams:
-  allOf:
-    - $ref: '#/nameParam'
-    - $ref: '#/conditionsParam'
-
-nameParam:
   type: object
   required:
     - name
+    - conditions
   properties:
     name:
       $ref: '#/name'
+    conditions:
+      $ref: '#/conditions'
 
-conditionsParam:
+updateSegmentParams:
   type: object
-  required:
-    - conditions
   properties:
+    name:
+      $ref: '#/name'
     conditions:
       $ref: '#/conditions'
 

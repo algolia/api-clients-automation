@@ -1,3 +1,15 @@
+updateSegmentResponse:
+  title: updateSegmentResponse
+  type: object
+  required:
+    - segmentID
+    - updatedAt
+  properties:
+    segmentID:
+      $ref: '#/segmentID'
+    updatedAt:
+      $ref: '#/updatedAt'
+
 segment:
   type: object
   required:
