@@ -1,6 +1,6 @@
 [
   {
-    "testName": "delete a segment's configuration",
+    "testName": "delete a segments configuration",
     "parameters": {
       "segmentID": "segment1"
     },
