@@ -22,6 +22,24 @@ deleteSegmentResponse:
     deletedUntil:
       $ref: '#/deletedUntil'
 
+getSegmentUsersResponse:
+  title: getSegmentUsersResponse
+  type: object
+  required:
+    - segmentID
+    - users
+  properties:
+    segmentID:
+      $ref: '#/segmentID'
+    users:
+      type: array
+      items:
+        $ref: 'UserProfile.yml#/userProfile'
+    previousPageToken:
+      $ref: '../common/schemas/Params.yml#/previousPageToken'
+    nextPageToken:
+      $ref: '../common/schemas/Params.yml#/nextPageToken'
+
 segment:
   type: object
   required:
