@@ -12,10 +12,7 @@ get:
       content:
         application/json:
           schema:
-            title: fetchAllSegmentsResponse
-            type: array
-            items:
-              $ref: '../../responses/Segment.yml#/segment'
+            $ref: '../../responses/Segment.yml#/fetchAllSegmentsResponse'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
     '422':
@@ -40,16 +37,7 @@ post:
       content:
         application/json:
           schema:
-            title: createSegmentResponse
-            type: object
-            required:
-              - segmentID
-              - updatedAt
-            properties:
-              segmentID:
-                $ref: '../../responses/Segment.yml#/segment'
-              updatedAt:
-                $ref: '../../responses/Segment.yml#/updatedAt'
+            $ref: '../../responses/Segment.yml#/createSegmentResponse'
     '400':
       $ref: '../../../common/responses/IndexNotFound.yml'
     '401':

@@ -40,22 +40,44 @@ getSegmentUsersResponse:
     nextPageToken:
       $ref: '../common/schemas/Params.yml#/nextPageToken'
 
+fetchSegmentResponse:
+  title: fetchSegmentResponse
+  $ref: '#/segment'
+
+fetchAllSegmentsResponse:
+  title: fetchAllSegmentsResponse
+  type: array
+  items:
+    $ref: '#/segment'
+
+createSegmentResponse:
+  title: createSegmentResponse
+  type: object
+  required:
+    - segmentID
+    - updatedAt
+  properties:
+    segmentID:
+      $ref: '#/segmentID'
+    updatedAt:
+      $ref: '#/updatedAt'
+
 segment:
   type: object
   required:
-    - id
+    - segmentID
     - name
     - conditions
-    - status
+    - segmentStatus
     - type
   properties:
-    id:
-      type: string
+    segmentID:
+      $ref: '#/segmentID'
     name:
       type: string
     conditions:
       type: string
-    status:
+    segmentStatus:
       $ref: '#/segmentStatus'
     type:
       $ref: '#/segmentType'
