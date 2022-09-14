@@ -10,10 +10,25 @@ createSegmentParams:
       $ref: '#/conditions'
 
 updateSegmentParams:
+  oneOf:
+    - $ref: '#/segmentNameParam'
+    - $ref: '#/segmentConditionsParam'
+    - $ref: '#/allUpdateSegmentParams'
+
+allUpdateSegmentParams:
+  allOf:
+    - $ref: '#/segmentNameParam'
+    - $ref: '#/segmentConditionsParam'
+
+segmentNameParam:
   type: object
   properties:
     name:
       $ref: '#/name'
+
+segmentConditionsParam:
+  type: object
+  properties:
     conditions:
       $ref: '#/conditions'
 
