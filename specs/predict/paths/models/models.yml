@@ -50,8 +50,7 @@ post:
                 type: string
                 description: The ID of the model.
               updatedAt:
-                type: string
-                description: The time the model was updated.
+                $ref: '../../../common/responses/common.yml#/updatedAt'
             required:
               - modelID
               - updatedAt

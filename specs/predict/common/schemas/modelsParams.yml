@@ -2,7 +2,7 @@ activateModelParams:
   type: object
   properties:
     type:
-      $ref: '#/type'
+      $ref: '../../common/schemas/Params.yml#/modelsToRetrieve'
     name:
       $ref: '#/name'
     sourceID:

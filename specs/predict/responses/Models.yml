@@ -76,4 +76,4 @@ modelMetrics:
       type: number
       format: double
     updatedAt:
-      type: string
+      $ref: '../../common/responses/common.yml#/updatedAt'
