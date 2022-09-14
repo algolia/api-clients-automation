@@ -32,3 +32,11 @@ segmentType:
   enum:
     - computed
     - custom
+
+segmentID:
+  type: string
+  description: The ID of the segment.
+
+updatedAt:
+  type: string
+  description: The date and time at which the segment was last updated.

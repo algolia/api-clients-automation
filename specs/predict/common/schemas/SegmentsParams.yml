@@ -1,0 +1,28 @@
+createSegmentParams:
+  allOf:
+    - $ref: '#/nameParam'
+    - $ref: '#/conditionsParam'
+
+nameParam:
+  type: object
+  required:
+    - name
+  properties:
+    name:
+      $ref: '#/name'
+
+conditionsParam:
+  type: object
+  required:
+    - conditions
+  properties:
+    conditions:
+      $ref: '#/conditions'
+
+name:
+  type: string
+  description: The name or description of the segment.
+
+conditions:
+  type: string
+  description: The filters that define the segment, defined in the same way as filters for Rules.

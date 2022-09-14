@@ -62,4 +62,4 @@ paths:
     $ref: 'paths/segments/fetch.yml'
 
   /1/segments:
-    $ref: 'paths/segments/fetchAll.yml'
+    $ref: 'paths/segments/allSegments.yml'
