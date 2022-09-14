@@ -28,10 +28,14 @@ tags:
   - name: profiles
     x-displayName: Profiles
     description: Manage users' profiles.
+  - name: segments
+    x-displayName: Segments
+    description: Manage segments.
 x-tagGroups:
   - name: General
     tags:
       - profiles
+      - segments
 paths:
   # ######################
   # ### Custom request ###
@@ -39,6 +43,9 @@ paths:
   /1{path}:
     $ref: '../common/paths/customRequest.yml'
 
+  # ######################
+  # ### Users request ###
+  # ######################
   /1/users/{userID}/fetch:
     $ref: 'paths/users/fetch.yml'
 
@@ -48,5 +55,11 @@ paths:
   /1/users:
     $ref: 'paths/users/fetchAll.yml'
 
+  # ######################
+  # ### Segments request ###
+  # ######################
   /1/segments/{segmentID}:
     $ref: 'paths/segments/fetch.yml'
+
+  /1/segments:
+    $ref: 'paths/segments/fetchAll.yml'

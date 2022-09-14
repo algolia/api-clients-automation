@@ -11,4 +11,10 @@ segmentID:
   required: true
   schema:
     type: string
-  description: The ID of the Segment to retrieve.
+  description: The ID of the Segment to fetch.
+type:
+  name: type
+  in: query
+  schema:
+    $ref: '../responses/Segment.yml#/segmentType'
+  description: The type of segments to fetch.
