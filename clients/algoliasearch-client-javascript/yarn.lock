@@ -3087,6 +3087,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/cli@npm:14.7.5":
+  version: 14.7.5
+  resolution: "@nrwl/cli@npm:14.7.5"
+  dependencies:
+    nx: 14.7.5
+  checksum: 547e1e19d116fa1e3e46ec42912c8f5b176138228fa9bacd17e7d5fd354a75e733a935bf6b6bd4dc942a7396fb86e5e314adf32b7efaed8da4f2bfe8f55164d4
+  languageName: node
+  linkType: hard
+
 "@nrwl/tao@npm:14.7.3":
   version: 14.7.3
   resolution: "@nrwl/tao@npm:14.7.3"
@@ -3095,6 +3104,17 @@ __metadata:
   bin:
     tao: index.js
   checksum: b5b132399f62489f2012e3076fa9fc7c1fe43d4a0d337b031af887b3d7db465a85dc20d6e67c4b96cf43510aa4962af75209a7219043aa3804f1833c94eb159f
+  languageName: node
+  linkType: hard
+
+"@nrwl/tao@npm:14.7.5":
+  version: 14.7.5
+  resolution: "@nrwl/tao@npm:14.7.5"
+  dependencies:
+    nx: 14.7.5
+  bin:
+    tao: index.js
+  checksum: 1d72241e7631a922cf84f39805f73bacb9dd60fa8c3698a587603bda02e178f7bae2b1a1839ab57a04d7bbe64c29d61e896dac016da906b66fefd53f02a8016c
   languageName: node
   linkType: hard
 
@@ -3717,7 +3737,7 @@ __metadata:
     bundlesize2: 0.0.31
     execa: 5.1.1
     lerna: 5.5.1
-    nx: 14.7.3
+    nx: 14.7.5
     rollup: 2.79.0
     rollup-plugin-node-globals: 1.4.0
     rollup-plugin-terser: 7.0.2
@@ -7990,6 +8010,54 @@ __metadata:
   bin:
     nx: bin/nx.js
   checksum: cc2f0a46b51903f682b8d874d20c3a01e119542b75724f38380c6a7d357ff65f07ec548968ce4a2ae7ba8005cb109fab6c968725240f9f85f89f3c9ae08c1753
+  languageName: node
+  linkType: hard
+
+"nx@npm:14.7.5":
+  version: 14.7.5
+  resolution: "nx@npm:14.7.5"
+  dependencies:
+    "@nrwl/cli": 14.7.5
+    "@nrwl/tao": 14.7.5
+    "@parcel/watcher": 2.0.4
+    chalk: 4.1.0
+    chokidar: ^3.5.1
+    cli-cursor: 3.1.0
+    cli-spinners: 2.6.1
+    cliui: ^7.0.2
+    dotenv: ~10.0.0
+    enquirer: ~2.3.6
+    fast-glob: 3.2.7
+    figures: 3.2.0
+    flat: ^5.0.2
+    fs-extra: ^10.1.0
+    glob: 7.1.4
+    ignore: ^5.0.4
+    js-yaml: 4.1.0
+    jsonc-parser: 3.0.0
+    minimatch: 3.0.5
+    npm-run-path: ^4.0.1
+    open: ^8.4.0
+    semver: 7.3.4
+    string-width: ^4.2.3
+    tar-stream: ~2.2.0
+    tmp: ~0.2.1
+    tsconfig-paths: ^3.9.0
+    tslib: ^2.3.0
+    v8-compile-cache: 2.3.0
+    yargs: ^17.4.0
+    yargs-parser: 21.0.1
+  peerDependencies:
+    "@swc-node/register": ^1.4.2
+    "@swc/core": ^1.2.173
+  peerDependenciesMeta:
+    "@swc-node/register":
+      optional: true
+    "@swc/core":
+      optional: true
+  bin:
+    nx: bin/nx.js
+  checksum: a65d0fb4f36035802a1710262aced67664322bfe00e181c1424af2356d600d1bd793e251853c28b0e7fc541a3d65dcfe5794521f32595df02c1be85a782cc472
   languageName: node
   linkType: hard
 
