@@ -3952,7 +3952,7 @@ __metadata:
     rollup: 2.79.0
     rollup-plugin-node-globals: 1.4.0
     rollup-plugin-terser: 7.0.2
-    rollup-plugin-typescript2: 0.33.0
+    rollup-plugin-typescript2: 0.34.0
     semver: 7.3.7
     ts-node: 10.9.1
     typescript: 4.8.3
@@ -9690,9 +9690,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-typescript2@npm:0.33.0":
-  version: 0.33.0
-  resolution: "rollup-plugin-typescript2@npm:0.33.0"
+"rollup-plugin-typescript2@npm:0.34.0":
+  version: 0.34.0
+  resolution: "rollup-plugin-typescript2@npm:0.34.0"
   dependencies:
     "@rollup/pluginutils": ^4.1.2
     find-cache-dir: ^3.3.2
@@ -9701,7 +9701,7 @@ __metadata:
   peerDependencies:
     rollup: ">=1.26.3"
     typescript: ">=2.4.0"
-  checksum: 03e3077c5197f512222f11ebb8b7682c97ddbd6332189ea06884aa3e778a04107483d340f3be94dbc471595e8908687dd841b81976855485486097b6bb095f65
+  checksum: 14d5fbfa705430fdc0aaa6fed73ca9ae3c1297408f2da6b842942d40e0b44fbc264ee8be5ac7c61268dfcf61b281f770f010bd4bbd0332e2250cefd79c7352ea
   languageName: node
   linkType: hard
 
