@@ -14,15 +14,15 @@ export function {{apiName}}(
   return create{{capitalizedApiName}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
-    timeouts: isPredictClient ? {
+    timeouts: {{#isPredictClient}}{
       connect: 10000,
       read: DEFAULT_READ_TIMEOUT_BROWSER,
       write: DEFAULT_WRITE_TIMEOUT_BROWSER,
-    } : {
+    }{{/isPredictClient}}{{^isPredictClient}}{
       connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
       read: DEFAULT_READ_TIMEOUT_BROWSER,
       write: DEFAULT_WRITE_TIMEOUT_BROWSER,
-    },
+    }{{/isPredictClient}},
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
