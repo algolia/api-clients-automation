@@ -16,6 +16,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
   private boolean isAlgoliasearchClient;
+  private boolean isPredictClient;
 
   @Override
   public String getName() {
@@ -28,6 +29,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
     CLIENT = Utils.camelize((String) additionalProperties.get("client"));
     isAlgoliasearchClient = CLIENT.equals("algoliasearch");
+    isPredictClient = CLIENT.equals("predict");
 
     // generator specific options
     setSupportsES6(true);
@@ -133,6 +135,10 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
       additionalProperties.put("apiName", apiName);
       additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
       additionalProperties.put("algoliaAgent", "Lite");
+    }
+
+    if (isPredictClient) {
+      additionalProperties.put("isPredictClient", true);
     }
   }
 

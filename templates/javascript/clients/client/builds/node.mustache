@@ -14,10 +14,14 @@ export function {{apiName}}(
   return create{{capitalizedApiName}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
-    timeouts: {
-      connect: DEFAULT_CONNECT_TIMEOUT_NODE,
-      read: DEFAULT_READ_TIMEOUT_NODE,
-      write: DEFAULT_WRITE_TIMEOUT_NODE,
+    timeouts: isPredictClient ? {
+      connect: 10000,
+      read: DEFAULT_READ_TIMEOUT_BROWSER,
+      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
+    } : {
+      connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
+      read: DEFAULT_READ_TIMEOUT_BROWSER,
+      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
     requester: createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],

@@ -14,7 +14,11 @@ export function {{apiName}}(
   return create{{capitalizedApiName}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
-    timeouts: {
+    timeouts: isPredictClient ? {
+      connect: 10000,
+      read: DEFAULT_READ_TIMEOUT_BROWSER,
+      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
+    } : {
       connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
       read: DEFAULT_READ_TIMEOUT_BROWSER,
       write: DEFAULT_WRITE_TIMEOUT_BROWSER,
