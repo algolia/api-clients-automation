@@ -85,6 +85,7 @@ consequence:
 consequenceParams:
   allOf:
     - $ref: '../../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery'
+    - $ref: '../../../../common/schemas/SearchParams.yml#/paginationParams'
     - $ref: '../../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
     - $ref: '#/params'
 

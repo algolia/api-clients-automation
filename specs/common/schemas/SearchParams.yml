@@ -2,6 +2,7 @@ searchParams:
   oneOf:
     - $ref: '#/searchParamsString'
     - $ref: '#/searchParamsObject'
+    - $ref: '#/paginationParams'
 
 searchParamsObject:
   allOf:
@@ -19,6 +20,25 @@ searchParamsQuery:
   properties:
     query:
       $ref: '#/query'
+
+paginationParams:
+  type: object
+  additionalProperties: false
+  properties:
+    page:
+      $ref: '#/components/schemas/page'
+    offset:
+      type: integer
+      description: Specify the offset of the first hit to return.
+      x-categories:
+        - Pagination
+    length:
+      type: integer
+      description: Set the number of hits to retrieve (used only with offset).
+      minimum: 1
+      maximum: 1000
+      x-categories:
+        - Pagination
 
 baseSearchParamsWithoutQuery:
   type: object
@@ -72,20 +92,6 @@ baseSearchParamsWithoutQuery:
       default: count
       x-categories:
         - Faceting
-    page:
-      $ref: '#/page'
-    offset:
-      type: integer
-      description: Specify the offset of the first hit to return.
-      x-categories:
-        - Pagination
-    length:
-      type: integer
-      description: Set the number of hits to retrieve (used only with offset).
-      minimum: 1
-      maximum: 1000
-      x-categories:
-        - Pagination
     aroundLatLng:
       $ref: '#/aroundLatLng'
     aroundLatLngViaIP:
