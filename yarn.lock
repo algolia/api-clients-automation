@@ -2421,10 +2421,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.59":
-  version: 16.11.59
-  resolution: "@types/node@npm:16.11.59"
-  checksum: b3a2986ef8f8216bb7fd1187dcf2e69aca3e6b6b5fdfd6abf4cf11c44e3cdd587fae875a28dc4ef257e2b369e2c5290642aff6a0a9d702f3385a78f561293259
+"@types/node@npm:16.11.62":
+  version: 16.11.62
+  resolution: "@types/node@npm:16.11.62"
+  checksum: 7086105ded0005a9dc80688250c3d6a8aa01a2bcee3e3934fd3f731786b0e9e47a47fb72be7bfa96f3266bdb14aa9713931ea108d3445a99e35ea127b2d2346e
   languageName: node
   linkType: hard
 
@@ -7709,7 +7709,7 @@ __metadata:
     "@types/js-yaml": 4.0.5
     "@types/micromatch": 4.0.2
     "@types/mustache": 4.2.1
-    "@types/node": 16.11.59
+    "@types/node": 16.11.62
     "@types/semver": 7.3.10
     chalk: 4.1.2
     commander: 9.4.1
