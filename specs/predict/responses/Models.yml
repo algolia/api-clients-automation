@@ -41,7 +41,6 @@ modelInstance:
     - sourceID
     - index
     - modelAttributes
-    - contentAttributes
     - lastTrained
     - lastInference
     - modelStatus
