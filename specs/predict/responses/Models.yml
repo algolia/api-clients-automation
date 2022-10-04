@@ -40,7 +40,6 @@ modelInstance:
     - type
     - sourceID
     - index
-    - modelAttributes
     - lastTrained
     - lastInference
     - modelStatus
