@@ -41,15 +41,15 @@ import type { DeleteUserProfileResponse } from '../model/deleteUserProfileRespon
 import type { FetchAllUserProfilesParams } from '../model/fetchAllUserProfilesParams';
 import type { FetchAllUserProfilesResponse } from '../model/fetchAllUserProfilesResponse';
 import type { GetAvailableModelTypesResponseInner } from '../model/getAvailableModelTypesResponseInner';
+import type { GetModelMetricsResponse } from '../model/getModelMetricsResponse';
 import type { GetSegmentUsersResponse } from '../model/getSegmentUsersResponse';
 import type { ModelInstance } from '../model/modelInstance';
-import type { ModelMetrics } from '../model/modelMetrics';
 import type { Segment } from '../model/segment';
 import type { UpdateModelInstanceResponse } from '../model/updateModelInstanceResponse';
 import type { UpdateSegmentResponse } from '../model/updateSegmentResponse';
 import type { UserProfile } from '../model/userProfile';
 
-export const apiClientVersion = '1.0.0-alpha.25';
+export const apiClientVersion = '1.0.0-alpha.26';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = typeof REGIONS[number];
@@ -619,7 +619,7 @@ export function createPredictClient({
     getModelMetrics(
       { modelID }: GetModelMetricsProps,
       requestOptions?: RequestOptions
-    ): Promise<ModelMetrics[]> {
+    ): Promise<GetModelMetricsResponse> {
       if (!modelID) {
         throw new Error(
           'Parameter `modelID` is required when calling `getModelMetrics`.'
