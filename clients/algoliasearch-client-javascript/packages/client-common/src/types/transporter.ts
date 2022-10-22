@@ -139,6 +139,8 @@ export type TransporterOptions = {
    * The user agent used. Sent on query parameters.
    */
   algoliaAgent: AlgoliaAgent;
+
+  useAlgoliaTracking: boolean;
 };
 
 export type Transporter = TransporterOptions & {

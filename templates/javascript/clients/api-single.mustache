@@ -19,6 +19,7 @@ export function create{{capitalizedApiName}}({
   const transporter = createTransporter({
     hosts: getDefaultHosts({{^hasRegionalHost}}appIdOption{{/hasRegionalHost}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),
     ...options,
+    useAlgoliaTracking: {{{useAlgoliaTracking}}},
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents,
       client: '{{{algoliaAgent}}}',
@@ -75,7 +76,7 @@ export function create{{capitalizedApiName}}({
     {{/isSearchClient}}
     {{#operation}}
     {{> client/api/operation/jsdoc}}
-    {{nickname}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}( {{> client/api/operation/parameters}} ) : Promise<{{{returnType}}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}> {
+    {{nickname}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}( {{> client/api/operation/parameters}} ) : Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}> {
       {{#vendorExtensions.x-legacy-signature}}
         {{> client/api/operation/legacySearchCompatible/implementation}}
       {{/vendorExtensions.x-legacy-signature}}

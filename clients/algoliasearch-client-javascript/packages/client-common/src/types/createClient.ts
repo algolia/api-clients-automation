@@ -9,7 +9,7 @@ type OverriddenTransporterOptions =
 
 export type CreateClientOptions = Omit<
   TransporterOptions,
-  OverriddenTransporterOptions | 'algoliaAgent'
+  OverriddenTransporterOptions | 'algoliaAgent' | 'useAlgoliaTracking'
 > &
   Partial<Pick<TransporterOptions, OverriddenTransporterOptions>> & {
     appId: string;
