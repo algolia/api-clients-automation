@@ -1,0 +1,128 @@
+Source:
+  type: object
+  additionalProperties: false
+  properties:
+    sourceID:
+      type: string
+    type:
+      $ref: '#/SourceType'
+    name:
+      type: string
+    input:
+      $ref: '#/SourceInput'
+    authenticationID:
+      type: string
+    createdAt:
+      type: string
+    updatedAt:
+      type: string
+  required:
+    - sourceID
+    - type
+    - name
+    - input
+    - authenticationID
+    - createdAt
+
+SourceCreate:
+  type: object
+  additionalProperties: false
+  properties:
+    type:
+      $ref: '#/SourceType'
+    name:
+      type: string
+    input:
+      $ref: '#/SourceInput'
+    authenticationID:
+      type: string
+  required:
+    - type
+    - name
+    - input
+    - authenticationID
+
+SourceCreateResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    sourceID:
+      type: string
+    name:
+      type: string
+    createdAt:
+      type: string
+  required:
+    - sourceID
+    - name
+    - createdAt
+
+SourceUpdate:
+  type: object
+  additionalProperties: false
+  properties:
+    type:
+      $ref: '#/SourceType'
+    name:
+      type: string
+    input:
+      $ref: '#/SourceInput'
+    authenticationID:
+      type: string
+
+SourceUpdateResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    sourceID:
+      type: string
+    name:
+      type: string
+    updatedAt:
+      type: string
+  required:
+    - sourceID
+    - name
+    - updatedAt
+
+SourceType:
+  type: string
+  enum:
+    - 'csv'
+    - 'json'
+    - 'bigquery'
+    - 'bigquery_ga4'
+    - 'bigquery_ua'
+    - 'bigcommerce'
+    - 'commercetools'
+
+SourceCommercetools:
+  type: object
+  additionalProperties: false
+  properties:
+    stores:
+      type: array
+      items:
+        type: string
+    url:
+      type: string
+    projectKey:
+      type: string
+  required:
+    - stores
+    - url
+    - projectKey
+
+SourceBigCommerce:
+  type: object
+  additionalProperties: false
+  properties:
+    store_hash:
+      type: string
+  required:
+    - store_hash
+
+SourceInput:
+  oneOf:
+    - $ref: '#/SourceCommercetools'
+    - $ref: '#/SourceBigCommerce'
