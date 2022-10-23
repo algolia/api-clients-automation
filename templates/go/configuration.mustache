@@ -1,0 +1,42 @@
+{{>partial_header}}
+package {{packageName}}
+
+import (
+  "fmt"
+	"net/http"
+	"strings"
+)
+
+{{#hasRegionalHost}}
+type Region string
+
+const (
+  {{#allowedRegions}}
+  {{#lambda.uppercase}}{{.}}{{/lambda.uppercase}} Region = "{{.}}"{{/allowedRegions}}
+)
+{{/hasRegionalHost}}
+
+// Configuration stores the configuration of the API client
+type Configuration struct {
+	Host             string            `json:"host,omitempty"`
+	DefaultHeader    map[string]string `json:"defaultHeader,omitempty"`
+	UserAgent        string            `json:"userAgent,omitempty"`
+	Debug            bool              `json:"debug,omitempty"`
+	HTTPClient       *http.Client
+}
+
+// NewConfiguration returns a new Configuration object
+func NewConfiguration({{#hasRegionalHost}}region Region{{/hasRegionalHost}}) *Configuration {
+	cfg := &Configuration{
+    Host: fmt.Sprintf("https://%s", {{#hasRegionalHost}}strings.Replace("{{{host}}}", "{region}", string(region), -1){{/hasRegionalHost}}{{^hasRegionalHost}}"{{{host}}}"{{/hasRegionalHost}}),
+		DefaultHeader:    make(map[string]string),
+		UserAgent:        "{{{httpUserAgent}}}{{^httpUserAgent}}OpenAPI-Generator/{{{packageVersion}}}/go{{/httpUserAgent}}",
+		Debug:            false,
+	}
+	return cfg
+}
+
+// AddDefaultHeader adds a new HTTP header to the default header in the request
+func (c *Configuration) AddDefaultHeader(key string, value string) {
+	c.DefaultHeader[key] = value
+}
