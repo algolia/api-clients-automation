@@ -83,6 +83,7 @@ describe('api', () => {
           `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`
         ),
       },
+      useAlgoliaTracking: true,
       baseHeaders: {
         'content-type': 'text/plain',
         'x-algolia-api-key': 'API_KEY',
