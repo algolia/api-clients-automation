@@ -36,6 +36,9 @@ export async function playground({
         { verbose }
       );
       break;
+    case 'go':
+      await run(`cd playground/go && go run ingestion.go`, { verbose });
+      break;
     default:
   }
 }

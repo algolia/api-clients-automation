@@ -109,6 +109,12 @@
       },
       "php-query-suggestions": {
         "output": "#{cwd}/clients/algoliasearch-client-php"
+      },
+      "go-ingestion": {
+        "output": "#{cwd}/clients/algoliasearch-client-go",
+        "additionalProperties": {
+          "packageName": "ingestion"
+        }
       }
     }
   }
