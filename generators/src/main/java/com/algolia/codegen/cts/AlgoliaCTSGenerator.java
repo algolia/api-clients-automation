@@ -44,6 +44,11 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     client = (String) additionalProperties.get("client");
     ctsManager = CTSManagerFactory.getManager(language, client);
 
+    if (ctsManager == null) {
+      // skip the generation
+      System.exit(0);
+    }
+
     String outputFolder = Utils.getClientConfigField(language, "tests", "outputFolder");
     String extension = Utils.getClientConfigField(language, "tests", "extension");
 
