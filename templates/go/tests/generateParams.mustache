@@ -1,0 +1,12 @@
+{{#isString}}
+  "{{{value}}}",
+{{/isString}}
+{{#isEnum}}
+  {{{clientPrefix}}}.{{#lambda.uppercase}}{{{objectName}}}_{{{value}}}{{/lambda.uppercase}},
+{{/isEnum}}
+{{#isObject}}
+  {{#oneOfModel}}{{{clientPrefix}}}.{{{type}}}As{{{parentClassName}}}({{/oneOfModel}}
+    {{{clientPrefix}}}.New{{{objectName}}}(
+    {{#value}}{{> generateParams}}{{/value}}
+  ){{#oneOfModel}}){{/oneOfModel}},
+{{/isObject}}

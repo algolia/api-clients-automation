@@ -54,6 +54,8 @@ public class TestsRequest extends TestsGenerator {
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();
       if (!cts.containsKey(operationId)) {
+        continue;
+        /*
         throw new CTSException(
           "operationId '" +
           operationId +
@@ -65,7 +67,7 @@ public class TestsRequest extends TestsGenerator {
           ".json'.\n" +
           "You can read more on the documentation:" +
           " https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite"
-        );
+        );*/
       }
       Request[] op = cts.get(operationId);
 
@@ -73,7 +75,10 @@ public class TestsRequest extends TestsGenerator {
       for (int i = 0; i < op.length; i++) {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
-        test.put("method", operationId);
+        if (req.parameters == null) {
+          throw new CTSException("parameters cannot be null in requests test: " + operationId + ", use {} instead");
+        }
+        test.put("method", getMethodName(operationId));
         test.put("testName", req.testName == null ? operationId : req.testName);
         test.put("testIndex", i);
 
@@ -122,5 +127,12 @@ public class TestsRequest extends TestsGenerator {
       blocks.add(testObj);
     }
     bundle.put("blocksRequests", blocks);
+  }
+
+  private String getMethodName(String operationId) {
+    if (language.equals("go")) {
+      return Utils.capitalize(operationId);
+    }
+    return operationId;
   }
 }
