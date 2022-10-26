@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"encoding/xml"
 	"errors"
 	"fmt"
 	"io"
@@ -22,32 +21,64 @@ import (
 	"unicode/utf8"
 )
 
-var (
-	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
-)
+var jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
 
 // APIClient manages communication with the {{appName}} API v{{version}}
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
   appID string
-  apiKey string
-	cfg    *Configuration
-}
+	cfg   *Configuration
+} 
 
 // NewAPIClient creates a new API client. Requires a userAgent string describing your application.
 // optionally a custom http.Client to allow for advanced features such as caching.
-func NewAPIClient(appID, apiKey string, cfg *Configuration) *APIClient {
-	if cfg.HTTPClient == nil {
-		cfg.HTTPClient = http.DefaultClient
-	}
+func NewClient(appID, apiKey string{{#hasRegionalHost}}, region Region{{/hasRegionalHost}}) *APIClient {
+  cfg := &Configuration{
+    AppID: appID,
+    ApiKey: apiKey,
+    Host: getDefaultHost({{#hasRegionalHost}}region{{/hasRegionalHost}}),
+    DefaultHeader:    make(map[string]string),
+    UserAgent:        "{{{httpUserAgent}}}{{^httpUserAgent}}Algolia for Go/{{{packageVersion}}}/go{{/httpUserAgent}}",
+    Debug: false,
+    Requester: newDefaultRequester(),
+  }
 
-	c := &APIClient{}
-  c.appID = appID
-  c.apiKey = apiKey
-	c.cfg = cfg
+	return &APIClient{
+    appID: appID,
+    cfg: cfg,
+  }
+}
 
-	return c
+func NewClientWithConfig(cfg Configuration) *APIClient {
+  if cfg.AppID == "" {
+    panic("appID is required")
+  }
+  if cfg.ApiKey == "" {
+    panic("apiKey is required")
+  }
+  if cfg.Host == "" {
+    {{#hasRegionalHost}}
+    if cfg.Region == "" {
+      panic("region is required")
+    }{{/hasRegionalHost}}
+    cfg.Host = getDefaultHost({{#hasRegionalHost}}cfg.Region{{/hasRegionalHost}})
+  }
+  if cfg.Requester == nil {
+    cfg.Requester = newDefaultRequester()
+  }
+  if cfg.UserAgent == "" {
+    cfg.UserAgent = "{{{httpUserAgent}}}{{^httpUserAgent}}Algolia for Go/{{{packageVersion}}}/go{{/httpUserAgent}}"
+  }
+
+  return &APIClient{
+    appID: cfg.AppID,
+    cfg: &cfg,
+  }
+}
+
+func getDefaultHost({{#hasRegionalHost}}region Region{{/hasRegionalHost}}) string {
+  {{#hasRegionalHost}}return strings.Replace("https://{{{host}}}", "{region}", string(region), -1){{/hasRegionalHost}}
+  {{^hasRegionalHost}}return "https://{{{host}}}"{{/hasRegionalHost}}
 }
 
 func atoi(in string) (int, error) {
@@ -111,6 +142,12 @@ func parameterToJson(obj interface{}) (string, error) {
 	return string(jsonBuf), err
 }
 
+
+// AddDefaultHeader adds a new HTTP header to the default header in the request
+func (c *APIClient) AddDefaultHeader(key string, value string) {
+	c.cfg.DefaultHeader[key] = value
+}
+
 // callAPI do the request.
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 	if c.cfg.Debug {
@@ -121,7 +158,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		log.Printf("\n%s\n", string(dump))
 	}
 
-	resp, err := c.cfg.HTTPClient.Do(request)
+	resp, err := c.cfg.Requester.Request(request)
 	if err != nil {
 		return nil, err
 	}
@@ -195,8 +232,8 @@ func (c *APIClient) prepareRequest(
 
 	// Add the user agent to the request.
 	req.Header.Add("User-Agent", c.cfg.UserAgent)
-  req.Header.Add("X-Algolia-Application-Id", c.appID)
-  req.Header.Add("X-Algolia-API-Key", c.apiKey)
+  req.Header.Add("X-Algolia-Application-Id", c.cfg.AppID)
+  req.Header.Add("X-Algolia-API-Key", c.cfg.ApiKey)
   req.Header.Add("Content-Type", contentType)
   req.Header.Add("Accept", contentType)
 
@@ -267,8 +304,6 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 		_, err = bodyBuf.WriteString(*s)
 	} else if jsonCheck.MatchString(contentType) {
 		err = json.NewEncoder(bodyBuf).Encode(body)
-	} else if xmlCheck.MatchString(contentType) {
-		err = xml.NewEncoder(bodyBuf).Encode(body)
 	}
 
 	if err != nil {
