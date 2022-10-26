@@ -14,7 +14,7 @@ func main() {
 	godotenv.Load("../.env")
 	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
-	client := ingestion.NewAPIClient(appID, apiKey, ingestion.NewConfiguration(ingestion.US))
+	client := ingestion.NewClient(appID, apiKey, ingestion.US)
 
 	auth, err := client.CreateAuthentication(ingestion.NewAuthenticationCreate(
 		ingestion.AUTHENTICATIONTYPE_ALGOLIA, "test-auth", ingestion.AuthAlgoliaAsAuthInput(ingestion.NewAuthAlgolia(appID, apiKey))))

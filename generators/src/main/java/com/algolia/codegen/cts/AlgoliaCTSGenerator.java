@@ -46,6 +46,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
     if (ctsManager == null) {
       // skip the generation
+      System.out.println("No CTS manager found for language " + language + ", skipping");
       System.exit(0);
     }
 
