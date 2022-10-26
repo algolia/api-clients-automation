@@ -1,6 +1,7 @@
 package com.algolia.codegen.cts.tests;
 
 import com.algolia.codegen.Utils;
+import com.algolia.codegen.exceptions.CTSException;
 import java.io.File;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
@@ -54,8 +55,6 @@ public class TestsRequest extends TestsGenerator {
       String operationId = entry.getKey();
 
       if (!cts.containsKey(operationId)) {
-        continue;
-        /*
         throw new CTSException(
           "operationId '" +
           operationId +
@@ -67,7 +66,7 @@ public class TestsRequest extends TestsGenerator {
           ".json'.\n" +
           "You can read more on the documentation:" +
           " https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite"
-        );*/
+        );
       }
       Request[] op = cts.get(operationId);
 
