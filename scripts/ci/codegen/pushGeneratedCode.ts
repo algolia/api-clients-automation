@@ -29,6 +29,8 @@ export async function pushGeneratedCode(): Promise<void> {
   );
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
+  // git diff doesn't show added files, so it can skip the push if the diff only contains new files, unless we stage them
+  await run('git add .');
   const nbDiff = await getNbGitDiff({
     branch: baseBranch,
     head: null,
