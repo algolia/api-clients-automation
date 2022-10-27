@@ -53,7 +53,6 @@ public class TestsRequest extends TestsGenerator {
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();
-
       if (!cts.containsKey(operationId)) {
         throw new CTSException(
           "operationId '" +

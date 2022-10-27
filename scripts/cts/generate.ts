@@ -1,5 +1,4 @@
 import { buildCustomGenerators, run, toAbsolutePath } from '../common';
-import { getTestOutputFolder } from '../config';
 import { formatter } from '../formatter';
 import { createSpinner } from '../oraLog';
 import { generateOpenapitools } from '../pre-gen';
@@ -26,15 +25,12 @@ export async function ctsGenerateMany(
   await generateOpenapitools(generators);
 
   for (const gen of generators) {
-    if (!getTestOutputFolder(gen.language)) {
-      continue;
-    }
     await ctsGenerate(gen, verbose);
   }
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
-    if (!getTestOutputFolder(lang)) {
+    if (lang === 'go') {
       continue;
     }
     await formatter(lang, toAbsolutePath(`tests/output/${lang}`), verbose);
