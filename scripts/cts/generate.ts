@@ -30,9 +30,6 @@ export async function ctsGenerateMany(
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
-    if (lang === 'go') {
-      continue;
-    }
     await formatter(lang, toAbsolutePath(`tests/output/${lang}`), verbose);
   }
 }

@@ -1,0 +1,33 @@
+[
+  {
+    "testName": "createSource",
+    "parameters": {
+      "type": "commercetools",
+      "name": "sourceName",
+      "input": {
+        "stores": [
+          "myStore"
+        ],
+        "url": "http://commercetools.com",
+        "projectKey": "keyID"
+      },
+      "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    },
+    "request": {
+      "path": "/1/sources",
+      "method": "POST",
+      "body": {
+        "type": "commercetools",
+        "name": "sourceName",
+        "input": {
+          "stores": [
+            "myStore"
+          ],
+          "url": "http://commercetools.com",
+          "projectKey": "keyID"
+        },
+        "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      }
+    }
+  }
+]

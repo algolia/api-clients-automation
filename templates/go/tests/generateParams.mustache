@@ -1,9 +1,26 @@
 {{#isString}}
   "{{{value}}}",
 {{/isString}}
+{{#isBoolean}}
+  {{{value}}},
+{{/isBoolean}}
+{{#isInteger}}
+  {{{value}}},
+{{/isInteger}}
+{{#isLong}}
+  {{{value}}},
+{{/isLong}}
+{{#isDouble}}
+  {{{value}}},
+{{/isDouble}}
 {{#isEnum}}
   {{{clientPrefix}}}.{{#lambda.uppercase}}{{{objectName}}}_{{{value}}}{{/lambda.uppercase}},
 {{/isEnum}}
+{{#isArray}}
+  []{{{itemType}}}{
+    {{#value}}{{> generateParams}}{{/value}}
+  },
+{{/isArray}}
 {{#isObject}}
   {{#oneOfModel}}{{{clientPrefix}}}.{{{type}}}As{{{parentClassName}}}({{/oneOfModel}}
     {{{clientPrefix}}}.New{{{objectName}}}(

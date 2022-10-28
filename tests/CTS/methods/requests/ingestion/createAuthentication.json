@@ -1,0 +1,29 @@
+[
+  {
+    "testName": "createAuthentication",
+    "parameters": {
+      "type": "oauth",
+      "name": "authName",
+      "input": {
+        "url": "http://test.oauth",
+        "client_id": "myID",
+        "client_secret": "mySecret",
+        "scope": ""
+      }
+    },
+    "request": {
+      "path": "/1/authentications",
+      "method": "POST",
+      "body": {
+        "type": "oauth",
+        "name": "authName",
+        "input": {
+          "url": "http://test.oauth",
+          "client_id": "myID",
+          "client_secret": "mySecret",
+          "scope": ""
+        }
+      }
+    }
+  }
+]

@@ -21,10 +21,16 @@ public class ParametersWithDataType {
 
   private final Map<String, CodegenModel> models;
   private final String language;
+  private final Map<String, Map<String, String>> overridenPrimitives = new HashMap<>();
 
   public ParametersWithDataType(Map<String, CodegenModel> models, String language) {
     this.models = models;
     this.language = language;
+
+    Map<String, String> goPrimitives = new HashMap<>();
+    goPrimitives.put("String", "string");
+
+    overridenPrimitives.put("go", goPrimitives);
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
@@ -200,6 +206,7 @@ public class ParametersWithDataType {
     testOutput.put("isSimpleObject", false);
     testOutput.put("oneOfModel", false);
     testOutput.put("isAdditionalProperty", false);
+    testOutput.put("itemType", false);
 
     return testOutput;
   }
@@ -222,6 +229,12 @@ public class ParametersWithDataType {
       values.add(traverseParams(paramName + "_" + i, items.get(i), spec == null ? null : spec.getItems(), paramName, suffix + 1));
     }
 
+    if (spec == null) {
+      // try to infer the type, if it fails fallback to anyType
+      testOutput.put("itemType", overridePrimitive("Object"));
+    } else {
+      testOutput.put("itemType", overridePrimitive(getTypeName(spec.getItems())));
+    }
     testOutput.put("isArray", true);
     testOutput.put("value", values);
   }
@@ -455,23 +468,23 @@ public class ParametersWithDataType {
       case "String":
         if (spec != null) spec.setIsString(true);
         if (output != null) output.put("isString", true);
-        return "String";
+        return overridePrimitive("String");
       case "Integer":
         if (spec != null) spec.setIsNumber(true);
         if (output != null) output.put("isInteger", true);
-        return "Integer";
+        return overridePrimitive("Integer");
       case "Long":
         if (spec != null) spec.setIsNumber(true);
         if (output != null) output.put("isLong", true);
-        return "Long";
+        return overridePrimitive("Long");
       case "Double":
         if (spec != null) spec.setIsNumber(true);
         if (output != null) output.put("isDouble", true);
-        return "Double";
+        return overridePrimitive("Double");
       case "Boolean":
         if (spec != null) spec.setIsBoolean(true);
         if (output != null) output.put("isBoolean", true);
-        return "Boolean";
+        return overridePrimitive("Boolean");
       case "ArrayList":
         if (spec != null) {
           spec.setIsArray(true);
@@ -482,11 +495,11 @@ public class ParametersWithDataType {
           spec.setItems(baseItems);
         }
         if (output != null) output.put("isArray", true);
-        return "List";
+        return overridePrimitive("List");
       case "LinkedHashMap":
         if (spec != null) spec.baseType = "Object";
         if (output != null) output.put("isFreeFormObject", true);
-        return "Object";
+        return overridePrimitive("Object");
       default:
         throw new CTSException("Unknown type: " + param.getClass().getSimpleName());
     }
@@ -572,5 +585,16 @@ public class ParametersWithDataType {
       }
     }
     return null;
+  }
+
+  private String overridePrimitive(String primitive) {
+    if (!overridenPrimitives.containsKey(language)) {
+      return primitive;
+    }
+    Map<String, String> forLanguage = overridenPrimitives.get(language);
+    if (!forLanguage.containsKey(primitive)) {
+      return primitive;
+    }
+    return forLanguage.get(primitive);
   }
 }

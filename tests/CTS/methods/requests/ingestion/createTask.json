@@ -1,0 +1,25 @@
+[
+  {
+    "testName": "createTask",
+    "parameters": {
+      "sourceID": "search",
+      "destinationID": "destinationName",
+      "trigger": {
+        "type": "on_demand"
+      },
+      "action": "replace"
+    },
+    "request": {
+      "path": "/1/tasks",
+      "method": "POST",
+      "body": {
+        "sourceID": "search",
+        "destinationID": "destinationName",
+        "trigger": {
+          "type": "on_demand"
+        },
+        "action": "replace"
+      }
+    }
+  }
+]
