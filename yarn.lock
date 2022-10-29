@@ -2326,12 +2326,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/inquirer@npm:8.2.3":
-  version: 8.2.3
-  resolution: "@types/inquirer@npm:8.2.3"
+"@types/inquirer@npm:8.2.4":
+  version: 8.2.4
+  resolution: "@types/inquirer@npm:8.2.4"
   dependencies:
     "@types/through": "*"
-  checksum: 2978e749fbda061b85a56331a267f6c7f40380c17bce1b0f8b0bd1d86c88820e3bd7df4985c633647652b571f7ffd6b97b929cabe8b7d61259d354229e4c6c5b
+  checksum: 3a46231faac1e5df4863a2d501617b3f25e9481ea8a966a9b866bafef01fcc151606d9f25cb66f90492dd0d1d7af7c675a2314f50db85a7f2aeed265d93eb412
   languageName: node
   linkType: hard
 
@@ -5161,9 +5161,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer@npm:8.2.4":
-  version: 8.2.4
-  resolution: "inquirer@npm:8.2.4"
+"inquirer@npm:8.2.5":
+  version: 8.2.5
+  resolution: "inquirer@npm:8.2.5"
   dependencies:
     ansi-escapes: ^4.2.1
     chalk: ^4.1.1
@@ -5180,7 +5180,7 @@ __metadata:
     strip-ansi: ^6.0.0
     through: ^2.3.6
     wrap-ansi: ^7.0.0
-  checksum: dfcb6529d3af443dfea2241cb471508091b51f5121a088fdb8728b23ec9b349ef0a5e13a0ef2c8e19457b0bed22f7cbbcd561f7a4529d084c562a58c605e2655
+  checksum: f13ee4c444187786fb393609dedf6b30870115a57b603f2e6424f29a99abc13446fd45ee22461c33c9c40a92a60a8df62d0d6b25d74fc6676fa4cb211de55b55
   languageName: node
   linkType: hard
 
@@ -7697,7 +7697,7 @@ __metadata:
   dependencies:
     "@octokit/rest": 19.0.4
     "@types/folder-hash": 4.0.2
-    "@types/inquirer": 8.2.3
+    "@types/inquirer": 8.2.4
     "@types/jest": 28.1.8
     "@types/js-yaml": 4.0.5
     "@types/micromatch": 4.0.2
@@ -7711,7 +7711,7 @@ __metadata:
     execa: 5.1.1
     folder-hash: 4.0.2
     fs-extra: 10.1.0
-    inquirer: 8.2.4
+    inquirer: 8.2.5
     jest: 29.0.3
     js-yaml: 4.1.0
     micromatch: 4.0.5
