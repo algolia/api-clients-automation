@@ -60,7 +60,7 @@
   },
   "packageManager": "yarn@3.2.3",
   "engines": {
-    "node": "^16.0.0",
+    "node": "^18.0.0",
     "yarn": "^3.0.0"
   }
 }
