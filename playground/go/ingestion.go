@@ -16,17 +16,23 @@ func main() {
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
 	client := ingestion.NewClient(appID, apiKey, ingestion.US)
 
-	auth, err := client.CreateAuthentication(ingestion.NewAuthenticationCreate(
-		ingestion.AUTHENTICATIONTYPE_ALGOLIA,
-		"test-auth-2",
-		ingestion.AuthAlgoliaAsAuthInput(ingestion.NewAuthAlgolia(appID, apiKey))))
+	auths, err := client.GetAuthentications(ingestion.WithPage(22), ingestion.WithItemsPerPage(15))
 
-	if err != nil {
-		fmt.Println(err)
+	fmt.Println(auths.GetPagination(), err)
 
-		return
-	}
-	fmt.Println(auth)
+	/*
+
+		auth, err := client.CreateAuthentication(ingestion.NewAuthenticationCreate(
+			ingestion.AUTHENTICATIONTYPE_ALGOLIA,
+			"test-auth-2",
+			ingestion.AuthAlgoliaAsAuthInput(ingestion.NewAuthAlgolia(appID, apiKey))))
+
+		if err != nil {
+			fmt.Println(err)
+
+			return
+		}
+		fmt.Println(auth)*/
 	/*
 		dest, err := client.CreateDestination(ingestion.NewDestinationCreate(
 			ingestion.DESTINATIONTYPE_SEARCH,
