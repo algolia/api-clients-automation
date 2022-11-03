@@ -193,7 +193,7 @@ func (c *APIClient) prepareRequest(
   }
 
 	// Setup path and query parameters
-	url, err := url.Parse(path)
+	url, err := url.Parse(fmt.Sprintf("%s%s", c.cfg.Host, path))
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +210,13 @@ func (c *APIClient) prepareRequest(
 	url.RawQuery = query.Encode()
 
 	// Generate a new request
-	req, err = http.NewRequest(method, url.String(), body)
+	
+  // weird nil typing
+	var bodyReader io.Reader
+	if body != nil {
+		bodyReader = body
+	}
+	req, err = http.NewRequest(method, url.String(), bodyReader)
 	if err != nil {
 		return nil, err
 	}
@@ -282,9 +288,11 @@ func newStrictDecoder(data []byte) *json.Decoder {
 
 // Set request body from an interface{}
 func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err error) {
-	if bodyBuf == nil {
-		bodyBuf = &bytes.Buffer{}
+	if body == nil {
+		return nil, nil
 	}
+
+	bodyBuf = &bytes.Buffer{}
 
 	if reader, ok := body.(io.Reader); ok {
 		_, err = bodyBuf.ReadFrom(reader)
