@@ -16,14 +16,20 @@ import (
 type echoRequester struct {
 	path string
   method string
-  body string
+  body *string
 }
 
 func (e *echoRequester) Request(req *http.Request) (*http.Response, error) {
 	e.path = req.URL.Path
   e.method = req.Method
-  body, _ := io.ReadAll(req.Body)
-  e.body = string(body)
+  if req.Body != nil {
+    body, _ := io.ReadAll(req.Body)
+    strBody := string(body)
+    e.body = &strBody
+  } else {
+    e.body = nil
+  }
+  
 
 	return &http.Response{
 		StatusCode: 200,
@@ -66,14 +72,14 @@ func Test{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t * testing.T
   
   {{#request.body}}
   ja := jsonassert.New(t)
-  ja.Assertf(echo.body, `{{{request.body}}}`)
+  ja.Assertf(*echo.body, `{{{request.body}}}`)
   {{/request.body}}
   {{^request.body}}
   {{#assertNullBody}}
-    require.Equal(t, echo.body, "null\n")
+    require.Nil(t, echo.body)
   {{/assertNullBody}}
   {{^assertNullBody}}
-    require.Empty(t, echo.body);
+    require.Empty(t, *echo.body);
   {{/assertNullBody}}
 {{/request.body}}
   {{/tests}}

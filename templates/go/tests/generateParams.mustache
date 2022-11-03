@@ -21,8 +21,7 @@
     {{#value}}{{> generateParams}}{{/value}}
   },
 {{/isArray}}
-{{#isObject}}
-  {{#oneOfModel}}{{{clientPrefix}}}.{{{type}}}As{{{parentClassName}}}({{/oneOfModel}}
+{{#isObject}}{{#oneOfModel}}{{{clientPrefix}}}.{{{type}}}As{{{parentClassName}}}({{/oneOfModel}}
     {{{clientPrefix}}}.New{{{objectName}}}(
     {{#value}}{{> generateParams}}{{/value}}
   ){{#oneOfModel}}){{/oneOfModel}},
