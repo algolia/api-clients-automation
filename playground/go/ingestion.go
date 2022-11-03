@@ -17,25 +17,28 @@ func main() {
 	client := ingestion.NewClient(appID, apiKey, ingestion.US)
 
 	auth, err := client.CreateAuthentication(ingestion.NewAuthenticationCreate(
-		ingestion.AUTHENTICATIONTYPE_ALGOLIA, "test-auth", ingestion.AuthAlgoliaAsAuthInput(ingestion.NewAuthAlgolia(appID, apiKey))))
+		ingestion.AUTHENTICATIONTYPE_ALGOLIA,
+		"test-auth-2",
+		ingestion.AuthAlgoliaAsAuthInput(ingestion.NewAuthAlgolia(appID, apiKey))))
 
 	if err != nil {
 		fmt.Println(err)
 
 		return
 	}
+	fmt.Println(auth)
+	/*
+		dest, err := client.CreateDestination(ingestion.NewDestinationCreate(
+			ingestion.DESTINATIONTYPE_SEARCH,
+			"test-dest",
+			ingestion.DestinationIndexPrefixAsDestinationInput(ingestion.NewDestinationIndexPrefix("commercetools_")),
+			auth.AuthenticationID))
 
-	dest, err := client.CreateDestination(ingestion.NewDestinationCreate(
-		ingestion.DESTINATIONTYPE_SEARCH,
-		"test-dest",
-		ingestion.DestinationIndexPrefixAsDestinationInput(ingestion.NewDestinationIndexPrefix("commercetools_")),
-		auth.AuthenticationID))
+		if err != nil {
+			fmt.Println(err)
 
-	if err != nil {
-		fmt.Println(err)
+			return
+		}
 
-		return
-	}
-
-	fmt.Println(dest)
+		fmt.Println(dest)*/
 }
