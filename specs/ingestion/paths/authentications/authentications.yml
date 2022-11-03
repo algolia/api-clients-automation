@@ -4,6 +4,9 @@ get:
   summary: Get a list of authentications.
   description: Get a list of authentications.
   operationId: getAuthentications
+  parameters:
+    - $ref: '../../common/parameters.yml#/itemsPerPage'
+    - $ref: '../../common/parameters.yml#/page'
   responses:
     '200':
       description: OK

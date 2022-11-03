@@ -33,3 +33,19 @@ taskID:
   schema:
     type: string
     example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+
+itemsPerPage:
+  name: itemsPerPage
+  in: query
+  description: The number of items per page to return
+  required: false
+  schema:
+    type: integer
+
+page:
+  name: page
+  in: query
+  description: The page number to fetch, starting at 1
+  required: false
+  schema:
+    type: integer

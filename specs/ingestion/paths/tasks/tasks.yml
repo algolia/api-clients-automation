@@ -4,6 +4,9 @@ get:
   summary: Get a list of tasks.
   description: Get a list of tasks.
   operationId: getTasks
+  parameters:
+    - $ref: '../../common/parameters.yml#/itemsPerPage'
+    - $ref: '../../common/parameters.yml#/page'
   responses:
     '200':
       description: OK
