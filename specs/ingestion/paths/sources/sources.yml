@@ -4,6 +4,9 @@ get:
   summary: Get a list of sources.
   description: Get a list of sources.
   operationId: getSources
+  parameters:
+    - $ref: '../../common/parameters.yml#/itemsPerPage'
+    - $ref: '../../common/parameters.yml#/page'
   responses:
     '200':
       description: OK
