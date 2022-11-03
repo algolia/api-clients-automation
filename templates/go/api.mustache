@@ -11,6 +11,29 @@ import (
 {{#imports}}	"{{import}}"
 {{/imports}}
 )
+
+type Option struct {
+	Type string
+	Name string
+	Value string
+}
+
+func WithPage(page int32) Option {
+	return Option{
+		Type: "query",
+		Name: "page",
+		Value: parameterToString(page, ""),
+	}
+}
+
+func WithItemsPerPage(itemsPerPage int32) Option {
+	return Option{
+		Type: "query",
+		Name: "itemsPerPage",
+		Value: parameterToString(itemsPerPage, ""),
+	}
+}
+
 {{#operation}}
 
 // {{{description}}}{{#returnType}}
@@ -18,7 +41,7 @@ import (
 {{#isDeprecated}}
 // Deprecated
 {{/isDeprecated}}
-func (c *APIClient) {{nickname}}({{#allParams}}{{paramName}} {{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{{dataType}}}{{^-last}},{{/-last}}{{/allParams}}) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{{dataType}}}{{^-last}},{{/-last}}{{/requiredParams}}{{#hasOptionalParams}}{{#hasRequiredParams}}, {{/hasRequiredParams}}opts ...Option{{/hasOptionalParams}}) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
 	var (
 		body     interface{}
 		{{#returnType}}
@@ -87,21 +110,22 @@ func (c *APIClient) {{nickname}}({{#allParams}}{{paramName}} {{^isArray}}{{^isPr
 	{{#required}}
 	queryParams.Add("{{baseName}}", parameterToString(*{{paramName}}, "{{collectionFormat}}"))
 	{{/required}}
-	{{^required}}
-	if {{paramName}} != nil {
-		queryParams.Add("{{baseName}}", parameterToString(*{{paramName}}, "{{collectionFormat}}"))
-	}
-	{{/required}}
 	{{/queryParams}}
+  {{#hasOptionalParams}}
+  for _, opt := range opts {
+    switch opt.Type {
+      case "query":
+        queryParams.Add(opt.Name, opt.Value)
+      case "header":
+        headers[opt.Name] = opt.Value
+    }
+  }
+  {{/hasOptionalParams}}
   {{#headerParams}}
 	{{#required}}
 	headers["{{baseName}}"] = parameterToString(*{{paramName}}, "{{collectionFormat}}")
 	{{/required}}
-	{{^required}}
-	if {{paramName}} != nil {
-		headers["{{baseName}}"] = parameterToString(*{{paramName}}, "{{collectionFormat}}")
-	}
-	{{/required}}
+
 {{/headerParams}}
 {{#bodyParams}}
 	// body params
