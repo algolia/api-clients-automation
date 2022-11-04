@@ -10,7 +10,7 @@ __metadata:
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": 2.5.1
-    "@prettier/plugin-php": 0.19.1
+    "@prettier/plugin-php": 0.19.2
     "@redocly/openapi-cli": 1.0.0-beta.94
     "@typescript-eslint/eslint-plugin": 5.41.0
     "@typescript-eslint/parser": 5.41.0
@@ -2111,16 +2111,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prettier/plugin-php@npm:0.19.1":
-  version: 0.19.1
-  resolution: "@prettier/plugin-php@npm:0.19.1"
+"@prettier/plugin-php@npm:0.19.2":
+  version: 0.19.2
+  resolution: "@prettier/plugin-php@npm:0.19.2"
   dependencies:
     linguist-languages: ^7.21.0
     mem: ^8.0.0
-    php-parser: ^3.1.1
+    php-parser: ^3.1.2
   peerDependencies:
     prettier: ^1.15.0 || ^2.0.0
-  checksum: 9f8aa24a3f90c86fcf4ffa9055dc81bf919749800b7de3bef1376f836cce59136eea876e8271015c2b7f0216596f779a066f0088eb40a4bac73dcf7c036cb78f
+  checksum: 0fd189f032b7cfe8a39f264ab6bfbd1429aeb162fd746828f2e8f4eb9f9cf7995a9a95f332ea7e6bf56dd7ad2e1a7c1f514bf37cab54f95d4c3c625a4082a2cc
   languageName: node
   linkType: hard
 
@@ -7212,10 +7212,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"php-parser@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "php-parser@npm:3.1.1"
-  checksum: 4aa62ddc1210a0b1a28fad1d3c1063ad6b1a1fe26d81008f97bc08a921d5188f59e27f2255fc9e4482c2ac7b5b1a857e97d02abf3d573e2f8059e6e2aa6ee12d
+"php-parser@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "php-parser@npm:3.1.2"
+  checksum: 8230a284c8a60d6f9cad06c7511a3e7250c3f59aecbac45d67ffc0705a219eb2514641b517854bd14f6548dc5d3024867f8fb8d02980ef0c7f1e77a0e377841c
   languageName: node
   linkType: hard
 
