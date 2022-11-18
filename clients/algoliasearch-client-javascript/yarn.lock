@@ -40,7 +40,7 @@ __metadata:
     jest: 29.3.1
     jest-environment-jsdom: 29.3.1
     ts-jest: 28.0.8
-    typescript: 4.8.3
+    typescript: 4.9.3
   languageName: unknown
   linkType: soft
 
@@ -145,7 +145,7 @@ __metadata:
     jest: 29.3.1
     jest-environment-jsdom: 29.3.1
     ts-jest: 28.0.8
-    typescript: 4.8.3
+    typescript: 4.9.3
     xhr-mock: 2.5.1
   languageName: unknown
   linkType: soft
@@ -161,7 +161,7 @@ __metadata:
     jest: 29.3.1
     nock: 13.2.9
     ts-jest: 28.0.8
-    typescript: 4.8.3
+    typescript: 4.9.3
   languageName: unknown
   linkType: soft
 
@@ -175,7 +175,7 @@ __metadata:
     jest: 29.3.1
     nock: 13.2.9
     ts-jest: 28.0.8
-    typescript: 4.8.3
+    typescript: 4.9.3
   languageName: unknown
   linkType: soft
 
@@ -3821,7 +3821,7 @@ __metadata:
     rollup-plugin-typescript2: 0.34.0
     semver: 7.3.7
     ts-node: 10.9.1
-    typescript: 4.8.3
+    typescript: 4.9.3
   languageName: unknown
   linkType: soft
 
@@ -9894,6 +9894,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:4.9.3":
+  version: 4.9.3
+  resolution: "typescript@npm:4.9.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 17b8f816050b412403e38d48eef0e893deb6be522d6dc7caf105e54a72e34daf6835c447735fd2b28b66784e72bfbf87f627abb4818a8e43d1fa8106396128dc
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@4.8.3#~builtin<compat/typescript>, typescript@patch:typescript@^3 || ^4#~builtin<compat/typescript>":
   version: 4.8.3
   resolution: "typescript@patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=a1c5e5"
@@ -9901,6 +9911,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 2222d2382fb3146089b1d27ce2b55e9d1f99cc64118f1aba75809b693b856c5d3c324f052f60c75b577947fc538bc1c27bad0eb76cbdba9a63a253489504ba7e
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@4.9.3#~builtin<compat/typescript>":
+  version: 4.9.3
+  resolution: "typescript@patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=a1c5e5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: ef65c22622d864497d0a0c5db693523329b3284c15fe632e93ad9aa059e8dc38ef3bd767d6f26b1e5ecf9446f49bd0f6c4e5714a2eeaf352805dc002479843d1
   languageName: node
   linkType: hard
 
