@@ -2310,10 +2310,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mustache@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@types/mustache@npm:4.2.1"
-  checksum: 27e84f17a32f18ba1bc2fc08360a66687a9436233a6c1b48c6e8d6766644ebbeb2538b7f40edcc760dc0023a8f773cef0d60092870aeef86b1d1e744e4a99480
+"@types/mustache@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@types/mustache@npm:4.2.2"
+  checksum: 1fa67a519f4302c96615524be4c8248067da02ca047bae9d4c4bb79977135ac7c15dcc388e7c70b8a817b9497004d5ca5c77a155dcb096bea16d53d4cdbe75d2
   languageName: node
   linkType: hard
 
@@ -7727,7 +7727,7 @@ __metadata:
     "@types/jest": 28.1.8
     "@types/js-yaml": 4.0.5
     "@types/micromatch": 4.0.2
-    "@types/mustache": 4.2.1
+    "@types/mustache": 4.2.2
     "@types/node": 16.11.59
     "@types/semver": 7.3.10
     chalk: 4.1.2
