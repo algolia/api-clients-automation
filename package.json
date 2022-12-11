@@ -38,7 +38,7 @@
     "@typescript-eslint/parser": "5.44.0",
     "babel-eslint": "10.1.0",
     "eslint": "8.27.0",
-    "eslint-config-algolia": "20.0.0",
+    "eslint-config-algolia": "20.1.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-algolia": "2.0.0",
     "eslint-plugin-automation-custom": "1.0.0",
