@@ -35,6 +35,9 @@ tags:
   - name: tasks
     x-displayName: Tasks
     description: Tasks refers to all type of Ingestion we can do (Reindex, On demand update, ...).
+  - name: observability
+    x-displayName: Observability
+    description: Observability api tracks each runs and events
 paths:
   # authentications api
   /1/authentications:
