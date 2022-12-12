@@ -12,6 +12,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/observability.yml#/RunResponse'
+            $ref: '../../common/schemas/run.yml#/RunResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'

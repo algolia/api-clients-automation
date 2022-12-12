@@ -1,8 +1,0 @@
-RunResponse:
-  type: object
-  additionalProperties: false
-  properties:
-    runID:
-      type: string
-  required:
-    - runID

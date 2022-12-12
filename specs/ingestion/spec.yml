@@ -32,19 +32,29 @@ tags:
   - name: tasks
     x-displayName: Tasks
     description: Tasks refers to all type of Ingestion we can do (Reindex, On demand update, ...).
+  - name: observability
+    x-displayName: Observability
+    description: Observability api tracks each runs and events
 paths:
+  # authentications api
   /1/authentications:
     $ref: 'paths/authentications/authentications.yml'
   /1/authentications/{authenticationID}:
     $ref: 'paths/authentications/authenticationID.yml'
+
+  # destinations api
   /1/destinations:
     $ref: 'paths/destinations/destinations.yml'
   /1/destinations/{destinationID}:
     $ref: 'paths/destinations/destinationID.yml'
+
+  # sources api
   /1/sources:
     $ref: 'paths/sources/sources.yml'
   /1/sources/{sourceID}:
     $ref: 'paths/sources/sourceID.yml'
+
+  # tasks api
   /1/tasks:
     $ref: 'paths/tasks/tasks.yml'
   /1/tasks/{taskID}:
@@ -55,3 +65,13 @@ paths:
     $ref: 'paths/tasks/enableTask.yml'
   /1/tasks/{taskID}/disable:
     $ref: 'paths/tasks/disableTask.yml'
+
+  # observability api
+  /1/runs:
+    $ref: 'paths/runs/runs.yml'
+  /1/runs/{runID}:
+    $ref: 'paths/runs/runID.yml'
+  /1/runs/{runID}/events:
+    $ref: 'paths/runs/events/events.yml'
+  /1/runs/{runID}/events/{eventID}:
+    $ref: 'paths/runs/events/eventID.yml'
