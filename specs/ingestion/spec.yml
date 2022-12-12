@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: Ingestion API
-  description: API powering the Data Ingestion feature of Algolia
+  description: API powering the Data Ingestion feature of Algolia.
   version: '1.0'
 components:
   securitySchemes:
@@ -26,15 +26,15 @@ tags:
   - name: destinations
     x-displayName: Destinations
     description: Destinations refers to an Algolia product (Search, Insight, Recommend, ...).
+  - name: observability
+    x-displayName: Observability
+    description: Observability api tracks each runs and events.
   - name: sources
     x-displayName: Sources
     description: Sources describe the platform informations.
   - name: tasks
     x-displayName: Tasks
     description: Tasks refers to all type of Ingestion we can do (Reindex, On demand update, ...).
-  - name: observability
-    x-displayName: Observability
-    description: Observability api tracks each runs and events
 paths:
   # authentications api
   /1/authentications:
