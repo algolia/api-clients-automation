@@ -4,8 +4,11 @@ RunResponse:
   properties:
     runID:
       type: string
+    createdAt:
+      $ref: './common.yml#/createdAt'
   required:
     - runID
+    - createdAt
 
 Run:
   type: object
