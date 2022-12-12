@@ -10,6 +10,20 @@ RunResponse:
     - runID
     - createdAt
 
+RunListResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    runs:
+      type: array
+      items:
+        $ref: '#/Run'
+    pagination:
+      $ref: './pagination.yml#/Pagination'
+  required:
+    - runs
+    - pagination
+
 Run:
   type: object
   additionalProperties: false

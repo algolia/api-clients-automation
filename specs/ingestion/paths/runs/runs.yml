@@ -13,18 +13,6 @@ get:
       content:
         application/json:
           schema:
-            title: listRunsResponse
-            type: object
-            additionalProperties: false
-            properties:
-              runs:
-                type: array
-                items:
-                  $ref: '../../common/schemas/run.yml#/Run'
-              pagination:
-                $ref: '../../common/schemas/pagination.yml#/Pagination'
-            required:
-              - runs
-              - pagination
+            $ref: '../../common/schemas/run.yml#/RunListResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'

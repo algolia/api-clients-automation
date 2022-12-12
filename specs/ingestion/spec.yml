@@ -75,3 +75,5 @@ paths:
     $ref: 'paths/runs/events/events.yml'
   /1/runs/{runID}/events/{eventID}:
     $ref: 'paths/runs/events/eventID.yml'
+  /1/runs/tasks/{id}:
+    $ref: 'path/runs/tasks/taskID.yml'
