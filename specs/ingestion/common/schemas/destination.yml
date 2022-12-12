@@ -11,9 +11,9 @@ Destination:
     input:
       $ref: '#/DestinationInput'
     createdAt:
-      type: string
+      $ref: './common.yml#/createdAt'
     updatedAt:
-      type: string
+      $ref: './common.yml#/updatedAt'
     authenticationID:
       type: string
   required:
@@ -51,7 +51,7 @@ DestinationCreateResponse:
     name:
       type: string
     createdAt:
-      type: string
+      $ref: './common.yml#/createdAt'
   required:
     - destinationID
     - name
@@ -79,7 +79,7 @@ DestinationUpdateResponse:
     name:
       type: string
     updatedAt:
-      type: string
+      $ref: './common.yml#/updatedAt'
   required:
     - destinationID
     - name

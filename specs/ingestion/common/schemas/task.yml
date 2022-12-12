@@ -23,9 +23,9 @@ Task:
     nextRun:
       type: string
     createdAt:
-      type: string
+      $ref: './common.yml#/createdAt'
     updatedAt:
-      type: string
+      $ref: './common.yml#/updatedAt'
   required:
     - taskID
     - sourceID
@@ -64,7 +64,7 @@ TaskCreateResponse:
     taskID:
       type: string
     createdAt:
-      type: string
+      $ref: './common.yml#/createdAt'
   required:
     - taskID
     - createdAt
@@ -87,7 +87,7 @@ TaskUpdateResponse:
     taskID:
       type: string
     updatedAt:
-      type: string
+      $ref: './common.yml#/updatedAt'
   required:
     - taskID
     - updatedAt

@@ -13,9 +13,9 @@ Source:
     authenticationID:
       type: string
     createdAt:
-      type: string
+      $ref: './common.yml#/createdAt'
     updatedAt:
-      type: string
+      $ref: './common.yml#/updatedAt'
   required:
     - sourceID
     - type
@@ -51,7 +51,7 @@ SourceCreateResponse:
     name:
       type: string
     createdAt:
-      type: string
+      $ref: './common.yml#/createdAt'
   required:
     - sourceID
     - name
@@ -79,7 +79,7 @@ SourceUpdateResponse:
     name:
       type: string
     updatedAt:
-      type: string
+      $ref: './common.yml#/updatedAt'
   required:
     - sourceID
     - name
@@ -87,14 +87,7 @@ SourceUpdateResponse:
 
 SourceType:
   type: string
-  enum:
-    - 'csv'
-    - 'json'
-    - 'bigquery'
-    - 'bigquery_ga4'
-    - 'bigquery_ua'
-    - 'bigcommerce'
-    - 'commercetools'
+  enum: ['bigcommerce', 'commercetools']
 
 SourceCommercetools:
   type: object
@@ -117,7 +110,7 @@ SourceBigCommerce:
   type: object
   additionalProperties: false
   properties:
-    store_hash:
+    storeHash:
       type: string
   required:
     - store_hash

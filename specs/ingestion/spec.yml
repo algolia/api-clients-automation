@@ -1,8 +1,7 @@
 openapi: 3.0.2
 info:
   title: Ingestion API
-  description: >-
-    [Documentation](https://docs.google.com/document/d/13UnFi4Osfw4vOJr5iN4P4RJDZdslpFs4OgM4F1VBwQc/edit#heading=h.kp12qj1w1lig)
+  description: API powering the Data Ingestion feature of Algolia
   version: '1.0'
 components:
   securitySchemes:
@@ -32,7 +31,7 @@ tags:
     description: Sources describe the platform informations.
   - name: tasks
     x-displayName: Tasks
-    description: Tasks refers to all type on Ingestion we can do (Reindex, On demand update, ...).
+    description: Tasks refers to all type of Ingestion we can do (Reindex, On demand update, ...).
 paths:
   /1/authentications:
     $ref: 'paths/authentications/authentications.yml'

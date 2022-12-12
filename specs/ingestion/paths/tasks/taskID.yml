@@ -51,5 +51,9 @@ delete:
   responses:
     '204':
       description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/common.yml#/DeleteResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'

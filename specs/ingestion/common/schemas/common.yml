@@ -1,0 +1,16 @@
+createdAt:
+  type: string
+  description: Date of creation (RFC3339 format).
+
+updatedAt:
+  type: string
+  description: Date of last update (RFC3339 format).
+
+DeleteResponse:
+  type: object
+  properties:
+    deletedAt:
+      type: string
+      description: Date of deletion (RFC3339 format)
+  required:
+    - deletedAt
