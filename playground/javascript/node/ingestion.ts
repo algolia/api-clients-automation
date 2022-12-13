@@ -10,11 +10,11 @@ const apiKey =
   '**** ADMIN_KEY *****';
 
 // Init client with appId and apiKey
-const client = ingestionClient(appId, apiKey, 'us', {authMode: 'WithinHeaders'});
+const client = ingestionClient(appId, apiKey, 'us', {authMode: 'WithinHeaders', hosts: [{url: 'staging-data.us.algolia.com', accept: 'readWrite', protocol: 'https'}]});
 
 async function testIngestion() {
   try {
-    const res = await client.createAuthentication({input: {appID: appId, apiKey}, name: 'test', type: 'algolia'});
+    const res = await client.getAuthentications();
 
     console.log(`[OK]`, res);
   } catch (e) {

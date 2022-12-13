@@ -36,7 +36,6 @@ export function createTransporter({
   baseHeaders,
   baseQueryParameters,
   algoliaAgent,
-  useAlgoliaTracking,
   timeouts,
   requester,
   requestsCache,
@@ -111,11 +110,14 @@ export function createTransporter({
         : {};
 
     const queryParameters: QueryParameters = {
-      ...(useAlgoliaTracking ? { 'x-algolia-agent': algoliaAgent.value } : {}),
       ...baseQueryParameters,
       ...request.queryParameters,
       ...dataQueryParameters,
     };
+
+    if (algoliaAgent.value) {
+      queryParameters['x-algolia-agent'] = algoliaAgent.value;
+    }
 
     if (requestOptions && requestOptions.queryParameters) {
       for (const key of Object.keys(requestOptions.queryParameters)) {
@@ -338,7 +340,6 @@ export function createTransporter({
     requester,
     timeouts,
     algoliaAgent,
-    useAlgoliaTracking,
     baseHeaders,
     baseQueryParameters,
     hosts,
