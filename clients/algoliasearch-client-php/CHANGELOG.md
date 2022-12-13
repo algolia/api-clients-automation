@@ -1,3 +1,7 @@
+## [4.0.0-alpha.28](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.27...4.0.0-alpha.28)
+
+- [1685ed08](https://github.com/algolia/api-clients-automation/commit/1685ed08) feat(specs): create ingestion specs ([#1100](https://github.com/algolia/api-clients-automation/pull/1100)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-alpha.27](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.26...4.0.0-alpha.27)
 
 - [fc7f987d](https://github.com/algolia/api-clients-automation/commit/fc7f987d) feat(specs): add appropriate type to model instance type property ([#1077](https://github.com/algolia/api-clients-automation/pull/1077)) by [@writeens](https://github.com/writeens/)
