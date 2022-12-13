@@ -16,9 +16,9 @@ func main() {
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
 	client := ingestion.NewClient(appID, apiKey, ingestion.US)
 
-	auths, err := client.GetAuthentications(ingestion.WithPage(22), ingestion.WithItemsPerPage(15))
+	auths, err := client.GetAuthentications()
 
-	fmt.Println(auths.GetPagination(), err)
+	fmt.Println(auths, err)
 
 	/*
 

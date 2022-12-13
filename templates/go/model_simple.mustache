@@ -35,7 +35,7 @@ type {{{classname}}}Option func(f *{{{classname}}})
 {{#optionalVars}}
 func With{{{classname}}}{{{name}}}(val {{{dataType}}}) {{{classname}}}Option {
 	return func(f *{{{classname}}}) {
-		f.{{{name}}} = &val
+		f.{{{name}}} = {{^isFreeFormObject}}&{{/isFreeFormObject}}val
 	}
 }
 
@@ -431,4 +431,18 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
 }
 
 {{/isArray}}
+func (o {{classname}}) String() string {
+  out := "{{classname}} {\n"
+	{{#vars}}
+  out += fmt.Sprintf("  {{baseName}}=%v\n", o.{{name}})
+	{{/vars}}
+	{{#isAdditionalPropertiesTrue}}
+	for key, value := range o.AdditionalProperties {
+		out += fmt.Sprintf("  %s=%v\n", key, value)
+	}
+
+	{{/isAdditionalPropertiesTrue}}
+  out += "}"
+	return out
+}
 {{>nullable_model}}

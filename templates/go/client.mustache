@@ -14,6 +14,7 @@ import (
 	"net/url"
 	"reflect"
 	"regexp"
+  "runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -36,7 +37,7 @@ func NewClient(appID, apiKey string{{#hasRegionalHost}}, region Region{{/hasRegi
     ApiKey: apiKey,
     Host: getDefaultHost({{#hasRegionalHost}}region{{/hasRegionalHost}}),
     DefaultHeader:    make(map[string]string),
-    UserAgent:        "{{{httpUserAgent}}}{{^httpUserAgent}}Algolia for Go/{{{packageVersion}}}/go{{/httpUserAgent}}",
+    UserAgent:        getUserAgent(),
     Debug: false,
     Requester: newDefaultRequester(),
   }
@@ -65,7 +66,7 @@ func NewClientWithConfig(cfg Configuration) *APIClient {
     cfg.Requester = newDefaultRequester()
   }
   if cfg.UserAgent == "" {
-    cfg.UserAgent = "{{{httpUserAgent}}}{{^httpUserAgent}}Algolia for Go/{{{packageVersion}}}/go{{/httpUserAgent}}"
+    cfg.UserAgent = getUserAgent()
   }
 
   return &APIClient{
@@ -77,6 +78,10 @@ func NewClientWithConfig(cfg Configuration) *APIClient {
 func getDefaultHost({{#hasRegionalHost}}region Region{{/hasRegionalHost}}) string {
   {{#hasRegionalHost}}return strings.Replace("https://{{{host}}}", "{region}", string(region), -1){{/hasRegionalHost}}
   {{^hasRegionalHost}}return "https://{{{host}}}"{{/hasRegionalHost}}
+}
+
+func getUserAgent() string {
+  return fmt.Sprintf("Algolia for Go ({{{packageVersion}}}); go (%s); Ingestion ({{{packageVersion}}})", runtime.Version())
 }
 
 func atoi(in string) (int, error) {
