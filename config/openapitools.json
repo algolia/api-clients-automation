@@ -68,7 +68,7 @@
       "javascript-ingestion": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/ingestion",
         "additionalProperties": {
-          "packageVersion": "1.0.0-alpha"
+          "packageVersion": "1.0.0-alpha.1"
         }
       },
       "java-search": {
