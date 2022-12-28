@@ -105,6 +105,7 @@ segmentType:
 segmentVersion:
   type: number
   description: The segment syntax version.
+  example: 1
 
 segmentID:
   type: string
@@ -117,10 +118,12 @@ segmentName:
 updatedAt:
   type: string
   description: The date and time at which the segment was last updated.
+  example: 2021-07-22T12:30:00Z
 
 deletedUntil:
   type: string
   description: The date and time at which the segment will be re-ingested.
+  example: 2021-07-22T12:30:00Z
 
 segmentConditionsAnd:
   type: object
