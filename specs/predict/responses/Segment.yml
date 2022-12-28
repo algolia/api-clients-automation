@@ -65,18 +65,21 @@ createSegmentResponse:
 segment:
   type: object
   required:
+    - version
     - segmentID
     - name
     - conditions
     - segmentStatus
     - type
   properties:
+    version:
+      $ref: '#/segmentVersion'
     segmentID:
       $ref: '#/segmentID'
     name:
-      type: string
+      $ref: '#/segmentName'
     conditions:
-      type: string
+      $ref: '#/segmentConditionsAnd'
     segmentStatus:
       $ref: '#/segmentStatus'
     type:
@@ -86,6 +89,7 @@ segment:
 
 segmentStatus:
   type: string
+  description: The status of the segment.
   enum:
     - active
     - pending
@@ -93,13 +97,22 @@ segmentStatus:
 
 segmentType:
   type: string
+  description: The type of the segment.
   enum:
     - computed
     - custom
 
+segmentVersion:
+  type: number
+  description: The segment syntax version.
+
 segmentID:
   type: string
   description: The ID of the segment.
+
+segmentName:
+  type: string
+  description: The name of the segment.
 
 updatedAt:
   type: string
@@ -108,3 +121,169 @@ updatedAt:
 deletedUntil:
   type: string
   description: The date and time at which the segment will be re-ingested.
+
+segmentConditionsAnd:
+  type: object
+  description: |
+    An object containing conditions that define which users are included in the segment.
+    
+    These conditions are chained together using an 'AND' operator.
+    
+    This object can only be at the top-level of the segment conditions property.
+  required:
+    - operator
+    - operands
+  properties:
+    operator:
+      $ref: '#/segmentOperatorAnd'
+    operands:
+      $ref: '#/segmentOperandsAnd'
+
+segmentOperatorAnd:
+  type: string
+  enum: ['AND']
+
+segmentOperandsAnd:
+  type: array
+  items:
+    $ref: '#/segmentOperandsItemsAnd'
+
+segmentOperandsItemsAnd:
+  oneOf:
+    - $ref: '#/segmentConditionsOr'
+    - $ref: '#/segmentOperandOrderValue'
+    - $ref: '#/segmentOperandFunnelStage'
+    - $ref: '#/segmentOperandAffinities'
+    - $ref: '#/segmentOperandProperty'
+
+segmentConditionsOr:
+  type: object
+  description: |
+    An object containing conditions that define which users are included in the segment.
+
+    These conditions are chained together using an 'OR' operator.
+    
+    This object can only be nested as an operand within 'AND' conditions.
+  required:
+    - operator
+    - operands
+  properties:
+    operator:
+      $ref: '#/segmentOperatorOr'
+    operands:
+      $ref: '#/segmentOperandsOr'
+
+segmentOperatorOr:
+  type: string
+  enum: ['OR']
+
+segmentOperandsOr:
+  type: array
+  items:
+    $ref: '#/segmentOperandsItemsOr'
+
+segmentOperandsItemsOr:
+  oneOf:
+    - $ref: '#/segmentOperandOrderValue'
+    - $ref: '#/segmentOperandFunnelStage'
+    - $ref: '#/segmentOperandAffinities'
+    - $ref: '#/segmentOperandProperty'
+
+segmentOperandOrderValue:
+  type: object
+  required:
+    - name
+    - filters
+  properties:
+    name:
+      type: string
+    filters:
+      type: array
+      items:
+        $ref: '#/segmentPropertyFilter'
+
+segmentOperandFunnelStage:
+  type: object
+  required:
+    - name
+    - filters
+  properties:
+    name:
+      type: string
+    filters:
+      type: array
+      items:
+        $ref: '#/segmentPredictionFilter'
+
+segmentOperandAffinities:
+  type: object
+  required:
+    - name
+    - filters
+  properties:
+    name:
+      type: string
+    filters:
+      type: array
+      items:
+        $ref: '#/segmentPredictionFilter'
+
+segmentOperandProperty:
+  type: object
+  required:
+    - name
+    - filters
+  properties:
+    name:
+      type: string
+    filters:
+      type: array
+      items:
+        $ref: '#/segmentPropertyFilter'
+
+segmentPropertyFilter:
+  type: object
+  required:
+    - operator
+    - value
+  properties:
+    operator:
+      $ref: '#/segmentFilterOperator'
+    value:
+      type: string
+
+segmentPredictionFilter:
+  type: object
+  required:
+    - operator
+    - value
+    - probability
+  properties:
+    operator:
+      $ref: '#/segmentFilterOperator'
+    value:
+      type: string
+    probability:
+      $ref: '#/segmentFilterProbability'
+
+segmentFilterOperator:
+  type: string
+  enum:
+    - =
+    - '!='
+    - '>'
+    - '>='
+    - <
+    - <=
+
+segmentFilterProbability:
+  type: object
+  properties:
+    lt:
+      type: number
+    lte:
+      type: number
+    gt:
+      type: number
+    gte:
+      type: number
