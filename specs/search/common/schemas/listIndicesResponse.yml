@@ -63,3 +63,4 @@ fetchedIndex:
     - fileSize
     - lastBuildTimeS
     - pendingTask
+    - numberOfPendingTasks
