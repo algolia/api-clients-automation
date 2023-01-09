@@ -3313,10 +3313,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:9.4.0":
-  version: 9.4.0
-  resolution: "commander@npm:9.4.0"
-  checksum: a322de584a6ccd1ea83c24f6a660e52d16ffbe2613fcfbb8d2cc68bc9dec637492456d754fe8bb5b039ad843ed8e04fb0b107e581a75f62cde9e1a0ab1546e09
+"commander@npm:9.5.0":
+  version: 9.5.0
+  resolution: "commander@npm:9.5.0"
+  checksum: c7a3e27aa59e913b54a1bafd366b88650bc41d6651f0cbe258d4ff09d43d6a7394232a4dadd0bf518b3e696fdf595db1028a0d82c785b88bd61f8a440cecfade
   languageName: node
   linkType: hard
 
@@ -7747,7 +7747,7 @@ __metadata:
     "@types/node": 16.11.59
     "@types/semver": 7.3.10
     chalk: 4.1.2
-    commander: 9.4.0
+    commander: 9.5.0
     dotenv: 16.0.2
     eslint: 8.27.0
     execa: 5.1.1
