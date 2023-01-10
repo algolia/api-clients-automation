@@ -1,3 +1,7 @@
+## [5.0.0-alpha.32](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.31...5.0.0-alpha.32)
+
+- [8fc33195](https://github.com/algolia/api-clients-automation/commit/8fc33195) fix(specs): make enabled nullable ([#1212](https://github.com/algolia/api-clients-automation/pull/1212)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.31](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.30...5.0.0-alpha.31)
 
 - [75c9a862](https://github.com/algolia/api-clients-automation/commit/75c9a862) fix(specs): numberOfPendingTasks is plural ([#1211](https://github.com/algolia/api-clients-automation/pull/1211)) by [@kai687](https://github.com/kai687/)
