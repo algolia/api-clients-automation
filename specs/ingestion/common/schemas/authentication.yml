@@ -150,7 +150,6 @@ AuthOAuth:
     - url
     - client_id
     - client_secret
-    - scope
 
 AuthAlgolia:
   type: object
