@@ -10,8 +10,6 @@ Authentication:
       type: string
     platform:
       $ref: '#/PlatformType'
-    input:
-      $ref: '#/AuthInput'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -22,6 +20,18 @@ Authentication:
     - name
     - input
     - createdAt
+
+AuthenticationWithInput:
+  allOf:
+    - $ref: '#/Authentication'
+    - type: object
+      title: authenticationInput
+      additionalProperties: false
+      properties:
+        input:
+          $ref: '#/AuthInput'
+      required:
+        - input
 
 AuthenticationCreate:
   type: object
