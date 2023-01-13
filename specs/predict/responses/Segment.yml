@@ -104,8 +104,9 @@ segmentType:
 
 segmentVersion:
   type: number
+  format: float
   description: The segment syntax version.
-  example: 1
+  example: 1.1
 
 segmentID:
   type: string
@@ -253,6 +254,7 @@ segmentAffinityFilterValue:
   oneOf:
     - type: string
     - type: number
+      format: float
     - type: array
       items:
         type: string
@@ -295,6 +297,7 @@ segmentPropertyFilterValue:
   oneOf:
     - type: string
     - type: number
+      format: float
     - type: array
       items:
         type: string
