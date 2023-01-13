@@ -79,7 +79,7 @@ segment:
     name:
       $ref: '#/segmentName'
     conditions:
-      $ref: '#/segmentConditionsAnd'
+      $ref: '#/segmentParentConditions'
     segmentStatus:
       $ref: '#/segmentStatus'
     type:
@@ -125,74 +125,54 @@ deletedUntil:
   description: The date and time at which the segment will be re-ingested.
   example: 2021-07-22T12:30:00Z
 
-segmentConditionsAnd:
+segmentParentConditions:
   type: object
-  description: |
-    An object containing conditions that define which users are included in the segment.
-    
-    These conditions are chained together using an 'AND' operator.
-    
-    This object can only be at the top-level of the segment conditions property.
   required:
     - operator
     - operands
   properties:
     operator:
-      $ref: '#/segmentOperatorAnd'
+      $ref: '#/segmentConditionOperator'
     operands:
-      $ref: '#/segmentOperandsAnd'
+      type: array
+      items:
+        $ref: '#/segmentParentConditionOperands'
 
-segmentOperatorAnd:
-  type: string
-  enum: ['AND']
-
-segmentOperandsAnd:
-  type: array
-  items:
-    $ref: '#/segmentOperandsItemsAnd'
-
-segmentOperandsItemsAnd:
-  oneOf:
-    - $ref: '#/segmentConditionsOr'
-    - $ref: '#/segmentOperandOrderValue'
-    - $ref: '#/segmentOperandFunnelStage'
-    - $ref: '#/segmentOperandAffinities'
-    - $ref: '#/segmentOperandProperty'
-
-segmentConditionsOr:
+segmentChildConditions:
   type: object
-  description: |
-    An object containing conditions that define which users are included in the segment.
-
-    These conditions are chained together using an 'OR' operator.
-    
-    This object can only be nested as an operand within 'AND' conditions.
   required:
     - operator
     - operands
   properties:
     operator:
-      $ref: '#/segmentOperatorOr'
+      $ref: '#/segmentConditionOperator'
     operands:
-      $ref: '#/segmentOperandsOr'
+      type: array
+      items:
+        $ref: '#/segmentChildConditionOperands'
 
-segmentOperatorOr:
+segmentConditionOperator:
   type: string
-  enum: ['OR']
+  enum:
+    - AND
+    - OR
 
-segmentOperandsOr:
-  type: array
-  items:
-    $ref: '#/segmentOperandsItemsOr'
-
-segmentOperandsItemsOr:
+segmentParentConditionOperands:
   oneOf:
-    - $ref: '#/segmentOperandOrderValue'
+    - $ref: '#/segmentChildConditions'
+    - $ref: '#/segmentOperandAffinity'
     - $ref: '#/segmentOperandFunnelStage'
-    - $ref: '#/segmentOperandAffinities'
+    - $ref: '#/segmentOperandOrderValue'
     - $ref: '#/segmentOperandProperty'
 
-segmentOperandOrderValue:
+segmentChildConditionOperands:
+  oneOf:
+    - $ref: '#/segmentOperandAffinity'
+    - $ref: '#/segmentOperandFunnelStage'
+    - $ref: '#/segmentOperandOrderValue'
+    - $ref: '#/segmentOperandProperty'
+
+segmentOperandAffinity:
   type: object
   required:
     - name
@@ -200,10 +180,13 @@ segmentOperandOrderValue:
   properties:
     name:
       type: string
+      pattern: ^predictions\.affinities\.\w+$
+      example: predictions.affinities.color
     filters:
       type: array
+      minItems: 1
       items:
-        $ref: '#/segmentPropertyFilter'
+        $ref: '#/segmentAffinityFilter'
 
 segmentOperandFunnelStage:
   type: object
@@ -213,12 +196,15 @@ segmentOperandFunnelStage:
   properties:
     name:
       type: string
+      pattern: ^predictions\.funnel_stage$
+      example: predictions.funnel_stage
     filters:
       type: array
+      minItems: 1
       items:
-        $ref: '#/segmentPredictionFilter'
+        $ref: '#/segmentFunnelStageFilter'
 
-segmentOperandAffinities:
+segmentOperandOrderValue:
   type: object
   required:
     - name
@@ -226,10 +212,13 @@ segmentOperandAffinities:
   properties:
     name:
       type: string
+      pattern: ^predictions\.order_value$
+      example: predictions.order_value
     filters:
       type: array
+      minItems: 1
       items:
-        $ref: '#/segmentPredictionFilter'
+        $ref: '#/segmentOrderValueFilter'
 
 segmentOperandProperty:
   type: object
@@ -239,38 +228,88 @@ segmentOperandProperty:
   properties:
     name:
       type: string
+      pattern: ^properties\.(raw|computed|custom)\.\w+$
+      example: properties.raw.age
     filters:
       type: array
+      minItems: 1
       items:
         $ref: '#/segmentPropertyFilter'
 
-segmentPropertyFilter:
+segmentAffinityFilter:
   type: object
   required:
-    - operator
-    - value
-  properties:
-    operator:
-      $ref: '#/segmentFilterOperator'
-    value:
-      type: string
-
-segmentPredictionFilter:
-  type: object
-  required:
-    - operator
     - value
     - probability
   properties:
     operator:
-      $ref: '#/segmentFilterOperator'
+      $ref: '#/segmentFilterOperatorNumerical'
+    value:
+      $ref: '#/segmentAffinityFilterValue'
+    probability:
+      $ref: '#/segmentFilterProbability'
+
+segmentAffinityFilterValue:
+  oneOf:
+    - type: string
+    - type: number
+    - type: array
+      items:
+        type: string
+    - type: boolean
+
+segmentFunnelStageFilter:
+  type: object
+  required:
+    - value
+    - probability
+  properties:
+    operator:
+      $ref: '#/segmentFilterOperatorBoolean'
     value:
       type: string
     probability:
       $ref: '#/segmentFilterProbability'
 
-segmentFilterOperator:
+segmentOrderValueFilter:
+  type: object
+  required:
+    - value
+  properties:
+    operator:
+      $ref: '#/segmentFilterOperatorNumerical'
+    value:
+      type: number
+
+segmentPropertyFilter:
+  type: object
+  required:
+    - value
+  properties:
+    operator:
+      $ref: '#/segmentFilterOperatorNumerical'
+    value:
+      $ref: '#/segmentPropertyFilterValue'
+
+segmentPropertyFilterValue:
+  oneOf:
+    - type: string
+    - type: number
+    - type: array
+      items:
+        type: string
+    - type: boolean
+
+segmentFilterOperatorBoolean:
   type: string
+  default: =
+  enum:
+    - =
+    - '!='
+
+segmentFilterOperatorNumerical:
+  type: string
+  default: =
   enum:
     - =
     - '!='
@@ -281,6 +320,8 @@ segmentFilterOperator:
 
 segmentFilterProbability:
   type: object
+  minProperties: 1
+  maxProperties: 2
   properties:
     lt:
       type: number
