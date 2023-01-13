@@ -86,11 +86,7 @@ action:
   schema:
     type: array
     items:
-      type: string
-      enum:
-        - save
-        - replace
-        - delete
+      $ref: './schemas/task.yml#/ActionType'
     example: save,replace
 
 destinationIDQueryParam:
@@ -115,9 +111,5 @@ triggerType:
   schema:
     type: array
     items:
-      type: string
-      enum:
-        - on_demand
-        - schedule
-        - subscription
+      $ref: './schemas/task.yml#/TriggerType'
     example: on_demand,schedule
