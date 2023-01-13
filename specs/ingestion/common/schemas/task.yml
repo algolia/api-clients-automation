@@ -18,10 +18,6 @@ Task:
     # lastCursorValue:
     #   type: integer
     #   format: int64
-    lastRun:
-      type: string
-    nextRun:
-      type: string
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -43,7 +39,7 @@ TaskCreate:
     destinationID:
       type: string
     trigger:
-      $ref: '#/Trigger'
+      $ref: '#/TriggerInput'
     action:
       $ref: '#/ActionType'
     enabled:
@@ -76,7 +72,7 @@ TaskUpdate:
     destinationID:
       type: string
     trigger:
-      $ref: '#/Trigger'
+      $ref: '#/TriggerInput'
     enabled:
       type: boolean
 
@@ -96,13 +92,30 @@ ActionType:
   type: string
   enum: ['replace', 'save', 'delete']
 
+TriggerInput:
+  type: object
+  additionalProperties: false
+  properties:
+    type:
+      $ref: '#/TriggerType'
+    cron:
+      type: string
+  required:
+    - type
+
 Trigger:
   type: object
   additionalProperties: false
   properties:
     type:
       $ref: '#/TriggerType'
-    frequency:
+    cron:
+      type: string
+    lastRun:
+      description: The last time the task ran (`scheduled` or `on-demand`).
+      type: string
+    nextRun:
+      description: The next scheduled run for the task (`scheduled`).
       type: string
   required:
     - type
