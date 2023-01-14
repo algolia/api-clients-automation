@@ -4463,16 +4463,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"folder-hash@npm:4.0.2":
-  version: 4.0.2
-  resolution: "folder-hash@npm:4.0.2"
+"folder-hash@npm:4.0.4":
+  version: 4.0.4
+  resolution: "folder-hash@npm:4.0.4"
   dependencies:
     debug: ^4.3.3
-    graceful-fs: ~4.2.9
-    minimatch: ~5.0.0
+    minimatch: ~5.1.2
   bin:
     folder-hash: bin/folder-hash
-  checksum: c087a02f5c39e6869c72e40d196ee642a972e5219b83239ba61f2971c710b6fbee0e9bfbe834cdb59104a7a696596be75c4c3365fc1e7aae8bbe652a650c8092
+  checksum: 1864e4a1376d3484c60b1e41135d368cb380f67135ebca4b995be3af2a6502b4dac2b5468c5dcd5ab4a5cd11f0936f43aefb42e944bd88a8344d5c2cc7427599
   languageName: node
   linkType: hard
 
@@ -4764,7 +4763,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9, graceful-fs@npm:~4.2.9":
+"graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
   version: 4.2.10
   resolution: "graceful-fs@npm:4.2.10"
   checksum: 3f109d70ae123951905d85032ebeae3c2a5a7a997430df00ea30df0e3a6c60cf6689b109654d6fdacd28810a053348c4d14642da1d075049e6be1ba5216218da
@@ -6574,12 +6573,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:~5.0.0":
-  version: 5.0.1
-  resolution: "minimatch@npm:5.0.1"
+"minimatch@npm:~5.1.2":
+  version: 5.1.2
+  resolution: "minimatch@npm:5.1.2"
   dependencies:
     brace-expansion: ^2.0.1
-  checksum: b34b98463da4754bc526b244d680c69d4d6089451ebe512edaf6dd9eeed0279399cfa3edb19233513b8f830bf4bfcad911dddcdf125e75074100d52f724774f0
+  checksum: 32ffda25b9fb8270a1c1beafdb7489dc0e411af553495136509a945691f63c9b6b000eeeaaf8bffe3efa609c1d6d3bc0f5a106f6c3443b5c05da649100ded964
   languageName: node
   linkType: hard
 
@@ -7751,7 +7750,7 @@ __metadata:
     dotenv: 16.0.2
     eslint: 8.27.0
     execa: 5.1.1
-    folder-hash: 4.0.2
+    folder-hash: 4.0.4
     fs-extra: 10.1.0
     inquirer: 8.2.5
     jest: 29.3.1
