@@ -7,10 +7,10 @@ get:
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../common/parameters.yml#/page'
-    - $ref: '../../common/parameters.yml#/action'
-    - $ref: '../../common/parameters.yml#/enabled'
-    - $ref: '../../common/parameters.yml#/destinationIDQueryParam'
-    - $ref: '../../common/parameters.yml#/triggerType'
+    - $ref: '../../common/taskParameters.yml#/action'
+    - $ref: '../../common/taskParameters.yml#/enabled'
+    - $ref: '../../common/taskParameters.yml#/destinationID'
+    - $ref: '../../common/taskParameters.yml#/triggerType'
   responses:
     '200':
       description: OK
