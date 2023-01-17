@@ -55,11 +55,20 @@ export class DeserializationError extends AlgoliaError {
   }
 }
 
-type DetailedError = {
+export type DetailedErrorWithMessage = {
+  message: string;
+  label: string;
+};
+
+export type DetailedErrorWithTypeID = {
+  id: string;
+  type: string;
+  name?: string;
+};
+
+export type DetailedError = {
   code: string;
-  details?:
-    | Array<{ id: string; type: string; name?: string }>
-    | Array<{ message: string; label: string }>;
+  details?: DetailedErrorWithMessage[] | DetailedErrorWithTypeID[];
 };
 
 export class DetailedApiError extends ApiError {
