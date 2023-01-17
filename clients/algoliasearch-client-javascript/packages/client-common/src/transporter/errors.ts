@@ -71,6 +71,7 @@ export type DetailedError = {
   details?: DetailedErrorWithMessage[] | DetailedErrorWithTypeID[];
 };
 
+// DetailedApiError is only used by the ingestion client to return more informative error, other clients will use ApiClient.
 export class DetailedApiError extends ApiError {
   error: DetailedError;
 
