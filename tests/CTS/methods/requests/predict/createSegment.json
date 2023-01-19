@@ -3,14 +3,36 @@
     "testName": "create segment with required params",
     "parameters": {
       "name": "segment1",
-      "conditions": "predictions.order_value.value > 100 AND predictions.funnel_stage.score < 0.9"
+      "conditions": {
+        "operator": "AND",
+        "operands": [
+          {
+            "name": "predictions.affinities.brand",
+            "value": "nike",
+            "probability": {
+              ">": "0.8"
+            }
+          }
+        ]
+      }
     },
     "request": {
       "path": "/1/segments",
       "method": "POST",
       "body": {
         "name": "segment1",
-        "conditions": "predictions.order_value.value > 100 AND predictions.funnel_stage.score < 0.9"
+        "conditions": {
+          "operator": "AND",
+          "operands": [
+            {
+              "name": "predictions.affinities.brand",
+              "value": "nike",
+              "probability": {
+                ">": "0.8"
+              }
+            }
+          ]
+        }
       }
     }
   }
