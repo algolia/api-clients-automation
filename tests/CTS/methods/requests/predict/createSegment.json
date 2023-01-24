@@ -7,11 +7,13 @@
         "operator": "AND",
         "operands": [
           {
-            "name": "predictions.affinities.brand",
-            "value": "nike",
-            "probability": {
-              ">": "0.8"
-            }
+            "name": "predictions.order_value",
+            "filters": [
+              {
+                "operator": ">",
+                "value": 200
+              }
+            ]
           }
         ]
       }
@@ -25,11 +27,13 @@
           "operator": "AND",
           "operands": [
             {
-              "name": "predictions.affinities.brand",
-              "value": "nike",
-              "probability": {
-                ">": "0.8"
-              }
+              "name": "predictions.order_value",
+              "filters": [
+                {
+                  "operator": ">",
+                  "value": 200
+                }
+              ]
             }
           ]
         }
