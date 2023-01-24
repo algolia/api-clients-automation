@@ -21,5 +21,10 @@ platform:
   schema:
     type: array
     items:
-      $ref: './schemas/authentication.yml#/Platform'
-    example: commercetools,bigcommerce
+      $ref: '#/platformWithNone'
+    example: commercetools,none
+
+platformWithNone:
+  oneOf:
+    - $ref: './schemas/authentication.yml#/Platform'
+    - $ref: './schemas/authentication.yml#/PlatformNone'

@@ -101,6 +101,10 @@ Platform:
   type: string
   enum: ['bigcommerce', 'commercetools']
 
+PlatformNone:
+  type: string
+  enum: ['none']
+
 AuthGoogleServiceAccount:
   type: object
   additionalProperties: false
