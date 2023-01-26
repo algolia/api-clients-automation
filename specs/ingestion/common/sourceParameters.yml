@@ -16,7 +16,7 @@ authenticationID:
   in: query
   description: >-
     Which authenticationID the returned source should have. Can be a list of string separated with commas.
-    Also supports 'none' as a value to return sources that don't bring any authentication.
+    Also supports 'none' as a value to return sources that don't have any authentication.
   required: false
   style: form
   explode: false
