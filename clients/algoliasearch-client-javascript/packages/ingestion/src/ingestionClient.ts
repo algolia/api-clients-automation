@@ -67,7 +67,7 @@ import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
 
-export const apiClientVersion = '1.0.0-alpha.10';
+export const apiClientVersion = '1.0.0-alpha.11';
 
 export const REGIONS = ['us'] as const;
 export type Region = typeof REGIONS[number];
@@ -896,7 +896,7 @@ export function createIngestionClient({
      * @param getSources.itemsPerPage - The number of items per page to return.
      * @param getSources.page - The page number to fetch, starting at 1.
      * @param getSources.type - Which type the returned source should have. Can be a list of string separated with commas.
-     * @param getSources.authenticationID - Which authenticationID the returned source should have. Can be a list of string separated with commas.
+     * @param getSources.authenticationID - Which authenticationID the returned source should have. Can be a list of string separated with commas. Also supports \'none\' as a value to return sources that don\'t have any authentication.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(
@@ -977,6 +977,7 @@ export function createIngestionClient({
      * @param getTasks.page - The page number to fetch, starting at 1.
      * @param getTasks.action - Which action the returned task should have. Can be a list of string separated with commas.
      * @param getTasks.enabled - If the returned task should have its \'enabled\' property set to true.
+     * @param getTasks.sourceID - Which sourceID the returned task should have. Can be a list of string separated with commas.
      * @param getTasks.destinationID - Which destinationID the returned task should have. Can be a list of string separated with commas.
      * @param getTasks.triggerType - Which trigger type the returned task should have. Can be a list of string separated with commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -987,6 +988,7 @@ export function createIngestionClient({
         page,
         action,
         enabled,
+        sourceID,
         destinationID,
         triggerType,
       }: GetTasksProps = {},
@@ -1010,6 +1012,10 @@ export function createIngestionClient({
 
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
+      }
+
+      if (sourceID !== undefined) {
+        queryParameters.sourceID = sourceID.toString();
       }
 
       if (destinationID !== undefined) {
