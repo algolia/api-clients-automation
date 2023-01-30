@@ -60,8 +60,6 @@ SourceUpdate:
   type: object
   additionalProperties: false
   properties:
-    type:
-      $ref: '#/SourceType'
     name:
       type: string
     input:
