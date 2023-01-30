@@ -65,7 +65,7 @@ SourceUpdate:
     name:
       type: string
     input:
-      $ref: '#/SourceInput'
+      $ref: '#/SourceUpdateInput'
     authenticationID:
       type: string
 
@@ -139,3 +139,36 @@ SourceInput:
     - $ref: '#/SourceCommercetools'
     - $ref: '#/SourceBigCommerce'
     - $ref: '#/SourceJson'
+
+SourceUpdateCommercetools:
+  type: object
+  additionalProperties: false
+  properties:
+    storeKeys:
+      type: array
+      items:
+        type: string
+    locales:
+      type: array
+      description: >
+        Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+      items:
+        type: string
+
+SourceUpdateJson:
+  type: object
+  additionalProperties: false
+  properties:
+    url:
+      type: string
+    method:
+      $ref: '#/MethodType'
+  required:
+    - url
+
+
+SourceUpdateInput:
+  oneOf:
+    - $ref: '#/SourceUpdateCommercetools'
+    - $ref: '#/SourceUpdateJson'
+
