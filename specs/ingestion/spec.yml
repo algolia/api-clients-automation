@@ -51,6 +51,8 @@ paths:
   # sources api
   /1/sources:
     $ref: 'paths/sources/sources.yml'
+  /1/sources/search:
+    $ref: 'paths/sources/searchSources.yml'
   /1/sources/{sourceID}:
     $ref: 'paths/sources/sourceID.yml'
 
