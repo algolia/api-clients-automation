@@ -2,7 +2,7 @@ post:
   tags:
     - tasks
   summary: Run a task.
-  description: Run a task.
+  description: Run the task of the given taskID.
   operationId: runTask
   parameters:
     - $ref: '../../common/parameters.yml#/taskID'

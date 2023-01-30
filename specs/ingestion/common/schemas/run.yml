@@ -1,6 +1,7 @@
 RunResponse:
   type: object
   additionalProperties: false
+  description: The response from the run task API, containing an Observability Run ID and the time it was created at.
   properties:
     runID:
       type: string
