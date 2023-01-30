@@ -39,6 +39,8 @@ paths:
   # authentications api
   /1/authentications:
     $ref: 'paths/authentications/authentications.yml'
+  /1/authentications/search:
+    $ref: 'paths/authentications/searchAuthentications.yml'
   /1/authentications/{authenticationID}:
     $ref: 'paths/authentications/authenticationID.yml'
 
