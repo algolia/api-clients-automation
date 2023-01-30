@@ -1,8 +1,8 @@
 get:
   tags:
     - observability
-  summary: Get a list of events for a specific run.
-  description: Get a list of events for a specific run.
+  summary: Get a list of events.
+  description: Get a list of events for the specific runID.
   operationId: getEvents
   parameters:
     - $ref: '../../../common/parameters.yml#/runID'

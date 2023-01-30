@@ -2,7 +2,7 @@ get:
   tags:
     - observability
   summary: Get a run.
-  description: Get a run.
+  description: Get a single run for the given ID.
   operationId: getRun
   parameters:
     - $ref: '../../common/parameters.yml#/runID'
