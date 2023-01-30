@@ -3,11 +3,11 @@ Event:
   additionalProperties: false
   properties:
     eventID:
-      type: string
+      $ref: './common.yml#/eventID'
     runID:
-      type: string
+      $ref: './common.yml#/runID'
     parentID:
-      type: string
+      $ref: './common.yml#/eventID'
     status:
       $ref: '#/EventStatus'
     type:

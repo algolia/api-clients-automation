@@ -3,14 +3,11 @@ Task:
   additionalProperties: false
   properties:
     taskID:
-      type: string
-      description: The ID of the created task.
+      $ref: './common.yml#/taskID'
     sourceID:
-      type: string
-      description: The ID of the source to bound the task to.
+      $ref: './common.yml#/sourceID'
     destinationID:
-      type: string
-      description: The ID of the destination to bound the task to.
+      $ref: './common.yml#/destinationID'
     trigger:
       $ref: '#/TaskTrigger'
     enabled:
@@ -45,11 +42,9 @@ TaskCreate:
   description: The payload for a task creation.
   properties:
     sourceID:
-      type: string
-      description: The ID of the source to bound the task to.
+      $ref: './common.yml#/sourceID'
     destinationID:
-      type: string
-      description: The ID of the destination to bound the task to.
+      $ref: './common.yml#/destinationID'
     trigger:
       $ref: '#/TaskCreateTrigger'
     action:
@@ -77,8 +72,7 @@ TaskCreateResponse:
   description: The response from the API after a task creation.
   properties:
     taskID:
-      type: string
-      description: The ID of the created task.
+      $ref: './common.yml#/taskID'
     createdAt:
       $ref: './common.yml#/createdAt'
   required:
@@ -91,8 +85,7 @@ TaskUpdate:
   description: The payload for a task update.
   properties:
     destinationID:
-      type: string
-      description: The ID of the destination to bound the task to.
+      $ref: './common.yml#/destinationID'
     trigger:
       $ref: '#/TriggerInput'
     enabled:
@@ -105,8 +98,7 @@ TaskUpdateResponse:
   additionalProperties: false
   properties:
     taskID:
-      type: string
-      description: The ID of the updated task.
+      $ref: './common.yml#/taskID'
     updatedAt:
       $ref: './common.yml#/updatedAt'
   required:
