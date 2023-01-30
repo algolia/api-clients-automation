@@ -21,4 +21,4 @@ authenticationID:
   schema:
     type: array
     items:
-      type: string
+      $ref: './schemas/common.yml#/authenticationID'

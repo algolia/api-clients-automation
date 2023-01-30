@@ -30,7 +30,7 @@ sourceID:
   schema:
     type: array
     items:
-      type: string
+      $ref: './schemas/common.yml#/sourceID'
 
 destinationID:
   name: destinationID
@@ -42,7 +42,7 @@ destinationID:
   schema:
     type: array
     items:
-      type: string
+      $ref: './schemas/common.yml#/destinationID'
 
 triggerType:
   name: triggerType

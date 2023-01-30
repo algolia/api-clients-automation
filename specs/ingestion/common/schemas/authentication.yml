@@ -3,7 +3,7 @@ Authentication:
   additionalProperties: false
   properties:
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
     type:
       $ref: '#/AuthenticationType'
     name:
@@ -55,7 +55,7 @@ AuthenticationCreateResponse:
   additionalProperties: false
   properties:
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
     name:
       type: string
     createdAt:
@@ -83,7 +83,7 @@ AuthenticationUpdateResponse:
   additionalProperties: false
   properties:
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
     name:
       type: string
     updatedAt:

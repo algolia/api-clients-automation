@@ -3,7 +3,7 @@ Destination:
   additionalProperties: false
   properties:
     destinationID:
-      type: string
+      $ref: './common.yml#/destinationID'
     type:
       $ref: '#/DestinationType'
     name:
@@ -46,7 +46,7 @@ DestinationCreateResponse:
   additionalProperties: false
   properties:
     destinationID:
-      type: string
+      $ref: './common.yml#/destinationID'
     name:
       type: string
     createdAt:
@@ -74,7 +74,7 @@ DestinationUpdateResponse:
   additionalProperties: false
   properties:
     destinationID:
-      type: string
+      $ref: './common.yml#/destinationID'
     name:
       type: string
     updatedAt:
