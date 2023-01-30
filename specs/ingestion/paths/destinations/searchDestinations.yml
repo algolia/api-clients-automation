@@ -1,8 +1,8 @@
 post:
   tags:
     - destinations
-  summary: Search amongst destinations.
-  description: Search amongst destinations with a defined set of parameters.
+  summary: Search among destinations.
+  description: Search among destinations with a defined set of parameters.
   operationId: searchDestinations
   requestBody:
     content:

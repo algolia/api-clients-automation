@@ -1,8 +1,8 @@
 post:
   tags:
     - tasks
-  summary: Search amongst tasks.
-  description: Search amongst tasks with a defined set of parameters.
+  summary: Search among tasks.
+  description: Search among tasks with a defined set of parameters.
   operationId: searchTasks
   requestBody:
     content:

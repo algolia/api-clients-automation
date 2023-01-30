@@ -1,8 +1,8 @@
 post:
   tags:
     - sources
-  summary: Search amongst sources.
-  description: Search amongst sources with a defined set of parameters.
+  summary: Search among sources.
+  description: Search among sources with a defined set of parameters.
   operationId: searchSources
   requestBody:
     content:
