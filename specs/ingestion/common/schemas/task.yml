@@ -105,6 +105,17 @@ TaskUpdateResponse:
     - taskID
     - updatedAt
 
+TaskSearch:
+  type: object
+  additionalProperties: false
+  properties:
+    taskIDs:
+      type: array
+      items:
+        type: string
+  required:
+    - taskIDs
+
 ActionType:
   type: string
   description: The action to perform on the Algolia index.
