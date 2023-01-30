@@ -5,7 +5,7 @@ get:
   description: Get a source.
   operationId: getSource
   parameters:
-    - $ref: '../../common/parameters.yml#/sourceID'
+    - $ref: '../../common/parameters.yml#/pathSourceID'
   responses:
     '200':
       description: OK
@@ -23,7 +23,7 @@ post:
   description: Update a source.
   operationId: updateSource
   parameters:
-    - $ref: '../../common/parameters.yml#/sourceID'
+    - $ref: '../../common/parameters.yml#/pathSourceID'
   requestBody:
     content:
       application/json:
@@ -47,7 +47,7 @@ delete:
   description: Soft delete a source.
   operationId: deleteSource
   parameters:
-    - $ref: '../../common/parameters.yml#/sourceID'
+    - $ref: '../../common/parameters.yml#/pathSourceID'
   responses:
     '204':
       description: OK

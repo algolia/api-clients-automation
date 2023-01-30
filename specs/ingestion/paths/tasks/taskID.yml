@@ -5,7 +5,7 @@ get:
   description: Get the task of the given taskID.
   operationId: getTask
   parameters:
-    - $ref: '../../common/parameters.yml#/taskID'
+    - $ref: '../../common/parameters.yml#/pathTaskID'
   responses:
     '200':
       description: OK
@@ -23,7 +23,7 @@ put:
   description: Update the task of the given taskID.
   operationId: updateTask
   parameters:
-    - $ref: '../../common/parameters.yml#/taskID'
+    - $ref: '../../common/parameters.yml#/pathTaskID'
   requestBody:
     content:
       application/json:
@@ -47,7 +47,7 @@ delete:
   description: Soft delete the task of the given taskID.
   operationId: deleteTask
   parameters:
-    - $ref: '../../common/parameters.yml#/taskID'
+    - $ref: '../../common/parameters.yml#/pathTaskID'
   responses:
     '204':
       description: OK

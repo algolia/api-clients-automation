@@ -5,7 +5,7 @@ get:
   description: Get a destination.
   operationId: getDestination
   parameters:
-    - $ref: '../../common/parameters.yml#/destinationID'
+    - $ref: '../../common/parameters.yml#/pathDestinationID'
   responses:
     '200':
       description: OK
@@ -23,7 +23,7 @@ put:
   description: Update a destination.
   operationId: updateDestination
   parameters:
-    - $ref: '../../common/parameters.yml#/destinationID'
+    - $ref: '../../common/parameters.yml#/pathDestinationID'
   requestBody:
     content:
       application/json:
@@ -47,7 +47,7 @@ delete:
   description: Soft delete a destination.
   operationId: deleteDestination
   parameters:
-    - $ref: '../../common/parameters.yml#/destinationID'
+    - $ref: '../../common/parameters.yml#/pathDestinationID'
   responses:
     '204':
       description: OK

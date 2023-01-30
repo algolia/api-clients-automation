@@ -5,7 +5,7 @@ get:
   description: Get a list of events for the specific runID.
   operationId: getEvents
   parameters:
-    - $ref: '../../../common/parameters.yml#/runID'
+    - $ref: '../../../common/parameters.yml#/pathRunID'
     - $ref: '../../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../../common/parameters.yml#/page'
   responses:

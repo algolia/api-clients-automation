@@ -5,7 +5,7 @@ put:
   description: Disable a task.
   operationId: disableTask
   parameters:
-    - $ref: '../../common/parameters.yml#/taskID'
+    - $ref: '../../common/parameters.yml#/pathTaskID'
   responses:
     '200':
       description: OK

@@ -5,7 +5,7 @@ get:
   description: Get a authentication.
   operationId: getAuthentication
   parameters:
-    - $ref: '../../common/parameters.yml#/authenticationID'
+    - $ref: '../../common/parameters.yml#/pathAuthenticationID'
   responses:
     '200':
       description: OK
@@ -23,7 +23,7 @@ put:
   description: Update a authentication.
   operationId: updateAuthentication
   parameters:
-    - $ref: '../../common/parameters.yml#/authenticationID'
+    - $ref: '../../common/parameters.yml#/pathAuthenticationID'
   requestBody:
     content:
       application/json:
@@ -47,7 +47,7 @@ delete:
   description: Soft delete a authentication.
   operationId: deleteAuthentication
   parameters:
-    - $ref: '../../common/parameters.yml#/authenticationID'
+    - $ref: '../../common/parameters.yml#/pathAuthenticationID'
   responses:
     '204':
       description: OK

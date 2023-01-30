@@ -10,7 +10,7 @@ action:
   name: action
   in: query
   required: false
-  description: An array of actions to perform on the Algolia index.
+  description: The action of the tasks to retrieve.
   style: form
   explode: false
   schema:
@@ -23,7 +23,7 @@ action:
 sourceID:
   name: sourceID
   in: query
-  description: The sourceID bound to the task.
+  description: The sourceIDs of the tasks to retrive.
   required: false
   style: form
   explode: false
@@ -35,7 +35,7 @@ sourceID:
 destinationID:
   name: destinationID
   in: query
-  description: The destinationID bound to the task.
+  description: The destinationIDs of the tasks to retrive.
   required: false
   style: form
   explode: false
