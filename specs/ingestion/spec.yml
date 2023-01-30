@@ -45,6 +45,8 @@ paths:
   # destinations api
   /1/destinations:
     $ref: 'paths/destinations/destinations.yml'
+  /1/destinations/search:
+    $ref: 'paths/destinations/searchDestinations.yml'
   /1/destinations/{destinationID}:
     $ref: 'paths/destinations/destinationID.yml'
 
