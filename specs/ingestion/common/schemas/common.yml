@@ -56,3 +56,7 @@ eventID:
   type: string
   description: The event UUID.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+
+name:
+  type: string
+  description: An human readable name describing the object.
