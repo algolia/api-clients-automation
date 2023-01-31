@@ -104,6 +104,7 @@ SourceCommercetools:
     storeKeys:
       type: array
       items:
+        description: Unique and immutable key of the referenced Store.
         type: string
     locales:
       type: array
@@ -125,6 +126,7 @@ SourceBigCommerce:
   properties:
     storeHash:
       type: string
+      description: The store hash identifying the store the shopper is signing in to.
   required:
     - store_hash
 
@@ -138,6 +140,7 @@ SourceJson:
   properties:
     url:
       type: string
+      description: The URL of the file.
     method:
       $ref: '#/MethodType'
   required:
@@ -155,6 +158,7 @@ SourceUpdateCommercetools:
   properties:
     storeKeys:
       type: array
+      description: Unique and immutable key of the referenced Store.
       items:
         type: string
     locales:
@@ -170,6 +174,7 @@ SourceUpdateJson:
   properties:
     url:
       type: string
+      description: The URL of the file.
     method:
       $ref: '#/MethodType'
   required:
