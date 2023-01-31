@@ -24,7 +24,12 @@ platform:
       $ref: '#/platformWithNone'
     example: commercetools,none
 
+platformNone:
+  type: string
+  description: Used to filter Authentication without platform property.
+  enum: ['none']
+
 platformWithNone:
   oneOf:
     - $ref: './schemas/authentication.yml#/Platform'
-    - $ref: './schemas/authentication.yml#/PlatformNone'
+    - $ref: '#/platformNone'
