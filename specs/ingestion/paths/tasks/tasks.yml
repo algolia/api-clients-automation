@@ -2,7 +2,7 @@ get:
   tags:
     - tasks
   summary: Get a list of tasks.
-  description: Get a list of tasks for the given query parameters, returning a list of tasks with pagination details.
+  description: Get a list of tasks for the given query parameters, with pagination details.
   operationId: getTasks
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'

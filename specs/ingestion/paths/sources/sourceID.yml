@@ -2,7 +2,7 @@ get:
   tags:
     - sources
   summary: Get a source.
-  description: Get a source.
+  description: Get the source of the given sourceID.
   operationId: getSource
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
@@ -20,7 +20,7 @@ put:
   tags:
     - sources
   summary: Update a source.
-  description: Update a source.
+  description: Update the source of the given sourceID.
   operationId: updateSource
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
@@ -44,7 +44,7 @@ delete:
   tags:
     - sources
   summary: Delete a source.
-  description: Soft delete a source.
+  description: Soft delete the source of the given sourceID.
   operationId: deleteSource
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'

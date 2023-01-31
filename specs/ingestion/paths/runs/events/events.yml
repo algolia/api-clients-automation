@@ -2,7 +2,7 @@ get:
   tags:
     - observability
   summary: Get a list of events.
-  description: Get a list of events for the specific runID.
+  description: Get a list of events associated to the given runID, for the given query parameters, with pagination details.
   operationId: getEvents
   parameters:
     - $ref: '../../../common/parameters.yml#/pathRunID'

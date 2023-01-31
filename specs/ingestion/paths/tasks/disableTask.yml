@@ -2,7 +2,7 @@ put:
   tags:
     - tasks
   summary: Disable a task.
-  description: Disable a task.
+  description: Disable the task of the given taskID.
   operationId: disableTask
   parameters:
     - $ref: '../../common/parameters.yml#/pathTaskID'

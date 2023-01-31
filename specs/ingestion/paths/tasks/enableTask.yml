@@ -2,7 +2,7 @@ put:
   tags:
     - tasks
   summary: Enable a task.
-  description: Enable a task.
+  description: Enable the task of the given taskID.
   operationId: enableTask
   parameters:
     - $ref: '../../common/parameters.yml#/pathTaskID'
