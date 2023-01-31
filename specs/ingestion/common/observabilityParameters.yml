@@ -30,4 +30,4 @@ taskID:
   in: query
   description: Filter by taskID.
   schema:
-    $ref: "./schemas/common.yml#/taskID"
+    $ref: './schemas/common.yml#/taskID'

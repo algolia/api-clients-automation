@@ -8,7 +8,9 @@ Event:
     runID:
       $ref: './common.yml#/runID'
     parentID:
-      $ref: './common.yml#/eventID'
+      type: string
+      description: The parent event, the cause of this event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     status:
       $ref: '#/EventStatus'
     type:
