@@ -2,7 +2,7 @@ pathAuthenticationID:
   name: authenticationID
   in: path
   required: true
-  description: The authentication uuid.
+  description: The authentication UUID.
   schema:
     $ref: './schemas/common.yml#/authenticationID'
 
@@ -10,7 +10,7 @@ pathDestinationID:
   name: destinationID
   in: path
   required: true
-  description: The destination uuid.
+  description: The destination UUID.
   schema:
     $ref: './schemas/common.yml#/destinationID'
 
@@ -18,7 +18,7 @@ pathSourceID:
   name: sourceID
   in: path
   required: true
-  description: The source uuid.
+  description: The source UUID.
   schema:
     $ref: './schemas/common.yml#/sourceID'
 
@@ -26,7 +26,7 @@ pathTaskID:
   name: taskID
   in: path
   required: true
-  description: The task uuid.
+  description: The task UUID.
   schema:
     $ref: './schemas/common.yml#/taskID'
 
@@ -34,7 +34,7 @@ pathRunID:
   name: runID
   in: path
   required: true
-  description: The run uuid.
+  description: The run UUID.
   schema:
     $ref: './schemas/common.yml#/runID'
 
@@ -42,7 +42,7 @@ pathEventID:
   name: eventID
   in: path
   required: true
-  description: The event uuid.
+  description: The event UUID.
   schema:
     $ref: './schemas/common.yml#/eventID'
 

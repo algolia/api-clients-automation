@@ -29,30 +29,30 @@ DeleteResponse:
 
 authenticationID:
   type: string
-  description: The authentication uuid.
+  description: The authentication UUID.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 destinationID:
   type: string
-  description: The destination uuid.
+  description: The destination UUID.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 sourceID:
   type: string
-  description: The source uuid.
+  description: The source UUID.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 taskID:
   type: string
-  description: The task uuid.
+  description: The task UUID.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 runID:
   type: string
-  description: The run uuid.
+  description: The run UUID.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 eventID:
   type: string
-  description: The event uuid.
+  description: The event UUID.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
