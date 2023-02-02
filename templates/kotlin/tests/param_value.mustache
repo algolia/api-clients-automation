@@ -1,0 +1,43 @@
+{{#isNull}}
+null,
+{{/isNull}}
+{{#isString}}
+{{#oneOfModel}}{{{parentClassName}}}.String("{{{value}}}"){{/oneOfModel}}{{^oneOfModel}}"{{{value}}}"{{/oneOfModel}},
+{{/isString}}
+{{#isInteger}}
+{{#oneOfModel}}{{{parentClassName}}}.Int({{{value}}}){{/oneOfModel}}{{^oneOfModel}}{{{value}}}{{/oneOfModel}},
+{{/isInteger}}
+{{#isLong}}
+{{#oneOfModel}}{{{parentClassName}}}.Long({{{value}}}L){{/oneOfModel}}{{^oneOfModel}}{{{value}}}L{{/oneOfModel}},
+{{/isLong}}
+{{#isDouble}}
+{{#oneOfModel}}{{{parentClassName}}}.Double({{{value}}}){{/oneOfModel}}{{^oneOfModel}}{{{value}}}{{/oneOfModel}},
+{{/isDouble}}
+{{#isBoolean}}
+{{#oneOfModel}}{{{parentClassName}}}.Boolean({{{value}}}){{/oneOfModel}}{{^oneOfModel}}{{{value}}}{{/oneOfModel}},
+{{/isBoolean}}
+{{#isEnum}}
+{{{objectName}}}.values().first { it.value == "{{{value}}}" },
+{{/isEnum}}
+{{#isArray}}
+{{#oneOfModel}}{{parentClassName}}.{{type-capitalized}}(listOf({{#value}}{{> param_value}}{{/value}})){{/oneOfModel}}{{^oneOfModel}}listOf({{#value}}{{> param_value}}{{/value}}){{/oneOfModel}},
+{{/isArray}}
+{{#isFreeFormObject}}
+{{#isSimpleObject}}
+buildJsonObject {
+{{#value}}
+  put("{{{key}}}", {{> param_json_element}})
+{{/value}}
+},
+{{/isSimpleObject}}
+{{^isSimpleObject}}
+mapOf({{#value}} "{{key}}" to {{> param_value}}{{/value}}),
+{{/isSimpleObject}}
+{{/isFreeFormObject}}
+{{#isObject}}
+{{{objectName}}}(
+{{#value}}
+{{> request_param}}
+{{/value}}
+),
+{{/isObject}}

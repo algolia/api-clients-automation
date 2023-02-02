@@ -1,0 +1,86 @@
+{{>licenseInfo}}
+package {{apiPackage}}
+
+import {{packageName}}.configuration.*
+import {{packageName}}.extensions.internal.*
+import {{packageName}}.exception.*
+import {{modelPackage}}.*
+import {{packageName}}.transport.*
+import {{packageName}}.transport.internal.*
+import kotlinx.serialization.json.*
+
+{{#operations}}
+public class {{classname}}(
+  override val appId: String,
+  override val apiKey: String,
+  {{#hasRegionalHost}}
+  public val region: String{{#fallbackToAliasHost}}? = null{{/fallbackToAliasHost}},
+  {{/hasRegionalHost}}
+  override val options: ClientOptions = ClientOptions(),
+) : ApiClient {
+
+  override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, options = options) {
+  {{^hasRegionalHost}}
+    listOf(
+      Host("$appId-dsn.algolia.net", CallType.Read),
+      Host("$appId.algolia.net", CallType.Write),
+    ) + mutableListOf(
+      Host("$appId-1.algolianet.com"),
+      Host("$appId-2.algolianet.com"),
+      Host("$appId-3.algolianet.com")
+    ).apply { shuffle() }
+  {{/hasRegionalHost}}
+  {{#hasRegionalHost}}
+    val allowedRegions = listOf({{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}})
+    if ({{#fallbackToAliasHost}}region != null && {{/fallbackToAliasHost}}region !in allowedRegions) throw AlgoliaClientException("'region' must be one of the following: $allowedRegions")
+    val url = {{#fallbackToAliasHost}}if (region == null) "{{{hostWithFallback}}}" else {{/fallbackToAliasHost}} "{{{hostForKotlin}}}"
+    listOf(Host(url)) 
+  {{/hasRegionalHost}}
+  }
+
+  {{#operation}}
+
+  /**
+   * {{{summary}}}
+   * {{{notes}}}
+   {{#allParams}}
+   * @param {{{paramName}}} {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+   {{/allParams}}
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun {{operationId}}({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null): {{{returnType}}} {
+      val requestConfig = RequestConfig(
+          method = RequestMethod.{{httpMethod}},
+          path = "{{{vendorExtensions.pathForKotlin}}}",
+          {{#vendorExtensions.x-use-read-transporter}}
+          isRead = {{{vendorExtensions.x-use-read-transporter}}},
+          {{/vendorExtensions.x-use-read-transporter}}
+          {{#hasHeaderParams}}
+          headers = buildMap {
+              {{#headerParams}}
+              {{#required}}
+              put("{{baseName}}", {{paramName}})
+              {{/required}}
+              {{^required}}
+              {{paramName}}?.let { header -> put ("{{baseName}}", header) }
+              {{/required}}
+              {{/headerParams}}
+          },
+          {{/hasHeaderParams}}
+          {{#hasQueryParams}}
+          query = buildMap {
+              {{> api_query}}
+          },
+          {{/hasQueryParams}}
+          {{#hasBodyParam}}
+          body = {{#bodyParam}}{{{paramName}}},{{/bodyParam}}
+          {{/hasBodyParam}}
+      )
+      return requester.execute(
+        requestConfig = requestConfig,
+        requestOptions = requestOptions,
+      )
+  }
+  {{/operation}}
+}
+{{/operations}}

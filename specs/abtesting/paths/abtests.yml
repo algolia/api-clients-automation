@@ -18,7 +18,7 @@ post:
           properties:
             name:
               $ref: '../common/parameters.yml#/name'
-            variant:
+            variants:
               type: array
               description: List of 2 variants for the A/B test.
               minItems: 2
@@ -29,7 +29,7 @@ post:
               $ref: '../common/parameters.yml#/endAt'
           required:
             - name
-            - variant
+            - variants
             - endAt
   responses:
     '200':

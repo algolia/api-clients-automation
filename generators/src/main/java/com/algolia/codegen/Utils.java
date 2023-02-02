@@ -44,6 +44,7 @@ public class Utils {
   public static CodegenOperation specifyCustomRequest(CodegenOperation ope) {
     if (CUSTOM_METHOD.contains(ope.nickname)) {
       ope.vendorExtensions.put("x-is-custom-request", true);
+      System.out.println("FOUND: " + CUSTOM_METHOD);
     }
     return ope;
   }

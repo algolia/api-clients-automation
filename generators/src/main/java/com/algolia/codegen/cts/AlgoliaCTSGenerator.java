@@ -195,4 +195,10 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
   public String escapeQuotationMark(String input) {
     return input.replace("\"", "\\\"");
   }
+
+  @Override
+  public void postProcessParameter(CodegenParameter parameter) {
+    super.postProcessParameter(parameter);
+    // if (parameter.nameInLowerCase)
+  }
 }
