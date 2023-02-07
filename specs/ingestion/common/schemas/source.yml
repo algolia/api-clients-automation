@@ -95,7 +95,7 @@ SourceSearch:
 
 SourceType:
   type: string
-  enum: ['bigcommerce', 'commercetools', 'json']
+  enum: ['bigcommerce', 'commercetools', 'json', 'csv']
 
 SourceCommercetools:
   type: object
@@ -146,11 +146,29 @@ SourceJson:
   required:
     - url
 
+SourceCsv:
+  type: object
+  additionalProperties: false
+  properties:
+    url:
+      type: string
+    uniqueIDColumn:
+      type: string
+    mapping:
+      type: object
+      additionalProperties:
+        type: string
+    method:
+      $ref: '#/MethodType'
+  required:
+    - url
+
 SourceInput:
   oneOf:
     - $ref: '#/SourceCommercetools'
     - $ref: '#/SourceBigCommerce'
     - $ref: '#/SourceJson'
+    - $ref: '#/SourceCsv'
 
 SourceUpdateCommercetools:
   type: object
