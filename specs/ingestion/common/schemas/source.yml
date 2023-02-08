@@ -194,41 +194,9 @@ SourceUpdateCommercetools:
       items:
         type: string
 
-SourceUpdateJSON:
-  type: object
-  additionalProperties: false
-  properties:
-    url:
-      type: string
-      description: The URL of the file.
-    method:
-      $ref: '#/MethodType'
-  required:
-    - url
-
-SourceUpdateCSV:
-  type: object
-  additionalProperties: false
-  properties:
-    url:
-      type: string
-      description: The URL of the file.
-    uniqueIDColumn:
-      type: string
-      description: The name of the column that contains the unique ID.
-    mapping:
-      type: object
-      description: >
-        Mapping of type for every column. For example {"myColumn": "boolean, "myOtherColumn": "json"}.
-      additionalProperties:
-        $ref: '#/MappingTypeCSV'
-    method:
-      $ref: '#/MethodType'
-  required:
-    - url
 
 SourceUpdateInput:
   oneOf:
     - $ref: '#/SourceUpdateCommercetools'
-    - $ref: '#/SourceUpdateJSON'
-    - $ref: '#/SourceUpdateCSV'
+    - $ref: '#/SourceJSON'
+    - $ref: '#/SourceCSV'
