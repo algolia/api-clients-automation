@@ -159,11 +159,11 @@ SourceCSV:
       description: The URL of the file.
     uniqueIDColumn:
       type: string
-      description: The name of the column that contains the unique ID.
+      description: The name of the column that contains the unique ID, used as `objectID` in Algolia.
     mapping:
       type: object
       description: >
-        Mapping of type for every column. For example {"myColumn": "boolean, "myOtherColumn": "json"}.
+        Mapping of type for every column. For example {"myColumn": "boolean", "myOtherColumn": "json"}.
       additionalProperties:
         $ref: '#/MappingTypeCSV'
     method:
