@@ -163,7 +163,7 @@ SourceCSV:
     mapping:
       type: object
       description: >
-        Mapping of type for every column. For example {"myColumn": "boolean, "myOtherColumn": "json"}.
+        Mapping of type for every column. For example {"myColumn": "boolean", "myOtherColumn": "json"}.
       additionalProperties:
         $ref: '#/MappingTypeCSV'
     method:
