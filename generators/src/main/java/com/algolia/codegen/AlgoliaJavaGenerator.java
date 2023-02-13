@@ -133,13 +133,13 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       case ">":
         return "GT";
       case "=":
-        return "EQUAL";
+        return "EQ";
       case "<=":
         return "LTE";
       case ">=":
         return "GTE";
       case "!=":
-        return "NOTEQUAL";
+        return "NEQ";
     }
 
     if (!value.matches("[A-Z0-9_]+")) {
