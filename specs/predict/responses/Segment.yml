@@ -308,14 +308,8 @@ segmentPropertyFilter:
       $ref: '#/segmentPropertyFilterValue'
 
 segmentPropertyFilterValue:
-  oneOf:
-    - type: string
-    - type: number
-      format: float
-    - type: array
-      items:
-        type: string
-    - type: boolean
+  allOf:
+    - $ref: 'segmentAffinityFilterValue'
 
 segmentFilterOperatorBoolean:
   description: The operator used on the boolean filter value.
