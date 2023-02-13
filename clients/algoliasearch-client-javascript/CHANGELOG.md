@@ -1,3 +1,63 @@
+## [5.0.0-alpha.44](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.43...5.0.0-alpha.44)
+
+- [023d5572](https://github.com/algolia/api-clients-automation/commit/023d5572) feat(specs): add sort and order handling in query parameters ([#1304](https://github.com/algolia/api-clients-automation/pull/1304)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.43](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.42...5.0.0-alpha.43)
+
+- [b9b4ba35](https://github.com/algolia/api-clients-automation/commit/b9b4ba35) feat(specs): add CSV source ([#1301](https://github.com/algolia/api-clients-automation/pull/1301)) by [@morganleroi](https://github.com/morganleroi/)
+
+## [5.0.0-alpha.42](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.41...5.0.0-alpha.42)
+
+- [9d04dc22](https://github.com/algolia/api-clients-automation/commit/9d04dc22) fix(specs): rename task type to `onDemand` ([#1299](https://github.com/algolia/api-clients-automation/pull/1299)) by [@shortcuts](https://github.com/shortcuts/)
+- [d39716c7](https://github.com/algolia/api-clients-automation/commit/d39716c7) feat(javascript): export task trigger guards from each build entrypoints ([#1289](https://github.com/algolia/api-clients-automation/pull/1289)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.41](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.40...5.0.0-alpha.41)
+
+- [dc5a22dd](https://github.com/algolia/api-clients-automation/commit/dc5a22dd) feat(javascript): improve on task trigger type guards ([#1286](https://github.com/algolia/api-clients-automation/pull/1286)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.40](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.39...5.0.0-alpha.40)
+
+- [91f21487](https://github.com/algolia/api-clients-automation/commit/91f21487) feat(javascript): add task trigger type guards ([#1280](https://github.com/algolia/api-clients-automation/pull/1280)) by [@Fluf22](https://github.com/Fluf22/)
+- [a1c7c245](https://github.com/algolia/api-clients-automation/commit/a1c7c245) fix(specs): correct types for Tasks trigger ([#1279](https://github.com/algolia/api-clients-automation/pull/1279)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.0.0-alpha.39](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.38...5.0.0-alpha.39)
+
+- [aed20fe6](https://github.com/algolia/api-clients-automation/commit/aed20fe6) feat(specs): add more descriptions to the Ingestion API ([#1273](https://github.com/algolia/api-clients-automation/pull/1273)) by [@shortcuts](https://github.com/shortcuts/)
+- [3739451a](https://github.com/algolia/api-clients-automation/commit/3739451a) fix(specs): add query params for observability ([#1277](https://github.com/algolia/api-clients-automation/pull/1277)) by [@millotp](https://github.com/millotp/)
+- [859c0a97](https://github.com/algolia/api-clients-automation/commit/859c0a97) feat(specs): source update changes ([#1276](https://github.com/algolia/api-clients-automation/pull/1276)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+
+## [5.0.0-alpha.38](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.37...5.0.0-alpha.38)
+
+- [46c1e2e9](https://github.com/algolia/api-clients-automation/commit/46c1e2e9) feat(specs): add search endpoint to every item type ([#1274](https://github.com/algolia/api-clients-automation/pull/1274)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.37](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.36...5.0.0-alpha.37)
+
+- [a60e6790](https://github.com/algolia/api-clients-automation/commit/a60e6790) feat(specs): add sourceID query param to task list endpoint ([#1250](https://github.com/algolia/api-clients-automation/pull/1250)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.36](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.35...5.0.0-alpha.36)
+
+- [83330afe](https://github.com/algolia/api-clients-automation/commit/83330afe) chore(specs): change PlatformType naming to Platform ([#1246](https://github.com/algolia/api-clients-automation/pull/1246)) by [@Fluf22](https://github.com/Fluf22/)
+- [700dad66](https://github.com/algolia/api-clients-automation/commit/700dad66) feat(specs): add query param to filter list endpoint results ([#1245](https://github.com/algolia/api-clients-automation/pull/1245)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.35](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.34...5.0.0-alpha.35)
+
+- [699fff2b](https://github.com/algolia/api-clients-automation/commit/699fff2b) fix(specs): fix method for task enable/disable status ([#1242](https://github.com/algolia/api-clients-automation/pull/1242)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.34](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.33...5.0.0-alpha.34)
+
+- [010eed78](https://github.com/algolia/api-clients-automation/commit/010eed78) feat(javascript): add error to APIError if possible ([#1234](https://github.com/algolia/api-clients-automation/pull/1234)) by [@millotp](https://github.com/millotp/)
+
+## [5.0.0-alpha.33](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.32...5.0.0-alpha.33)
+
+- [4b1f1fd3](https://github.com/algolia/api-clients-automation/commit/4b1f1fd3) feat(specs): add query params to task lists endpoint in Ingestion APIC ([#1233](https://github.com/algolia/api-clients-automation/pull/1233)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.0.0-alpha.32](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.31...5.0.0-alpha.32)
+
+- [466cc0b3](https://github.com/algolia/api-clients-automation/commit/466cc0b3) fix(specs): remove input from auth list ([#1229](https://github.com/algolia/api-clients-automation/pull/1229)) by [@millotp](https://github.com/millotp/)
+- [28d82603](https://github.com/algolia/api-clients-automation/commit/28d82603) fix(specs): authenticationID is not required in source and destination ([#1203](https://github.com/algolia/api-clients-automation/pull/1203)) by [@morganleroi](https://github.com/morganleroi/)
+- [9acdc96b](https://github.com/algolia/api-clients-automation/commit/9acdc96b) fix(specs): move lastRun and nextRun to task.trigger ([#1228](https://github.com/algolia/api-clients-automation/pull/1228)) by [@millotp](https://github.com/millotp/)
+- [8fc33195](https://github.com/algolia/api-clients-automation/commit/8fc33195) fix(specs): make enabled nullable ([#1212](https://github.com/algolia/api-clients-automation/pull/1212)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.31](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.30...5.0.0-alpha.31)
 
 - [75c9a862](https://github.com/algolia/api-clients-automation/commit/75c9a862) fix(specs): numberOfPendingTasks is plural ([#1211](https://github.com/algolia/api-clients-automation/pull/1211)) by [@kai687](https://github.com/kai687/)

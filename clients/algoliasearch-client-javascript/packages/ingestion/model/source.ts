@@ -4,6 +4,9 @@ import type { SourceInput } from './sourceInput';
 import type { SourceType } from './sourceType';
 
 export type Source = {
+  /**
+   * The source UUID.
+   */
   sourceID: string;
 
   type: SourceType;
@@ -12,7 +15,10 @@ export type Source = {
 
   input: SourceInput;
 
-  authenticationID: string;
+  /**
+   * The authentication UUID.
+   */
+  authenticationID?: string;
 
   /**
    * Date of creation (RFC3339 format).

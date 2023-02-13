@@ -2,11 +2,15 @@ get:
   tags:
     - sources
   summary: Get a list of sources.
-  description: Get a list of sources.
+  description: Get a list of sources for the given query parameters, with pagination details.
   operationId: getSources
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../common/parameters.yml#/page'
+    - $ref: '../../common/sourceParameters.yml#/type'
+    - $ref: '../../common/sourceParameters.yml#/authenticationID'
+    - $ref: '../../common/sourceParameters.yml#/sort'
+    - $ref: '../../common/parameters.yml#/order'
   responses:
     '200':
       description: OK

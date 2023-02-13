@@ -3,7 +3,7 @@ Source:
   additionalProperties: false
   properties:
     sourceID:
-      type: string
+      $ref: './common.yml#/sourceID'
     type:
       $ref: '#/SourceType'
     name:
@@ -11,7 +11,7 @@ Source:
     input:
       $ref: '#/SourceInput'
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -21,7 +21,6 @@ Source:
     - type
     - name
     - input
-    - authenticationID
     - createdAt
 
 SourceCreate:
@@ -35,7 +34,7 @@ SourceCreate:
     input:
       $ref: '#/SourceInput'
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
   required:
     - type
     - name
@@ -47,7 +46,7 @@ SourceCreateResponse:
   additionalProperties: false
   properties:
     sourceID:
-      type: string
+      $ref: './common.yml#/sourceID'
     name:
       type: string
     createdAt:
@@ -61,21 +60,19 @@ SourceUpdate:
   type: object
   additionalProperties: false
   properties:
-    type:
-      $ref: '#/SourceType'
     name:
       type: string
     input:
-      $ref: '#/SourceInput'
+      $ref: '#/SourceUpdateInput'
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
 
 SourceUpdateResponse:
   type: object
   additionalProperties: false
   properties:
     sourceID:
-      type: string
+      $ref: './common.yml#/sourceID'
     name:
       type: string
     updatedAt:
@@ -85,9 +82,20 @@ SourceUpdateResponse:
     - name
     - updatedAt
 
+SourceSearch:
+  type: object
+  additionalProperties: false
+  properties:
+    sourceIDs:
+      type: array
+      items:
+        type: string
+  required:
+    - sourceIDs
+
 SourceType:
   type: string
-  enum: ['bigcommerce', 'commercetools', 'json']
+  enum: ['bigcommerce', 'commercetools', 'json', 'csv']
 
 SourceCommercetools:
   type: object
@@ -96,13 +104,14 @@ SourceCommercetools:
     storeKeys:
       type: array
       items:
+        description: Unique and immutable key of the referenced Store.
         type: string
     locales:
       type: array
+      description: >
+        Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
       items:
         type: string
-        description: >
-          The string must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example "fr-FR" or "en".
     url:
       type: string
     projectKey:
@@ -117,6 +126,7 @@ SourceBigCommerce:
   properties:
     storeHash:
       type: string
+      description: The store hash identifying the store the shopper is signing in to.
   required:
     - store_hash
 
@@ -124,12 +134,38 @@ MethodType:
   type: string
   enum: ['GET', 'POST']
 
-SourceJson:
+SourceJSON:
   type: object
   additionalProperties: false
   properties:
     url:
       type: string
+      description: The URL of the file.
+    method:
+      $ref: '#/MethodType'
+  required:
+    - url
+
+MappingTypeCSV:
+  type: string
+  enum: ['string','integer','float','boolean','json']
+
+SourceCSV:
+  type: object
+  additionalProperties: false
+  properties:
+    url:
+      type: string
+      description: The URL of the file.
+    uniqueIDColumn:
+      type: string
+      description: The name of the column that contains the unique ID, used as `objectID` in Algolia.
+    mapping:
+      type: object
+      description: >
+        Mapping of type for every column. For example {"myColumn": "boolean", "myOtherColumn": "json"}.
+      additionalProperties:
+        $ref: '#/MappingTypeCSV'
     method:
       $ref: '#/MethodType'
   required:
@@ -139,4 +175,27 @@ SourceInput:
   oneOf:
     - $ref: '#/SourceCommercetools'
     - $ref: '#/SourceBigCommerce'
-    - $ref: '#/SourceJson'
+    - $ref: '#/SourceJSON'
+    - $ref: '#/SourceCSV'
+
+SourceUpdateCommercetools:
+  type: object
+  additionalProperties: false
+  properties:
+    storeKeys:
+      type: array
+      description: Unique and immutable key of the referenced Store.
+      items:
+        type: string
+    locales:
+      type: array
+      description: >
+        Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+      items:
+        type: string
+
+SourceUpdateInput:
+  oneOf:
+    - $ref: '#/SourceUpdateCommercetools'
+    - $ref: '#/SourceJSON'
+    - $ref: '#/SourceCSV'

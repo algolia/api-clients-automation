@@ -1,5 +1,56 @@
 ## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
 
+- [023d5572](https://github.com/algolia/api-clients-automation/commit/023d5572) feat(specs): add sort and order handling in query parameters ([#1304](https://github.com/algolia/api-clients-automation/pull/1304)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [b9b4ba35](https://github.com/algolia/api-clients-automation/commit/b9b4ba35) feat(specs): add CSV source ([#1301](https://github.com/algolia/api-clients-automation/pull/1301)) by [@morganleroi](https://github.com/morganleroi/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [9d04dc22](https://github.com/algolia/api-clients-automation/commit/9d04dc22) fix(specs): rename task type to `onDemand` ([#1299](https://github.com/algolia/api-clients-automation/pull/1299)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [a1c7c245](https://github.com/algolia/api-clients-automation/commit/a1c7c245) fix(specs): correct types for Tasks trigger ([#1279](https://github.com/algolia/api-clients-automation/pull/1279)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [aed20fe6](https://github.com/algolia/api-clients-automation/commit/aed20fe6) feat(specs): add more descriptions to the Ingestion API ([#1273](https://github.com/algolia/api-clients-automation/pull/1273)) by [@shortcuts](https://github.com/shortcuts/)
+- [3739451a](https://github.com/algolia/api-clients-automation/commit/3739451a) fix(specs): add query params for observability ([#1277](https://github.com/algolia/api-clients-automation/pull/1277)) by [@millotp](https://github.com/millotp/)
+- [859c0a97](https://github.com/algolia/api-clients-automation/commit/859c0a97) feat(specs): source update changes ([#1276](https://github.com/algolia/api-clients-automation/pull/1276)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [46c1e2e9](https://github.com/algolia/api-clients-automation/commit/46c1e2e9) feat(specs): add search endpoint to every item type ([#1274](https://github.com/algolia/api-clients-automation/pull/1274)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [a60e6790](https://github.com/algolia/api-clients-automation/commit/a60e6790) feat(specs): add sourceID query param to task list endpoint ([#1250](https://github.com/algolia/api-clients-automation/pull/1250)) by [@Fluf22](https://github.com/Fluf22/)
+- [6916fb9b](https://github.com/algolia/api-clients-automation/commit/6916fb9b) feat(java): remove predict client temporarely ([#1262](https://github.com/algolia/api-clients-automation/pull/1262)) by [@millotp](https://github.com/millotp/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [83330afe](https://github.com/algolia/api-clients-automation/commit/83330afe) chore(specs): change PlatformType naming to Platform ([#1246](https://github.com/algolia/api-clients-automation/pull/1246)) by [@Fluf22](https://github.com/Fluf22/)
+- [700dad66](https://github.com/algolia/api-clients-automation/commit/700dad66) feat(specs): add query param to filter list endpoint results ([#1245](https://github.com/algolia/api-clients-automation/pull/1245)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [699fff2b](https://github.com/algolia/api-clients-automation/commit/699fff2b) fix(specs): fix method for task enable/disable status ([#1242](https://github.com/algolia/api-clients-automation/pull/1242)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [4b1f1fd3](https://github.com/algolia/api-clients-automation/commit/4b1f1fd3) feat(specs): add query params to task lists endpoint in Ingestion APIC ([#1233](https://github.com/algolia/api-clients-automation/pull/1233)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
+- [466cc0b3](https://github.com/algolia/api-clients-automation/commit/466cc0b3) fix(specs): remove input from auth list ([#1229](https://github.com/algolia/api-clients-automation/pull/1229)) by [@millotp](https://github.com/millotp/)
+- [28d82603](https://github.com/algolia/api-clients-automation/commit/28d82603) fix(specs): authenticationID is not required in source and destination ([#1203](https://github.com/algolia/api-clients-automation/pull/1203)) by [@morganleroi](https://github.com/morganleroi/)
+- [9acdc96b](https://github.com/algolia/api-clients-automation/commit/9acdc96b) fix(specs): move lastRun and nextRun to task.trigger ([#1228](https://github.com/algolia/api-clients-automation/pull/1228)) by [@millotp](https://github.com/millotp/)
+- [8fc33195](https://github.com/algolia/api-clients-automation/commit/8fc33195) fix(specs): make enabled nullable ([#1212](https://github.com/algolia/api-clients-automation/pull/1212)) by [@kai687](https://github.com/kai687/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
 - [75c9a862](https://github.com/algolia/api-clients-automation/commit/75c9a862) fix(specs): numberOfPendingTasks is plural ([#1211](https://github.com/algolia/api-clients-automation/pull/1211)) by [@kai687](https://github.com/kai687/)
 - [e77a46b9](https://github.com/algolia/api-clients-automation/commit/e77a46b9) fix(specs): example should be integer ([#1210](https://github.com/algolia/api-clients-automation/pull/1210)) by [@kai687](https://github.com/kai687/)
 

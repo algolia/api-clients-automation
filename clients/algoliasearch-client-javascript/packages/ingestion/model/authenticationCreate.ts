@@ -2,14 +2,20 @@
 
 import type { AuthInput } from './authInput';
 import type { AuthenticationType } from './authenticationType';
-import type { PlatformType } from './platformType';
+import type { Platform } from './platform';
 
+/**
+ * The payload when creating an authentication.
+ */
 export type AuthenticationCreate = {
   type: AuthenticationType;
 
+  /**
+   * An human readable name describing the object.
+   */
   name: string;
 
-  platform?: PlatformType;
+  platform?: Platform;
 
   input: AuthInput;
 };
