@@ -309,7 +309,7 @@ segmentPropertyFilter:
 
 segmentPropertyFilterValue:
   allOf:
-    - $ref: 'segmentAffinityFilterValue'
+    - $ref: '#/segmentAffinityFilterValue'
 
 segmentFilterOperatorBoolean:
   description: The operator used on the boolean filter value.
