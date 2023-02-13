@@ -314,22 +314,22 @@ segmentPropertyFilterValue:
 segmentFilterOperatorBoolean:
   description: The operator used on the boolean filter value.
   type: string
-  default: EQ
+  default: =
   enum:
-    - EQ
-    - NEQ
+    - =
+    - '!='
 
 segmentFilterOperatorNumerical:
   description: The operator used on the numerical filter value.
   type: string
-  default: EQ
+  default: =
   enum:
-    - EQ
-    - NEQ
-    - GT
-    - GTE
-    - LT
-    - LTE
+    - =
+    - '!='
+    - '>'
+    - '>='
+    - <
+    - <=
 
 segmentFilterProbability:
   description: Probability of the filter.
@@ -337,11 +337,11 @@ segmentFilterProbability:
   minProperties: 1
   maxProperties: 2
   properties:
-    LT:
+    lt:
       type: number
-    LTE:
+    lte:
       type: number
-    GT:
+    gt:
       type: number
-    GTE:
+    gte:
       type: number
