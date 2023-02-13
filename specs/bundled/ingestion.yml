@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: Ingestion API
-  description: API powering the Data Ingestion feature of Algolia.
+  description: API powering the Data Ingestion connectors of Algolia.
   version: '1.0'
 components:
   securitySchemes:
@@ -31,45 +31,52 @@ components:
     type:
       name: type
       in: query
-      description: >-
-        Which type the returned authentication should have. Can be a list of
-        string separated with commas.
+      description: The type of the authentications to retrieve.
       required: false
       style: form
       explode: false
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/authenticationTypeWithNone'
-        example: basic,oauth,none
+          $ref: '#/components/schemas/AuthenticationType'
+        example: basic,oauth
     platform:
       name: platform
       in: query
-      description: >-
-        Which platform the returned authentication should have. Can be a list of
-        string separated with commas.
+      description: The platform of the authentications to retrieve.
       required: false
       style: form
       explode: false
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/Platform'
-        example: commercetools,bigcommerce
-    authenticationID:
+          $ref: '#/components/schemas/platformWithNone'
+        example: commercetools,none
+    sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/authenticationSortKeys'
+    order:
+      name: order
+      in: query
+      description: The order of the returned list.
+      required: false
+      schema:
+        $ref: '#/components/schemas/orderKeys'
+    pathAuthenticationID:
       name: authenticationID
       in: path
-      description: The authentication uuid.
       required: true
+      description: The authentication UUID.
       schema:
-        type: string
-        example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        $ref: '#/components/schemas/authenticationID'
     destinationParameters_type:
       name: type
       in: query
-      description: >-
-        Which type the returned destination should have. Can be a list of string
-        separated with commas.
+      description: The type of the destinations to retrive.
       required: false
       style: form
       explode: false
@@ -78,33 +85,35 @@ components:
         items:
           $ref: '#/components/schemas/DestinationType'
         example: search,predict
-    destinationParameters_authenticationID:
+    authenticationID:
       name: authenticationID
       in: query
-      description: >-
-        Which authenticationID the returned destination should have. Can be a
-        list of string separated with commas.
+      description: The authenticationIDs of the destinations to retrive.
       required: false
       style: form
       explode: false
       schema:
         type: array
         items:
-          type: string
-    destinationID:
+          $ref: '#/components/schemas/authenticationID'
+    destinationParameters_sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/destinationSortKeys'
+    pathDestinationID:
       name: destinationID
       in: path
-      description: The destination uuid.
       required: true
+      description: The destination UUID.
       schema:
-        type: string
-        example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        $ref: '#/components/schemas/destinationID'
     sourceParameters_type:
       name: type
       in: query
-      description: >-
-        Which type the returned source should have. Can be a list of string
-        separated with commas.
+      description: The type of the sources to retrieve.
       required: false
       style: form
       explode: false
@@ -116,64 +125,77 @@ components:
     sourceParameters_authenticationID:
       name: authenticationID
       in: query
-      description: >-
-        Which authenticationID the returned source should have. Can be a list of
-        string separated with commas.
+      description: >
+        The authenticationIDs of the sources to retrieve. 'none' returns sources
+        that doesn't have an authentication.
       required: false
       style: form
       explode: false
       schema:
         type: array
         items:
-          type: string
-    sourceID:
+          $ref: '#/components/schemas/authenticationID'
+        example: 10000000-0a75-4000-a000-000000000001,none
+    sourceParameters_sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/sourceSortKeys'
+    pathSourceID:
       name: sourceID
       in: path
-      description: The source uuid.
       required: true
+      description: The source UUID.
       schema:
-        type: string
-        example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        $ref: '#/components/schemas/sourceID'
     action:
       name: action
       in: query
-      description: >-
-        Which action the returned task should have. Can be a list of string
-        separated with commas.
       required: false
+      description: The action of the tasks to retrieve.
       style: form
       explode: false
       schema:
         type: array
+        description: An array of actions to perform on the Algolia index.
         items:
           $ref: '#/components/schemas/ActionType'
         example: save,replace
     enabled:
       name: enabled
       in: query
-      description: If the returned task should have its 'enabled' property set to true.
+      description: Whether the task is enabled or not.
       required: false
       schema:
         type: boolean
-    taskParameters_destinationID:
-      name: destinationID
+    sourceID:
+      name: sourceID
       in: query
-      description: >-
-        Which destinationID the returned task should have. Can be a list of
-        string separated with commas.
+      description: The sourceIDs of the tasks to retrive.
       required: false
       style: form
       explode: false
       schema:
         type: array
         items:
-          type: string
+          $ref: '#/components/schemas/sourceID'
+    destinationID:
+      name: destinationID
+      in: query
+      description: The destinationIDs of the tasks to retrive.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/destinationID'
     triggerType:
       name: triggerType
       in: query
-      description: >-
-        Which trigger type the returned task should have. Can be a list of
-        string separated with commas.
+      description: The trigger type of the task.
       required: false
       style: form
       explode: false
@@ -181,53 +203,128 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/TriggerType'
-        example: on_demand,schedule
-    taskID:
+        example: onDemand,schedule
+    taskParameters_sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/taskSortKeys'
+    pathTaskID:
       name: taskID
       in: path
-      description: The task uuid.
       required: true
+      description: The task UUID.
       schema:
-        type: string
-        example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    runID:
+        $ref: '#/components/schemas/taskID'
+    runStatus:
+      name: status
+      in: query
+      description: Filter the status of the runs.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/RunStatus'
+    taskID:
+      name: taskID
+      in: query
+      description: Filter by taskID.
+      schema:
+        $ref: '#/components/schemas/taskID'
+    runSort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/runSortKeys'
+    pathRunID:
       name: runID
       in: path
-      description: The run uuid.
       required: true
+      description: The run UUID.
       schema:
-        type: string
-        example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    eventID:
+        $ref: '#/components/schemas/runID'
+    eventStatus:
+      name: status
+      in: query
+      description: Filter the status of the events.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/EventStatus'
+    eventType:
+      name: type
+      in: query
+      description: Filter the type of the events.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/EventType'
+    eventSort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/eventSortKeys'
+    pathEventID:
       name: eventID
       in: path
-      description: The event uuid.
       required: true
+      description: The event UUID.
       schema:
-        type: string
-        example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        $ref: '#/components/schemas/eventID'
   schemas:
     AuthenticationType:
       type: string
+      description: >-
+        Type of the Authentication, defines what kind of object is stored in the
+        input.
       enum:
         - googleServiceAccount
         - basic
         - apiKey
         - oauth
         - algolia
-    AuthenticationNone:
-      type: string
-      enum:
-        - none
-    authenticationTypeWithNone:
-      oneOf:
-        - $ref: '#/components/schemas/AuthenticationType'
-        - $ref: '#/components/schemas/AuthenticationNone'
     Platform:
       type: string
+      description: Describe which platform the Authentication is used for.
       enum:
         - bigcommerce
         - commercetools
+    platformNone:
+      type: string
+      description: Used to filter Authentication without platform property.
+      enum:
+        - none
+    platformWithNone:
+      oneOf:
+        - $ref: '#/components/schemas/Platform'
+        - $ref: '#/components/schemas/platformNone'
+    authenticationSortKeys:
+      type: string
+      description: Used to sort the Authentication list endpoint.
+      enum:
+        - name
+        - auth_type
+        - platform
+        - updatedAt
+        - createdAt
+    orderKeys:
+      type: string
+      description: Used to order a sorted request.
+      enum:
+        - asc
+        - desc
+    authenticationID:
+      type: string
+      description: The authentication UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    name:
+      type: string
+      description: An human readable name describing the object.
     createdAt:
       type: string
       description: Date of creation (RFC3339 format).
@@ -236,14 +333,15 @@ components:
       description: Date of last update (RFC3339 format).
     Authentication:
       type: object
+      description: An authentication is used to login into a Source or a Destination.
       additionalProperties: false
       properties:
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
         type:
           $ref: '#/components/schemas/AuthenticationType'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         platform:
           $ref: '#/components/schemas/Platform'
         createdAt:
@@ -283,17 +381,22 @@ components:
           example: Invalid Application-Id or API-Key
     AuthGoogleServiceAccount:
       type: object
+      description: Authentication input to connect to a Google service (e.g. BigQuery).
       additionalProperties: false
       properties:
         clientEmail:
           type: string
+          description: Email address of the Service Account.
+          example: service-account-name@project-id.iam.gserviceaccount.com
         privateKey:
           type: string
+          description: Private key of the Service Account.
       required:
         - clientEmail
         - privateKey
     AuthBasic:
       type: object
+      description: Authentication input for Basic login with username and password.
       additionalProperties: false
       properties:
         username:
@@ -305,6 +408,7 @@ components:
         - password
     AuthAPIKey:
       type: object
+      description: Authentication input used for token credentials.
       additionalProperties: false
       properties:
         key:
@@ -313,16 +417,18 @@ components:
         - key
     AuthOAuth:
       type: object
+      description: Authentication input for OAuth login.
       additionalProperties: false
       properties:
         url:
           type: string
+          description: The OAuth endpoint URL.
         client_id:
           type: string
+          description: The clientID.
         client_secret:
           type: string
-        scope:
-          type: string
+          description: The secret.
       required:
         - url
         - client_id
@@ -333,8 +439,12 @@ components:
       properties:
         appID:
           type: string
+          description: Algolia Application ID.
         apiKey:
           type: string
+          description: >-
+            Algolia API Key, with the correct rights to push to an index and
+            change settings.
       required:
         - appID
         - apiKey
@@ -347,12 +457,13 @@ components:
         - $ref: '#/components/schemas/AuthAlgolia'
     AuthenticationCreate:
       type: object
+      description: The payload when creating an authentication.
       additionalProperties: false
       properties:
         type:
           $ref: '#/components/schemas/AuthenticationType'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         platform:
           $ref: '#/components/schemas/Platform'
         input:
@@ -363,23 +474,40 @@ components:
         - input
     AuthenticationCreateResponse:
       type: object
+      description: Response from the API when the Authentication is successfully created.
       additionalProperties: false
       properties:
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         createdAt:
           $ref: '#/components/schemas/createdAt'
       required:
         - authenticationID
         - name
         - createdAt
+    AuthenticationSearch:
+      type: object
+      additionalProperties: false
+      description: >-
+        Payload to search for multiple authentications, based on the given
+        `authenticationIDs`.
+      properties:
+        authenticationIDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/authenticationID'
+      required:
+        - authenticationIDs
     AuthenticationWithInput:
       allOf:
         - $ref: '#/components/schemas/Authentication'
         - type: object
           title: authenticationInput
+          description: >-
+            The authentication input property stores the (encrypted)
+            credentials.
           additionalProperties: false
           properties:
             input:
@@ -388,12 +516,13 @@ components:
             - input
     AuthenticationUpdate:
       type: object
+      description: Payload to partialy update an Authentication.
       additionalProperties: false
       properties:
         type:
           $ref: '#/components/schemas/AuthenticationType'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         platform:
           $ref: '#/components/schemas/Platform'
         input:
@@ -401,11 +530,12 @@ components:
     AuthenticationUpdateResponse:
       type: object
       additionalProperties: false
+      description: Response from the API when the Authentication is successfully updated.
       properties:
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -422,17 +552,33 @@ components:
         - deletedAt
     DestinationType:
       type: string
+      description: >-
+        Type of the Destination, defines in which Algolia product the data will
+        be stored.
       enum:
         - search
         - insights
         - flow
         - predict
+    destinationSortKeys:
+      type: string
+      description: Used to sort the Destination list endpoint.
+      enum:
+        - name
+        - type
+        - updatedAt
+        - createdAt
+    destinationID:
+      type: string
+      description: The destination UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     DestinationIndexPrefix:
       type: object
       additionalProperties: false
       properties:
         indexPrefix:
           type: string
+          description: The prefix of the final index name.
       required:
         - indexPrefix
     DestinationIndexName:
@@ -441,6 +587,7 @@ components:
       properties:
         indexName:
           type: string
+          description: The index name to store data in.
       required:
         - indexName
     DestinationInput:
@@ -449,14 +596,15 @@ components:
         - $ref: '#/components/schemas/DestinationIndexName'
     Destination:
       type: object
+      description: A destination describe how the data is indexed on the Algolia side.
       additionalProperties: false
       properties:
         destinationID:
-          type: string
+          $ref: '#/components/schemas/destinationID'
         type:
           $ref: '#/components/schemas/DestinationType'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         input:
           $ref: '#/components/schemas/DestinationInput'
         createdAt:
@@ -474,15 +622,16 @@ components:
     DestinationCreate:
       type: object
       additionalProperties: false
+      description: The payload when creating a destination.
       properties:
         type:
           $ref: '#/components/schemas/DestinationType'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         input:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
       required:
         - type
         - name
@@ -491,25 +640,40 @@ components:
     DestinationCreateResponse:
       type: object
       additionalProperties: false
+      description: Response from the API when the Destination is successfully created.
       properties:
         destinationID:
-          type: string
+          $ref: '#/components/schemas/destinationID'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         createdAt:
           $ref: '#/components/schemas/createdAt'
       required:
         - destinationID
         - name
         - createdAt
+    DestinationSearch:
+      type: object
+      additionalProperties: false
+      description: >-
+        Payload to search for multiple destinations, based on the given
+        `destinationIDs`.
+      properties:
+        destinationIDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/destinationID'
+      required:
+        - destinationIDs
     DestinationUpdate:
       type: object
       additionalProperties: false
+      description: Payload to partialy update a Destination.
       properties:
         type:
           $ref: '#/components/schemas/DestinationType'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         input:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
@@ -517,11 +681,12 @@ components:
     DestinationUpdateResponse:
       type: object
       additionalProperties: false
+      description: Response from the API when the Destination is successfully updated.
       properties:
         destinationID:
-          type: string
+          $ref: '#/components/schemas/destinationID'
         name:
-          type: string
+          $ref: '#/components/schemas/name'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -534,6 +699,19 @@ components:
         - bigcommerce
         - commercetools
         - json
+        - csv
+    sourceSortKeys:
+      type: string
+      description: Used to sort the Source list endpoint.
+      enum:
+        - name
+        - type
+        - updatedAt
+        - createdAt
+    sourceID:
+      type: string
+      description: The source UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     SourceCommercetools:
       type: object
       additionalProperties: false
@@ -541,6 +719,7 @@ components:
         storeKeys:
           type: array
           items:
+            description: Unique and immutable key of the referenced Store.
             type: string
         locales:
           type: array
@@ -562,6 +741,7 @@ components:
       properties:
         storeHash:
           type: string
+          description: The store hash identifying the store the shopper is signing in to.
       required:
         - store_hash
     MethodType:
@@ -569,12 +749,44 @@ components:
       enum:
         - GET
         - POST
-    SourceJson:
+    SourceJSON:
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
+          description: The URL of the file.
+        method:
+          $ref: '#/components/schemas/MethodType'
+      required:
+        - url
+    MappingTypeCSV:
+      type: string
+      enum:
+        - string
+        - integer
+        - float
+        - boolean
+        - json
+    SourceCSV:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+          description: The URL of the file.
+        uniqueIDColumn:
+          type: string
+          description: >-
+            The name of the column that contains the unique ID, used as
+            `objectID` in Algolia.
+        mapping:
+          type: object
+          description: >
+            Mapping of type for every column. For example {"myColumn":
+            "boolean", "myOtherColumn": "json"}.
+          additionalProperties:
+            $ref: '#/components/schemas/MappingTypeCSV'
         method:
           $ref: '#/components/schemas/MethodType'
       required:
@@ -583,13 +795,14 @@ components:
       oneOf:
         - $ref: '#/components/schemas/SourceCommercetools'
         - $ref: '#/components/schemas/SourceBigCommerce'
-        - $ref: '#/components/schemas/SourceJson'
+        - $ref: '#/components/schemas/SourceJSON'
+        - $ref: '#/components/schemas/SourceCSV'
     Source:
       type: object
       additionalProperties: false
       properties:
         sourceID:
-          type: string
+          $ref: '#/components/schemas/sourceID'
         type:
           $ref: '#/components/schemas/SourceType'
         name:
@@ -597,7 +810,7 @@ components:
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -619,7 +832,7 @@ components:
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
       required:
         - type
         - name
@@ -630,7 +843,7 @@ components:
       additionalProperties: false
       properties:
         sourceID:
-          type: string
+          $ref: '#/components/schemas/sourceID'
         name:
           type: string
         createdAt:
@@ -639,24 +852,53 @@ components:
         - sourceID
         - name
         - createdAt
+    SourceSearch:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceIDs:
+          type: array
+          items:
+            type: string
+      required:
+        - sourceIDs
+    SourceUpdateCommercetools:
+      type: object
+      additionalProperties: false
+      properties:
+        storeKeys:
+          type: array
+          description: Unique and immutable key of the referenced Store.
+          items:
+            type: string
+        locales:
+          type: array
+          description: >
+            Array of locales that must match the following pattern:
+            ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+          items:
+            type: string
+    SourceUpdateInput:
+      oneOf:
+        - $ref: '#/components/schemas/SourceUpdateCommercetools'
+        - $ref: '#/components/schemas/SourceJSON'
+        - $ref: '#/components/schemas/SourceCSV'
     SourceUpdate:
       type: object
       additionalProperties: false
       properties:
-        type:
-          $ref: '#/components/schemas/SourceType'
         name:
           type: string
         input:
-          $ref: '#/components/schemas/SourceInput'
+          $ref: '#/components/schemas/SourceUpdateInput'
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
     SourceUpdateResponse:
       type: object
       additionalProperties: false
       properties:
         sourceID:
-          type: string
+          $ref: '#/components/schemas/sourceID'
         name:
           type: string
         updatedAt:
@@ -667,47 +909,113 @@ components:
         - updatedAt
     ActionType:
       type: string
+      description: The action to perform on the Algolia index.
       enum:
         - replace
         - save
         - delete
     TriggerType:
       type: string
+      description: |
+        The type of the task reflect how it can be used:
+          - onDemand: a task that runs manually
+          - schedule: a task that runs regularly, following a given cron expression
+          - subscription: a task that runs after a subscription event is received from an integration (e.g. Webhook).
       enum:
-        - on_demand
+        - onDemand
         - schedule
         - subscription
-    Trigger:
+    taskSortKeys:
+      type: string
+      description: Used to sort the Task list endpoint.
+      enum:
+        - enabled
+        - triggerType
+        - action
+        - updatedAt
+        - createdAt
+    taskID:
+      type: string
+      description: The task UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    OnDemandTriggerType:
+      type: string
+      description: A task which is manually executed via the run task endpoint.
+      enum:
+        - onDemand
+    LastRun:
+      description: The last time the scheduled task ran.
+      type: string
+    OnDemandTrigger:
       type: object
       additionalProperties: false
+      description: The trigger information of a task of type `on-demand`.
       properties:
         type:
-          $ref: '#/components/schemas/TriggerType'
-        cron:
-          type: string
+          $ref: '#/components/schemas/OnDemandTriggerType'
         lastRun:
-          description: The last time the task ran (`scheduled` or `on-demand`).
-          type: string
+          $ref: '#/components/schemas/LastRun'
+      required:
+        - type
+    ScheduleTriggerType:
+      type: string
+      description: A task which is triggered by a schedule (cron expression).
+      enum:
+        - schedule
+    Cron:
+      type: string
+      description: >-
+        A cron expression that represent at which regularity the task should
+        run.
+      example: '* * 1 * *'
+    ScheduleTrigger:
+      type: object
+      additionalProperties: false
+      description: The trigger information for a task of type 'schedule'.
+      properties:
+        type:
+          $ref: '#/components/schemas/ScheduleTriggerType'
+        cron:
+          $ref: '#/components/schemas/Cron'
+        lastRun:
+          $ref: '#/components/schemas/LastRun'
         nextRun:
-          description: The next scheduled run for the task (`scheduled`).
+          description: The next scheduled run of the task.
           type: string
       required:
         - type
+        - cron
+        - nextRun
+    SubscriptionTrigger:
+      type: object
+      additionalProperties: false
+      description: The trigger input for a task of type 'subscription'.
+      properties:
+        type:
+          $ref: '#/components/schemas/TriggerType'
+      required:
+        - type
+    Trigger:
+      oneOf:
+        - $ref: '#/components/schemas/OnDemandTrigger'
+        - $ref: '#/components/schemas/ScheduleTrigger'
+        - $ref: '#/components/schemas/SubscriptionTrigger'
     Task:
       type: object
       additionalProperties: false
       properties:
         taskID:
-          type: string
+          $ref: '#/components/schemas/taskID'
         sourceID:
-          type: string
+          $ref: '#/components/schemas/sourceID'
         destinationID:
-          type: string
+          $ref: '#/components/schemas/destinationID'
         trigger:
           $ref: '#/components/schemas/Trigger'
         enabled:
           type: boolean
           default: true
+          description: Whether the task is enabled or not.
         action:
           $ref: '#/components/schemas/ActionType'
         createdAt:
@@ -718,33 +1026,51 @@ components:
         - taskID
         - sourceID
         - destinationID
+        - trigger
         - enabled
         - action
         - createdAt
     TriggerInput:
       type: object
       additionalProperties: false
+      description: The trigger input of a task.
       properties:
         type:
           $ref: '#/components/schemas/TriggerType'
-        cron:
-          type: string
       required:
         - type
+    ScheduleTriggerInput:
+      type: object
+      additionalProperties: false
+      description: The trigger input for a task of type 'schedule'.
+      properties:
+        type:
+          $ref: '#/components/schemas/ScheduleTriggerType'
+        cron:
+          $ref: '#/components/schemas/Cron'
+      required:
+        - type
+        - cron
+    TaskCreateTrigger:
+      oneOf:
+        - $ref: '#/components/schemas/TriggerInput'
+        - $ref: '#/components/schemas/ScheduleTriggerInput'
     TaskCreate:
       type: object
       additionalProperties: false
+      description: The payload for a task creation.
       properties:
         sourceID:
-          type: string
+          $ref: '#/components/schemas/sourceID'
         destinationID:
-          type: string
+          $ref: '#/components/schemas/destinationID'
         trigger:
-          $ref: '#/components/schemas/TriggerInput'
+          $ref: '#/components/schemas/TaskCreateTrigger'
         action:
           $ref: '#/components/schemas/ActionType'
         enabled:
           type: boolean
+          description: Whether the task is enabled or not.
       required:
         - sourceID
         - destinationID
@@ -753,41 +1079,62 @@ components:
     TaskCreateResponse:
       type: object
       additionalProperties: false
+      description: The response from the API after a task creation.
       properties:
         taskID:
-          type: string
+          $ref: '#/components/schemas/taskID'
         createdAt:
           $ref: '#/components/schemas/createdAt'
       required:
         - taskID
         - createdAt
-    TaskUpdate:
+    TaskSearch:
       type: object
       additionalProperties: false
       properties:
+        taskIDs:
+          type: array
+          items:
+            type: string
+      required:
+        - taskIDs
+    TaskUpdate:
+      type: object
+      additionalProperties: false
+      description: The payload for a task update.
+      properties:
         destinationID:
-          type: string
+          $ref: '#/components/schemas/destinationID'
         trigger:
           $ref: '#/components/schemas/TriggerInput'
         enabled:
           type: boolean
+          description: Whether the task is enabled or not.
     TaskUpdateResponse:
       type: object
+      description: The response from the API after a task update.
       additionalProperties: false
       properties:
         taskID:
-          type: string
+          $ref: '#/components/schemas/taskID'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
         - taskID
         - updatedAt
+    runID:
+      type: string
+      description: The run UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     RunResponse:
       type: object
       additionalProperties: false
+      description: >-
+        The response from the run task API, containing an Observability Run ID
+        and the time it was created at.
       properties:
         runID:
-          type: string
+          $ref: '#/components/schemas/runID'
         createdAt:
           $ref: '#/components/schemas/createdAt'
       required:
@@ -798,7 +1145,15 @@ components:
       enum:
         - created
         - started
+        - idled
         - finished
+    runSortKeys:
+      type: string
+      description: Used to sort the Run list endpoint.
+      enum:
+        - status
+        - updatedAt
+        - createdAt
     RunOutcome:
       type: string
       enum:
@@ -820,11 +1175,11 @@ components:
       additionalProperties: false
       properties:
         runID:
-          type: string
+          $ref: '#/components/schemas/runID'
         appID:
           type: string
         taskID:
-          type: string
+          $ref: '#/components/schemas/taskID'
         status:
           $ref: '#/components/schemas/RunStatus'
         progress:
@@ -881,20 +1236,34 @@ components:
       enum:
         - fetch
         - record
-        - internal
+        - log
+    eventSortKeys:
+      type: string
+      description: Used to sort the Event list endpoint.
+      enum:
+        - status
+        - type
+        - publishedAt
+    eventID:
+      type: string
+      description: The event UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     publishedAt:
       type: string
       description: Date of publish (RFC3339 format).
     Event:
       type: object
+      description: An event describe a step of the task execution flow..
       additionalProperties: false
       properties:
         eventID:
-          type: string
+          $ref: '#/components/schemas/eventID'
         runID:
-          type: string
+          $ref: '#/components/schemas/runID'
         parentID:
           type: string
+          description: The parent event, the cause of this event.
+          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
         status:
           $ref: '#/components/schemas/EventStatus'
         type:
@@ -930,36 +1299,42 @@ security:
 tags:
   - name: authentications
     x-displayName: Authentications
-    description: Authentications describe the way we connect to Algolia, or any platform.
+    description: >-
+      An authentication describe the way we connect to Algolia, or any supported
+      connector.
   - name: destinations
     x-displayName: Destinations
     description: >-
-      Destinations refers to an Algolia product (Search, Insight, Recommend,
+      A destination refers to an Algolia product (Search, Insight, Recommend,
       ...).
   - name: observability
     x-displayName: Observability
-    description: Observability api tracks each runs and events.
+    description: The observability API associates a run to a task execution.
   - name: sources
     x-displayName: Sources
-    description: Sources describe the platform informations.
+    description: A source describe the platform informations.
   - name: tasks
     x-displayName: Tasks
     description: >-
-      Tasks refers to all type of Ingestion we can do (Reindex, On demand
-      update, ...).
+      A Task describe how we fetch the data (reindex, on-demand, subscription)
+      from a source and how we index it on the Algolia side.
 paths:
   /1/authentications:
     get:
       tags:
         - ingestion
       summary: Get a list of authentications.
-      description: Get a list of authentications.
+      description: >-
+        Get a list of authentications for the given query parameters, with
+        pagination details.
       operationId: getAuthentications
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/type'
         - $ref: '#/components/parameters/platform'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: OK
@@ -1003,15 +1378,40 @@ paths:
                 $ref: '#/components/schemas/AuthenticationCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/authentications/search:
+    post:
+      tags:
+        - ingestion
+      summary: Search among authentications.
+      description: Search among authentications with a defined set of parameters.
+      operationId: searchAuthentications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationSearch'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchAuthenticationsResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Authentication'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/authentications/{authenticationID}:
     get:
       tags:
         - ingestion
       summary: Get a authentication.
-      description: Get a authentication.
+      description: Get the authentication of the given authenticationID.
       operationId: getAuthentication
       parameters:
-        - $ref: '#/components/parameters/authenticationID'
+        - $ref: '#/components/parameters/pathAuthenticationID'
       responses:
         '200':
           description: OK
@@ -1025,10 +1425,10 @@ paths:
       tags:
         - ingestion
       summary: Update a authentication.
-      description: Update a authentication.
+      description: Update the authentication of the given authenticationID.
       operationId: updateAuthentication
       parameters:
-        - $ref: '#/components/parameters/authenticationID'
+        - $ref: '#/components/parameters/pathAuthenticationID'
       requestBody:
         content:
           application/json:
@@ -1048,10 +1448,10 @@ paths:
       tags:
         - ingestion
       summary: Delete a authentication.
-      description: Soft delete a authentication.
+      description: Soft delete the authentication of the given authenticationID.
       operationId: deleteAuthentication
       parameters:
-        - $ref: '#/components/parameters/authenticationID'
+        - $ref: '#/components/parameters/pathAuthenticationID'
       responses:
         '204':
           description: OK
@@ -1066,13 +1466,17 @@ paths:
       tags:
         - ingestion
       summary: Get a list of destinations.
-      description: Get a list of destinations.
+      description: >-
+        Get a list of destinations for the given query parameters, with
+        pagination details.
       operationId: getDestinations
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/destinationParameters_type'
-        - $ref: '#/components/parameters/destinationParameters_authenticationID'
+        - $ref: '#/components/parameters/authenticationID'
+        - $ref: '#/components/parameters/destinationParameters_sort'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: OK
@@ -1116,15 +1520,40 @@ paths:
                 $ref: '#/components/schemas/DestinationCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/destinations/search:
+    post:
+      tags:
+        - ingestion
+      summary: Search among destinations.
+      description: Search among destinations with a defined set of parameters.
+      operationId: searchDestinations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationSearch'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchDestinationsResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Destination'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/destinations/{destinationID}:
     get:
       tags:
         - ingestion
       summary: Get a destination.
-      description: Get a destination.
+      description: Get the destination of the given destinationID.
       operationId: getDestination
       parameters:
-        - $ref: '#/components/parameters/destinationID'
+        - $ref: '#/components/parameters/pathDestinationID'
       responses:
         '200':
           description: OK
@@ -1138,10 +1567,10 @@ paths:
       tags:
         - ingestion
       summary: Update a destination.
-      description: Update a destination.
+      description: Update the destination of the given destinationID.
       operationId: updateDestination
       parameters:
-        - $ref: '#/components/parameters/destinationID'
+        - $ref: '#/components/parameters/pathDestinationID'
       requestBody:
         content:
           application/json:
@@ -1161,10 +1590,10 @@ paths:
       tags:
         - ingestion
       summary: Delete a destination.
-      description: Soft delete a destination.
+      description: Soft delete the destination of the given destinationID.
       operationId: deleteDestination
       parameters:
-        - $ref: '#/components/parameters/destinationID'
+        - $ref: '#/components/parameters/pathDestinationID'
       responses:
         '204':
           description: OK
@@ -1179,13 +1608,17 @@ paths:
       tags:
         - ingestion
       summary: Get a list of sources.
-      description: Get a list of sources.
+      description: >-
+        Get a list of sources for the given query parameters, with pagination
+        details.
       operationId: getSources
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/sourceParameters_type'
         - $ref: '#/components/parameters/sourceParameters_authenticationID'
+        - $ref: '#/components/parameters/sourceParameters_sort'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: OK
@@ -1229,15 +1662,40 @@ paths:
                 $ref: '#/components/schemas/SourceCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/sources/search:
+    post:
+      tags:
+        - ingestion
+      summary: Search among sources.
+      description: Search among sources with a defined set of parameters.
+      operationId: searchSources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceSearch'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchSourcesResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Source'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/sources/{sourceID}:
     get:
       tags:
         - ingestion
       summary: Get a source.
-      description: Get a source.
+      description: Get the source of the given sourceID.
       operationId: getSource
       parameters:
-        - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/pathSourceID'
       responses:
         '200':
           description: OK
@@ -1247,14 +1705,14 @@ paths:
                 $ref: '#/components/schemas/Source'
         '400':
           $ref: '#/components/responses/BadRequest'
-    post:
+    put:
       tags:
         - ingestion
       summary: Update a source.
-      description: Update a source.
+      description: Update the source of the given sourceID.
       operationId: updateSource
       parameters:
-        - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/pathSourceID'
       requestBody:
         content:
           application/json:
@@ -1274,10 +1732,10 @@ paths:
       tags:
         - ingestion
       summary: Delete a source.
-      description: Soft delete a source.
+      description: Soft delete the source of the given sourceID.
       operationId: deleteSource
       parameters:
-        - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/pathSourceID'
       responses:
         '204':
           description: OK
@@ -1292,15 +1750,20 @@ paths:
       tags:
         - ingestion
       summary: Get a list of tasks.
-      description: Get a list of tasks.
+      description: >-
+        Get a list of tasks for the given query parameters, with pagination
+        details.
       operationId: getTasks
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/action'
         - $ref: '#/components/parameters/enabled'
-        - $ref: '#/components/parameters/taskParameters_destinationID'
+        - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
+        - $ref: '#/components/parameters/taskParameters_sort'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: OK
@@ -1309,6 +1772,7 @@ paths:
               schema:
                 title: listTasksResponse
                 type: object
+                description: A list of tasks with pagination details.
                 additionalProperties: false
                 properties:
                   tasks:
@@ -1344,15 +1808,40 @@ paths:
                 $ref: '#/components/schemas/TaskCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/tasks/search:
+    post:
+      tags:
+        - ingestion
+      summary: Search among tasks.
+      description: Search among tasks with a defined set of parameters.
+      operationId: searchTasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskSearch'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchTasksResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/tasks/{taskID}:
     get:
       tags:
         - ingestion
       summary: Get a task.
-      description: Get a task.
+      description: Get the task of the given taskID.
       operationId: getTask
       parameters:
-        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/pathTaskID'
       responses:
         '200':
           description: OK
@@ -1366,10 +1855,10 @@ paths:
       tags:
         - ingestion
       summary: Update a task.
-      description: Update a task.
+      description: Update the task of the given taskID.
       operationId: updateTask
       parameters:
-        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/pathTaskID'
       requestBody:
         content:
           application/json:
@@ -1389,10 +1878,10 @@ paths:
       tags:
         - ingestion
       summary: Delete a task.
-      description: Soft delete a task.
+      description: Soft delete the task of the given taskID.
       operationId: deleteTask
       parameters:
-        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/pathTaskID'
       responses:
         '204':
           description: OK
@@ -1407,10 +1896,10 @@ paths:
       tags:
         - ingestion
       summary: Run a task.
-      description: Run a task.
+      description: Run the task of the given taskID.
       operationId: runTask
       parameters:
-        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/pathTaskID'
       responses:
         '200':
           description: OK
@@ -1425,10 +1914,10 @@ paths:
       tags:
         - ingestion
       summary: Enable a task.
-      description: Enable a task.
+      description: Enable the task of the given taskID.
       operationId: enableTask
       parameters:
-        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/pathTaskID'
       responses:
         '200':
           description: OK
@@ -1443,10 +1932,10 @@ paths:
       tags:
         - ingestion
       summary: Disable a task.
-      description: Disable a task.
+      description: Disable the task of the given taskID.
       operationId: disableTask
       parameters:
-        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/pathTaskID'
       responses:
         '200':
           description: OK
@@ -1461,11 +1950,17 @@ paths:
       tags:
         - ingestion
       summary: Get a list of runs.
-      description: Get a list of runs.
+      description: >-
+        Get a list of runs for the given query parameters, with pagination
+        details.
       operationId: getRuns
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/runStatus'
+        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/runSort'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: OK
@@ -1480,10 +1975,10 @@ paths:
       tags:
         - ingestion
       summary: Get a run.
-      description: Get a run.
+      description: Get a single run for the given ID.
       operationId: getRun
       parameters:
-        - $ref: '#/components/parameters/runID'
+        - $ref: '#/components/parameters/pathRunID'
       responses:
         '200':
           description: OK
@@ -1497,13 +1992,17 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Get a list of events for a specific run.
-      description: Get a list of events for a specific run.
+      summary: Get a list of events.
+      description: >-
+        Get a list of events associated to the given runID, for the given query
+        parameters.
       operationId: getEvents
       parameters:
-        - $ref: '#/components/parameters/runID'
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pathRunID'
+        - $ref: '#/components/parameters/eventStatus'
+        - $ref: '#/components/parameters/eventType'
+        - $ref: '#/components/parameters/eventSort'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: OK
@@ -1518,23 +2017,20 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Event'
-                  pagination:
-                    $ref: '#/components/schemas/Pagination'
                 required:
                   - events
-                  - pagination
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/runs/{runID}/events/{eventID}:
     get:
       tags:
         - ingestion
-      summary: Get an event in a specific run.
-      description: Get an event in a specific run.
+      summary: Get an event.
+      description: Get a single event for a specific runID.
       operationId: getEvent
       parameters:
-        - $ref: '#/components/parameters/runID'
-        - $ref: '#/components/parameters/eventID'
+        - $ref: '#/components/parameters/pathRunID'
+        - $ref: '#/components/parameters/pathEventID'
       responses:
         '200':
           description: OK
@@ -1542,25 +2038,5 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-  /1/runs/tasks/{taskID}:
-    get:
-      tags:
-        - ingestion
-      summary: Get a list of runs associated with a taskID.
-      description: Get a list of runs associated with a taskID.
-      operationId: getRunsByTaskID
-      parameters:
-        - $ref: '#/components/parameters/taskID'
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RunListResponse'
         '400':
           $ref: '#/components/responses/BadRequest'

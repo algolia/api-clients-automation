@@ -2,13 +2,15 @@ get:
   tags:
     - destinations
   summary: Get a list of destinations.
-  description: Get a list of destinations.
+  description: Get a list of destinations for the given query parameters, with pagination details.
   operationId: getDestinations
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../common/parameters.yml#/page'
     - $ref: '../../common/destinationParameters.yml#/type'
     - $ref: '../../common/destinationParameters.yml#/authenticationID'
+    - $ref: '../../common/destinationParameters.yml#/sort'
+    - $ref: '../../common/parameters.yml#/order'
   responses:
     '200':
       description: OK

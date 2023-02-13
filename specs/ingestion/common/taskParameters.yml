@@ -1,7 +1,7 @@
 enabled:
   name: enabled
   in: query
-  description: If the returned task should have its 'enabled' property set to true.
+  description: Whether the task is enabled or not.
   required: false
   schema:
     type: boolean
@@ -9,32 +9,45 @@ enabled:
 action:
   name: action
   in: query
-  description: Which action the returned task should have. Can be a list of string separated with commas.
   required: false
+  description: The action of the tasks to retrieve.
   style: form
   explode: false
   schema:
     type: array
+    description: An array of actions to perform on the Algolia index.
     items:
       $ref: './schemas/task.yml#/ActionType'
     example: save,replace
 
-destinationID:
-  name: destinationID
+sourceID:
+  name: sourceID
   in: query
-  description: Which destinationID the returned task should have. Can be a list of string separated with commas.
+  description: The sourceIDs of the tasks to retrive.
   required: false
   style: form
   explode: false
   schema:
     type: array
     items:
-      type: string
+      $ref: './schemas/common.yml#/sourceID'
+
+destinationID:
+  name: destinationID
+  in: query
+  description: The destinationIDs of the tasks to retrive.
+  required: false
+  style: form
+  explode: false
+  schema:
+    type: array
+    items:
+      $ref: './schemas/common.yml#/destinationID'
 
 triggerType:
   name: triggerType
   in: query
-  description: Which trigger type the returned task should have. Can be a list of string separated with commas.
+  description: The trigger type of the task.
   required: false
   style: form
   explode: false
@@ -42,4 +55,17 @@ triggerType:
     type: array
     items:
       $ref: './schemas/task.yml#/TriggerType'
-    example: on_demand,schedule
+    example: onDemand,schedule
+
+sort:
+  name: sort
+  in: query
+  description: The key by which the list should be sorted.
+  required: false
+  schema:
+    $ref: '#/taskSortKeys'
+
+taskSortKeys:
+  type: string
+  description: Used to sort the Task list endpoint.
+  enum: [enabled, triggerType, action, updatedAt, createdAt]

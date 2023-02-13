@@ -4,14 +4,26 @@ import type { ActionType } from './actionType';
 import type { Trigger } from './trigger';
 
 export type Task = {
+  /**
+   * The task UUID.
+   */
   taskID: string;
 
+  /**
+   * The source UUID.
+   */
   sourceID: string;
 
+  /**
+   * The destination UUID.
+   */
   destinationID: string;
 
-  trigger?: Trigger;
+  trigger: Trigger;
 
+  /**
+   * Whether the task is enabled or not.
+   */
   enabled: boolean;
 
   action: ActionType;
