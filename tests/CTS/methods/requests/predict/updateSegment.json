@@ -115,7 +115,10 @@
                 {
                   "operator": "EQ",
                   "value": "red",
-                  "probability": { "GTE": 0.5, "LTE": 1 }
+                  "probability": {
+                    "GTE": 0.5,
+                    "LTE": 1
+                  }
                 }
               ]
             }
@@ -136,7 +139,10 @@
                 {
                   "operator": "EQ",
                   "value": "red",
-                  "probability": { "GTE": 0.5, "LTE": 1 }
+                  "probability": {
+                    "GTE": 0.5,
+                    "LTE": 1
+                  }
                 }
               ]
             }
