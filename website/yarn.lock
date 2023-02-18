@@ -5361,14 +5361,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docusaurus-preset-shiki-twoslash@npm:1.1.38":
-  version: 1.1.38
-  resolution: "docusaurus-preset-shiki-twoslash@npm:1.1.38"
+"docusaurus-preset-shiki-twoslash@npm:1.1.39":
+  version: 1.1.39
+  resolution: "docusaurus-preset-shiki-twoslash@npm:1.1.39"
   dependencies:
     copy-text-to-clipboard: ^3.0.1
-    remark-shiki-twoslash: 3.1.0
+    remark-shiki-twoslash: 3.1.1
     typescript: ">3"
-  checksum: 94be72b30dbc584542765ec37e215f4752e3970010e2085b16e01fd7c5a53a739eee63eed90a00f726df310cb1884ba5c4e28d8b3e4e8a63bc3becfd9d8134e5
+  checksum: c67ae7cff75c425dd88be5efd2cca7d874d716556cabb0670e24613d9a2faca32dd402c5326ec2f39c2768ff1329912f04bc0fbb4bee746427056da595fa4a4b
   languageName: node
   linkType: hard
 
@@ -10721,20 +10721,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-shiki-twoslash@npm:3.1.0":
-  version: 3.1.0
-  resolution: "remark-shiki-twoslash@npm:3.1.0"
+"remark-shiki-twoslash@npm:3.1.1":
+  version: 3.1.1
+  resolution: "remark-shiki-twoslash@npm:3.1.1"
   dependencies:
+    "@types/unist": ^2.0.0
     "@typescript/twoslash": 3.1.0
     "@typescript/vfs": 1.3.4
     fenceparser: ^1.1.0
     regenerator-runtime: ^0.13.7
     shiki: 0.10.1
-    shiki-twoslash: 3.1.0
+    shiki-twoslash: 3.1.1
     tslib: 2.1.0
-    typescript: ">3"
     unist-util-visit: ^2.0.0
-  checksum: 46e91d504f2942233f550bc29f8a4068278982c62d70f344247ff6ee94cdb6092813e9352f082587b5ffb2dae0a9f74e51056962cd37edf1db9f07ec94255f43
+  peerDependencies:
+    typescript: ">3"
+  checksum: 84b232e8ed3cb24d26bce6c59b04d950494c01d5a561e5163dbbe62aa972b5e36c821dc9c0a4a4dec32a7be372a501e78f8e71c22cc275e00a133ff1e08c3f34
   languageName: node
   linkType: hard
 
@@ -11254,15 +11256,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki-twoslash@npm:3.1.0":
-  version: 3.1.0
-  resolution: "shiki-twoslash@npm:3.1.0"
+"shiki-twoslash@npm:3.1.1":
+  version: 3.1.1
+  resolution: "shiki-twoslash@npm:3.1.1"
   dependencies:
     "@typescript/twoslash": 3.1.0
     "@typescript/vfs": 1.3.4
+    fenceparser: ^1.1.0
     shiki: 0.10.1
+  peerDependencies:
     typescript: ">3"
-  checksum: db013c3645838269e81092e5a13cfb60a0723d8da81ec2e34206e942ec3e8e77cbafeb4a59c4792c43006e419fcbc869fd714dea0e5b18bbc2c5287cf2290731
+  checksum: 97441b88c8ec15946979457442bf463a98387f161641454665e46c309ada1666c319576e72dd053c2203d27b2fe0bd669e08b72e734418ce38928c73c05afe74
   languageName: node
   linkType: hard
 
@@ -12804,7 +12808,7 @@ __metadata:
     "@docusaurus/types": 2.2.0
     "@mdx-js/react": 1.6.22
     clsx: 1.2.0
-    docusaurus-preset-shiki-twoslash: 1.1.38
+    docusaurus-preset-shiki-twoslash: 1.1.39
     react: 18.2.0
     react-dom: 18.2.0
     redocusaurus: 1.4.0
