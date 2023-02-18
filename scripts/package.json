@@ -15,7 +15,7 @@
   "devDependencies": {
     "@octokit/rest": "19.0.7",
     "@types/folder-hash": "4.0.2",
-    "@types/inquirer": "8.2.5",
+    "@types/inquirer": "8.2.6",
     "@types/jest": "28.1.8",
     "@types/js-yaml": "4.0.5",
     "@types/micromatch": "4.0.2",
