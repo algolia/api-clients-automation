@@ -26,7 +26,7 @@
     "commander": "9.5.0",
     "dotenv": "16.0.2",
     "eslint": "8.34.0",
-    "execa": "5.1.1",
+    "execa": "7.0.0",
     "folder-hash": "4.0.4",
     "fs-extra": "10.1.0",
     "inquirer": "8.2.5",
