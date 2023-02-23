@@ -291,7 +291,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jdk: [temurin, zulu, oracle]
+        jdk: [temurin, zulu]
         java: [8, 11, 17]
     name: Java ${{ matrix.java }}/${{ matrix.jdk }} Build
 
