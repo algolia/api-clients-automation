@@ -309,8 +309,10 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build
-        run: |
-          cd clients/algoliasearch-client-java-2 && ./gradlew build --stacktrace
+        run: cd clients/algoliasearch-client-java-2 && ./gradlew build --stacktrace
+
+      - name: Test
+        run: yarn cli cts run java
 
   codegen:
     runs-on: ubuntu-20.04
