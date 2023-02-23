@@ -1,3 +1,6 @@
+// This package is to check the public API (binary) compatibility of the latest
+// published release with `algoliasearch-client-java` package.
+
 import me.champeau.gradle.japicmp.JapicmpTask
 
 plugins {
@@ -19,7 +22,6 @@ dependencies {
   }
   latest(projects.algoliasearchCore)
 }
-
 
 def japicmp = tasks.register('japicmp', JapicmpTask) {
   dependsOn tasks.findByName("jar")
