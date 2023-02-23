@@ -277,12 +277,48 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
+  javacompat:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    needs:
+      - setup
+      - client_gen
+    if: |
+      always() &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+
+    strategy:
+      fail-fast: false
+      matrix:
+        jdk: [temurin, zulu, oracle]
+        java: [8, 11, 17]
+    name: Java ${{ matrix.java }}/${{ matrix.jdk }} Build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Configure JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: ${{ matrix.jdk }}
+          java-version: ${{ matrix.java }}
+
+      - name: Build
+        run: |
+          cd clients/algoliasearch-client-java-2 && ./gradlew build --stacktrace
+
   codegen:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs:
       - setup
       - client_gen
+      - javacompat
     if: |
       always() &&
       !contains(needs.*.result, 'cancelled') &&
