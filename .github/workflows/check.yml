@@ -308,6 +308,11 @@ jobs:
           distribution: ${{ matrix.jdk }}
           java-version: ${{ matrix.java }}
 
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
       - name: Build
         run: cd clients/algoliasearch-client-java-2 && ./gradlew build --stacktrace
 
