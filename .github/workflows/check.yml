@@ -313,6 +313,11 @@ jobs:
         with:
           type: minimal
 
+      - name: Download java artifacts
+        uses: ./.github/actions/restore-artifacts
+        with:
+          java: true   
+
       - name: Build
         run: cd clients/algoliasearch-client-java-2 && ./gradlew build --stacktrace
 
