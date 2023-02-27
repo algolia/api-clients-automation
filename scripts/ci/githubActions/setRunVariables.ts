@@ -2,7 +2,7 @@
 import { CLIENTS_JS_UTILS } from '../../common';
 import { getLanguageFolder } from '../../config';
 
-import { isBaseChanged } from './utils';
+import { isBaseChanged, setOutput } from './utils';
 
 const JS_CLIENT_FOLDER = getLanguageFolder('javascript');
 const JAVA_CLIENT_FOLDER = getLanguageFolder('java');
@@ -81,7 +81,7 @@ async function setRunVariables({
 }): Promise<void> {
   console.log(`Checking diff between ${originBranch} and HEAD`);
 
-  console.log(`::set-output name=ORIGIN_BRANCH::${originBranch}`);
+  await setOutput('ORIGIN_BRANCH', originBranch);
 
   await isBaseChanged(originBranch, DEPENDENCIES, true);
 }

@@ -17,7 +17,7 @@ import type {
   SpecMatrix,
   ToRunMatrix,
 } from './types';
-import { computeCacheKey, isBaseChanged } from './utils';
+import { computeCacheKey, isBaseChanged, setOutput } from './utils';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
@@ -150,16 +150,15 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
       testsToDelete,
       testsToStore,
     });
-    console.log(`::set-output name=RUN_GEN_${language.toUpperCase()}::true`);
+    console.log(`name=RUN_GEN_${language.toUpperCase()}::true`);
   }
 
   const shouldRun = clientMatrix.client.length > 0;
 
-  console.log(`::set-output name=RUN_GEN::${shouldRun}`);
-  console.log(
-    `::set-output name=GEN_MATRIX::${JSON.stringify(
-      shouldRun ? clientMatrix : EMPTY_MATRIX
-    )}`
+  await setOutput('RUN_GEN', shouldRun);
+  await setOutput(
+    'GEN_MATRIX',
+    JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX)
   );
 }
 
@@ -187,7 +186,7 @@ async function getSpecMatrix(): Promise<void> {
     ]),
   };
 
-  console.log(`::set-output name=MATRIX::${JSON.stringify(ciMatrix)}`);
+  await setOutput('MATRIX', JSON.stringify(ciMatrix));
 }
 
 /**

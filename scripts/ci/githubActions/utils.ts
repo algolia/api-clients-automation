@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 import crypto from 'crypto';
+import fsp from 'fs/promises';
+import { EOL } from 'os';
 
 import { hashElement } from 'folder-hash';
 
 import { toAbsolutePath } from '../../common';
 import { getNbGitDiff } from '../utils';
-
 /**
  * This cache key holds the hash of the common dependencies of all the clients.
  */
@@ -63,12 +64,12 @@ export async function computeCacheKey(
 /**
  * Determines if changes have been found in the `dependencies`, compared to the `baseBranch`.
  *
- * If `setOutput` is true, it will set log the variable values for the CI.
+ * If `output` is true, it will set log the variable values for the CI.
  */
 export async function isBaseChanged(
   baseBranch: string,
   dependencies: Record<string, string[]>,
-  setOutput?: boolean
+  output?: boolean
 ): Promise<boolean> {
   for (const [key, path] of Object.entries(dependencies)) {
     const diff = await getNbGitDiff({
@@ -76,13 +77,18 @@ export async function isBaseChanged(
       path: path.join(' '),
     });
 
-    if (setOutput) {
+    if (output) {
       console.log(`Found ${diff} changes for '${key}'`);
-      console.log(`::set-output name=${key}::${diff}`);
+      await setOutput(key, diff);
     } else if (diff > 0) {
       return true;
     }
   }
 
   return false;
+}
+
+export async function setOutput(key: string, value: any): Promise<void> {
+  const output = process.env.GITHUB_OUTPUT!;
+  await fsp.writeFile(output, `${key}=${value}${EOL}`);
 }
