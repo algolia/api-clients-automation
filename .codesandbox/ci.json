@@ -1,5 +1,5 @@
 {
-  "node": "18",
+  "node": "16",
   "packages": [
     "clients/algoliasearch-client-javascript/packages/*/"
   ],
