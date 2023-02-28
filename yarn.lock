@@ -53,7 +53,7 @@ __metadata:
     prettier: 2.8.4
     prettier-plugin-java: 2.0.0
     renovate-config-algolia: 2.1.10
-    typescript: 4.9.5
+    typescript: 4.8.4
   languageName: unknown
   linkType: soft
 
@@ -1022,44 +1022,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@msgpackr-extract/msgpackr-extract-darwin-arm64@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@msgpackr-extract/msgpackr-extract-darwin-arm64@npm:3.0.0"
+"@msgpackr-extract/msgpackr-extract-darwin-arm64@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@msgpackr-extract/msgpackr-extract-darwin-arm64@npm:3.0.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@msgpackr-extract/msgpackr-extract-darwin-x64@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@msgpackr-extract/msgpackr-extract-darwin-x64@npm:3.0.0"
+"@msgpackr-extract/msgpackr-extract-darwin-x64@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@msgpackr-extract/msgpackr-extract-darwin-x64@npm:3.0.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@msgpackr-extract/msgpackr-extract-linux-arm64@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@msgpackr-extract/msgpackr-extract-linux-arm64@npm:3.0.0"
+"@msgpackr-extract/msgpackr-extract-linux-arm64@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@msgpackr-extract/msgpackr-extract-linux-arm64@npm:3.0.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@msgpackr-extract/msgpackr-extract-linux-arm@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@msgpackr-extract/msgpackr-extract-linux-arm@npm:3.0.0"
+"@msgpackr-extract/msgpackr-extract-linux-arm@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@msgpackr-extract/msgpackr-extract-linux-arm@npm:3.0.1"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@msgpackr-extract/msgpackr-extract-linux-x64@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@msgpackr-extract/msgpackr-extract-linux-x64@npm:3.0.0"
+"@msgpackr-extract/msgpackr-extract-linux-x64@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@msgpackr-extract/msgpackr-extract-linux-x64@npm:3.0.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@msgpackr-extract/msgpackr-extract-win32-x64@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@msgpackr-extract/msgpackr-extract-win32-x64@npm:3.0.0"
+"@msgpackr-extract/msgpackr-extract-win32-x64@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@msgpackr-extract/msgpackr-extract-win32-x64@npm:3.0.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3752,9 +3752,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.284":
-  version: 1.4.311
-  resolution: "electron-to-chromium@npm:1.4.311"
-  checksum: 663fde5d90293d19c05b0dc65996e1ba6f3ee89d6365de3503de6a96c21439e18ea579fdd7d718e260708aa871ef333de934a4024d54fd109959ac0bca9d1400
+  version: 1.4.313
+  resolution: "electron-to-chromium@npm:1.4.313"
+  checksum: 694c379e0800e55e3e2966f73557bfc3bad66e1eb120928d33e8f0619b59ec057eb94ecb27a06e6f7ea1892565f6b8a87b03129a8243baa0d1ccea9579040a83
   languageName: node
   linkType: hard
 
@@ -3985,7 +3985,7 @@ __metadata:
     jest: 29.4.3
     ts-jest: 29.0.5
     ts-node: 10.9.1
-    typescript: 4.9.5
+    typescript: 4.8.4
   languageName: unknown
   linkType: soft
 
@@ -5529,7 +5529,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     parcel: 2.8.3
-    typescript: 4.9.5
+    typescript: 4.8.4
   languageName: unknown
   linkType: soft
 
@@ -5551,7 +5551,7 @@ __metadata:
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     dotenv: 16.0.3
     ts-node: 10.9.1
-    typescript: 4.9.5
+    typescript: 4.8.4
   languageName: unknown
   linkType: soft
 
@@ -6709,16 +6709,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msgpackr-extract@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "msgpackr-extract@npm:3.0.0"
+"msgpackr-extract@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "msgpackr-extract@npm:3.0.1"
   dependencies:
-    "@msgpackr-extract/msgpackr-extract-darwin-arm64": 3.0.0
-    "@msgpackr-extract/msgpackr-extract-darwin-x64": 3.0.0
-    "@msgpackr-extract/msgpackr-extract-linux-arm": 3.0.0
-    "@msgpackr-extract/msgpackr-extract-linux-arm64": 3.0.0
-    "@msgpackr-extract/msgpackr-extract-linux-x64": 3.0.0
-    "@msgpackr-extract/msgpackr-extract-win32-x64": 3.0.0
+    "@msgpackr-extract/msgpackr-extract-darwin-arm64": 3.0.1
+    "@msgpackr-extract/msgpackr-extract-darwin-x64": 3.0.1
+    "@msgpackr-extract/msgpackr-extract-linux-arm": 3.0.1
+    "@msgpackr-extract/msgpackr-extract-linux-arm64": 3.0.1
+    "@msgpackr-extract/msgpackr-extract-linux-x64": 3.0.1
+    "@msgpackr-extract/msgpackr-extract-win32-x64": 3.0.1
     node-gyp: latest
     node-gyp-build-optional-packages: 5.0.7
   dependenciesMeta:
@@ -6736,19 +6736,19 @@ __metadata:
       optional: true
   bin:
     download-msgpackr-prebuilds: bin/download-prebuilds.js
-  checksum: 89a92c1422399ab796f31742a8b1724b4e7a766706417c7c6da30f3be2a1dff64d182ed20109987dc38520c0864c9c7607a082ae95f1d15a2fa3695aa30dcd22
+  checksum: 98e46afa1241e96215f43a9ccf85e937fb5541a219173e95846a368eabac39a4c6388a371aaaa979c9f9426fe39549a6fc412a4f2b0b767a7d6ac598c663cfd7
   languageName: node
   linkType: hard
 
 "msgpackr@npm:^1.5.4":
-  version: 1.8.3
-  resolution: "msgpackr@npm:1.8.3"
+  version: 1.8.4
+  resolution: "msgpackr@npm:1.8.4"
   dependencies:
-    msgpackr-extract: ^3.0.0
+    msgpackr-extract: ^3.0.1
   dependenciesMeta:
     msgpackr-extract:
       optional: true
-  checksum: 15a3a7db3332b1a6e9b5ca71d57b862bf10c73d7b3e4f37abfe009d9b0843857cc9c625fed942f3f53d39770468c9ef92a83798e64993cb6389fd695075f3f74
+  checksum: b766fbb1671ae47e81d7cca5e83b2e37b65249728c7f99b827cbaeef7e308e1ecd77f4745653d1aeba8006170af0c48d6163f36035ac222b1381858cdb8ec37d
   languageName: node
   linkType: hard
 
@@ -7765,7 +7765,7 @@ __metadata:
     semver: 7.3.8
     ts-jest: 29.0.5
     ts-node: 10.9.1
-    typescript: 4.9.5
+    typescript: 4.8.4
   languageName: unknown
   linkType: soft
 
@@ -8505,23 +8505,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.9.5":
-  version: 4.9.5
-  resolution: "typescript@npm:4.9.5"
+"typescript@npm:4.8.4":
+  version: 4.8.4
+  resolution: "typescript@npm:4.8.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ee000bc26848147ad423b581bd250075662a354d84f0e06eb76d3b892328d8d4440b7487b5a83e851b12b255f55d71835b008a66cbf8f255a11e4400159237db
+  checksum: 3e4f061658e0c8f36c820802fa809e0fd812b85687a9a2f5430bc3d0368e37d1c9605c3ce9b39df9a05af2ece67b1d844f9f6ea8ff42819f13bcb80f85629af0
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.9.5#~builtin<compat/typescript>":
-  version: 4.9.5
-  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"
+"typescript@patch:typescript@4.8.4#~builtin<compat/typescript>":
+  version: 4.8.4
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=1a91c8"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ab417a2f398380c90a6cf5a5f74badd17866adf57f1165617d6a551f059c3ba0a3e4da0d147b3ac5681db9ac76a303c5876394b13b3de75fdd5b1eaa06181c9d
+  checksum: c981e82b77a5acdcc4e69af9c56cdecf5b934a87a08e7b52120596701e389a878b8e3f860e73ffb287bf649cc47a8c741262ce058148f71de4cdd88bb9c75153
   languageName: node
   linkType: hard
 
