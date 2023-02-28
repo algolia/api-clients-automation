@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 import crypto from 'crypto';
-import fsp from 'fs/promises';
-import { EOL } from 'os';
 
+import * as core from '@actions/core';
 import { hashElement } from 'folder-hash';
 
 import { toAbsolutePath } from '../../common';
@@ -79,16 +78,11 @@ export async function isBaseChanged(
 
     if (output) {
       console.log(`Found ${diff} changes for '${key}'`);
-      await setOutput(key, diff);
+      core.setOutput(key, diff);
     } else if (diff > 0) {
       return true;
     }
   }
 
   return false;
-}
-
-export async function setOutput(key: string, value: any): Promise<void> {
-  const output = process.env.GITHUB_OUTPUT!;
-  await fsp.writeFile(output, `${key}=${value}${EOL}`);
 }

@@ -1,4 +1,6 @@
 /* eslint-disable no-console,no-case-declarations */
+import * as core from '@actions/core';
+
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common';
 import {
   getClientsConfigField,
@@ -17,7 +19,7 @@ import type {
   SpecMatrix,
   ToRunMatrix,
 } from './types';
-import { computeCacheKey, isBaseChanged, setOutput } from './utils';
+import { computeCacheKey, isBaseChanged } from './utils';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
@@ -155,8 +157,8 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
 
   const shouldRun = clientMatrix.client.length > 0;
 
-  await setOutput('RUN_GEN', shouldRun);
-  await setOutput(
+  core.setOutput('RUN_GEN', shouldRun);
+  core.setOutput(
     'GEN_MATRIX',
     JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX)
   );
@@ -186,7 +188,7 @@ async function getSpecMatrix(): Promise<void> {
     ]),
   };
 
-  await setOutput('MATRIX', JSON.stringify(ciMatrix));
+  core.setOutput('MATRIX', JSON.stringify(ciMatrix));
 }
 
 /**
