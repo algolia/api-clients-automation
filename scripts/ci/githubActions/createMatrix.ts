@@ -1,4 +1,4 @@
-/* eslint-disable no-console,no-case-declarations */
+/* eslint-disable no-case-declarations */
 import * as core from '@actions/core';
 
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common';
@@ -152,7 +152,7 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
       testsToDelete,
       testsToStore,
     });
-    console.log(`name=RUN_GEN_${language.toUpperCase()}::true`);
+    core.setOutput(`RUN_GEN_${language.toUpperCase()}`, true);
   }
 
   const shouldRun = clientMatrix.client.length > 0;
