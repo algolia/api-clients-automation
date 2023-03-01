@@ -24,7 +24,7 @@ runs:
       uses: actions/setup-java@v3
       with:
         distribution: zulu
-        java-version: 11.0.4
+        java-version-file: .java-version
         cache: gradle
 
     - name: Validate gradle wrapper
@@ -93,6 +93,20 @@ runs:
       run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
     # PHP deps
+    - name: Get PHP version
+      if: ${{ inputs.language == 'php' }}
+      id: php-version
+      shell: bash
+      run: |
+        echo "PHP_VERSION=$(cat .php-version)" >> $GITHUB_OUTPUT
+
+    - name: Install PHP
+      if: ${{ inputs.language == 'php' }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: steps.php-version.outputs.PHP_VERSION
+        tools: composer
+
     - name: Run composer update
       if: ${{ inputs.language == 'php' }}
       shell: bash
