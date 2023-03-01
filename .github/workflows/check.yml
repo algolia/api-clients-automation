@@ -318,9 +318,6 @@ jobs:
         with:
           java: true   
 
-      - name: Build
-        run: cd clients/algoliasearch-client-java-2 && ./gradlew build --stacktrace
-
       - name: Test
         run: yarn cli cts run java
 
