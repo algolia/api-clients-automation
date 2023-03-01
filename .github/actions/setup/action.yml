@@ -98,13 +98,14 @@ runs:
       id: php-version
       shell: bash
       run: |
-        echo "PHP_VERSION=$(cat .php-version)" >> $GITHUB_OUTPUT
+        # remove patch from version
+        echo "PHP_VERSION=$(cat .php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
 
     - name: Install PHP
       if: ${{ inputs.language == 'php' }}
       uses: shivammathur/setup-php@v2
       with:
-        php-version: steps.php-version.outputs.PHP_VERSION
+        php-version: ${{ steps.php-version.outputs.PHP_VERSION }}
         tools: composer
 
     - name: Run composer update
