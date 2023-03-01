@@ -24,7 +24,7 @@ runs:
       uses: actions/setup-java@v3
       with:
         distribution: zulu
-        java-version-file: .java-version
+        java-version-file: config/.java-version
         cache: gradle
 
     - name: Validate gradle wrapper
@@ -99,7 +99,7 @@ runs:
       shell: bash
       run: |
         # remove patch from version
-        echo "PHP_VERSION=$(cat .php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
+        echo "PHP_VERSION=$(cat config/.php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
 
     - name: Install PHP
       if: ${{ inputs.language == 'php' }}

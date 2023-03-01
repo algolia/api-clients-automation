@@ -4,9 +4,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)/../.."
 
 cd $ROOT
 
-JAVA_VERSION=$(cat .java-version)
+JAVA_VERSION=$(cat config/.java-version)
 NODE_VERSION=$(cat .nvmrc)
-PHP_VERSION=$(cat .php-version)
+PHP_VERSION=$(cat config/.php-version)
 
 docker build \
   --build-arg JAVA_VERSION=$JAVA_VERSION \
