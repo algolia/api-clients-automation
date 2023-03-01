@@ -277,7 +277,7 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
-  javacompat:
+  java_compatibility_check:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs:
@@ -330,7 +330,7 @@ jobs:
     needs:
       - setup
       - client_gen
-      - javacompat
+      - java_compatibility_check
     if: |
       always() &&
       !contains(needs.*.result, 'cancelled') &&
