@@ -36,7 +36,6 @@
     "js-yaml": "4.1.0",
     "micromatch": "4.0.5",
     "mustache": "4.2.0",
-    "ora-classic": "5.4.2",
     "semver": "7.3.8",
     "spinnies": "0.5.1",
     "ts-jest": "29.0.5",
