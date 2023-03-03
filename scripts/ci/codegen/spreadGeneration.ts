@@ -151,7 +151,8 @@ async function spreadGeneration(): Promise<void> {
         `Processing release commit, creating new release tag ('${version}') for '${lang}' repository.`
       );
 
-      await run(`git tag -d ${version}`, { cwd: tempGitDir });
+      // we always want to delete the tag in case it exists
+      await run(`git tag -d ${version} || true`, { cwd: tempGitDir });
       await run(`git tag ${version} HEAD`, { cwd: tempGitDir });
       await run('git push --tags', { cwd: tempGitDir });
     }
