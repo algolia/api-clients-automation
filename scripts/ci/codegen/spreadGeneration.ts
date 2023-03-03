@@ -10,6 +10,7 @@ import {
   REPO_URL,
   ensureGitHubToken,
   configureGitHubAuthor,
+  setVerbose,
 } from '../../common';
 import { getLanguageFolder, getPackageVersionDefault } from '../../config';
 import { RELEASED_TAG } from '../../release/common';
@@ -150,5 +151,6 @@ async function spreadGeneration(): Promise<void> {
 }
 
 if (require.main === module) {
+  setVerbose(false);
   spreadGeneration();
 }
