@@ -39,7 +39,6 @@ SourceCreate:
     - type
     - name
     - input
-    - authenticationID
 
 SourceCreateResponse:
   type: object
