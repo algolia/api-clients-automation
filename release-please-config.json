@@ -4,6 +4,14 @@
   "plugins": [
     "node-workspace"
   ],
+  "extra-files": [
+    {
+      "type": "json",
+      "path": "config/clients.config.json",
+      "jsonpath": "$.*.packageVersion",
+      "glob": true
+    }
+  ],
   "packages": {
     "clients/algoliasearch-client-javascript": {
       "release-type": "node",
@@ -27,9 +35,8 @@
       "extra-files": [
         {
           "type": "json",
-          "path": "../../config/clients.config.json",
-          "jsonpath": "$.java.packageVersion",
-          "glob": true
+          "path": "/config/clients.config.json",
+          "jsonpath": "$.java.packageVersion"
         }
       ]
     },
