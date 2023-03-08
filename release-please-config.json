@@ -24,7 +24,6 @@
     },
     "clients/algoliasearch-client-java-2": {
       "release-type": "java",
-      "versioning": "java-snapshot",
       "extra-files": [
         {
           "type": "json",
