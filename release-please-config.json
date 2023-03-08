@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "bootstrap-sha": "51658367bc04bc258405fe48c882f813ba150600",
   "plugins": [
     "node-workspace"
@@ -10,22 +11,26 @@
         {
           "type": "json",
           "path": "../../config/clients.config.json",
-          "jsonpath": "$.javascript.utilsPackageVersion"
+          "jsonpath": "$.javascript.utilsPackageVersion",
+          "glob": true
         },
         {
           "type": "json",
           "path": "../../config/openapitools.json",
-          "jsonpath": "$.generator-cli.generators.*.additionalProperties.packageVersion"
+          "jsonpath": "$.generator-cli.generators.*.additionalProperties.packageVersion",
+          "glob": true
         }
       ]
     },
     "clients/algoliasearch-client-java-2": {
       "release-type": "java",
+      "versioning": "java-snapshot",
       "extra-files": [
         {
           "type": "json",
           "path": "../../config/clients.config.json",
-          "jsonpath": "$.java.packageVersion"
+          "jsonpath": "$.java.packageVersion",
+          "glob": true
         }
       ]
     },
@@ -35,7 +40,8 @@
         {
           "type": "json",
           "path": "../../config/clients.config.json",
-          "jsonpath": "$.php.packageVersion"
+          "jsonpath": "$.php.packageVersion",
+          "glob": true
         }
       ]
     }
