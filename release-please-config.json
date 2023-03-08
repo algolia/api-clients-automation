@@ -1,17 +1,20 @@
 {
   "bootstrap-sha": "51658367bc04bc258405fe48c882f813ba150600",
+  "plugins": [
+    "node-workspace"
+  ],
   "packages": {
     "clients/algoliasearch-client-javascript": {
       "release-type": "node",
       "extra-files": [
         {
           "type": "json",
-          "path": "config/clients.config.json",
+          "path": "../../config/clients.config.json",
           "jsonpath": "$.javascript.utilsPackageVersion"
         },
         {
           "type": "json",
-          "path": "config/openapitools.json",
+          "path": "../../config/openapitools.json",
           "jsonpath": "$.generator-cli.generators.*.additionalProperties.packageVersion"
         }
       ]
@@ -21,7 +24,7 @@
       "extra-files": [
         {
           "type": "json",
-          "path": "config/clients.config.json",
+          "path": "../../config/clients.config.json",
           "jsonpath": "$.java.packageVersion"
         }
       ]
@@ -31,7 +34,7 @@
       "extra-files": [
         {
           "type": "json",
-          "path": "config/clients.config.json",
+          "path": "../../config/clients.config.json",
           "jsonpath": "$.php.packageVersion"
         }
       ]
