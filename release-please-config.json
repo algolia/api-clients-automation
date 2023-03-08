@@ -1,8 +1,14 @@
 {
   "bootstrap-sha": "51658367bc04bc258405fe48c882f813ba150600",
   "packages": {
-    "clients/algoliasearch-client-javascript": {},
-    "clients/algoliasearch-client-java-2": {},
-    "clients/algoliasearch-client-php": {}
+    "clients/algoliasearch-client-javascript": {
+      "release-type": "node"
+    },
+    "clients/algoliasearch-client-java-2": {
+      "release-type": "java"
+    },
+    "clients/algoliasearch-client-php": {
+      "release-type": "php"
+    }
   }
 }
