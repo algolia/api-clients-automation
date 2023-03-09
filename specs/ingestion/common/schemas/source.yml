@@ -137,15 +137,17 @@ BigCommerceChannel:
   type: object
   additionalProperties: false
   properties:
-    ID:
+    id:
       type: integer
       description: The ID of the bigcommerce channel.
     currencies:
       type: array
+      description: An array of currencies for the given channel `ID`, a currency is a trigram string that represents the currency code.
       items:
         type: string
-        description: The currency of the channel, in the code form (trigram string)
         example: "usd"
+  required:
+    - id
 
 MethodType:
   type: string
