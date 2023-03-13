@@ -144,5 +144,6 @@ predictionsAffinitiesSuccess:
 predictionAffinityValue:
   oneOf:
     - type: string
-    - type: integer
+    - type: number
+      format: double
     - type: boolean
