@@ -4,11 +4,9 @@
   "plugins": [
     "node-workspace"
   ],
-  "prerelease": true,
   "packages": {
     "clients/algoliasearch-client-javascript": {
       "release-type": "node",
-      "release-as": "5.0.0-alpha.53",
       "extra-files": [
         {
           "type": "json",
