@@ -1,5 +1,18 @@
 {
-  "clients/algoliasearch-client-javascript": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/algoliasearch": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/client-abtesting": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/client-analytics": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/client-common": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/client-insights": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/client-personalization": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/client-query-suggestions": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/client-search": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/ingestion": "1.0.0-alpha.27",
+  "clients/algoliasearch-client-javascript/packages/predict": "1.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/recommend": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/requester-browser-xhr": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/requester-fetch": "5.0.0-alpha.53",
+  "clients/algoliasearch-client-javascript/packages/requester-node-http": "5.0.0-alpha.53",
   "clients/algoliasearch-client-java-2": "4.0.0-SNAPSHOT",
   "clients/algoliasearch-client-php": "4.0.0-alpha.51"
 }

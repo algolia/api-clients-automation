@@ -1,23 +1,160 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "plugins": [
-    "node-workspace"
+    "node-workspace",
+    {
+      "type": "linked-versions",
+      "group-name": "javascript-common",
+      "components": [
+        "client-common",
+        "requester-browser-xhr",
+        "requester-node-http",
+        "requester-fetch"
+      ]
+    }
   ],
   "packages": {
-    "clients/algoliasearch-client-javascript": {
+    "clients/algoliasearch-client-javascript/packages/algoliasearch": {
       "release-type": "node",
       "extra-files": [
         {
           "type": "json",
-          "path": "/config/clients.config.json",
-          "jsonpath": "$.javascript.utilsPackageVersion",
-          "glob": true
-        },
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-algoliasearch'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/client-abtesting": {
+      "release-type": "node",
+      "extra-files": [
         {
           "type": "json",
           "path": "/config/openapitools.json",
-          "jsonpath": "$['generator-cli'].generators.*.additionalProperties.packageVersion",
-          "glob": true
+          "jsonpath": "$['generator-cli'].generators['javascript-abtesting'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/client-analytics": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-analytics'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/client-common": {
+      "release-type": "node",
+      "component": "client-common",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/clients.config.json",
+          "jsonpath": "$.javascript.utilsPackageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/client-insights": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-insights'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/client-personalization": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-personalization'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/client-query-suggestions": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-query-suggestions'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/client-search": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-search'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/ingestion": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-ingestion'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/predict": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-predict'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/recommend": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/openapitools.json",
+          "jsonpath": "$['generator-cli'].generators['javascript-recommend'].additionalProperties.packageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/requester-browser-xhr": {
+      "release-type": "node",
+      "component": "requester-browser-xhr",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/clients.config.json",
+          "jsonpath": "$.javascript.utilsPackageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/requester-fetch": {
+      "release-type": "node",
+      "component": "requester-fetch",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/clients.config.json",
+          "jsonpath": "$.javascript.utilsPackageVersion"
+        }
+      ]
+    },
+    "clients/algoliasearch-client-javascript/packages/requester-node-http": {
+      "release-type": "node",
+      "component": "requester-node-http",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "/config/clients.config.json",
+          "jsonpath": "$.javascript.utilsPackageVersion"
         }
       ]
     },
@@ -39,8 +176,7 @@
         {
           "type": "json",
           "path": "/config/clients.config.json",
-          "jsonpath": "$.php.packageVersion",
-          "glob": true
+          "jsonpath": "$.php.packageVersion"
         }
       ]
     }
