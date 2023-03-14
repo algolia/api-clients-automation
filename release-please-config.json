@@ -4,11 +4,11 @@
   "plugins": [
     "node-workspace"
   ],
+  "prerelease": true,
   "packages": {
     "clients/algoliasearch-client-javascript": {
       "release-type": "node",
       "release-as": "5.0.0-alpha.53",
-      "prerelease": true,
       "extra-files": [
         {
           "type": "json",
@@ -27,8 +27,6 @@
     "clients/algoliasearch-client-java-2": {
       "release-type": "java",
       "package-name": "algoliasearch-client-java-2",
-      "prerelease": true,
-      "versioning": "java-add-snapshot",
       "extra-files": [
         {
           "type": "json",
@@ -40,7 +38,6 @@
     "clients/algoliasearch-client-php": {
       "release-type": "php",
       "package-name": "algoliasearch-client-php",
-      "prerelease": true,
       "extra-files": [
         {
           "type": "json",
