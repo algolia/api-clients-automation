@@ -4,28 +4,21 @@
   "plugins": [
     "node-workspace"
   ],
-  "extra-files": [
-    {
-      "type": "json",
-      "path": "config/clients.config.json",
-      "jsonpath": "$.*.packageVersion",
-      "glob": true
-    }
-  ],
   "packages": {
     "clients/algoliasearch-client-javascript": {
       "release-type": "node",
+      "release-as": "5.0.0-alpha.53",
       "prerelease": true,
       "extra-files": [
         {
           "type": "json",
-          "path": "../../config/clients.config.json",
+          "path": "/config/clients.config.json",
           "jsonpath": "$.javascript.utilsPackageVersion",
           "glob": true
         },
         {
           "type": "json",
-          "path": "../../config/openapitools.json",
+          "path": "/config/openapitools.json",
           "jsonpath": "$.generator-cli.generators.*.additionalProperties.packageVersion",
           "glob": true
         }
@@ -35,6 +28,7 @@
       "release-type": "java",
       "package-name": "algoliasearch-client-java-2",
       "prerelease": true,
+      "versioning": "java-add-snapshot",
       "extra-files": [
         {
           "type": "json",
@@ -50,7 +44,7 @@
       "extra-files": [
         {
           "type": "json",
-          "path": "../../config/clients.config.json",
+          "path": "/config/clients.config.json",
           "jsonpath": "$.php.packageVersion",
           "glob": true
         }
