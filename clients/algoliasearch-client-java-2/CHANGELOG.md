@@ -4,6 +4,32 @@
 - [6f0ac998](https://github.com/algolia/api-clients-automation/commit/6f0ac998) feat(specs): make the `eu` region available for the ingestion client ([#1396](https://github.com/algolia/api-clients-automation/pull/1396)) by [@Fluf22](https://github.com/Fluf22/)
 - [79ae980b](https://github.com/algolia/api-clients-automation/commit/79ae980b) feat(specs): update affinity value type to accomodate booleans and numbers ([#1388](https://github.com/algolia/api-clients-automation/pull/1388)) by [@writeens](https://github.com/writeens/)
 
+## [4.1.0](https://github.com/algolia/api-clients-automation/compare/algoliasearch-client-java-2-v4.0.0-SNAPSHOT...algoliasearch-client-java-2-v4.1.0) (2023-03-14)
+
+
+### Features
+
+* **java:** browse objects/synonyms/rules ([#952](https://github.com/algolia/api-clients-automation/issues/952)) ([68ff7ee](https://github.com/algolia/api-clients-automation/commit/68ff7ee4d1910f57667f7a3fa3c65280c995e9cb))
+* **java:** convert from gson to jackson ([#771](https://github.com/algolia/api-clients-automation/issues/771)) ([cbdfd38](https://github.com/algolia/api-clients-automation/commit/cbdfd3859b7d89fe521efab757019609acc3d0bd))
+* **java:** enable custom level debug APIC-535 ([#705](https://github.com/algolia/api-clients-automation/issues/705)) ([14190d7](https://github.com/algolia/api-clients-automation/commit/14190d7bf22bab035985761f14a08110cd31a806))
+* **java:** generic support for hits ([#829](https://github.com/algolia/api-clients-automation/issues/829)) ([d3fb62c](https://github.com/algolia/api-clients-automation/commit/d3fb62c86a67568af12edcdb41466248c7a667c1))
+* **java:** waitForApiKey ([#798](https://github.com/algolia/api-clients-automation/issues/798)) ([64a34c7](https://github.com/algolia/api-clients-automation/commit/64a34c79b48bb3119de3b8db914389fa02a68482))
+
+
+### Bug Fixes
+
+* **clients:** make POST body related to the endpoint, assert body in tests ([#849](https://github.com/algolia/api-clients-automation/issues/849)) ([a4346a7](https://github.com/algolia/api-clients-automation/commit/a4346a720a5a5f17bbd2b0dc1cb1939ea5b303c3))
+* **java:** catch null exception for ClientOptions APIC-537 ([#703](https://github.com/algolia/api-clients-automation/issues/703)) ([762836b](https://github.com/algolia/api-clients-automation/commit/762836b17ab6897fa3cb7456fc38bf464720474d))
+* **java:** freeze snapshot version to 4.0.0 ([#955](https://github.com/algolia/api-clients-automation/issues/955)) ([a54e901](https://github.com/algolia/api-clients-automation/commit/a54e901f50f0bf3b3f5e262b332b65e441369021))
+* **java:** more flexible json parser ([#954](https://github.com/algolia/api-clients-automation/issues/954)) ([b7edbea](https://github.com/algolia/api-clients-automation/commit/b7edbea60a30e717f6068d8ed5d561e9250926d2))
+* **java:** use body as error message APIC-541 ([#734](https://github.com/algolia/api-clients-automation/issues/734)) ([1756059](https://github.com/algolia/api-clients-automation/commit/1756059a16fbacb76b14b67c5e0ef023a40f4723))
+* **scripts:** release independently each language ([#1374](https://github.com/algolia/api-clients-automation/issues/1374)) ([1d8bd72](https://github.com/algolia/api-clients-automation/commit/1d8bd72ed6c012c8ec64873a2e63c1ccc633cdeb))
+
+
+### Documentation
+
+* **java:** document browse and waitForApiKey ([#956](https://github.com/algolia/api-clients-automation/issues/956)) ([fbe774d](https://github.com/algolia/api-clients-automation/commit/fbe774da61367365162f7b18e0c0b9db7ba10eec))
+
 ## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
 
 - [9f967a45](https://github.com/algolia/api-clients-automation/commit/9f967a45) fix(specs): authenticationID not required in source and destination ([#1379](https://github.com/algolia/api-clients-automation/pull/1379)) by [@millotp](https://github.com/millotp/)

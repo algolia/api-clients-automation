@@ -13,6 +13,6 @@
   "clients/algoliasearch-client-javascript/packages/requester-browser-xhr": "5.0.0-alpha.53",
   "clients/algoliasearch-client-javascript/packages/requester-fetch": "5.0.0-alpha.53",
   "clients/algoliasearch-client-javascript/packages/requester-node-http": "5.0.0-alpha.53",
-  "clients/algoliasearch-client-java-2": "4.0.0-SNAPSHOT",
-  "clients/algoliasearch-client-php": "4.0.0-alpha.51"
+  "clients/algoliasearch-client-java-2": "4.1.0",
+  "clients/algoliasearch-client-php": "4.1.0-alpha.51"
 }
