@@ -16,7 +16,7 @@
         {
           "type": "json",
           "path": "/config/openapitools.json",
-          "jsonpath": "$.generator-cli.generators.*.additionalProperties.packageVersion",
+          "jsonpath": "$.['generator-cli'].generators.*.additionalProperties.packageVersion",
           "glob": true
         }
       ]
