@@ -1,3 +1,8 @@
+## [4.0.0-alpha.51](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.50...4.0.0-alpha.51)
+
+- [6f0ac998](https://github.com/algolia/api-clients-automation/commit/6f0ac998) feat(specs): make the `eu` region available for the ingestion client ([#1396](https://github.com/algolia/api-clients-automation/pull/1396)) by [@Fluf22](https://github.com/Fluf22/)
+- [79ae980b](https://github.com/algolia/api-clients-automation/commit/79ae980b) feat(specs): update affinity value type to accomodate booleans and numbers ([#1388](https://github.com/algolia/api-clients-automation/pull/1388)) by [@writeens](https://github.com/writeens/)
+
 ## [4.0.0-alpha.50](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.49...4.0.0-alpha.50)
 
 - [9f967a45](https://github.com/algolia/api-clients-automation/commit/9f967a45) fix(specs): authenticationID not required in source and destination ([#1379](https://github.com/algolia/api-clients-automation/pull/1379)) by [@millotp](https://github.com/millotp/)
