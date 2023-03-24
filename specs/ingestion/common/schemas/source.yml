@@ -129,7 +129,7 @@ SourceBigCommerce:
     channels:
       type: array
       items:
-        $ref: "#/BigCommerceChannel"
+        $ref: '#/BigCommerceChannel'
   required:
     - store_hash
 
@@ -146,7 +146,7 @@ BigCommerceChannel:
       example: ['usd','eur']
       items:
         type: string
-        example: "usd"
+        example: 'usd'
   required:
     - id
 
