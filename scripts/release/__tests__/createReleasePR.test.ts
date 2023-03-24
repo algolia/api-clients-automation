@@ -1,4 +1,3 @@
-// @ts-expect-error
 import { gitAuthor } from '../../../config/release.config.json';
 import * as common from '../../common';
 import {

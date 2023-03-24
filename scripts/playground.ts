@@ -30,7 +30,7 @@ export async function playground({
       );
       break;
     case 'go':
-      await run(`cd playground/go && go run main.go`);
+      await run(`cd playground/go && /usr/local/go/bin/go run main.go`);
       break;
     default:
   }
