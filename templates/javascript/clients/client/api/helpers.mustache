@@ -79,17 +79,21 @@ waitForApiKey(
       ...baseIteratorOptions,
       func: () => this.getApiKey({ key }, requestOptions),
       validate: (response) => {
-        for (const [field, value] of Object.entries(apiKey)) {
-          const resValue = response[field as keyof ApiKey];
-          if (Array.isArray(value) && Array.isArray(resValue)) {
-            if (
-              value.length !== resValue.length ||
-              value.some((v, index) => v !== resValue[index])
-            ) {
+        let field: keyof ApiKey;
+        for (field in apiKey) {
+          if (field in apiKey) {
+            const value = apiKey[field];
+            const resValue = response[field];
+            if (Array.isArray(value) && Array.isArray(resValue)) {
+              if (
+                value.length !== resValue.length ||
+                value.some((v, index) => v !== resValue[index])
+              ) {
+                return false;
+              }
+            } else if (value !== resValue) {
               return false;
             }
-          } else if (value !== resValue) {
-            return false;
           }
         }
         return true;
