@@ -25,6 +25,9 @@ export async function formatter(
       cmd = `yarn run prettier ${folder} --write \
             && PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;
       break;
+    case 'go':
+      cmd = `cd ${folder} && /usr/local/go/bin/go fmt ./...`;
+      break;
     default:
       return;
   }

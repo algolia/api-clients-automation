@@ -24,6 +24,12 @@ RUN apt-get update && apt-get install -y \
     python3 \
     && rm -rf /var/lib/apt/lists/*
 
+# Go
+COPY --from=golang:1.19-bullseye /usr/local/go/ /usr/local/go/
+COPY --from=golang:1.19-bullseye /usr/local/go/ /usr/local/go/
+ENV PATH /usr/local/go/bin:$PATH
+
+
 # Javascript (node)
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 RUN nvm install ${NODE_VERSION}

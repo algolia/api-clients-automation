@@ -115,6 +115,13 @@ runs:
         composer update --working-dir=clients/algoliasearch-client-php
         composer dump-autoload --working-dir=clients/algoliasearch-client-php
 
+    # Go deps
+    - name: Install golang
+      if: ${{ inputs.language == 'go' }}
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.19.5'
+
     # Computing jobs that should run
     - name: Setting diff outputs variables
       if: inputs.type == 'matrix'
@@ -174,6 +181,9 @@ outputs:
   RUN_GEN_PHP:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_PHP }}
+  RUN_GEN_GO:
+    description: Indicates if we plan to run the job for this language
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_GO }}
 
   RUN_JS_UTILS:
     description: Whether to build JS client common folders when RUN_JS is false
