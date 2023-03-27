@@ -20,7 +20,7 @@ type {{classname}} struct {
 	{{name}} {{^required}}{{^isNullable}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isNullable}}{{/required}}{{{dataType}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"{{#withXml}} xml:"{{baseName}}{{#isXmlAttribute}},attr{{/isXmlAttribute}}"{{/withXml}}{{#vendorExtensions.x-go-custom-tag}} {{{.}}}{{/vendorExtensions.x-go-custom-tag}}`
 {{/vars}}
 {{#isAdditionalPropertiesTrue}}
-	AdditionalProperties map[string]interface{}
+	AdditionalProperties map[string]any
 {{/isAdditionalPropertiesTrue}}
 }
 
@@ -263,7 +263,7 @@ func (o *{{classname}}) Unset{{name}}() {
 {{/required}}
 {{/vars}}
 func (o {{classname}}) MarshalJSON() ([]byte, error) {
-	toSerialize := {{#isArray}}make([]interface{}, len(o.Items)){{/isArray}}{{^isArray}}map[string]interface{}{}{{/isArray}}
+	toSerialize := {{#isArray}}make([]any, len(o.Items)){{/isArray}}{{^isArray}}map[string]any{}{{/isArray}}
 	{{#parent}}
 	{{^isMap}}
 	{{^isArray}}
@@ -355,7 +355,7 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
 		return err
 	}
 
-	additionalProperties := make(map[string]interface{})
+	additionalProperties := make(map[string]any)
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		{{#vars}}
@@ -392,7 +392,7 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
 		*o = {{{classname}}}(var{{{classname}}})
 	}
 
-	additionalProperties := make(map[string]interface{})
+	additionalProperties := make(map[string]any)
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		{{#vars}}
@@ -411,7 +411,7 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
 		*o = {{{classname}}}(var{{{classname}}})
 	}
 
-	additionalProperties := make(map[string]interface{})
+	additionalProperties := make(map[string]any)
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		{{#vars}}

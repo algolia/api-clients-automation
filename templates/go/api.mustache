@@ -21,7 +21,7 @@ func WithPage(page int32) Option {
 	return Option{
 		Type: "query",
 		Name: "page",
-		Value: parameterToString(page, ""),
+		Value: parameterToString(page),
 	}
 }
 
@@ -29,15 +29,15 @@ func WithItemsPerPage(itemsPerPage int32) Option {
 	return Option{
 		Type: "query",
 		Name: "itemsPerPage",
-		Value: parameterToString(itemsPerPage, ""),
+		Value: parameterToString(itemsPerPage),
 	}
 }
 
-func WithBody(body interface{}) Option {
+func WithBody(body any) Option {
   return Option{
     Type: "body",
     Name: "body",
-    Value: parameterToString(body, ""),
+    Value: parameterToString(body),
   }
 }
 
@@ -50,15 +50,15 @@ func WithBody(body interface{}) Option {
 {{/isDeprecated}}
 func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{{dataType}}}{{^-last}},{{/-last}}{{/requiredParams}}{{#hasOptionalParams}}{{#hasRequiredParams}}, {{/hasRequiredParams}}opts ...Option{{/hasOptionalParams}}) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
 	var (
-    localVarPostBody     interface{}
-    {{#hasBodyParam}}body                 interface{}{{/hasBodyParam}}
+    localVarPostBody     any
+    {{#hasBodyParam}}body                 any{{/hasBodyParam}}
 		{{#returnType}}
 		returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
 		{{/returnType}}
 	)
 
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.Replace(requestPath, "{"+"{{baseName}}"+"}", url.PathEscape(parameterToString({{paramName}}, "{{collectionFormat}}")), -1){{/pathParams}}
+  requestPath = strings.Replace(requestPath, "{"+"{{baseName}}"+"}", url.PathEscape(parameterToString({{paramName}})), -1){{/pathParams}}
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -123,7 +123,7 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{
 
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Add("{{baseName}}", parameterToString({{^isPrimitiveType}}*{{/isPrimitiveType}}{{paramName}}, "{{collectionFormat}}"))
+	queryParams.Add("{{baseName}}", parameterToString({{^isPrimitiveType}}*{{/isPrimitiveType}}{{paramName}}))
 	{{/required}}
 	{{/queryParams}}
   {{#hasOptionalParams}}
@@ -143,7 +143,7 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{
   {{/hasOptionalParams}}
   {{#headerParams}}
 	{{#required}}
-	headers["{{baseName}}"] = parameterToString({{^isPrimitiveType}}*{{/isPrimitiveType}}{{paramName}}, "{{collectionFormat}}")
+	headers["{{baseName}}"] = parameterToString({{^isPrimitiveType}}*{{/isPrimitiveType}}{{paramName}})
 	{{/required}}
 
 {{/headerParams}}

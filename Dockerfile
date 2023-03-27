@@ -26,7 +26,6 @@ RUN apt-get update && apt-get install -y \
 
 # Go
 COPY --from=golang:1.19-bullseye /usr/local/go/ /usr/local/go/
-COPY --from=golang:1.19-bullseye /usr/local/go/ /usr/local/go/
 ENV PATH /usr/local/go/bin:$PATH
 
 
