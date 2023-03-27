@@ -116,11 +116,18 @@ runs:
         composer dump-autoload --working-dir=clients/algoliasearch-client-php
 
     # Go deps
+    - name: Get GO version
+      if: ${{ inputs.language == 'go' }}
+      id: go-version
+      shell: bash
+      run: |
+        echo "GO_VERSION=$(cat config/.go-version)" >> $GITHUB_OUTPUT
+
     - name: Install golang
       if: ${{ inputs.language == 'go' }}
       uses: actions/setup-go@v3
       with:
-        go-version: '1.19.5'
+        go-version: ${{ steps.go-version.outputs.GO_VERSION }}
 
     # Computing jobs that should run
     - name: Setting diff outputs variables
