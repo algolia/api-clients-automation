@@ -148,6 +148,12 @@
         "additionalProperties": {
           "packageName": "search"
         }
+      },
+      "go-predict": {
+        "output": "#{cwd}/clients/algoliasearch-client-go",
+        "additionalProperties": {
+          "packageName": "predict"
+        }
       }
     }
   }

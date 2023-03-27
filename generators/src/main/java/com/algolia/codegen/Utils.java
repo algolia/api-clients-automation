@@ -191,6 +191,14 @@ public class Utils {
     );
   }
 
+  /**
+   * Sets a `generationBanner` variable on the mustache templates, to display the generation banner
+   * on generated files.
+   */
+  public static void setGenerationBanner(Map<String, Object> additionalProperties, String banner) {
+    additionalProperties.put("generationBanner", banner);
+  }
+
   public static void prettyPrint(Object o) {
     Json.prettyPrint(o);
   }

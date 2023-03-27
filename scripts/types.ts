@@ -15,7 +15,7 @@ export type LanguageConfig = {
   utilsPackageVersion?: string;
   tests: {
     extension: string;
-    outputFolder?: string;
+    outputFolder: string;
   };
 };
 
