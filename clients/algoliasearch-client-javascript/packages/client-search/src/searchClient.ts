@@ -118,7 +118,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.0-alpha.53';
+export const apiClientVersion = '5.0.0-alpha.54';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -301,16 +301,16 @@ export function createSearchClient({
           func: () => this.getApiKey({ key }, requestOptions),
           validate: (response) => {
             for (const field of Object.keys(apiKey)) {
-              if (Array.isArray(apiKey[field])) {
+              const value = apiKey[field as keyof ApiKey];
+              const resValue = response[field as keyof ApiKey];
+              if (Array.isArray(value) && Array.isArray(resValue)) {
                 if (
-                  apiKey[field].length !== response[field].length ||
-                  (apiKey[field] as string[]).some(
-                    (value, index) => value !== response[field][index]
-                  )
+                  value.length !== resValue.length ||
+                  value.some((v, index) => v !== resValue[index])
                 ) {
                   return false;
                 }
-              } else if (response[field] !== apiKey[field]) {
+              } else if (value !== resValue) {
                 return false;
               }
             }
