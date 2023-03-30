@@ -118,6 +118,7 @@ updatedAt:
 lastUpdatedAt:
   type: string
   description: The date and time at which the segment was last updated (RFC3339).
+  example: 2021-07-22T12:30:00Z
 
 deletedUntil:
   type: string
