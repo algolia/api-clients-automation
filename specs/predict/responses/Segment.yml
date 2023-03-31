@@ -68,6 +68,7 @@ segment:
     - segmentID
     - name
     - conditions
+    - size
     - segmentStatus
     - type
   properties:
@@ -77,6 +78,8 @@ segment:
       $ref: '#/segmentName'
     conditions:
       $ref: '#/segmentParentConditions'
+    size:
+      $ref: '#/segmentSize'
     segmentStatus:
       $ref: '#/segmentStatus'
     type:
@@ -106,6 +109,11 @@ segmentID:
 segmentName:
   type: string
   description: The name of the segment.
+
+segmentSize:
+  type: number
+  format: int64
+  description: The number of users that match the conditions for this segment.
 
 updatedAt:
   type: string
