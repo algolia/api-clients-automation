@@ -12,53 +12,77 @@ import (
 )
 
 type Option struct {
-	Type string
-	Name string
-	Value string
+	optionType  string
+	name  string
+	value string
 }
 
-func WithPage(page int32) Option {
+func QueryParamOption(name string, val any) Option {
 	return Option{
-		Type: "query",
-		Name: "page",
-		Value: parameterToString(page),
+    optionType:  "query",
+		name:  name,
+		value: parameterToString(val),
 	}
 }
 
-func WithItemsPerPage(itemsPerPage int32) Option {
+func HeaderParamOption(name string, val any) Option {
 	return Option{
-		Type: "query",
-		Name: "itemsPerPage",
-		Value: parameterToString(itemsPerPage),
+    optionType:  "header",
+		name:  "itemsPerPage",
+		value: parameterToString(val),
 	}
-}
-
-func WithBody(body any) Option {
-  return Option{
-    Type: "body",
-    Name: "body",
-    Value: parameterToString(body),
-  }
 }
 
 {{#operation}}
+
+  type {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request struct {
+{{#allParams}}
+	{{paramName}} {{^isPathParam}}{{^isFreeFormObject}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isFreeFormObject}}{{/isPathParam}}{{{dataType}}}
+{{/allParams}}
+}
+
+{{#allParams}}
+{{^isPathParam}}
+{{#description}}
+// {{.}}
+{{/description}}
+{{#isDeprecated}}
+// Deprecated
+{{/isDeprecated}}
+func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{paramName}} {{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
+	r.{{paramName}} = {{^isFreeFormObject}}{{^isPrimitiveType}}&{{/isPrimitiveType}}{{/isFreeFormObject}}{{paramName}}
+	return r
+}
+
+{{/isPathParam}}
+{{/allParams}}
+{{#isDeprecated}}
+// Deprecated
+{{/isDeprecated}}
+//@return {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request
+func (c *APIClient) NewApi{{{nickname}}}Request({{#pathParams}} {{paramName}} {{{dataType}}} {{^-last}},{{/-last}}{{/pathParams}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
+	return {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request{
+		{{#pathParams}}
+		{{paramName}}: {{paramName}},
+		{{/pathParams}}
+	}
+}
 
 // {{{description}}}{{#returnType}}
 //  @return {{{.}}}{{/returnType}}
 {{#isDeprecated}}
 // Deprecated
 {{/isDeprecated}}
-func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{{dataType}}}{{^-last}},{{/-last}}{{/requiredParams}}{{#hasOptionalParams}}{{#hasRequiredParams}}, {{/hasRequiredParams}}opts ...Option{{/hasOptionalParams}}) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request, opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
 	var (
     localVarPostBody     any
-    {{#hasBodyParam}}body                 any{{/hasBodyParam}}
 		{{#returnType}}
-		returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
+		localVarReturnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
 		{{/returnType}}
 	)
 
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.Replace(requestPath, "{"+"{{baseName}}"+"}", url.PathEscape(parameterToString({{paramName}})), -1){{/pathParams}}
+  requestPath = strings.Replace(requestPath, "{"+"{{baseName}}"+"}", url.PathEscape(parameterToString(r.{{paramName}})), -1){{/pathParams}}
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -66,56 +90,56 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{
 	{{#required}}
 	{{^isPathParam}}
   {{^isPrimitiveType}}
-	if {{paramName}} == nil {
-	  return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
+	if r.{{paramName}} == nil {
+	  return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
 	}
   {{/isPrimitiveType}}
   {{#isString}}
-	if {{paramName}} == "" {
-	  return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
+	if r.{{paramName}} == "" {
+	  return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
 	}
   {{/isString}}
 	{{/isPathParam}}
 	{{#minItems}}
-	if len({{^isPathParam}}*{{/isPathParam}}{{paramName}}) < {{minItems}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minItems}} elements")
+	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minItems}} {
+		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minItems}} elements")
 	}
 	{{/minItems}}
 	{{#maxItems}}
-	if len({{^isPathParam}}*{{/isPathParam}}{{paramName}}) > {{maxItems}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxItems}} elements")
+	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxItems}} {
+		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxItems}} elements")
 	}
 	{{/maxItems}}
 	{{#minLength}}
-	if strlen({{^isPathParam}}*{{/isPathParam}}{{paramName}}) < {{minLength}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minLength}} elements")
+	if strlen({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minLength}} {
+		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minLength}} elements")
 	}
 	{{/minLength}}
 	{{#maxLength}}
-	if strlen({{^isPathParam}}*{{/isPathParam}}{{paramName}}) > {{maxLength}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxLength}} elements")
+	if strlen({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxLength}} {
+		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxLength}} elements")
 	}
 	{{/maxLength}}
 	{{#minimum}}
 	{{#isString}}
-	{{paramName}}Txt, err := atoi({{^isPathParam}}*{{/isPathParam}}{{paramName}})
+	{{paramName}}Txt, err := atoi({{^isPathParam}}*{{/isPathParam}}r.{{paramName}})
 	if {{paramName}}Txt < {{minimum}} {
 	{{/isString}}
 	{{^isString}}
-	if {{^isPathParam}}*{{/isPathParam}}{{paramName}} < {{minimum}} {
+	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} < {{minimum}} {
 	{{/isString}}
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must be greater than {{minimum}}")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must be greater than {{minimum}}")
 	}
 	{{/minimum}}
 	{{#maximum}}
 	{{#isString}}
-	{{paramName}}Txt, err := atoi({{^isPathParam}}*{{/isPathParam}}{{paramName}})
+	{{paramName}}Txt, err := atoi({{^isPathParam}}*{{/isPathParam}}r.{{paramName}})
 	if {{paramName}}Txt > {{maximum}} {
 	{{/isString}}
 	{{^isString}}
-	if {{^isPathParam}}*{{/isPathParam}}{{paramName}} > {{maximum}} {
+	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} > {{maximum}} {
 	{{/isString}}
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must be less than {{maximum}}")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must be less than {{maximum}}")
 	}
 	{{/maximum}}
 	{{/required}}
@@ -123,56 +147,58 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{
 
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Add("{{baseName}}", parameterToString({{^isPrimitiveType}}*{{/isPrimitiveType}}{{paramName}}))
+	queryParams.Add("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
-	{{/queryParams}}
-  {{#hasOptionalParams}}
-  // optional params
-  for _, opt := range opts {
-    switch opt.Type {
-      case "query":
-        queryParams.Add(opt.Name, opt.Value)
-      case "header":
-        headers[opt.Name] = opt.Value
-      {{#hasBodyParam}}
-      case "body":
-        body = opt.Value
-      {{/hasBodyParam}}
-    }
+  {{^required}}
+  if !isNilorEmpty(r.{{paramName}}) {
+    queryParams.Add("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isFreeFormObject}}r.{{paramName}}))
   }
-  {{/hasOptionalParams}}
+  {{/required}}
+	{{/queryParams}}
+
   {{#headerParams}}
 	{{#required}}
-	headers["{{baseName}}"] = parameterToString({{^isPrimitiveType}}*{{/isPrimitiveType}}{{paramName}})
+	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isFreeFormObject}}r.{{paramName}})
 	{{/required}}
-
+  {{^required}}
+  if !isNilorEmpty(r.{{paramName}}) {
+    headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isFreeFormObject}}r.{{paramName}})
+  }
+  {{/required}}
 {{/headerParams}}
+
+  // optional params if any
+  for _, opt := range opts {
+    switch opt.optionType {
+      case "query":
+        queryParams.Add(opt.name, opt.value)
+      case "header":
+        headers[opt.name] = opt.value
+    }
+  }
+
 {{#bodyParams}}
   // body params
-  if {{paramName}} != nil {
-  localVarPostBody = {{paramName}}
-  } else {
-  localVarPostBody = body
-  }
+  localVarPostBody = r.{{paramName}}
 {{/bodyParams}}
 	req, err := c.prepareRequest(context.Background(), requestPath, http.Method{{httpMethod}}, localVarPostBody, headers, queryParams)
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}err
+		return {{#returnType}}localVarReturnValue, {{/returnType}}err
 	}
 
 	res, err := c.callAPI(req)
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}err
+		return {{#returnType}}localVarReturnValue, {{/returnType}}err
 	}
   if res == nil {
-    return {{#returnType}}returnValue, {{/returnType}}reportError("res is nil")
+    return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("res is nil")
   }
 
 	resBody, err := io.ReadAll(res.Body)
 	res.Body.Close()
 	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}err
+		return {{#returnType}}localVarReturnValue, {{/returnType}}err
 	}
 
 	if res.StatusCode >= 300 {
@@ -204,10 +230,10 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{
 			err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.Message = err.Error()
-				return {{#returnType}}returnValue, {{/returnType}}newErr
+				return {{#returnType}}localVarReturnValue, {{/returnType}}newErr
 			}
 			{{^-last}}
-			return {{#returnType}}returnValue, {{/returnType}}newErr
+			return {{#returnType}}localVarReturnValue, {{/returnType}}newErr
 			{{/-last}}
 		{{^wildcard}}
 		}
@@ -216,17 +242,17 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{^isArray}}{{
 		{{/is1xx}}
 		{{/dataType}}
 		{{/responses}}
-		return {{#returnType}}returnValue, {{/returnType}}newErr
+		return {{#returnType}}localVarReturnValue, {{/returnType}}newErr
 	}
 
 	{{#returnType}}
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&localVarReturnValue, resBody, res.Header.Get("Content-Type"))
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
+		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("cannot decode result: %w", err)
 	}
 
 	{{/returnType}}
-	return {{#returnType}}returnValue, {{/returnType}}nil
+	return {{#returnType}}localVarReturnValue, {{/returnType}}nil
 }
 {{/operation}}
 {{/operations}}
