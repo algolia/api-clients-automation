@@ -113,7 +113,7 @@ segmentName:
 segmentSize:
   type: number
   format: int64
-  description: The number of users that match the conditions for this segment.
+  description: The number of users that match the segment conditions when it was created, last updated, or when model inference last ran.
 
 updatedAt:
   type: string
