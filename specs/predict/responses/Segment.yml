@@ -112,7 +112,7 @@ segmentName:
 
 updatedAt:
   type: string
-  description: The date and time at which the segment was successfully updated (RFC3339).
+  description: The date and time at which the segment was updated (RFC3339).
   example: 2021-07-22T12:30:00Z
 
 lastUpdatedAt:
