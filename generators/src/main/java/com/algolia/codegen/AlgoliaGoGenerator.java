@@ -1,7 +1,11 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.util.List;
+import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.GoClientCodegen;
 
@@ -38,11 +42,17 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
 
     try {
       Utils.generateServer(client, additionalProperties);
-
       additionalProperties.put("packageVersion", Utils.getClientConfigField("go", "packageVersion"));
+      // using hostForGo to avoid overriding host in supporting files
+      additionalProperties.put("hostForGo", (String) additionalProperties.get("host"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  @Override
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 }
