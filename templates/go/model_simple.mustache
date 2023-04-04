@@ -51,20 +51,6 @@ func New{{classname}}({{#requiredVars}}{{nameInCamelCase}} {{dataType}}{{^-last}
 	this.{{name}} = {{nameInCamelCase}}
 {{/required}}
 {{^required}}
-{{#defaultValue}}
-{{^vendorExtensions.x-golang-is-container}}
-{{^isReadOnly}}
-{{#isNullable}}
-	var {{nameInCamelCase}} {{{datatypeWithEnum}}} = {{{.}}}
-	this.{{name}} = *New{{{dataType}}}(&{{nameInCamelCase}})
-{{/isNullable}}
-{{^isNullable}}
-	var {{nameInCamelCase}} {{{dataType}}} = {{{.}}}
-	this.{{name}} = &{{nameInCamelCase}}
-{{/isNullable}}
-{{/isReadOnly}}
-{{/vendorExtensions.x-golang-is-container}}
-{{/defaultValue}}
 {{/required}}
 {{/allVars}}
 {{#hasOptional}}
