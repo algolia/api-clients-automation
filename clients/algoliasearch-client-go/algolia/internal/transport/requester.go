@@ -28,7 +28,7 @@ func DefaultHTTPClient() *http.Client {
 	}
 }
 
-var defaultTransport http.RoundTripper = &http.Transport{
+var defaultTransport = &http.Transport{
 	DialContext: (&net.Dialer{
 		KeepAlive: DefaultKeepAliveDuration,
 		Timeout:   DefaultConnectTimeout,

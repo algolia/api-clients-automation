@@ -43,13 +43,8 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind)
 	var intermediateNetworkErrors []error
 
 	// Add Content-Encoding header, if needed
-	if shouldCompress(t.compression, req.Method, req.Body) {
-		switch t.compression {
-		case compression.GZIP:
-			req.Header.Add("Content-Encoding", "gzip")
-		default:
-			// Do nothing
-		}
+	if t.compression == compression.GZIP && shouldCompress(t.compression, req.Method, req.Body) {
+		req.Header.Add("Content-Encoding", "gzip")
 	}
 
 	for _, h := range t.retryStrategy.GetTryableHosts(k) {

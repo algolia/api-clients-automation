@@ -92,7 +92,7 @@ func getDefaultHosts(r Region) []*transport.StatefulHost {
 	hosts := []*transport.StatefulHost{}
   switch r {
 	case {{#allowedRegions}}{{#lambda.uppercase}}{{.}}{{/lambda.uppercase}}{{^-last}},{{/-last}}{{/allowedRegions}}:
-		hosts = append(hosts, transport.NewStatefulHost(strings.Replace("{{{hostForGo}}}", "{region}", string(r), -1), call.IsReadWrite)){{#fallbackToAliasHost}}
+		hosts = append(hosts, transport.NewStatefulHost(strings.Replace("{{{regionalHost}}}", "{region}", string(r), -1), call.IsReadWrite)){{#fallbackToAliasHost}}
   default:
 		hosts = append(hosts, transport.NewStatefulHost("{{{hostWithFallback}}}", call.IsReadWrite)){{/fallbackToAliasHost}}
 	}

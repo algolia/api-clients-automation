@@ -21,7 +21,11 @@ func main() {
 	// ingestion
 	ingestionClient := ingestion.NewClient(appID, apiKey, ingestion.US)
 
-	auths, err := ingestionClient.GetAuthentications(ingestionClient.NewApiGetAuthenticationsRequest().WithItemsPerPage(2))
+	auths, err := ingestionClient.GetAuthentications(
+		ingestionClient.NewApiGetAuthenticationsRequest().WithItemsPerPage(2),
+		ingestion.QueryParamOption("myQueryParam1", "myQueryParamValue1"),
+		ingestion.HeaderParamOption("myHeaderParam1", "myHeaderParamValue2"),
+	)
 	fmt.Println(auths, err)
 
 	// search

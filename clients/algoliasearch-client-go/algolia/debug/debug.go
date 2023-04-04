@@ -26,13 +26,13 @@ func Disable() {
 // depending on the given input type. This function is internally used by the
 // Algolia API client to display, for instance, HTTP requests and responses when
 // debug logging is enabled.
-func Display(itf any) {
+func Display(input any) {
 	if !debug {
 		return
 	}
 	start := time.Now()
 	var msg string
-	switch v := itf.(type) {
+	switch v := input.(type) {
 	case *http.Request:
 		msg = debugRequest(v)
 	case *http.Response:

@@ -43,8 +43,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     try {
       Utils.generateServer(client, additionalProperties);
       additionalProperties.put("packageVersion", Utils.getClientConfigField("go", "packageVersion"));
-      // using hostForGo to avoid overriding host in supporting files
-      additionalProperties.put("hostForGo", (String) additionalProperties.get("host"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
