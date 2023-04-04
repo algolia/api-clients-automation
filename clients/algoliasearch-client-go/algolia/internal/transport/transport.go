@@ -59,7 +59,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind)
 		// before the early returns, but when we do so, we do it **after**
 		// reading the body content of the response. Otherwise, a `context
 		// cancelled` error may happen when the body is read.
-		perRequestCtx, cancel := context.WithTimeout(ctx, 5*time.Minute) //h.timeout)
+		perRequestCtx, cancel := context.WithTimeout(ctx, h.timeout)
 		req = req.WithContext(perRequestCtx)
 		res, err := t.request(req, h.host)
 
