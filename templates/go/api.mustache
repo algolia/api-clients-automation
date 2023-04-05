@@ -77,9 +77,9 @@ func (c *APIClient) NewApi{{{nickname}}}Request({{#pathParams}} {{paramName}} {{
 {{/isDeprecated}}
 func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request, opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
 	var (
-    localVarPostBody     any
+    postBody     any
 		{{#returnType}}
-		localVarReturnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
+		returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
 		{{/returnType}}
 	)
 
@@ -93,33 +93,33 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
 	{{^isPathParam}}
   {{^isPrimitiveType}}
 	if r.{{paramName}} == nil {
-	  return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
+	  return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
 	}
   {{/isPrimitiveType}}
   {{#isString}}
 	if r.{{paramName}} == "" {
-	  return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
+	  return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
 	}
   {{/isString}}
 	{{/isPathParam}}
 	{{#minItems}}
 	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minItems}} {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minItems}} elements")
+		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minItems}} elements")
 	}
 	{{/minItems}}
 	{{#maxItems}}
 	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxItems}} {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxItems}} elements")
+		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxItems}} elements")
 	}
 	{{/maxItems}}
 	{{#minLength}}
 	if strlen({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minLength}} {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minLength}} elements")
+		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minLength}} elements")
 	}
 	{{/minLength}}
 	{{#maxLength}}
 	if strlen({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxLength}} {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxLength}} elements")
+		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxLength}} elements")
 	}
 	{{/maxLength}}
 	{{#minimum}}
@@ -130,7 +130,7 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
 	{{^isString}}
 	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} < {{minimum}} {
 	{{/isString}}
-		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must be greater than {{minimum}}")
+		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must be greater than {{minimum}}")
 	}
 	{{/minimum}}
 	{{#maximum}}
@@ -141,7 +141,7 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
 	{{^isString}}
 	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} > {{maximum}} {
 	{{/isString}}
-		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("{{paramName}} must be less than {{maximum}}")
+		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must be less than {{maximum}}")
 	}
 	{{/maximum}}
 	{{/required}}
@@ -181,26 +181,26 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
 
 {{#bodyParams}}
   // body params
-  localVarPostBody = r.{{paramName}}
+  postBody = r.{{paramName}}
 {{/bodyParams}}
-	req, err := c.prepareRequest(context.Background(), requestPath, http.Method{{httpMethod}}, localVarPostBody, headers, queryParams)
+	req, err := c.prepareRequest(context.Background(), requestPath, http.Method{{httpMethod}}, postBody, headers, queryParams)
 	if err != nil {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}err
+		return {{#returnType}}returnValue, {{/returnType}}err
 	}
 
 	res, err := c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}call.Read{{/x-use-read-transporter}}{{^x-use-read-transporter}}call.Write{{/x-use-read-transporter}}{{/vendorExtensions}})
 	if err != nil {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}err
+		return {{#returnType}}returnValue, {{/returnType}}err
 	}
   if res == nil {
-    return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("res is nil")
+    return {{#returnType}}returnValue, {{/returnType}}reportError("res is nil")
   }
 
 	resBody, err := io.ReadAll(res.Body)
 	res.Body.Close()
 	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
 	if err != nil {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}err
+		return {{#returnType}}returnValue, {{/returnType}}err
 	}
 
 	if res.StatusCode >= 300 {
@@ -232,10 +232,10 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
 			err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.Message = err.Error()
-				return {{#returnType}}localVarReturnValue, {{/returnType}}newErr
+				return {{#returnType}}returnValue, {{/returnType}}newErr
 			}
 			{{^-last}}
-			return {{#returnType}}localVarReturnValue, {{/returnType}}newErr
+			return {{#returnType}}returnValue, {{/returnType}}newErr
 			{{/-last}}
 		{{^wildcard}}
 		}
@@ -244,17 +244,17 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
 		{{/is1xx}}
 		{{/dataType}}
 		{{/responses}}
-		return {{#returnType}}localVarReturnValue, {{/returnType}}newErr
+		return {{#returnType}}returnValue, {{/returnType}}newErr
 	}
 
 	{{#returnType}}
-	err = c.decode(&localVarReturnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
 	if err != nil {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}reportError("cannot decode result: %w", err)
+		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
 	}
 
 	{{/returnType}}
-	return {{#returnType}}localVarReturnValue, {{/returnType}}nil
+	return {{#returnType}}returnValue, {{/returnType}}nil
 }
 {{/operation}}
 {{/operations}}
