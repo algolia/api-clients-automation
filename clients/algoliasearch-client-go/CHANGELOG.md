@@ -1,3 +1,7 @@
+## [4.0.0-alpha.4](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.3...4.0.0-alpha.4)
+
+- [968aa54c](https://github.com/algolia/api-clients-automation/commit/968aa54c) feat(go): add more playground examples ([#1447](https://github.com/algolia/api-clients-automation/pull/1447)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+
 ## [4.0.0-alpha.3](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.2...4.0.0-alpha.3)
 
 - [ca763fbb](https://github.com/algolia/api-clients-automation/commit/ca763fbb) feat(go): template improvements ([#1444](https://github.com/algolia/api-clients-automation/pull/1444)) by [@mehmetaligok](https://github.com/mehmetaligok/)
