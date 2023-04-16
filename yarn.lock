@@ -7826,7 +7826,7 @@ __metadata:
     js-yaml: 4.1.0
     micromatch: 4.0.5
     mustache: 4.2.0
-    semver: 7.3.8
+    semver: 7.4.0
     spinnies: 0.5.1
     ts-jest: 29.1.0
     ts-node: 10.9.1
@@ -7834,7 +7834,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"semver@npm:7.3.8, semver@npm:7.x, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8":
+"semver@npm:7.4.0":
+  version: 7.4.0
+  resolution: "semver@npm:7.4.0"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: debf7f4d6fa36fdc5ef82bd7fc3603b6412165c8a3963a30be0c45a587be1a49e7681e80aa109da1875765741af24edc6e021cee1ba16ae96f649d06c5df296d
+  languageName: node
+  linkType: hard
+
+"semver@npm:7.x, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8":
   version: 7.3.8
   resolution: "semver@npm:7.3.8"
   dependencies:
