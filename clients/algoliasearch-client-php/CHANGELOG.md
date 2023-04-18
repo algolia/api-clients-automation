@@ -1,3 +1,16 @@
+## [4.0.0-alpha.55](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.54...4.0.0-alpha.55)
+
+- [a0d96721](https://github.com/algolia/api-clients-automation/commit/a0d96721) fix(specs): task trigger guard import ([#1458](https://github.com/algolia/api-clients-automation/pull/1458)) by [@Fluf22](https://github.com/Fluf22/)
+- [d3f107d4](https://github.com/algolia/api-clients-automation/commit/d3f107d4) fix(specs): task trigger guard update ([#1457](https://github.com/algolia/api-clients-automation/pull/1457)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.0.0-alpha.54](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.53...4.0.0-alpha.54)
+
+- [619e2ad7](https://github.com/algolia/api-clients-automation/commit/619e2ad7) feat(specs): add delimiter option for csv source ([#1445](https://github.com/algolia/api-clients-automation/pull/1445)) by [@millotp](https://github.com/millotp/)
+
+## [4.0.0-alpha.53](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.52...4.0.0-alpha.53)
+
+- [33ec7bc7](https://github.com/algolia/api-clients-automation/commit/33ec7bc7) feat(specs): add `lastUpdatedAt` field to predict segments ([#1431](https://github.com/algolia/api-clients-automation/pull/1431)) by [@bengreenbank](https://github.com/bengreenbank/)
+
 ## [4.0.0-alpha.52](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.51...4.0.0-alpha.52)
 
 - [c49b6e6d](https://github.com/algolia/api-clients-automation/commit/c49b6e6d) fix(specs): add customRequest to ingestion and small fix ([#1418](https://github.com/algolia/api-clients-automation/pull/1418)) by [@millotp](https://github.com/millotp/)

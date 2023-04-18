@@ -10,7 +10,7 @@ import (
 type CreateSegmentResponse struct {
 	// The ID of the segment.
 	SegmentID string `json:"segmentID"`
-	// The date and time at which the segment was last updated (RFC3339).
+	// The date and time at which the segment was updated (RFC3339).
 	UpdatedAt string `json:"updatedAt"`
 }
 
@@ -93,11 +93,10 @@ func (o CreateSegmentResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (o CreateSegmentResponse) String() string {
-	out := "CreateSegmentResponse {\n"
+	out := ""
 	out += fmt.Sprintf("  segmentID=%v\n", o.SegmentID)
 	out += fmt.Sprintf("  updatedAt=%v\n", o.UpdatedAt)
-	out += "}"
-	return out
+	return fmt.Sprintf("CreateSegmentResponse {\n%s}", out)
 }
 
 type NullableCreateSegmentResponse struct {

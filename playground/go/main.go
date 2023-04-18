@@ -1,10 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
-	"github.com/joho/godotenv"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -12,36 +13,41 @@ func main() {
 	godotenv.Load("../.env")
 	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
-	client := ingestion.NewClient(appID, apiKey, ingestion.US)
 
-	auths, err := client.GetAuthentications()
-	fmt.Println(auths, err)
+	var client string
+	var returnCode int
 
-	/*
+	flag.StringVar(&client, "client", "", "client name")
+	flag.Parse()
 
-		auth, err := client.CreateAuthentication(ingestion.NewAuthenticationCreate(
-			ingestion.AUTHENTICATIONTYPE_ALGOLIA,
-			"test-auth-2",
-			ingestion.AuthAlgoliaAsAuthInput(ingestion.NewAuthAlgolia(appID, apiKey))))
+	if client == "" {
+		fmt.Println("Please specify a client name")
+		os.Exit(1)
+	}
 
-		if err != nil {
-			fmt.Println(err)
+	//debug.Enable()
 
-			return
-		}
-		fmt.Println(auth)*/
-	/*
-		dest, err := client.CreateDestination(ingestion.NewDestinationCreate(
-			ingestion.DESTINATIONTYPE_SEARCH,
-			"test-dest",
-			ingestion.DestinationIndexPrefixAsDestinationInput(ingestion.NewDestinationIndexPrefix("commercetools_")),
-			auth.AuthenticationID))
+	switch client {
+	case "ingestion":
+		returnCode = testIngestion(appID, apiKey)
+	case "search":
+		returnCode = testSearch(appID, apiKey)
+	case "analytics":
+		returnCode = testAnalytics(appID, apiKey)
+	case "insights":
+		returnCode = testInsights(appID, apiKey)
+	case "personalization":
+		returnCode = testPersonalization(appID, apiKey)
+	case "predict":
+		returnCode = testPredict(appID, apiKey)
+	case "query-suggestions":
+		returnCode = testQuerySuggestions(appID, apiKey)
+	case "recommend":
+		returnCode = testRecommend(appID, apiKey)
+	default:
+		fmt.Println("Please specify a valid client name")
+		os.Exit(1)
+	}
 
-		if err != nil {
-			fmt.Println(err)
-
-			return
-		}
-
-		fmt.Println(dest)*/
+	os.Exit(returnCode)
 }

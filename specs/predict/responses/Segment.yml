@@ -71,6 +71,7 @@ segment:
     - size
     - segmentStatus
     - type
+    - lastUpdatedAt
   properties:
     segmentID:
       $ref: '#/segmentID'
@@ -84,6 +85,8 @@ segment:
       $ref: '#/segmentStatus'
     type:
       $ref: '#/segmentType'
+    lastUpdatedAt:
+      $ref: '#/lastUpdatedAt'
     errorMessage:
       type: string
 
@@ -116,6 +119,11 @@ segmentSize:
   description: The approximate number of users that matched the segment conditions when it was created, last updated, or when model inference last ran.
 
 updatedAt:
+  type: string
+  description: The date and time at which the segment was updated (RFC3339).
+  example: 2021-07-22T12:30:00Z
+
+lastUpdatedAt:
   type: string
   description: The date and time at which the segment was last updated (RFC3339).
   example: 2021-07-22T12:30:00Z
