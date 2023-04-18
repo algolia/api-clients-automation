@@ -1,3 +1,8 @@
+## [4.0.0-alpha.5](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.4...4.0.0-alpha.5)
+
+- [692aa2d8](https://github.com/algolia/api-clients-automation/commit/692aa2d8) fix(specs): add transform event type ([#1470](https://github.com/algolia/api-clients-automation/pull/1470)) by [@millotp](https://github.com/millotp/)
+- [69aac53d](https://github.com/algolia/api-clients-automation/commit/69aac53d) fix(specs): task trigger guard import order ([#1459](https://github.com/algolia/api-clients-automation/pull/1459)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.0.0-alpha.4](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.3...4.0.0-alpha.4)
 
 - [a0d96721](https://github.com/algolia/api-clients-automation/commit/a0d96721) fix(specs): task trigger guard import ([#1458](https://github.com/algolia/api-clients-automation/pull/1458)) by [@Fluf22](https://github.com/Fluf22/)
