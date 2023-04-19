@@ -54,9 +54,11 @@ kotlin {
             }
         }
 
-        val appleTest by getting {
-            dependencies {
-                implementation(libs.ktor.client.darwin)
+        if (HostManager.hostIsMac) {
+            val appleTest by getting {
+                dependencies {
+                    implementation(libs.ktor.client.darwin)
+                }
             }
         }
     }
@@ -73,6 +75,7 @@ tasks.withType<Test> {
 configure<SpotlessExtension> {
     kotlin {
         target("**/*.kt")
+        trimTrailingWhitespace()
         ktlint()
             .editorConfigOverride(
                 mapOf(

@@ -19,6 +19,11 @@ public class {{classname}}(
   override val options: ClientOptions = ClientOptions(),
 ) : ApiClient {
 
+  init {
+      require(appId.isNotBlank()) { "`appId` is missing." }
+      require(apiKey.isNotBlank()) { "`apiKey` is missing." }
+  }
+
   override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, options = options) {
   {{^hasRegionalHost}}
     listOf(
@@ -32,7 +37,12 @@ public class {{classname}}(
   {{/hasRegionalHost}}
   {{#hasRegionalHost}}
     val allowedRegions = listOf({{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}})
-    if ({{#fallbackToAliasHost}}region != null && {{/fallbackToAliasHost}}region !in allowedRegions) throw AlgoliaClientException("'region' must be one of the following: $allowedRegions")
+    {{^fallbackToAliasHost}}
+    require(region in allowedRegions) { "`region` is required and must be one of the following: ${allowedRegions.joinToString()}" }
+    {{/fallbackToAliasHost}}
+    {{#fallbackToAliasHost}}
+    require(region == null || region in allowedRegions) { "`region` must be one of the following: ${allowedRegions.joinToString()}" }
+    {{/fallbackToAliasHost}}
     val url = {{#fallbackToAliasHost}}if (region == null) "{{{hostWithFallback}}}" else {{/fallbackToAliasHost}} "{{{hostForKotlin}}}"
     listOf(Host(url)) 
   {{/hasRegionalHost}}
@@ -49,6 +59,14 @@ public class {{classname}}(
    * @param requestOptions additional request configuration.
    */
   public suspend fun {{operationId}}({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null): {{{returnType}}} {
+      {{#requiredParams}}
+      {{#isString}}
+      require({{paramName}}.isNotBlank()) { "Parameter `{{paramName}}` is required when calling `{{operationId}}`." }
+      {{/isString}}
+      {{#isFreeFormObject}}
+      require({{paramName}}.isNotEmpty()) { "Parameter `{{paramName}}` is required when calling `{{operationId}}`." }
+      {{/isFreeFormObject}}
+      {{/requiredParams}}
       val requestConfig = RequestConfig(
           method = RequestMethod.{{httpMethod}},
           path = "{{{vendorExtensions.pathForKotlin}}}",

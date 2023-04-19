@@ -49,6 +49,9 @@ module.exports = {
     // Kotlin
     '!clients/algoliasearch-client-kotlin/**',
     'clients/algoliasearch-client-kotlin/gradle.properties',
+    'clients/algoliasearch-client-kotlin/client/README.md',
+    'clients/algoliasearch-client-kotlin/client-bom/README.md',
+    'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/BuildConfig.kt',
     'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/api/**',
     'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/**',
 

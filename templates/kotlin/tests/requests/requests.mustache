@@ -26,10 +26,10 @@ class {{clientPrefix}}Test {
     {{#tests}}
 
     @Test
-    fun `{{method}}Test{{testIndex}}`() = runTest {
+    fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = runTest {
         client.runTest(
             call = {
-                client.{{method}}(
+                {{method}}(
                     {{#parametersWithDataType}}
                     {{> request_param}}
                     {{/parametersWithDataType}}

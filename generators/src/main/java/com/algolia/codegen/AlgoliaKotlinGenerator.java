@@ -104,6 +104,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     final String apiFolder = (sourceFolder + File.separator + apiPackage).replace(".", "/");
     supportingFiles.add(new SupportingFile("ApiClient.kt.mustache", apiFolder, "ApiClient.kt"));
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
+    supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
 
     additionalProperties.put("packageVersion", Utils.getClientConfigField("kotlin", "packageVersion"));
 
@@ -117,7 +118,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   private void hostForKotlin() {
-    String host = (String) additionalProperties.get("host");
+    String host = (String) additionalProperties.get("regionalHost");
     if (host != null) {
       String hostForKotlin = host.replaceAll("\\{([^}]+)}", "\\$$1");
       additionalProperties.put("hostForKotlin", hostForKotlin);

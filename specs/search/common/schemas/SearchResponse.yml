@@ -23,6 +23,7 @@ baseSearchResponse:
     - nbPages
     - hitsPerPage
     - processingTimeMS
+    - exhaustiveNbHits
     - query
     - params
   properties:

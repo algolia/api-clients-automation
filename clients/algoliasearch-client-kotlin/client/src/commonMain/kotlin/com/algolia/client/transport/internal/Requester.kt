@@ -48,10 +48,11 @@ internal fun requesterOf(
     apiKey = apiKey,
     options = options,
     agent = AlgoliaAgent(BuildConfig.version).apply {
-      add(AgentSegment(clientName, BuildConfig.version))
       add(platformAgentSegment())
+      add(AgentSegment(clientName, BuildConfig.version))
     },
   ),
+  connectTimeout = options.connectTimeout,
   readTimeout = options.readTimeout,
   writeTimeout = options.writeTimeout,
   hosts = options.hosts ?: defaultHosts(),

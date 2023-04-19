@@ -8,7 +8,7 @@ internal class AlgoliaAgent(clientVersion: String) {
 
   private val segments =
     mutableSetOf(
-      AgentSegment("Algolia for Java", clientVersion),
+      AgentSegment("Algolia for Kotlin", clientVersion),
     )
 
   fun add(segment: AgentSegment): Boolean {

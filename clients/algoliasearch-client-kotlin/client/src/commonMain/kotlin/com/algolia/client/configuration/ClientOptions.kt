@@ -8,11 +8,14 @@ import io.ktor.client.plugins.logging.*
 /** Custom client configuration. */
 public class ClientOptions(
 
+  /** Connect timeout for each request */
+  public val connectTimeout: Long = 2000L,
+
   /** The timeout for each request when performing write operations. */
   public val writeTimeout: Long = 30000L,
 
   /** The timeout for each request when performing read operations. */
-  public val readTimeout: Long = 30000L,
+  public val readTimeout: Long = 5000L,
 
   /** [LogLevel] to display in the console. */
   public val logLevel: LogLevel = LogLevel.NONE,

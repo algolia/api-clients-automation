@@ -29,6 +29,7 @@ import kotlinx.serialization.json.JsonObject
 @InternalAlgoliaClient
 public class KtorRequester(
   public val httpClient: HttpClient,
+  private val connectTimeout: Long,
   private val readTimeout: Long,
   private val writeTimeout: Long,
   hosts: List<Host>,
@@ -108,6 +109,7 @@ public class KtorRequester(
           CallType.Read -> requestOptions?.readTimeout ?: readTimeout
           CallType.Write -> requestOptions?.writeTimeout ?: writeTimeout
         }
+      connectTimeoutMillis = connectTimeout
       socketTimeoutMillis = timeout * (host.retryCount + 1)
     }
   }

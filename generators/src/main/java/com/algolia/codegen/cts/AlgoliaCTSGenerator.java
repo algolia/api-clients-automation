@@ -84,6 +84,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
     lambdas.put("escapeQuotes", new EscapeQuotesLambda());
     lambdas.put("escapeSlash", new EscapeSlashLambda());
+    lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
     return lambdas;
   }
 
@@ -194,11 +195,5 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
   public String escapeQuotationMark(String input) {
     return input.replace("\"", "\\\"");
-  }
-
-  @Override
-  public void postProcessParameter(CodegenParameter parameter) {
-    super.postProcessParameter(parameter);
-    // if (parameter.nameInLowerCase)
   }
 }

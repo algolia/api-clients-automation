@@ -44,8 +44,3 @@ private fun ApiClient.intercept(block: (HttpRequestBuilder) -> Unit) {
     throw InterceptionException()
   }
 }
-
-/**
- * Represents an exception thrown when an interceptor is executed.
- */
-private class InterceptionException : RuntimeException()

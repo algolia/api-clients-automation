@@ -56,3 +56,10 @@ fun assertEmptyBody(body: Any) {
   val expected = JsonObject(emptyMap())
   assertEquals(actual, expected)
 }
+
+fun assertError(throwable: Throwable, message: String) {
+  when (throwable) {
+    is SkipException -> println("Test skipped because of non-nullable")
+    else -> assertEquals(message, throwable.message)
+  }
+}

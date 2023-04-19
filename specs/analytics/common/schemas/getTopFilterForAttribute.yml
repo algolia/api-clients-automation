@@ -1,6 +1,8 @@
 getTopFilterForAttributeResponse:
   type: object
   additionalProperties: false
+  required:
+    - values
   properties:
     values:
       type: array
