@@ -5,6 +5,8 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.KotlinClientCodegen;
@@ -130,9 +132,31 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     CodegenOperation codegenOperation = Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
     // Set pathForKotlin by replacing the path variables with Kotlin's string
     // interpolation syntax
-    String pathForKotlin = path.replaceAll("\\{([^}]+)}", "\\$$1");
-    codegenOperation.vendorExtensions.put("pathForKotlin", pathForKotlin);
+    List<String> segments = extractSegments(path);
+    codegenOperation.vendorExtensions.put("pathSegments", segments);
     return codegenOperation;
+  }
+
+  private List<String> extractSegments(String input) {
+    List<String> segments = new ArrayList<>();
+    Pattern pattern = Pattern.compile("\\{([^}]+)}");
+    for (String part : input.split("/")) {
+      if (!part.isEmpty()) {
+        Matcher matcher = pattern.matcher(part);
+        StringBuilder sb = new StringBuilder();
+        sb.append("\"");
+        if (matcher.find()) {
+          sb.append("$");
+          sb.append(matcher.group(1));
+        } else {
+          sb.append(part);
+        }
+        sb.append("\"");
+        segments.add(sb.toString());
+      }
+    }
+
+    return segments;
   }
 
   @Override

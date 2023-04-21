@@ -5,7 +5,7 @@ import io.ktor.util.reflect.*
 /** Defines a config object for a given request. */
 public data class RequestConfig(
   val method: RequestMethod,
-  val path: String,
+  val pathSegments: List<String>,
   val isRead: Boolean = false,
   val headers: Map<String, Any> = emptyMap(),
   val query: Map<String, Any> = emptyMap(),
@@ -15,7 +15,7 @@ public data class RequestConfig(
 /** Create a [RequestConfig] instance. * */
 public inline fun <reified T> RequestConfig(
   method: RequestMethod,
-  path: String,
+  pathSegments: List<String>,
   isRead: Boolean = false,
   headers: Map<String, String> = emptyMap(),
   query: Map<String, Any> = emptyMap(),
@@ -23,7 +23,7 @@ public inline fun <reified T> RequestConfig(
 ): RequestConfig =
   RequestConfig(
     method = method,
-    path = path,
+    pathSegments = pathSegments,
     isRead = isRead,
     headers = headers,
     query = query,

@@ -135,7 +135,7 @@ public class KtorRequester(
       url {
         protocol = URLProtocol.HTTPS
         port = URLProtocol.HTTPS.defaultPort
-        path(requestConfig.path)
+        pathSegments = requestConfig.pathSegments
       }
       method = requestConfig.method.ktorHttpMethod
       contentType(ContentType.Application.Json)
