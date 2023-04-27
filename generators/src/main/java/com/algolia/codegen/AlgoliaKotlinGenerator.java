@@ -190,7 +190,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     }
   }
 
-  private static void modelsOneOf(Map<String, ModelsMap> models) {
+  private void modelsOneOf(Map<String, ModelsMap> models) {
     for (ModelsMap modelContainer : models.values()) {
       // modelContainers always have 1 and only 1 model in our specs
       CodegenModel model = modelContainer.getModels().get(0).getModel();
@@ -228,6 +228,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
         if (modelsMap != null) {
           CodegenModel compoundModel = modelsMap.getModels().get(0).getModel();
           compoundModel.vendorExtensions.put("x-one-of-explicit-name", compoundModel.classname);
+          compoundModel.vendorExtensions.put("x-fully-qualified-classname", modelPackage + "." + compoundModel.classname);
+          compoundModel.vendorExtensions.put("x-classname-or-alias", compoundModel.classname + "Impl");
           sealedChilds.add(compoundModel);
         } else {
           CodegenModel newModel = new CodegenModel();
@@ -239,6 +241,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
           property.setDatatypeWithEnum(oneOf);
           newModel.setVars(Collections.singletonList(property));
           newModel.vendorExtensions.put("x-one-of-explicit-name", oneOf.replace("<", "Of").replace(">", ""));
+          newModel.vendorExtensions.put("x-fully-qualified-classname", newModel.classname);
           sealedChilds.add(newModel);
         }
       }

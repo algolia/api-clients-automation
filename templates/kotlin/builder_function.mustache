@@ -10,7 +10,7 @@
         {{#vars}}
         {{{name}}}: {{>data_class_field_type}}{{^required}}? = null{{/required}},
         {{/vars}}
-    ): {{classname}}  = {{classname}} (
+    ): {{classname}}  = {{vendorExtensions.x-fully-qualified-classname}} (
         {{#vars}}
         {{{name}}} = {{{name}}},
         {{/vars}}
