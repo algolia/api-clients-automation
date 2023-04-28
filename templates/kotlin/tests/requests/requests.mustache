@@ -55,16 +55,16 @@ class {{clientPrefix}}Test {
             },
             intercept = {
                 {{#request}}
-                assertEquals(it.url.pathSegments, listOf("{{{path}}}".decodeURLPart()))
-                assertEquals(it.method, HttpMethod.parse("{{method}}"))
+                assertEquals("{{{path}}}".toPathSegments(), it.url.pathSegments)
+                assertEquals(HttpMethod.parse("{{method}}"), it.method)
                 {{#headers}}
-                assertContainsAll(it.headers, """{{{.}}}""")
+                assertContainsAll("""{{{.}}}""", it.headers)
                 {{/headers}}
                 {{#queryParameters}}
-                assertContainsAll(it.url.parameters, """{{{.}}}""")
+                assertContainsAll("""{{{.}}}""", it.url.parameters)
                 {{/queryParameters}}
                 {{#body}}
-                assertJsonBody(it.body, """{{{.}}}""")
+                assertJsonBody("""{{{.}}}""", it.body)
                 {{/body}}
                 {{^body}}
                 {{#assertNullBody}}

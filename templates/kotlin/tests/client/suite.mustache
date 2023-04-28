@@ -29,11 +29,6 @@ class {{clientPrefix}}Test {
         {{#isCreateClient}}
         {{> client/createClient}}
         {{/isCreateClient}}
-        {{#isVariable}}
-        // VAR
-        TODO()
-        /** {{{.}}} */
-        {{/isVariable}}
         {{#isMethod}}
         client.runTest(
              call = {

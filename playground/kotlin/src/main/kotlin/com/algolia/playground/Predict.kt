@@ -2,9 +2,7 @@ package com.algolia.playground
 
 import com.algolia.client.api.PredictClient
 import com.algolia.client.configuration.ClientOptions
-import com.algolia.client.model.predict.AllParams
-import com.algolia.client.model.predict.ModelsToRetrieve
-import com.algolia.client.model.predict.TypesToRetrieve
+import com.algolia.client.model.predict.*
 import io.github.cdimascio.dotenv.Dotenv
 import io.ktor.client.plugins.logging.*
 import kotlin.system.exitProcess
@@ -21,17 +19,38 @@ suspend fun main() {
 
     val userId = dotenv["ALGOLIA_PREDICT_USER_ID"] ?: "user1"
 
-    val userProfile = client.fetchUserProfile(
-        userID = userId, params = AllParams(
-            modelsToRetrieve = listOf(
-                ModelsToRetrieve.FunnelStage,
-                ModelsToRetrieve.OrderValue,
-                ModelsToRetrieve.Affinities,
+    val updateSegment = client.updateSegment(
+        segmentID = "segment1",
+        updateSegmentParams = SegmentConditionsParam(
+            conditions = SegmentParentConditions(
+                operator = SegmentConditionOperator.values().first { it.value == "AND" },
+                operands = listOf(
+                    SegmentOperandAffinity(
+                        name = "predictions.order_value",
+                        filters = listOf(
+                            SegmentAffinityFilter(
+                                operator = SegmentFilterOperatorNumerical.values().first { it.value == "GT" },
+                                value = SegmentAffinityFilterValue.Double(200.0),
+                            ),
+                        ),
+                    ),
+                ),
             ),
-            typesToRetrieve = listOf(TypesToRetrieve.Properties, TypesToRetrieve.Segments),
-        )
+        ),
     )
-    println(userProfile)
+    println(updateSegment)
+
+    //val userProfile = client.fetchUserProfile(
+    //    userID = userId, params = AllParams(
+    //        modelsToRetrieve = listOf(
+    //            ModelsToRetrieve.FunnelStage,
+    //            ModelsToRetrieve.OrderValue,
+    //            ModelsToRetrieve.Affinities,
+    //        ),
+    //        typesToRetrieve = listOf(TypesToRetrieve.Properties, TypesToRetrieve.Segments),
+    //    )
+    //)
+    //println(userProfile)
 
     exitProcess(0)
 }

@@ -4,10 +4,7 @@ import io.ktor.client.utils.*
 import io.ktor.http.content.*
 import io.ktor.util.*
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
@@ -22,7 +19,7 @@ import kotlin.test.assertTrue
  * @param builder The [StringValuesBuilder] instance to be checked for key-value pairs.
  * @param json A JSON string representing a map of key-value pairs.
  */
-fun assertContainsAll(builder: StringValuesBuilder, json: String) {
+fun assertContainsAll(json: String, builder: StringValuesBuilder) {
   val jsonObject = Json.parseToJsonElement(json) as JsonObject
   jsonObject.entries.onEach { (key, value) ->
     assertTrue("Missing key: $key in $jsonObject") { builder.contains(key) }
@@ -39,11 +36,38 @@ fun assertContainsAll(builder: StringValuesBuilder, json: String) {
  * @param body The actual body content to be checked for equality with the expected JSON string.
  * @param json The expected JSON string to compare against the actual JSON content in [body].
  */
-fun assertJsonBody(body: Any, json: String) {
+fun assertJsonBody(json: String, body: Any) {
   val bodyJson = body as? TextContent ?: error("json body expected, but not found!")
   val actual = Json.decodeFromString<JsonElement>(bodyJson.text)
   val expected = Json.decodeFromString<JsonElement>(json)
-  assertEquals(actual, expected)
+  if (!areJsonElementsEqual(actual, expected)) error("Expected $expected, but got $actual")
+}
+
+/**
+ * Compares two [JsonElement] instances for structural equality without considering the order of elements.
+ */
+private fun areJsonElementsEqual(elem1: JsonElement?, elem2: JsonElement?): Boolean {
+  return when {
+    elem1 == null && elem2 == null -> true
+    elem1 is JsonObject && elem2 is JsonObject -> {
+      if (elem1.size != elem2.size) return false
+      elem1.keys.all { key -> areJsonElementsEqual(elem1[key], elem2[key]) }
+    }
+    elem1 is JsonArray && elem2 is JsonArray -> {
+      if (elem1.size != elem2.size) return false
+      elem1.zip(elem2).all { (value1, value2) -> areJsonElementsEqual(value1, value2) }
+    }
+    elem1 is JsonPrimitive && elem2 is JsonPrimitive -> {
+      val num1 = elem1.contentOrNull?.toDoubleOrNull()
+      val num2 = elem2.contentOrNull?.toDoubleOrNull()
+      if (num1 != null && num2 != null) {
+        num1 == num2
+      } else {
+        elem1 == elem2
+      }
+    }
+    else -> elem1 == elem2
+  }
 }
 
 fun assertNoBody(body: Any) {
