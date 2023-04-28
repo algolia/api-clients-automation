@@ -200,12 +200,36 @@ SourceCSV:
   required:
     - url
 
+SourceBigQuery:
+  type: object
+  additionalProperties: false
+  properties:
+    projectID:
+      type: string
+      description: Project ID of the BigQuery Source.
+    datasetID:
+      type: string
+      description: Dataset ID of the BigQuery Source.
+    dataType:
+      type: string
+      enum: ['ga4', 'ga360']
+    table:
+      type: string
+      description: Table name (for default BQ).
+    tablePrefix:
+      type: string
+      description: Table prefix (for Google Analytics).
+  required:
+    - projectID
+    - datasetID  
+
 SourceInput:
   oneOf:
     - $ref: '#/SourceCommercetools'
     - $ref: '#/SourceBigCommerce'
     - $ref: '#/SourceJSON'
     - $ref: '#/SourceCSV'
+    - $ref: '#/SourceBigQuery'
 
 SourceUpdateCommercetools:
   type: object
@@ -228,3 +252,4 @@ SourceUpdateInput:
     - $ref: '#/SourceUpdateCommercetools'
     - $ref: '#/SourceJSON'
     - $ref: '#/SourceCSV'
+    - $ref: '#/SourceBigQuery'
