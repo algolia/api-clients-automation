@@ -94,7 +94,7 @@ SourceSearch:
 
 SourceType:
   type: string
-  enum: ['bigcommerce', 'commercetools', 'json', 'csv']
+  enum: ['bigcommerce', 'commercetools', 'json', 'csv', 'bigquery']
 
 SourceCommercetools:
   type: object
