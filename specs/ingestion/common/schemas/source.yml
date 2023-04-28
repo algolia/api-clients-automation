@@ -211,8 +211,7 @@ SourceBigQuery:
       type: string
       description: Dataset ID of the BigQuery Source.
     dataType:
-      type: string
-      enum: ['ga4', 'ga360']
+      $ref: '#/DataType'
     table:
       type: string
       description: Table name (for default BQ).
@@ -222,6 +221,10 @@ SourceBigQuery:
   required:
     - projectID
     - datasetID  
+
+DataType:
+  type: string
+  enum: ['ga4', 'ga360']
 
 SourceInput:
   oneOf:
