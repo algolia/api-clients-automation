@@ -233,14 +233,16 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
           sealedChilds.add(compoundModel);
         } else {
           CodegenModel newModel = new CodegenModel();
-          newModel.setClassname(oneOf.replace("<", "Of").replace(">", "") + "Wrapper");
+          String name = oneOf.replace("<", "Of").replace(">", "");
+          newModel.setClassname(name + "Wrapper");
           newModel.setDescription(model.classname + " as " + oneOf);
           CodegenProperty property = new CodegenProperty();
           property.setName("value");
           property.setRequired(true);
           property.setDatatypeWithEnum(oneOf);
           newModel.setVars(Collections.singletonList(property));
-          newModel.vendorExtensions.put("x-one-of-explicit-name", oneOf.replace("<", "Of").replace(">", ""));
+          newModel.vendorExtensions.put("x-is-number", newModel.isNumber);
+          newModel.vendorExtensions.put("x-one-of-explicit-name", isNumberType(oneOf) ? "Number" : name);
           newModel.vendorExtensions.put("x-fully-qualified-classname", newModel.classname);
           sealedChilds.add(newModel);
         }
@@ -254,7 +256,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     }
   }
 
-  private static Set<Map<String, String>> compoundParent(CodegenModel model) {
+  private boolean isNumberType(String typeName) {
+    return typeName.equals("Int") || typeName.equals("Double") || typeName.equals("Long");
+  }
+
+  private Set<Map<String, String>> compoundParent(CodegenModel model) {
     Set<Map<String, String>> parents = (Set<Map<String, String>>) model.vendorExtensions.get("x-one-of-element-parents");
     if (parents != null) return parents;
     parents = new HashSet<>();
