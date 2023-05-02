@@ -14,6 +14,8 @@ public class CTSManagerFactory {
         return new JavaCTSManager(client);
       case "php":
         return new PhpCTSManager();
+      case "go":
+        return new GoCTSManager();
     }
     return null;
   }

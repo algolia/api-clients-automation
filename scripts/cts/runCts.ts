@@ -22,6 +22,11 @@ async function runCtsOne(language: string): Promise<void> {
       );
       break;
     }
+    case 'go':
+      await run('go test -count 1 ./...', {
+        cwd: 'tests/output/go',
+      });
+      break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;

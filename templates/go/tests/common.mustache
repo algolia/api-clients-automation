@@ -1,0 +1,30 @@
+package tests
+
+import (
+  "bytes"
+  "io"
+  "net/http"
+)
+
+type echoRequester struct {
+  path   string
+  method string
+  body   *string
+}
+
+func (e *echoRequester) Request(req *http.Request) (*http.Response, error) {
+  e.path = req.URL.Path
+  e.method = req.Method
+  if req.Body != nil {
+    body, _ := io.ReadAll(req.Body)
+    strBody := string(body)
+    e.body = &strBody
+  } else {
+    e.body = nil
+  }
+
+  return &http.Response{
+    StatusCode: 200,
+    Body:       io.NopCloser(bytes.NewBufferString("")),
+  }, nil
+}
