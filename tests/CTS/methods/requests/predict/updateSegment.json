@@ -28,7 +28,7 @@
               "filters": [
                 {
                   "operator": "GT",
-                  "value": 200
+                  "value": 200.0
                 }
               ]
             }
@@ -48,7 +48,7 @@
               "filters": [
                 {
                   "operator": "GT",
-                  "value": 200
+                  "value": 200.0
                 }
               ]
             }
@@ -71,7 +71,7 @@
               "filters": [
                 {
                   "operator": "GT",
-                  "value": 200
+                  "value": 200.0
                 }
               ]
             }
@@ -92,7 +92,7 @@
               "filters": [
                 {
                   "operator": "GT",
-                  "value": 200
+                  "value": 200.0
                 }
               ]
             }
@@ -117,7 +117,7 @@
                   "value": "red",
                   "probability": {
                     "GTE": 0.5,
-                    "LTE": 1
+                    "LTE": 1.0
                   }
                 }
               ]
@@ -141,7 +141,7 @@
                   "value": "red",
                   "probability": {
                     "GTE": 0.5,
-                    "LTE": 1
+                    "LTE": 1.0
                   }
                 }
               ]
