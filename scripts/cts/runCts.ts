@@ -23,7 +23,7 @@ async function runCtsOne(language: string): Promise<void> {
       break;
     }
     case 'go':
-      await run('go test -count 1 ./...', {
+      await run('/usr/local/go/bin/go test -count 1 ./...', {
         cwd: 'tests/output/go',
       });
       break;
