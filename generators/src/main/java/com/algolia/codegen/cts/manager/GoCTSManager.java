@@ -8,7 +8,8 @@ public class GoCTSManager implements CTSManager {
 
   @Override
   public void addSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("common.mustache", "tests/methods/requests", "common.go"));
+    //    supportingFiles.add(new SupportingFile("common.mustache", "tests/methods/requests",
+    // "common.go"));
   }
 
   @Override
