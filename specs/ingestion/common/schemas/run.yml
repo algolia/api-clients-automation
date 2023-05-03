@@ -50,6 +50,9 @@ Run:
     reason:
       type: string
       description: 'Explains the result of outcome.'
+    reasonCode:
+      type: string
+      description: 'An identifier that pairs with the outcome reason.'
     type:
       $ref: '#/RunType'
     createdAt:
