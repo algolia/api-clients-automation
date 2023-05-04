@@ -42,7 +42,7 @@ public class Utils {
    * escape '/' in the path variable
    */
   public static CodegenOperation specifyCustomRequest(CodegenOperation ope) {
-    if (CUSTOM_METHOD.contains(ope.nickname)) {
+    if (CUSTOM_METHOD.contains(ope.operationIdOriginal)) {
       ope.vendorExtensions.put("x-is-custom-request", true);
     }
     return ope;

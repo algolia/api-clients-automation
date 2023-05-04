@@ -31,7 +31,7 @@ func QueryParamOption(name string, val any) Option {
 func HeaderParamOption(name string, val any) Option {
 	return Option{
     optionType:  "header",
-		name:  "itemsPerPage",
+		name:  name,
 		value: parameterToString(val),
 	}
 }
@@ -51,7 +51,7 @@ func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/
 		return err
 	}
   {{#allParams}}
-	if v, ok := req["{{paramName}}"]; ok {
+	if v, ok := req["{{#isQueryParam}}{{baseName}}{{/isQueryParam}}{{^isQueryParam}}{{paramName}}{{/isQueryParam}}"]; ok { //{{paramName}}
 		err = json.Unmarshal(v, &r.{{paramName}})
 		if err != nil {
       err = json.Unmarshal(b, &r.{{paramName}})
@@ -174,17 +174,27 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
 	{{/required}}
 	{{/allParams}}
 
+  {{#vendorExtensions.x-is-custom-request}}
+    {{#queryParams}}
+      {{^required}}if !isNilorEmpty(r.{{paramName}}) { {{/required}}
+          for k, v := range r.{{paramName}} {
+           queryParams.Set(k, parameterToString(v))
+          }
+      {{^required}} } {{/required}}
+    {{/queryParams}}
+  {{/vendorExtensions.x-is-custom-request}}
+  {{^vendorExtensions.x-is-custom-request}}
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Add("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+	queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
   if !isNilorEmpty(r.{{paramName}}) {
-    queryParams.Add("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+    queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
 	{{/queryParams}}
-
+  {{/vendorExtensions.x-is-custom-request}}
   {{#headerParams}}
 	{{#required}}
 	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
@@ -200,7 +210,7 @@ func (c *APIClient) {{nickname}}(r {{#structPrefix}}{{&classname}}{{/structPrefi
   for _, opt := range opts {
     switch opt.optionType {
       case "query":
-        queryParams.Add(opt.name, opt.value)
+        queryParams.Set(opt.name, opt.value)
       case "header":
         headers[opt.name] = opt.value
     }

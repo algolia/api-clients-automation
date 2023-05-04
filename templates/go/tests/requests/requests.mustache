@@ -39,7 +39,24 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       parametersStr := `{{{parameters}}}`
       req := {{clientPrefix}}.Api{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request{}
       require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-      _, err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}(req)
+      {{#hasRequestOptions}}
+        var opts []{{clientPrefix}}.Option
+        {{#requestOptions.queryParameters}}
+        requestOptionParameters := map[string]any{}
+        require.NoError(t, json.Unmarshal([]byte(`{{{parameters}}}`), &requestOptionParameters))
+        for k, v := range requestOptionParameters {
+          opts = append(opts, {{clientPrefix}}.QueryParamOption(k, v))
+        }
+        {{/requestOptions.queryParameters}}
+        {{#requestOptions.headers}}
+        requestOptionHeaders := map[string]any{}
+        require.NoError(t, json.Unmarshal([]byte(`{{{parameters}}}`), &requestOptionHeaders))
+        for k, v := range requestOptionHeaders {
+          opts = append(opts, {{clientPrefix}}.HeaderParamOption(k, v))
+        }
+        {{/requestOptions.headers}}
+      {{/hasRequestOptions}}
+      _, err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}(req{{#hasRequestOptions}}, opts...{{/hasRequestOptions}})
       require.NoError(t, err)
 
       expectedPath, err := url.QueryUnescape("{{{request.path}}}")
@@ -59,6 +76,20 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
         require.Empty(t, echo.body);
       {{/assertNullBody}}
       {{/request.body}}
+      {{#request.headers}}
+        headers := map[string]string{}
+        require.NoError(t, json.Unmarshal([]byte(`{{{.}}}`), &headers))
+        for k, v := range headers {
+          require.Equal(t, v, echo.header.Get(k))
+        }
+      {{/request.headers}}
+      {{#request.queryParameters}}
+        queryParams := map[string]string{}
+        require.NoError(t, json.Unmarshal([]byte(`{{{.}}}`), &queryParams))
+        for k, v := range queryParams {
+            require.Equal(t, v, echo.query.Get(k))
+        }
+      {{/request.queryParameters}}
       },
     },
 {{/tests}}
