@@ -24,14 +24,15 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
+import kotlin.time.Duration
 
 /** Default implementation of [Requester] using Ktor's [HttpClient]. */
 @InternalAlgoliaClient
 public class KtorRequester(
   public val httpClient: HttpClient,
-  private val connectTimeout: Long,
-  private val readTimeout: Long,
-  private val writeTimeout: Long,
+  private val connectTimeout: Duration,
+  private val readTimeout: Duration,
+  private val writeTimeout: Duration,
   hosts: List<Host>,
 ) : Requester {
 
@@ -109,8 +110,8 @@ public class KtorRequester(
           CallType.Read -> requestOptions?.readTimeout ?: readTimeout
           CallType.Write -> requestOptions?.writeTimeout ?: writeTimeout
         }
-      connectTimeoutMillis = connectTimeout
-      socketTimeoutMillis = timeout * (host.retryCount + 1)
+      connectTimeoutMillis = connectTimeout.inWholeMilliseconds
+      socketTimeoutMillis = timeout.inWholeMilliseconds * (host.retryCount + 1)
     }
   }
 

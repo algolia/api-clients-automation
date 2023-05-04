@@ -1,6 +1,7 @@
 package com.algolia.client.transport
 
 import kotlinx.serialization.json.JsonObject
+import kotlin.time.Duration
 
 /**
  * Represents options for configuring a request to an endpoint.
@@ -12,8 +13,8 @@ import kotlinx.serialization.json.JsonObject
  * @property body A JSON object representing the request body.
  */
 public data class RequestOptions(
-  public val writeTimeout: Long? = null,
-  public val readTimeout: Long? = null,
+  public val writeTimeout: Duration? = null,
+  public val readTimeout: Duration? = null,
   public val headers: Map<String, Any> = emptyMap(),
   public val urlParameters: Map<String, Any> = emptyMap(),
   public val body: JsonObject? = null,

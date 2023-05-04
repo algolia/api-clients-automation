@@ -4,18 +4,20 @@ import com.algolia.client.transport.Requester
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.logging.*
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /** Custom client configuration. */
 public class ClientOptions(
 
   /** Connect timeout for each request */
-  public val connectTimeout: Long = 2000L,
+  public val connectTimeout: Duration = 2.seconds,
 
   /** The timeout for each request when performing write operations. */
-  public val writeTimeout: Long = 30000L,
+  public val writeTimeout: Duration = 30.seconds,
 
   /** The timeout for each request when performing read operations. */
-  public val readTimeout: Long = 5000L,
+  public val readTimeout: Duration = 5.seconds,
 
   /** [LogLevel] to display in the console. */
   public val logLevel: LogLevel = LogLevel.NONE,
@@ -38,6 +40,6 @@ public class ClientOptions(
   /** Custom Http Requester. */
   public val requester: Requester? = null,
 
-  /**  */
+  /** List of Algolia agent segments */
   public val algoliaAgentSegments: List<AgentSegment> = emptyList(),
 )
