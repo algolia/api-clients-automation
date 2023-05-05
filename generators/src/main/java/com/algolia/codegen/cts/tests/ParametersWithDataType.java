@@ -8,6 +8,7 @@ import io.swagger.util.Json;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenComposedSchemas;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
@@ -132,6 +133,7 @@ public class ParametersWithDataType {
 
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
+    testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
     testOutput.put("parentSuffix", suffix - 1);
     testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && suffix != 0);
     testOutput.put("suffix", suffix);
@@ -279,9 +281,11 @@ public class ParametersWithDataType {
       HashMap<String, Object> oneOfModel = new HashMap<>();
       IJsonSchemaValidationProperties current = match;
       String typeName = getTypeName(current);
+      StringBuilder capitalizedTypeName = new StringBuilder(typeName);
       while (current.getItems() != null) {
         current = current.getItems();
         typeName += "Of" + getTypeName(current);
+        capitalizedTypeName.append("Of").append(StringUtils.capitalize(getTypeName(current)));
       }
 
       boolean useExplicitName = false;
@@ -295,6 +299,7 @@ public class ParametersWithDataType {
 
       oneOfModel.put("parentClassName", Utils.capitalize(baseType));
       oneOfModel.put("type", typeName);
+      oneOfModel.put("type-capitalized", capitalizedTypeName.toString());
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);
       testOutput.put("oneOfModel", oneOfModel);
       return;

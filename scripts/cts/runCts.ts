@@ -22,6 +22,9 @@ async function runCtsOne(language: string): Promise<void> {
       );
       break;
     }
+    case 'kotlin':
+      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests');
+      break;
     case 'go':
       if (DOCKER) {
         await run('/usr/local/go/bin/go test -count 1 ./...', {
