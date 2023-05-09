@@ -1,3 +1,8 @@
+## [4.0.0-alpha.59](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.58...4.0.0-alpha.59)
+
+- [558b8fbb](https://github.com/algolia/api-clients-automation/commit/558b8fbb) feat(clients): add Kotlin API client ([#1400](https://github.com/algolia/api-clients-automation/pull/1400)) by [@aallam](https://github.com/aallam/)
+- [102f3d4d](https://github.com/algolia/api-clients-automation/commit/102f3d4d) fix(specs): remove unsupported delete option for task action type ([#1511](https://github.com/algolia/api-clients-automation/pull/1511)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.0.0-alpha.58](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.57...4.0.0-alpha.58)
 
 - [3af3eb49](https://github.com/algolia/api-clients-automation/commit/3af3eb49) fix(specs): update required for kotlin tests to pass ([#1492](https://github.com/algolia/api-clients-automation/pull/1492)) by [@aallam](https://github.com/aallam/)
