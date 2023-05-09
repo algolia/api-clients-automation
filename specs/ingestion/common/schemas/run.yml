@@ -51,8 +51,7 @@ Run:
       type: string
       description: 'Explains the result of outcome.'
     reasonCode:
-      type: string
-      description: 'An identifier that pairs with the outcome reason.'
+      $ref: '#/RunReasonCode'
     type:
       $ref: '#/RunType'
     createdAt:
@@ -83,3 +82,8 @@ RunOutcome:
 RunType:
   type: string
   enum: ['reindex', 'update']
+
+RunReasonCode:
+  type: string
+  description: 'An identifier that pairs with the outcome reason.'
+  enum: ['internal', 'critical', 'no_events', 'too_many_errors', 'ok', 'discarded']
