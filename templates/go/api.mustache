@@ -37,8 +37,6 @@ func HeaderParamOption(name string, val any) Option {
 }
 
 {{#operation}}
-
-  // hasParams: {{#hasParams}}true{{/hasParams}}{{^hasParams}}false{{/hasParams}}
   {{#hasParams}}
   type {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request struct {
 {{#allParams}}
