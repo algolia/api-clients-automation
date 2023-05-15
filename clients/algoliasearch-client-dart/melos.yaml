@@ -1,0 +1,26 @@
+name: algolia_client
+
+packages:
+  - packages/*
+
+scripts:
+
+  build:
+    exec: dart run build_runner build --delete-conflicting-outputs
+    packageFilters:
+      dependsOn: build_runner
+
+  analyze:
+    exec: dart analyze .
+
+  format:
+    exec: dart format .
+
+  fix:
+    exec: dart fix --apply
+
+  get:
+    exec: dart pub get
+
+  clear:
+    exec: rm -rf .dart_tool

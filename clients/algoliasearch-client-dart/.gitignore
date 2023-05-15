@@ -1,0 +1,17 @@
+# Dart
+.dart_tool/
+build/
+pubspec.lock
+doc/api/
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Misc.
+.DS_Store
+
+# Melos
+pubspec_overrides.yaml

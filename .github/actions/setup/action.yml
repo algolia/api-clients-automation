@@ -194,6 +194,9 @@ outputs:
   RUN_GEN_KOTLIN:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_KOTLIN }}
+  RUN_GEN_DART:
+    description: Indicates if we plan to run the job for this language
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_DART }}  
 
   RUN_JS_UTILS:
     description: Whether to build JS client common folders when RUN_JS is false
