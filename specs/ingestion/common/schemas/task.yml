@@ -271,7 +271,7 @@ ScheduleDateUtilsInput:
   description: The input for a `schedule` task whose source is of type `bigquery` and for which extracted data spans a fixed number of days.
   properties:
     timeframe:
-      description: The timeframe of the extraction (RFC3339 format).
+      description: The timeframe of the extraction, in number of days from today.
       type: integer
       minimum: 1
       maximum: 30
