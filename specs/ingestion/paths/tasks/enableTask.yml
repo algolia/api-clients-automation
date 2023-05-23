@@ -1,4 +1,4 @@
-patch:
+put:
   tags:
     - tasks
   summary: Enable a task.
