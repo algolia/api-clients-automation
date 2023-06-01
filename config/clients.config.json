@@ -68,8 +68,8 @@
     "apiFolder": "lib/src/api",
     "customGenerator": "algolia-dart",
     "tests": {
-      "extension": "Test.kt",
-      "outputFolder": "test"
+      "extension": "_test.dart",
+      "outputFolder": ""
     }
   }
 }
