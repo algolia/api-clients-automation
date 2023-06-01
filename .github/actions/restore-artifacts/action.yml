@@ -110,7 +110,7 @@ runs:
 
     # Dart
     - name: Download clients-dart artifact
-      if: ${{ inputs.kotlin == 'true' && inputs.type == 'all' }}
+      if: ${{ inputs.dart == 'true' && inputs.type == 'all' }}
       uses: actions/download-artifact@v3
       with:
         name: clients-dart
