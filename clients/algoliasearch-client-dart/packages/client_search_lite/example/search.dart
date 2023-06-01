@@ -14,7 +14,7 @@ void main() async {
     hitsPerPage: 5,
   );
   // Execute the search request.
-  final responseHits = await client.searchSingleIndex(request: queryHits);
+  final responseHits = await client.searchIndex(request: queryHits);
   // Print the search hits.
   printHits(responseHits);
 

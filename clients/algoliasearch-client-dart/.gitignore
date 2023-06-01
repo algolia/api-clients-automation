@@ -1,17 +1,29 @@
-# Dart
+# Files and directories created by pub
 .dart_tool/
+.buildlog
+.packages
+.project
+.pub/
 build/
-pubspec.lock
+
+# Files created by dart2js
+*.dart.js
+*.part.js
+*.js.deps
+*.js.map
+*.info.json
+
+# Directory created by dartdoc
 doc/api/
+
+# Don't commit pubspec lock file
+pubspec.lock
 
 # IntelliJ
 *.iml
 *.ipr
 *.iws
-.idea/
 
-# Misc.
-.DS_Store
 
 # Melos
 pubspec_overrides.yaml

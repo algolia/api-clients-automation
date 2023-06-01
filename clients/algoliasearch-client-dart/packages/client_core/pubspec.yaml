@@ -1,6 +1,6 @@
 name: algolia_client_core
 description: Algolia API Client Core
-version: 0.1.0-dev.1
+version: 0.1.0-alpha.1
 homepage: https://www.algolia.com/doc/
 repository: https://github.com/algolia/algoliasearch-client-dart/packages/client_core
 

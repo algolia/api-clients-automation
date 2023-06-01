@@ -8,14 +8,14 @@ void main() async {
   );
 
   // Constructing a query to search for hits in the 'instant_search' index.
-  final queryHits = SearchParams(
+  final queryHits = SearchParamsObject(
     query: 'a',
     hitsPerPage: 5,
   );
   // Execute the search request.
-  final responseHits = await client.searchSingleIndex(
+  final responseHits = await client.searchIndex(
     indexName: 'instant_search',
-    searchParams: queryHits,
+    request: queryHits,
   );
   // Print the search hits.
   printHits(responseHits);

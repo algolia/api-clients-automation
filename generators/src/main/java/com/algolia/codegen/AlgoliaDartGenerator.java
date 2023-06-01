@@ -24,9 +24,9 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
   @Override
   public void processOpts() {
-    String version = Utils.getClientConfigField("dart", "packageVersion");
     String client = (String) additionalProperties.get("client");
     isLiteClient = client.equals("algoliasearch");
+    String version = Utils.getOpenApiToolsField("dart", client, "packageVersion");
 
     // pubspec.yaml
     setPubAuthor("Algolia");
@@ -67,6 +67,9 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     // Cleanup supporting files
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("auth"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("api_client"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().contains("gitignore"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().contains("build"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().contains("analysis_options"));
 
     final String srcFolder = libPath + sourceFolder;
     supportingFiles.add(new SupportingFile("version.mustache", srcFolder, "version.dart"));
