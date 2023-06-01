@@ -23,6 +23,10 @@ scripts:
     exec: dart fix --apply
     description: Find and fix static analysis issues in all packages
 
+  lint:
+    run: melos analyze && melos format && melos fix
+    description: analyze, format and fix all packages
+
   get:
     exec: dart pub get
     description: Run `dart pub get` in all packages
