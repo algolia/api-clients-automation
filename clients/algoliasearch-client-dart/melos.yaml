@@ -24,8 +24,8 @@ scripts:
     description: Find and fix static analysis issues in all packages
 
   lint:
-    run: melos analyze && melos format && melos fix
-    description: analyze, format and fix all packages
+    run: melos fix && melos format
+    description: fix and format all packages
 
   get:
     exec: dart pub get
