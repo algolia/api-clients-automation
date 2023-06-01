@@ -24,8 +24,8 @@ final class RetryStrategy {
     required AgentSegment segment,
     required String appId,
     required String apiKey,
-    required ClientOptions options,
     required Iterable<Host> Function() defaultHosts,
+    ClientOptions options = const ClientOptions(),
   }) : this(
           readTimeout: options.readTimeout,
           writeTimeout: options.writeTimeout,
@@ -37,6 +37,7 @@ final class RetryStrategy {
                 headers: options.headers,
                 connectTimeout: options.connectTimeout,
                 clientSegments: [segment, ...?options.agentSegments],
+                logger: options.logger,
               ),
         );
 

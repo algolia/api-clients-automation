@@ -23,6 +23,9 @@ final class ClientOptions {
   /// List of agent segments for the Algolia service.
   final Iterable<AgentSegment>? agentSegments;
 
+  /// Custom logger for http operations.
+  final Function(Object?)? logger;
+
   /// Custom requester used to send HTTP requests.
   final Requester? requester;
 
@@ -35,6 +38,7 @@ final class ClientOptions {
     this.headers,
     this.agentSegments,
     this.requester,
+    this.logger,
   });
 
   @override
