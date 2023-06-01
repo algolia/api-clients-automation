@@ -33,9 +33,6 @@ async function buildClient(
       await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd });
 
       break;
-    case 'dart':
-      await run('melos build');
-      break;
     default:
   }
   spinner.succeed();
