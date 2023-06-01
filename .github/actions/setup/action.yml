@@ -137,12 +137,16 @@ runs:
       run: |
         echo "DART_VERSION=$(cat config/.dart-version)" >> $GITHUB_OUTPUT
 
-    - name: Setup dart tools   
+    - name: Install dart   
       if: ${{ inputs.language == 'dart' }}
-      uses: actions/setup-dart@v1
+      uses: dart-lang/setup-dart@v1  
       with:
         sdk: ${{ steps.dart-version.outputs.DART_VERSION }}
-      run: dart pub global activate melos     
+
+    - name: Setup dart tools
+      if: ${{ inputs.language == 'dart' }}
+      shell: bash
+      run: dart pub global activate melos    
 
     # Computing jobs that should run
     - name: Setting diff outputs variables
