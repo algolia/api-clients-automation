@@ -21,7 +21,7 @@
     "@types/js-yaml": "4.0.5",
     "@types/micromatch": "4.0.2",
     "@types/mustache": "4.2.2",
-    "@types/node": "18.16.13",
+    "@types/node": "18.16.16",
     "@types/semver": "7.5.0",
     "@types/spinnies": "0.5.0",
     "chalk": "4.1.2",

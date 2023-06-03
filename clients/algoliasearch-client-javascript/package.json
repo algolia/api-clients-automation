@@ -23,7 +23,7 @@
     "@rollup/plugin-babel": "6.0.3",
     "@rollup/plugin-node-resolve": "15.1.0",
     "@types/jest": "29.5.1",
-    "@types/node": "18.16.13",
+    "@types/node": "18.16.16",
     "@types/rollup-plugin-node-globals": "1.4.1",
     "@types/semver": "7.5.0",
     "bundlesize2": "0.0.31",
