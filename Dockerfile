@@ -16,6 +16,11 @@ ARG JAVA_VERSION
 
 ENV DOCKER=true
 
+# Dart
+COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
+ENV PATH /usr/lib/dart/bin:$PATH
+RUN dart pub global activate melos
+
 # use bash for subsequent commands
 SHELL ["/bin/bash", "--login", "-c"]
 
@@ -34,9 +39,6 @@ RUN apt-get update && apt-get install -y \
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
 ENV PATH /usr/local/go/bin:$PATH
 
-# Dart
-COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
-ENV PATH /usr/lib/dart/bin:$PATH
 
 # Javascript (node)
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
