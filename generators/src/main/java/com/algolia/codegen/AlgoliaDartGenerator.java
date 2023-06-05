@@ -62,7 +62,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
       supportingFiles.add(new SupportingFile("lib.mustache", libPath, "algoliasearch_lite.dart"));
       additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("dart", "search", "packageVersion"));
-      additionalProperties.put("insightsVersion", Utils.getOpenApiToolsField("javascript", "insights", "packageVersion"));
+      additionalProperties.put("insightsVersion", Utils.getOpenApiToolsField("dart", "insights", "packageVersion"));
     }
 
     // disable documentation and tests
