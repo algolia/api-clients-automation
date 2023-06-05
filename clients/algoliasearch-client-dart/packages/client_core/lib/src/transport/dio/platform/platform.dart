@@ -1,4 +1,4 @@
-import 'package:algolia_core/algolia_core.dart';
+import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:dio/dio.dart' as dio;
 
 import 'platform_stub.dart'

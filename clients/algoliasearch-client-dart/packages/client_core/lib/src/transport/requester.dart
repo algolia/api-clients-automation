@@ -1,4 +1,4 @@
-import 'package:algolia_core/src/config/host.dart';
+import 'package:algolia_client_core/src/config/host.dart';
 
 /// This contract allows you to run http requests and get response.
 abstract interface class Requester {

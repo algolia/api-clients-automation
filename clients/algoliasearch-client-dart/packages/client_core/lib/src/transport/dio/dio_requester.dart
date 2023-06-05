@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:algolia_core/src/algolia_exception.dart';
-import 'package:algolia_core/src/config/agent_segment.dart';
-import 'package:algolia_core/src/transport/algolia_agent.dart';
-import 'package:algolia_core/src/transport/dio/agent_interceptor.dart';
-import 'package:algolia_core/src/transport/dio/auth_interceptor.dart';
-import 'package:algolia_core/src/transport/dio/platform/platform.dart';
-import 'package:algolia_core/src/transport/requester.dart';
-import 'package:algolia_core/src/version.dart';
+import 'package:algolia_client_core/src/algolia_exception.dart';
+import 'package:algolia_client_core/src/config/agent_segment.dart';
+import 'package:algolia_client_core/src/transport/algolia_agent.dart';
+import 'package:algolia_client_core/src/transport/dio/agent_interceptor.dart';
+import 'package:algolia_client_core/src/transport/dio/auth_interceptor.dart';
+import 'package:algolia_client_core/src/transport/dio/platform/platform.dart';
+import 'package:algolia_client_core/src/transport/requester.dart';
+import 'package:algolia_client_core/src/version.dart';
 import 'package:dio/dio.dart';
 
 /// A [Requester] implementation using the Dio library.

@@ -43,7 +43,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
       setPubName(libName);
       setPubLibrary(libName);
     } else {
-      libName = "algolia_" + client;
+      libName = "algolia_client_" + client;
       clientName = "Algolia " + client;
       setApiNameSuffix(Utils.API_SUFFIX);
       packageFolder = "client_" + client;

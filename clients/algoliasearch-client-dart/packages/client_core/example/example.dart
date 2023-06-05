@@ -1,4 +1,4 @@
-import 'package:algolia_core/algolia_core.dart';
+import 'package:algolia_client_core/algolia_client_core.dart';
 
 void main() async {
   // Creating an instance of the RetryStrategy with necessary parameters.

@@ -19,7 +19,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  algolia_core: ^0.1.0-alpha.1
+  algolia_core: ^0.1.0-dev.1
 ```
 
 Then install packages from the command line:

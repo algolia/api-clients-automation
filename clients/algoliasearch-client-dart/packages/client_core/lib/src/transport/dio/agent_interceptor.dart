@@ -1,5 +1,5 @@
-import 'package:algolia_core/src/transport/algolia_agent.dart';
-import 'package:algolia_core/src/transport/dio/platform/platform.dart';
+import 'package:algolia_client_core/src/transport/algolia_agent.dart';
+import 'package:algolia_client_core/src/transport/dio/platform/platform.dart';
 import 'package:dio/dio.dart';
 
 /// Interceptor that attaches the Algolia agent to outgoing requests.

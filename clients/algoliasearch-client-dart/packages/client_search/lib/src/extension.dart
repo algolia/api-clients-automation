@@ -1,4 +1,4 @@
-import 'package:algolia_search/algolia_search.dart';
+import 'package:algolia_client_search/algolia_client_search.dart';
 
 extension SearchClientExt on SearchClient {
   /// Perform a search operation targeting one index.

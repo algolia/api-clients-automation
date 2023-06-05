@@ -1,4 +1,4 @@
-import 'package:algolia_core/src/config/client_options.dart';
+import 'package:algolia_client_core/src/config/client_options.dart';
 
 /// An abstract class representing an API client with specific properties and options.
 abstract interface class ApiClient {
