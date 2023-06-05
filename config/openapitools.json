@@ -182,14 +182,14 @@
       "kotlin-ingestion": {
         "output": "#{cwd}/clients/algoliasearch-client-kotlin"
       },
-      "dart-search": {
-        "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_search",
+      "dart-algoliasearch": {
+        "output": "#{cwd}/clients/algoliasearch-client-dart/packages/algoliasearch",
         "additionalProperties": {
           "packageVersion": "0.1.0-alpha.1"
         }
       },
-      "dart-algoliasearch": {
-        "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_search_lite",
+      "dart-search": {
+        "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_search",
         "additionalProperties": {
           "packageVersion": "0.1.0-alpha.1"
         }

@@ -16,11 +16,6 @@ ARG JAVA_VERSION
 
 ENV DOCKER=true
 
-# Dart
-COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
-ENV PATH /usr/lib/dart/bin:$PATH
-RUN dart pub global activate melos
-
 # use bash for subsequent commands
 SHELL ["/bin/bash", "--login", "-c"]
 
@@ -52,6 +47,14 @@ RUN sdk install java ${JAVA_VERSION}-zulu
 
 # Java formatter
 ADD https://github.com/google/google-java-format/releases/download/v1.15.0/google-java-format-1.15.0-all-deps.jar /tmp/java-formatter.jar
+
+# Dart
+COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
+RUN echo "export PATH=/usr/lib/dart/bin:/root/.pub-cache/bin:$PATH" >>  ~/.profile && \
+    source ~/.profile && \
+    dart pub global activate melos
+
+# use bash for subsequent commands
 
 WORKDIR /app
 
