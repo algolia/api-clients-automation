@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:algolia_client_core/src/config/agent_segment.dart';
+import 'package:algolia_core/src/config/agent_segment.dart';
 import 'package:dio/dio.dart' as dio;
 
 /// [AgentSegment]s for native platforms.

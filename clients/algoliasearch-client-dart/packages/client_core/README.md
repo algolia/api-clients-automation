@@ -4,8 +4,8 @@
   </a>
 
   <p align="center">
-    <a href="https://pub.dartlang.org/packages/algolia_client_core"><img src="https://img.shields.io/pub/v/algolia_client_core.svg" alt="Latest version"></img></a>
-    <a href="https://pub.dev/packages/algolia_client_core/publisher"><img src="https://img.shields.io/pub/publisher/algolia_client_core.svg" alt="Licence"></img></a>
+    <a href="https://pub.dartlang.org/packages/algolia_core"><img src="https://img.shields.io/pub/v/algolia_core.svg" alt="Latest version"></img></a>
+    <a href="https://pub.dev/packages/algolia_core/publisher"><img src="https://img.shields.io/pub/publisher/algolia_core.svg" alt="Licence"></img></a>
   </p>
 </p>
 
@@ -19,7 +19,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  algolia_client_core: ^latest_version
+  algolia_core: ^0.1.0-alpha.1
 ```
 
 Then install packages from the command line:

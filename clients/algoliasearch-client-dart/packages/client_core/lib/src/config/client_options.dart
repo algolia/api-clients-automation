@@ -1,8 +1,8 @@
 import 'dart:core';
 
-import 'package:algolia_client_core/src/config/agent_segment.dart';
-import 'package:algolia_client_core/src/config/host.dart';
-import 'package:algolia_client_core/src/transport/requester.dart';
+import 'package:algolia_core/src/config/agent_segment.dart';
+import 'package:algolia_core/src/config/host.dart';
+import 'package:algolia_core/src/transport/requester.dart';
 
 final class ClientOptions {
   /// The list of hosts that the client can connect to.

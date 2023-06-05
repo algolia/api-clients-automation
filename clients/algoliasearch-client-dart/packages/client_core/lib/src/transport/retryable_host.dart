@@ -1,4 +1,4 @@
-import 'package:algolia_client_core/src/config/host.dart';
+import 'package:algolia_core/src/config/host.dart';
 
 /// This internal data class represents a host that supports retrying requests.
 ///

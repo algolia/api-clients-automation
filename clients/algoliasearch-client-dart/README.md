@@ -7,8 +7,8 @@
 within your Dart project</h4>
 
   <p align="center">
-    <a href="https://pub.dartlang.org/packages/algolia_client_core"><img src="https://img.shields.io/pub/v/algolia_client_core.svg" alt="Latest version"></img></a>
-    <a href="https://pub.dev/packages/algolia_client_core/publisher"><img src="https://img.shields.io/pub/publisher/algolia_client_core.svg" alt="Licence"></img></a>
+    <a href="https://pub.dartlang.org/packages/algolia_core"><img src="https://img.shields.io/pub/v/algolia_core.svg" alt="Latest version"></img></a>
+    <a href="https://pub.dev/packages/algolia_core/publisher"><img src="https://img.shields.io/pub/publisher/algolia_core.svg" alt="Licence"></img></a>
   </p>
 </p>
 

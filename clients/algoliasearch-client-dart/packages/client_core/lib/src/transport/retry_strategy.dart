@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:algolia_client_core/algolia_client_core.dart';
-import 'package:algolia_client_core/src/transport/dio/dio_requester.dart';
-import 'package:algolia_client_core/src/transport/retryable_host.dart';
+import 'package:algolia_core/algolia_core.dart';
+import 'package:algolia_core/src/transport/dio/dio_requester.dart';
+import 'package:algolia_core/src/transport/retryable_host.dart';
 
 /// Component to run http requests with retry logic.
 final class RetryStrategy {
