@@ -5,4 +5,5 @@ export type SourceType =
   | 'bigquery'
   | 'commercetools'
   | 'csv'
+  | 'docker'
   | 'json';
