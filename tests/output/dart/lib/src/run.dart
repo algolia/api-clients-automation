@@ -1,6 +1,4 @@
 import 'package:algoliasearch/algoliasearch.dart';
-import 'package:collection/collection.dart';
-import 'package:test/test.dart';
 
 /// Function [runTest] tests API client functionality with provided parameters.
 ///
