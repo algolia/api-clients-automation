@@ -59,19 +59,21 @@ eventSortKeys:
   enum: [status, type, publishedAt]
 
 startDate:
-  type: string
+  name: startDate
+  in: query
   description: >
     The start date (in RFC3339 format) of the runs fetching window.
 
     Defaults to 'now'-7 days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
-  links:
-    - https://www.rfc-editor.org/rfc/rfc3339
+  schema:
+    type: string
 
 endDate:
-  type: string
+  name: endDate
+  in: query
   description: >
     The end date (in RFC3339 format) of the runs fetching window.
 
     Defaults to 'now' days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
-  links:
-    - https://www.rfc-editor.org/rfc/rfc3339
+  schema:
+    type: string
