@@ -38,11 +38,11 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     String packageFolder;
     if (isAlgoliasearchClient) {
       libName = "algoliasearch";
-      clientName = "Algolia Search Lite";
+      clientName = "Search Lite";
       packageFolder = libName;
     } else {
       libName = "algolia_client_" + client;
-      clientName = "Algolia " + client;
+      clientName = client;
       packageFolder = "client_" + client;
       setApiNameSuffix(Utils.API_SUFFIX);
     }
