@@ -23,7 +23,3 @@ pubspec.lock
 *.iml
 *.ipr
 *.iws
-
-
-# Melos
-pubspec_overrides.yaml
