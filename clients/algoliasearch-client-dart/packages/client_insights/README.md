@@ -29,7 +29,7 @@ Add Algolia Insights API Client as a dependency in your project directly from pu
 dart pub add algolia_client_insights
 ```
 
-#### With Flutter:
+#### For Flutter projects:
 
 ```shell
 flutter pub add algolia_client_insights

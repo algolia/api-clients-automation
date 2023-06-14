@@ -29,7 +29,7 @@ Add Algolia Client Core as a dependency in your project directly from pub.dev:
 dart pub add algolia_client_core
 ```
 
-#### With Flutter:
+#### For Flutter projects:
 
 ```shell
 flutter pub add algolia_client_core

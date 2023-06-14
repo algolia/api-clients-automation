@@ -29,7 +29,7 @@ Add Algolia Search API Client as a dependency in your project directly from pub.
 dart pub add algolia_client_search
 ```
 
-#### With Flutter:
+#### For Flutter projects:
 
 ```shell
 flutter pub add algolia_client_search

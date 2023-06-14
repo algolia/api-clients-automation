@@ -55,7 +55,7 @@ To use this package in your project, add it as a dependency:
 dart pub add algoliasearch
 ```
 
-#### With Flutter:
+#### For Flutter projects:
 
 ```shell
 flutter pub add algolisearch
