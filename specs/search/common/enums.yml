@@ -5,7 +5,7 @@ searchStrategy:
 operationType:
   type: string
   enum: [move, copy]
-  description: Type of operation to perform (move or copy).
+  description: Operation to perform (_move_ or _copy_).
 
 scopeType:
   type: string

@@ -1,7 +1,11 @@
 openapi: 3.0.2
 info:
   title: Search API
-  description: API powering the Search feature of Algolia.
+  description: |-
+    Use the Search REST API  to manage your data (indices and records), implement search, and improve relevance (with Rules, synonyms, and language dictionaries).
+
+    Although Algolia provides a REST API, you should use the official open source API [clients, libraries, and tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) instead.
+    There's no [SLA](https://www.algolia.com/policies/sla/) if you use the REST API directly.
   version: 1.0.0
 components:
   securitySchemes:
@@ -37,13 +41,13 @@ tags:
   - name: Advanced
     description: Advanced operations.
   - name: Api Keys
-    description: Manage your Api Keys.
+    description: Manage your API keys.
   - name: Clusters
     description: Clusters operations.
   - name: Dictionaries
     description: Dictionaries operations.
   - name: Indices
-    description: Manage indices.
+    description: Manage indices, including listing them, checking and updating settings, deleting, copying, and renaming.
   - name: Records
     description: Records operations.
   - name: Rules

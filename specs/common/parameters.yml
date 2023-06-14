@@ -2,7 +2,7 @@
 IndexName:
   name: indexName
   in: path
-  description: The index in which to perform the request.
+  description: The index on which to perform the request.
   required: true
   schema:
     type: string
@@ -11,7 +11,7 @@ IndexName:
 ObjectID:
   name: objectID
   in: path
-  description: Unique identifier of an object.
+  description: Unique object (record) identifier.
   required: true
   schema:
     type: string
@@ -105,7 +105,7 @@ id:
 indexName:
   type: string
   example: products
-  description: The Algolia index name.
+  description: Algolia index name.
 
 hitsPerPage:
   type: integer
