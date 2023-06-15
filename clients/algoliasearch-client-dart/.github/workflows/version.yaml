@@ -7,13 +7,13 @@ on:
 
 jobs:
   check-version:
+    name: Version Check
     runs-on: ubuntu-latest
+    if: "startsWith(github.event.head_commit.message, 'chore: release')"
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
       
       - name: Run version check script
         run: .github/scripts/version.sh
