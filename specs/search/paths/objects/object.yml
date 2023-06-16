@@ -80,8 +80,8 @@ delete:
   tags:
     - Records
   operationId: deleteObject
-  summary: Delete an object.
-  description: Delete an existing object.
+  summary: Delete a record (object).
+  description: To delete a set of records matching a query, use the `deleteByQuery` operation instead.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
