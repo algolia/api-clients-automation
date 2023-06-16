@@ -11,7 +11,7 @@ IndexName:
 ObjectID:
   name: objectID
   in: path
-  description: Unique object (record) identifier.
+  description: Unique record (object) identifier.
   required: true
   schema:
     type: string

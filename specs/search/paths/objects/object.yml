@@ -2,14 +2,19 @@ get:
   tags:
     - Records
   operationId: getObject
-  summary: Retrieve an object.
-  description: Retrieve one object from the index.
+  summary: Retrieve a single record (object).
+  description: To retrieve more than one record, use the `getObjects` operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
     - name: attributesToRetrieve
       in: query
-      description: List of attributes to retrieve. If not specified, all retrievable attributes are returned.
+      description: >
+        Attributes to retrieve. If not specified, all retrievable attributes are returned.
+
+        `objectID` is always retrieved, even when not specified.
+
+        Any attributes listed in [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved by `getObject` unless the request is authenticated with the admin API key.
       schema:
         type: array
         items:
