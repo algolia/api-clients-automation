@@ -2,8 +2,15 @@ post:
   tags:
     - Records
   operationId: saveObject
-  description: Add an object to the index, automatically assigning it an object ID.
-  summary: Add an object to the index.
+  description: >
+    Add a single record (object) to an index or replace it.
+
+    If the record doesn't contain an `objectID` property, Algolia automatically adds it.
+    
+    If you use an existing `objectID`, the existing record is replaced with the new one.
+    
+    To add multiple records to your index in a single API request, use the `batch` operation.
+  summary: Add or a replace a record in an index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
