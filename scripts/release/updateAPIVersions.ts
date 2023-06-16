@@ -220,7 +220,9 @@ export async function updateDartPackages(): Promise<void> {
   const cwd = getLanguageFolder('dart');
 
   // Generate packages versions and changelogs.
-  await run(`(cd ${cwd} && melos version --no-git-tag-version --yes)`);
+  await run(
+    `(cd ${cwd} && melos version --no-git-tag-version --published --yes)`
+  );
 
   for (const gen of Object.values(GENERATORS)) {
     if (gen.language === 'dart') {
