@@ -209,7 +209,7 @@ page:
     - Pagination
 
 aroundRadius:
-  description: Define the maximum radius for a geo search (in meters).
+  description: Defines the maximum radius for a geo search (in meters).
   oneOf:
     - type: integer
       minimum: 1
@@ -223,7 +223,7 @@ aroundRadiusAll:
 
 aroundLatLng:
   type: string
-  description: Search for entries around a central geolocation, enabling a geo search within a circular area.
+  description: Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geo search within a circular area.
   default: ''
   x-categories:
     - Geo-Search
@@ -240,7 +240,7 @@ insideBoundingBox:
   items:
     type: number
     format: double
-  description: Search inside a rectangular area (in geo coordinates).
+  description: Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geo coordinates).
   x-categories:
     - Geo-Search
 
@@ -249,7 +249,7 @@ insidePolygon:
   items:
     type: number
     format: double
-  description: Search inside a polygon (in geo coordinates).
+  description: Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geo coordinates).
   x-categories:
     - Geo-Search
 
@@ -272,13 +272,15 @@ listOfSearchFilters:
 
 filters:
   type: string
-  description: Filter the query with numeric, facet and/or tag filters.
+  description: >
+    [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters.
   default: ''
   x-categories:
     - Filtering
 
 facetFilters:
-  description: Filter hits by facet value.
+  description: >
+    [Filter hits by facet value](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
   oneOf:
     - $ref: '#/listOfSearchFilters'
     - type: string
@@ -295,7 +297,8 @@ reRankingApplyFilter:
     - Filtering
 
 tagFilters:
-  description: Filter hits by tags.
+  description: >
+    [Filter hits by tags](https://www.algolia.com/doc/api-reference/api-parameters/tagFilters/).
   oneOf:
     - $ref: '#/listOfSearchFilters'
     - type: string
@@ -303,7 +306,8 @@ tagFilters:
     - Filtering
 
 numericFilters:
-  description: Filter on numeric attributes.
+  description: >
+    [Filter on numeric attributes](https://www.algolia.com/doc/api-reference/api-parameters/numericFilters/).
   oneOf:
     - $ref: '#/listOfSearchFilters'
     - type: string

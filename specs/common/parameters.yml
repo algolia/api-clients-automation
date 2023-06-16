@@ -2,7 +2,7 @@
 IndexName:
   name: indexName
   in: path
-  description: The index on which to perform the request.
+  description: Index on which to perform the request.
   required: true
   schema:
     type: string
