@@ -3,7 +3,7 @@ get:
     - Records
   operationId: getObject
   summary: Retrieve a single record (object).
-  description: To retrieve more than one record, use the `getObjects` operation.
+  description: To retrieve more than one record, use the `objects` operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -43,17 +43,23 @@ put:
   tags:
     - Records
   operationId: addOrUpdateObject
-  summary: Add or replace an object.
+  summary: Add or replace a record (object).
   description: |
-    Add or replace an object with a given object ID.
-    If the object does not exist, it will be created.
-    If it already exists, it will be replaced.
+    Add or replace a record by specifying its `objectID``.
+
+    If the record doesn't contain an `objectID` property, Algolia automatically adds it.
+    
+    If you use an existing `objectID`, the existing record is replaced with the new one.
+    
+    To update only some attributes of an existing record, use the `partial` operation instead.
+
+    To add multiple records to your index in a single API request, use the `batch` operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
   requestBody:
     required: true
-    description: The Algolia object.
+    description: Algolia record.
     content:
       application/json:
         schema:

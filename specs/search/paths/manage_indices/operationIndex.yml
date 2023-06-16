@@ -4,7 +4,7 @@ post:
   operationId: operationIndex
   summary: Copy, move, or rename an index.
   description: |-
-    The `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and Rules to a `destination` index.
+    This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and Rules to a `destination` index.
     The operation will overwrite the destination index (apart from the index's API keys and analytics data).
     If the destination index doesn't exist, it will be created.
 
