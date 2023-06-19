@@ -3,7 +3,7 @@ get:
     - Records
   operationId: getObject
   summary: Retrieve a single record (object).
-  description: To retrieve more than one record, use the `objects` operation.
+  description: To retrieve more than one record, use the `objects` method.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -51,9 +51,9 @@ put:
     
     If you use an existing `objectID`, the existing record is replaced with the new one.
     
-    To update only some attributes of an existing record, use the `partial` operation instead.
+    To update only some attributes of an existing record, use the `partial` method instead.
 
-    To add multiple records to your index in a single API request, use the `batch` operation.
+    To add multiple records to your index in a single API request, use the `batch` method.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -81,7 +81,7 @@ delete:
     - Records
   operationId: deleteObject
   summary: Delete a record (object).
-  description: To delete a set of records matching a query, use the `deleteByQuery` operation instead.
+  description: To delete a set of records matching a query, use the `deleteByQuery` method instead.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'

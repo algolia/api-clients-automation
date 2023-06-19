@@ -3,7 +3,7 @@ get:
     - Indices
   operationId: getTask
   description: >
-    Some operations, such as copying an index, will respond with a `taskID` value. You can use this value with `getTask` to check the status of that task.
+    Some methods, such as copying an index, will respond with a `taskID` value. You can use this value with `getTask` to check the status of that task.
 
     The response includes two fields:
 
