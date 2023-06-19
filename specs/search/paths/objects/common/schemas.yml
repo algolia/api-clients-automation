@@ -8,7 +8,7 @@ action:
     - deleteObject
     - delete
     - clear
-  description: type of operation.
+  description: Type of batch operation.
 
 builtInOperationType:
   type: string
