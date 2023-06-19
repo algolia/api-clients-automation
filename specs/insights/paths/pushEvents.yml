@@ -28,20 +28,24 @@ post:
                 type: object
                 description: Insights event.
                 additionalProperties: false
-                maximum: 1000
+                minItems: 1
+                maxItems: 1000
                 properties:
                   eventType:
                     $ref: '../common/enums.yml#/eventType'
                   eventName:
                     type: string
-                    maximum: 64
+                    minLength: 1
+                    maxLength: 64
                     description: A user-defined string used to categorize events.
                   index:
                     type: string
                     description: Name of the targeted index.
                   userToken:
                     type: string
-                    pattern: '[a-zA-Z0-9_-=/+]{1,128}'
+                    minLength: 1
+                    maxLength: 128
+                    pattern: '[a-zA-Z0-9_=/+-]{1,128}'
                     description: A user identifier. Depending if the user is logged-in or not, several strategies can be used from a sessionId to a technical identifier. You should always send pseudonymous or anonymous userTokens.
                   timestamp:
                     type: integer
@@ -49,22 +53,31 @@ post:
                     description: Time of the event expressed in milliseconds since the Unix epoch.
                   queryID:
                     type: string
+                    pattern: '[0-9a-f]{32}'
+                    minLength: 32
+                    maxLength: 32
                     description: Algolia queryID. This is required when an event is tied to a search.
                   objectIDs:
                     type: array
                     description: An array of index objectID. Limited to 20 objects. An event can’t have both objectIDs and filters at the same time.
                     items:
                       type: string
+                    minItems: 1
+                    maxItems: 20
                   filters:
                     type: array
                     description: An array of filters. Limited to 10 filters. An event can’t have both objectIDs and filters at the same time.
                     items:
                       type: string
+                    minItems: 1
+                    maxItems: 20
                   positions:
                     type: array
                     description: Position of the click in the list of Algolia search results. This field is required if a queryID is provided. One position must be provided for each objectID.
                     items:
                       type: integer
+                    minItems: 1
+                    maxItems: 20
                 required:
                   - eventType
                   - eventName
