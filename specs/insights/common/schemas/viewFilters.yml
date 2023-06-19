@@ -12,8 +12,7 @@ properties:
   eventType:
     type: string
     description: Event type.
-    enum:
-      - view
+    enum: [view]
   index:
     $ref: '../parameters.yml#/index'
   filters:

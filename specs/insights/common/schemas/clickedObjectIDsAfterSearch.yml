@@ -13,8 +13,7 @@ properties:
   eventType:
     type: string
     description: Event type.
-    enum:
-      - click
+    enum: [click]
   index:
     $ref: '../parameters.yml#/index'
   objectIDs:

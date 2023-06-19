@@ -8,8 +8,7 @@ properties:
   eventType:
     type: string
     description: Event type.
-    enum:
-      - conversion
+    enum: [conversion]
   index:
     $ref: '../parameters.yml#/index'
   filters:
