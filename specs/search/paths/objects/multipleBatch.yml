@@ -2,15 +2,20 @@ post:
   tags:
     - Records
   operationId: multipleBatch
-  description: Perform multiple write operations, potentially targeting multiple indices, in a single API call.
-  summary: Batch operations to many indices.
+  description: >
+    To reduce the time spent on network round trips, you can perform several write operations in a single API call.
+    It's a multi-index version of the `batch` method. It can be helpful when, for example, you have one index per user.
+    Operations are applied in the order they are specified.
+    
+    The supported operations are equivalent to the individual methods of the same name.
+  summary: Batch write operations on multiple indices.
   requestBody:
     required: true
     content:
       application/json:
         schema:
           title: batchParams
-          description: The `multipleBatch` parameters.
+          description: Batch parameters.
           type: object
           additionalProperties: false
           properties:
@@ -25,7 +30,7 @@ post:
                     $ref: 'common/schemas.yml#/action'
                   body:
                     type: object
-                    description: arguments to the operation (depends on the type of the operation).
+                    description: Operation arguments (varies with specified `action`).
                   indexName:
                     type: string
                     description: Index to target for this operation.
