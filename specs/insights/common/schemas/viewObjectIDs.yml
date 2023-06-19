@@ -1,0 +1,26 @@
+type: object
+title: Viewed object IDs
+description: Use this event when users view items in the search results.
+additionalProperties: false
+properties:
+  eventName:
+    $ref: '../parameters.yml#/eventName'
+  eventType:
+    type: string
+    description: Event type.
+    enum:
+      - view
+  index:
+    $ref: '../parameters.yml#/index'
+  objectIDs:
+    $ref: '../parameters.yml#/objectIDs'
+  userToken:
+    $ref: '../parameters.yml#/userToken'
+  timestamp:
+    $ref: '../parameters.yml#/timestamp'
+required:
+  - eventName
+  - eventType
+  - index
+  - objectIDs
+  - userToken

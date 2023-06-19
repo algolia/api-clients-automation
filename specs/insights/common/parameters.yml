@@ -21,7 +21,7 @@ filters:
     type: string
   minItems: 1
   maxItems: 20
-  example: ["brand:apple"]
+  example: ['brand:apple']
 
 index:
   type: string
@@ -35,7 +35,7 @@ objectIDs:
     type: string
     minItems: 1
     maxItems: 20
-  example: ["object-1", "object-2", "object-3"]
+  example: ['object-1', 'object-2', 'object-3']
 
 positions:
   type: array
@@ -68,7 +68,7 @@ timestamp:
   format: int64
   description: |
     Time of the event in milliseconds in [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
-  
+    
     By default, the Insights API uses the time it receives an event as its timestamp.
   example: 1687193127
 
@@ -77,7 +77,7 @@ userToken:
   minLength: 1
   maxLength: 128
   pattern: '[a-zA-Z0-9_=/+-]{1,128}'
-  description:  |
+  description: |
     Anonymous or pseudonymous user identifier. 
 
     > **Note**: Never include personally identifiable information in user tokens.

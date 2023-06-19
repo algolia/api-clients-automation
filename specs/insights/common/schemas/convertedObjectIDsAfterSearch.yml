@@ -1,0 +1,36 @@
+type: object
+title: Converted object IDs after search
+description: |
+  Use this event to track when users convert after a previous Algolia request.
+  
+  For example, a user clicks on an item in the search results to view the product detail page.
+  Then, the user adds the item to their shopping cart.
+
+  If you're building your category pages with Algolia,
+  you'll also use this event.
+additionalProperties: false
+properties:
+  eventName:
+    $ref: '../parameters.yml#/eventName'
+  eventType:
+    type: string
+    description: Event type.
+    enum:
+      - conversion
+  index:
+    $ref: '../parameters.yml#/index'
+  objectIDs:
+    $ref: '../parameters.yml#/objectIDs'
+  queryID:
+    $ref: '../parameters.yml#/queryID'
+  userToken:
+    $ref: '../parameters.yml#/userToken'
+  timestamp:
+    $ref: '../parameters.yml#/timestamp'
+required:
+  - eventName
+  - eventType
+  - index
+  - objectIDs
+  - queryID
+  - userToken

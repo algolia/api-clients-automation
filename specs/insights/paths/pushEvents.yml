@@ -21,44 +21,28 @@ post:
             events:
               type: array
               description: |
-                    List of click and conversion events.
+                List of click and conversion events.
 
-                    An event is an object representing a user interaction.
-                    Events have attributes that describe the interaction,
-                    such as an event name, a type, or a user token.
-                    Some attributes require other attributes to be declared,
-                    and some attributes can't be declared at the same time.
+                An event is an object representing a user interaction.
+                Events have attributes that describe the interaction,
+                such as an event name, a type, or a user token.
+                Some attributes require other attributes to be declared,
+                and some attributes can't be declared at the same time.
 
-                    **All** events must be valid or the API returns an error.
+                **All** events must be valid or the API returns an error.
               items:
-                title: event
-                type: object
-                description: Click and conversion event.
-                additionalProperties: false
-                minItems: 1
-                maxItems: 1000
-                properties:
-                  eventType:
-                    $ref: '../common/enums.yml#/eventType'
-                  eventName:
-                    $ref: '../common/parameters.yml/eventName'
-                  index:
-                    $ref: '../common/parameters.yml/index'
-                  userToken:
-                    $ref: '../common/parameters.yml/userToken'
-                  timestamp:
-                    $ref: '../common/parameters.yml/timestamp'
-                  objectIDs:
-                    $ref: '../common/parameters.yml/objectIDs'
-                  filters:
-                    $ref: '../common/parameters.yml/filters'
-                  positions:
-                    $ref: '../common/parameters.yml/positions'
-                required:
-                  - eventName
-                  - eventType
-                  - index
-                  - userToken
+                anyOf:
+                  - $ref: '../common/schemas/clickedObjectIDsAfterSearch.yml'
+                  - $ref: '../common/schemas/convertedObjectIDsAfterSearch.yml'
+                  - $ref: '../common/schemas/clickedObjectIDs.yml'
+                  - $ref: '../common/schemas/convertedObjectIDs.yml'
+                  - $ref: '../common/schemas/clickedFilters.yml'
+                  - $ref: '../common/schemas/convertedFilters.yml'
+                  - $ref: '../common/schemas/viewObjectIDs.yml'
+                  - $ref: '../common/schemas/viewFilters.yml'
+              minItems: 1
+              maxItems: 1000
+                
   responses:
     '200':
       description: OK

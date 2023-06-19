@@ -1,0 +1,31 @@
+type: object
+title: Clicked object IDs 
+description: |
+  Use this event to track when users click items unrelated to a previous Algolia request.
+
+  For example, if you don't use Algolia to build your category pages, use this event.
+
+  To track click events related to Algolia requests, use the "Clicked object IDs after search" event.
+additionalProperties: false
+properties:
+  eventName:
+    $ref: '../parameters.yml#/eventName'
+  eventType:
+    type: string
+    description: Event type.
+    enum:
+      - click
+  index:
+    $ref: '../parameters.yml#/index'
+  objectIDs:
+    $ref: '../parameters.yml#/objectIDs'
+  userToken:
+    $ref: '../parameters.yml#/userToken'
+  timestamp:
+    $ref: '../parameters.yml#/timestamp'
+required:
+  - eventName
+  - eventType
+  - index
+  - objectIDs
+  - userToken
