@@ -13,20 +13,27 @@ post:
     content:
       application/json:
         schema:
-          title: InsightEvents
           type: object
-          description: An 
           additionalProperties: false
           required:
             - events
           properties:
             events:
               type: array
-              description: Array of events sent.
+              description: |
+                    List of click and conversion events.
+
+                    An event is an object representing a user interaction.
+                    Events have attributes that describe the interaction,
+                    such as an event name, a type, or a user token.
+                    Some attributes require other attributes to be declared,
+                    and some attributes can't be declared at the same time.
+
+                    **All** events must be valid or the API returns an error.
               items:
-                title: InsightEvent
+                title: event
                 type: object
-                description: Insights event.
+                description: Click and conversion event.
                 additionalProperties: false
                 minItems: 1
                 maxItems: 1000
@@ -34,7 +41,6 @@ post:
                   eventType:
                     $ref: '../common/enums.yml#/eventType'
                   eventName:
-                    title: event name
                     type: string
                     minLength: 1
                     maxLength: 64
@@ -47,12 +53,10 @@ post:
                       framework.
                     example: Product Clicked
                   index:
-                    title: index name
                     type: string
                     description: Name of the Algolia index.
                     example: YourIndexName
                   userToken:
-                    title: user token
                     type: string
                     minLength: 1
                     maxLength: 128
@@ -63,7 +67,6 @@ post:
                       > **Note**: Never include personally identifiable information in user tokens.
                     example: test-user-1
                   timestamp:
-                    title: timestamp
                     type: integer
                     format: int64
                     description: |
@@ -71,7 +74,6 @@ post:
                       By default, the Insights API uses the time it receives an event as its timestamp.
                     example: 1687193127
                   queryID:
-                    title: query ID
                     type: string
                     pattern: '[0-9a-f]{32}'
                     minLength: 32
@@ -83,7 +85,6 @@ post:
                       If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
                     example: 3e48cd0616e466948dd85abf5c3fbbe2
                   objectIDs:
-                    title: object IDs
                     type: array
                     description: List of object identifiers for items of an Algolia index.
                     items:
