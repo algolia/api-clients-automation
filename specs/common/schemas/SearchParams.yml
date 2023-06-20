@@ -100,7 +100,7 @@ baseSearchParamsWithoutQuery:
         - Geo-Search
     minimumAroundRadius:
       type: integer
-      description: Minimum radius (in meters) used for a geo search when aroundRadius is not set.
+      description: Minimum radius (in meters) used for a geo search when `aroundRadius` is not set.
       minimum: 1
       x-categories:
         - Geo-Search
@@ -209,7 +209,7 @@ page:
     - Pagination
 
 aroundRadius:
-  description: Defines the maximum radius for a geo search (in meters).
+  description: Maximum radius for a geo search (in meters).
   oneOf:
     - type: integer
       minimum: 1

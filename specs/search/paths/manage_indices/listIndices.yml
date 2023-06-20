@@ -2,8 +2,8 @@ get:
   tags:
     - Indices
   operationId: listIndices
-  summary: List existing indexes.
-  description: List an Algolia apllication's indices.
+  summary: List indices.
+  description: List indices in an Algolia application.
   parameters:
     - $ref: '../../../common/parameters.yml#/Page'
   responses:

@@ -55,7 +55,7 @@ Page:
   in: query
   name: page
   description: >
-    Requested page (zero-based: the first page is page 0). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+    Returns the requested page number (zero-based: the first page is page 0). Page size is set by `hitsPerPage`. When null, will retrieve all indices (no pagination).
   schema:
     type: integer
     nullable: true
@@ -65,7 +65,7 @@ PageDefault0:
   in: query
   name: page
   description: >
-    Requested page (zero-based: the first page is page 0). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+    Returns the requested page number (zero-based: the first page is page 0). Page size is set by `hitsPerPage`. When null, will retrieve all indices (no pagination).
   schema:
     type: integer
     nullable: true
@@ -74,7 +74,7 @@ PageDefault0:
 HitsPerPage:
   in: query
   name: hitsPerPage
-  description: Maximum number of objects to retrieve.
+  description: Maximum number of records to retrieve.
   schema:
     type: integer
     default: 100
