@@ -46,16 +46,71 @@ post:
                   'userToken': 'test-user-1'
                   'objectIDs': ['object-1']
                   'positions': [1]
-                  'queryID': '7dfe2ada7bca48bdd0629649df0bee07'          
-          ViewEventExample:
+                  'queryID': '7dfe2ada7bca48bdd0629649df0bee07'
+          ConversionObjectIDsAfterSearch:
+            summary: Conversion event after search requests.
+            value:
+              'events':
+                - 'eventName': 'Products Added To Cart'
+                  'eventType': 'conversion'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+                  'queryID': '7dfe2ada7bca48bdd0629649df0bee07'                
+          ClickObjectIDs:
+            summary: Click event.
+            value:
+              'events':
+                - 'eventName': 'Products Clicked'
+                  'eventType': 'click'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+          ConversionObjectIDs:
+            summary: Conversion event.
+            value:
+              'events':
+                - 'eventName': 'Products Added To Cart'
+                  'eventType': 'conversion'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+          ClickFilter:
+            summary: Click event with filters.
+            value:
+              'events':
+                - 'eventName': 'Category Clicked'
+                  'eventType': 'click'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'filters': ['category:books']
+          ConversionFilter:
+            summary: Conversion event with filters.
+            value:
+              'events':
+                - 'eventName': 'Category Converted'
+                  'eventType': 'conversion'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'filters': ['category:books']
+          ViewObjectIDs:
             summary: View event.
             value:
               'events':
-                - 'eventName': 'Viewed Products'
+                - 'eventName': 'Products Viewed'
                   'eventType': 'view'
                   'index': 'test-index'
                   'userToken': 'test-user-1'
                   'objectIDs': ['object-1']
+          ViewFilters:
+            summary: View event with filters.
+            value:
+              'events':
+                - 'eventName': 'Category Viewed'
+                  'eventType': 'view'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'filters': ['category:books']
                   
   responses:
     '200':
