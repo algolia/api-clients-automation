@@ -15,7 +15,7 @@ post:
       description: >
         If the record doesn't exist and the parameter value is:
           
-        - `true` an empty record will be created.
+        - `true` a new record will be created.
         - `false` the engine will do nothing.
       in: query
       schema:
@@ -23,7 +23,7 @@ post:
         default: true
   requestBody:
     required: true
-    description: JSON object containing attributes to update.
+    description: Object containing attributes to update.
     content:
       application/json:
         schema:

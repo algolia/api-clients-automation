@@ -3,7 +3,7 @@ get:
     - Indices
   operationId: getSettings
   description: Return an object containing an index's [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
-  summary: Retrieve index settings.
+  summary: Get index settings.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:

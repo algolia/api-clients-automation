@@ -4,10 +4,10 @@ post:
   operationId: batch
   summary: Batch write operations on one index.
   description: >
-    To reduce the time spent on network round trips, you can perform several write operations in a single API call.
-    Operations are applied in the order they are specified.
+    To reduce the time spent on network round trips, you can perform several write actions in a single API call.
+    Actions are applied in the order they are specified.
     
-    The supported operations are equivalent to the individual methods of the same name.
+    The supported `action`s are equivalent to the individual operations of the same name.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

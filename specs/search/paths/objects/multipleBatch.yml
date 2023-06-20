@@ -3,11 +3,11 @@ post:
     - Records
   operationId: multipleBatch
   description: >
-    To reduce the time spent on network round trips, you can perform several write operations in a single API call.
-    It's a multi-index version of the `batch` method. It can be helpful when, for example, you have one index per user.
-    Operations are applied in the order they are specified.
+    To reduce the time spent on network round trips, you can perform several write actions in a single API operation.
+    It's a multi-index version of the `batch` operation. It can be helpful when, for example, you have one index per user.
+    Actions are applied in the order they are specified.
     
-    The supported operations are equivalent to the individual methods of the same name.
+    The supported `action`s are equivalent to the individual operations of the same name.
   summary: Batch write operations on multiple indices.
   requestBody:
     required: true

@@ -30,3 +30,4 @@ logType:
 taskStatus:
   type: string
   enum: [published, notPublished]
+  description: _published_ if the task has been processed, _notPublished_ otherwise.

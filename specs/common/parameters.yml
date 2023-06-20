@@ -54,7 +54,8 @@ ForwardToReplicas:
 Page:
   in: query
   name: page
-  description: Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+  description: >
+    Requested page (zero-based: the first page is page 0). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
   schema:
     type: integer
     nullable: true
@@ -63,7 +64,8 @@ Page:
 PageDefault0:
   in: query
   name: page
-  description: Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+  description: >
+    Requested page (zero-based: the first page is page 0). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
   schema:
     type: integer
     nullable: true
@@ -110,7 +112,7 @@ indexName:
 hitsPerPage:
   type: integer
   default: 20
-  description: Maximum number of hits in a page. Minimum is 1, maximum is 1000.
+  description: Maximum number of hits in a page. Minimum is 1, maximum is 1,000.
 
 query:
   type: string
@@ -120,7 +122,8 @@ query:
 page:
   type: integer
   default: 0
-  description: Requested page (zero-based).
+  description: >
+    Requested page (zero-based: the first page is page 0).
 
 trackedSearchCount:
   type: integer

@@ -4,7 +4,7 @@ post:
   operationId: searchRules
   x-use-read-transporter: true
   x-cacheable: true
-  summary: Search for rules.
+  summary: List the rules associated with an inde.
   description: Search for rules matching various criteria.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
@@ -14,7 +14,7 @@ post:
         schema:
           type: object
           title: searchRulesParams
-          description: Parameters for the search.
+          description: Rules search parameters.
           additionalProperties: false
           properties:
             query:
@@ -23,7 +23,7 @@ post:
               $ref: 'common/schemas.yml#/anchoring'
             context:
               type: string
-              description: Restricts matches to contextual rules with a specific context (exact match).
+              description: Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules) for example, "mobile".
             page:
               $ref: '../../../common/parameters.yml#/page'
             hitsPerPage:
@@ -32,13 +32,13 @@ post:
               type: boolean
               nullable: true
               default: null
-              description: When specified, restricts matches to rules with a specific enabled status. When absent (default), all rules are retrieved, regardless of their enabled status.
+              description: Restricts responses to enabled rules. When absent (default), all rules are retrieved, enabled or not.
             requestOptions:
               type: array
-              description: A mapping of requestOptions to send along with the request.
+              description: The request options to send with the request.
               items:
                 type: object
-                description: Request Option.
+                description: Request option.
   responses:
     '200':
       description: OK

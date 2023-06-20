@@ -5,7 +5,7 @@ post:
   summary: Copy, move, or rename an index.
   description: |-
     This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and Rules to a `destination` index.
-    The method will overwrite the destination index (apart from the index's API keys and analytics data).
+    If the destination index exists, it will be replaced, except for index-specific API keys and analytics data.
     If the destination index doesn't exist, it will be created.
 
     The choice between moving or copying an index depends on your needs. Choose:

@@ -39,25 +39,25 @@ security:
     apiKey: []
 tags:
   - name: Advanced
-    description: Advanced methods.
+    description: Advanced operations.
   - name: Api Keys
     description: Manage your API keys.
   - name: Clusters
-    description: Cluster methods.
+    description: Cluster operations.
   - name: Dictionaries
-    description: Dictionary methods.
+    description: Dictionary operations.
   - name: Indices
     description: Manage indices, including listing them, checking and updating settings, deleting, copying, and renaming.
   - name: Records
-    description: Record methods.
+    description: Record operations.
   - name: Rules
-    description: Rules methods.
+    description: Rules operations.
   - name: Search
-    description: Search methods.
+    description: Search operations.
   - name: Synonyms
-    description: Synonym methods.
+    description: Synonym operations.
   - name: Vaults
-    description: Vault methods.
+    description: Vault operations.
   - name: _model_index_settings
     x-displayName: Index Settings
     description: |

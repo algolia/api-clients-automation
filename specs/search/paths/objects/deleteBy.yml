@@ -4,7 +4,7 @@ post:
   operationId: deleteBy
   summary: Delete all records matching a query.
   description: >
-    This method doesn't support all the query options, only its filters (numeric, facet, or tag) and geo queries.
+    This operation doesn't support all the query options, only its filters (numeric, facet, or tag) and geo queries.
 
     It doesn't accept empty filters or queries.
   parameters:
