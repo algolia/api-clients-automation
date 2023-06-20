@@ -13,9 +13,8 @@ post:
     content:
       application/json:
         schema:
-          title: InsightEvents
+          title: InsightsEvents
           type: object
-          description: An 
           additionalProperties: false
           required:
             - events
@@ -35,9 +34,9 @@ post:
               minItems: 1
               maxItems: 1000
               items:
-                title: InsightEvent
+                title: InsightsEvent
+                description: Click and conversion event.
                 type: object
-                description: Insights event.
                 additionalProperties: false
                 minItems: 1
                 maxItems: 1000
@@ -45,7 +44,6 @@ post:
                   eventType:
                     $ref: '../common/enums.yml#/eventType'
                   eventName:
-                    title: event name
                     type: string
                     minLength: 1
                     maxLength: 64
@@ -58,12 +56,10 @@ post:
                       framework.
                     example: Product Clicked
                   index:
-                    title: index name
                     type: string
                     description: Name of the Algolia index.
                     example: YourIndexName
                   userToken:
-                    title: user token
                     type: string
                     minLength: 1
                     maxLength: 128
@@ -74,7 +70,6 @@ post:
                       > **Note**: Never include personally identifiable information in user tokens.
                     example: test-user-1
                   timestamp:
-                    title: timestamp
                     type: integer
                     format: int64
                     description: |
@@ -82,7 +77,6 @@ post:
                       By default, the Insights API uses the time it receives an event as its timestamp.
                     example: 1687193127
                   queryID:
-                    title: query ID
                     type: string
                     pattern: '[0-9a-f]{32}'
                     minLength: 32
@@ -94,7 +88,6 @@ post:
                       If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
                     example: 3e48cd0616e466948dd85abf5c3fbbe2
                   objectIDs:
-                    title: object IDs
                     type: array
                     description: List of object identifiers for items of an Algolia index.
                     items:
@@ -131,6 +124,107 @@ post:
                   - eventType
                   - index
                   - userToken
+        examples:
+          ClickObjectIDsAfterSearch:
+            summary: Click event after search requests
+            value:
+              'events':
+                - 'eventName': 'Products Clicked'
+                  'eventType': 'click'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+                  'positions': [1]
+                  'queryID': '7dfe2ada7bca48bdd0629649df0bee07'          
+          ConversionObjectIDsAfterSearch:
+            summary: Conversion event after search requests
+            value:
+              'events':
+                - 'eventName': 'Products Purchased'
+                  'eventType': 'conversion'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+                  'queryID': '7dfe2ada7bca48bdd0629649df0bee07'
+          ClickObjectIDs:
+            summary: Click event unrelated to search requests
+            value:
+              'events':
+                - 'eventName': 'Products Clicked'
+                  'eventType': 'click'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+          ConversionObjectIDs:
+            summary: Conversion event unrelated to search requests
+            value:
+              'events':
+                - 'eventName': 'Products Added To Cart'
+                  'eventType': 'conversion'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+          ClickFilter:
+            summary: Click event with filters
+            value:
+              'events':
+                - 'eventName': 'Category Clicked'
+                  'eventType': 'click'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'filters': ['category:books']
+          ConversionFilter:
+            summary: Conversion event with filters
+            value:
+              'events':
+                - 'eventName': 'Category Converted'
+                  'eventType': 'conversion'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'filters': ['category:books']     
+          ViewEventExample:
+            summary: View event
+            value:
+              'events':
+                - 'eventName': 'Viewed Products'
+                  'eventType': 'view'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['object-1']
+          ViewFiltersExample:
+            summary: View event with filters
+            value:
+              'events':
+                - 'eventName': 'Viewed Category'
+                  'eventType': 'view'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'filters': ['category:books']
+          MultipleEvents:
+            summary: Multiple events
+            value:
+              'events': 
+                - 'eventName': 'Viewed Products'
+                  'eventType': 'view'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'objectIDs': ['objectID-1']
+                  
+                - 'eventName': 'ClickedProduct'
+                  'eventType': 'click'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'queryID': '7dfe2ada7bca48bdd0629649df0bee07'
+                  'objectIDs': ['objectID-1']
+                  'positions': [1]
+                  
+                - 'eventName': 'Product Added To Cart'
+                  'eventType': 'conversion'
+                  'index': 'test-index'
+                  'userToken': 'test-user-1'
+                  'queryID': '7dfe2ada7bca48bdd0629649df0bee07'
+                  'objectIDs': ['objectID-1']
+                  
   responses:
     '200':
       description: OK
