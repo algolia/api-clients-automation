@@ -68,7 +68,7 @@ post:
                     minLength: 1
                     maxLength: 128
                     pattern: '[a-zA-Z0-9_=/+-]{1,128}'
-                    description:  |
+                    description: |
                       Anonymous or pseudonymous user identifier. 
 
                       > **Note**: Never include personally identifiable information in user tokens.
@@ -101,7 +101,7 @@ post:
                       type: string
                     minItems: 1
                     maxItems: 20
-                    example: ["object-1", "object-2", "object-3"]
+                    example: ['object-1', 'object-2', 'object-3']
                   filters:
                     type: array
                     description: |
@@ -112,7 +112,7 @@ post:
                       type: string
                     minItems: 1
                     maxItems: 20
-                    example: ["brand:apple"]
+                    example: ['brand:apple']
                   positions:
                     type: array
                     items:
