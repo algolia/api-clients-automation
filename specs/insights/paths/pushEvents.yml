@@ -38,8 +38,6 @@ post:
                 description: Click and conversion event.
                 type: object
                 additionalProperties: false
-                minItems: 1
-                maxItems: 1000
                 properties:
                   eventType:
                     $ref: '../common/enums.yml#/eventType'
