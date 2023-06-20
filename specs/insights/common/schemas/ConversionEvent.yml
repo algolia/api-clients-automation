@@ -1,3 +1,2 @@
 type: string
-description: Conversion event.
 enum: [conversion]

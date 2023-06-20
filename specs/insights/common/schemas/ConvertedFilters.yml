@@ -8,7 +8,7 @@ properties:
     $ref: './ConversionEvent.yml'
   index:
     $ref: './EventAttributes.yml#/index'
-  objectIDs:
+  filters:
     $ref: './EventAttributes.yml#/filters'
   userToken:
     $ref: './EventAttributes.yml#/userToken'

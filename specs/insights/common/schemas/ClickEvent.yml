@@ -1,3 +1,2 @@
 type: string
-description: Click event.
 enum: [click]
