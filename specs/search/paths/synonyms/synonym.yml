@@ -27,8 +27,15 @@ put:
   tags:
     - Synonyms
   operationId: saveSynonym
-  summary: Save synonym.
-  description: Create a new synonym object or update the existing synonym object with the given object ID.
+  summary: Save a synonym.
+  description: >
+    Add a single [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it.
+
+    If the synonym `objectID` doesn't exist, Algolia adds a new one.
+    
+    If you use an existing synonym `objectID`, the existing synonym is replaced with the new one.
+    
+    To add multiple synonyms in a single API request, use the `batch` operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
