@@ -1,7 +1,11 @@
 #!/bin/bash
 
-for dir in packages/*/ ; do \
-  dir=${dir%/} \
-  version=$(grep "^version:" "${dir}/pubspec.yaml" | sed 's/version: //') && \
-  awk -v ver="$version" '{gsub(/const packageVersion = .*;/, "const packageVersion = \047"ver"\047;"); print}' "${dir}/lib/src/version.dart" > temp && mv temp "${dir}/lib/src/version.dart"; \
+for dir in packages/*/ ; do
+  dir=${dir%/}
+  version=$(grep "^version:" "${dir}/pubspec.yaml" | sed 's/version: //') &&
+  if [[ "$(uname)" == "Darwin" ]]; then \
+    sed -i '' -e "s/^const packageVersion = .*;$/const packageVersion = '$version';/" "${dir}/lib/src/version.dart";
+  else
+    sed -i -e "s/^const packageVersion = .*;$/const packageVersion = '$version';/" "${dir}/lib/src/version.dart";
+  fi;
 done
