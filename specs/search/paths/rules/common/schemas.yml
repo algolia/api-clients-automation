@@ -7,21 +7,22 @@ rule:
       $ref: '../../../../common/parameters.yml#/objectID'
     conditions:
       type: array
-      description: A list of conditions that should apply to activate a Rule. You can use up to 25 conditions per Rule.
+      description: >
+        [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
       items:
         $ref: '#/condition'
     consequence:
       $ref: '#/consequence'
     description:
       type: string
-      description: This field is intended for Rule management purposes, in particular to ease searching for Rules and presenting them to human readers. It's not interpreted by the API.
+      description: A description of the rule's purpose. This can be helpful when searching for and presenting rules in, for example, the Algolia dashboard.
     enabled:
       type: boolean
       default: true
-      description: Whether the Rule is enabled. Disabled Rules remain in the index, but aren't applied at query time.
+      description: If `true``, the rule is enabled. If it isn't enabled, it isn't applied at query time.
     validity:
       type: array
-      description: By default, Rules are permanently valid. When validity periods are specified, the Rule applies only during those periods; it's ignored the rest of the time. The list must not be empty.
+      description: If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.
       items:
         $ref: '#/timeRange'
   required:
@@ -46,12 +47,13 @@ condition:
 
 anchoring:
   type: string
-  description: Whether the pattern parameter matches the beginning (`startsWith`) or end (`endsWith`) of the query string, is an exact match (`is`), or a a partial match (`contains`).
+  description: Whether the pattern parameter matches the beginning (`startsWith`) or end (`endsWith`) of the query string, is an exact match (`is`), or a partial match (`contains`).
   enum: [is, startsWith, endsWith, contains]
 
 consequence:
   type: object
-  description: Consequence of the Rule.
+  description: >
+    [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences) of a rule.
   additionalProperties: false
   properties:
     params:

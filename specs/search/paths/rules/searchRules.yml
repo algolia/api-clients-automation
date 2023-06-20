@@ -4,7 +4,7 @@ post:
   operationId: searchRules
   x-use-read-transporter: true
   x-cacheable: true
-  summary: List the rules associated with an inde.
+  summary: List the rules associated with an index.
   description: Search for rules matching various criteria.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

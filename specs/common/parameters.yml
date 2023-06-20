@@ -47,7 +47,7 @@ EndDate:
 ForwardToReplicas:
   in: query
   name: forwardToReplicas
-  description: Indicates whether the updated settings of `indexName` are forwarded to its replica indices.
+  description: If `true`, the updated `indexName` settings will be forwarded to its replica indices.
   schema:
     type: boolean
 

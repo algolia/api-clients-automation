@@ -27,8 +27,8 @@ put:
   tags:
     - Rules
   operationId: saveRule
-  summary: Save/Update a rule.
-  description: Create or update the Rule with the specified objectID.
+  summary: Create or update a single rule.
+  description: To create or update more than one rule, use the `rules` method's `batch` operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
