@@ -60,7 +60,7 @@ delete:
     - Rules
   operationId: deleteRule
   summary: Delete a rule.
-  description: Delete the Rule with the specified objectID.
+  description: To list rule 'objectID's for an index, use the `rules` method's `search` operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
