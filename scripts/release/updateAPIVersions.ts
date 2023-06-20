@@ -219,12 +219,12 @@ export async function updateAPIVersions(
 export async function updateDartPackages(): Promise<void> {
   const cwd = getLanguageFolder('dart');
 
-  console.log("Generate dart packages versions and changelogs")
+  // Generate dart packages versions and changelogs
   await run(
     `(cd ${cwd} && melos version --no-git-tag-version --published --yes)`
   );
 
-  console.log("Update packages configs based on generated versions")
+  // Update packages configs based on generated versions
   for (const gen of Object.values(GENERATORS)) {
     if (gen.language === 'dart') {
       const { additionalProperties } = gen;
