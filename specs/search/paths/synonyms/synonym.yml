@@ -79,8 +79,8 @@ delete:
   tags:
     - Synonyms
   operationId: deleteSynonym
-  summary: Delete synonym.
-  description: Delete a single synonyms set, identified by the given objectID.
+  summary: Delete a synonym.
+  description: To list synonym 'objectID's for an index, use the `synonyms` method's `search` operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
