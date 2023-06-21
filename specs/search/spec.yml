@@ -45,7 +45,7 @@ tags:
   - name: Clusters
     description: Cluster operations.
   - name: Dictionaries
-    description: Dictionary operations.
+    description: Dictionary operations allow you to customize linguistic features such as [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/).
   - name: Indices
     description: Manage indices, including listing them, checking and updating settings, deleting, copying, and renaming.
   - name: Records
