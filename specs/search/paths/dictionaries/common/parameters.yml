@@ -2,7 +2,7 @@
 DictionaryName:
   in: path
   name: dictionaryName
-  description: The dictionary to search in.
+  description: Dictionary to search in.
   required: true
   schema:
     $ref: '#/dictionaryType'
@@ -13,11 +13,13 @@ dictionaryType:
 
 # misc
 language:
-  description: Language ISO code supported by the dictionary (e.g., "en" for English).
+  description: >
+    [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) (for example, "en" for English).
   type: string
 
 standardEntries:
-  description: Map of language ISO code supported by the dictionary (e.g., "en" for English) to a boolean value.
+  description: >
+    Maps a [supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) to a boolean value (for example, `"fr": false`). Set the value to `true` to enable Algolia's built-in [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) for that language. Set it to `false` to turn the built-in stop words off. 
   type: object
   additionalProperties: false
   properties:
