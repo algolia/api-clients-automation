@@ -98,7 +98,7 @@ Limit:
 # misc
 objectID:
   type: string
-  description: Unique identifier of the object.
+  description: Unique object identifier.
 
 id:
   type: string

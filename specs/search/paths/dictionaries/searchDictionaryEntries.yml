@@ -5,7 +5,7 @@ post:
   x-use-read-transporter: true
   x-cacheable: true
   description: Search for entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.
-  summary: Search a dictionary entries.
+  summary: Search dictionary entries.
   parameters:
     - $ref: 'common/parameters.yml#/DictionaryName'
   requestBody:

@@ -20,7 +20,7 @@ dictionaryEntryState:
   type: string
   enum: [enabled, disabled]
   default: enabled
-  description: The state of the dictionary entry.
+  description: Dictionary entry state.
 
 logType:
   type: string
