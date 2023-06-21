@@ -2,8 +2,8 @@ get:
   tags:
     - Api Keys
   operationId: listApiKeys
-  summary: List API Keys.
-  description: List API keys, along with their associated rights.
+  summary: List API keys.
+  description: List the API keys associated with the Algolia application, including their rights and restrictions.
   responses:
     '200':
       description: OK
@@ -18,7 +18,7 @@ get:
             properties:
               keys:
                 type: array
-                description: List of api keys.
+                description: API keys.
                 items:
                   $ref: 'common/schemas.yml#/getApiKeyResponse'
     '400':
