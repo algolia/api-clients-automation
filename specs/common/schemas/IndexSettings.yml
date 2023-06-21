@@ -399,7 +399,7 @@ maxFacetHits:
 
 hitsPerPage:
   type: integer
-  description: Set the number of hits per page.
+  description: Number of hits per page (1 to 1000).
   default: 20
   x-categories:
     - Pagination

@@ -19,8 +19,7 @@ language:
 
 standardEntries:
   description: >
-    Maps a [supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) to a boolean value (for example, `"fr": false`). Set the value to `true` to enable Algolia's built-in [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) for that language. Set it to `false` to turn the built-in stop words off. 
-  type: object
+    Maps a [supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) to a boolean value (for example, `"fr": false`). If `true` Algolia's built-in [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) for that language have been turned off.
   additionalProperties: false
   properties:
     plurals:

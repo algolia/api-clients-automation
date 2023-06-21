@@ -26,7 +26,7 @@ baseSearchParamsWithoutQuery:
   properties:
     similarQuery:
       type: string
-      description: Overrides the query parameter and performs a more generic search that can be used to find "similar" results.
+      description: Overrides the `query` parameter and performs a more generic search that can be used to find similar results.
       default: ''
       x-categories:
         - Search
@@ -112,7 +112,7 @@ baseSearchParamsWithoutQuery:
       type: array
       items:
         type: string
-      description: This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
+      description: This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as `ignorePlurals`, `removeStopWords`, `removeWordsIfNoResults`, `analyticsTags`, and `ruleContexts`. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
       default: []
       x-categories:
         - Languages
@@ -149,7 +149,7 @@ baseSearchParamsWithoutQuery:
         - Analytics
     analytics:
       type: boolean
-      description: Whether the current query will be taken into account in the Analytics.
+      description: Whether the current query will be taken into account in the analytics.
       default: true
       x-categories:
         - Analytics
@@ -196,14 +196,14 @@ paramsAsString:
 
 query:
   type: string
-  description: The text to search in the index.
+  description: Text to search for in an index.
   default: ''
   x-categories:
     - Search
 
 page:
   type: integer
-  description: Specify the page to retrieve.
+  description: Page to retrieve (the first page is `0`, not `1`).
   default: 0
   x-categories:
     - Pagination
