@@ -4,7 +4,7 @@ additionalProperties: false
 properties:
   message:
     type: string
-    description: Details about the response, such as, error messages.
+    description: Details about the response, such as error messages.
   status:
     type: integer
     description: The HTTP status code of the response.

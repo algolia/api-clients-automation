@@ -7,7 +7,7 @@ post:
     Send a list of events to the Insights API.
 
     You can include up to 1,000 events in a single request,
-    but the request body must be smaller than 2MB.
+    but the request body must be smaller than 2&nbsp;MB.
   requestBody:
     required: true
     content:
@@ -30,7 +30,7 @@ post:
                 Some attributes require other attributes to be declared,
                 and some attributes can't be declared at the same time.
 
-                **All** events must be valid or the API returns an error.
+                **All** events must be valid, otherwise the API returns an error.
               minItems: 1
               maxItems: 1000
               items:
@@ -209,7 +209,7 @@ post:
               value: {'status': 422, 'message': 'EventName is required'}
             WrongEventName:
               summary: Event name too long or wrong characters.
-              value: {'status': 422, 'message': 'EventName must contain only visible ascii characters, and be between 1 and 64 characeters long'}
+              value: {'status': 422, 'message': 'EventName must contain only visible ASCII characters, and be between 1 and 64 characters long'}
             EventTypeRequired:
               summary: Missing eventType attribute.
               value: {'status': 422, 'message': 'EventType is required'}
@@ -241,7 +241,7 @@ post:
               value: {'status': 422, 'message': 'Event of type click with positions should specify a queryID'}
             WrongPositionsValue:
               summary: Wrong value in positions array.
-              description: Any value in the `positions` array must be greater than or equal to 1.
+              description: Any value in the `positions` array must be greater than 0.
               value: {'status': 422, 'message': 'Event of type click may only have strictly positive positions'}
             WrongPositionsItems:
               summary: Wrong number of items in positions array.

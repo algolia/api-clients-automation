@@ -31,7 +31,7 @@ timestamp:
   type: integer
   format: int64
   description: |
-    Time of the event in milliseconds in [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
+    Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
     By default, the Insights API uses the time it receives an event as its timestamp.
   example: 1687193127
 
@@ -59,7 +59,7 @@ objectIDs:
 filters:
   type: array
   description: |
-    List of facet filters.
+    Facet filters.
 
     Each facet filter string must be URL-encoded, such as, `discount:10%25`.
   items:
