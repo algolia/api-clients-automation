@@ -40,8 +40,8 @@ scripts:
     description: Run `dart pub update` in all packages
 
   upgrade:
-    exec: dart pub update
-    description: Run `dart pub update` in all packages
+    exec: dart pub upgrade
+    description: Run `dart pub upgrade` in all packages
 
   clear:
     exec: rm -rf .dart_tool
