@@ -9,9 +9,9 @@ void main() async {
 
   // Creating an InsightEvents object with a list of InsightEvent objects.
   // Each InsightEvent represents an event such as a user viewing a specific item.
-  final events = InsightEvents(
+  final events = InsightsEvents(
     events: [
-      InsightEvent(
+      ViewObjectIDs(
         eventType: EventType.view,
         eventName: 'View event',
         index: 'instant_search',
