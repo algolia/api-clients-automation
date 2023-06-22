@@ -3,7 +3,7 @@ get:
     - Api Keys
   operationId: listApiKeys
   summary: List API keys.
-  description: List the API keys associated with the Algolia application, including their rights and restrictions.
+  description: API keys associated with the Algolia application, including their permissions and restrictions.
   responses:
     '200':
       description: OK
@@ -34,8 +34,13 @@ post:
   tags:
     - Api Keys
   operationId: addApiKey
-  summary: Create an API key.
-  description: Add a new API Key with specific permissions/restrictions.
+  summary: Add API key.
+  description: >
+    Add a new API key with specific permissions and restrictions.
+
+    The request must be authenticated with the admin API key.
+
+    The response returns an API key string.
   requestBody:
     required: true
     content:

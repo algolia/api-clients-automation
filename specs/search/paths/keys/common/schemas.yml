@@ -16,31 +16,64 @@ apiKey:
       default: ''
     indexes:
       type: array
-      description: Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
+      description: >
+        Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
+
+        Specify either an exact index name, or a pattern with a leading or trailing wildcard character (or both). For example:
+
+        - `dev_*` matches all indices starting with "dev_"
+        - `*_dev` matches all indices ending with "_dev"
+        - `*_products_*` matches all indices containing "_products_".
       default: []
       items:
         type: string
     maxHitsPerQuery:
       type: integer
-      description: Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced.
+      description: >
+        Maximum number (poitive integer) of hits this API key can retrieve in one query. If zero, no limit is enforced.
+
+        > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index.
       default: 0
     maxQueriesPerIPPerHour:
       type: integer
-      description: Maximum number of API calls per hour allowed from a given IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      description: >
+        Maximum number of API calls per hour allowed from a given IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+
+        Each time an API call is performed with this key, a check is performed. If there were more than the specified number of calls within the last hour, the API returns a 429 (Too Many Requests) status code.
+
+        **If [proxying the query through your servers](https://www.algolia.com/doc/api-client/getting-started/customize/javascript/?client=javascript#use-a-custom-host), use the admin API key and set:**
+          
+        - `X-Forwarded-For` HTTP header with the client IP
+        - `X-Forwarded-API-Key` with the rate-limited API key.
+
+        > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index.
       default: 0
     queryParameters:
       type: string
-      description: Force some [query parameters](https://www.algolia.com/doc/api-reference/api-parameters/) to be applied for each query made with this API key. URL-encoded query string. 
+      description: >
+        Force some [query parameters](https://www.algolia.com/doc/api-reference/api-parameters/) to be applied for each query made with this API key.
+        
+        It's a URL-encoded query string. For example, `typoTolerance%3Dstrict%26ignorePlurals%3Dfalse%26filters%3Drights%3Apublic`.
       default: ''
     referers:
       type: array
-      description: Restrict this  API key to specific [referrers](https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions/#http-referrers). If empty or blank, defaults to all referrers.
+      description: >
+        Restrict this API key to specific [referrers](https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions/#http-referrers). If empty or blank, defaults to all referrers.
+
+        For example:
+
+        - `https://algolia.com/*` matches all referers starting with "https://algolia.com/""
+        - `*.algolia.com` matches all referers ending with ".algolia.com"
+        - `*algolia.com*` allows everthing in the domain "algolia.com".
       default: []
       items:
         type: string
     validity:
       type: integer
-      description: Validity duration of a key (in seconds). Short-lived API keys are useful to grant temporary access to your data, for example, during demos. The default value of 0 never expires.
+      description: >
+        Validity duration of a key (in seconds).  The key will automatically be removed after this time has expired. The default value of 0 never expires.
+
+        Short-lived API keys are useful to grant temporary access to your data, for example, for demos. 
       default: 0
   required:
     - acl
@@ -80,7 +113,7 @@ addApiKeyResponse:
 
 acl:
   description: |
-    List of rights for the API key:
+    API key permissions:
 
     `addObject`: required to add or update records, copy or move an index.
     `analytics`: required to access the Analytics API.
