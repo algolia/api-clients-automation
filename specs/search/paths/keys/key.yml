@@ -71,7 +71,10 @@ delete:
     - Api Keys
   operationId: deleteApiKey
   summary: Delete API key.
-  description: Delete an existing API key.
+  description: >
+    Delete an existing API key.
+
+    The request must be authenticated with the admin API key.
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'
   responses:
