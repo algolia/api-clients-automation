@@ -70,8 +70,8 @@ delete:
   tags:
     - Api Keys
   operationId: deleteApiKey
-  summary: Delete an API key.
-  description: Delete an existing API Key.
+  summary: Delete API key.
+  description: Delete an existing API key.
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'
   responses:
