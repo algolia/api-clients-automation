@@ -2,7 +2,7 @@ post:
   tags:
     - Clusters
   operationId: assignUserId
-  summary: Assign or Move userID.
+  summary: Assign or move userID.
   description: >
     Assign or Move a userID to a cluster.
 
@@ -45,11 +45,9 @@ get:
   operationId: listUserIds
   summary: List userIDs.
   description: >
-    List the userIDs assigned to a multi-clusters appID.
+    List the userIDs assigned to a multi-cluster application.
 
-    The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters.
-
-    Upon success, the response is 200 OK and contains the following userIDs data.
+    Since userID usage can take up to a few seconds to propagate to the different clusters, the response data isn't quite real-time.
   parameters:
     - $ref: '../../../common/parameters.yml#/Page'
     - $ref: '../../../common/parameters.yml#/HitsPerPage'
@@ -61,11 +59,11 @@ get:
           schema:
             title: listUserIdsResponse
             type: object
-            description: UserIDs data.
+            description: UserID data.
             properties:
               userIDs:
                 type: array
-                description: List of userIDs.
+                description: UserIDs.
                 items:
                   $ref: '../../common/schemas/UserId.yml#/userId'
             required:

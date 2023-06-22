@@ -74,7 +74,7 @@ PageDefault0:
 HitsPerPage:
   in: query
   name: hitsPerPage
-  description: Maximum number of records to retrieve.
+  description: Maximum number of hits in a page.
   schema:
     type: integer
     default: 100
