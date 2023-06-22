@@ -1,6 +1,5 @@
 [
   {
-    "testName": "ClickedObjectIDsAfterSearch",
     "parameters": {
       "events": [
         {
@@ -40,82 +39,6 @@
             "positions": [
               7,
               6
-            ]
-          }
-        ]
-      }
-    }
-  },
-  {
-    "testName": "ConvertedObjectIDsAfterSearch",
-    "parameters": {
-      "events": [
-        {
-          "eventType": "conversion",
-          "eventName": "Product Purchased",
-          "index": "products",
-          "userToken": "user-123456",
-          "timestamp": 1641290601962,
-          "objectIDs": [
-            "9780545139700",
-            "9780439784542"
-          ],
-          "queryID": "43b15df305339e827f0ac0bdc5ebcaa7"
-        }
-      ]
-    },
-    "request": {
-      "path": "/1/events",
-      "method": "POST",
-      "body": {
-        "events": [
-          {
-            "eventType": "conversion",
-            "eventName": "Product Purchased",
-            "index": "products",
-            "userToken": "user-123456",
-            "timestamp": 1641290601962,
-            "objectIDs": [
-              "9780545139700",
-              "9780439784542"
-            ],
-            "queryID": "43b15df305339e827f0ac0bdc5ebcaa7"
-          }
-        ]
-      }
-    }
-  },
-  {
-    "testName": "ViewedObjectIDs",
-    "parameters": {
-      "events": [
-        {
-          "eventType": "view",
-          "eventName": "Product Detail Page Viewed",
-          "index": "products",
-          "userToken": "user-123456",
-          "timestamp": 1641290601962,
-          "objectIDs": [
-            "9780545139700",
-            "9780439784542"
-          ]
-        }
-      ]
-    },
-    "request": {
-      "path": "/1/events",
-      "method": "POST",
-      "body": {
-        "events": [
-          {
-            "eventType": "view",
-            "eventName": "Product Detail Page Viewed",
-            "index": "products",
-            "userToken": "user-123456",
-            "timestamp": 1641290601962,
-            "objectIDs": [
-              "9780545139700",
-              "9780439784542"
             ]
           }
         ]
