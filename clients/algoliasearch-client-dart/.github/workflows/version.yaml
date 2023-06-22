@@ -20,4 +20,4 @@ jobs:
       - name: Run version check script
         run: .github/scripts/version.sh
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
