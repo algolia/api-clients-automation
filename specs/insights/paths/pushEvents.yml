@@ -258,7 +258,7 @@ post:
                 This can happen if one or more of the attributes is a number instead of a string.
               value: {'status': 422, 'message': 'Invalid type for field events: expected string, got number'}
             InvalidTimestamp:
-              summary: Timestamp too old
+              summary: Timestamp too old.
               value: {'status': 422, 'message': 'The timestamp must be at most 4 days in the past'}
             TooManyEvents:
               summary: Too many events.
