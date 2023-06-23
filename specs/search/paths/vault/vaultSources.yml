@@ -2,8 +2,8 @@ get:
   tags:
     - Vaults
   operationId: getSources
-  description: List all allowed sources.
-  summary: List all allowed sources.
+  description: Get all allowed sources (IP addresses).
+  summary: Get all allowed IP addresses.
   responses:
     '200':
       description: OK

@@ -63,7 +63,12 @@ tags:
   - name: Synonyms
     description: Synonym operations.
   - name: Vaults
-    description: Vault operations.
+    description: >
+      Vault operations.
+      
+      Algolia Vault allows you to restrict network-level access to your cluster to a specific set of IP addresses: for non-authorized IP addresses, the cluster is invisible. 
+      
+      To access this feature, [Algolia Vault](https://www.algolia.com/doc/guides/security/algolia-vault/) must be enabled on your server. Contact [Algolia's support team](https://support.algolia.com/hc/en-us/requests/new) for details.
   - name: _model_index_settings
     x-displayName: Index Settings
     description: |
