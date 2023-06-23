@@ -4,8 +4,13 @@ post:
   operationId: searchSingleIndex
   x-use-read-transporter: true
   x-cacheable: true
-  summary: Search in a single index.
-  description: Perform a search operation targeting one specific index.
+  summary: Search an index.
+  description: >
+    Return records that match the query.
+
+    You can find the list of parameters that you can use in the POST body in the Search Parameters section.
+    
+    Alternatively, parameters may be specified as a URL-encoded query string inside the params attribute.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
