@@ -2,15 +2,11 @@ post:
   tags:
     - Clusters
   operationId: assignUserId
-  summary: Assign or move userID.
+  summary: Assign or move a userID.
   description: >
-    Assign or Move a userID to a cluster.
+    Assign or move a userID to a cluster.
 
-    The time it takes to migrate (move) a user is proportional to the amount of data linked to the userID.
-
-    Upon success, the response is 200 OK.
-
-    A successful response indicates that the operation has been taken into account, and the userID is directly usable.
+    The time it takes to move a user is proportional to the amount of data linked to the userID.
   parameters:
     - $ref: '../../common/parameters.yml#/UserIDInHeader'
   requestBody:

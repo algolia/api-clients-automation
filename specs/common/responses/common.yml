@@ -7,7 +7,7 @@ objectIDs:
   type: array
   items:
     type: string
-  description: List of objectID.
+  description: objectIDs.
 
 createdAt:
   type: string
@@ -16,12 +16,11 @@ createdAt:
 createdAtTimestamp:
   type: integer
   format: int64
-  description: Time of the event expressed in milliseconds since the Unix epoch.
-
+  description: Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
 updatedAt:
   type: string
-  description: Date of last update (ISO-8601 format).
+  description: Date of last update (in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format).
 
 deletedAt:
   type: string
-  description: Date of deletion (ISO-8601 format).
+  description: Date of deletion (in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format).

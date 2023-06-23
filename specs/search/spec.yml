@@ -44,10 +44,12 @@ tags:
     description: Manage your API keys.
   - name: Clusters
     description: >
-      Cluster operations.
-      
-      For this to work, the [multi-cluster management](https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/) feature must be enabled on your account.
-      For more information, contact the [Algolia support team](https://support.algolia.com/hc/en-us/requests/new).
+      Multi-cluster operations.
+
+      Algolia no longer offers [multi-cluster management](https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/) .
+
+      - If you want to partition your data per user, use facets and secured API keys instead.
+      - If you need more data, consider upgrading to a bigger cluster to suit your needs. Contact [Algolia's support team](https://support.algolia.com/hc/en-us/requests/new) for details.
   - name: Dictionaries
     description: Dictionary operations allow you to customize linguistic features such as [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/).
   - name: Indices

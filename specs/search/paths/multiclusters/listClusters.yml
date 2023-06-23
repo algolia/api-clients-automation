@@ -16,7 +16,7 @@ get:
             properties:
               topUsers:
                 type: array
-                description: Mapping of cluster names to top users.
+                description: Mapping of cluster names to top users (users with the highest number of records per cluster).
                 items:
                   $ref: '../../common/schemas/Cluster.yml#/clusterName'
             required:

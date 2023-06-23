@@ -5,10 +5,6 @@ post:
   summary: Batch assign userIDs.
   description: >
     Assign multiple userIDs to a cluster.
-
-    Upon success, the response is 200 OK.
-
-    A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
   parameters:
     - $ref: '../../common/parameters.yml#/UserIDInHeader'
   requestBody:
@@ -25,7 +21,10 @@ post:
               $ref: '../../common/schemas/Cluster.yml#/clusterName'
             users:
               type: array
-              description: userIDs to assign. Note you cannot move users with this method.
+              description: >
+                userIDs to assign.
+                
+                **You can't _move_ users with this operation.**.
               items:
                 type: string
           required:
