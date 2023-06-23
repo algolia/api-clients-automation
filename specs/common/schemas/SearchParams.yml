@@ -26,7 +26,7 @@ baseSearchParamsWithoutQuery:
   properties:
     similarQuery:
       type: string
-      description: Overrides the `query` parameter and performs a more generic search.
+      description: Overrides the query parameter and performs a more generic search.
       default: ''
       x-categories:
         - Search
@@ -137,7 +137,7 @@ baseSearchParamsWithoutQuery:
         - Rules
     personalizationImpact:
       type: integer
-      description: Howm much [Personalization affects results](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
+      description: How much [Personalization affects results](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
       default: 100
       x-categories:
         - Personalization
