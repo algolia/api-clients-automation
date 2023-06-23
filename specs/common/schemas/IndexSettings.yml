@@ -391,7 +391,7 @@ indexSettingsAsSearchParams:
 
 maxFacetHits:
   type: integer
-  description: Maximum number of facet hits to return during a search for facet values. For performance reasons, the maximum allowed number of returned values is 100.
+  description: Maximum number of facet hits to return during a search for facet values. For performance reasons, this can't exceed 100.
   maximum: 100
   default: 10
   x-categories:
