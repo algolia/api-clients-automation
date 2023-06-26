@@ -5,9 +5,9 @@ title: Manage dictionary entries
 import { TabsLanguage } from '../../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
 
-The REST API offers a single endpoint to manage your dictorionary. In this guide, we will demonstrate how to manage entries for different scenarios.
+The REST API offers [a single endpoint to manage your dictorionary](https://api-clients-automation.netlify.app/specs/search#tag/Dictionaries/operation/batchDictionaryEntries). In this guide, we will demonstrate how to manage entries for different scenarios.
 
-A `dictionaryName` can be either `stopword`, `plural` or `compound`.
+A `dictionaryName` can be either `stopwords`, `plurals` or `compounds`.
 
 ## Append new entries to your dictionary
 
@@ -18,7 +18,7 @@ A `dictionaryName` can be either `stopword`, `plural` or `compound`.
 
 ```js
 await client.batchDictionaryEntries({
-      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopword`, `plural` or `compound`.
+      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopwords`, `plurals` or `compounds`.
       batchDictionaryEntriesParams: {
         clearExistingDictionaryEntries: false, // here we want to append data, so we don't clear existing entries
         requests: [
@@ -64,7 +64,7 @@ await client.batchDictionaryEntries({
 
 ```js
 await client.batchDictionaryEntries({
-      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopword`, `plural` or `compound`.
+      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopwords`, `plurals` or `compounds`.
       batchDictionaryEntriesParams: {
         clearExistingDictionaryEntries: true, // Since we replace, we will create a new dictionary from those entries
         requests: [
@@ -110,7 +110,7 @@ await client.batchDictionaryEntries({
 
 ```js
 await client.batchDictionaryEntries({
-      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopword`, `plural` or `compound`.
+      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopwords`, `plurals` or `compounds`.
       batchDictionaryEntriesParams: {
         clearExistingDictionaryEntries: true,
         requests: [], // We don't push any new entries to it
@@ -144,7 +144,7 @@ await client.batchDictionaryEntries({
 
 ```js
 await client.batchDictionaryEntries({
-      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopword`, `plural` or `compound`.
+      dictionaryName: 'YOUR_DICTIONARY_NAME', // one of `stopwords`, `plurals` or `compounds`.
       batchDictionaryEntriesParams: {
         clearExistingDictionaryEntries: false, // we don't want to impact other entries.
         requests: [
