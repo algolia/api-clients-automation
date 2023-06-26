@@ -2,25 +2,32 @@ get:
   tags:
     - Advanced
   operationId: getLogs
-  description: Return the latest log entries.
+  description: >
+    The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl) enabled.
+
+    Logs are held for the last seven days. There's also a logging limit of 1,000 API calls per server.
+
+    This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn't appear in the logs itself.
+
+    > **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN's endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
   summary: Return the latest log entries.
   parameters:
     - name: offset
       in: query
-      description: First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
+      description: First log entry to retrieve. Sorted by decreasing date with 0 being the most recent.
       schema:
         type: integer
         default: 0
     - name: length
       in: query
-      description: Maximum number of entries to retrieve. The maximum allowed value is 1000.
+      description: Maximum number of entries to retrieve.
       schema:
         type: integer
         default: 10
         maximum: 1000
     - name: indexName
       in: query
-      description: Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
+      description: Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices.
       schema:
         type: string
         nullable: true
@@ -49,7 +56,7 @@ get:
                   properties:
                     timestamp:
                       type: string
-                      description: Timestamp in ISO-8601 format.
+                      description: Timestamp in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
                     method:
                       type: string
                       description: HTTP method of the performed request.
@@ -58,19 +65,19 @@ get:
                       description: HTTP response code.
                     query_body:
                       type: string
-                      description: Request body. Truncated after 1000 characters.
+                      description: Request body. Truncated after 1,000 characters.
                     answer:
                       type: string
-                      description: Answer body. Truncated after 1000 characters.
+                      description: Answer body. Truncated after 1,000 characters.
                     url:
                       type: string
                       description: Request URL.
                     ip:
                       type: string
-                      description: IP of the client which performed the request.
+                      description: IP address of the client that performed the request.
                     query_headers:
                       type: string
-                      description: Request Headers (API Key is obfuscated).
+                      description: Request headers (API key is obfuscated).
                     sha1:
                       type: string
                       description: SHA1 signature of the log entry.
@@ -79,7 +86,7 @@ get:
                       description: Number of API calls.
                     processing_time_ms:
                       type: string
-                      description: Processing time for the query. It doesn't include network time.
+                      description: Processing time for the query. Doesn't include network time.
                     index:
                       type: string
                       description: Index targeted by the query.
@@ -91,7 +98,7 @@ get:
                       description: Number of hits returned for the query.
                     inner_queries:
                       type: array
-                      description: Array of all performed queries for the given request.
+                      description: Performed queries for the given request.
                       items:
                         type: object
                         title: logQuery
@@ -104,7 +111,7 @@ get:
                             description: User identifier.
                           query_id:
                             type: string
-                            description: QueryID for the given query.
+                            description: Unique query identifier.
                   required:
                     - timestamp
                     - method

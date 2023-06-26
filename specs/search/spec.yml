@@ -71,6 +71,8 @@ tags:
       You should authorize the IP addresses of team members who need to access the Alglolia dashboard, as it's also affected by the restricted list you set up.
       
       To access this feature, [Algolia Vault](https://www.algolia.com/doc/guides/security/algolia-vault/) must be enabled on your server. Contact [Algolia's support team](https://support.algolia.com/hc/en-us/requests/new) for details.
+
+      > **Note**: The maximum number of allowed sources is 1,000.
   - name: _model_index_settings
     x-displayName: Index settings
     description: |
