@@ -4,7 +4,7 @@ post:
   operationId: getObjects
   x-use-read-transporter: true
   x-cacheable: true
-  summary: Get one or more records.
+  summary: Get multiple records.
   description: >
     Retrieve one or more records, potentially from different indices, in a single API operation.
     Results will be received in the same order as the requests.

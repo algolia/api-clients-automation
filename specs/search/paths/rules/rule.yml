@@ -3,7 +3,7 @@ get:
     - Rules
   operationId: getRule
   summary: Get a rule.
-  description: To list rule 'objectID's for an index, use the `rules` method's `search` operation.
+  description: To list rule objectIDs for an index, use the [`search` operation](#tag/Rules/operation/searchRules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -28,7 +28,7 @@ put:
     - Rules
   operationId: saveRule
   summary: Create or update a single rule.
-  description: To create or update more than one rule, use the `rules` method's `batch` operation.
+  description: To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -60,7 +60,7 @@ delete:
     - Rules
   operationId: deleteRule
   summary: Delete a rule.
-  description: To list rule 'objectID's for an index, use the `rules` method's `search` operation.
+  description: To list rule objectIDs for an index, use the [`search` operation](#tag/Rules/operation/searchRules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'

@@ -15,8 +15,8 @@ post:
       description: >
         If the record doesn't exist and the parameter value is:
           
-        - `true` a new record will be created.
-        - `false` the engine will do nothing.
+        - `true`, a new record will be created.
+        - `false`, the engine will do nothing.
       in: query
       schema:
         type: boolean

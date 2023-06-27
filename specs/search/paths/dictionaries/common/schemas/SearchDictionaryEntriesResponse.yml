@@ -16,10 +16,7 @@ searchDictionaryEntriesResponse:
 
 dictionaryEntry:
   type: object
-  description: >
-    Dictionary entry.
-
-    To get an entry's `objectID`, use the `dictionaries` method's `settings` operation.
+  description: Dictionary entry.
   additionalProperties: true
   required:
     - objectID

@@ -20,7 +20,7 @@ builtInOperationType:
     - AddUnique
     - IncrementFrom
     - IncrementSet
-  description: Operation to apply on the attribute.
+  description: Operation to apply to the attribute.
 
 attribute:
   type: string

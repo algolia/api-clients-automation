@@ -2,8 +2,8 @@ get:
   tags:
     - Records
   operationId: getObject
-  summary: Get a single record.
-  description: To get more than one record, use the `objects` operation.
+  summary: Get a record.
+  description: To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -16,7 +16,7 @@ get:
 
         `objectID` is always retrieved, even when not specified.
 
-        Any attributes listed in [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved by `getObject` unless the request is authenticated with the admin API key.
+        Any attributes listed in [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key.
       schema:
         type: array
         items:
@@ -45,13 +45,13 @@ put:
   tags:
     - Records
   operationId: addOrUpdateObject
-  summary: Add or replace a record.
+  summary: Add or replace a record (using objectID).
   description: |
     If you use an existing `objectID`, the existing record will be replaced with the new one.
     
-    To update only some attributes of an existing record, use the `partial` operation instead.
+    To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.
 
-    To add multiple records to your index in a single API request, use the `batch` operation.
+    To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -79,7 +79,7 @@ delete:
     - Records
   operationId: deleteObject
   summary: Delete a record.
-  description: To delete a set of records matching a query, use the `deleteByQuery` operation instead.
+  description: To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
