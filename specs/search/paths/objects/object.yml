@@ -47,7 +47,7 @@ put:
   operationId: addOrUpdateObject
   summary: Add or replace a record.
   description: |
-    If you use an existing `objectID`, the existing record is replaced with the new one.
+    If you use an existing `objectID`, the existing record will be replaced with the new one.
     
     To update only some attributes of an existing record, use the `partial` operation instead.
 

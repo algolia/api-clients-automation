@@ -1,7 +1,7 @@
 taskID:
   type: integer
   format: int64
-  description: taskID of the task to wait for.
+  description: Unique identifier of the task to wait for.
 
 objectIDs:
   type: array
@@ -11,12 +11,12 @@ objectIDs:
 
 createdAt:
   type: string
-  description: Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+  description: Time of creation in milliseconds (in [Unix epoch time](https://wikipedia.org/wiki/Unix_time)).
 
 createdAtTimestamp:
   type: integer
   format: int64
-  description: Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+  description: Time of creation in milliseconds (in [Unix epoch time](https://wikipedia.org/wiki/Unix_time)).
 updatedAt:
   type: string
   description: Date of last update (in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format).

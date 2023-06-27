@@ -19,7 +19,7 @@ rule:
     enabled:
       type: boolean
       default: true
-      description: If `true``, the rule is enabled. If it isn't enabled, it isn't applied at query time.
+      description: If `true`, the rule is enabled. If it isn't enabled, it isn't applied at query time.
     validity:
       type: array
       description: If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.
@@ -60,16 +60,16 @@ consequence:
       $ref: '#/consequenceParams'
     promote:
       type: array
-      description: Objects to promote as hits.
+      description: Records to promote.
       items:
         $ref: '#/promote'
     filterPromotes:
       type: boolean
       default: false
-      description: Only use in combination with the promote consequence. When true, promoted results will be restricted to match the filters of the current search. When false, the promoted results will show up regardless of the filters.
+      description: Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.
     hide:
       type: array
-      description: Objects to hide from hits. Each object must contain an objectID field. By default, you can hide up to 50 items per rule.
+      description: Records to hide. By default, you can hide up to 50 records per rule.
       items:
         title: consequenceHide
         type: object
@@ -116,7 +116,7 @@ promoteObjectIDs:
   properties:
     objectIDs:
       type: array
-      description: Array of unique identifiers of the objects to promote.
+      description: Unique identifiers of the records to promote.
       items:
         type: string
     position:
@@ -127,11 +127,11 @@ promoteObjectIDs:
 
 promotePosition:
   type: integer
-  description: The position to promote the objects to (zero-based). If you pass objectIDs, the objects are placed at this position as a group. For example, if you pass four objectIDs to position 0, the objects take the first four positions.
+  description: The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
 
 params:
   type: object
-  description: Additional search parameters. Any valid search parameter is allowed.
+  description: Additional search parameters.
   additionalProperties: false
   properties:
     query:

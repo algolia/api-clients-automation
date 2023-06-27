@@ -5,6 +5,8 @@ post:
   summary: Batch assign userIDs.
   description: >
     Assign multiple userIDs to a cluster.
+
+    **You can't _move_ users with this operation.**.
   parameters:
     - $ref: '../../common/parameters.yml#/UserIDInHeader'
   requestBody:
@@ -21,10 +23,7 @@ post:
               $ref: '../../common/schemas/Cluster.yml#/clusterName'
             users:
               type: array
-              description: >
-                userIDs to assign.
-                
-                **You can't _move_ users with this operation.**.
+              description: userIDs to assign.
               items:
                 type: string
           required:

@@ -4,9 +4,9 @@ post:
   operationId: searchForFacetValues
   x-use-read-transporter: true
   x-cacheable: true
-  summary: Search for the values of a facet.
+  summary: Search for facet values.
   description: >
-    [Search for values of a facet](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria.
+    [Searches for a facet's values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria.
 
     > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
   parameters:

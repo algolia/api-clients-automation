@@ -52,7 +52,7 @@ post:
             properties:
               taskID:
                 type: object
-                description: List of tasksIDs per index.
+                description: List of taskIDs per index.
                 additionalProperties:
                   $ref: '../../../common/responses/common.yml#/taskID'
               objectIDs:

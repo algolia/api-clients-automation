@@ -5,12 +5,7 @@ post:
   x-use-read-transporter: true
   x-cacheable: true
   summary: Search an index.
-  description: >
-    Return records that match the query.
-
-    You can find the list of parameters that you can use in the POST body in the Search Parameters section.
-    
-    Alternatively, parameters may be specified as a URL-encoded query string inside the params attribute.
+  description: Return records that match the query.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

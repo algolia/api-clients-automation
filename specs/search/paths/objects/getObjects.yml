@@ -55,7 +55,7 @@ post:
             properties:
               results:
                 type: array
-                description: List of results fetched.
+                description: Retrieved results.
                 items:
                   type: object
                   description: Fetched object.

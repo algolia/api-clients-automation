@@ -4,7 +4,7 @@ listIndicesResponse:
   properties:
     items:
       type: array
-      description: List of the fetched indices.
+      description: Retrieved indices.
       items:
         $ref: '#/fetchedIndex'
     nbPages:

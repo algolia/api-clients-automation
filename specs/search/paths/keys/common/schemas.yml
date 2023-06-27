@@ -12,12 +12,12 @@ apiKey:
         $ref: '#/acl'
     description:
       type: string
-      description: A description of an API key. This can be helpful when presenting keys in the Algolia dashboard.
+      description: A description of an API key. This can be helpful when displaying keys in the Algolia dashboard.
       default: ''
     indexes:
       type: array
       description: >
-        Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
+        Restrict this API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
 
         Specify either an exact index name, or a pattern with a leading or trailing wildcard character (or both). For example:
 
@@ -30,7 +30,7 @@ apiKey:
     maxHitsPerQuery:
       type: integer
       description: >
-        Maximum number (poitive integer) of hits this API key can retrieve in one query. If zero, no limit is enforced.
+        Maximum number (positive integer) of hits this API key can retrieve in one query. If zero, no limit is enforced.
 
         > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index.
       default: 0

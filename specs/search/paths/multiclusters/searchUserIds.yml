@@ -21,7 +21,7 @@ post:
           properties:
             query:
               type: string
-              description: Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
+              description: Query to search. The search is a prefix search with [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) enabled. An empty query will retrieve all users.
             clusterName:
               $ref: '../../common/schemas/Cluster.yml#/clusterName'
             page:
@@ -42,7 +42,7 @@ post:
             properties:
               hits:
                 type: array
-                description: List of user object matching the query.
+                description: User objects that match the query.
                 items:
                   title: userHit
                   type: object

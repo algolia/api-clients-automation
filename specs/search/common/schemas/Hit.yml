@@ -135,7 +135,7 @@ rankingInfo:
 
 highlightedValue:
   type: string
-  description: Markup text with occurrences highlighted.
+  description: Markup text with `facetQuery` matches highlighted.
   example: <em>George</em> <em>Clo</em>oney
 
 matchLevel:

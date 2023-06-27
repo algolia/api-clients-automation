@@ -29,7 +29,7 @@ baseSearchResponse:
   properties:
     abTestID:
       type: integer
-      description: If a search encounters an index that's being A/B tested, returns the ongoing A/B test ID.
+      description: If a search encounters an index that's being A/B tested, returns the A/B test ID.
     abTestVariantID:
       type: integer
       description: If a search encounters an index that's being A/B tested, returns the variant ID of the index used (starting at 1).
@@ -48,7 +48,7 @@ baseSearchResponse:
       description: If `false`, `nbHits` is approximate.
     exhaustiveTypo:
       type: boolean
-      description: If `false`, the typo tolerance search was approximate (only included when typo tolerance is enabled).
+      description: If `false`, the typo tolerance search was approximate (only applies when typo tolerance is enabled).
     facets:
       title: facets
       type: object
@@ -89,7 +89,7 @@ baseSearchResponse:
       description: Index name used for the query.
     indexUsed:
       type: string
-      description: Index name used for the query. In the case of an A/B test, the targeted index isn't always the index used by the query.
+      description: Index name used for the query. During A/B testing, the targeted index isn't always the index used by the query.
       example: indexNameAlt
     message:
       type: string
@@ -110,7 +110,7 @@ baseSearchResponse:
       example: query=a&hitsPerPage=20
     redirect:
       type: object
-      description: Used by Algolia.
+      description: For internal use.
       properties:
         index:
           type: array
