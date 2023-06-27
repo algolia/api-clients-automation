@@ -27,7 +27,7 @@ put:
   tags:
     - Rules
   operationId: saveRule
-  summary: Create or update a single rule.
+  summary: Create or update a rule.
   description: To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

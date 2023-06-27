@@ -2,7 +2,7 @@ get:
   tags:
     - Dictionaries
   operationId: getDictionarySettings
-  description: Get the languages for which stop words are turned off (with the [`settings` operation](#tag/Dictionaries/operation/setDictionarySettings)).
+  description: Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
   summary: Get stop word settings.
   responses:
     '200':

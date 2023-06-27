@@ -1,7 +1,10 @@
 taskID:
   type: integer
   format: int64
-  description: Unique identifier of the task to wait for.
+  description: >
+    Unique identifier of the task to wait for.
+
+    A successful response means that the operation has been scheduled. It might not run immediately. Check its progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
 
 objectIDs:
   type: array
