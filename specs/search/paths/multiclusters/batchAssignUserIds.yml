@@ -24,6 +24,7 @@ post:
             users:
               type: array
               description: userIDs to assign.
+              example: ['einstein','bohr','feynman']
               items:
                 type: string
           required:
