@@ -202,6 +202,7 @@ searchParamsString:
 
 paramsAsString:
   description: Search parameters as a URL-encoded query string.
+  example: 'query=george%20clo&hitsPerPage=2&getRankingInfo=1'
   type: string
   default: ''
 

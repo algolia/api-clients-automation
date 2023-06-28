@@ -15,7 +15,8 @@ rule:
       $ref: '#/consequence'
     description:
       type: string
-      description: A description of the rule's purpose. This can be helpful when searching for and presenting rules in, for example, the Algolia dashboard.
+      description: A description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
+      example: 'Display a promotional banner'
     enabled:
       type: boolean
       default: true
@@ -35,6 +36,7 @@ condition:
     pattern:
       type: string
       description: Query pattern syntax.
+      example: '{facet:brand}'
     anchoring:
       $ref: '#/anchoring'
     alternatives:
@@ -44,6 +46,7 @@ condition:
     context:
       type: string
       description: 'Rule context format: [A-Za-z0-9_-]+).'
+      example: 'trackedFilters'
 
 anchoring:
   type: string
@@ -83,6 +86,7 @@ consequence:
     userData:
       type: object
       description: Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
+      example: {'settingID': 'f2a7b51e3503acc6a39b3784ffb84300','pluginVersion': '1.6.0'}
 
 consequenceParams:
   allOf:
@@ -96,13 +100,14 @@ promote:
     - $ref: '#/promoteObjectID'
 
 promoteObjectID:
-  description: Single objectID to promote as hits.
+  description: objectID to promote.
   type: object
   additionalProperties: false
   properties:
     objectID:
       type: string
       description: Unique identifier of the object to promote.
+      example: '2b642cf64c587f50388eb1b8d047bf56'
     position:
       $ref: '#/promotePosition'
   required:
@@ -110,13 +115,14 @@ promoteObjectID:
     - objectID
 
 promoteObjectIDs:
-  description: Multiple objectIDs to promote as hits.
+  description: objectIDs to promote.
   type: object
   additionalProperties: false
   properties:
     objectIDs:
       type: array
       description: Unique identifiers of the records to promote.
+      example: ['3f31c087763a2ceec359b318fc3edef3','63c3c871e31a152d67df7720192fd752']
       items:
         type: string
     position:
@@ -128,6 +134,7 @@ promoteObjectIDs:
 promotePosition:
   type: integer
   description: The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
+  example: 0
 
 params:
   type: object

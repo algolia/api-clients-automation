@@ -4,8 +4,8 @@ post:
   operationId: searchRules
   x-use-read-transporter: true
   x-cacheable: true
-  summary: List the rules associated with an index.
-  description: Search for rules matching various criteria.
+  summary: List the rules.
+  description: List rules matching various criteria.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -35,7 +35,9 @@ post:
               description: Restricts responses to enabled rules. When absent (default), all rules are retrieved, enabled or not.
             requestOptions:
               type: array
-              description: The request options to send with the request.
+              description: Request options to send with the API call.
+              example: >
+                {timeouts:{read:20}}
               items:
                 type: object
                 description: Request option.
