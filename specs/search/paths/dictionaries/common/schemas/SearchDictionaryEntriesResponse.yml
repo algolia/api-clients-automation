@@ -27,7 +27,8 @@ dictionaryEntry:
     language:
       type: string
       description: >
-        [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) (for example, "en" for English).
+        [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
+      example: 'de'
     word:
       type: string
       description: >
@@ -44,17 +45,20 @@ dictionaryEntry:
         
         When `decomposition` isn't empty: creates a decomposition exception.
         For example, when decomposition is set to the ["hund", "hutte"] exception, "hundehutte" decomposes into “hund” and “hutte”, discarding the linking "e".
+      example: 'down'
     words:
       type: array
       description: >
         Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/).
         
         If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`.
+      example: ['cheval','chevaux']
       items:
         type: string
     decomposition:
       type: array
       description: For compound entries, governs the behavior of the `word` parameter.
+      example: ['kopf','schmerz','tablette']
       items:
         type: string
     state:

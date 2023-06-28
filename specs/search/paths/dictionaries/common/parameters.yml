@@ -14,12 +14,13 @@ dictionaryType:
 # misc
 language:
   description: >
-    [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) (for example, "en" for English).
+    [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
+  example: 'en'
   type: string
 
 standardEntries:
   description: >
-    Maps a [supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) to a boolean value (for example, `"fr": false`). If `true` Algolia's built-in [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) for that language have been turned off.
+    Maps a [supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) to a boolean value (for example, `'fr': false`). If `true` Algolia's built-in [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) for that language have been turned off.
   additionalProperties: false
   properties:
     plurals:
@@ -30,7 +31,9 @@ standardEntries:
       $ref: '#/standardEntry'
 
 standardEntry:
-  description: Language ISO code.
+  description: Language ISO code and boolean.
+  example: >
+    {'fr': false}
   type: object
   nullable: true
   additionalProperties:
