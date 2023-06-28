@@ -1,6 +1,7 @@
 taskID:
   type: integer
   format: int64
+  example: 1514562690001
   description: >
     Unique identifier of the task to wait for.
 
@@ -10,20 +11,26 @@ objectIDs:
   type: array
   items:
     type: string
+    example: f46ff0681a7c8cf818456e34bfbcc8ef
   description: objectIDs.
 
 createdAt:
   type: string
+  example: 1646636812345
   description: Time of creation in milliseconds (in [Unix epoch time](https://wikipedia.org/wiki/Unix_time)).
 
 createdAtTimestamp:
   type: integer
   format: int64
+  example: 1656345570000
   description: Time of creation in milliseconds (in [Unix epoch time](https://wikipedia.org/wiki/Unix_time)).
+
 updatedAt:
   type: string
+  example: 2023-06-27T14:42:38.831Z
   description: Date of last update (in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format).
 
 deletedAt:
   type: string
+  example: 2023-06-27T14:42:38.831Z
   description: Date of deletion (in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format).

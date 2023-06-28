@@ -12,18 +12,21 @@ baseIndexSettings:
       type: array
       items:
         type: string
+      example: [virtual(relevant),digital_comma_replica]
       description: Creates [replicas](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/) (exact copies of an index).
       default: []
       x-categories:
         - Ranking
     paginationLimitedTo:
       type: integer
+      example: 20
       description: Maximum number of hits accessible through pagination.
       default: 1000
     unretrievableAttributes:
       type: array
       items:
         type: string
+      example: [custom_ranking]
       description: Attributes that can't be retrieved at query time.
       default: []
       x-categories:
@@ -32,6 +35,7 @@ baseIndexSettings:
       type: array
       items:
         type: string
+      example: ['wheel','1X2BCD']
       description: Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
       default: []
       x-categories:
@@ -41,18 +45,22 @@ baseIndexSettings:
       type: array
       items:
         type: string
+      example: ['name','description']
       x-categories:
         - Languages
     camelCaseAttributes:
       type: array
       items:
         type: string
+      example: ['description']
       description: Attributes on which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
       default: []
       x-categories:
         - Languages
     decompoundedAttributes:
       type: object
+      example: >
+        { de: ['name']}
       description: Attributes in your index to which [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) (decompounding) applies.
       default: {}
       x-categories:
@@ -61,6 +69,7 @@ baseIndexSettings:
       type: array
       items:
         type: string
+      example: ['ja']
       description: Languages, set at index level, for language-specific processing features such as [tokenization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/tokenization/) and [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
       default: []
       x-categories:
@@ -69,6 +78,7 @@ baseIndexSettings:
       type: array
       items:
         type: string
+      example: ['sku']
       description: Attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
       default: []
       x-categories:
@@ -87,11 +97,13 @@ baseIndexSettings:
       items:
         type: string
       description: Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
+      example: ['quantity','popularity']
       default: []
       x-categories:
         - Performance
     separatorsToIndex:
       type: string
+      example: +#
       description: Controls which separators are added to an Algolia index as part of [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean). Separators are all non-letter characters except spaces and currency characters, such as $€£¥.
       default: ''
       x-categories:
@@ -100,6 +112,7 @@ baseIndexSettings:
       type: array
       items:
         type: string
+      example: ['title,alternative_title','author','unordered(text)','emails.personal']
       description: >
         [Attributes used for searching](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
       default: []
@@ -110,6 +123,8 @@ baseIndexSettings:
     customNormalization:
       description: Overrides Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
       type: object
+      example: >
+        {default: {'ä': 'ae', 'ü': 'ue'}}
       additionalProperties:
         type: object
         additionalProperties:
@@ -125,6 +140,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['author','filterOnly(isbn)','searchable(edition)','afterDistinct(category)','afterDistinct(searchable(publisher))']
       description: Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
       default: []
       x-categories:
@@ -133,7 +149,8 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
-      description: Attributes to retrieve (and not to retrieve).
+      example: ['author','title','content']
+      description: Attributes to retrieve.
       default: ['*']
       x-categories:
         - Attributes
@@ -141,6 +158,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['title','author']
       description: Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
       default: []
       x-categories:
@@ -166,12 +184,14 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['desc(popularity)','asc(price)']
       description: Specifies the [custom ranking criterion](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
       default: []
       x-categories:
         - Ranking
     relevancyStrictness:
       type: integer
+      example: 90
       description: Relevancy threshold below which less relevant results aren't included in the results.
       default: 100
       x-categories:
@@ -180,6 +200,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['author','title','content']
       description: Attributes to highlight.
       x-categories:
         - Highlighting and Snippeting
@@ -187,6 +208,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['content:80','description']
       description: Attributes to snippet. You can also set each snippet's size to a specific number of words.
       default: []
       x-categories:
@@ -241,6 +263,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['sku']
       description: Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
       default: []
       x-categories:
@@ -251,6 +274,7 @@ indexSettingsAsSearchParams:
       $ref: '#/removeStopWords'
     keepDiacriticsOnCharacters:
       type: string
+      example: øé
       description: Characters that the engine shouldn't automatically [normalize](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
       default: ''
       x-categories:
@@ -259,6 +283,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['es']
       description: Languages to be used by language-specific settings and features such as `ignorePlurals`, `removeStopWords`, and [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) word detection.
       default: []
       x-categories:
@@ -311,6 +336,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['blue','iphone case']
       description: Words that should be considered as [optional](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words) when found in a query.
       default: []
       x-categories:
@@ -319,6 +345,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
+      example: ['description']
       description: Attributes for which you want to [turn off the exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
       default: []
       x-categories:
@@ -410,6 +437,7 @@ hitsPerPage:
 
 userData:
   type: object
+  example: {'settingID': 'f2a7b51e3503acc6a39b3784ffb84300','pluginVersion': '1.6.0'}
   description: Lets you store custom data in your indices.
   default: {}
   x-categories:
@@ -435,6 +463,7 @@ mode:
 removeWordsIfNoResults:
   type: string
   enum: [none, lastWords, firstWords, allOptional]
+  example: firstWords
   description: Selects a strategy to [remove words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/) from the query when it doesn't match any hits.
   default: none
   x-categories:
@@ -462,7 +491,8 @@ advancedSyntaxFeatures:
     - Query strategy
 
 distinct:
-  description: Enables [deduplication or grouping of results (Algolia's _distinct_ feature)](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).).
+  description: Enables [deduplication or grouping of results (Algolia's _distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature)).
+  example: 1
   oneOf:
     - type: boolean
     - type: integer
@@ -494,6 +524,7 @@ ignorePlurals:
     _list_: language ISO codes for which ignoring plurals should be enabled. This list will override any values that you may have set in `queryLanguages`.
     _true_: enables the ignore plurals feature, where singulars and plurals are considered equivalent ("foot" = "feet"). The languages supported here are either [every language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) (this is the default) or those set by `queryLanguages`.
     _false_: turns off the ignore plurals feature, so that singulars and plurals aren't considered to be the same ("foot" will not find "feet").
+  example: ['ca','es']
   oneOf:
     - type: array
       items:
@@ -512,6 +543,7 @@ removeStopWords:
     _list_: language ISO codes for which stop words should be enabled. This list will override any values that you may have set in `queryLanguages`.
     _true_: enables the stop words feature, ensuring that stop words are removed from consideration in a search. The languages supported here are either [every language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) (this is the default) or those set by `queryLanguages`.
     _false_: turns off the stop words feature, allowing stop words to be taken into account in a search.
+  example: ['ca','es']
   oneOf:
     - type: array
       items:
