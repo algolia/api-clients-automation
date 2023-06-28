@@ -25,28 +25,30 @@ Index:
   required: true
   schema:
     type: string
+    example: myIndexName
 
 StartDate:
   in: query
   name: startDate
-  description: The lower bound timestamp (a date, a string like "2006-01-02") of the period to analyze.
+  description: Lower bound timestamp (a date string in the format YYYY-MM-DD) of the period to analyze.
   schema:
     type: string
-    example: 1999-09-19
+    example: 2022-09-19
     pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
 
 EndDate:
   in: query
   name: endDate
-  description: The upper bound timestamp (a date, a string like "2006-01-02") of the period to analyze.
+  description: Upper bound timestamp (a date string inf the format YYY-MM-DD) of the period to analyze.
   schema:
     type: string
-    example: 2000-01-21
+    example: 2023-01-21
     pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
 
 ForwardToReplicas:
   in: query
   name: forwardToReplicas
+  example: false
   description: If `true`, the updated `indexName` settings will be forwarded to its replica indices.
   schema:
     type: boolean
@@ -55,7 +57,7 @@ Page:
   in: query
   name: page
   description: >
-    Returns the requested page number (zero-based: the first page is page 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
+    Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
   schema:
     type: integer
     nullable: true
@@ -65,7 +67,7 @@ PageDefault0:
   in: query
   name: page
   description: >
-    Returns the requested page number (zero-based: the first page is page 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
+    Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
   schema:
     type: integer
     nullable: true
@@ -99,10 +101,12 @@ Limit:
 objectID:
   type: string
   description: Unique object identifier.
+  example: '123'
 
 id:
   type: string
-  description: objectID of the inserted object.
+  example: '12'
+  description: objectID of the inserted synonym object.
 
 indexName:
   type: string
@@ -122,13 +126,14 @@ query:
 page:
   type: integer
   default: 0
-  description: >
-    Requested page (zero-based: the first page is page 0).
+  description: Requested page (the first page is page 0).
 
 trackedSearchCount:
   type: integer
+  example: 2
   description: The number of tracked search click.
 
 count:
   description: The number of occurrences.
+  example: 2
   type: integer

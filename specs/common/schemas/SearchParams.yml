@@ -236,6 +236,7 @@ aroundRadiusAll:
 aroundLatLng:
   type: string
   description: Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.
+  example: '40.71,-74.01'
   default: ''
   x-categories:
     - Geo-Search
@@ -253,6 +254,7 @@ insideBoundingBox:
     type: number
     format: double
   description: Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
+  example: [46.650828100116044,7.123046875,45.17210966999772,1.009765625]
   x-categories:
     - Geo-Search
 
@@ -262,6 +264,7 @@ insidePolygon:
     type: number
     format: double
   description: Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
+  example: [46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]
   x-categories:
     - Geo-Search
 
@@ -286,6 +289,7 @@ filters:
   type: string
   description: >
     [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters.
+  example: '(category:Book OR category:Ebook) AND _tags:published'
   default: ''
   x-categories:
     - Filtering
@@ -293,6 +297,7 @@ filters:
 facetFilters:
   description: >
     [Filter hits by facet value](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
+  example: ['category:Book','author:John Doe']
   oneOf:
     - $ref: '#/listOfSearchFilters'
     - type: string
@@ -311,6 +316,7 @@ reRankingApplyFilter:
 tagFilters:
   description: >
     [Filter hits by tags](https://www.algolia.com/doc/api-reference/api-parameters/tagFilters/).
+  example: [['Book','Movie'],'SciFi']
   oneOf:
     - $ref: '#/listOfSearchFilters'
     - type: string
@@ -320,6 +326,7 @@ tagFilters:
 numericFilters:
   description: >
     [Filter on numeric attributes](https://www.algolia.com/doc/api-reference/api-parameters/numericFilters/).
+  example: [['inStock = 1','deliveryDate < 1441755506'],'price < 1000']
   oneOf:
     - $ref: '#/listOfSearchFilters'
     - type: string

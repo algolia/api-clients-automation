@@ -16,7 +16,7 @@ get:
 
         `objectID` is always retrieved, even when not specified.
 
-        Any attributes listed in [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key.
+        [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key.
       schema:
         type: array
         items:

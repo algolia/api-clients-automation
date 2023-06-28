@@ -11,7 +11,7 @@ objectIDs:
   type: array
   items:
     type: string
-    example: f46ff0681a7c8cf818456e34bfbcc8ef
+  example: ['f46ff0681a7c8cf818456e34bfbcc8ef','100']
   description: objectIDs.
 
 createdAt:

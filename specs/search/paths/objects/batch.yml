@@ -32,6 +32,7 @@ post:
                   body:
                     type: object
                     description: Operation arguments (varies with specified `action`).
+                    example: {'name': 'Betty Jane McCamey','company': 'Vita Foods Inc.','email': 'betty@mccamey.com'}
                 required:
                   - action
                   - body
