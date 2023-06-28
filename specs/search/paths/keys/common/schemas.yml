@@ -7,6 +7,7 @@ apiKey:
       type: array
       description: >
         [Permissions](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl) associated with the key.
+      example: ['search','addObject']
       default: []
       items:
         $ref: '#/acl'
@@ -25,6 +26,7 @@ apiKey:
         - `dev_*` matches all indices starting with "dev_"
         - `*_dev` matches all indices ending with "_dev"
         - `*_products_*` matches all indices containing "_products_".
+      example: ['indexName1','indexName2']
       default: []
       items:
         type: string
@@ -54,7 +56,8 @@ apiKey:
       description: >
         Force some [query parameters](https://www.algolia.com/doc/api-reference/api-parameters/) to be applied for each query made with this API key.
         
-        It's a URL-encoded query string. For example, `typoTolerance%3Dstrict%26ignorePlurals%3Dfalse%26filters%3Drights%3Apublic`.
+        It's a URL-encoded query string.
+      example: 'typoTolerance%3Dstrict%26ignorePlurals%3Dfalse%26filters%3Drights%3Apublic'
       default: ''
     referers:
       type: array
@@ -66,6 +69,7 @@ apiKey:
         - `https://algolia.com/*` matches all referers starting with "https://algolia.com/""
         - `*.algolia.com` matches all referers ending with ".algolia.com"
         - `*algolia.com*` allows everthing in the domain "algolia.com".
+      example: ['*algolia.com*']
       default: []
       items:
         type: string
@@ -75,6 +79,7 @@ apiKey:
         Validity duration of a key (in seconds).  The key will automatically be removed after this time has expired. The default value of 0 never expires.
 
         Short-lived API keys are useful to grant temporary access to your data, for example, for demos. 
+      example: 86400
       default: 0
   required:
     - acl
