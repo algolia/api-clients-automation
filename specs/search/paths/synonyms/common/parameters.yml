@@ -23,6 +23,7 @@ Type:
 SynonymType:
   type: string
   description: Synonym type.
+  example: onewaysynonym
   enum:
     - synonym
     - onewaysynonym

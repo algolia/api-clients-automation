@@ -11,7 +11,7 @@ synonymHit:
   properties:
     objectID:
       type: string
-      description: Unique identifier of the synonym object to be created or updated.
+      description: Unique identifier of a synonym object.
     type:
       $ref: './parameters.yml#/SynonymType'
 
@@ -20,26 +20,32 @@ synonymHit:
       items:
         type: string
       description: Words or phrases considered equivalent.
+      example: ['vehicle','auto']
     input:
       type: string
       description: Word or phrase to appear in query strings (for [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
+      example: 'car'
     word:
       type: string
       description: Word or phrase to appear in query strings (for [`altcorrection1` and `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).
+      example: 'car'
     corrections:
       type: array
       items:
         type: string
       description: Words to be matched in records.
+      example: ['vehicle','auto']
     placeholder:
       type: string
       description: >
         [Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records.
+      example: '<Street>'
     replacements:
       type: array
       items:
         type: string
       description: Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
+      example: ['street','st']
   required:
     - objectID
     - type

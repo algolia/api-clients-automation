@@ -29,7 +29,7 @@ put:
   operationId: saveSynonym
   summary: Save a synonym.
   description: >
-    Add a single [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it.
+    Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it.
 
     If the synonym `objectID` doesn't exist, Algolia adds a new one.
     
