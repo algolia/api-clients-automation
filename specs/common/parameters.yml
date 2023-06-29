@@ -120,7 +120,7 @@ hitsPerPage:
 
 query:
   type: string
-  description: Full text query.
+  description: Full-text query.
   default: ''
 
 page:

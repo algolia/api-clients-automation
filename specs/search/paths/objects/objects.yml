@@ -10,7 +10,7 @@ post:
     If you use an existing `objectID`, the existing record is replaced with the new one.
     
     To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
-  summary: Add or replace a record.
+  summary: Add or update a record.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

@@ -12,6 +12,8 @@ post:
 
     - **Move** to rename an index.
     - **Copy** to create a new index with the same records and configuration as an existing one.
+
+    > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

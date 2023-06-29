@@ -45,7 +45,7 @@ put:
   tags:
     - Records
   operationId: addOrUpdateObject
-  summary: Add or replace a record (using objectID).
+  summary: Add or update a record (using objectID).
   description: |
     If you use an existing `objectID`, the existing record will be replaced with the new one.
     
