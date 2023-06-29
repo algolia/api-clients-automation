@@ -16,3 +16,4 @@ source:
     description:
       description: Source description.
       type: string
+      example: 'Server subnet'
