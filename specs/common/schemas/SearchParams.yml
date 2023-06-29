@@ -144,6 +144,7 @@ baseSearchParamsWithoutQuery:
     userToken:
       type: string
       description: Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.
+      example: '123456'
       x-categories:
         - Personalization
     getRankingInfo:
@@ -336,6 +337,7 @@ numericFilters:
 
 optionalFilters:
   description: Create filters for ranking purposes, where records that match the filter are ranked higher (or lower for negative optional filters).
+  example: ['category:Book','author:John Doe']
   oneOf:
     - $ref: '#/listOfSearchFilters'
     - type: string

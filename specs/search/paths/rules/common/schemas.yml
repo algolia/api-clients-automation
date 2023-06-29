@@ -200,7 +200,7 @@ automaticFacetFilters:
         type: string
 
 automaticOptionalFacetFilters:
-  description: Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
+  description: Same syntax as `automaticFacetFilters`, but the engine treats the filters as optional.
   $ref: '#/automaticFacetFilters'
 
 automaticFacetFilter:

@@ -87,6 +87,7 @@ apiKey:
 keyString:
   type: string
   description: API key.
+  example: '13ad45b4d0a2f6ea65ecbddf6aa260f2'
 
 getApiKeyResponse:
   allOf:

@@ -380,6 +380,7 @@ indexSettingsAsSearchParams:
       $ref: '#/distinct'
     attributeForDistinct:
       description: Name of the deduplication attribute to be used with Algolia's [_distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).
+      example: 'url'
       type: string
     synonyms:
       type: boolean

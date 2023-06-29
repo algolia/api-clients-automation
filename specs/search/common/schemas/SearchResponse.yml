@@ -36,6 +36,7 @@ baseSearchResponse:
     aroundLatLng:
       type: string
       description: Computed geographical location.
+      example: '40.71,-74.01'
       pattern: ^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$
     automaticRadius:
       type: string
@@ -119,6 +120,7 @@ baseSearchResponse:
     parsedQuery:
       type: string
       description: Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
+      example: 'george clo'
     processingTimeMS:
       type: integer
       description: Time the server took to process the request, in milliseconds.
@@ -131,6 +133,7 @@ baseSearchResponse:
     serverUsed:
       type: string
       description: Host name of the server that processed the request.
+      example: 'c2-uk-3.algolia.net'
     userData:
       $ref: '../../../common/schemas/IndexSettings.yml#/userData'
     renderingContent:

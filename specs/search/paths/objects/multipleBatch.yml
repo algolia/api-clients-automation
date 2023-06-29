@@ -36,6 +36,7 @@ post:
                   indexName:
                     type: string
                     description: Index to target for this operation.
+                    example: 'index1'
                 required:
                   - action
                   - body
