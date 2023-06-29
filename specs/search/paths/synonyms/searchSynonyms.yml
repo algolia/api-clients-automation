@@ -12,7 +12,7 @@ post:
     - $ref: '../../../common/parameters.yml#/PageDefault0'
     - $ref: '../../../common/parameters.yml#/HitsPerPage'
   requestBody:
-    description: The body of the the `searchSynonyms` method.
+    description: Body of the `searchSynonyms` operation.
     content:
       application/json:
         schema:

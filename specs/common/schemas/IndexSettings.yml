@@ -337,7 +337,7 @@ indexSettingsAsSearchParams:
       items:
         type: string
       example: ['blue','iphone case']
-      description: Words that should be considered as [optional](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words) when found in a query.
+      description: Words which should be considered [optional](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words) when found in a query.
       default: []
       x-categories:
         - Query strategy

@@ -31,7 +31,7 @@ put:
   tags:
     - Dictionaries
   operationId: setDictionarySettings
-  description: Set stop words settings for a specific language.
+  description: Set stop word settings for a specific language.
   summary: Set stop word settings.
   requestBody:
     required: true

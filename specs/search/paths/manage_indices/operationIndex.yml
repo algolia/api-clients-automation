@@ -32,7 +32,7 @@ post:
               items:
                 $ref: '../../common/enums.yml#/scopeType'
               description: |-
-                **Only applies to the _copy_ operation.**
+                **This only applies to the _copy_ operation.**
                 
                 If you omit `scope`, the copy command copies all records, settings, synonyms, and rules.
                 

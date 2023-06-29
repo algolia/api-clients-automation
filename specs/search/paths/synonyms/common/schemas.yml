@@ -1,6 +1,6 @@
 synonymHits:
   type: array
-  description: Array of synonym objects.
+  description: Synonym objects.
   items:
     $ref: '#/synonymHit'
 

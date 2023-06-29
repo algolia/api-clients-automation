@@ -46,7 +46,7 @@ tags:
     description: >
       Multi-cluster operations.
 
-      Algolia no longer offers [multi-cluster management](https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/) .
+      Algolia no longer offers [multi-cluster management](https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/).
 
       - If you want to partition your data per user, use facets and secured API keys instead.
       - If you need more data, consider upgrading to a bigger cluster to suit your needs. Contact [Algolia's support team](https://support.algolia.com/hc/en-us/requests/new) for details.

@@ -23,7 +23,8 @@ post:
               $ref: 'common/schemas.yml#/anchoring'
             context:
               type: string
-              description: Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules) for example, "mobile".
+              description: Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+              example: 'mobile'
             page:
               $ref: '../../../common/parameters.yml#/page'
             hitsPerPage:
@@ -32,7 +33,7 @@ post:
               type: boolean
               nullable: true
               default: null
-              description: Restricts responses to enabled rules. When absent (default), all rules are retrieved, enabled or not.
+              description: Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
             requestOptions:
               type: array
               description: Request options to send with the API call.
