@@ -30,3 +30,12 @@ SynonymType:
     - altcorrection1
     - altcorrection2
     - placeholder
+
+ObjectID:
+  name: objectID
+  in: path
+  description: Unique identifier of a synonym object.
+  required: true
+  schema:
+    type: string
+    example: 'synonymID'

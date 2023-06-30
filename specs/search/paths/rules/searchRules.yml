@@ -18,7 +18,7 @@ post:
           additionalProperties: false
           properties:
             query:
-              $ref: '../../../common/parameters.yml#/query'
+              $ref: 'common/parameters.yml#/query'
             anchoring:
               $ref: 'common/schemas.yml#/anchoring'
             context:

@@ -6,6 +6,7 @@ get:
   description: List indices in an Algolia application.
   parameters:
     - $ref: '../../../common/parameters.yml#/Page'
+    - $ref: '../../../common/parameters.yml#/HitsPerPage'
   responses:
     '200':
       description: OK

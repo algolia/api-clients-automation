@@ -4,7 +4,9 @@ rule:
   additionalProperties: false
   properties:
     objectID:
-      $ref: '../../../../common/parameters.yml#/objectID'
+      type: string
+      description: Unique identifier for a rule object.
+      example: 'hide-12345'
     conditions:
       type: array
       description: >

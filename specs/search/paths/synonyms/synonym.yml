@@ -6,7 +6,7 @@ get:
   description: To list synonym objectIDs for an index, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
-    - $ref: '../../../common/parameters.yml#/ObjectID'
+    - $ref: 'common/parameters.yml#/ObjectID'
   responses:
     '200':
       description: OK
@@ -38,7 +38,7 @@ put:
     To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
-    - $ref: '../../../common/parameters.yml#/ObjectID'
+    - $ref: 'common/parameters.yml#/ObjectID'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
   requestBody:
     required: true
@@ -83,7 +83,7 @@ delete:
   description: To list synonym objectIDs for an index, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
-    - $ref: '../../../common/parameters.yml#/ObjectID'
+    - $ref: 'common/parameters.yml#/ObjectID'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
   responses:
     '200':

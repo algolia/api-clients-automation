@@ -48,7 +48,6 @@ EndDate:
 ForwardToReplicas:
   in: query
   name: forwardToReplicas
-  example: false
   description: If `true`, the updated `indexName` settings will be forwarded to its replica indices.
   schema:
     type: boolean

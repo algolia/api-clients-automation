@@ -12,6 +12,7 @@ synonymHit:
     objectID:
       type: string
       description: Unique identifier of a synonym object.
+      example: 'synonymID'
     type:
       $ref: './parameters.yml#/SynonymType'
 
