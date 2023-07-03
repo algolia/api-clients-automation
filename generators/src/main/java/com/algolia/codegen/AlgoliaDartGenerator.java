@@ -34,29 +34,35 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     setPubAuthorEmail("hey@algolia.com");
     setPubHomepage("https://www.algolia.com/doc/");
     setPubVersion(version);
-    String clientName;
     String packageFolder;
     if (isAlgoliasearchClient) {
       libName = "algoliasearch";
       packageFolder = libName;
-      clientName = "Search Lite";
-      setPubName(libName);
-      setPubLibrary(libName);
+      setPubDescription(
+        "A Dart package for Algolia. Enables seamless integration for instant search, typo" +
+        " tolerance & user insights, and more, in Dart/Flutter apps."
+      );
     } else {
       libName = "algolia_client_" + client;
-      clientName = "Algolia " + client;
-      setApiNameSuffix(Utils.API_SUFFIX);
       packageFolder = "client_" + client;
-      setPubName(libName);
-      setPubLibrary(libName);
+      setApiNameSuffix(Utils.API_SUFFIX);
+      setPubDescription(
+        "A sub-package of the AlgoliaSearch library, offering " +
+        client +
+        "-specific functionalities for enhanced search and discovery in Dart/Flutter" +
+        " apps."
+      );
     }
-    setPubDescription("Algolia " + clientName + " API client to interact with Algolia");
-    setPubRepository("https://github.com/algolia/algoliasearch-client-dart/packages/" + packageFolder);
+    setPubName(libName);
+    setPubLibrary(libName);
+    setPubRepository("https://github.com/algolia/algoliasearch-client-dart/tree/main/packages/" + packageFolder);
 
     // configs
     additionalProperties.put(CodegenConstants.SERIALIZATION_LIBRARY, SERIALIZATION_LIBRARY_JSON_SERIALIZABLE);
 
     super.processOpts();
+
+    Arrays.asList("source", "get", "hide").forEach(reservedWords::remove); // reserved words from dart-keywords.txt
 
     if (isAlgoliasearchClient) {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
@@ -80,6 +86,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("gitignore"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("build"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("analysis_options"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().contains("README"));
 
     final String srcFolder = libPath + sourceFolder;
     supportingFiles.add(new SupportingFile("version.mustache", srcFolder, "version.dart"));

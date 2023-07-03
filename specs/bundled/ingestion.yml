@@ -256,6 +256,26 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/runSortKeys'
+    startDate:
+      name: startDate
+      in: query
+      description: >
+        The start date (in RFC3339 format) of the runs fetching window.
+
+        Defaults to 'now'-7 days if omitted. The timespan between `startDate`
+        and `endDate` must be smaller than 7 days.
+      schema:
+        type: string
+    endDate:
+      name: endDate
+      in: query
+      description: >
+        The end date (in RFC3339 format) of the runs fetching window.
+
+        Defaults to 'now' days if omitted. The timespan between `startDate` and
+        `endDate` must be smaller than 7 days.
+      schema:
+        type: string
     pathRunID:
       name: runID
       in: path
@@ -878,7 +898,7 @@ components:
       type: string
       enum:
         - dockerhub
-        - gcr
+        - ghcr
       description: The registry where the image is stored.
     DockerImageType:
       type: string
@@ -1341,6 +1361,7 @@ components:
       enum:
         - success
         - failure
+        - processing
     RunReasonCode:
       type: string
       description: An identifier that pairs with the outcome reason.
@@ -1351,6 +1372,7 @@ components:
         - too_many_errors
         - ok
         - discarded
+        - blocking
     RunType:
       type: string
       enum:
@@ -1393,8 +1415,6 @@ components:
           $ref: '#/components/schemas/RunType'
         createdAt:
           $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
         startedAt:
           $ref: '#/components/schemas/startedAt'
         finishedAt:
@@ -1406,7 +1426,6 @@ components:
         - status
         - type
         - createdAt
-        - updatedAt
     RunListResponse:
       type: object
       additionalProperties: false
@@ -2287,6 +2306,8 @@ paths:
         - $ref: '#/components/parameters/taskID'
         - $ref: '#/components/parameters/runSort'
         - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
       responses:
         '200':
           description: OK

@@ -1,3 +1,30 @@
+## [4.0.0-alpha.20](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.19...4.0.0-alpha.20)
+
+- [15bc7618](https://github.com/algolia/api-clients-automation/commit/15bc7618) feat(specs): updated_at removed from Run response ([#1651](https://github.com/algolia/api-clients-automation/pull/1651)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+- [b7c71def](https://github.com/algolia/api-clients-automation/commit/b7c71def) feat(specs): add new outlier count properties to variant payload ([#1656](https://github.com/algolia/api-clients-automation/pull/1656)) by [@febeck](https://github.com/febeck/)
+- [b703dea4](https://github.com/algolia/api-clients-automation/commit/b703dea4) docs(specs): review Insights API spec ([#1647](https://github.com/algolia/api-clients-automation/pull/1647)) by [@kai687](https://github.com/kai687/)
+
+## [4.0.0-alpha.19](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.18...4.0.0-alpha.19)
+
+- [19e99bb9](https://github.com/algolia/api-clients-automation/commit/19e99bb9) fix(specs): change github container registry name ([#1641](https://github.com/algolia/api-clients-automation/pull/1641)) by [@morganleroi](https://github.com/morganleroi/)
+
+## [4.0.0-alpha.18](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.17...4.0.0-alpha.18)
+
+- [19e99bb9](https://github.com/algolia/api-clients-automation/commit/19e99bb9) fix(specs): change github container registry name ([#1641](https://github.com/algolia/api-clients-automation/pull/1641)) by [@morganleroi](https://github.com/morganleroi/)
+
+## [4.0.0-alpha.17](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.16...4.0.0-alpha.17)
+
+- [308c7ccb](https://github.com/algolia/api-clients-automation/commit/308c7ccb) fix(specs): add blocking to reasonCode instead of outcome ([#1622](https://github.com/algolia/api-clients-automation/pull/1622)) by [@damcou](https://github.com/damcou/)
+
+## [4.0.0-alpha.16](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.15...4.0.0-alpha.16)
+
+- [3cdb7495](https://github.com/algolia/api-clients-automation/commit/3cdb7495) fix(specs): add blocking run outcome ([#1619](https://github.com/algolia/api-clients-automation/pull/1619)) by [@damcou](https://github.com/damcou/)
+
+## [4.0.0-alpha.15](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.14...4.0.0-alpha.15)
+
+- [81401eed](https://github.com/algolia/api-clients-automation/commit/81401eed) feat(specs): add `startDate` and `endDate` parameters to Ingestion API ([#1614](https://github.com/algolia/api-clients-automation/pull/1614)) by [@shortcuts](https://github.com/shortcuts/)
+- [138a35b5](https://github.com/algolia/api-clients-automation/commit/138a35b5) fix(specs): add processing run outcome ([#1613](https://github.com/algolia/api-clients-automation/pull/1613)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-alpha.14](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.13...4.0.0-alpha.14)
 
 - [e1cb1c89](https://github.com/algolia/api-clients-automation/commit/e1cb1c89) fix(specs): add docker source input ([#1594](https://github.com/algolia/api-clients-automation/pull/1594)) by [@millotp](https://github.com/millotp/)

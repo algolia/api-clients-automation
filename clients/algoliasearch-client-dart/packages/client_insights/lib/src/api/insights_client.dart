@@ -4,8 +4,8 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_insights/src/deserialize.dart';
 import 'package:algolia_client_insights/src/version.dart';
 
-import 'package:algolia_client_insights/src/model/insight_events.dart';
-import 'package:algolia_client_insights/src/model/push_events_response.dart';
+import 'package:algolia_client_insights/src/model/events_response.dart';
+import 'package:algolia_client_insights/src/model/insights_events.dart';
 
 final class InsightsClient implements ApiClient {
   @override
@@ -17,13 +17,15 @@ final class InsightsClient implements ApiClient {
   @override
   final ClientOptions options;
 
+  final String? region;
+
   final RetryStrategy _retryStrategy;
 
   InsightsClient({
     required this.appId,
     required this.apiKey,
     this.options = const ClientOptions(),
-    String? region,
+    this.region,
   }) : _retryStrategy = RetryStrategy.create(
             segment: AgentSegment(value: "Insights", version: packageVersion),
             appId: appId,
@@ -33,7 +35,7 @@ final class InsightsClient implements ApiClient {
               final allowedRegions = ['de', 'us'];
               assert(
                 region == null || allowedRegions.contains(region),
-                '`region` must be one of the following: ${allowedRegions.join(',')}',
+                '`region` must be one of the following: ${allowedRegions.join(', ')}',
               );
               final url = region == null
                   ? 'insights.algolia.io'
@@ -52,17 +54,17 @@ final class InsightsClient implements ApiClient {
   /// * [path] - The path of the API endpoint to target, anything after the /1 needs to be specified.
   /// * [parameters] - Query parameters to be applied to the current query.
   /// * [requestOptions] additional request configuration.
-  Future<Object> callGet({
+  Future<Object> del({
     required String path,
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
     assert(
       path.isNotEmpty,
-      'Parameter `path` is required when calling `callGet`.',
+      'Parameter `path` is required when calling `del`.',
     );
     final request = ApiRequest(
-      method: RequestMethod.get,
+      method: RequestMethod.delete,
       path: r'/1{path}'
           .replaceAll('{' r'path' '}', Uri.encodeComponent(path.toString())),
       queryParams: {
@@ -87,17 +89,17 @@ final class InsightsClient implements ApiClient {
   /// * [path] - The path of the API endpoint to target, anything after the /1 needs to be specified.
   /// * [parameters] - Query parameters to be applied to the current query.
   /// * [requestOptions] additional request configuration.
-  Future<Object> del({
+  Future<Object> get({
     required String path,
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
     assert(
       path.isNotEmpty,
-      'Parameter `path` is required when calling `del`.',
+      'Parameter `path` is required when calling `get`.',
     );
     final request = ApiRequest(
-      method: RequestMethod.delete,
+      method: RequestMethod.get,
       path: r'/1{path}'
           .replaceAll('{' r'path' '}', Uri.encodeComponent(path.toString())),
       queryParams: {
@@ -153,28 +155,28 @@ final class InsightsClient implements ApiClient {
     );
   }
 
-  /// Push events.
-  /// This command pushes an array of events.  An event is   - an action: `eventName`   - performed in a context: `eventType`   - at some point in time provided: `timestamp`   - by an end user: `userToken`   - on something: `index`   Notes:   - To be accepted, all events sent must be valid.   - The size of the body must be *less than 2 MB*.   - When an event is tied to an Algolia search, it must also provide a `queryID`. If that event is a `click`, their absolute `positions` should also be passed.   - We consider that an `index` provides access to 2 resources: objects and filters. An event can only interact with a single resource type, but not necessarily on a single item. As such an event will accept an array of `objectIDs` or `filters`.
+  /// Send events.
+  /// Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
   ///
   /// Parameters:
-  /// * [insightEvents]
+  /// * [insightsEvents]
   /// * [requestOptions] additional request configuration.
-  Future<PushEventsResponse> pushEvents({
-    required InsightEvents insightEvents,
+  Future<EventsResponse> pushEvents({
+    required InsightsEvents insightsEvents,
     RequestOptions? requestOptions,
   }) async {
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/events',
-      body: insightEvents.toJson(),
+      body: insightsEvents.toJson(),
     );
     final response = await _retryStrategy.execute(
       request: request,
       options: requestOptions,
     );
-    return deserialize<PushEventsResponse, PushEventsResponse>(
+    return deserialize<EventsResponse, EventsResponse>(
       response,
-      'PushEventsResponse',
+      'EventsResponse',
       growable: true,
     );
   }

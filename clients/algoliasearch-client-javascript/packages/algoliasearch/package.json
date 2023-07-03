@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "5.0.0-alpha.67",
+  "version": "5.0.0-alpha.73",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -59,17 +59,17 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-abtesting": "5.0.0-alpha.67",
-    "@algolia/client-analytics": "5.0.0-alpha.67",
-    "@algolia/client-common": "5.0.0-alpha.67",
-    "@algolia/client-personalization": "5.0.0-alpha.67",
-    "@algolia/client-search": "5.0.0-alpha.67",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.67",
-    "@algolia/requester-node-http": "5.0.0-alpha.67"
+    "@algolia/client-abtesting": "5.0.0-alpha.73",
+    "@algolia/client-analytics": "5.0.0-alpha.73",
+    "@algolia/client-common": "5.0.0-alpha.73",
+    "@algolia/client-personalization": "5.0.0-alpha.73",
+    "@algolia/client-search": "5.0.0-alpha.73",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.73",
+    "@algolia/requester-node-http": "5.0.0-alpha.73"
   },
   "devDependencies": {
     "@types/jest": "29.5.2",
-    "@types/node": "18.16.16",
+    "@types/node": "18.16.18",
     "jest": "29.5.0",
     "rollup": "2.79.1",
     "ts-jest": "29.1.0",
