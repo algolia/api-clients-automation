@@ -1,0 +1,13 @@
+title: time
+description: Time measured by a probe.
+type: array
+items:
+  type: object
+  properties:
+    t:
+      type: integer
+      format: int64
+      description: Timestamp.
+    v:
+      type: integer
+      description: Time in ms.

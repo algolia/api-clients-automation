@@ -1,0 +1,11 @@
+title: metric
+type: object
+additionalProperties: false
+properties:
+  t:
+    type: integer
+    format: int64
+    description: Timestamp.
+  v:
+    type: integer
+    description: Value of the metric.

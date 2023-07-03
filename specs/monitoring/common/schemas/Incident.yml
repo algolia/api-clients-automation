@@ -1,0 +1,9 @@
+title: incident
+description: Details about the reported incident.
+type: object
+properties:
+  title:
+    type: string
+    description: Description of the incident.
+  status:
+    $ref: './Status.yml'

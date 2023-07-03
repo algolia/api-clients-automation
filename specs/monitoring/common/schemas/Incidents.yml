@@ -1,0 +1,12 @@
+title: incidents
+description: List of incidents reported for this cluster.
+type: array
+items:
+  type: object
+  properties:
+    t:
+      type: integer
+      format: int64
+      description: Timestamp of the incident report.
+    v:
+      $ref: ./Incident.yml

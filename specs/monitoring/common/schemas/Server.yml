@@ -1,0 +1,35 @@
+title: server
+additionalProperties: false
+properties:
+  name:
+    type: string
+    description: Server name.
+    example: c16-de-1
+  region:
+    $ref: './Region.yml'
+  is_slave:
+    type: boolean
+    default: false
+    deprecated: true
+    description: |
+      Included to support legacy applications.
+      Do not rely on this attribute being present in the response.
+      Use `is_replica` instead.
+    example: false
+  is_replica:
+    type: boolean
+    default: false
+    description: Indicates whether this server is a replica of another server.
+    example: false
+  cluster:
+    type: string
+    description: Name of the cluster to which this server belongs.
+    example: c16-de
+  status:
+    type: string
+    enum:
+      - PRODUCTION
+  type:
+    type: string
+    enum:
+      - cluster

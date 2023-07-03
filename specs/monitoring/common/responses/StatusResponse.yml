@@ -1,0 +1,16 @@
+description: OK
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: status
+            $ref: ../schemas/status.yml
+    examples:
+      Success:
+        value:
+          status:
+            c16-de: operational
