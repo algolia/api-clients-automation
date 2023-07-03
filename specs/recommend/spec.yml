@@ -1,7 +1,11 @@
 openapi: 3.0.2
 info:
   title: Recommend API
-  description: API powering the Recommend feature of Algolia.
+  description: |-
+    Use the Recommend REST API  to manage your reecommendation and trending models.
+
+    Although Algolia provides a REST API, you should use the official open source API [clients, libraries, and tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) instead.
+    There's no [SLA](https://www.algolia.com/policies/sla/) if you use the REST API directly.
   version: 1.0.0
 components:
   securitySchemes:
@@ -35,7 +39,7 @@ security:
     apiKey: []
 tags:
   - name: recommendations
-    x-displayName: Recommendations & Trending
+    x-displayName: Recommendation and trending models
     description: Manage recommendations.
 x-tagGroups:
   - name: General

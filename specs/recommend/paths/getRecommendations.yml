@@ -4,21 +4,25 @@ post:
   operationId: getRecommendations
   x-use-read-transporter: true
   x-cacheable: true
-  summary: Get results.
-  description: Returns recommendations or trending results, for a specific model and `objectID`.
+  summary: Get recommendations or trending items.
+  description: >
+    Returns results from either recommendation or trending models:
+
+      - Recommendations are provided by the [Related Products and Related Content models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content)
+      - Trending models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content).
   requestBody:
     required: true
     content:
       application/json:
         schema:
           title: getRecommendationsParams
-          description: The `getRecommendations` parameters.
+          description: Recommendations parameters.
           type: object
           additionalProperties: false
           properties:
             requests:
               type: array
-              description: The `getRecommendations` requests.
+              description: Recommendation requests.
               items:
                 $ref: '../common/schemas/RecommendationsRequest.yml#/recommendationsRequest'
           required:
