@@ -18,13 +18,18 @@ OrderBy:
 # private
 orderBy:
   type: string
+  description: >
+    Method for ordering results.
+
+    `clickThroughRate`, `conversionRate` and `averageClickPosition` are only available if the `clickAnalytics` parameter is `true`.
   enum: [searchCount, clickThroughRate, conversionRate, averageClickPosition]
   default: searchCount
 
 Direction:
   in: query
   name: direction
-  description: The sorting of the result.
+  description: >
+    Sorting direction of the results: ascending or descending.
   schema:
     $ref: '#/direction'
 
@@ -37,22 +42,37 @@ direction:
 ClickAnalytics:
   in: query
   name: clickAnalytics
-  description: Whether to include the click-through and conversion rates for a search.
+  description: If `true`, include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. These are called _tracked searches_.
   schema:
     type: boolean
     default: false
 
+count:
+  description: Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
+  type: integer
+  example: 3
+
 Search:
   in: query
   name: search
-  description: The query term to search for. Must match the exact user input.
+  description: User query.
+  example: 'enable ab test'
   schema:
     type: string
+
+Offset:
+  in: query
+  name: offset
+  description: Start position for retrieving results. Must be a positive integer.
+  example: 1
+  schema:
+    type: integer
 
 Tags:
   name: tags
   in: query
-  description: Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+  description: Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+  example: 'device:mobile%20phone'
   schema:
     type: string
 
@@ -64,11 +84,13 @@ average:
 
 averageClickPosition:
   type: integer
-  description: The average position of all the click count event.
+  description: Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.
+  example: 1
 
 clickCount:
   type: integer
-  description: The number of click event.
+  description: Number of click events.
+  example: 1
 
 date:
   type: string
@@ -77,16 +99,21 @@ date:
 rate:
   type: number
   format: double
-  description: The click-through rate.
+  description: >
+    [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+  example: 1
 
 conversionRate:
   type: number
   format: double
-  description: The conversion rate.
+  description: >
+    [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+  example: 0
 
 conversionCount:
   type: integer
-  description: The number of converted clicks.
+  description: Number of converted clicks.
+  example: 0
 
 attribute:
   description: The attribute.
@@ -101,7 +128,8 @@ value:
   type: string
 
 search:
-  description: The search query.
+  description: User query.
+  example: 'separator'
   type: string
 
 hit:
