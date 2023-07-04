@@ -17,7 +17,7 @@ content:
                 $ref: '../schemas/InfraProbes.yml'
             ram_indexing_usage:
               type: object
-              description: RAM usage for the indexing in MB.
+              description: RAM used for indexing in MB.
               additionalProperties:
                 x-additionalPropertiesName: probes
                 $ref: '../schemas/InfraProbes.yml'

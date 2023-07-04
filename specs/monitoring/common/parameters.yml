@@ -27,7 +27,7 @@ Metric:
     Metric to report.
 
     For more information about the individual metrics, see the response.
-    To include all metrics, use `*` as parameter.
+    To include all metrics, use `*` as the parameter.
   enum:
     - avg_build_time
     - ssd_usage
