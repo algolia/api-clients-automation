@@ -6,7 +6,8 @@ import java.util.function.Supplier;
 
 public class AlgoliaIterableHelper {
 
-  public static <T> Iterable<T> createIterable(Supplier<Iterator<T>> executeQuery, BooleanSupplier _hasNext) {
+  public static <T> Iterable<T> createIterable(
+      Supplier<Iterator<T>> executeQuery, BooleanSupplier _hasNext) {
     return new Iterable<T>() {
       @Override
       public Iterator<T> iterator() {
