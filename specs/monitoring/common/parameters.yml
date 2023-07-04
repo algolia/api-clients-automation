@@ -23,14 +23,8 @@ MetricInPath:
 
     For more information about the individual metrics, see the response.
     To include all metrics, use `*` as the parameter.
-  enum:
-    - avg_build_time
-    - ssd_usage
-    - ram_search_usage
-    - ram_indexing_usage
-    - cpu_usage
-    - '*'
-  example: '*'
+  schema:
+    $ref: './enums.yml#/Metric'
 
 PeriodInPath:
   name: period
