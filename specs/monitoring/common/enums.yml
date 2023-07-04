@@ -44,6 +44,18 @@ Region:
 Status:
   title: status
   type: string
+  description: >-
+    Status of a cluster as a key-value pair with the cluster's name as key and the
+    status as value.
+  enum:
+    - operational
+    - degraded_performance
+    - partial_outage
+    - major_outage
+
+ServerStatus:
+  title: status
+  type: string
   enum:
     - PRODUCTION
 

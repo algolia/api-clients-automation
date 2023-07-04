@@ -15,7 +15,7 @@ get:
     - Without authentication, the response lists the servers for all Algolia
     clusters.
   tags:
-    - monitoring
+    - monitoring-tag
   responses:
     '200':
       $ref: '../common/responses/InventoryResponse.yml'

@@ -3,11 +3,10 @@ description: Time measured by a probe.
 type: array
 items:
   type: object
+  additionalProperties: false
   properties:
     t:
-      type: integer
-      format: int64
-      description: Timestamp.
+      $ref: './Timestamp.yml'
     v:
       type: integer
       description: Time in ms.

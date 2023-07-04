@@ -3,9 +3,7 @@ type: object
 additionalProperties: false
 properties:
   t:
-    type: integer
-    format: int64
-    description: Timestamp.
+    $ref: './Timestamp.yml'
   v:
     type: integer
     description: Value of the metric.

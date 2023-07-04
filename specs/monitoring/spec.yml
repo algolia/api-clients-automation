@@ -30,8 +30,8 @@ tags:
   - name: infrastructure
     description: Report metrics for different time periods.
     x-displayName: Infrastructure
-  - name: monitoring
-    description: Report search and indexing times for your servers.
+  - name: monitoring-tag
+    description: Report search and indexing times for your clusters, and get a list of servers.
     x-displayName: Monitoring
   - name: status
     description: |

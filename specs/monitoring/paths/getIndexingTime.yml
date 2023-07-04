@@ -4,7 +4,7 @@ get:
   operationId: getIndexingTime
   security: []
   tags:
-    - monitoring
+    - monitoring-tag
   parameters:
     - $ref: '../common/parameters.yml#/Clusters'
   responses:

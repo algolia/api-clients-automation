@@ -6,4 +6,4 @@ properties:
     type: string
     description: Description of the incident.
   status:
-    $ref: './Status.yml'
+    $ref: '../enums.yml#/Status'

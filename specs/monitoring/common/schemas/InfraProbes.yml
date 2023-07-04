@@ -1,4 +1,4 @@
 title: probes
 type: array
 items:
-  $ref: './Metric.yml'
+  $ref: './ProbesMetric.yml'

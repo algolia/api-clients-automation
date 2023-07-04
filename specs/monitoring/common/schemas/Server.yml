@@ -26,6 +26,6 @@ properties:
     description: Name of the cluster to which this server belongs.
     example: c16-de
   status:
-    $ref: '../enums.yml#/Status'
+    $ref: '../enums.yml#/ServerStatus'
   type:
     $ref: '../enums.yml#/Type'

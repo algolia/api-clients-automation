@@ -5,8 +5,6 @@ items:
   type: object
   properties:
     t:
-      type: integer
-      format: int64
-      description: Timestamp of the incident report.
+      $ref: './Timestamp.yml'
     v:
       $ref: './Incident.yml'
