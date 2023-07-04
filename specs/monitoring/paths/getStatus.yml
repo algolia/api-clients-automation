@@ -1,6 +1,6 @@
 get:
   operationId: getStatus
-  summary: List statuses of clusters
+  summary: List statuses of clusters.
   tags:
     - status
   security:
@@ -18,6 +18,6 @@ get:
     Algolia clusters.
   responses:
     '200':
-      $ref: ../common/responses/StatusResponse.yaml
+      $ref: '../common/responses/StatusResponse.yaml'
     '401':
-      $ref: ../common/responses/UnauthorizedResponse.yaml
+      $ref: '../common/responses/UnauthorizedResponse.yaml'

@@ -9,4 +9,4 @@ items:
       format: int64
       description: Timestamp of the incident report.
     v:
-      $ref: ./Incident.yml
+      $ref: './Incident.yml'

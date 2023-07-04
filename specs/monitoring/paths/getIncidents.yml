@@ -1,5 +1,5 @@
 get:
-  summary: List incidents
+  summary: List incidents.
   description: List known incidents for all clusters.
   operationId: getIncidents
   security: []
@@ -7,6 +7,6 @@ get:
     - incidents
   responses:
     '200':
-      $ref: ../common/responses/IncidentsResponse.yaml
+      $ref: '../common/responses/IncidentsResponse.yaml'
     '401':
-      $ref: ../common/responses/UnauthorizedResponse.yaml
+      $ref: '../common/responses/UnauthorizedResponse.yaml'

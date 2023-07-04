@@ -11,7 +11,7 @@ content:
             indexing:
               additionalProperties:
                 x-additionalPropertiesName: times
-                $ref: ../schemas/Time.yml
+                $ref: '../schemas/Time.yml'
     examples:
       Success:
         value:

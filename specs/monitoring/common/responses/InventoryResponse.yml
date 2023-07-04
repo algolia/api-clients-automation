@@ -7,7 +7,7 @@ content:
         inventory:
           type: array
           items:
-            $ref: ../schemas/Server.yml
+            $ref: '../schemas/Server.yml'
     examples:
       Success:
         value:

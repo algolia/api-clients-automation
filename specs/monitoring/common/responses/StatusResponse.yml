@@ -8,7 +8,7 @@ content:
           type: object
           additionalProperties:
             x-additionalPropertiesName: status
-            $ref: ../schemas/status.yml
+            $ref: '../schemas/status.yml'
     examples:
       Success:
         value:

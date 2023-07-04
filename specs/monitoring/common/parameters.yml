@@ -14,44 +14,50 @@ Clusters:
         - c2-de
         - c3-de
 
-Metric:
+MetricInPath:
   name: metric
   in: path
   required: true
   schema:
-    type: string
-    description: |
-      Metric to report.
+    $ref: '#/Metric'
 
-      For more information about the individual metrics, see the response.
-      To include all metrics, use `*` as parameter.
-    enum:
-      - avg_build_time
-      - ssd_usage
-      - ram_search_usage
-      - ram_indexing_usage
-      - cpu_usage
-      - '*'
-    example: '*'
+Metric:
+  type: string
+  description: |
+    Metric to report.
 
-Period:
+    For more information about the individual metrics, see the response.
+    To include all metrics, use `*` as parameter.
+  enum:
+    - avg_build_time
+    - ssd_usage
+    - ram_search_usage
+    - ram_indexing_usage
+    - cpu_usage
+    - '*'
+  example: '*'
+
+PeriodInPath:
   name: period
   in: path
   required: true
   schema:
-    type: string
-    description: |
-      Period over which to aggregate the metrics:
+    $ref: '#/Period'
 
-      - `minute`. Aggregate the last minute. 1 data point per 10 seconds.
-      - `hour`. Aggregate the last hour. 1 data point per minute.
-      - `day`. Aggregate the last day. 1 data point per 10 minutes.
-      - `week`. Aggregate the last week. 1 data point per hour.
-      - `month`. Aggregate the last month. 1 data point per day.
-    enum:
-      - minute
-      - hour
-      - day
-      - week
-      - month
-    example: week
+Period:
+  type: string
+  description: |
+    Period over which to aggregate the metrics:
+
+    - `minute`. Aggregate the last minute. 1 data point per 10 seconds.
+    - `hour`. Aggregate the last hour. 1 data point per minute.
+    - `day`. Aggregate the last day. 1 data point per 10 minutes.
+    - `week`. Aggregate the last week. 1 data point per hour.
+    - `month`. Aggregate the last month. 1 data point per day.
+  enum:
+    - minute
+    - hour
+    - day
+    - week
+    - month
+  example: week

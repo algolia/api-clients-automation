@@ -5,7 +5,7 @@ content:
       type: object
       additionalProperties:
         x-additionalPropertiesName: Server
-        $ref: ../schemas/Probes.yml
+        $ref: '../schemas/Probes.yml'
     examples:
       Success:
         value:

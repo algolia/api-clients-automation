@@ -1,5 +1,5 @@
 get:
-  summary: List statuses of selected clusters
+  summary: List statuses of selected clusters.
   description: Report whether a cluster is operational.
   operationId: getStatusSingle
   tags:
@@ -7,11 +7,11 @@ get:
   security: []
   parameters:
     - clusters:
-        $ref: ../common/parameters.yml#/Clusters
+        $ref: '../common/parameters.yml#/Clusters'
   responses:
     '200':
-      $ref: ../common/responses/StatusResponse.yaml
+      $ref: '../common/responses/StatusResponse.yaml'
     '401':
-      $ref: ../common/responses/UnauthorizedResponse.yaml
+      $ref: '../common/responses/UnauthorizedResponse.yaml'
     '404':
-      $ref: ../common/responses/NotFoundResponse.yaml
+      $ref: '../common/responses/NotFoundResponse.yaml'

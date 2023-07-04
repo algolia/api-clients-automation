@@ -26,10 +26,16 @@ properties:
     description: Name of the cluster to which this server belongs.
     example: c16-de
   status:
-    type: string
-    enum:
-      - PRODUCTION
+    $ref: '#/Status'
   type:
-    type: string
-    enum:
-      - cluster
+    $ref: '#/Type'
+
+Status:
+  type: string
+  enum:
+    - PRODUCTION
+
+Type:
+  type: string
+  enum:
+    - cluster

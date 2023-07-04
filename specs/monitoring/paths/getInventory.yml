@@ -1,5 +1,5 @@
 get:
-  summary: List servers
+  summary: List servers.
   operationId: getInventory
   security:
     - appId: []
@@ -18,6 +18,6 @@ get:
     - monitoring
   responses:
     '200':
-      $ref: ../common/responses/InventoryResponse.yaml
+      $ref: '../common/responses/InventoryResponse.yaml'
     '403':
-      $ref: ../common/responses/ForbiddenResponse.yaml
+      $ref: '../common/responses/ForbiddenResponse.yaml'
