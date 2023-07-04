@@ -6,12 +6,11 @@ get:
     - status
   security: []
   parameters:
-    - clusters:
-        $ref: '../common/parameters.yml#/Clusters'
+    - $ref: '../common/parameters.yml#/Clusters'
   responses:
     '200':
-      $ref: '../common/responses/StatusResponse.yaml'
+      $ref: '../common/responses/StatusResponse.yml'
     '401':
-      $ref: '../common/responses/UnauthorizedResponse.yaml'
+      $ref: '../common/responses/UnauthorizedResponse.yml'
     '404':
-      $ref: '../common/responses/NotFoundResponse.yaml'
+      $ref: '../common/responses/NotFoundResponse.yml'

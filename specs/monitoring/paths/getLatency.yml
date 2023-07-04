@@ -9,6 +9,6 @@ get:
     - $ref: '../common/parameters.yml#/Clusters'
   responses:
     '200':
-      $ref: '../common/responses/LatencyResponse.yaml'
+      $ref: '../common/responses/LatencyResponse.yml'
     '400':
-      $ref: '../common/responses/BadRequestResponse.yaml'
+      $ref: '../common/responses/BadRequestResponse.yml'

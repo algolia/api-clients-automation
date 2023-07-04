@@ -7,6 +7,6 @@ get:
     - incidents
   responses:
     '200':
-      $ref: '../common/responses/IncidentsResponse.yaml'
+      $ref: '../common/responses/IncidentsResponse.yml'
     '401':
-      $ref: '../common/responses/UnauthorizedResponse.yaml'
+      $ref: '../common/responses/UnauthorizedResponse.yml'

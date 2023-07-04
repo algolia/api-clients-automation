@@ -3,12 +3,12 @@ Clusters:
   name: clusters
   in: path
   required: true
+  description: Subset of clusters.
   schema:
     type: array
     items:
       type: string
       title: Cluster names
-      description: List of clusters to test.
       example:
         - c1-de
         - c2-de
@@ -18,11 +18,6 @@ MetricInPath:
   name: metric
   in: path
   required: true
-  schema:
-    $ref: '#/Metric'
-
-Metric:
-  type: string
   description: |
     Metric to report.
 
@@ -41,11 +36,6 @@ PeriodInPath:
   name: period
   in: path
   required: true
-  schema:
-    $ref: '#/Period'
-
-Period:
-  type: string
   description: |
     Period over which to aggregate the metrics:
 
@@ -54,10 +44,5 @@ Period:
     - `day`. Aggregate the last day. 1 data point per 10 minutes.
     - `week`. Aggregate the last week. 1 data point per hour.
     - `month`. Aggregate the last month. 1 data point per day.
-  enum:
-    - minute
-    - hour
-    - day
-    - week
-    - month
-  example: week
+  schema:
+    $ref: './enums.yml#/Period'

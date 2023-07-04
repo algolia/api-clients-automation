@@ -6,7 +6,7 @@ properties:
     description: Server name.
     example: c16-de-1
   region:
-    $ref: './Region.yml'
+    $ref: '../enums.yml#/Region'
   is_slave:
     type: boolean
     default: false
@@ -26,16 +26,6 @@ properties:
     description: Name of the cluster to which this server belongs.
     example: c16-de
   status:
-    $ref: '#/Status'
+    $ref: '../enums.yml#/Status'
   type:
-    $ref: '#/Type'
-
-Status:
-  type: string
-  enum:
-    - PRODUCTION
-
-Type:
-  type: string
-  enum:
-    - cluster
+    $ref: '../enums.yml#/Type'

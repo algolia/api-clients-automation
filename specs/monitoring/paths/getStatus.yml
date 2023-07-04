@@ -18,6 +18,6 @@ get:
     Algolia clusters.
   responses:
     '200':
-      $ref: '../common/responses/StatusResponse.yaml'
+      $ref: '../common/responses/StatusResponse.yml'
     '401':
-      $ref: '../common/responses/UnauthorizedResponse.yaml'
+      $ref: '../common/responses/UnauthorizedResponse.yml'
