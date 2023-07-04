@@ -11,8 +11,7 @@ import okhttp3.Response;
 public interface Requester {
   public Call newCall(Request request);
 
-  public <T> T handleResponse(Response response, JavaType returnType)
-      throws AlgoliaRuntimeException;
+  public <T> T handleResponse(Response response, JavaType returnType) throws AlgoliaRuntimeException;
 
   /**
    * Enable/disable debugging for this API client.

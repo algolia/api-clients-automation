@@ -43,12 +43,6 @@ public class RequestOptions {
 
   @Override
   public String toString() {
-    return ("RequestOptions{"
-        + "headers="
-        + headers
-        + ", queryParameters="
-        + queryParameters
-        + '\''
-        + '}');
+    return ("RequestOptions{" + "headers=" + headers + ", queryParameters=" + queryParameters + '\'' + '}');
   }
 }

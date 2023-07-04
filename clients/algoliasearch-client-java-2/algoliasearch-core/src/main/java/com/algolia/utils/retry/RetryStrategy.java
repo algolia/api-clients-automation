@@ -31,30 +31,20 @@ public class RetryStrategy {
       public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         UseReadTransporter useReadTransporter = (UseReadTransporter) request.tag();
-        Iterator<StatefulHost> hostsIter =
-            getTryableHosts(
-                    (useReadTransporter != null || request.method().equals("GET"))
-                        ? CallType.READ
-                        : CallType.WRITE)
-                .iterator();
+        Iterator<StatefulHost> hostsIter = getTryableHosts(
+          (useReadTransporter != null || request.method().equals("GET")) ? CallType.READ : CallType.WRITE
+        )
+          .iterator();
         try {
           while (hostsIter.hasNext()) {
             StatefulHost currentHost = hostsIter.next();
 
             // Building the request URL
-            HttpUrl newUrl =
-                request
-                    .url()
-                    .newBuilder()
-                    .scheme(currentHost.getScheme())
-                    .host(currentHost.getHost())
-                    .build();
+            HttpUrl newUrl = request.url().newBuilder().scheme(currentHost.getScheme()).host(currentHost.getHost()).build();
             request = request.newBuilder().url(newUrl).build();
 
             // Computing timeout with the retry count
-            chain.withConnectTimeout(
-                chain.connectTimeoutMillis() + currentHost.getRetryCount() * 1000,
-                TimeUnit.MILLISECONDS);
+            chain.withConnectTimeout(chain.connectTimeoutMillis() + currentHost.getRetryCount() * 1000, TimeUnit.MILLISECONDS);
 
             try {
               Response response = chain.proceed(request);
@@ -113,14 +103,9 @@ public class RetryStrategy {
     synchronized (this) {
       resetExpiredHosts();
       if (hosts.stream().anyMatch(h -> h.isUp() && h.getAccept().contains(callType))) {
-        return hosts.stream()
-            .filter(h -> h.isUp() && h.getAccept().contains(callType))
-            .collect(Collectors.toList());
+        return hosts.stream().filter(h -> h.isUp() && h.getAccept().contains(callType)).collect(Collectors.toList());
       } else {
-        for (StatefulHost host :
-            hosts.stream()
-                .filter(h -> h.getAccept().contains(callType))
-                .collect(Collectors.toList())) {
+        for (StatefulHost host : hosts.stream().filter(h -> h.getAccept().contains(callType)).collect(Collectors.toList())) {
           reset(host);
         }
 

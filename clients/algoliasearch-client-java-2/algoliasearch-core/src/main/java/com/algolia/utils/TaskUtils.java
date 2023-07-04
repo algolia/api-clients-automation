@@ -8,17 +8,16 @@ import java.util.function.Supplier;
 public class TaskUtils {
 
   public static final int DEFAULT_MAX_RETRIES = 50;
-  public static final IntUnaryOperator DEFAULT_TIMEOUT =
-      (int retries) -> {
-        return Math.min(retries * 200, 5000);
-      };
+  public static final IntUnaryOperator DEFAULT_TIMEOUT = (int retries) -> {
+    return Math.min(retries * 200, 5000);
+  };
 
   public static <TResponse> TResponse retryUntil(
-      Supplier<TResponse> func,
-      Predicate<TResponse> validate,
-      int maxRetries,
-      IntUnaryOperator timeout)
-      throws AlgoliaRuntimeException {
+    Supplier<TResponse> func,
+    Predicate<TResponse> validate,
+    int maxRetries,
+    IntUnaryOperator timeout
+  ) throws AlgoliaRuntimeException {
     int retryCount = 0;
     while (retryCount < maxRetries) {
       TResponse resp = func.get();
@@ -34,7 +33,6 @@ public class TaskUtils {
 
       retryCount++;
     }
-    throw new AlgoliaRetriesExceededException(
-        "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
+    throw new AlgoliaRetriesExceededException("The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
   }
 }

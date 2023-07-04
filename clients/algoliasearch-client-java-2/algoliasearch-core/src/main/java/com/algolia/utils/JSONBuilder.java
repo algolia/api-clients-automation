@@ -18,8 +18,7 @@ public class JSONBuilder {
   }
 
   public ObjectMapper build() {
-    ObjectMapper mapper =
-        JsonMapper.builder().disable(MapperFeature.ALLOW_COERCION_OF_SCALARS).build();
+    ObjectMapper mapper = JsonMapper.builder().disable(MapperFeature.ALLOW_COERCION_OF_SCALARS).build();
     mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, this.failOnUnknown);
     mapper.enable(Feature.AUTO_CLOSE_JSON_CONTENT);

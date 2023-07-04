@@ -47,8 +47,7 @@ public class HttpRequester implements Requester {
   }
 
   @Override
-  public <T> T handleResponse(Response response, JavaType returnType)
-      throws AlgoliaRuntimeException {
+  public <T> T handleResponse(Response response, JavaType returnType) throws AlgoliaRuntimeException {
     if (response.isSuccessful()) {
       if (returnType == null || response.code() == 204) {
         // returning null if the returnType is not defined, or the status code is 204 (No Content)
@@ -91,8 +90,7 @@ public class HttpRequester implements Requester {
 
     String respBody;
     try {
-      if (response.body() != null) respBody = response.body().string();
-      else respBody = null;
+      if (response.body() != null) respBody = response.body().string(); else respBody = null;
     } catch (IOException e) {
       throw new AlgoliaRuntimeException(e);
     }
@@ -127,8 +125,7 @@ public class HttpRequester implements Requester {
 
   @Override
   public void setConnectTimeout(int connectionTimeout) {
-    httpClient =
-        httpClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.MILLISECONDS).build();
+    httpClient = httpClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.MILLISECONDS).build();
   }
 
   @Override

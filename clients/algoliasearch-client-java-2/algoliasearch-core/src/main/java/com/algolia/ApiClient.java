@@ -29,8 +29,7 @@ public abstract class ApiClient {
   private Requester requester;
   protected ObjectMapper json;
 
-  public ApiClient(
-      String appId, String apiKey, String clientName, String version, ClientOptions options) {
+  public ApiClient(String appId, String apiKey, String clientName, String version, ClientOptions options) {
     if (appId == null || appId.length() == 0) {
       throw new AlgoliaRuntimeException("`appId` is missing.");
     }
@@ -199,9 +198,7 @@ public abstract class ApiClient {
   public String parameterToString(Object param) throws UnsupportedOperationException {
     if (param == null) {
       return "";
-    } else if (param instanceof Date
-        || param instanceof OffsetDateTime
-        || param instanceof LocalDate) {
+    } else if (param instanceof Date || param instanceof OffsetDateTime || param instanceof LocalDate) {
       // note: date comes as string for now, we should never have to serialize one
       // maybe we could accept them as Date object and in that case use jackson serialization
       throw new UnsupportedOperationException("Date must come as string (already serialized)");
@@ -269,29 +266,29 @@ public abstract class ApiClient {
   public <T> CompletableFuture<T> executeAsync(Call call, final JavaType returnType) {
     final CompletableFuture<T> future = new CompletableFuture<>();
     call.enqueue(
-        new Callback() {
-          @Override
-          public void onFailure(Call call, IOException e) {
-            future.completeExceptionally(e.getCause());
-          }
+      new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+          future.completeExceptionally(e.getCause());
+        }
 
-          @Override
-          public void onResponse(Call call, Response response) throws IOException {
-            try {
-              T result = requester.handleResponse(response, returnType);
-              future.complete(result);
-            } catch (AlgoliaRuntimeException e) {
-              future.completeExceptionally(e);
-            } catch (Exception e) {
-              future.completeExceptionally(new AlgoliaRuntimeException(e));
-            }
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          try {
+            T result = requester.handleResponse(response, returnType);
+            future.complete(result);
+          } catch (AlgoliaRuntimeException e) {
+            future.completeExceptionally(e);
+          } catch (Exception e) {
+            future.completeExceptionally(new AlgoliaRuntimeException(e));
           }
-        });
+        }
+      }
+    );
     return future;
   }
 
-  public <T> CompletableFuture<T> executeAsync(
-      Call call, final Class<?> returnType, final Class<?> innerType) {
+  public <T> CompletableFuture<T> executeAsync(Call call, final Class<?> returnType, final Class<?> innerType) {
     return executeAsync(call, json.getTypeFactory().constructParametricType(returnType, innerType));
   }
 
@@ -316,17 +313,15 @@ public abstract class ApiClient {
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   public Call buildCall(
-      String path,
-      String method,
-      Map<String, Object> queryParameters,
-      Object body,
-      Map<String, String> headerParams,
-      RequestOptions requestOptions,
-      Boolean useReadTransporter)
-      throws AlgoliaRuntimeException {
-    Request request =
-        buildRequest(
-            path, method, queryParameters, body, headerParams, requestOptions, useReadTransporter);
+    String path,
+    String method,
+    Map<String, Object> queryParameters,
+    Object body,
+    Map<String, String> headerParams,
+    RequestOptions requestOptions,
+    Boolean useReadTransporter
+  ) throws AlgoliaRuntimeException {
+    Request request = buildRequest(path, method, queryParameters, body, headerParams, requestOptions, useReadTransporter);
 
     return requester.newCall(request);
   }
@@ -348,23 +343,18 @@ public abstract class ApiClient {
    * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   public Request buildRequest(
-      String path,
-      String method,
-      Map<String, Object> queryParameters,
-      Object body,
-      Map<String, String> headerParams,
-      RequestOptions requestOptions,
-      Boolean useReadTransporter)
-      throws AlgoliaRuntimeException {
+    String path,
+    String method,
+    Map<String, Object> queryParameters,
+    Object body,
+    Map<String, String> headerParams,
+    RequestOptions requestOptions,
+    Boolean useReadTransporter
+  ) throws AlgoliaRuntimeException {
     boolean hasRequestOptions = requestOptions != null;
-    final String url =
-        buildUrl(
-            path,
-            queryParameters,
-            hasRequestOptions ? requestOptions.getExtraQueryParameters() : null);
+    final String url = buildUrl(path, queryParameters, hasRequestOptions ? requestOptions.getExtraQueryParameters() : null);
     final Request.Builder reqBuilder = new Request.Builder().url(url);
-    processHeaderParams(
-        headerParams, hasRequestOptions ? requestOptions.getExtraHeaders() : null, reqBuilder);
+    processHeaderParams(headerParams, hasRequestOptions ? requestOptions.getExtraHeaders() : null, reqBuilder);
 
     RequestBody reqBody;
     // We rely on `permitsRequestBody` to tell us if we should provide a body
@@ -390,8 +380,7 @@ public abstract class ApiClient {
    * @param extraQueryParameters The query parameters, coming from the requestOptions
    * @return The full URL
    */
-  public String buildUrl(
-      String path, Map<String, Object> queryParameters, Map<String, Object> extraQueryParameters) {
+  public String buildUrl(String path, Map<String, Object> queryParameters, Map<String, Object> extraQueryParameters) {
     if (extraQueryParameters != null) {
       for (Entry<String, Object> param : extraQueryParameters.entrySet()) {
         queryParameters.put(param.getKey(), param.getValue());
@@ -430,10 +419,7 @@ public abstract class ApiClient {
    * @param extraHeaderParams Header parameters in the form of Map, coming from RequestOptions
    * @param reqBuilder Request.Builder
    */
-  public void processHeaderParams(
-      Map<String, String> headerParams,
-      Map<String, String> extraHeaderParams,
-      Request.Builder reqBuilder) {
+  public void processHeaderParams(Map<String, String> headerParams, Map<String, String> extraHeaderParams, Request.Builder reqBuilder) {
     for (Entry<String, String> param : headerParams.entrySet()) {
       reqBuilder.header(param.getKey().toLowerCase(), parameterToString(param.getValue()));
     }
