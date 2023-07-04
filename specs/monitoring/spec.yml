@@ -49,11 +49,11 @@ paths:
   /1/status:
     $ref: 'paths/getStatus.yml'
   /1/status/{clusters}:
-    $ref: 'paths/getStatusSingle.yml'
+    $ref: 'paths/getClusterStatus.yml'
   /1/incidents:
     $ref: 'paths/getIncidents.yml'
   /1/incidents/{clusters}:
-    $ref: 'paths/getIncidentsSingle.yml'
+    $ref: 'paths/getClusterIncidents.yml'
   /1/inventory/servers:
     $ref: 'paths/getInventory.yml'
   /1/latency/{clusters}:
