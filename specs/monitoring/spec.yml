@@ -28,7 +28,7 @@ tags:
     description: List the known incidents.
     x-displayName: Incidents
   - name: infrastructure
-    description: Report metrics for different time periods.
+    description: Return information about the Algolia infrastructure used by your application.
     x-displayName: Infrastructure
   - name: monitoring-tag
     description: Report search and indexing times for your clusters, and get a list of servers.

@@ -7,7 +7,7 @@ content:
         incidents:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: incidents
+            x-additionalPropertiesName: cluster
             $ref: '../schemas/Incidents.yml'
     examples:
       success:

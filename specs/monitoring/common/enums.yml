@@ -44,9 +44,7 @@ Region:
 Status:
   title: status
   type: string
-  description: >-
-    Status of a cluster as a key-value pair with the cluster's name as key and the
-    status as value.
+  description: Status of the cluster.
   enum:
     - operational
     - degraded_performance

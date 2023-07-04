@@ -1,5 +1,5 @@
 title: incident
-description: Details about the reported incident.
+description: Incident details.
 type: object
 properties:
   title:
