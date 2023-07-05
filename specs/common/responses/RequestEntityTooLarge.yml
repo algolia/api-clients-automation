@@ -1,4 +1,4 @@
-description: Request Entity Too Large.
+description: Request entity is too large.
 content:
   application/json:
     schema:
