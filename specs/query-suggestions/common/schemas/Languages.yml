@@ -1,0 +1,11 @@
+title: languages
+description: |
+  Set the language for deduplicating singular and plural suggestions.
+  If specified, only the more popular form is included.
+default: false
+oneOf:
+  - type: array
+    items:
+      type: string
+  - type: boolean
+    default: false

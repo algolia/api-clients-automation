@@ -1,0 +1,25 @@
+type: object
+description: Query Suggestions configuration.
+additionalProperties: false
+required:
+  - sourceIndices
+properties:
+  sourceIndices:
+    $ref: './SourceIndices.yml'
+  languages:
+    $ref: './Languages.yml'
+  exclude:
+    type: array
+    description: Patterns to exclude from query suggestions.
+    nullable: true
+    default: null
+    items:
+      type: string
+  enablePersonalization:
+    type: boolean
+    default: false
+    description: Turn on personalized query suggestions.
+  allowSpecialCharacters:
+    type: boolean
+    default: false
+    description: Allow suggestions with special characters.
