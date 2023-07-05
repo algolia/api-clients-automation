@@ -26,7 +26,7 @@ apiKey:
         - `dev_*` matches all indices starting with "dev_"
         - `*_dev` matches all indices ending with "_dev"
         - `*_products_*` matches all indices containing "_products_".
-      example: ['indexName1','indexName2']
+      example: ['dev_products','prod_products']
       default: []
       items:
         type: string
