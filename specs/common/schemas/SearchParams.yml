@@ -169,7 +169,7 @@ baseSearchParamsWithoutQuery:
       type: array
       items:
         type: string
-      description: Tags to apply to the query for analytics purposes. For example, you can apply two different tags, `mobile` and `website`, to compare mobile and website search usage.
+      description: Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
       default: []
       x-categories:
         - Analytics
