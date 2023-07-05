@@ -2,7 +2,9 @@ openapi: 3.0.2
 info:
   title: Recommend API
   description: |-
-    Use the Recommend REST API  to manage your reecommendation and trending models.
+    The Recommend API lets you generate recommendations with several AI models.
+    
+    > **Note**: You should use Algolia's [libraries and tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) to interact with the Recommend API. Using the HTTP endpoints directly is not covered by the [SLA](https://www.algolia.com/policies/sla/).
 
     Although Algolia provides a REST API, you should use the official open source API [clients, libraries, and tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) instead.
     There's no [SLA](https://www.algolia.com/policies/sla/) if you use the REST API directly.
