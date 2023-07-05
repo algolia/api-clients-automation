@@ -3,7 +3,7 @@ get:
     - Advanced
   operationId: getLogs
   description: >
-    The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl) enabled.
+    The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
 
     Logs are held for the last seven days. There's also a logging limit of 1,000 API calls per server.
 
