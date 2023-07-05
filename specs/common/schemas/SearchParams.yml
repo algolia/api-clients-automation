@@ -137,7 +137,7 @@ baseSearchParamsWithoutQuery:
         - Rules
     personalizationImpact:
       type: integer
-      description: How much [Personalization affects results](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
+      description: Defines how much [Personalization affects results](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
       default: 100
       x-categories:
         - Personalization
