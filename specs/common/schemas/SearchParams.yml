@@ -307,7 +307,7 @@ facetFilters:
     - Filtering
 
 reRankingApplyFilter:
-  description: When [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/). is enabled, only records that match these filters will be affected by Dynamic Re-Ranking.
+  description: When [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) is enabled, only records that match these filters will be affected by Dynamic Re-Ranking.
   nullable: true
   oneOf:
     - $ref: '#/listOfSearchFilters'
