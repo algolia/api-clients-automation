@@ -25,7 +25,7 @@ Index:
   required: true
   schema:
     type: string
-    example: myIndexName
+    example: YourIndexName
 
 StartDate:
   in: query
