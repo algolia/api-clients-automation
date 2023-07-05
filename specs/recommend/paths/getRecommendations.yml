@@ -9,7 +9,7 @@ post:
     Returns results from either recommendation or trending models:
 
       - Recommendations are provided by the [Related Products and Related Content models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content)
-      - Trending models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content).
+      - Trending models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
   requestBody:
     required: true
     content:
