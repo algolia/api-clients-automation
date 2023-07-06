@@ -68,10 +68,11 @@ Search:
 Offset:
   in: query
   name: offset
-  description: Start position for retrieving results. Must be a positive integer.
+  description: Start position for retrieving results.
   example: 1
   schema:
     type: integer
+    minimum: 0
 
 Tags:
   name: tags
@@ -85,7 +86,7 @@ Tags:
 average:
   type: number
   format: double
-  description: The average of all the click count event.
+  description: Average count of all click events.
 
 averageClickPosition:
   type: integer
@@ -124,15 +125,15 @@ conversionCount:
   example: 0
 
 attribute:
-  description: The attribute.
+  description: Attribute name.
   type: string
 
 operator:
-  description: The operator.
+  description: Operator.
   type: string
 
 value:
-  description: The value of the attribute.
+  description: Attribute value.
   type: string
 
 search:
@@ -141,5 +142,6 @@ search:
   type: string
 
 hit:
-  description: The hit.
+  description: Hit.
   type: string
+  example: 'method-export-rules-php'

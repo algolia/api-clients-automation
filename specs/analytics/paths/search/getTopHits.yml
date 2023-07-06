@@ -3,7 +3,7 @@ get:
     - search
   operationId: getTopHits
   summary: Get top hits.
-  description: Returns top hits. Limited to the 1000 most frequent ones.
+  description: Returns the most popular clicked results in the latest 1,000 searches.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'
@@ -11,7 +11,7 @@ get:
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../../../common/parameters.yml#/Limit'
-    - $ref: '../../../common/parameters.yml#/Offset'
+    - $ref: '../../common/parameters.yml#/Offset'
     - $ref: '../../common/parameters.yml#/Tags'
   responses:
     '200':
