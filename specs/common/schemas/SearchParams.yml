@@ -150,7 +150,7 @@ baseSearchParamsWithoutQuery:
         - Personalization
     getRankingInfo:
       type: boolean
-      description: If `true`, return [detailed ranking information](https://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/#ranking-information) in the response.
+      description: Incidates whether the search response includes [detailed ranking information](https://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/#ranking-information).
       default: false
       x-categories:
         - Advanced
