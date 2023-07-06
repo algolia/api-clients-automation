@@ -24,7 +24,7 @@ dictionaryEntryState:
   type: string
   enum: [enabled, disabled]
   default: enabled
-  description: Dictionary entry state.
+  description: Indicates whether a dictionary entry is active (`enabled`) or inactive (`disabled`). 
 
 logType:
   type: string
