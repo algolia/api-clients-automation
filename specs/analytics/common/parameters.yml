@@ -95,7 +95,7 @@ averageClickPosition:
 clickCount:
   type: integer
   description: Number of click events.
-  example: 1
+  example: 162
 
 date:
   type: string
