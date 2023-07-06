@@ -83,7 +83,7 @@ baseSearchParamsWithoutQuery:
     offset:
       type: integer
       description: >
-        Specify the offset of the first hit to return.
+        Specifies the offset of the first hit to return.
 
         > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
       x-categories:
