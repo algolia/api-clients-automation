@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-legacy-signature: true
   summary: Search multiple indices.
-  description: Send multiple search queries, potentially targeting multiple indices.
+  description: Send multiple search queries to one or more indices.
   requestBody:
     required: true
     description: Query requests and strategies. Results will be received in the same order as the queries.
