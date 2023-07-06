@@ -2,7 +2,7 @@
 Attribute:
   in: path
   name: attribute
-  description: The exact name of the attribute.
+  description: Attribute name.
   required: true
   schema:
     type: string
@@ -42,7 +42,7 @@ direction:
 ClickAnalytics:
   in: query
   name: clickAnalytics
-  description: If `true`, include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. These are called _tracked searches_.
+  description: Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
   schema:
     type: boolean
     default: false
@@ -50,7 +50,12 @@ ClickAnalytics:
 count:
   description: Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
   type: integer
-  example: 3
+  example: 504
+
+noResultCount:
+  description: Number of occurences.
+  type: integer
+  example: 54
 
 Search:
   in: query
@@ -102,7 +107,9 @@ rate:
   format: double
   description: >
     [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-  example: 1
+  minimum: 0
+  maximum: 1
+  example: 0.14634193523426317
 
 conversionRate:
   type: number
