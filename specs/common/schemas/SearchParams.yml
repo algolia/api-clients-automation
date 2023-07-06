@@ -188,7 +188,7 @@ baseSearchParamsWithoutQuery:
         - Advanced
     enableReRanking:
       type: boolean
-      description: If `true`, this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
+      description: Indicates whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
       default: true
       x-categories:
         - Advanced
