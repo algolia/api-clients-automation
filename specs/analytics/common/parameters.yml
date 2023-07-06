@@ -100,7 +100,7 @@ clickCount:
 
 date:
   type: string
-  description: Date of the analytics event. A date string in the format YYYY-MM-DD.
+  description: Date of the event in the format YYYY-MM-DD.
   example: '2023-06-14'
 
 rate:
