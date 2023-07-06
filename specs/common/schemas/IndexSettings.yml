@@ -304,7 +304,7 @@ indexSettingsAsSearchParams:
         - Rules
     enablePersonalization:
       type: boolean
-      description: If `true`, [Personalization](https://www.algolia.com/doc/guides/personalization/what-is-personalization/) is enabled.
+      description: Incidates whether [Personalization](https://www.algolia.com/doc/guides/personalization/what-is-personalization/) is enabled.
       default: false
       x-categories:
         - Personalization
