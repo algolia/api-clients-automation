@@ -2,7 +2,7 @@ post:
   tags:
     - Search
   operationId: browse
-  summary: Get all index content.
+  summary: Get all records from an index.
   description: >
     Retrieve up to 1,000 records per call.
 
