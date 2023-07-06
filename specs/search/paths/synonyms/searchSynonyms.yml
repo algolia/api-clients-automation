@@ -4,15 +4,15 @@ post:
   operationId: searchSynonyms
   x-use-read-transporter: true
   x-cacheable: true
-  summary: Search synonyms.
-  description: Search or browse all synonyms, optionally filtering them by type.
+  summary: List synonyms.
+  description: List all the synonyms matching various criteria.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: './common/parameters.yml#/Type'
     - $ref: '../../../common/parameters.yml#/PageDefault0'
     - $ref: '../../../common/parameters.yml#/HitsPerPage'
   requestBody:
-    description: The body of the the `searchSynonyms` method.
+    description: Body of the `searchSynonyms` operation.
     content:
       application/json:
         schema:
