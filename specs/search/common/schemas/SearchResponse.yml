@@ -49,7 +49,7 @@ baseSearchResponse:
       description: Indicates whether the number of hits `nbHits` is exhaustive (exact) or approximate.
     exhaustiveTypo:
       type: boolean
-      description: If `false`, the typo tolerance search was approximate (only applies when typo tolerance is enabled).
+      description: Indicates whether the search for typos was exhaustive (exact) or approximate.
     facets:
       title: facets
       type: object
