@@ -1,8 +1,8 @@
-title: IncidentsResponse
 description: OK
 content:
   application/json:
     schema:
+      title: IncidentsResponse
       type: object
       properties:
         incidents:

@@ -1,8 +1,8 @@
-title: StatusResponse
 description: OK
 content:
   application/json:
     schema:
+      title: StatusResponse
       type: object
       properties:
         status:

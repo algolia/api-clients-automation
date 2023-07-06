@@ -1,8 +1,8 @@
-title: InfrastructureResponse
 description: OK
 content:
   application/json:
     schema:
+      title: InfrastructureResponse
       type: object
       additionalProperties: false
       properties:

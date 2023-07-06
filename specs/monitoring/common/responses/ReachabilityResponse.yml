@@ -1,8 +1,8 @@
-title: ReachabilityResponse
 description: OK
 content:
   application/json:
     schema:
+      title: ReachabilityResponse
       type: object
       additionalProperties:
         x-additionalPropertiesName: Server

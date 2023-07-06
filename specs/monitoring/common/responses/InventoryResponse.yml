@@ -1,8 +1,8 @@
-title: InventoryResponse
 description: OK
 content:
   application/json:
     schema:
+      title: InventoryResponse
       type: object
       properties:
         inventory:

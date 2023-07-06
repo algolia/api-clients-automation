@@ -1,8 +1,8 @@
-title: IndexingTimeResponse
 description: OK
 content:
   application/json:
     schema:
+      title: IndexingTimeResponse
       type: object
       properties:
         metrics:

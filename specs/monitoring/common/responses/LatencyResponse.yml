@@ -1,8 +1,8 @@
-title: LatencyResponse
 description: OK
 content:
   application/json:
     schema:
+      title: LatencyResponse
       type: object
       properties:
         metrics:
