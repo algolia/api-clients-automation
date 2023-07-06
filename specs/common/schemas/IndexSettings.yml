@@ -407,7 +407,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
-      description: Fields to return in the API response for search and browse queries.
+      description: Attributes to include in the API response for search and browse queries.
       default: []
       x-categories:
         - Advanced
