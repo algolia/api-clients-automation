@@ -5,14 +5,10 @@ Clusters:
   required: true
   description: Subset of clusters.
   schema:
-    type: array
-    items:
-      type: string
-      title: Cluster names
-      example:
-        - c1-de
-        - c2-de
-        - c3-de
+    # The `correct` (?) schema should be type array/items string,
+    # But the SDK generator expects a string, because it can't replace a list of strings in the URL.
+    type: string
+    example: "c1-de,c2-de,c3-de"
 
 MetricInPath:
   name: metric
