@@ -1,3 +1,4 @@
+title: InventoryResponse
 description: OK
 content:
   application/json:

@@ -1,3 +1,4 @@
+title: IncidentsResponse
 description: OK
 content:
   application/json:

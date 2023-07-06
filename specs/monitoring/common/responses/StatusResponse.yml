@@ -1,3 +1,4 @@
+title: StatusResponse
 description: OK
 content:
   application/json:
