@@ -4,7 +4,7 @@ listIndicesResponse:
   properties:
     items:
       type: array
-      description: Retrieved indices.
+      description: All indices in your Algolia application.
       items:
         $ref: '#/fetchedIndex'
     nbPages:
