@@ -43,7 +43,7 @@ baseSearchResponse:
       description: Automatically-computed radius.
     exhaustiveFacetsCount:
       type: boolean
-      description: If `false`, the facet count is approximate.
+      description: Indicates whether the facet count is exhaustive (exact) or approximate.
     exhaustiveNbHits:
       type: boolean
       description: If `false`, `nbHits` is approximate.
