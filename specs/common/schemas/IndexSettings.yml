@@ -85,7 +85,7 @@ baseIndexSettings:
     allowCompressionOfIntegerArray:
       type: boolean
       description: >
-        If `true`, the engine compresses arrays with exclusively non-negative integers.
+        Incidates whether the engine compresses arrays with exclusively non-negative integers.
 
         When enabled, the compressed arrays may be reordered.
       default: false
