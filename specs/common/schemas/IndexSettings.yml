@@ -298,7 +298,7 @@ indexSettingsAsSearchParams:
         - Languages
     enableRules:
       type: boolean
-      description: If `true`, [Rules](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/) are enabled.
+      description: Incidates whether [Rules](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/) are enabled.
       default: true
       x-categories:
         - Rules
