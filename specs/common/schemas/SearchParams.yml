@@ -182,7 +182,7 @@ baseSearchParamsWithoutQuery:
         - Advanced
     enableABTest:
       type: boolean
-      description: If `false`, excludes the current query from A/B testing.
+      description: Incidates whether this search will be considered in A/B testing.
       default: true
       x-categories:
         - Advanced
