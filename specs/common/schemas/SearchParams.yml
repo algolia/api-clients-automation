@@ -162,7 +162,7 @@ baseSearchParamsWithoutQuery:
         - Analytics
     analytics:
       type: boolean
-      description: If `false`, [excludes the current query from analytics](https://www.algolia.com/doc/guides/search-analytics/guides/exclude-queries/).
+      description: Indicates whether this query will be included in [analytics](https://www.algolia.com/doc/guides/search-analytics/guides/exclude-queries/).
       default: true
       x-categories:
         - Analytics
