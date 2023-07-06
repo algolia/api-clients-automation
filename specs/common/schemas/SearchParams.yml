@@ -55,7 +55,7 @@ baseSearchParamsWithoutQuery:
       type: array
       items:
         type: string
-      description: Get [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts), their facet values, and the number of matching facet values.
+      description: Returns [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts), their facet values, and the number of matching facet values.
       default: []
       x-categories:
         - Faceting
