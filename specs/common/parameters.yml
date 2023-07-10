@@ -93,7 +93,7 @@ Offset:
 Limit:
   in: query
   name: limit
-  description: Number of records to return. Limit is the size of the page.
+  description: Number of records to return (page size).
   schema:
     type: integer
     default: 10
