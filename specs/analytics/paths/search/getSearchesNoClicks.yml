@@ -3,7 +3,7 @@ get:
     - search
   operationId: getSearchesNoClicks
   summary: Get top searches with no clicks.
-  description: Returns the most popular of the latest 1,000 searches that didn't lead to any search result clicks.
+  description: Returns the most popular of the last 1,000 searches that didn't lead to any search result clicks.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

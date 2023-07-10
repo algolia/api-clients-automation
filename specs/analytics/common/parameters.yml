@@ -6,6 +6,7 @@ Attribute:
   required: true
   schema:
     type: string
+    example: 'brand'
 
 # query
 OrderBy:
@@ -127,6 +128,7 @@ conversionCount:
 attribute:
   description: Attribute name.
   type: string
+  example: 'url'
 
 operator:
   description: Operator.
