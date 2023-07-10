@@ -3,7 +3,7 @@ get:
     - click
   operationId: getClickThroughRate
   summary: Get click-through rate (CTR).
-  description: Returns a click-through rate (CTR).
+  description: Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

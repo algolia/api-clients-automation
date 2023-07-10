@@ -60,7 +60,8 @@ Tags:
 average:
   type: number
   format: double
-  description: The average of all the click count event.
+  description: Average count of all click events.
+  example: 2.3344634550185286
 
 averageClickPosition:
   type: integer
@@ -68,14 +69,13 @@ averageClickPosition:
 
 clickCount:
   type: integer
-  description: >
-    Number of click events.
-
-    If all `positions` have a `clickCount` of 0, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+  description: Number of click events.
+  example: 988
 
 date:
   type: string
   description: Date of the event.
+  example: '2023-06-14'
 
 rate:
   type: number
