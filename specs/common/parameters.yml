@@ -30,7 +30,7 @@ Index:
 StartDate:
   in: query
   name: startDate
-  description: Start date (a string in the format `YYY-MM-DD`) of the period to analyze.
+  description: Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
     example: 2022-09-19
@@ -39,7 +39,7 @@ StartDate:
 EndDate:
   in: query
   name: endDate
-  description: End date (a string in the format `YYY-MM-DD`) of the period to analyze.
+  description: End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
     example: 2023-01-21
