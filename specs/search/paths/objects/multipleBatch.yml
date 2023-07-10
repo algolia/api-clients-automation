@@ -4,10 +4,10 @@ post:
   operationId: multipleBatch
   description: >
     To reduce the time spent on network round trips, you can perform several write actions in a single request.
-    It's a multi-index version of the [`batch` operation](#tag/Records/operation/batch). It can be helpful when, for example, you have one index per user.
+    It's a multi-index version of the [`batch` operation](#tag/Records/operation/batch).
     Actions are applied in the order they are specified.
     
-    The supported `action`s are equivalent to the individual operations of the same name.
+    The supported actions are equivalent to the individual operations of the same name.
   summary: Batch write operations on multiple indices.
   requestBody:
     required: true
