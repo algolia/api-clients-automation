@@ -39,7 +39,7 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
     }
 
     if (lang === 'javascript') {
-      await run('yarn install', { cwd: 'tests/output/javascript' });
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install');
     }
 
     await formatter(lang, toAbsolutePath(`tests/output/${lang}`));
