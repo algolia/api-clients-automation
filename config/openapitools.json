@@ -231,12 +231,6 @@
         "additionalProperties": {
           "packageVersion": "0.1.1+3"
         }
-      },
-      "dart-monitoring": {
-        "output": "#{cwd}/clients/algoliasearch-client-dart/packages/monitoring",
-        "additionalProperties": {
-          "packageVersion": "0.1.1+1"
-        }
       }
     }
   }
