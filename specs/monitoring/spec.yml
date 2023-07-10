@@ -46,6 +46,12 @@ tags:
       Server names follow the pattern: `{cluster-name}-{1|2|3}`.
     x-displayName: Status
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: '../common/paths/customRequest.yml'
+
   /1/status:
     $ref: 'paths/getStatus.yml'
   /1/status/{clusters}:
