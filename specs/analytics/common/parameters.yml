@@ -133,10 +133,12 @@ attribute:
 operator:
   description: Operator.
   type: string
+  example: ':'
 
 value:
   description: Attribute value.
   type: string
+  example: 'integration'
 
 search:
   description: User query.

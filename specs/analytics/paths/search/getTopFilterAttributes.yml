@@ -3,7 +3,7 @@ get:
     - search
   operationId: getTopFilterAttributes
   summary: Get top filterable attributes.
-  description: Returns the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the last 1,000 searches.
+  description: Returns the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'
