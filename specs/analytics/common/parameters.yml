@@ -68,7 +68,10 @@ averageClickPosition:
 
 clickCount:
   type: integer
-  description: The number of click event.
+  description: >
+    Number of click events.
+
+    If all `positions` have a `clickCount` of 0, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
 
 date:
   type: string
@@ -77,12 +80,12 @@ date:
 rate:
   type: number
   format: double
-  description: The click-through rate.
+  description: Click-through rate (CTR).
 
 conversionRate:
   type: number
   format: double
-  description: The conversion rate.
+  description: Conversion rate (CR).
 
 conversionCount:
   type: integer
