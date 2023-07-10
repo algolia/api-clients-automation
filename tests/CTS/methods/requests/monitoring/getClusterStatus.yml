@@ -1,6 +1,6 @@
 [
   {
-    "testName": "getStatusSingle",
+    "testName": "getClusterStatus",
     "parameters": {
       "clusters": [
         "c1-de"
