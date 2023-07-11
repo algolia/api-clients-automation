@@ -4,7 +4,7 @@ get:
   operationId: getClickPositions
   summary: Get click positions.
   description: |
-    Shows the number of clicks events and their associated position in the search results.
+    Show the number of clicks events and their associated position in the search results.
 
     > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
 
