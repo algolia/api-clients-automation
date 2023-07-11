@@ -20,7 +20,7 @@ language:
 
 standardEntries:
   description: >
-    Maps a [supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) to a boolean value (for example, `'fr': false`). If `true` Algolia's built-in [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) for that language have been turned off.
+    Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and boolean values.
   additionalProperties: false
   properties:
     plurals:
