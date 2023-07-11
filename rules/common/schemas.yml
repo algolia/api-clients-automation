@@ -22,7 +22,7 @@ rule:
     enabled:
       type: boolean
       default: true
-      description: If `true`, the rule is enabled. If it isn't enabled, it isn't applied at query time.
+      description: Indicates whether the rule is active. If `false`, the rule isn't applied at query time.
     validity:
       type: array
       description: If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.
@@ -43,7 +43,7 @@ condition:
       $ref: '#/anchoring'
     alternatives:
       type: boolean
-      description: Whether the pattern matches on plurals, synonyms, and typos.
+      description: Indicates whether the pattern matches on plurals, synonyms, and typos.
       default: false
     context:
       type: string
@@ -52,7 +52,7 @@ condition:
 
 anchoring:
   type: string
-  description: Whether the pattern parameter matches the beginning (`startsWith`) or end (`endsWith`) of the query string, is an exact match (`is`), or a partial match (`contains`).
+  description: Whether the pattern parameter should match the beginning (`startsWith`) or end (`endsWith`) of the query string, is an exact match (`is`), or a partial match (`contains`).
   enum: [is, startsWith, endsWith, contains]
 
 consequence:
@@ -71,7 +71,8 @@ consequence:
     filterPromotes:
       type: boolean
       default: false
-      description: Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.
+      description: Indicates whether promoted results must match the filters of the current search. If false, promoted results will show regardless of applied filters.
+      Only use in combination with the `promote` consequence.
     hide:
       type: array
       description: Records to hide. By default, you can hide up to 50 records per rule.
@@ -87,7 +88,7 @@ consequence:
           - objectID
     userData:
       type: object
-      description: Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
+      description: Custom JSON object that will be appended to the `userData` array in the response. The (minified) size of this object must not exceed 1kB.
       example: {'settingID': 'f2a7b51e3503acc6a39b3784ffb84300','pluginVersion': '1.6.0'}
 
 consequenceParams:
@@ -102,13 +103,13 @@ promote:
     - $ref: '#/promoteObjectID'
 
 promoteObjectID:
-  description: objectID to promote.
+  description: Object ID to promote.
   type: object
   additionalProperties: false
   properties:
     objectID:
       type: string
-      description: Unique identifier of the object to promote.
+      description: Unique identifier of the record (object) to promote.
       example: '2b642cf64c587f50388eb1b8d047bf56'
     position:
       $ref: '#/promotePosition'
@@ -135,7 +136,7 @@ promoteObjectIDs:
 
 promotePosition:
   type: integer
-  description: The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
+  description: Position in the search results to place the records. If you pass a list of object IDs, the records are shown at this position as a group. For example, if you pronmote four records to position 0, the records take the first four positions.
   example: 0
 
 params:
@@ -153,7 +154,7 @@ params:
       $ref: '../../../../common/schemas/IndexSettings.yml#/renderingContent'
 
 consequenceQuery:
-  description: When providing a string, it replaces the entire query string. When providing an object, it describes incremental edits to be made to the query string (but you can't do both).
+  description: When providing a string, the rule replaces the entire query string. When providing an object, the rule makes incremental edits to the query string.
   oneOf:
     - $ref: '#/consequenceQueryObject'
     - type: string
