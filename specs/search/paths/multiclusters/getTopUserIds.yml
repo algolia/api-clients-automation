@@ -4,7 +4,7 @@ get:
   operationId: getTopUserIds
   summary: Get top userID.
   description: >
-    Get the top 10 userIDs (users with the highest number of records per cluster).
+    Get the IDs of the 10 users with the highest number of records per cluster.
 
     Since userID usage can take up to a few seconds to propagate to the different clusters, the response data isn't quite real-time.
   responses:
