@@ -102,7 +102,7 @@ promote:
     - $ref: '#/promoteObjectID'
 
 promoteObjectID:
-  description: objectID to promote.
+  description: Object ID to promote.
   type: object
   additionalProperties: false
   properties:
