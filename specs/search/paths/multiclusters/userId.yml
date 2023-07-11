@@ -6,7 +6,8 @@ get:
   description: >
     Returns the userID data stored in the mapping.
 
-    Since userID usage can take up to a few seconds to propagate to the different clusters, the response data isn't quite real-time.
+    Since it can take up to a few seconds to get the data from the different clusters,
+    the response isn't real-time.
   parameters:
     - $ref: '../../common/parameters.yml#/UserIDInPath'
   responses:
