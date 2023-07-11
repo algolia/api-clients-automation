@@ -31,7 +31,7 @@ standardEntries:
       $ref: '#/standardEntry'
 
 standardEntry:
-  description: Language ISO code and boolean.
+  description: Key-value pair of a language ISO code and a boolean value.
   example: >
     {'fr': false}
   type: object
