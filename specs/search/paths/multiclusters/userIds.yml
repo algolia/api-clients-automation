@@ -60,7 +60,7 @@ get:
             properties:
               userIDs:
                 type: array
-                description: UserIDs.
+                description: User IDs.
                 items:
                   $ref: '../../common/schemas/UserId.yml#/userId'
             required:
