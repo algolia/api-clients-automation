@@ -1,11 +1,11 @@
-import * as common from '../../../common';
-import { cleanGeneratedBranch } from '../cleanGeneratedBranch';
-import { pushGeneratedCode } from '../pushGeneratedCode';
-import commentText from '../text';
+import * as common from '../../../common.js';
+import { cleanGeneratedBranch } from '../cleanGeneratedBranch.js';
+import { pushGeneratedCode } from '../pushGeneratedCode.js';
+import commentText from '../text.js';
 import {
   upsertGenerationComment,
   getCommentBody,
-} from '../upsertGenerationComment';
+} from '../upsertGenerationComment.js';
 
 describe('codegen', () => {
   describe('cleanGeneratedBranch', () => {

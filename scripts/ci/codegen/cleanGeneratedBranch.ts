@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { gitBranchExists, run } from '../../common';
+import { gitBranchExists, run } from '../../common.js';
 
 /**
  * Deletes a branch for its `generated/${headRef}` name on origin.

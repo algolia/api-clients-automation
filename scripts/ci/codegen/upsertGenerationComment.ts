@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import { run, OWNER, REPO, getOctokit } from '../../common';
+import { run, OWNER, REPO, getOctokit } from '../../common.js';
 
-import commentText from './text';
+import commentText from './text.js';
 
 const BOT_NAME = 'algolia-bot';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
