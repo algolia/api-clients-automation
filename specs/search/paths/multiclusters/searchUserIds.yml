@@ -4,7 +4,7 @@ post:
   operationId: searchUserIds
   x-use-read-transporter: true
   x-cacheable: true
-  summary: Search for a userID.
+  summary: Search for a user ID.
   description: >
     Since userID usage can take up to a few seconds to propagate to the different clusters, the response data isn't quite real-time.
     
