@@ -20,8 +20,7 @@ public class TestsClient extends TestsGenerator {
   @Override
   public boolean available() {
     // no `lite` client test for now
-    if ((language.equals("javascript") || language.equals("dart"))
-        && client.equals("algoliasearch")) {
+    if ((language.equals("javascript") || language.equals("dart")) && client.equals("algoliasearch")) {
       return false;
     }
 
@@ -30,23 +29,16 @@ public class TestsClient extends TestsGenerator {
   }
 
   @Override
-  public void addSupportingFiles(
-      List<SupportingFile> supportingFiles, String outputFolder, String extension) {
+  public void addSupportingFiles(List<SupportingFile> supportingFiles, String outputFolder, String extension) {
     if (!available()) {
       return;
     }
     supportingFiles.add(
-        new SupportingFile(
-            "client/suite.mustache",
-            outputFolder + "/client",
-            Utils.createClientName(client, language) + extension));
+      new SupportingFile("client/suite.mustache", outputFolder + "/client", Utils.createClientName(client, language) + extension)
+    );
   }
 
-  public void run(
-      Map<String, CodegenModel> models,
-      Map<String, CodegenOperation> operations,
-      Map<String, Object> bundle)
-      throws Exception {
+  public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     Map<String, ClientTestData[]> cts = loadCTS("client", client, ClientTestData[].class);
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language);
 
@@ -72,8 +64,7 @@ public class TestsClient extends TestsGenerator {
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
               if (ope == null) {
-                throw new CTSException(
-                    "Cannot find operation for method: " + step.path, test.testName);
+                throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
               }
               stepOut.put("returnType", ope.returnType);
               stepOut.put("isMethod", true);

@@ -42,8 +42,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
 
     try {
       Utils.generateServer(client, additionalProperties);
-      additionalProperties.put(
-          "packageVersion", Utils.getClientConfigField("go", "packageVersion"));
+      additionalProperties.put("packageVersion", Utils.getClientConfigField("go", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -51,8 +50,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   }
 
   @Override
-  public CodegenOperation fromOperation(
-      String path, String httpMethod, Operation operation, List<Server> servers) {
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 }

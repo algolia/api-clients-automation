@@ -18,8 +18,7 @@ public class TestsRequest extends TestsGenerator {
     String clientName = client;
     // This special case allow us to read the `search` CTS to generated the tests for the
     // `lite` client, which is only available in JavaScript
-    if ((language.equals("javascript") || language.equals("dart"))
-        && client.equals("algoliasearch")) {
+    if ((language.equals("javascript") || language.equals("dart")) && client.equals("algoliasearch")) {
       clientName = "search";
     }
     return super.loadCTS("methods/requests", clientName, Request[].class);
@@ -32,24 +31,21 @@ public class TestsRequest extends TestsGenerator {
   }
 
   @Override
-  public void addSupportingFiles(
-      List<SupportingFile> supportingFiles, String outputFolder, String extension) {
+  public void addSupportingFiles(List<SupportingFile> supportingFiles, String outputFolder, String extension) {
     if (!available()) {
       return;
     }
     supportingFiles.add(
-        new SupportingFile(
-            "requests/requests.mustache",
-            outputFolder + "/methods/requests",
-            Utils.createClientName(client, language) + extension));
+      new SupportingFile(
+        "requests/requests.mustache",
+        outputFolder + "/methods/requests",
+        Utils.createClientName(client, language) + extension
+      )
+    );
   }
 
   @Override
-  public void run(
-      Map<String, CodegenModel> models,
-      Map<String, CodegenOperation> operations,
-      Map<String, Object> bundle)
-      throws Exception {
+  public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     Map<String, Request[]> cts = loadRequestCTS();
 
     List<Object> blocks = new ArrayList<>();
@@ -59,16 +55,17 @@ public class TestsRequest extends TestsGenerator {
       String operationId = entry.getKey();
       if (!cts.containsKey(operationId)) {
         throw new CTSException(
-            "operationId '"
-                + operationId
-                + "' does not exist in the tests suite, please create the file:"
-                + " 'tests/CTS/methods/requests/"
-                + client
-                + "/"
-                + operationId
-                + ".json'.\n"
-                + "You can read more on the documentation:"
-                + " https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite");
+          "operationId '" +
+          operationId +
+          "' does not exist in the tests suite, please create the file:" +
+          " 'tests/CTS/methods/requests/" +
+          client +
+          "/" +
+          operationId +
+          ".json'.\n" +
+          "You can read more on the documentation:" +
+          " https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite"
+        );
       }
       Request[] op = cts.get(operationId);
 
@@ -113,8 +110,7 @@ public class TestsRequest extends TestsGenerator {
             if (req.requestOptions.headers != null) {
               Map<String, Object> headers = new HashMap<>();
               // convert the headers to an acceptable type
-              paramsType.enhanceParameters(
-                  new HashMap<String, Object>(req.requestOptions.headers), headers);
+              paramsType.enhanceParameters(new HashMap<String, Object>(req.requestOptions.headers), headers);
               requestOptions.put("headers", headers);
             }
             test.put("requestOptions", requestOptions);

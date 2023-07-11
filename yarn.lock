@@ -37,7 +37,6 @@ __metadata:
   dependencies:
     "@babel/eslint-parser": 7.22.7
     "@openapitools/openapi-generator-cli": 2.6.0
-    "@prettier/plugin-php": 0.19.6
     "@redocly/openapi-cli": 1.0.0-beta.95
     "@typescript-eslint/eslint-plugin": 5.61.0
     "@typescript-eslint/parser": 5.61.0
@@ -59,7 +58,7 @@ __metadata:
     lint-staged: 13.2.3
     mustache: 4.2.0
     prettier: 3.0.0
-    prettier-plugin-java: 2.1.0
+    prettier-plugin-java: 2.2.0
     renovate-config-algolia: 2.1.10
     typescript: 5.1.6
   languageName: unknown
@@ -2184,19 +2183,6 @@ __metadata:
     picocolors: ^1.0.0
     tslib: ^2.6.0
   checksum: 24e04c121269317d259614cd32beea3af38277151c4002df5883c4be920b8e3490bb897748e844f9d46bf68230f86dabd4e8f093773130e7e60529a769a132fc
-  languageName: node
-  linkType: hard
-
-"@prettier/plugin-php@npm:0.19.6":
-  version: 0.19.6
-  resolution: "@prettier/plugin-php@npm:0.19.6"
-  dependencies:
-    linguist-languages: ^7.21.0
-    mem: ^8.0.0
-    php-parser: ^3.1.5
-  peerDependencies:
-    prettier: ^1.15.0 || ^2.0.0
-  checksum: 0ecd2814f9fc95b6aea1a46ab645c0f7a9f16f0b2c3613fce409b74b4ced663d7a193158f110097ef46c2c1c3a3ac8573014c9598a2fc8ff8e6e3c59f3295d0c
   languageName: node
   linkType: hard
 
@@ -6794,13 +6780,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"linguist-languages@npm:^7.21.0":
-  version: 7.21.0
-  resolution: "linguist-languages@npm:7.21.0"
-  checksum: b655daec0357ec5765a67c37441455d817a854ed1bba6875b379b4508fcf2376436827e4246dd049ce3de3a72dd1c149d42ceac8581deb79b76650a423fd1397
-  languageName: node
-  linkType: hard
-
 "lint-staged@npm:13.2.3":
   version: 13.2.3
   resolution: "lint-staged@npm:13.2.3"
@@ -7022,29 +7001,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"map-age-cleaner@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "map-age-cleaner@npm:0.1.3"
-  dependencies:
-    p-defer: ^1.0.0
-  checksum: cb2804a5bcb3cbdfe4b59066ea6d19f5e7c8c196cd55795ea4c28f792b192e4c442426ae52524e5e1acbccf393d3bddacefc3d41f803e66453f6c4eda3650bc1
-  languageName: node
-  linkType: hard
-
 "mdn-data@npm:2.0.14":
   version: 2.0.14
   resolution: "mdn-data@npm:2.0.14"
   checksum: 9d0128ed425a89f4cba8f787dca27ad9408b5cb1b220af2d938e2a0629d17d879a34d2cb19318bdb26c3f14c77dd5dfbae67211f5caaf07b61b1f2c5c8c7dc16
-  languageName: node
-  linkType: hard
-
-"mem@npm:^8.0.0":
-  version: 8.1.1
-  resolution: "mem@npm:8.1.1"
-  dependencies:
-    map-age-cleaner: ^0.1.3
-    mimic-fn: ^3.1.0
-  checksum: c41bc97f6f82b91899206058989e34bcb1543af40413c2ab59e5a8e97e4f8f2188d62e7bd95b2d575d5b0d823d5034a0f274a0676f6d11a0e0b973898b06c8b1
   languageName: node
   linkType: hard
 
@@ -7092,13 +7052,6 @@ __metadata:
   version: 2.1.0
   resolution: "mimic-fn@npm:2.1.0"
   checksum: d2421a3444848ce7f84bd49115ddacff29c15745db73f54041edc906c14b131a38d05298dae3081667627a59b2eb1ca4b436ff2e1b80f69679522410418b478a
-  languageName: node
-  linkType: hard
-
-"mimic-fn@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "mimic-fn@npm:3.1.0"
-  checksum: f7b167f9115b8bbdf2c3ee55dce9149d14be9e54b237259c4bc1d8d0512ea60f25a1b323f814eb1fe8f5a541662804bcfcfff3202ca58df143edb986849d58db
   languageName: node
   linkType: hard
 
@@ -7616,13 +7569,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-defer@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "p-defer@npm:1.0.0"
-  checksum: 4271b935c27987e7b6f229e5de4cdd335d808465604644cb7b4c4c95bef266735859a93b16415af8a41fd663ee9e3b97a1a2023ca9def613dba1bad2a0da0c7b
-  languageName: node
-  linkType: hard
-
 "p-limit@npm:^2.2.0":
   version: 2.3.0
   resolution: "p-limit@npm:2.3.0"
@@ -7778,13 +7724,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"php-parser@npm:^3.1.5":
-  version: 3.1.5
-  resolution: "php-parser@npm:3.1.5"
-  checksum: 41ab01b750cca266aa348beabd131276d3f5200fb8304c915a0bd69f02d8cf3aeab8d5d23f30c929861eef40b414d244c3446328d6c2f34b49633c09447e8ad6
-  languageName: node
-  linkType: hard
-
 "picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
@@ -7902,23 +7841,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:2.1.0":
-  version: 2.1.0
-  resolution: "prettier-plugin-java@npm:2.1.0"
+"prettier-plugin-java@npm:2.2.0":
+  version: 2.2.0
+  resolution: "prettier-plugin-java@npm:2.2.0"
   dependencies:
     java-parser: 2.0.4
     lodash: 4.17.21
-    prettier: 2.8.4
-  checksum: 6a87ab20d52226b479125189bc8287c465d3d4e7f5e30b2443b331e47e5512a6652a88ddde1c2b97428f8f01ca70075569510867dc5538fec8c662cc6394470f
-  languageName: node
-  linkType: hard
-
-"prettier@npm:2.8.4":
-  version: 2.8.4
-  resolution: "prettier@npm:2.8.4"
-  bin:
-    prettier: bin-prettier.js
-  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
+    prettier: 3.0.0
+  checksum: 327de457c93ce24f7ad16016988cf0acfab4b6e73735f46f204fb234d20ef18623c3bb81e46a4abf58a52573b57bff2c52894880e86f98239fd6720c295c1e27
   languageName: node
   linkType: hard
 
