@@ -26,12 +26,17 @@ public abstract class TestsGenerator {
 
   public abstract boolean available();
 
-  public abstract void addSupportingFiles(List<SupportingFile> supportingFiles, String outputFolder, String extension);
+  public abstract void addSupportingFiles(
+      List<SupportingFile> supportingFiles, String outputFolder, String extension);
 
-  public abstract void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle)
-    throws Exception;
+  public abstract void run(
+      Map<String, CodegenModel> models,
+      Map<String, CodegenOperation> operations,
+      Map<String, Object> bundle)
+      throws Exception;
 
-  protected <T> Map<String, T> loadCTS(String path, String clientName, Class<T> jsonType) throws Exception {
+  protected <T> Map<String, T> loadCTS(String path, String clientName, Class<T> jsonType)
+      throws Exception {
     if (!available()) {
       throw new CTSException("Templates not found for " + path, true);
     }
@@ -74,6 +79,7 @@ public abstract class TestsGenerator {
   }
 
   private String injectVariables(String json) {
-    return json.replace("${{languageCased}}", languageCased()).replace("${{clientPascalCase}}", Utils.capitalize(Utils.camelize(client)));
+    return json.replace("${{languageCased}}", languageCased())
+        .replace("${{clientPascalCase}}", Utils.capitalize(Utils.camelize(client)));
   }
 }

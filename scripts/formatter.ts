@@ -18,11 +18,11 @@ export async function formatter(
         --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
         -jar /tmp/java-formatter.jar -r \
-        && yarn prettier --write ${folder}`;
+        && yarn prettier --no-error-on-unmatched-pattern --write ${folder}`;
       break;
     case 'php':
       await runComposerUpdate();
-      cmd = `yarn run prettier ${folder} --write \
+      cmd = `yarn prettier --no-error-on-unmatched-pattern --write ${folder} \
             && PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;
       break;
     case 'go':

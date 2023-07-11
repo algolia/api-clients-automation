@@ -54,32 +54,45 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     // `client` related files, `algoliasearch` have it's own logic below
     if (!isAlgoliasearchClient) {
       // models
-      supportingFiles.add(new SupportingFile("client/model/clientMethodProps.mustache", "model", "clientMethodProps.ts"));
-      supportingFiles.add(new SupportingFile("client/model/modelBarrel.mustache", "model", "index.ts"));
+      supportingFiles.add(
+          new SupportingFile(
+              "client/model/clientMethodProps.mustache", "model", "clientMethodProps.ts"));
+      supportingFiles.add(
+          new SupportingFile("client/model/modelBarrel.mustache", "model", "index.ts"));
 
       // builds
-      supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "builds", "browser.ts"));
+      supportingFiles.add(
+          new SupportingFile("client/builds/browser.mustache", "builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("client/builds/node.mustache", "builds", "node.ts"));
     }
     // `algoliasearch` related files
     else {
       // `algoliasearch` builds
-      supportingFiles.add(new SupportingFile("algoliasearch/builds/browser.mustache", "builds", "browser.ts"));
-      supportingFiles.add(new SupportingFile("algoliasearch/builds/node.mustache", "builds", "node.ts"));
-      supportingFiles.add(new SupportingFile("algoliasearch/builds/models.mustache", "builds", "models.ts"));
+      supportingFiles.add(
+          new SupportingFile("algoliasearch/builds/browser.mustache", "builds", "browser.ts"));
+      supportingFiles.add(
+          new SupportingFile("algoliasearch/builds/node.mustache", "builds", "node.ts"));
+      supportingFiles.add(
+          new SupportingFile("algoliasearch/builds/models.mustache", "builds", "models.ts"));
 
       // `lite` builds
-      supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "lite/builds", "browser.ts"));
-      supportingFiles.add(new SupportingFile("client/builds/node.mustache", "lite/builds", "node.ts"));
+      supportingFiles.add(
+          new SupportingFile("client/builds/browser.mustache", "lite/builds", "browser.ts"));
+      supportingFiles.add(
+          new SupportingFile("client/builds/node.mustache", "lite/builds", "node.ts"));
 
       // `lite` models
-      supportingFiles.add(new SupportingFile("client/model/clientMethodProps.mustache", "lite/model", "clientMethodProps.ts"));
-      supportingFiles.add(new SupportingFile("client/model/modelBarrel.mustache", "lite/model", "index.ts"));
+      supportingFiles.add(
+          new SupportingFile(
+              "client/model/clientMethodProps.mustache", "lite/model", "clientMethodProps.ts"));
+      supportingFiles.add(
+          new SupportingFile("client/model/modelBarrel.mustache", "lite/model", "index.ts"));
 
       // `lite root export files
       supportingFiles.add(new SupportingFile("algoliasearch/lite.mustache", "", "lite.js"));
       supportingFiles.add(new SupportingFile("algoliasearch/lite.d.mustache", "", "lite.d.ts"));
-      supportingFiles.add(new SupportingFile("algoliasearch/lite.tsconfig.mustache", "", "lite/tsconfig.json"));
+      supportingFiles.add(
+          new SupportingFile("algoliasearch/lite.tsconfig.mustache", "", "lite/tsconfig.json"));
     }
   }
 
@@ -106,7 +119,8 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
   }
 
   @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+  public CodegenOperation fromOperation(
+      String path, String httpMethod, Operation operation, List<Server> servers) {
     return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
@@ -124,10 +138,17 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
     if (isAlgoliasearchClient) {
       // Files used to create the package.json of the algoliasearch package
-      additionalProperties.put("analyticsVersion", Utils.getOpenApiToolsField("javascript", "analytics", "packageVersion"));
-      additionalProperties.put("abtestingVersion", Utils.getOpenApiToolsField("javascript", "abtesting", "packageVersion"));
-      additionalProperties.put("personalizationVersion", Utils.getOpenApiToolsField("javascript", "personalization", "packageVersion"));
-      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("javascript", "search", "packageVersion"));
+      additionalProperties.put(
+          "analyticsVersion",
+          Utils.getOpenApiToolsField("javascript", "analytics", "packageVersion"));
+      additionalProperties.put(
+          "abtestingVersion",
+          Utils.getOpenApiToolsField("javascript", "abtesting", "packageVersion"));
+      additionalProperties.put(
+          "personalizationVersion",
+          Utils.getOpenApiToolsField("javascript", "personalization", "packageVersion"));
+      additionalProperties.put(
+          "searchVersion", Utils.getOpenApiToolsField("javascript", "search", "packageVersion"));
 
       // Files used to generate the `lite` client
       apiName = "lite" + Utils.API_SUFFIX;
@@ -146,14 +167,17 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
   /** Provides an opportunity to inspect and modify operation data before the code is generated. */
   @Override
-  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> allModels) {
+  public OperationsMap postProcessOperationsWithModels(
+      OperationsMap objs, List<ModelMap> allModels) {
     OperationsMap results = super.postProcessOperationsWithModels(objs, allModels);
 
     setDefaultGeneratorOptions();
     try {
       Utils.generateServer((String) additionalProperties.get("client"), additionalProperties);
-      additionalProperties.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "utilsPackageVersion"));
-      additionalProperties.put("npmNamespace", Utils.getClientConfigField("javascript", "npmNamespace"));
+      additionalProperties.put(
+          "utilsPackageVersion", Utils.getClientConfigField("javascript", "utilsPackageVersion"));
+      additionalProperties.put(
+          "npmNamespace", Utils.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);

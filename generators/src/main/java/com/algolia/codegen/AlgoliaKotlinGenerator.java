@@ -50,25 +50,25 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     propertyAdditionalKeywords.clear();
 
     // Simplify types
-    List<String> primitives = Arrays.asList(
-      "Byte",
-      "ByteArray",
-      "Short",
-      "Int",
-      "Long",
-      "Float",
-      "Double",
-      "Boolean",
-      "Char",
-      "String",
-      "Array",
-      "List",
-      "MutableList",
-      "Map",
-      "MutableMap",
-      "Set",
-      "MutableSet"
-    );
+    List<String> primitives =
+        Arrays.asList(
+            "Byte",
+            "ByteArray",
+            "Short",
+            "Int",
+            "Long",
+            "Float",
+            "Double",
+            "Boolean",
+            "Char",
+            "String",
+            "Array",
+            "List",
+            "MutableList",
+            "Map",
+            "MutableMap",
+            "Set",
+            "MutableSet");
     languageSpecificPrimitives = new HashSet<>(primitives);
 
     // Types mapping
@@ -102,13 +102,15 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
     // Add custom files
     final String packageFolder = (sourceFolder + File.separator + packageName).replace(".", "/");
-    supportingFiles.add(new SupportingFile("BuildConfig.kt.mustache", packageFolder, "BuildConfig.kt"));
+    supportingFiles.add(
+        new SupportingFile("BuildConfig.kt.mustache", packageFolder, "BuildConfig.kt"));
     final String apiFolder = (sourceFolder + File.separator + apiPackage).replace(".", "/");
     supportingFiles.add(new SupportingFile("ApiClient.kt.mustache", apiFolder, "ApiClient.kt"));
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
 
-    additionalProperties.put("packageVersion", Utils.getClientConfigField("kotlin", "packageVersion"));
+    additionalProperties.put(
+        "packageVersion", Utils.getClientConfigField("kotlin", "packageVersion"));
 
     try {
       Utils.generateServer(client, additionalProperties);
@@ -128,8 +130,10 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    CodegenOperation codegenOperation = Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+  public CodegenOperation fromOperation(
+      String path, String httpMethod, Operation operation, List<Server> servers) {
+    CodegenOperation codegenOperation =
+        Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
     // Set pathForKotlin by replacing the path variables with Kotlin's string
     // interpolation syntax
     List<String> segments = extractSegments(path);
@@ -228,8 +232,10 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
         if (modelsMap != null) {
           CodegenModel compoundModel = modelsMap.getModels().get(0).getModel();
           compoundModel.vendorExtensions.put("x-one-of-explicit-name", compoundModel.classname);
-          compoundModel.vendorExtensions.put("x-fully-qualified-classname", modelPackage + "." + compoundModel.classname);
-          compoundModel.vendorExtensions.put("x-classname-or-alias", compoundModel.classname + "Impl");
+          compoundModel.vendorExtensions.put(
+              "x-fully-qualified-classname", modelPackage + "." + compoundModel.classname);
+          compoundModel.vendorExtensions.put(
+              "x-classname-or-alias", compoundModel.classname + "Impl");
           sealedChilds.add(compoundModel);
         } else {
           CodegenModel newModel = new CodegenModel();
@@ -242,7 +248,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
           property.setDatatypeWithEnum(oneOf);
           newModel.setVars(Collections.singletonList(property));
           newModel.vendorExtensions.put("x-is-number", newModel.isNumber);
-          newModel.vendorExtensions.put("x-one-of-explicit-name", isNumberType(oneOf) ? "Number" : name);
+          newModel.vendorExtensions.put(
+              "x-one-of-explicit-name", isNumberType(oneOf) ? "Number" : name);
           newModel.vendorExtensions.put("x-fully-qualified-classname", newModel.classname);
           sealedChilds.add(newModel);
         }
@@ -252,7 +259,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
       model.vendorExtensions.put("x-is-one-of-interface", true);
       model.vendorExtensions.put("x-one-of-list", oneOfList);
-      model.vendorExtensions.put("x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
+      model.vendorExtensions.put(
+          "x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
     }
   }
 
@@ -261,7 +269,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   private Set<Map<String, String>> compoundParent(CodegenModel model) {
-    Set<Map<String, String>> parents = (Set<Map<String, String>>) model.vendorExtensions.get("x-one-of-element-parents");
+    Set<Map<String, String>> parents =
+        (Set<Map<String, String>>) model.vendorExtensions.get("x-one-of-element-parents");
     if (parents != null) return parents;
     parents = new HashSet<>();
     model.vendorExtensions.put("x-one-of-element-parents", parents);

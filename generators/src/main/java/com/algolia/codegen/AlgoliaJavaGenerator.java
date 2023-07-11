@@ -41,27 +41,28 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     apiDocTemplateFiles.clear();
     modelDocTemplateFiles.clear();
 
-    supportingFiles.removeIf(file ->
-      file.getTemplateFile().equals("build.gradle.mustache") ||
-      file.getTemplateFile().equals("settings.gradle.mustache") ||
-      file.getTemplateFile().equals("gitignore.mustache") ||
-      file.getTemplateFile().equals("ApiClient.mustache") ||
-      file.getTemplateFile().equals("ApiCallback.mustache") ||
-      file.getTemplateFile().equals("ApiResponse.mustache") ||
-      file.getTemplateFile().equals("AbstractOpenApiSchema.mustache") ||
-      file.getTemplateFile().equals("maven.yml.mustache") ||
-      file.getTemplateFile().equals("JSON.mustache") ||
-      file.getTemplateFile().equals("ProgressRequestBody.mustache") ||
-      file.getTemplateFile().equals("ProgressResponseBody.mustache") ||
-      file.getTemplateFile().equals("Pair.mustache")
-    );
+    supportingFiles.removeIf(
+        file ->
+            file.getTemplateFile().equals("build.gradle.mustache")
+                || file.getTemplateFile().equals("settings.gradle.mustache")
+                || file.getTemplateFile().equals("gitignore.mustache")
+                || file.getTemplateFile().equals("ApiClient.mustache")
+                || file.getTemplateFile().equals("ApiCallback.mustache")
+                || file.getTemplateFile().equals("ApiResponse.mustache")
+                || file.getTemplateFile().equals("AbstractOpenApiSchema.mustache")
+                || file.getTemplateFile().equals("maven.yml.mustache")
+                || file.getTemplateFile().equals("JSON.mustache")
+                || file.getTemplateFile().equals("ProgressRequestBody.mustache")
+                || file.getTemplateFile().equals("ProgressResponseBody.mustache")
+                || file.getTemplateFile().equals("Pair.mustache"));
 
     additionalProperties.put("isSearchClient", client.equals("search"));
 
     try {
       Utils.generateServer(client, additionalProperties);
 
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("java", "packageVersion"));
+      additionalProperties.put(
+          "packageVersion", Utils.getClientConfigField("java", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -75,7 +76,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   }
 
   @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+  public CodegenOperation fromOperation(
+      String path, String httpMethod, Operation operation, List<Server> servers) {
     return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
@@ -102,7 +104,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         model.vendorExtensions.put("x-is-one-of-interface", true);
         model.vendorExtensions.put("x-one-of-list", oneOfList);
 
-        model.vendorExtensions.put("x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
+        model.vendorExtensions.put(
+            "x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
       }
     }
 
@@ -134,7 +137,10 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
     if (!value.matches("[A-Z0-9_]+")) {
       // convert camelCase77String to CAMEL_CASE_77_STRING
-      return value.replaceAll("-", "_").replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2").toUpperCase(Locale.ROOT);
+      return value
+          .replaceAll("-", "_")
+          .replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2")
+          .toUpperCase(Locale.ROOT);
     }
 
     return super.toEnumVarName(value, datatype);

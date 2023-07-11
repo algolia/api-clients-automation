@@ -37,15 +37,21 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     // Remove base template as we want to change its path
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("Configuration.mustache"));
 
-    supportingFiles.add(new SupportingFile("Configuration.mustache", "lib/Configuration", "Configuration.php"));
-    supportingFiles.add(new SupportingFile("ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
+    supportingFiles.add(
+        new SupportingFile("Configuration.mustache", "lib/Configuration", "Configuration.php"));
+    supportingFiles.add(
+        new SupportingFile(
+            "ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
 
-    supportingFiles.add(new SupportingFile("client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php"));
+    supportingFiles.add(
+        new SupportingFile(
+            "client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php"));
 
     setDefaultGeneratorOptions(client);
     try {
       Utils.generateServer(client, additionalProperties);
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("php", "packageVersion"));
+      additionalProperties.put(
+          "packageVersion", Utils.getClientConfigField("php", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -53,7 +59,8 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   }
 
   @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+  public CodegenOperation fromOperation(
+      String path, String httpMethod, Operation operation, List<Server> servers) {
     return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
