@@ -75,7 +75,8 @@ baseSearchResponse:
             format: double
             description: Minimum value in the results.
           max:
-            type: integer
+            type: number
+            format: double
             description: Maximum value in the results.
           avg:
             type: integer
