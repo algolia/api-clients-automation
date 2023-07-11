@@ -3,7 +3,7 @@ get:
     - search
   operationId: getUsersCount
   summary: Get user count.
-  description: Returns the count of unique users.
+  description: Return the count of unique users.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
