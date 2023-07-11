@@ -1,8 +1,6 @@
-/* eslint-disable import/no-commonjs */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const execa = require('execa');
+import execa from 'execa';
 
-async function run(command) {
+export async function run(command) {
   return (
     (
       await execa.command(command, {
@@ -12,5 +10,3 @@ async function run(command) {
     ).all ?? ''
   );
 }
-
-module.exports = { run };

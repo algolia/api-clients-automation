@@ -1,7 +1,7 @@
 import execa from 'execa';
 
-import { capitalize, createClientName, gitCommit } from '../common';
-import { getClientsConfigField } from '../config';
+import { capitalize, createClientName, gitCommit } from '../common.js';
+import { getClientsConfigField } from '../config.js';
 
 jest.mock('execa');
 

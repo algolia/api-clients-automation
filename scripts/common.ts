@@ -6,18 +6,18 @@ import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
-import openapiConfig from '../config/openapitools.json';
-import releaseConfig from '../config/release.config.json';
+import openapiConfig from '../config/openapitools.json' assert { type: 'json' };
+import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
-import { getGitAuthor } from './release/common';
-import { createSpinner } from './spinners';
+import { getGitAuthor } from './release/common.js';
+import { createSpinner } from './spinners.js';
 import type {
   CheckForCache,
   CheckForCacheOptions,
   Generator,
   Language,
   RunOptions,
-} from './types';
+} from './types.js';
 
 export const MAIN_BRANCH = releaseConfig.mainBranch;
 export const OWNER = releaseConfig.owner;

@@ -148,6 +148,14 @@ module.exports = {
         '@typescript-eslint/prefer-optional-chain': 0,
       },
     },
+    // Scripts rules
+    {
+      files: ['scripts/**/*.ts', 'scripts/**/*.js'],
+      rules: {
+        'import/no-unresolved': 0,
+        'import/extensions': 0,
+      },
+    },
     {
       files: ['*.json'],
 

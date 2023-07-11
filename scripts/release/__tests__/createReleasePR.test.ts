@@ -1,4 +1,4 @@
-import { gitAuthor } from '../../../config/release.config.json';
+import { gitAuthor } from '../../../config/release.config.json' assert { type: 'json' };
 import * as common from '../../common';
 import {
   parseCommit,
