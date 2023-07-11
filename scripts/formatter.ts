@@ -22,8 +22,7 @@ export async function formatter(
       break;
     case 'php':
       await runComposerUpdate();
-      cmd = `yarn prettier --no-error-on-unmatched-pattern --write ${folder}/**/*.php \
-            && PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;
+      cmd = `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;
       break;
     case 'go':
       cmd = `cd ${folder} && go fmt ./...`;
