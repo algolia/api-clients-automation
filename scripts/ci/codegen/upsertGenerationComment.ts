@@ -102,6 +102,6 @@ export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
   }
 }
 
-if (require.main === module) {
+if (import.meta.url.endsWith(process.argv[1])) {
   upsertGenerationComment(args[0] as Trigger);
 }

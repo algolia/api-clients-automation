@@ -95,6 +95,6 @@ Co-authored-by: %an <%ae>
   }
 }
 
-if (require.main === module) {
+if (import.meta.url.endsWith(process.argv[1])) {
   pushGeneratedCode();
 }

@@ -210,7 +210,7 @@ async function createMatrix(opts: CreateMatrix): Promise<void> {
   return await getSpecMatrix();
 }
 
-if (require.main === module) {
+if (import.meta.url.endsWith(process.argv[1])) {
   const args = process.argv.slice(2);
 
   createMatrix({
