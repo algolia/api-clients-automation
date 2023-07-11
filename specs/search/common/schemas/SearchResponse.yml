@@ -29,7 +29,7 @@ baseSearchResponse:
   properties:
     abTestID:
       type: integer
-      description: If a search encounters an index that's being A/B tested, returns the A/B test ID.
+      description: A/B test ID. This is only included in the response for indices that are part of an A/B test.
     abTestVariantID:
       type: integer
       description: If a search encounters an index that's being A/B tested, returns the variant ID of the index used (starting at 1).
