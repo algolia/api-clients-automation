@@ -221,7 +221,7 @@ automaticFacetFilter:
     disjunctive:
       type: boolean
       default: false
-      description: Whether the filter is disjunctive (true) or conjunctive (false).
+      description: Indicates whether the filter is disjunctive (true) or conjunctive (false).
   required:
     - facet
 

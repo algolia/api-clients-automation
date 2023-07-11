@@ -4,7 +4,7 @@ ClearExistingRules:
   required: false
   schema:
     type: boolean
-  description: When `true`, existing rules are deleted before adding this batch. When `false`, existing rules are retained.
+  description: Indicates whether existing rules should be deleted before adding this batch.
 
 ObjectID:
   in: path
