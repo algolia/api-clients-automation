@@ -4,7 +4,7 @@ info:
   description: >
     The Analytics API lets you review your search, and click and conversion analytics.
 
-    > **Note**: The API key in the `X-Algolia-API-Key` header requires the [`analytics` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl) to be enabled.
+    > **Note**: The API key in the `X-Algolia-API-Key` header requires the [`analytics` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
   version: 1.0.0
 components:
   securitySchemes:
