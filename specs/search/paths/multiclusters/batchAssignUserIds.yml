@@ -23,7 +23,7 @@ post:
               $ref: '../../common/schemas/Cluster.yml#/clusterName'
             users:
               type: array
-              description: userIDs to assign.
+              description: User IDs to assign.
               example: ['einstein','bohr','feynman']
               items:
                 type: string
