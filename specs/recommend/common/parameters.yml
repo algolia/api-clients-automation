@@ -1,9 +1,11 @@
-Model:
+Models:
   in: path
   name: model
-  description: Recommendation and trending model names.
-  type: string
-  enum: [related-products, bought-together, trending-facets, trending-items]
+  description: >
+    [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+  schema:
+    type: string
+    # enum: [related-products, bought-together, trending-facets, trending-items]
 
 ObjectID:
   in: path
