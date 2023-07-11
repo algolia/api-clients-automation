@@ -48,7 +48,7 @@ async function preCommit(log) {
   await run(`git restore --staged ${toUnstage.join(' ')}`);
 }
 
-if (process.env.CI !== 'true') {
+if (import.meta.url.endsWith(process.argv[1]) && process.env.CI !== 'true') {
   preCommit(true).then(() => {
     // Run it twice because of renamed files, the first one delete the renamed one and leaves the deleted file, which is removed by this second pass
     preCommit(false);

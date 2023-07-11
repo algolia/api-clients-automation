@@ -112,7 +112,7 @@ async function setRunVariables({
   await isBaseChanged(originBranch, DEPENDENCIES, true);
 }
 
-if (require.main === module) {
+if (import.meta.url.endsWith(process.argv[1])) {
   const [originBranch] = process.argv.slice(2);
 
   if (!originBranch) {
