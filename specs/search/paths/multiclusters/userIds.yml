@@ -6,7 +6,7 @@ post:
   description: >
     Assign or move a userID to a cluster.
 
-    The time it takes to move a user is proportional to the amount of data linked to the userID.
+    The time it takes to move a user is proportional to the amount of data linked to the user ID.
   parameters:
     - $ref: '../../common/parameters.yml#/UserIDInHeader'
   requestBody:
