@@ -1,5 +1,11 @@
 ## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
 
+- [dc0ff048](https://github.com/algolia/api-clients-automation/commit/dc0ff048) fix(specs): facet stats properties as double ([#1694](https://github.com/algolia/api-clients-automation/pull/1694)) by [@aallam](https://github.com/aallam/)
+- [529f4c63](https://github.com/algolia/api-clients-automation/commit/529f4c63) docs(java): add migration guides code snippets ([#1691](https://github.com/algolia/api-clients-automation/pull/1691)) by [@aallam](https://github.com/aallam/)
+- [7250930c](https://github.com/algolia/api-clients-automation/commit/7250930c) fix(specs): add input to authentication list ([#1688](https://github.com/algolia/api-clients-automation/pull/1688)) by [@millotp](https://github.com/millotp/)
+
+## [4.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-java-2/compare/4.0.0-SNAPSHOT...4.0.0-SNAPSHOT)
+
 - [15bc7618](https://github.com/algolia/api-clients-automation/commit/15bc7618) feat(specs): updated_at removed from Run response ([#1651](https://github.com/algolia/api-clients-automation/pull/1651)) by [@mehmetaligok](https://github.com/mehmetaligok/)
 - [b7c71def](https://github.com/algolia/api-clients-automation/commit/b7c71def) feat(specs): add new outlier count properties to variant payload ([#1656](https://github.com/algolia/api-clients-automation/pull/1656)) by [@febeck](https://github.com/febeck/)
 - [b703dea4](https://github.com/algolia/api-clients-automation/commit/b703dea4) docs(specs): review Insights API spec ([#1647](https://github.com/algolia/api-clients-automation/pull/1647)) by [@kai687](https://github.com/kai687/)

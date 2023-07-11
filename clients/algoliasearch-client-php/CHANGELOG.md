@@ -1,3 +1,8 @@
+## [4.0.0-alpha.72](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.71...4.0.0-alpha.72)
+
+- [dc0ff048](https://github.com/algolia/api-clients-automation/commit/dc0ff048) fix(specs): facet stats properties as double ([#1694](https://github.com/algolia/api-clients-automation/pull/1694)) by [@aallam](https://github.com/aallam/)
+- [7250930c](https://github.com/algolia/api-clients-automation/commit/7250930c) fix(specs): add input to authentication list ([#1688](https://github.com/algolia/api-clients-automation/pull/1688)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-alpha.71](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.70...4.0.0-alpha.71)
 
 - [15bc7618](https://github.com/algolia/api-clients-automation/commit/15bc7618) feat(specs): updated_at removed from Run response ([#1651](https://github.com/algolia/api-clients-automation/pull/1651)) by [@mehmetaligok](https://github.com/mehmetaligok/)
