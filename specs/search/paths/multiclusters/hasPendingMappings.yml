@@ -22,7 +22,7 @@ get:
             additionalProperties: false
             properties:
               pending:
-                description: If `true`, there are clusters undergoing migration, creation, or deletion.
+                description: Indicates whether there are clusters undergoing migration, creation, or deletion.
                 type: boolean
               clusters:
                 description: >
