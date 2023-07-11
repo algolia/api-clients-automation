@@ -4962,6 +4962,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs-extra@npm:11.1.1":
+  version: 11.1.1
+  resolution: "fs-extra@npm:11.1.1"
+  dependencies:
+    graceful-fs: ^4.2.0
+    jsonfile: ^6.0.1
+    universalify: ^2.0.0
+  checksum: fb883c68245b2d777fbc1f2082c9efb084eaa2bbf9fddaa366130d196c03608eebef7fb490541276429ee1ca99f317e2d73e96f5ca0999eefedf5a624ae1edfd
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^2.0.0, fs-minipass@npm:^2.1.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -8221,7 +8232,7 @@ __metadata:
     eslint: 8.44.0
     execa: 5.1.1
     folder-hash: 4.0.4
-    fs-extra: 10.1.0
+    fs-extra: 11.1.1
     inquirer: 8.2.5
     jest: 29.6.1
     js-yaml: 4.1.0
