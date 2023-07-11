@@ -16,7 +16,7 @@ get:
           schema:
             title: getTopUserIdsResponse
             type: object
-            description: UserIDs and clusters.
+            description: User IDs and clusters.
             properties:
               topUsers:
                 type: array
