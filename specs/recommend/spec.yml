@@ -56,4 +56,7 @@ paths:
     $ref: 'paths/getRecommendations.yml'
 
   /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
-    $ref: 'paths/getRecommendRule.yml'
+    $ref: 'paths/recommendRule.yml'
+
+  /1/indexes/{indexName}/{model}/task/{taskID}:
+    $ref: 'paths/getRecommendStatus.yml'
