@@ -85,7 +85,7 @@ baseIndexSettings:
     allowCompressionOfIntegerArray:
       type: boolean
       description: >
-        If `true`, the engine compresses arrays with exclusively non-negative integers.
+        Incidates whether the engine compresses arrays with exclusively non-negative integers.
 
         When enabled, the compressed arrays may be reordered.
       default: false
@@ -298,13 +298,13 @@ indexSettingsAsSearchParams:
         - Languages
     enableRules:
       type: boolean
-      description: If `true`, [Rules](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/) are enabled.
+      description: Incidates whether [Rules](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/) are enabled.
       default: true
       x-categories:
         - Rules
     enablePersonalization:
       type: boolean
-      description: If `true`, [Personalization](https://www.algolia.com/doc/guides/personalization/what-is-personalization/) is enabled.
+      description: Incidates whether [Personalization](https://www.algolia.com/doc/guides/personalization/what-is-personalization/) is enabled.
       default: false
       x-categories:
         - Personalization
@@ -407,7 +407,7 @@ indexSettingsAsSearchParams:
       type: array
       items:
         type: string
-      description: Fields to return in the API response for search and browse queries.
+      description: Attributes to include in the API response for search and browse queries.
       default: []
       x-categories:
         - Advanced

@@ -71,16 +71,20 @@ baseSearchResponse:
         title: facetStats
         properties:
           min:
-            type: integer
+            type: number
+            format: double
             description: Minimum value in the results.
           max:
-            type: integer
-            description: TMaximum value in the results.
+            type: number
+            format: double
+            description: Maximum value in the results.
           avg:
-            type: integer
+            type: number
+            format: double
             description: Average facet value in the results.
           sum:
-            type: integer
+            type: number
+            format: double
             description: Sum of all values in the results.
     hitsPerPage:
       $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'

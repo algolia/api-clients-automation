@@ -55,7 +55,7 @@ baseSearchParamsWithoutQuery:
       type: array
       items:
         type: string
-      description: Get [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts), their facet values, and the number of matching facet values.
+      description: Returns [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts), their facet values, and the number of matching facet values.
       default: []
       x-categories:
         - Faceting
@@ -68,7 +68,7 @@ baseSearchParamsWithoutQuery:
     facetingAfterDistinct:
       type: boolean
       description: >
-        Force faceting to be applied after [de-duplication](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/) (with the distinct feature). Alternatively, the `afterDistinct` [modifier](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) of `attributesForFaceting` allows for more granular control.
+        Forces faceting to be applied after [de-duplication](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/) (with the distinct feature). Alternatively, the `afterDistinct` [modifier](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) of `attributesForFaceting` allows for more granular control.
       default: false
       x-categories:
         - Faceting
@@ -83,7 +83,7 @@ baseSearchParamsWithoutQuery:
     offset:
       type: integer
       description: >
-        Specify the offset of the first hit to return.
+        Specifies the offset of the first hit to return.
 
         > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
       x-categories:
@@ -91,7 +91,7 @@ baseSearchParamsWithoutQuery:
     length:
       type: integer
       description: >
-        Set the number of hits to retrieve (for use with `offset`).
+        Sets the number of hits to retrieve (for use with `offset`).
 
         > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
       minimum: 1
@@ -150,19 +150,19 @@ baseSearchParamsWithoutQuery:
         - Personalization
     getRankingInfo:
       type: boolean
-      description: If `true`, return [detailed ranking information](https://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/#ranking-information) in the response.
+      description: Incidates whether the search response includes [detailed ranking information](https://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/#ranking-information).
       default: false
       x-categories:
         - Advanced
     clickAnalytics:
       type: boolean
-      description: If `true`, include a query ID parameter with the response for [tracking click and conversion events](https://www.algolia.com/doc/guides/sending-events/concepts/event-types/#events-related-to-algolia-requests).
+      description: Indicates whether a query ID parameter is included in the search response. This is required for [tracking click and conversion events](https://www.algolia.com/doc/guides/sending-events/concepts/event-types/#events-related-to-algolia-requests).
       default: false
       x-categories:
         - Analytics
     analytics:
       type: boolean
-      description: If `false`, [excludes the current query from analytics](https://www.algolia.com/doc/guides/search-analytics/guides/exclude-queries/).
+      description: Indicates whether this query will be included in [analytics](https://www.algolia.com/doc/guides/search-analytics/guides/exclude-queries/).
       default: true
       x-categories:
         - Analytics
@@ -182,13 +182,13 @@ baseSearchParamsWithoutQuery:
         - Advanced
     enableABTest:
       type: boolean
-      description: If `false`, excludes the current query from A/B testing.
+      description: Incidates whether this search will be considered in A/B testing.
       default: true
       x-categories:
         - Advanced
     enableReRanking:
       type: boolean
-      description: If `true`, this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
+      description: Indicates whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
       default: true
       x-categories:
         - Advanced
@@ -337,7 +337,10 @@ numericFilters:
     - Filtering
 
 optionalFilters:
-  description: Create filters for ranking purposes, where records that match the filter are ranked higher (or lower for negative optional filters).
+  description: |
+    Create filters to boost or demote records. 
+    
+    Records that match the filter are ranked higher for positive and lower for negative optional filters. In contrast to regular filters, records that don't match the optional filter are still included in the results, only their ranking is affected.
   example: ['category:Book','author:John Doe']
   oneOf:
     - $ref: '#/listOfSearchFilters'

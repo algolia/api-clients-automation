@@ -1,4 +1,4 @@
-description: Unprocessable entity.
+description: Unprocessable Entity.
 content:
   application/json:
     schema:
