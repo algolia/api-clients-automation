@@ -7,12 +7,14 @@ import org.openapitools.codegen.model.*;
 
 public class GenericPropagator {
 
-  private static Set<String> primitiveModels = new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
+  private static Set<String> primitiveModels =
+      new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
 
   // Only static use of this class
   private GenericPropagator() {}
 
-  private static void setVendorExtension(IJsonSchemaValidationProperties property, String key, Object value) {
+  private static void setVendorExtension(
+      IJsonSchemaValidationProperties property, String key, Object value) {
     if (property instanceof CodegenModel) {
       ((CodegenModel) property).vendorExtensions.put(key, value);
     } else if (property instanceof CodegenProperty) {
@@ -42,23 +44,29 @@ public class GenericPropagator {
    */
   private static boolean hasGeneric(IJsonSchemaValidationProperties property) {
     if (property instanceof CodegenModel) {
-      return (
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
-      );
+      return ((boolean)
+              ((CodegenModel) property).vendorExtensions.getOrDefault("x-propagated-generic", false)
+          || (boolean)
+              ((CodegenModel) property)
+                  .vendorExtensions.getOrDefault("x-has-child-generic", false));
     } else if (property instanceof CodegenProperty) {
-      return (
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
-      );
+      return ((boolean)
+              ((CodegenProperty) property)
+                  .vendorExtensions.getOrDefault("x-propagated-generic", false)
+          || (boolean)
+              ((CodegenProperty) property)
+                  .vendorExtensions.getOrDefault("x-has-child-generic", false));
     }
     return false;
   }
 
-  private static CodegenModel propertyToModel(Map<String, CodegenModel> models, CodegenProperty prop) {
+  private static CodegenModel propertyToModel(
+      Map<String, CodegenModel> models, CodegenProperty prop) {
     // openapi generator returns some weird error when looking for primitive type,
     // so we filter them by hand
-    if (prop == null || primitiveModels.contains(prop.openApiType) || !models.containsKey(prop.openApiType)) {
+    if (prop == null
+        || primitiveModels.contains(prop.openApiType)
+        || !models.containsKey(prop.openApiType)) {
       return null;
     }
     return models.get(prop.openApiType);
@@ -68,13 +76,16 @@ public class GenericPropagator {
     CodegenProperty items = model.getItems();
     // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
-    if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items))) {
+    if (items != null
+        && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false)
+            || markPropagatedGeneric(items))) {
       setPropagatedGeneric(model);
       return true;
     }
     for (CodegenProperty var : model.getVars()) {
       // same thing for the var, if it's not a generic, we recurse on it until we find one
-      if ((boolean) var.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(var)) {
+      if ((boolean) var.vendorExtensions.getOrDefault("x-is-generic", false)
+          || markPropagatedGeneric(var)) {
         setPropagatedGeneric(model);
         return true;
       }
@@ -82,19 +93,25 @@ public class GenericPropagator {
     return false;
   }
 
-  private static boolean propagateGenericRecursive(Map<String, CodegenModel> models, IJsonSchemaValidationProperties property) {
+  private static boolean propagateGenericRecursive(
+      Map<String, CodegenModel> models, IJsonSchemaValidationProperties property) {
     CodegenProperty items = property.getItems();
     // if items itself isn't generic, we recurse on its items and properties (and it's
     // equivalent model if we find one) until we reach the end or find a generic property.
     // We need to check the model too because the tree isn't complete sometime, depending on the ref
     // in the spec, so we get the model with the same name and recurse.
-    if (items != null && ((hasGeneric(items) || propagateGenericRecursive(models, items) || hasGeneric(propertyToModel(models, items))))) {
+    if (items != null
+        && ((hasGeneric(items)
+            || propagateGenericRecursive(models, items)
+            || hasGeneric(propertyToModel(models, items))))) {
       setHasChildGeneric(property);
       return true;
     }
     for (CodegenProperty var : property.getVars()) {
       // same thing for the var
-      if (hasGeneric(var) || propagateGenericRecursive(models, var) || hasGeneric(propertyToModel(models, var))) {
+      if (hasGeneric(var)
+          || propagateGenericRecursive(models, var)
+          || hasGeneric(propertyToModel(models, var))) {
         setHasChildGeneric(property);
         return true;
       }
@@ -102,7 +119,8 @@ public class GenericPropagator {
     return false;
   }
 
-  private static void setGenericToComposedSchema(Map<String, CodegenModel> models, List<CodegenProperty> composedSchemas) {
+  private static void setGenericToComposedSchema(
+      Map<String, CodegenModel> models, List<CodegenProperty> composedSchemas) {
     if (composedSchemas == null) {
       return;
     }
@@ -113,7 +131,8 @@ public class GenericPropagator {
     }
   }
 
-  private static void propagateToComposedSchema(Map<String, CodegenModel> models, CodegenModel model) {
+  private static void propagateToComposedSchema(
+      Map<String, CodegenModel> models, CodegenModel model) {
     CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
     if (composedSchemas == null || !hasGeneric(model)) {
       return;
@@ -166,7 +185,8 @@ public class GenericPropagator {
   }
 
   /** Mark operations with a generic return type with x-is-generic */
-  public static void propagateGenericsToOperations(OperationsMap operations, List<ModelMap> allModels) {
+  public static void propagateGenericsToOperations(
+      OperationsMap operations, List<ModelMap> allModels) {
     Map<String, CodegenModel> models = convertToMap(allModels);
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
       if (ope.returnType == null) {

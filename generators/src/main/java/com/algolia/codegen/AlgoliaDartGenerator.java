@@ -39,36 +39,39 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
       libName = "algoliasearch";
       packageFolder = libName;
       setPubDescription(
-        "A Dart package for Algolia. Enables seamless integration for instant search, typo" +
-        " tolerance & user insights, and more, in Dart/Flutter apps."
-      );
+          "A Dart package for Algolia. Enables seamless integration for instant search, typo"
+              + " tolerance & user insights, and more, in Dart/Flutter apps.");
     } else {
       libName = "algolia_client_" + client;
       packageFolder = "client_" + client;
       setApiNameSuffix(Utils.API_SUFFIX);
       setPubDescription(
-        "A sub-package of the AlgoliaSearch library, offering " +
-        client +
-        "-specific functionalities for enhanced search and discovery in Dart/Flutter" +
-        " apps."
-      );
+          "A sub-package of the AlgoliaSearch library, offering "
+              + client
+              + "-specific functionalities for enhanced search and discovery in Dart/Flutter"
+              + " apps.");
     }
     setPubName(libName);
     setPubLibrary(libName);
-    setPubRepository("https://github.com/algolia/algoliasearch-client-dart/tree/main/packages/" + packageFolder);
+    setPubRepository(
+        "https://github.com/algolia/algoliasearch-client-dart/tree/main/packages/" + packageFolder);
 
     // configs
-    additionalProperties.put(CodegenConstants.SERIALIZATION_LIBRARY, SERIALIZATION_LIBRARY_JSON_SERIALIZABLE);
+    additionalProperties.put(
+        CodegenConstants.SERIALIZATION_LIBRARY, SERIALIZATION_LIBRARY_JSON_SERIALIZABLE);
 
     super.processOpts();
 
-    Arrays.asList("source", "get", "hide").forEach(reservedWords::remove); // reserved words from dart-keywords.txt
+    Arrays.asList("source", "get", "hide")
+        .forEach(reservedWords::remove); // reserved words from dart-keywords.txt
 
     if (isAlgoliasearchClient) {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
       supportingFiles.add(new SupportingFile("lib.mustache", libPath, "algoliasearch_lite.dart"));
-      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("dart", "search", "packageVersion"));
-      additionalProperties.put("insightsVersion", Utils.getOpenApiToolsField("dart", "insights", "packageVersion"));
+      additionalProperties.put(
+          "searchVersion", Utils.getOpenApiToolsField("dart", "search", "packageVersion"));
+      additionalProperties.put(
+          "insightsVersion", Utils.getOpenApiToolsField("dart", "insights", "packageVersion"));
     }
 
     // disable documentation and tests
@@ -93,7 +96,8 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("packageVersion", Utils.getClientConfigField("dart", "packageVersion"));
+    additionalProperties.put(
+        "packageVersion", Utils.getClientConfigField("dart", "packageVersion"));
 
     // typeMapping.put("object", "Map<String, dynamic>"); // from kotlinx.serialization
 
@@ -113,14 +117,16 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   }
 
   @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+  public CodegenOperation fromOperation(
+      String path, String httpMethod, Operation operation, List<Server> servers) {
     CodegenOperation op = super.fromOperation(path, httpMethod, operation, servers);
     CodegenOperation codegenOperation = Utils.specifyCustomRequest(op);
     return support.clearOneOfFromOperation(codegenOperation);
   }
 
   @Override
-  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> allModels) {
+  public OperationsMap postProcessOperationsWithModels(
+      OperationsMap objs, List<ModelMap> allModels) {
     OperationsMap operationsMap = super.postProcessOperationsWithModels(objs, allModels);
     return support.clearOneOfFromApiImports(operationsMap);
   }
@@ -135,7 +141,8 @@ class SchemaSupport {
 
   private static final String GENERIC_TYPE = "dynamic";
 
-  private final Map<String, String> oneOfs = new HashMap<>(); // Maintain a list of deleted class names
+  private final Map<String, String> oneOfs =
+      new HashMap<>(); // Maintain a list of deleted class names
 
   public Set<String> classnames() {
     return oneOfs.keySet();

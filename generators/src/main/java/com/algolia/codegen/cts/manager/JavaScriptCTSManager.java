@@ -23,10 +23,12 @@ public class JavaScriptCTSManager implements CTSManager {
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     String npmNamespace = Utils.getClientConfigField("javascript", "npmNamespace");
 
-    bundle.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "utilsPackageVersion"));
+    bundle.put(
+        "utilsPackageVersion", Utils.getClientConfigField("javascript", "utilsPackageVersion"));
     bundle.put("npmNamespace", npmNamespace);
 
-    JsonNode openApiToolsConfig = Utils.readJsonFile("config/openapitools.json").get("generator-cli").get("generators");
+    JsonNode openApiToolsConfig =
+        Utils.readJsonFile("config/openapitools.json").get("generator-cli").get("generators");
     Iterator<Map.Entry<String, JsonNode>> fields = openApiToolsConfig.fields();
     List<Map<String, String>> clients = new ArrayList<>();
 
@@ -41,7 +43,9 @@ public class JavaScriptCTSManager implements CTSManager {
       JsonNode additionalProperties = field.getValue().get("additionalProperties");
       String packageName = additionalProperties.get("packageName").asText();
 
-      client.put("packagePath", "link:../../../clients/algoliasearch-client-javascript/packages/" + packageName);
+      client.put(
+          "packagePath",
+          "link:../../../clients/algoliasearch-client-javascript/packages/" + packageName);
 
       if (!packageName.equals("algoliasearch")) {
         packageName = npmNamespace + "/" + packageName;
