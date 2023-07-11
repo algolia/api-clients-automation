@@ -22,7 +22,7 @@ post:
             clearExistingDictionaryEntries:
               type: boolean
               default: false
-              description: If `true`, delete all custom entries in the dictionary and then add the ones sent with this request.
+              description: Incidates whether to replace all custom entries in the dictionary with the ones sent with this request.
             requests:
               type: array
               description: Operations to batch.
