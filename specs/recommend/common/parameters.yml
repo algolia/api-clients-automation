@@ -1,0 +1,13 @@
+Model:
+  in: path
+  name: model
+  description: Recommendation and trending model names.
+  type: string
+  enum: [related-products, bought-together, trending-facets, trending-items]
+
+ObjectID:
+  in: path
+  name: objectID
+  type: string
+  description: Unique Recommend rule identifier.
+  example: 'a-recommend-rule-id'

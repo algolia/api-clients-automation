@@ -1,0 +1,27 @@
+get:
+  tags:
+    - recommendations
+  operationId: getRecommendRule
+  x-use-read-transporter: true
+  x-cacheable: true
+  summary: Get a Recommend rule.
+  description: Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  parameters:
+    - $ref: '../../common/parameters.yml#/IndexName'
+    - $ref: '../common/parameters.yml#/Model'
+    - $ref: '../common/parameters.yml#/ObjectID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../search/paths/rules/common/schemas.yml#/rule'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
