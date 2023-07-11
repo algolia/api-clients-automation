@@ -65,7 +65,7 @@ average:
 
 averageClickPosition:
   type: integer
-  description: The average position of all the click count event.
+  description: Average position of all the click events.
 
 clickCount:
   type: integer
