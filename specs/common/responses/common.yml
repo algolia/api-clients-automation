@@ -33,4 +33,4 @@ updatedAt:
 deletedAt:
   type: string
   example: '2023-06-27T14:42:38.831Z'
-  description: Tinestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+  description: Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
