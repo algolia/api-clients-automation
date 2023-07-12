@@ -140,6 +140,8 @@ async function getClientMatrix(baseBranch: string): Promise<void> {
         buildCommand = `cd ${
           matrix[language].path
         } && yarn build:many '{${packageNames.join(',')},}'`;
+
+        testsToStore = `${testsToStore} ${testsRootFolder}/package.json`;
         break;
       default:
         break;
