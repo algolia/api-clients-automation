@@ -274,7 +274,9 @@ export function buildConfigs(pkg) {
           globals({
             global: true,
           }),
-          nodeResolve(),
+          nodeResolve({
+            preferBuiltins: true,
+          }),
           ts({
             check: checkForTypes,
             tsconfig: isLiteClient ? 'lite/tsconfig.json' : 'tsconfig.json',
