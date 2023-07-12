@@ -41,7 +41,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 6.0.0
     "@typescript-eslint/parser": 6.0.0
     eslint: 8.44.0
-    eslint-config-algolia: 21.0.0
+    eslint-config-algolia: 22.0.0
     eslint-config-prettier: 8.8.0
     eslint-plugin-algolia: 2.0.0
     eslint-plugin-automation-custom: 1.0.0
@@ -4370,13 +4370,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-algolia@npm:21.0.0":
-  version: 21.0.0
-  resolution: "eslint-config-algolia@npm:21.0.0"
+"eslint-config-algolia@npm:22.0.0":
+  version: 22.0.0
+  resolution: "eslint-config-algolia@npm:22.0.0"
   peerDependencies:
     eslint: ^5.16.0 || ^6.8.0 || ^7.2.0 || ^8.0.0
     prettier: ^2.2.1
-  checksum: ea3091982476d554ac25d3ca3b32ceb6bcad220d6d678208aba1521341dd626fbcd24372a854bbdeb07327b453183835c71cf53ec866dadf8568f3276118b7f4
+  checksum: e8860782eaf79539747cfc36ef9b6d56a54688a5c03e7247362231364c75e2d7cf6f150ef6b810271ab340ecee6167aad0cc68ecbf5048048b56e72e8a1ee947
   languageName: node
   linkType: hard
 

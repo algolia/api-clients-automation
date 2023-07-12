@@ -86,7 +86,7 @@ module.exports = {
 
       parserOptions: {
         tsconfigRootDir: __dirname,
-        project: ['./**/tsconfig.json'],
+        project: './**/tsconfig.json',
       },
 
       settings: {
@@ -140,7 +140,7 @@ module.exports = {
 
       parserOptions: {
         tsconfigRootDir: __dirname,
-        project: ['./clients/algoliasearch-client-javascript/tsconfig.json'],
+        project: './clients/algoliasearch-client-javascript/tsconfig.json'
       },
 
       rules: {

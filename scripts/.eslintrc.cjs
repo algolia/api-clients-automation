@@ -1,10 +1,15 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
+  ignorePatterns: [
+    "*.test.ts"
+  ],
 
+  parser: '@typescript-eslint/parser',
+  
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ["tsconfig.json"]
+    tsconfigRootDir: __dirname,
+    project: "tsconfig.json",
   },
 
   settings: {
@@ -24,5 +29,6 @@ module.exports = {
       "ts": "never",
       "mjs": "never",
     }],
+    '@typescript-eslint/sort-type-union-intersection-members': 0
   },
 };
