@@ -37,8 +37,8 @@
       "maxSize": "5.00KB"
     },
     {
-      "path": "packages/ingestion/dist/monitoring.umd.js",
-      "maxSize": "4.85KB"
+      "path": "packages/monitoring/dist/monitoring.umd.js",
+      "maxSize": "3.90KB"
     },
     {
       "path": "packages/predict/dist/predict.umd.js",
