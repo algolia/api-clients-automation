@@ -1,13 +1,4 @@
 module.exports = {
-  extends: [
-    '../.eslintrc.cjs'
-  ],
-
-  env: {
-    es2021: true,
-    node: true,
-  },
-
   parser: '@typescript-eslint/parser',
 
   parserOptions: {
