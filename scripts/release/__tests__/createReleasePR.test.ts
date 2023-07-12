@@ -1,14 +1,7 @@
 import { jest } from '@jest/globals';
 
 import releaseConfig from '../../../config/release.config.json' assert { type: 'json' };
-import {
-  parseCommit,
-  getVersionChangesText,
-  getSkippedCommitsText,
-  decideReleaseStrategy,
-  readVersions,
-  getNextVersion,
-} from '../createReleasePR.js';
+import * as common from '../../common.js';
 import type { PassedCommit } from '../types.js';
 
 const gitAuthor = releaseConfig.gitAuthor;
@@ -27,26 +20,34 @@ const buildTestCommit = (
   return `${baseTestCommit}|${typeAndScope}: ${message}`;
 };
 
-describe('createReleasePR', () => {
-  beforeAll(() => {
-    // Mock `getOctokit` to bypass the API call and credential requirements
-    jest.unstable_mockModule('../../common.js', () => ({
-      getOctokit: jest.fn(() => {
-        return {
-          pulls: {
-            get: (): any => ({
-              data: {
-                user: {
-                  login: gitAuthor.name,
-                },
-              },
-            }),
+// Mock `getOctokit` to bypass the API call and credential requirements
+jest.unstable_mockModule('../../common.js', () => ({
+  ...common,
+  getOctokit: jest.fn(() => {
+    return {
+      pulls: {
+        get: (): any => ({
+          data: {
+            user: {
+              login: gitAuthor.name,
+            },
           },
-        };
-      }),
-    }));
-  });
+        }),
+      },
+    };
+  }),
+}));
 
+const {
+  parseCommit,
+  getVersionChangesText,
+  getSkippedCommitsText,
+  decideReleaseStrategy,
+  readVersions,
+  getNextVersion,
+} = await import('../createReleasePR.js');
+
+describe('createReleasePR', () => {
   afterAll(() => {
     jest.clearAllMocks();
   });

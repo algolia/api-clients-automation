@@ -1,6 +1,5 @@
 import { jest } from '@jest/globals';
 
-import { capitalize, createClientName, gitCommit } from '../common.js';
 import { getClientsConfigField } from '../config.js';
 
 jest.unstable_mockModule('execa', () => {
@@ -9,10 +8,13 @@ jest.unstable_mockModule('execa', () => {
   };
 });
 
+const { capitalize, createClientName, gitCommit } = await import(
+  '../common.js'
+);
 const { execaCommand } = await import('execa');
 
 describe('gitCommit', () => {
-  afterAll(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
