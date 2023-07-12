@@ -1,3 +1,4 @@
+/* eslint-disable import/no-commonjs */
 module.exports = {
   extends: [
     'algolia',
@@ -41,11 +42,15 @@ module.exports = {
     '@typescript-eslint/no-namespace': 0,
     'import/dynamic-import-chunkname': 0,
 
-    "import/extensions": [2, "ignorePackages", {
-      "js": "never",
-      "ts": "never",
-      "mjs": "never",
-    }],
+    'import/extensions': [
+      2,
+      'ignorePackages',
+      {
+        js: 'never',
+        ts: 'never',
+        mjs: 'never',
+      },
+    ],
     'unused-imports/no-unused-imports-ts': 2,
     '@typescript-eslint/no-unused-vars': 2,
     '@typescript-eslint/consistent-indexed-object-style': 2,
