@@ -22,7 +22,7 @@ module.exports = {
   settings: {
     'import/extensions': ['.js', '.ts'],
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts'],
+      '@typescript-eslint/parser': ['.ts', '.js'],
     },
     'import/ignore': ['node_modules'],
     'import/resolver': {
@@ -41,6 +41,10 @@ module.exports = {
     '@typescript-eslint/no-namespace': 0,
     'import/dynamic-import-chunkname': 0,
 
+    "import/extensions": [2, "ignorePackages", {
+      "js": "never",
+      "ts": "never",
+    }],
     'unused-imports/no-unused-imports-ts': 2,
     '@typescript-eslint/no-unused-vars': 2,
     '@typescript-eslint/consistent-indexed-object-style': 2,
