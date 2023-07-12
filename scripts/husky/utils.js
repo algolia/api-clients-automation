@@ -1,9 +1,9 @@
-import execa from 'execa';
+import { execaCommand } from 'execa';
 
 export async function run(command) {
   return (
     (
-      await execa.command(command, {
+      await execaCommand(command, {
         shell: 'bash',
         all: true,
       })

@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import * as common from '../../../common.js';
 import { cleanGeneratedBranch } from '../cleanGeneratedBranch.js';
 import { pushGeneratedCode } from '../pushGeneratedCode.js';
@@ -69,13 +71,15 @@ describe('codegen', () => {
     describe('cleanup', () => {
       let mockedResolvedValue: string;
       beforeEach(() => {
-        jest.spyOn(common, 'run').mockImplementation(() => {
-          return Promise.resolve(mockedResolvedValue);
-        });
+        jest.unstable_mockModule('../../../common.js', () => ({
+          run: jest.fn(() => {
+            return Promise.resolve(mockedResolvedValue);
+          }),
+        }));
       });
 
       afterEach(() => {
-        jest.spyOn(common, 'run').mockRestore();
+        jest.clearAllMocks();
       });
 
       afterEach(() => {});
