@@ -84,6 +84,11 @@ module.exports = {
 
       parser: '@typescript-eslint/parser',
 
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: ['./**/tsconfig.json'],
+      },
+
       settings: {
         'import/extensions': ['.js', '.ts'],
         'import/parsers': {
@@ -132,6 +137,12 @@ module.exports = {
     // JS client rules
     {
       files: ['clients/algoliasearch-client-javascript/packages/**/*.ts'],
+
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: ['./clients/algoliasearch-client-javascript/tsconfig.json'],
+      },
+
       rules: {
         // For a wider browser support (IE>=11), we forbid those two
         'no-restricted-syntax': [
