@@ -29,10 +29,11 @@ baseSearchResponse:
   properties:
     abTestID:
       type: integer
-      description: If a search encounters an index that's being A/B tested, returns the A/B test ID.
+      description: A/B test ID. This is only included in the response for indices that are part of an A/B test.
     abTestVariantID:
       type: integer
-      description: If a search encounters an index that's being A/B tested, returns the variant ID of the index used (starting at 1).
+      minimum: 1
+      description: Variant ID. This is only included in the response for indices that are part of an A/B test.
     aroundLatLng:
       type: string
       description: Computed geographical location.
@@ -43,13 +44,13 @@ baseSearchResponse:
       description: Automatically-computed radius.
     exhaustiveFacetsCount:
       type: boolean
-      description: If `false`, the facet count is approximate.
+      description: Indicates whether the facet count is exhaustive (exact) or approximate.
     exhaustiveNbHits:
       type: boolean
-      description: If `false`, `nbHits` is approximate.
+      description: Indicates whether the number of hits `nbHits` is exhaustive (exact) or approximate.
     exhaustiveTypo:
       type: boolean
-      description: If `false`, the typo tolerance search was approximate (only applies when typo tolerance is enabled).
+      description: Indicates whether the search for typos was exhaustive (exact) or approximate.
     facets:
       title: facets
       type: object
@@ -115,7 +116,8 @@ baseSearchResponse:
       example: query=a&hitsPerPage=20
     redirect:
       type: object
-      description: For internal use.
+      description: >
+        [Redirect results to a URL.](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/)
       properties:
         index:
           type: array
