@@ -39,7 +39,7 @@ security:
     apiKey: []
 tags:
   - name: recommendations
-    x-displayName: Recommendation and trending models
+    x-displayName: Recommend models
     description: Manage recommendations.
 x-tagGroups:
   - name: General
