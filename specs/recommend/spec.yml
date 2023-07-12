@@ -39,7 +39,7 @@ security:
     apiKey: []
 tags:
   - name: recommendations
-    x-displayName: Recommend models
+    x-displayName: Recommend
     description: Manage recommendations.
 x-tagGroups:
   - name: General
@@ -60,3 +60,6 @@ paths:
 
   /1/indexes/{indexName}/{model}/task/{taskID}:
     $ref: 'paths/getRecommendStatus.yml'
+
+  /1/indexes/{indexName}/{model}/recommend/rules/search:
+    $ref: 'paths/searchRecommendRules.yml'
