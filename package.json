@@ -47,7 +47,7 @@
     "eslint-plugin-jsdoc": "46.4.3",
     "eslint-plugin-json-format": "2.0.1",
     "eslint-plugin-prettier": "5.0.0",
-    "eslint-plugin-unused-imports": "2.0.0",
+    "eslint-plugin-unused-imports": "3.0.0",
     "eslint-plugin-yml": "1.8.0",
     "husky": "8.0.3",
     "js-yaml": "4.1.0",
