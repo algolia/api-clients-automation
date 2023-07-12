@@ -10,7 +10,7 @@
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
     "setRunVariables": "ts-node ci/githubActions/setRunVariables.ts",
     "spreadGeneration": "ts-node ci/codegen/spreadGeneration.ts",
-    "lint": "eslint --ext=ts,js -c .eslintrc.cjs",
+    "lint": "eslint --ext=ts,js .",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts"
   },
@@ -32,6 +32,7 @@
     "commander": "11.0.0",
     "dotenv": "16.3.1",
     "eslint": "8.44.0",
+    "eslint-import-resolver-typescript": "3.5.5",
     "execa": "7.1.1",
     "folder-hash": "4.0.4",
     "fs-extra": "11.1.1",

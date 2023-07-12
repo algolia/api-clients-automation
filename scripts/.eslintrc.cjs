@@ -9,14 +9,14 @@ module.exports = {
 
   env: {
     es2021: true,
-    node: true
+    node: true,
   },
 
   parser: '@typescript-eslint/parser',
 
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module"
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
 
   settings: {
@@ -25,6 +25,9 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts'],
     },
     'import/ignore': ['node_modules'],
+    'import/resolver': {
+      typescript: {},
+    },
   },
 
   plugins: ['algolia', 'unused-imports'],

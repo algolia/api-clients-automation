@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import micromatch from 'micromatch';
 
 import clientConfig from '../../config/clients.config.json' assert { type: 'json' };
-import patterns from '../../config/generation.config.json' assert { type: 'json' };
+import { patterns } from '../../config/generation.config.mjs';
 
 import { run } from './utils.js';
 
