@@ -20,9 +20,9 @@ module.exports = {
   },
 
   settings: {
-    'import/extensions': ['.js', '.ts'],
+    'import/extensions': ['.js', '.ts', '.mjs'],
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.js'],
+      '@typescript-eslint/parser': ['.ts', '.js', '.mjs'],
     },
     'import/ignore': ['node_modules'],
     'import/resolver': {
@@ -44,6 +44,7 @@ module.exports = {
     "import/extensions": [2, "ignorePackages", {
       "js": "never",
       "ts": "never",
+      "mjs": "never",
     }],
     'unused-imports/no-unused-imports-ts': 2,
     '@typescript-eslint/no-unused-vars': 2,

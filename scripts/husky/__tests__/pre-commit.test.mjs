@@ -1,6 +1,6 @@
 import micromatch from 'micromatch';
 
-import { getPatterns } from '../pre-commit.js';
+import { getPatterns } from '../pre-commit.mjs';
 
 describe('micromatch', () => {
   it('matches correctly the files to remove', () => {

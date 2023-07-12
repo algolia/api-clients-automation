@@ -6,11 +6,11 @@
     "cleanGeneratedBranch": "ts-node ci/codegen/cleanGeneratedBranch.ts",
     "createMatrix": "ts-node ci/githubActions/createMatrix.ts",
     "createReleasePR": "ts-node release/createReleasePR.ts",
-    "pre-commit": "./ci/husky/pre-commit.js",
+    "lint": "eslint --ext=ts,js .",
+    "pre-commit": "node ./ci/husky/pre-commit.mjs",
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
     "setRunVariables": "ts-node ci/githubActions/setRunVariables.ts",
     "spreadGeneration": "ts-node ci/codegen/spreadGeneration.ts",
-    "lint": "eslint --ext=ts,js .",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts"
   },
