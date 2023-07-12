@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/no-commonjs
 module.exports = {
+  root: true,
+
   ignorePatterns: [
     '**/node_modules',
     '**/build',
@@ -100,6 +101,7 @@ module.exports = {
         'no-continue': 0,
         '@typescript-eslint/prefer-enum-initializers': 0,
         '@typescript-eslint/no-namespace': 0,
+        'import/dynamic-import-chunkname': 0,
 
         'unused-imports/no-unused-imports-ts': 2,
         '@typescript-eslint/no-unused-vars': 2,
