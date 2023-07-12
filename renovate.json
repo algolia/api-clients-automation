@@ -118,7 +118,8 @@
       "matchStrings": [
         "(?<currentValue>.*?)"
       ],
-      "datasourceTemplate": "java-version"
+      "datasourceTemplate": "java-version",
+      "depNameTemplate": "java"
     },
     {
       "description": "Update .dart-version",
@@ -126,7 +127,8 @@
       "matchStrings": [
         "(?<currentValue>.*?)"
       ],
-      "datasourceTemplate": "dart-version"
+      "datasourceTemplate": "dart-version",
+      "depNameTemplate": "dart"
     },
     {
       "description": "Update .go-version",
@@ -134,7 +136,16 @@
       "matchStrings": [
         "(?<currentValue>.*?)"
       ],
-      "datasourceTemplate": "golang-version"
+      "datasourceTemplate": "golang-version",
+      "depNameTemplate": "golang"
+    },
+    {
+      "description": "update Dockerfile",
+      "fileMatch": "^Dockerfile$",
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sARG .*?_VERSION=(?<currentValue>.*)\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
   "ignorePaths": [
