@@ -10,6 +10,6 @@
   "ts-node": {
     "esm": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "./.eslintrc.cjs", "**/*.mjs"],
   "exclude": ["dist", "*.json", "node_modules", "**/*.test.ts"]
 }
