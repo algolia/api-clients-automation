@@ -1,12 +1,22 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 import chalk from 'chalk';
+import { execaCommand } from 'execa';
 import micromatch from 'micromatch';
 
 import clientConfig from '../../config/clients.config.json' assert { type: 'json' };
 import { patterns } from '../../config/generation.config.mjs';
 
-import { run } from './utils.js';
+async function run(command) {
+  return (
+    (
+      await execaCommand(command, {
+        shell: 'bash',
+        all: true,
+      })
+    ).all ?? ''
+  );
+}
 
 export function getPatterns() {
   const entries = patterns;
