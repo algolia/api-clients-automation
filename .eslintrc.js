@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
   ignorePatterns: [
+    'scripts/**',
     '**/node_modules',
     '**/build',
     '**/dist',
@@ -147,14 +148,6 @@ module.exports = {
           },
         ],
         '@typescript-eslint/prefer-optional-chain': 0,
-      },
-    },
-    // Scripts rules
-    {
-      files: ['scripts/**/*.ts', 'scripts/**/*.js'],
-      rules: {
-        'import/no-unresolved': 0,
-        'import/extensions': 0,
       },
     },
     {
