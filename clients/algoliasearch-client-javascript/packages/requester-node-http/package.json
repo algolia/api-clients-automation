@@ -5,6 +5,7 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
+  "type": "module",
   "main": "dist/requester-node-http.cjs.js",
   "module": "dist/requester-node-http.esm.node.js",
   "types": "dist/index.d.ts",
