@@ -27,7 +27,7 @@
     "@types/rollup-plugin-node-globals": "1.4.1",
     "@types/semver": "7.5.0",
     "bundlesize2": "0.0.31",
-    "execa": "5.1.1",
+    "execa": "7.1.1",
     "lerna": "5.5.2",
     "nx": "15.9.4",
     "rollup": "2.79.1",
