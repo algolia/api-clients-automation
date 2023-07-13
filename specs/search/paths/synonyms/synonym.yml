@@ -3,7 +3,7 @@ get:
     - Synonyms
   operationId: getSynonym
   summary: Get a synonym object.
-  description: To list synonym objectIDs for an index, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+  description: Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectID'
@@ -80,7 +80,7 @@ delete:
     - Synonyms
   operationId: deleteSynonym
   summary: Delete a synonym.
-  description: To list synonym objectIDs for an index, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+  description: Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectID'

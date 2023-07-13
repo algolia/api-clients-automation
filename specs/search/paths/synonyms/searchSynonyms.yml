@@ -4,8 +4,8 @@ post:
   operationId: searchSynonyms
   x-use-read-transporter: true
   x-cacheable: true
-  summary: List synonyms.
-  description: List all the synonyms matching various criteria.
+  summary: Search for synonyms.
+  description: Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: './common/parameters.yml#/Type'

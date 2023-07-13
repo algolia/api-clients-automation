@@ -3,7 +3,7 @@ ReplaceExistingSynonyms:
   name: replaceExistingSynonyms
   schema:
     type: boolean
-  description: If `true`, delete all synonyms in the index and then add the ones sent with this request.
+  description: Indicates whether to replace all synonyms in the index with the ones sent with this request.
 
 Query:
   in: query
