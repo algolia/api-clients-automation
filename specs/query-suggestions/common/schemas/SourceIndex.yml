@@ -21,7 +21,6 @@ properties:
     description: |
       [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.
     nullable: true
-    default: null
     items:
       type: string
   facets:
@@ -29,7 +28,6 @@ properties:
     items:
       $ref: './Facet.yml'
     nullable: true
-    default: null
     description: |
       Facets to use as top categories with your suggestions.
 
@@ -56,7 +54,6 @@ properties:
     items:
       type: string
     nullable: true
-    default: null
     description: |
       Facets used for generating query suggestions from facet values.
 
@@ -70,7 +67,6 @@ properties:
     items:
       type: string
     nullable: true
-    default: null
     description: |
       Algolia indices with popular searches to use as query suggestions.
 
