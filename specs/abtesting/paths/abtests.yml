@@ -51,22 +51,21 @@ get:
   tags:
     - abtest
   operationId: listABTests
-  summary: List all tests.
-  description: >
-    Fetch all existing A/B tests for App that are available for the current API Key.
-
-    When no data has been processed, the metrics will be returned as null.
+  summary: List all A/B tests.
+  description: List all A/B tests.
   parameters:
     - $ref: '../../common/parameters.yml#/Offset'
     - $ref: '../../common/parameters.yml#/Limit'
     - name: indexPrefix
       in: query
-      description: Filters the returned ab tests by any indices starting with the provided prefix that are assigned to either variant of an ab test.
+      description: Only return A/B tests for indices starting with this prefix.
+      example: 'dev_'
       schema:
         type: string
     - name: indexSuffix
       in: query
-      description: Filters the returned ab tests by any indices ending with the provided suffix that are assigned to either variant of an ab test.
+      description: Only return A/B tests for indices ending with this suffix.
+      example: '_development'
       schema:
         type: string
   responses:
@@ -83,10 +82,12 @@ get:
                 $ref: '../common/schemas/ABTest.yml#/ABTests'
               count:
                 type: integer
-                description: Number of A/B tests found for the app.
+                description: Number of A/B tests implemented.
+                example: 10
               total:
                 type: integer
-                description: Number of A/B tests retrievable.
+                description: Number of retrieavable A/B tests.
+                example: 11
             required:
               - abtests
               - count
