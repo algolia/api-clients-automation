@@ -6,6 +6,10 @@
     ":preserveSemverRanges"
   ],
   "enabledManagers": [
+    "dockerfile",
+    "github-actions",
+    "npm",
+    "nvm",
     "gradle",
     "regex",
     "pub",
@@ -85,6 +89,15 @@
       "datasourceTemplate": "github-releases"
     },
     {
+      "description": "Update yarn for netlify",
+      "fileMatch": "netlify.toml",
+      "matchStrings": [
+        "YARN_VERSION\\s*=\\s*\"(?<currentValue>.*?)\""
+      ],
+      "depNameTemplate": "yarnpkg/berry",
+      "datasourceTemplate": "github-releases"
+    },
+    {
       "description": "Update composer.json for PHP",
       "fileMatch": "composer.mustache",
       "matchStrings": [
@@ -98,17 +111,18 @@
       "description": "Update pubspec.yaml for Dart",
       "fileMatch": "pubspec.mustache",
       "matchStrings": [
-        "(dev_)?dependencies:\\s*{[^}]*}",
-        "\\s(?<depName>.*?):\\s*(?<currentValue>.*?)"
+        "(dev_)?dependencies:\\s*[^$]*",
+        "  (?<depName>[a-z_]+?): (?<currentValue>.*?)\n"
       ],
       "matchStringsStrategy": "recursive",
-      "datasourceTemplate": "dart"
+      "datasourceTemplate": "dart",
+      "versioningTemplate": "npm"
     },
     {
       "description": "Update .java-version",
       "fileMatch": ".java-version",
       "matchStrings": [
-        "(?<currentValue>.*?)"
+        "(?<currentValue>.*)"
       ],
       "datasourceTemplate": "java-version",
       "depNameTemplate": "java"
@@ -117,7 +131,7 @@
       "description": "Update .dart-version",
       "fileMatch": ".dart-version",
       "matchStrings": [
-        "(?<currentValue>.*?)"
+        "(?<currentValue>.*)"
       ],
       "datasourceTemplate": "dart-version",
       "depNameTemplate": "dart"
@@ -126,7 +140,7 @@
       "description": "Update .go-version",
       "fileMatch": ".go-version",
       "matchStrings": [
-        "(?<currentValue>.*?)"
+        "(?<currentValue>.*)"
       ],
       "datasourceTemplate": "golang-version",
       "depNameTemplate": "golang"
@@ -135,7 +149,7 @@
       "description": "Update .php-version",
       "fileMatch": ".php-version",
       "matchStrings": [
-        "(?<currentValue>.*?)"
+        "(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "php/php-src"
@@ -149,6 +163,11 @@
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
+  "github-actions": {
+    "fileMatch": [
+      "\\.github/workflows/.*\\.ya?ml$"
+    ]
+  },
   "ignorePaths": [
     "**/algoliasearch/**",
     "**/client-abtesting/**",
