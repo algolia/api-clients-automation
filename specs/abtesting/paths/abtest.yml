@@ -2,9 +2,11 @@ get:
   tags:
     - abtest
   operationId: getABTest
-  summary: Get a test.
+  summary: Get A/B test details.
   description: >
-    Returns metadata and metrics for an A/B test.
+    Get specific details for an A/B test.
+
+    To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
   parameters:
     - $ref: '../common/parameters.yml#/ID'
   responses:
