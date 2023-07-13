@@ -29,8 +29,11 @@ delete:
   tags:
     - abtest
   operationId: deleteABTest
-  summary: Delete a test.
-  description: Delete a test.
+  summary: Delete an A/B test.
+  description: >
+    Delete an A/B test.
+
+    To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
   parameters:
     - $ref: '../common/parameters.yml#/ID'
   responses:

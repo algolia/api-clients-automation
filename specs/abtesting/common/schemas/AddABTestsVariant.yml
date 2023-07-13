@@ -24,6 +24,8 @@ abTestsVariant:
 
 customSearchParams:
   type: object
+  description: Applies search parameters. This can only be used if the two variants use the same index.
+  example: {'typoTolerance': false,'synonyms': false}
   additionalProperties: false
   properties:
     customSearchParameters:

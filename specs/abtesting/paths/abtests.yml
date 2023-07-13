@@ -2,11 +2,8 @@ post:
   tags:
     - abtest
   operationId: addABTests
-  summary: Create a test.
-  description: >
-    Creates a new A/B test with provided configuration.
-
-    You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
+  summary: Create an A/B test.
+  description: Creates an A/B test.
   requestBody:
     required: true
     content:
@@ -18,9 +15,9 @@ post:
           properties:
             name:
               $ref: '../common/parameters.yml#/name'
-            variant:
+            variants:
               type: array
-              description: List of 2 variants for the A/B test.
+              description: A/B test variants.
               minItems: 2
               maxItems: 2
               items:
@@ -29,7 +26,7 @@ post:
               $ref: '../common/parameters.yml#/endAt'
           required:
             - name
-            - variant
+            - variants
             - endAt
   responses:
     '200':
