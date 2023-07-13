@@ -2,15 +2,15 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:js-app",
-    "algolia",
+    "github>algolia/renovate-config-algolia",
     ":preserveSemverRanges"
   ],
   "enabledManagers": [
-    "npm",
-    "nvm",
     "gradle",
-    "composer",
-    "regex"
+    "regex",
+    "pub",
+    "gomod",
+    "gradle-wrapper"
   ],
   "baseBranches": [
     "chore/renovateBaseBranch"
@@ -105,14 +105,6 @@
       "datasourceTemplate": "dart"
     },
     {
-      "description": "Update libs.versions.toml for Kotlin",
-      "fileMatch": "libs.versions.toml",
-      "matchStrings": [
-        "(?<depName>.*?):.*?(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "maven"
-    },
-    {
       "description": "Update .java-version",
       "fileMatch": ".java-version",
       "matchStrings": [
@@ -140,7 +132,16 @@
       "depNameTemplate": "golang"
     },
     {
-      "description": "update Dockerfile",
+      "description": "Update .php-version",
+      "fileMatch": ".php-version",
+      "matchStrings": [
+        "(?<currentValue>.*?)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "php/php-src"
+    },
+    {
+      "description": "Update Dockerfile",
       "fileMatch": "^Dockerfile$",
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sARG .*?_VERSION=(?<currentValue>.*)\\s"
@@ -153,9 +154,11 @@
     "**/client-abtesting/**",
     "**/client-analytics/**",
     "**/client-insights/**",
+    "**/client_insights/**",
     "**/client-personalization/**",
     "**/client-query-suggestions/**",
     "**/client-search/**",
+    "**/client_search/**",
     "**/ingestion/**",
     "**/predict/**",
     "**/recommend/**",
