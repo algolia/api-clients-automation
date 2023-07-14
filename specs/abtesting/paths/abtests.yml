@@ -83,8 +83,8 @@ get:
                 example: 10
               total:
                 type: integer
-                description: Number of retrieavable A/B tests.
-                example: 11
+                description: Number of retrievable A/B tests.
+                example: 12
             required:
               - abtests
               - count
