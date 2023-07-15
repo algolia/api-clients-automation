@@ -7,7 +7,7 @@ ARG PHP_VERSION=8.2.8
 # renovate: datasource=golang-version depName=golang
 ARG GO_VERSION=1.20.6
 # renovate: datasource=dart-version depName=dart
-ARG DART_VERSION=3.0.2
+ARG DART_VERSION=3.0.6
 
 FROM golang:${GO_VERSION}-bullseye as go-builder
 
