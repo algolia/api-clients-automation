@@ -1,7 +1,7 @@
 # renovate: datasource=github-tags depName=nodejs/node versioning=node
 ARG NODE_VERSION=18.16.1
 # renovate: datasource=java-version depName=java
-ARG JAVA_VERSION=11.0.19
+ARG JAVA_VERSION=11.0.19+7
 # renovate: datasource=github-tags depName=php/php-sec
 ARG PHP_VERSION=8.2.8
 # renovate: datasource=golang-version depName=golang
