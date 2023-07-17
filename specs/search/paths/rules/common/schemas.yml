@@ -17,12 +17,12 @@ rule:
       $ref: '#/consequence'
     description:
       type: string
-      description: A description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
+      description: Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
       example: 'Display a promotional banner'
     enabled:
       type: boolean
       default: true
-      description: If `true`, the rule is enabled. If it isn't enabled, it isn't applied at query time.
+      description: Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
     validity:
       type: array
       description: If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.
@@ -78,7 +78,7 @@ consequence:
       items:
         title: consequenceHide
         type: object
-        description: Unique identifier of the object to hide.
+        description: Unique identifier of the record to hide.
         additionalProperties: false
         properties:
           objectID:
@@ -102,14 +102,14 @@ promote:
     - $ref: '#/promoteObjectID'
 
 promoteObjectID:
-  description: Object ID to promote.
+  description: Record to promote.
   type: object
   additionalProperties: false
   properties:
     objectID:
       type: string
-      description: Unique identifier of the object to promote.
       example: '2b642cf64c587f50388eb1b8d047bf56'
+      description: Unique identifier of the record to promote.
     position:
       $ref: '#/promotePosition'
   required:
@@ -117,7 +117,7 @@ promoteObjectID:
     - objectID
 
 promoteObjectIDs:
-  description: objectIDs to promote.
+  description: Records to promote.
   type: object
   additionalProperties: false
   properties:

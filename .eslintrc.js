@@ -125,6 +125,12 @@ module.exports = {
             },
           },
         ],
+        'jsdoc/match-description':[
+          'error',
+          {
+            matchDescription: '^\n?([A-Z`\[\\d_][\\s\\S]*[.?!`]\\s*)?$'
+          },
+        ],
       },
     },
     // JS client rules
