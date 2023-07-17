@@ -44,10 +44,6 @@ apiKey:
 
         Each time an API call is performed with this key, a check is performed. If there were more than the specified number of calls within the last hour, the API returns an error with the status code `429` (Too Many Requests).
 
-        **If [proxying the query through your servers](https://www.algolia.com/doc/api-client/getting-started/customize/javascript/?client=javascript#use-a-custom-host), use the admin API key and set:**
-          
-        - `X-Forwarded-For` HTTP header with the client IP
-        - `X-Forwarded-API-Key` with the rate-limited API key.
 
         > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index.
       default: 0
