@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # JavaScript
 COPY .nvmrc .nvmrc
-COPY package.json package.json
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && source ~/.profile \
     && nvm install \
     && npm install -g yarn
