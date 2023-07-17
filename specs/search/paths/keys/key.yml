@@ -4,7 +4,7 @@ get:
   operationId: getApiKey
   summary: Get API key permissions.
   description: >
-    Permissions and restrictions of a specific API key.
+    Get the permissions and restrictions of a specific API key.
 
     When authenticating with the admin API key, you can request information for any of your application's keys.
     When authenticating with other API keys, you can only retrieve information for that key.
