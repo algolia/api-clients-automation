@@ -29,5 +29,5 @@ pubspec.lock
 # Melos
 pubspec_overrides.yaml
 
-# OpenAPI
+# OpenAPI Generator
 **.openapi-generator*

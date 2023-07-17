@@ -16,4 +16,5 @@ target
 .gradle
 build
 
-.openapi-generator
+# OpenAPI Generator
+**.openapi-generator*

@@ -17,3 +17,6 @@ coverage-error.log
 
 # Java
 *.hprof
+
+# OpenAPI Generator
+**.openapi-generator*
