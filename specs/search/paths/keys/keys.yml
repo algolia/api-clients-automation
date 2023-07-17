@@ -3,7 +3,7 @@ get:
     - Api Keys
   operationId: listApiKeys
   summary: List API keys.
-  description: API keys associated with the Algolia application, including their permissions and restrictions.
+  description: List all API keys associated with your Algolia application, including their permissions and restrictions.
   responses:
     '200':
       description: OK
