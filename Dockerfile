@@ -7,7 +7,6 @@ ARG PHP_VERSION
 FROM dart:${DART_VERSION} AS dart-builder
 FROM golang:${GO_VERSION}-bullseye AS go-builder
 FROM openjdk:${JAVA_VERSION}-slim AS java-builder
-
 FROM node:${NODE_VERSION}-slim AS builder
 
 ENV DOCKER=true
@@ -38,8 +37,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY --from=java-builder /usr/local/openjdk-11 /usr/local/openjdk-11
 RUN echo "export PATH=$PATH:/usr/local/openjdk-11/bin" >> ~/.profile && source ~/.profile
 ADD https://github.com/google/google-java-format/releases/download/v1.17.0/google-java-format-1.17.0-all-deps.jar /tmp/java-formatter.jar
-
-# use bash for subsequent commands
 
 WORKDIR /app
 
