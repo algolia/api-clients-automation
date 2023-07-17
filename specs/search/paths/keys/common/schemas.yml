@@ -74,7 +74,7 @@ apiKey:
       description: >
         Validity duration of a key (in seconds).  The key will automatically be removed after this time has expired. The default value of 0 never expires.
 
-        Short-lived API keys are useful to grant temporary access to your data, for example, for demos. 
+        Short-lived API keys are useful to grant temporary access to your data. For example, in mobile apps, you can't [control when users update your app](https://www.algolia.com/doc/guides/security/security-best-practices/#use-secured-api-keys-in-mobile-apps). So instead of encoding keys into your app as you would for a web app, you should dynamically fetch them from your mobile app's backend.
       example: 86400
       default: 0
   required:
