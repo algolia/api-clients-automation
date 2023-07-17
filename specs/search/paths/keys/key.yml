@@ -32,7 +32,7 @@ put:
   operationId: updateApiKey
   summary: Update an API key.
   description: >
-    Replace every permission of an existing API key.
+    Replace the permissions of an existing API key.
 
     Any unspecified parameter resets that permission to its default value.
 
