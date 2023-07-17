@@ -62,7 +62,7 @@ apiKey:
     referers:
       type: array
       description: >
-        Restrict this API key to specific [referrers](https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions/#http-referrers). If empty or blank, defaults to all referrers.
+        Restrict this API key to specific [referrers](https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions/#http-referrers). If empty, all referrers are allowed.
 
         For example:
 
