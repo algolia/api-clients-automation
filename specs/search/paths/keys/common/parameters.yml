@@ -5,4 +5,4 @@ KeyString:
   schema:
     type: string
     example: myAPIKey
-  description: API key string.
+  description: API key.
