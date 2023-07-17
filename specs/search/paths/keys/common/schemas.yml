@@ -33,7 +33,7 @@ apiKey:
     maxHitsPerQuery:
       type: integer
       description: >
-        Maximum number (positive integer) of hits this API key can retrieve in one query. If zero, no limit is enforced.
+        Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced.
 
         > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index.
       default: 0
