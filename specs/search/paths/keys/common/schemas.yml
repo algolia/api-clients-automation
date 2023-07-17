@@ -19,7 +19,7 @@ apiKey:
     indexes:
       type: array
       description: >
-        Restrict this API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
+        Restricts this API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
 
         Specify either an exact index name or a pattern with a leading or trailing wildcard character (or both). For example:
 
