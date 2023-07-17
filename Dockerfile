@@ -28,7 +28,7 @@ RUN echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
 # Dart
 COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
 RUN echo "export PATH=/usr/lib/dart/bin:/root/.pub-cache/bin:$PATH" >>  ~/.profile && source ~/.profile \
-    dart pub global activate melos
+    && dart pub global activate melos
 
 # PHP
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
