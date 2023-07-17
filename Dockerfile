@@ -7,7 +7,7 @@ ARG PHP_VERSION
 FROM dart:${DART_VERSION} AS dart-builder
 FROM golang:${GO_VERSION}-bullseye AS go-builder
 FROM openjdk:${JAVA_VERSION}-slim AS java-builder
-FROM node:${NODE_VERSION}-slim AS builder
+FROM php:${PHP_VERSION}-bullseye AS builder
 
 ENV DOCKER=true
 
@@ -17,9 +17,15 @@ SHELL ["/bin/bash", "--login", "-c"]
 # Global
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl zip unzip git \
-    php${PHP_VERSION} php${PHP_VERSION}-curl php${PHP_VERSION}-dom \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# JavaScript
+COPY .nvmrc .nvmrc
+COPY package.json package.json
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && source ~/.profile \
+    && nvm install \
+    && npm install -g yarn
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
