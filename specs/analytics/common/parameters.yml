@@ -66,15 +66,6 @@ Search:
   schema:
     type: string
 
-Offset:
-  in: query
-  name: offset
-  description: Start position for retrieving results.
-  example: 1
-  schema:
-    type: integer
-    minimum: 0
-
 Tags:
   name: tags
   in: query
