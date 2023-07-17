@@ -13,7 +13,7 @@ apiKey:
         $ref: '#/acl'
     description:
       type: string
-      description: A description of an API key. This can be helpful for display in the Algolia dashboard.
+      description: Description of an API key for you and your team members.
       example: 'Browse-restricted key'
       default: ''
     indexes:
