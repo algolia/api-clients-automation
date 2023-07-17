@@ -90,7 +90,7 @@ export const DEPENDENCIES = {
     'config/.java-version',
     'templates/kotlin',
     'generators/src/main/java/com/algolia/codegen/AlgoliaKotlinGenerator.java',
-    'tests/CTS/output/kotlin/gradle/libs.versions.toml',
+    'tests/output/kotlin/gradle/libs.versions.toml',
   ],
   DART_CLIENT_CHANGED: [
     ...CLIENTS_COMMON_FILES,
