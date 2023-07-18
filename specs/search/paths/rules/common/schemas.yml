@@ -71,7 +71,7 @@ consequence:
     filterPromotes:
       type: boolean
       default: false
-      description: Only use in combination with the `promote` consequence. When `true``, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.
+      description: Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.
     hide:
       type: array
       description: Records to hide. By default, you can hide up to 50 records per rule.
@@ -88,6 +88,7 @@ consequence:
     userData:
       type: object
       description: Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
+      example: {'settingID': 'f2a7b51e3503acc6a39b3784ffb84300','pluginVersion': '1.6.0'}
 
 consequenceParams:
   allOf:
@@ -107,6 +108,7 @@ promoteObjectID:
   properties:
     objectID:
       type: string
+      example: '2b642cf64c587f50388eb1b8d047bf56'
       description: Unique identifier of the record to promote.
     position:
       $ref: '#/promotePosition'
@@ -133,7 +135,8 @@ promoteObjectIDs:
 
 promotePosition:
   type: integer
-  description: Position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
+  description: The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
+  example: 0
 
 params:
   type: object
