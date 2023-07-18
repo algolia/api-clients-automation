@@ -79,6 +79,7 @@ average:
   type: number
   format: double
   description: Average count of all click events.
+  example: 2.3344634550185286
 
 averageClickPosition:
   type: integer
