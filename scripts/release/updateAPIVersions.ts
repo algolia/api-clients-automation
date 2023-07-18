@@ -221,7 +221,7 @@ export async function updateDartPackages(): Promise<void> {
 
   // Generate dart packages versions and changelogs
   await run(
-    `(cd ${cwd} && melos version --no-git-tag-version --yes --diff ${RELEASED_TAG})`
+    `(cd ${cwd} && dart pub get && melos version --no-git-tag-version --yes --diff ${RELEASED_TAG})`
   );
 
   // Update packages configs based on generated versions
