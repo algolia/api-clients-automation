@@ -1,6 +1,7 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
@@ -16,6 +17,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
   private boolean isAlgoliasearchClient;
+  private static JsonNode cacheOpenApiToolsConfig;
 
   @Override
   public String getName() {
@@ -110,9 +112,42 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
+  /**
+   * Get the current version of the client from the
+   * `clients/algoliasearch-client-javascript/packages/client-name/package.json` file, defaults to
+   * 1.0.0 if not found
+   */
+  public String getCurrentVersion(String client) throws ConfigException {
+    JsonNode packageJson = Utils.readJsonFile("clients/algoliasearch-client-javascript/packages/" + client + "/package.json");
+    String value = packageJson.get("version").asText();
+
+    if (value.isEmpty()) {
+      return "1.0.0";
+    }
+
+    return value;
+  }
+
+  /** Get the packageName from the output field in the config/openapitools.json. file */
+  public String getPackageName(String client) throws ConfigException {
+    if (cacheOpenApiToolsConfig == null) {
+      cacheOpenApiToolsConfig = Utils.readJsonFile("config/openapitools.json");
+    }
+
+    String output = cacheOpenApiToolsConfig
+      .get("generator-cli")
+      .get("generators")
+      .get("javascript-" + (String) additionalProperties.get("client"))
+      .get("output")
+      .asText();
+
+    return output.substring(output.lastIndexOf("/") + 1);
+  }
+
   /** Set default generator options */
   private void setDefaultGeneratorOptions() {
     String apiName = CLIENT + Utils.API_SUFFIX;
+    String packageName = getPackageName(CLIENT);
 
     additionalProperties.put("apiName", apiName);
     additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
@@ -121,13 +156,15 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
+    additionalProperties.put("packageVersion", getCurrentVersion(packageName));
+    additionalProperties.put("packageName", packageName);
 
     if (isAlgoliasearchClient) {
       // Files used to create the package.json of the algoliasearch package
-      additionalProperties.put("analyticsVersion", Utils.getOpenApiToolsField("javascript", "analytics", "packageVersion"));
-      additionalProperties.put("abtestingVersion", Utils.getOpenApiToolsField("javascript", "abtesting", "packageVersion"));
-      additionalProperties.put("personalizationVersion", Utils.getOpenApiToolsField("javascript", "personalization", "packageVersion"));
-      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("javascript", "search", "packageVersion"));
+      additionalProperties.put("analyticsVersion", getCurrentVersion("client-analytics"));
+      additionalProperties.put("abtestingVersion", getCurrentVersion("client-abtesting"));
+      additionalProperties.put("personalizationVersion", getCurrentVersion("client-personalization"));
+      additionalProperties.put("searchVersion", getCurrentVersion("client-search"));
 
       // Files used to generate the `lite` client
       apiName = "lite" + Utils.API_SUFFIX;
@@ -152,7 +189,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     setDefaultGeneratorOptions();
     try {
       Utils.generateServer((String) additionalProperties.get("client"), additionalProperties);
-      additionalProperties.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "utilsPackageVersion"));
+      additionalProperties.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "packageVersion"));
       additionalProperties.put("npmNamespace", Utils.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {
       e.printStackTrace();

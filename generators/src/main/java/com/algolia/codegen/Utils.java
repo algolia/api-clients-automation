@@ -135,9 +135,6 @@ public class Utils {
     if (fields.length == 0) {
       throw new ConfigException("getClientConfigField requires at least one field");
     }
-    if (language.equals("javascript") && fields[0].equals("packageVersion")) {
-      throw new ConfigException("Cannot read 'packageVersion' with language=\"javascript\", " + "read configs/openapitools.json instead");
-    }
     if (cacheConfig == null) {
       cacheConfig = readJsonFile("config/clients.config.json");
     }
