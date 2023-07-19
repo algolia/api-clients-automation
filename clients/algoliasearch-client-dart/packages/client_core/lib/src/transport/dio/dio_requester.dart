@@ -37,7 +37,7 @@ class DioRequester implements Requester {
               apiKey: apiKey,
             ),
             AgentInterceptor(
-              agent: AlgoliaAgent(packageVersion)
+              agent: AlgoliaAgent(version)
                 ..addAll(clientSegments ?? const [])
                 ..addAll(Platform.agentSegments()),
             ),
