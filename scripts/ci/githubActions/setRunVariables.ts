@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import * as core from '@actions/core';
 
-import { CLIENTS_JS_UTILS } from '../../common';
-import { getLanguageFolder } from '../../config';
+import { CLIENTS_JS_UTILS } from '../../common.js';
+import { getLanguageFolder } from '../../config.js';
 
-import { isBaseChanged } from './utils';
+import { isBaseChanged } from './utils.js';
 
 const JS_CLIENT_FOLDER = getLanguageFolder('javascript');
 const JAVA_CLIENT_FOLDER = getLanguageFolder('java');
@@ -20,6 +20,7 @@ const CLIENTS_COMMON_FILES = [
   'generators/src/main/java/com/algolia/codegen/Utils.java',
   'generators/src/main/java/com/algolia/codegen/cts',
   'tests/CTS',
+  '.nvmrc',
   ':!**node_modules',
 ];
 
@@ -86,12 +87,15 @@ export const DEPENDENCIES = {
   KOTLIN_CLIENT_CHANGED: [
     ...CLIENTS_COMMON_FILES,
     KOTLIN_CLIENT_FOLDER,
+    'config/.java-version',
     'templates/kotlin',
     'generators/src/main/java/com/algolia/codegen/AlgoliaKotlinGenerator.java',
+    'tests/output/kotlin/gradle/libs.versions.toml',
   ],
   DART_CLIENT_CHANGED: [
     ...CLIENTS_COMMON_FILES,
     DART_CLIENT_FOLDER,
+    'config/.dart-version',
     'templates/dart',
     'generators/src/main/java/com/algolia/codegen/AlgoliaDartGenerator.java',
   ],
@@ -112,7 +116,7 @@ async function setRunVariables({
   await isBaseChanged(originBranch, DEPENDENCIES, true);
 }
 
-if (require.main === module) {
+if (import.meta.url.endsWith(process.argv[1])) {
   const [originBranch] = process.argv.slice(2);
 
   if (!originBranch) {

@@ -1,5 +1,5 @@
-import { DOCKER, run, runComposerUpdate } from './common';
-import { createSpinner } from './spinners';
+import { run, runComposerUpdate } from './common.js';
+import { createSpinner } from './spinners.js';
 
 export async function formatter(
   language: string,
@@ -18,27 +18,23 @@ export async function formatter(
         --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
         -jar /tmp/java-formatter.jar -r \
-        && yarn prettier --write ${folder}`;
+        && yarn prettier --no-error-on-unmatched-pattern --write ${folder}/**/*.java`;
       break;
     case 'php':
       await runComposerUpdate();
-      cmd = `yarn run prettier ${folder} --write \
-            && PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;
+      cmd = `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --using-cache=no --allow-risky=yes`;
       break;
     case 'go':
       cmd = `cd ${folder} && go fmt ./...`;
-      if (DOCKER) {
-        cmd = `cd ${folder} && /usr/local/go/bin/go fmt ./...`;
-      }
       break;
     case 'kotlin':
       cmd = `${folder}/gradlew -p ${folder} spotlessApply`;
       break;
     case 'dart':
       if (folder.includes('tests')) {
-        cmd = `(cd ${folder} && dart fix --apply && dart format .)`;
+        cmd = `(cd ${folder} && dart pub get && dart fix --apply && dart format .)`;
       } else {
-        cmd = `(cd ${folder} && melos bs && melos build --no-select && melos lint)`;
+        cmd = `(cd ${folder} && dart pub get && melos bs && melos build --no-select && melos lint)`;
       }
       break;
     default:

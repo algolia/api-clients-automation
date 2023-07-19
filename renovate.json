@@ -2,18 +2,25 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:js-app",
-    "algolia",
+    "github>algolia/renovate-config-algolia",
     ":preserveSemverRanges"
   ],
   "enabledManagers": [
+    "dockerfile",
+    "github-actions",
     "npm",
     "nvm",
     "gradle",
-    "composer",
-    "regex"
+    "regex",
+    "pub",
+    "gomod",
+    "gradle-wrapper"
   ],
   "baseBranches": [
     "chore/renovateBaseBranch"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy"
   ],
   "packageRules": [
     {
@@ -47,7 +54,7 @@
         "package.mustache"
       ],
       "matchStrings": [
-        "\"devDependencies\":\\s*{[^}]*}",
+        "\"(dev)?[dD]ependencies\":\\s*{[^}]*}",
         "\\s\"(?<depName>.*?)\": \"(?<currentValue>.*?)\",?\\s"
       ],
       "matchStringsStrategy": "recursive",
@@ -83,21 +90,96 @@
       ],
       "depNameTemplate": "yarnpkg/berry",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": "Update yarn for netlify",
+      "fileMatch": "netlify.toml",
+      "matchStrings": [
+        "YARN_VERSION\\s*=\\s*\"(?<currentValue>.*?)\""
+      ],
+      "depNameTemplate": "yarnpkg/berry",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": "Update composer.json for PHP",
+      "fileMatch": "composer.mustache",
+      "matchStrings": [
+        "\"require(-dev)?\":\\s*{[^}]*}",
+        "\"(?<depName>.*?)\": \"(?<currentValue>.*?)\",?\\s"
+      ],
+      "matchStringsStrategy": "recursive",
+      "datasourceTemplate": "packagist"
+    },
+    {
+      "description": "Update pubspec.yaml for Dart",
+      "fileMatch": "pubspec.mustache",
+      "matchStrings": [
+        "(dev_)?dependencies:\\s*[^$]*",
+        "  (?<depName>[a-z_]+?): (?<currentValue>.*?)\n"
+      ],
+      "matchStringsStrategy": "recursive",
+      "datasourceTemplate": "dart",
+      "versioningTemplate": "npm"
+    },
+    {
+      "description": "Update .java-version",
+      "fileMatch": ".java-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "java-version",
+      "depNameTemplate": "java"
+    },
+    {
+      "description": "Update .dart-version",
+      "fileMatch": ".dart-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "dart-version",
+      "depNameTemplate": "dart"
+    },
+    {
+      "description": "Update .go-version",
+      "fileMatch": ".go-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "golang-version",
+      "depNameTemplate": "golang"
+    },
+    {
+      "description": "Update .php-version",
+      "fileMatch": ".php-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "php/php-src"
     }
   ],
+  "github-actions": {
+    "fileMatch": [
+      "\\.github/workflows/.*\\.ya?ml$"
+    ]
+  },
   "ignorePaths": [
     "**/algoliasearch/**",
     "**/client-abtesting/**",
     "**/client-analytics/**",
     "**/client-insights/**",
+    "**/client_insights/**",
     "**/client-personalization/**",
     "**/client-query-suggestions/**",
     "**/client-search/**",
+    "**/client_search/**",
     "**/ingestion/**",
     "**/predict/**",
     "**/recommend/**",
     "clients/algoliasearch-client-php/composer.json",
-    "tests/output/**"
+    "tests/output/dart/**",
+    "tests/output/java/**",
+    "tests/output/javascript/package.json"
   ],
   "prHourlyLimit": 20,
   "prConcurrentLimit": 50

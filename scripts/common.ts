@@ -2,22 +2,23 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import { Octokit } from '@octokit/rest';
-import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
+import { execaCommand } from 'execa';
+import type { ExecaError } from 'execa';
 import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
-import openapiConfig from '../config/openapitools.json';
-import releaseConfig from '../config/release.config.json';
+import openapiConfig from '../config/openapitools.json' assert { type: 'json' };
+import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
-import { getGitAuthor } from './release/common';
-import { createSpinner } from './spinners';
+import { getGitAuthor } from './release/common.js';
+import { createSpinner } from './spinners.js';
 import type {
   CheckForCache,
   CheckForCacheOptions,
   Generator,
   Language,
   RunOptions,
-} from './types';
+} from './types.js';
 
 export const MAIN_BRANCH = releaseConfig.mainBranch;
 export const OWNER = releaseConfig.owner;
@@ -37,28 +38,31 @@ export const ROOT_ENV_PATH = path.resolve(ROOT_DIR, '.env');
 // Build `GENERATORS` from the openapitools file
 export const GENERATORS = Object.entries(
   openapiConfig['generator-cli'].generators
-).reduce((current, [key, { output, ...gen }]) => {
-  const language = key.slice(0, key.indexOf('-')) as Language;
+).reduce(
+  (current, [key, { output, ...gen }]) => {
+    const language = key.slice(0, key.indexOf('-')) as Language;
 
-  // eslint-disable-next-line no-param-reassign
-  current[key] = {
-    additionalProperties: {},
-    ...gen,
-    output: output.replace('#{cwd}/', ''),
-    client: key.slice(key.indexOf('-') + 1),
-    language,
-    key,
-  };
-
-  if (language === 'javascript') {
     // eslint-disable-next-line no-param-reassign
-    current[key].additionalProperties.packageName = output.substring(
-      output.lastIndexOf('/') + 1
-    );
-  }
+    current[key] = {
+      additionalProperties: {},
+      ...gen,
+      output: output.replace('#{cwd}/', ''),
+      client: key.slice(key.indexOf('-') + 1),
+      language,
+      key,
+    };
 
-  return current;
-}, {} as Record<string, Generator>);
+    if (language === 'javascript') {
+      // eslint-disable-next-line no-param-reassign
+      current[key].additionalProperties.packageName = output.substring(
+        output.lastIndexOf('/') + 1
+      );
+    }
+
+    return current;
+  },
+  {} as Record<string, Generator>
+);
 
 export const LANGUAGES = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.language)),
@@ -84,7 +88,7 @@ export async function run(
     if (isVerbose()) {
       return (
         (
-          await execa.command(command, {
+          await execaCommand(command, {
             stdout: 'inherit',
             stderr: 'inherit',
             stdin: 'inherit',
@@ -96,7 +100,7 @@ export async function run(
       );
     }
     return (
-      (await execa.command(command, { shell: 'bash', all: true, cwd: realCwd }))
+      (await execaCommand(command, { shell: 'bash', all: true, cwd: realCwd }))
         .all ?? ''
     );
   } catch (err) {
@@ -106,7 +110,7 @@ export async function run(
       // it's already logged in the verbose case
       if (!isVerbose()) {
         // eslint-disable-next-line no-console
-        console.log((err as execa.ExecaError).all);
+        console.log((err as ExecaError).all);
       }
       throw new Error(`command failed: ${command}`);
     }
@@ -150,9 +154,7 @@ export async function gitCommit({
     ? `${message}\n\n\n${coAuthors.join('\n')}`
     : message;
 
-  await execa('git', ['commit', '-m', messageWithCoAuthors], {
-    cwd,
-  });
+  await execaCommand(`git commit -m "${messageWithCoAuthors}"`, { cwd });
 }
 
 export async function checkForCache({
@@ -244,7 +246,7 @@ export function ensureGitHubToken(): string {
   if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }
-  return process.env.GITHUB_TOKEN;
+  return process.env.GITHUB_TOKEN.replaceAll('"', '');
 }
 
 export function getOctokit(): Octokit {

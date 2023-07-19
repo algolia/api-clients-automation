@@ -1,10 +1,10 @@
-import { buildSpecs } from '../buildSpecs';
-import { buildCustomGenerators, CI, run, toAbsolutePath } from '../common';
-import { getTestOutputFolder } from '../config';
-import { formatter } from '../formatter';
-import { generateOpenapitools } from '../pre-gen';
-import { createSpinner } from '../spinners';
-import type { Generator } from '../types';
+import { buildSpecs } from '../buildSpecs.js';
+import { buildCustomGenerators, CI, run, toAbsolutePath } from '../common.js';
+import { getTestOutputFolder } from '../config.js';
+import { formatter } from '../formatter.js';
+import { generateOpenapitools } from '../pre-gen/index.js';
+import { createSpinner } from '../spinners.js';
+import type { Generator } from '../types.js';
 
 async function ctsGenerate(gen: Generator): Promise<void> {
   const spinner = createSpinner(`generating CTS for ${gen.key}`);
@@ -37,6 +37,13 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
     if (!getTestOutputFolder(lang)) {
       continue;
     }
+
+    if (lang === 'javascript') {
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', {
+        cwd: 'tests/output/javascript',
+      });
+    }
+
     await formatter(lang, toAbsolutePath(`tests/output/${lang}`));
   }
 }
