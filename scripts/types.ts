@@ -11,7 +11,7 @@ export type LanguageConfig = {
   modelFolder: string;
   apiFolder: string;
   customGenerator: string;
-  version?: string;
+  packageVersion?: string;
   tests: {
     extension: string;
     outputFolder: string;

@@ -47,7 +47,7 @@ export function getCustomGenerator(language: Language): string {
  * Returns the version of the package from clients.config.json, except for JavaScript where it returns the version of javascript-search.
  */
 export function getPackageVersionDefault(language: Language): string {
-  return getClientsConfigField(language, 'version');
+  return getClientsConfigField(language, 'packageVersion');
 }
 
 export function getGitHubUrl(

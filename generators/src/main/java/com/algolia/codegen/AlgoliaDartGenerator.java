@@ -26,7 +26,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
     isAlgoliasearchClient = client.equals("algoliasearch");
-    String version = Utils.getOpenApiToolsField("dart", client, "version");
+    String version = Utils.getOpenApiToolsField("dart", client, "packageVersion");
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
 
     // pubspec.yaml
@@ -67,8 +67,8 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     if (isAlgoliasearchClient) {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
       supportingFiles.add(new SupportingFile("lib.mustache", libPath, "algoliasearch_lite.dart"));
-      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("dart", "search", "version"));
-      additionalProperties.put("insightsVersion", Utils.getOpenApiToolsField("dart", "insights", "version"));
+      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("dart", "search", "packageVersion"));
+      additionalProperties.put("insightsVersion", Utils.getOpenApiToolsField("dart", "insights", "packageVersion"));
     }
 
     // disable documentation and tests
@@ -93,7 +93,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("version", Utils.getClientConfigField("dart", "version"));
+    additionalProperties.put("packageVersion", Utils.getClientConfigField("dart", "packageVersion"));
 
     // typeMapping.put("object", "Map<String, dynamic>"); // from kotlinx.serialization
 

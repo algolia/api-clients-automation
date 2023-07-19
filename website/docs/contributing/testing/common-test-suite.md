@@ -210,7 +210,7 @@ If specific values are needed for a specific languages, or custom generated file
   - `utilsPackageVersion`: the utils version to import
   - `import`: the name of the package or library to import
 - [java](https://github.com/algolia/api-clients-automation/blob/main/generators/src/main/java/com/algolia/codegen/cts/manager/JavaCTSManager.java)
-  - `version`: the version of the Java client
+  - `packageVersion`: the version of the Java client
   - `import`: the name of the client package to import from
 
 ### Clients tests
