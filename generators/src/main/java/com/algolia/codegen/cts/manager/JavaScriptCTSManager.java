@@ -23,7 +23,7 @@ public class JavaScriptCTSManager implements CTSManager {
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     String npmNamespace = Utils.getClientConfigField("javascript", "npmNamespace");
 
-    bundle.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "packageVersion"));
+    bundle.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "version"));
     bundle.put("npmNamespace", npmNamespace);
 
     JsonNode openApiToolsConfig = Utils.readJsonFile("config/openapitools.json").get("generator-cli").get("generators");

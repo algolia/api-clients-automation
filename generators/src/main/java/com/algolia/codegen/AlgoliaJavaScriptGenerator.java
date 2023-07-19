@@ -160,7 +160,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
-    additionalProperties.put("packageVersion", getCurrentVersion(packageName));
+    additionalProperties.put("version", getCurrentVersion(packageName));
     additionalProperties.put("packageName", packageName);
 
     if (isAlgoliasearchClient) {
@@ -193,7 +193,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     setDefaultGeneratorOptions();
     try {
       Utils.generateServer((String) additionalProperties.get("client"), additionalProperties);
-      additionalProperties.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "packageVersion"));
+      additionalProperties.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "version"));
       additionalProperties.put("npmNamespace", Utils.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {
       e.printStackTrace();

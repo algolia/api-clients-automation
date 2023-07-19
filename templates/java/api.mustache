@@ -47,7 +47,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, String region, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", "{{{packageVersion}}}", options);
+      super(appId, apiKey, "{{{baseName}}}", "{{{version}}}", options);
       if (options != null && options.getHosts() != null) {
         this.setHosts(options.getHosts());
       } else {
@@ -65,7 +65,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", "{{{packageVersion}}}", options);
+      super(appId, apiKey, "{{{baseName}}}", "{{{version}}}", options);
       if (options != null && options.getHosts() != null) {
         this.setHosts(options.getHosts());
       } else {

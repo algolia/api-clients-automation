@@ -42,7 +42,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
 
     try {
       Utils.generateServer(client, additionalProperties);
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("go", "packageVersion"));
+      additionalProperties.put("version", Utils.getClientConfigField("go", "version"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);

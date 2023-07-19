@@ -108,7 +108,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
 
-    additionalProperties.put("packageVersion", Utils.getClientConfigField("kotlin", "packageVersion"));
+    additionalProperties.put("version", Utils.getClientConfigField("kotlin", "version"));
 
     try {
       Utils.generateServer(client, additionalProperties);

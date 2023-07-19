@@ -36,7 +36,7 @@ final class {{classname}} implements ApiClient {
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
     {{/hasRegionalHost}}
   }) : _retryStrategy = RetryStrategy.create(
-            segment: AgentSegment(value: "{{{baseName}}}", version: packageVersion),
+            segment: AgentSegment(value: "{{{baseName}}}", version: version),
             appId: appId,
             apiKey: apiKey,
             options: options,

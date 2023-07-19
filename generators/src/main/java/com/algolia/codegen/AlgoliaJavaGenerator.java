@@ -61,7 +61,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     try {
       Utils.generateServer(client, additionalProperties);
 
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("java", "packageVersion"));
+      additionalProperties.put("version", Utils.getClientConfigField("java", "version"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);

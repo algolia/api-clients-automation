@@ -32,7 +32,7 @@ async function updateConfigFiles(
       continue;
     }
 
-    clientsConfig[lang].packageVersion = versionsToRelease[lang]!.next;
+    clientsConfig[lang].version = versionsToRelease[lang]!.next;
   }
 
   await writeJsonFile(
@@ -150,11 +150,11 @@ async function updateDartPackages(): Promise<void> {
       if (!newVersion) {
         throw new Error(`Failed to bump '${gen.packageName}'.`);
       }
-      additionalProperties.packageVersion = newVersion;
+      additionalProperties.version = newVersion;
       additionalProperties.packageName = undefined;
 
       if (gen.client === 'algoliasearch') {
-        clientsConfig.dart.packageVersion = newVersion;
+        clientsConfig.dart.version = newVersion;
       }
     }
   }

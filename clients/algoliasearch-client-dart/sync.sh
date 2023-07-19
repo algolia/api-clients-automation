@@ -9,5 +9,5 @@ fi
 for dir in packages/*/ ; do
   dir=${dir%/}
   version=$(grep "^version:" "${dir}/pubspec.yaml" | sed 's/version: //')
-  sed "${sed_arg[@]}" "s/^const packageVersion = .*;$/const packageVersion = '$version';/" "${dir}/lib/src/version.dart";
+  sed "${sed_arg[@]}" "s/^const version = .*;$/const version = '$version';/" "${dir}/lib/src/version.dart";
 done

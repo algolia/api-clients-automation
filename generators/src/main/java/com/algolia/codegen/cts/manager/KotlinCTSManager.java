@@ -21,7 +21,7 @@ public class KotlinCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Utils.getClientConfigField("kotlin", "packageVersion"));
+    bundle.put("version", Utils.getClientConfigField("kotlin", "version"));
     bundle.put("import", Utils.camelize(this.client).toLowerCase());
   }
 }
