@@ -4,6 +4,7 @@ import { getClientsConfigField } from '../config.js';
 
 jest.unstable_mockModule('execa', () => {
   return {
+    execaCommand: jest.fn(),
     execa: jest.fn(),
   };
 });
