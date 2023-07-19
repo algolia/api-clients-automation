@@ -112,27 +112,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
-  /**
-   * Get the current version of the client from the
-   * `clients/algoliasearch-client-javascript/packages/client-name/package.json` file, defaults to
-   * 0.0.1 if not found
-   */
-  public String getCurrentVersion(String client) throws ConfigException {
-    try {
-      JsonNode packageJson = Utils.readJsonFile("clients/algoliasearch-client-javascript/packages/" + client + "/package.json");
-      String value = packageJson.get("version").asText();
-
-      if (value.isEmpty()) {
-        return "0.0.1";
-      }
-
-      return value;
-    } catch (ConfigException e) {
-      return "0.0.1";
-    }
-  }
-
-  /** Get the packageName from the output field in the config/openapitools.json. file */
+  /** Get the packageName from the output field in the `config/openapitools.json` file */
   public String getPackageName(String client) throws ConfigException {
     if (cacheOpenApiToolsConfig == null) {
       cacheOpenApiToolsConfig = Utils.readJsonFile("config/openapitools.json");
@@ -160,15 +140,15 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
-    additionalProperties.put("version", getCurrentVersion(packageName));
+    additionalProperties.put("version", Utils.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
 
     if (isAlgoliasearchClient) {
       // Files used to create the package.json of the algoliasearch package
-      additionalProperties.put("analyticsVersion", getCurrentVersion("client-analytics"));
-      additionalProperties.put("abtestingVersion", getCurrentVersion("client-abtesting"));
-      additionalProperties.put("personalizationVersion", getCurrentVersion("client-personalization"));
-      additionalProperties.put("searchVersion", getCurrentVersion("client-search"));
+      additionalProperties.put("analyticsVersion", Utils.getPackageJsonVersion("client-analytics"));
+      additionalProperties.put("abtestingVersion", Utils.getPackageJsonVersion("client-abtesting"));
+      additionalProperties.put("personalizationVersion", Utils.getPackageJsonVersion("client-personalization"));
+      additionalProperties.put("searchVersion", Utils.getPackageJsonVersion("client-search"));
 
       // Files used to generate the `lite` client
       apiName = "lite" + Utils.API_SUFFIX;
@@ -193,7 +173,7 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
     setDefaultGeneratorOptions();
     try {
       Utils.generateServer((String) additionalProperties.get("client"), additionalProperties);
-      additionalProperties.put("utilsPackageVersion", Utils.getClientConfigField("javascript", "version"));
+      additionalProperties.put("utilsPackageVersion", Utils.getPackageJsonVersion("client-common"));
       additionalProperties.put("npmNamespace", Utils.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {
       e.printStackTrace();
