@@ -115,17 +115,21 @@ public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
   /**
    * Get the current version of the client from the
    * `clients/algoliasearch-client-javascript/packages/client-name/package.json` file, defaults to
-   * 1.0.0 if not found
+   * 0.0.1 if not found
    */
   public String getCurrentVersion(String client) throws ConfigException {
-    JsonNode packageJson = Utils.readJsonFile("clients/algoliasearch-client-javascript/packages/" + client + "/package.json");
-    String value = packageJson.get("version").asText();
+    try {
+      JsonNode packageJson = Utils.readJsonFile("clients/algoliasearch-client-javascript/packages/" + client + "/package.json");
+      String value = packageJson.get("version").asText();
 
-    if (value.isEmpty()) {
-      return "1.0.0";
+      if (value.isEmpty()) {
+        return "0.0.1";
+      }
+
+      return value;
+    } catch (ConfigException e) {
+      return "0.0.1";
     }
-
-    return value;
   }
 
   /** Get the packageName from the output field in the config/openapitools.json. file */
