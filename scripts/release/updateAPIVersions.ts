@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 
 import dotenv from 'dotenv';
 import yaml from 'js-yaml';
+import type { ReleaseType } from 'semver';
 
 import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
 import openapiConfig from '../../config/openapitools.json' assert { type: 'json' };
@@ -110,7 +111,7 @@ export async function updateAPIVersions(
     versionsToRelease
   )) {
     if (lang === 'dart') {
-      await updateDartPackages(changelog[lang]!);
+      await updateDartPackages(changelog[lang]!, releaseType);
 
       continue;
     }
@@ -136,14 +137,11 @@ export async function updateAPIVersions(
  * Updates packages versions and generates the changelog.
  * Documentation: {@link https://melos.invertase.dev/commands/version | melos version}.
  */
-async function updateDartPackages(changelog: string): Promise<void> {
-  const cwd = getLanguageFolder('dart');
-
-  // Generate dart packages versions and changelogs
-  await run(
-    `dart pub get && melos version --no-changelog --no-git-tag-version --yes --diff ${RELEASED_TAG}`,
-    { cwd }
-  );
+async function updateDartPackages(
+  changelog: string,
+  releaseType: ReleaseType
+): Promise<void> {
+  await run('dart pub get', { cwd: getLanguageFolder('dart') });
 
   // Update packages configs based on generated versions
   for (const gen of Object.values(GENERATORS)) {
@@ -152,13 +150,22 @@ async function updateDartPackages(changelog: string): Promise<void> {
     }
 
     const currentVersion = gen.additionalProperties.packageVersion;
-    const { additionalProperties } = gen;
-    const newVersion = await getPubspecVersion(gen.output);
+    const packageName = await getPubspecField(gen.output, 'name');
+    if (!packageName) {
+      throw new Error(`Unable to find packageName for '${gen.packageName}'.`);
+    }
+
+    await run(
+      `melos version --manual-version=${packageName}:${releaseType} --no-changelog --no-git-tag-version --yes --diff ${RELEASED_TAG}`,
+      { cwd: gen.output }
+    );
+
+    const newVersion = await getPubspecField(gen.output, 'version');
     if (!newVersion) {
       throw new Error(`Failed to bump '${gen.packageName}'.`);
     }
-    additionalProperties.packageVersion = newVersion;
-    additionalProperties.packageName = undefined;
+    gen.additionalProperties.packageVersion = newVersion;
+    gen.additionalProperties.packageName = undefined;
 
     if (gen.client === 'algoliasearch') {
       clientsConfig.dart.packageVersion = newVersion;
@@ -189,15 +196,18 @@ async function updateDartPackages(changelog: string): Promise<void> {
 /**
  * Get 'version' from pubspec.yaml file.
  */
-async function getPubspecVersion(
-  filePath: string
+async function getPubspecField(
+  filePath: string,
+  field: string
 ): Promise<string | undefined> {
   try {
     const fileContent = await fsp.readFile(
       toAbsolutePath(`${filePath}/pubspec.yaml`),
       'utf8'
     );
-    return (yaml.load(fileContent) as { version?: string }).version;
+    const pubspec = yaml.load(fileContent) as Record<string, any>;
+
+    return pubspec[field];
   } catch (error) {
     throw new Error(`Error reading the file: ${error}`);
   }
