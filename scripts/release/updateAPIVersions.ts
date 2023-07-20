@@ -141,7 +141,8 @@ async function updateDartPackages(changelog: string): Promise<void> {
 
   // Generate dart packages versions and changelogs
   await run(
-    `(cd ${cwd} && dart pub get && melos version --no-changelog --no-git-tag-version --yes --diff ${RELEASED_TAG})`
+    `dart pub get && melos version --no-changelog --no-git-tag-version --yes --diff ${RELEASED_TAG}`,
+    { cwd }
   );
 
   // Update packages configs based on generated versions
@@ -152,7 +153,7 @@ async function updateDartPackages(changelog: string): Promise<void> {
 
     const currentVersion = gen.additionalProperties.packageVersion;
     const { additionalProperties } = gen;
-    const newVersion = await getPubspecVersion(`../${gen.output}/pubspec.yaml`);
+    const newVersion = await getPubspecVersion(gen.output);
     if (!newVersion) {
       throw new Error(`Failed to bump '${gen.packageName}'.`);
     }
@@ -192,9 +193,11 @@ async function getPubspecVersion(
   filePath: string
 ): Promise<string | undefined> {
   try {
-    const fileContent = await fsp.readFile(filePath, 'utf8');
-    const data = yaml.load(fileContent) as { version?: string };
-    return data.version;
+    const fileContent = await fsp.readFile(
+      toAbsolutePath(`${filePath}/pubspec.yaml`),
+      'utf8'
+    );
+    return (yaml.load(fileContent) as { version?: string }).version;
   } catch (error) {
     throw new Error(`Error reading the file: ${error}`);
   }
