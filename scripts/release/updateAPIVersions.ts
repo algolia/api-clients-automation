@@ -110,7 +110,7 @@ export async function updateAPIVersions(
     versionsToRelease
   )) {
     if (lang === 'dart') {
-      await updateDartPackages(changelog[lang]!, current);
+      await updateDartPackages(changelog[lang]!);
 
       continue;
     }
@@ -136,10 +136,7 @@ export async function updateAPIVersions(
  * Updates packages versions and generates the changelog.
  * Documentation: {@link https://melos.invertase.dev/commands/version | melos version}.
  */
-async function updateDartPackages(
-  changelog: string,
-  currentVersion: string
-): Promise<void> {
+async function updateDartPackages(changelog: string): Promise<void> {
   const cwd = getLanguageFolder('dart');
 
   // Generate dart packages versions and changelogs
@@ -153,6 +150,7 @@ async function updateDartPackages(
       continue;
     }
 
+    const currentVersion = gen.additionalProperties.packageVersion;
     const { additionalProperties } = gen;
     const newVersion = await getPubspecVersion(`../${gen.output}/pubspec.yaml`);
     if (!newVersion) {
