@@ -45,12 +45,10 @@ async function updateChangelog(
   lang: Language,
   changelog: string,
   current: string,
-  next: string
+  next: string,
+  changelogPath: string
 ): Promise<void> {
   let content = '';
-  const changelogPath = toAbsolutePath(
-    `${getLanguageFolder(lang)}/CHANGELOG.md`
-  );
   const changelogHeader = `## [${next}](${getGitHubUrl(
     lang
   )}/compare/${current}...${next})`;
@@ -112,19 +110,25 @@ export async function updateAPIVersions(
     versionsToRelease
   )) {
     if (lang === 'dart') {
-      await updateDartPackages();
+      await updateDartPackages(changelog[lang]!, current);
 
       continue;
     }
 
     if (lang === 'javascript') {
-      const cwd = getLanguageFolder(lang);
-
       setVerbose(CI);
-      await run(`yarn install && yarn release:bump ${releaseType}`, { cwd });
+      await run(`yarn install && yarn release:bump ${releaseType}`, {
+        cwd: getLanguageFolder(lang),
+      });
     }
 
-    await updateChangelog(lang as Language, changelog[lang], current, next);
+    await updateChangelog(
+      lang as Language,
+      changelog[lang],
+      current,
+      next,
+      toAbsolutePath(`${getLanguageFolder(lang as Language)}/CHANGELOG.md`)
+    );
   }
 }
 
@@ -132,31 +136,42 @@ export async function updateAPIVersions(
  * Updates packages versions and generates the changelog.
  * Documentation: {@link https://melos.invertase.dev/commands/version | melos version}.
  */
-async function updateDartPackages(): Promise<void> {
+async function updateDartPackages(
+  changelog: string,
+  currentVersion: string
+): Promise<void> {
   const cwd = getLanguageFolder('dart');
 
   // Generate dart packages versions and changelogs
   await run(
-    `(cd ${cwd} && dart pub get && melos version --no-git-tag-version --yes --diff ${RELEASED_TAG})`
+    `(cd ${cwd} && dart pub get && melos version --no-changelog --no-git-tag-version --yes --diff ${RELEASED_TAG})`
   );
 
   // Update packages configs based on generated versions
   for (const gen of Object.values(GENERATORS)) {
-    if (gen.language === 'dart') {
-      const { additionalProperties } = gen;
-      const newVersion = await getPubspecVersion(
-        `../${gen.output}/pubspec.yaml`
-      );
-      if (!newVersion) {
-        throw new Error(`Failed to bump '${gen.packageName}'.`);
-      }
-      additionalProperties.packageVersion = newVersion;
-      additionalProperties.packageName = undefined;
-
-      if (gen.client === 'algoliasearch') {
-        clientsConfig.dart.packageVersion = newVersion;
-      }
+    if (gen.language !== 'dart') {
+      continue;
     }
+
+    const { additionalProperties } = gen;
+    const newVersion = await getPubspecVersion(`../${gen.output}/pubspec.yaml`);
+    if (!newVersion) {
+      throw new Error(`Failed to bump '${gen.packageName}'.`);
+    }
+    additionalProperties.packageVersion = newVersion;
+    additionalProperties.packageName = undefined;
+
+    if (gen.client === 'algoliasearch') {
+      clientsConfig.dart.packageVersion = newVersion;
+    }
+
+    await updateChangelog(
+      'dart',
+      changelog,
+      currentVersion,
+      newVersion,
+      toAbsolutePath(`${gen.output}/CHANGELOG.md`)
+    );
   }
 
   // update `openapitools.json` config file
