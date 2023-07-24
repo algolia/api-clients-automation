@@ -43,12 +43,13 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
         " tolerance & user insights, and more, in Dart/Flutter apps."
       );
     } else {
-      libName = "algolia_client_" + client;
-      packageFolder = "client_" + client;
+      String packageName = client.replace("-", "_");
+      libName = "algolia_client_" + packageName;
+      packageFolder = "client_" + packageName;
       setApiNameSuffix(Utils.API_SUFFIX);
       setPubDescription(
         "A sub-package of the AlgoliaSearch library, offering " +
-        client +
+         client.replace("-", " ") +
         "-specific functionalities for enhanced search and discovery in Dart/Flutter" +
         " apps."
       );
