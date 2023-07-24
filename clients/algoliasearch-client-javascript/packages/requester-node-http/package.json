@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-node-http",
-  "version": "5.0.0-alpha.73",
+  "version": "5.0.0-alpha.74",
   "description": "Promise-based request library for node using the native http module.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -20,11 +20,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.73"
+    "@algolia/client-common": "5.0.0-alpha.74"
   },
   "devDependencies": {
     "@types/jest": "29.5.3",
-    "@types/node": "18.16.19",
+    "@types/node": "18.17.0",
     "jest": "29.6.1",
     "nock": "13.3.2",
     "ts-jest": "29.1.1",

@@ -404,9 +404,7 @@ async function createReleasePR(): Promise<void> {
   const versionChanges = getVersionChangesText(versions);
 
   console.log('Creating changelogs for all languages...');
-  const changelog: Changelog = LANGUAGES.filter(
-    (lang) => lang !== 'dart'
-  ).reduce((newChangelog, lang) => {
+  const changelog: Changelog = LANGUAGES.reduce((newChangelog, lang) => {
     if (versions[lang].noCommit) {
       return newChangelog;
     }
@@ -450,7 +448,7 @@ async function createReleasePR(): Promise<void> {
     await run(`git push -d origin ${headBranch}`);
   }
 
-  await run(`git checkout -b ${headBranch}`);
+  await run(`git checkout -B ${headBranch}`);
 
   setVerbose(true);
   console.log(`Pushing updated changes to: ${headBranch}`);
