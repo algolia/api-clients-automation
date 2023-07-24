@@ -29,7 +29,7 @@
     "bundlesize2": "0.0.31",
     "execa": "7.1.1",
     "lerna": "7.1.4",
-    "nx": "16.5.2",
+    "nx": "16.5.5",
     "rollup": "3.26.3",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-typescript2": "0.35.0",
