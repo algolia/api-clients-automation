@@ -49,7 +49,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
       setApiNameSuffix(Utils.API_SUFFIX);
       setPubDescription(
         "A sub-package of the AlgoliaSearch library, offering " +
-         client.replace("-", " ") +
+        client.replace("-", " ") +
         "-specific functionalities for enhanced search and discovery in Dart/Flutter" +
         " apps."
       );
@@ -164,6 +164,19 @@ class SchemaSupport {
         String classname = modelMap.getModel().classname;
         oneOfs.put(classname, asImport(libName, classname));
         iterator.remove();
+        continue;
+      }
+      if (model.allOf.size() == 1) { // Changed from 'oneOf' to 'allOf'
+        String classname = modelMap.getModel().classname;
+        oneOfs.put(classname, asImport(libName, classname));
+        iterator.remove();
+      }
+
+      if (model.allOf.size() == 1) {
+        model.vendorExtensions.put("x-is-type-alias", true);
+        ModelsMap map = modelsMap.get(model.allOf.iterator().next());
+        String aliasType = map != null ? map.getModels().get(0).getModel().classname : GENERIC_TYPE;
+        model.vendorExtensions.put("x-type-alias", aliasType);
       }
     }
   }

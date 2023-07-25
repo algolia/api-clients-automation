@@ -213,7 +213,7 @@
         }
       },
       "dart-query-suggestions": {
-        "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_suggestions",
+        "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_query_suggestions",
         "additionalProperties": {
           "packageVersion": "0.0.1"
         }
