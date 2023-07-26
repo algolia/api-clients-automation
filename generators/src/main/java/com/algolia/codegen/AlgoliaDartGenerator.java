@@ -226,20 +226,23 @@ class SchemaSupport {
     }
   }
 
-  private Set<String> getOneOfTypes(Set<String> types) {
+  public Set<String> getOneOfTypes(Set<String> types) {
     Set<String> newTypes = new HashSet<>();
     for (String type : types) {
-      if (oneOfs.containsKey(type)) {
-        newTypes.addAll(oneOfs.get(type).types);
-      } else if (type.startsWith("List<")) { // only lists are supported for now.
-        String innerType = type.substring(5, type.length() - 1);
-        Set<String> innerTypes = getOneOfTypesList(innerType);
-        newTypes.addAll(innerTypes);
-      } else {
-        newTypes.add(type);
-      }
+      newTypes.addAll(getOneOfType(type));
     }
     return newTypes;
+  }
+
+  private Set<String> getOneOfType(String type) {
+    if (oneOfs.containsKey(type)) {
+      return oneOfs.get(type).types;
+    } else if (type.startsWith("List<")) { // only lists are supported for now.
+      String innerType = type.substring(5, type.length() - 1);
+      return getOneOfTypesList(innerType);
+    } else {
+      return Collections.singleton(type);
+    }
   }
 
   private Set<String> getOneOfTypesList(String type) {
@@ -264,26 +267,27 @@ class SchemaSupport {
 
   CodegenOperation clearOneOfFromOperation(CodegenOperation operation) {
     for (CodegenParameter parameter : operation.allParams) {
-      boolean isCleared = false;
-      if (oneOfs.containsKey(parameter.dataType)) {
-        parameter.dataType = GENERIC_TYPE;
-        isCleared = true;
-      } else if (parameter.isMap && oneOfs.containsKey(parameter.baseType)) {
-        parameter.dataType = "Map<String, " + GENERIC_TYPE + ">";
-        isCleared = true;
-      } else if (parameter.isContainer && oneOfs.containsKey(parameter.baseType)) {
-        parameter.dataType = "Iterable<" + GENERIC_TYPE + ">";
-        isCleared = true;
-      }
-      if (isCleared) {
+      String keyType = parameter.isMap || parameter.isContainer ? parameter.baseType : parameter.dataType;
+      if (oneOfs.containsKey(keyType)) {
+        Set<String> types = oneOfs.get(keyType).types;
+        if (parameter.isMap) {
+          parameter.dataType = "Map<String, " + GENERIC_TYPE + ">";
+        } else if (parameter.isContainer) {
+          parameter.dataType = "Iterable<" + GENERIC_TYPE + ">";
+        } else {
+          parameter.dataType = GENERIC_TYPE;
+        }
         parameter.isModel = false;
-        // property.vendorExtensions.put("x-oneof-types", oneOfs.get(property.dataType).types);
+        Set<String> newTypes = getOneOfTypes(types);
+        parameter.vendorExtensions.put(X_ONEOF_TYPES, newTypes);
+        parameter.vendorExtensions.put(X_IS_ONEOF, true);
       }
     }
     if (oneOfs.containsKey(operation.returnType)) {
       operation.returnType = GENERIC_TYPE;
       operation.returnBaseType = GENERIC_TYPE;
-      operation.vendorExtensions.put("x-one-of-return-type", operation.returnType);
+      operation.vendorExtensions.put(X_ONEOF_TYPES, getOneOfType(operation.returnType));
+      operation.vendorExtensions.put(X_IS_ONEOF, true);
     }
     return operation;
   }

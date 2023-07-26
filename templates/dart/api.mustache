@@ -77,9 +77,15 @@ final class {{classname}} implements ApiClient {
   ///
   /// Parameters:
   {{#allParams}}
-  /// * [{{paramName}}] {{#description}}- {{{.}}}{{/description}}
+  /// * [{{paramName}}] {{#description}}{{{.}}}{{/description}}{{#vendorExtensions}}{{#x-is-oneof}} - one of types: {{#x-oneof-types}}[{{{.}}}], {{/x-oneof-types}}{{/x-is-oneof}}{{/vendorExtensions}}
   {{/allParams}}
   /// * [requestOptions] additional request configuration.
+  {{#vendorExtensions}}
+  {{#x-is-oneof}}
+  /// Returns one of types: {{#x-oneof-types}}
+  /// - [{{{.}}}]{{/x-oneof-types}}
+  {{/x-is-oneof}}
+  {{/vendorExtensions}}
   {{#isDeprecated}}
   @Deprecated('This operation has been deprecated')
   {{/isDeprecated}}
