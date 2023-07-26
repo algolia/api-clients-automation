@@ -149,7 +149,7 @@ class SchemaSupport {
 
   Map<String, ModelsMap> clearOneOfFromModels(String libName, Map<String, ModelsMap> modelsMap) {
     removeModels(libName, modelsMap);
-    updateFieldTypes(modelsMap);
+    updateField(modelsMap);
     removeImports(modelsMap);
     return modelsMap;
   }
@@ -186,13 +186,16 @@ class SchemaSupport {
     return "package:" + libName + "/src/model/" + StringUtils.underscore(classname) + ".dart";
   }
 
-  private void updateFieldTypes(Map<String, ModelsMap> modelsMap) {
+  private void updateField(Map<String, ModelsMap> modelsMap) {
     for (ModelsMap modelContainer : modelsMap.values()) {
       List<ModelMap> models = modelContainer.getModels();
       if (models == null || models.isEmpty()) continue;
       ModelMap modelMap = models.get(0);
       CodegenModel model = modelMap.getModel();
       for (CodegenProperty property : model.vars) {
+        if (org.apache.commons.lang3.StringUtils.isAllUpperCase(property.name)) {
+          property.name = org.apache.commons.lang3.StringUtils.lowerCase(property.name);
+        }
         updatePropertyDataType(property);
       }
     }
