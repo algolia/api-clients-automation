@@ -3,6 +3,7 @@ package com.algolia.codegen;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.DartDioClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -96,8 +97,6 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     additionalProperties.put("isSearchClient", client.equals("search"));
     additionalProperties.put("packageVersion", Utils.getClientConfigField("dart", "packageVersion"));
 
-    // typeMapping.put("object", "Map<String, dynamic>"); // from kotlinx.serialization
-
     // Generate server info
     Utils.generateServer(client, additionalProperties);
   }
@@ -135,15 +134,17 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 class SchemaSupport {
 
   private static final String GENERIC_TYPE = "dynamic";
+  private static final String X_ONEOF_TYPES = "x-oneof-types";
+  private static final String X_IS_ONEOF = "x-is-oneof";
 
-  private final Map<String, String> oneOfs = new HashMap<>(); // Maintain a list of deleted class names
+  private final Map<String, OneOfMetadata> oneOfs = new HashMap<>(); // Maintain a list of deleted class names
 
   public Set<String> classnames() {
     return oneOfs.keySet();
   }
 
   public Collection<String> imports() {
-    return oneOfs.values();
+    return oneOfs.values().stream().map(e -> e.imprt).collect(Collectors.toSet());
   }
 
   Map<String, ModelsMap> clearOneOfFromModels(String libName, Map<String, ModelsMap> modelsMap) {
@@ -162,13 +163,13 @@ class SchemaSupport {
       CodegenModel model = modelMap.getModel();
       if (!model.oneOf.isEmpty()) {
         String classname = modelMap.getModel().classname;
-        oneOfs.put(classname, asImport(libName, classname));
+        oneOfs.put(classname, new OneOfMetadata(asImport(libName, classname), model.oneOf));
         iterator.remove();
         continue;
       }
       if (model.allOf.size() == 1) { // Changed from 'oneOf' to 'allOf'
         String classname = modelMap.getModel().classname;
-        oneOfs.put(classname, asImport(libName, classname));
+        oneOfs.put(classname, new OneOfMetadata(asImport(libName, classname), model.oneOf));
         iterator.remove();
       }
 
@@ -192,14 +193,57 @@ class SchemaSupport {
       ModelMap modelMap = models.get(0);
       CodegenModel model = modelMap.getModel();
       for (CodegenProperty property : model.vars) {
-        if (oneOfs.containsKey(property.dataType)) {
-          property.setDatatypeWithEnum(GENERIC_TYPE);
-        } else if (property.isMap && oneOfs.containsKey(property.complexType)) {
-          property.setDatatypeWithEnum("Map<String, " + GENERIC_TYPE + ">");
-        } else if (property.isContainer && oneOfs.containsKey(property.complexType)) {
-          property.setDatatypeWithEnum("Iterable<" + GENERIC_TYPE + ">");
-        }
+        updatePropertyDataType(property);
       }
+    }
+  }
+
+  private void updatePropertyDataType(CodegenProperty property) {
+    if (
+      oneOfs.containsKey(property.dataType) ||
+      (property.isMap && oneOfs.containsKey(property.complexType)) ||
+      (property.isContainer && oneOfs.containsKey(property.complexType))
+    ) {
+      String dataType;
+      if (oneOfs.containsKey(property.dataType)) {
+        dataType = GENERIC_TYPE;
+      } else if (property.isMap) {
+        dataType = "Map<String, " + GENERIC_TYPE + ">";
+      } else {
+        dataType = "Iterable<" + GENERIC_TYPE + ">";
+      }
+
+      property.setDatatypeWithEnum(dataType);
+      Set<String> types = oneOfs.containsKey(property.dataType)
+        ? oneOfs.get(property.dataType).types
+        : oneOfs.get(property.complexType).types;
+      Set<String> newTypes = getOneOfTypes(types);
+      property.vendorExtensions.put(X_ONEOF_TYPES, newTypes);
+      property.vendorExtensions.put(X_IS_ONEOF, true);
+    }
+  }
+
+  private Set<String> getOneOfTypes(Set<String> types) {
+    Set<String> newTypes = new HashSet<>();
+    for (String type : types) {
+      if (oneOfs.containsKey(type)) {
+        newTypes.addAll(oneOfs.get(type).types);
+      } else if (type.startsWith("List<")) { // only lists are supported for now.
+        String innerType = type.substring(5, type.length() - 1);
+        Set<String> innerTypes = getOneOfTypesList(innerType);
+        newTypes.addAll(innerTypes);
+      } else {
+        newTypes.add(type);
+      }
+    }
+    return newTypes;
+  }
+
+  private Set<String> getOneOfTypesList(String type) {
+    if (oneOfs.containsKey(type)) {
+      return oneOfs.get(type).types.stream().map(e -> "List<" + e + ">").collect(Collectors.toSet());
+    } else {
+      return Collections.singleton("List<" + type + ">");
     }
   }
 
@@ -208,7 +252,10 @@ class SchemaSupport {
       ModelsMap modelContainer = entry.getValue();
       ModelMap modelMap = modelContainer.getModels().get(0);
       CodegenModel model = modelMap.getModel();
-      model.imports.removeIf(oneOfs::containsValue);
+      for (Map.Entry<String, OneOfMetadata> oneof : oneOfs.entrySet()) {
+        String imprt = oneof.getValue().imprt;
+        model.imports.remove(imprt);
+      }
     }
   }
 
@@ -227,7 +274,13 @@ class SchemaSupport {
       }
       if (isCleared) {
         parameter.isModel = false;
+        // property.vendorExtensions.put("x-oneof-types", oneOfs.get(property.dataType).types);
       }
+    }
+    if (oneOfs.containsKey(operation.returnType)) {
+      operation.returnType = GENERIC_TYPE;
+      operation.returnBaseType = GENERIC_TYPE;
+      operation.vendorExtensions.put("x-one-of-return-type", operation.returnType);
     }
     return operation;
   }
@@ -237,5 +290,16 @@ class SchemaSupport {
     List<String> imports = (List<String>) operationsMap.get("imports");
     imports.removeAll(imports());
     return operationsMap;
+  }
+}
+
+class OneOfMetadata {
+
+  final String imprt;
+  final Set<String> types;
+
+  public OneOfMetadata(String imprt, Set<String> types) {
+    this.imprt = imprt;
+    this.types = types;
   }
 }

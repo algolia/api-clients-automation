@@ -26,6 +26,12 @@ final class {{{classname}}}{
   {{#description}}
       /// {{{description}}}
   {{/description}}
+  {{#vendorExtensions}}
+  {{#x-is-oneof}}
+     /// One of types: {{#x-oneof-types}}
+     /// - [{{{.}}}]{{/x-oneof-types}}
+  {{/x-is-oneof}}
+  {{/vendorExtensions}}
   {{^isEnum}}
       {{#minimum}}
           // minimum: {{{minimum}}}
