@@ -1,5 +1,7 @@
 package com.algolia.codegen;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
@@ -9,6 +11,7 @@ import org.openapitools.codegen.languages.DartDioClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
+import org.openapitools.codegen.utils.CamelizeOption;
 import org.openapitools.codegen.utils.StringUtils;
 
 public class AlgoliaDartGenerator extends DartDioClientCodegen {
@@ -64,7 +67,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     super.processOpts();
 
-    Arrays.asList("source", "get", "hide").forEach(reservedWords::remove); // reserved words from dart-keywords.txt
+    Arrays.asList("source", "get", "hide", "operator").forEach(reservedWords::remove); // reserved words from dart-keywords.txt
 
     if (isAlgoliasearchClient) {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
@@ -109,6 +112,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> modelsMap = super.postProcessAllModels(objs);
+    FieldUtils.normalizeVarNames(modelsMap);
     return support.clearOneOfFromModels(libName, modelsMap);
   }
 
@@ -193,9 +197,6 @@ class SchemaSupport {
       ModelMap modelMap = models.get(0);
       CodegenModel model = modelMap.getModel();
       for (CodegenProperty property : model.vars) {
-        if (org.apache.commons.lang3.StringUtils.isAllUpperCase(property.name)) {
-          property.name = org.apache.commons.lang3.StringUtils.lowerCase(property.name);
-        }
         updatePropertyDataType(property);
       }
     }
@@ -297,6 +298,52 @@ class SchemaSupport {
     List<String> imports = (List<String>) operationsMap.get("imports");
     imports.removeAll(imports());
     return operationsMap;
+  }
+}
+
+class FieldUtils {
+
+  private FieldUtils() {
+    // empty.
+  }
+
+  static Map<String, ModelsMap> normalizeVarNames(Map<String, ModelsMap> modelsMap) {
+    for (ModelsMap modelContainer : modelsMap.values()) {
+      List<ModelMap> models = modelContainer.getModels();
+      if (models == null || models.isEmpty()) continue;
+      ModelMap modelMap = models.get(0);
+      CodegenModel model = modelMap.getModel();
+      if (model.isEnum) {
+        normalizeEnumVars(model);
+      } else {
+        normalizeModelVars(model);
+      }
+    }
+    return modelsMap;
+  }
+
+  private static void normalizeModelVars(CodegenModel model) {
+    for (CodegenProperty property : model.vars) {
+      if (isAllUpperCase(property.name)) {
+        property.name = lowerCase(property.name);
+      }
+    }
+  }
+
+  private static void normalizeEnumVars(CodegenModel model) {
+    List<Map<String, Object>> enumVars = (List<Map<String, Object>>) model.allowableValues.get("enumVars");
+    for (Map<String, Object> enumVar : enumVars) {
+      String name = (String) enumVar.get("name");
+      enumVar.put("name", lowerCamelCase(name));
+    }
+  }
+
+  private static String lowerCamelCase(String varName) {
+    if (isAllUpperCase(varName)) {
+      return lowerCase(varName);
+    } else {
+      return StringUtils.camelize(varName, CamelizeOption.LOWERCASE_FIRST_CHAR);
+    }
   }
 }
 

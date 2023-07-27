@@ -11,7 +11,7 @@ enum {{{classname}}} {
   {{#description}}
   /// {{{.}}}
   {{/description}}
-  {{#lambda.camelcase}}{{#lambda.lowercase}}{{&name}}{{/lambda.lowercase}}{{/lambda.camelcase}}({{#isString}}r{{/isString}}{{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+  {{#lambda.camelcase}}{{&name}}}{{/lambda.camelcase}}({{#isString}}r{{/isString}}{{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
 {{/enumVars}}
 {{/allowableValues}}
 
