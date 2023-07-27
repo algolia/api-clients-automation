@@ -89,7 +89,6 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("auth"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("api_client"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("gitignore"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().contains("build"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("analysis_options"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("README"));
 
@@ -268,22 +267,17 @@ class SchemaSupport {
 
   CodegenOperation clearOneOfFromOperation(CodegenOperation operation) {
     for (CodegenParameter parameter : operation.allParams) {
-      String keyType = parameter.isMap || parameter.isContainer ? parameter.baseType : parameter.dataType;
-      if (oneOfs.containsKey(keyType)) {
-        Set<String> types = oneOfs.get(keyType).types;
-        if (parameter.isMap) {
-          parameter.dataType = "Map<String, " + GENERIC_TYPE + ">";
-        } else if (parameter.isContainer) {
-          parameter.dataType = "Iterable<" + GENERIC_TYPE + ">";
-        } else {
-          parameter.dataType = GENERIC_TYPE;
-        }
-        parameter.isModel = false;
-        Set<String> newTypes = getOneOfTypes(types);
-        parameter.vendorExtensions.put(X_ONEOF_TYPES, newTypes);
-        parameter.vendorExtensions.put(X_IS_ONEOF, true);
-      }
+      clearOneOfFromParam(parameter);
     }
+
+    for (CodegenParameter parameter : operation.requiredParams) {
+      clearOneOfFromParam(parameter);
+    }
+
+    for (CodegenParameter parameter : operation.optionalParams) {
+      clearOneOfFromParam(parameter);
+    }
+
     if (oneOfs.containsKey(operation.returnType)) {
       operation.returnType = GENERIC_TYPE;
       operation.returnBaseType = GENERIC_TYPE;
@@ -291,6 +285,24 @@ class SchemaSupport {
       operation.vendorExtensions.put(X_IS_ONEOF, true);
     }
     return operation;
+  }
+
+  private void clearOneOfFromParam(CodegenParameter parameter) {
+    String keyType = parameter.isMap || parameter.isContainer ? parameter.baseType : parameter.dataType;
+    if (oneOfs.containsKey(keyType)) {
+      Set<String> types = oneOfs.get(keyType).types;
+      if (parameter.isMap) {
+        parameter.dataType = "Map<String, " + GENERIC_TYPE + ">";
+      } else if (parameter.isContainer) {
+        parameter.dataType = "Iterable<" + GENERIC_TYPE + ">";
+      } else {
+        parameter.dataType = GENERIC_TYPE;
+      }
+      parameter.isModel = false;
+      Set<String> newTypes = getOneOfTypes(types);
+      parameter.vendorExtensions.put(X_ONEOF_TYPES, newTypes);
+      parameter.vendorExtensions.put(X_IS_ONEOF, true);
+    }
   }
 
   OperationsMap clearOneOfFromApiImports(OperationsMap operationsMap) {
