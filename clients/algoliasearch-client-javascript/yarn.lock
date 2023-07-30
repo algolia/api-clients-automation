@@ -36,7 +36,7 @@ __metadata:
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
     "@types/jest": 29.5.3
-    "@types/node": 18.17.0
+    "@types/node": 18.17.1
     jest: 29.6.1
     jest-environment-jsdom: 29.6.1
     ts-jest: 29.1.1
@@ -116,7 +116,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.75
     "@algolia/requester-browser-xhr": 5.0.0-alpha.75
     "@algolia/requester-node-http": 5.0.0-alpha.75
-    "@types/node": 18.17.0
+    "@types/node": 18.17.1
     rollup: 3.27.0
     typescript: 5.1.6
   languageName: unknown
@@ -154,7 +154,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.75
     "@types/jest": 29.5.3
-    "@types/node": 18.17.0
+    "@types/node": 18.17.1
     jest: 29.6.1
     jest-environment-jsdom: 29.6.1
     ts-jest: 29.1.1
@@ -169,7 +169,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.75
     "@types/jest": 29.5.3
-    "@types/node": 18.17.0
+    "@types/node": 18.17.1
     cross-fetch: 4.0.0
     jest: 29.6.1
     nock: 13.3.2
@@ -184,7 +184,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.75
     "@types/jest": 29.5.3
-    "@types/node": 18.17.0
+    "@types/node": 18.17.1
     jest: 29.6.1
     nock: 13.3.2
     ts-jest: 29.1.1
@@ -2731,6 +2731,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:18.17.1":
+  version: 18.17.1
+  resolution: "@types/node@npm:18.17.1"
+  checksum: 56201bda9a2d05d68602df63b4e67b0545ac8c6d0280bd5fb31701350a978a577a027501fbf49db99bf177f2242ebd1244896bfd35e89042d5bd7dfebff28d4e
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -2938,7 +2945,7 @@ __metadata:
     "@rollup/plugin-node-resolve": 15.1.0
     "@rollup/plugin-terser": 0.4.3
     "@types/jest": 29.5.3
-    "@types/node": 18.17.0
+    "@types/node": 18.17.1
     "@types/rollup-plugin-node-globals": 1.4.1
     "@types/semver": 7.5.0
     bundlesize2: 0.0.31
