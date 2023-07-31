@@ -8,6 +8,9 @@ repositories {
     mavenCentral()
 }
 
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
 dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     api 'com.squareup.okhttp3:okhttp:4.11.0'
