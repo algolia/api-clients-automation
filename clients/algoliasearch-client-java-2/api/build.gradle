@@ -20,7 +20,7 @@ dependencies {
   baseline('com.algolia:algoliasearch-client-java:4.+') {
     transitive = false
   }
-  latest(projects.algoliasearchCore)
+  latest(projects.algoliasearch)
 }
 
 def japicmp = tasks.register('japicmp', JapicmpTask) {
