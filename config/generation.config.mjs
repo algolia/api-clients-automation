@@ -9,8 +9,8 @@ export const patterns = [
   // Java
   '!clients/algoliasearch-client-java-2/**',
   'clients/algoliasearch-client-java-2/gradle.properties',
-  'clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/api/**',
-  'clients/algoliasearch-client-java-2/algoliasearch-core/src/main/java/com/algolia/model/**',
+  'clients/algoliasearch-client-java-2/algoliasearch/src/main/java/com/algolia/api/**',
+  'clients/algoliasearch-client-java-2/algoliasearch/src/main/java/com/algolia/model/**',
 
   'tests/output/java/build.gradle',
 

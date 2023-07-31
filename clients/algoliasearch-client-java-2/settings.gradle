@@ -1,6 +1,6 @@
 rootProject.name = "algoliasearch-client-java"
 
-include(":algoliasearch-core")
+include(":algoliasearch")
 include(":api")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

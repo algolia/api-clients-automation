@@ -24,7 +24,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   public void processOpts() {
     // generator specific options
     String client = (String) additionalProperties.get("client");
-    setSourceFolder("algoliasearch-core/src/main/java");
+    setSourceFolder("algoliasearch/src/main/java");
     setGroupId("com.algolia");
     setModelPackage("com.algolia.model." + Utils.camelize(client).toLowerCase());
     additionalProperties.put("invokerPackage", "com.algolia");
