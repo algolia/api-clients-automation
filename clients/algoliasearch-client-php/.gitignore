@@ -11,3 +11,6 @@ composer.phar
 
 .openapi-generator/
 composer.lock
+
+# OpenAPI Generator
+**.openapi-generator*
