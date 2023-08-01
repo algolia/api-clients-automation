@@ -1,3 +1,7 @@
+## [5.0.0-alpha.76](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.75...5.0.0-alpha.76)
+
+- [2ac508ff](https://github.com/algolia/api-clients-automation/commit/2ac508ff) fix(specs): search w/ hits & facets responses ([#1774](https://github.com/algolia/api-clients-automation/pull/1774)) by [@aallam](https://github.com/aallam/)
+
 ## [5.0.0-alpha.75](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.74...5.0.0-alpha.75)
 
 - [96ab1c384](https://github.com/algolia/api-clients-automation/commit/96ab1c384) fix(javascript): publish script esm ([#1787](https://github.com/algolia/api-clients-automation/pull/1787)) by [@shortcuts](https://github.com/shortcuts/)

@@ -1,3 +1,7 @@
+## [0.1.2+1](https://github.com/algolia/algoliasearch-client-dart/compare/0.1.2...0.1.2+1)
+
+- [2ac508ff](https://github.com/algolia/api-clients-automation/commit/2ac508ff) fix(specs): search w/ hits & facets responses ([#1774](https://github.com/algolia/api-clients-automation/pull/1774)) by [@aallam](https://github.com/aallam/)
+
 ## [0.1.2](https://github.com/algolia/algoliasearch-client-dart/compare/0.1.1+4...0.1.2)
 
 - [81ae3c73c](https://github.com/algolia/api-clients-automation/commit/81ae3c73c) feat(dart): rely on common changelog ([#1788](https://github.com/algolia/api-clients-automation/pull/1788)) by [@shortcuts](https://github.com/shortcuts/)
