@@ -1,4 +1,4 @@
-## [4.0.0-beta.0](https://github.com/algolia/algoliasearch-client-java-2/next)
+## [4.0.0-beta.1](https://github.com/algolia/algoliasearch-client-java-2/next)
 
 - [58ea5dbf](https://github.com/algolia/api-clients-automation/commit/58ea5dbf) fix(specs): allow partial input update for authentications ([#1856](https://github.com/algolia/api-clients-automation/pull/1856)) by [@Fluf22](https://github.com/Fluf22/)
 - [2ac508ff](https://github.com/algolia/api-clients-automation/commit/2ac508ff) fix(specs): search w/ hits & facets responses ([#1774](https://github.com/algolia/api-clients-automation/pull/1774)) by [@aallam](https://github.com/aallam/)
