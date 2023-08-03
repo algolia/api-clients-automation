@@ -32,7 +32,6 @@ baseSearchResponse:
     - hitsPerPage
     - processingTimeMS
     - exhaustiveNbHits
-    - params
   properties:
     abTestID:
       type: integer
