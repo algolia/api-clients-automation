@@ -30,7 +30,7 @@
     "execa": "7.2.0",
     "lerna": "7.1.4",
     "nx": "16.5.5",
-    "rollup": "3.27.0",
+    "rollup": "3.27.2",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-typescript2": "0.35.0",
     "semver": "7.5.4",
