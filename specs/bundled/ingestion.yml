@@ -99,7 +99,7 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/DestinationType'
-        example: search,predict
+        example: search
     authenticationID:
       name: authenticationID
       in: query
@@ -643,7 +643,6 @@ components:
         - search
         - insights
         - flow
-        - predict
     destinationSortKeys:
       type: string
       description: Used to sort the Destination list endpoint.

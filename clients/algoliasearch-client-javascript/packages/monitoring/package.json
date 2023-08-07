@@ -1,6 +1,6 @@
 {
   "name": "@algolia/monitoring",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "JavaScript client for monitoring",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -39,13 +39,13 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.75",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.75",
-    "@algolia/requester-node-http": "5.0.0-alpha.75"
+    "@algolia/client-common": "5.0.0-alpha.76",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.76",
+    "@algolia/requester-node-http": "5.0.0-alpha.76"
   },
   "devDependencies": {
-    "@types/node": "18.17.0",
-    "rollup": "3.26.3",
+    "@types/node": "18.17.3",
+    "rollup": "3.27.2",
     "typescript": "5.1.6"
   },
   "engines": {
