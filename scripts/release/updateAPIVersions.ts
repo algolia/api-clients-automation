@@ -19,7 +19,7 @@ import {
 import { getGitHubUrl, getLanguageFolder } from '../config.js';
 import type { Language } from '../types.js';
 
-import { RELEASED_TAG, writeJsonFile } from './common.js';
+import { writeJsonFile } from './common.js';
 import type { Changelog, Versions, VersionsToRelease } from './types.js';
 
 dotenv.config({ path: ROOT_ENV_PATH });
@@ -143,6 +143,19 @@ async function updateDartPackages(
 ): Promise<void> {
   await run('dart pub get', { cwd: getLanguageFolder('dart') });
 
+  const packageNames = await Promise.all(
+    Object.values(GENERATORS)
+      .filter((gen) => gen.language === 'dart')
+      .map(async (gen) => await getPubspecField(gen.output, 'name'))
+  );
+  const versionCommands = packageNames
+    .map((packageName) => `-V ${packageName}:${releaseType}`)
+    .join(' ');
+  await run(
+    `melos version ${versionCommands} --no-changelog --no-git-tag-version --yes`,
+    { cwd: getLanguageFolder('dart') }
+  );
+
   // Update packages configs based on generated versions
   for (const gen of Object.values(GENERATORS)) {
     if (gen.language !== 'dart') {
@@ -154,11 +167,6 @@ async function updateDartPackages(
     if (!packageName) {
       throw new Error(`Unable to find packageName for '${gen.packageName}'.`);
     }
-
-    await run(
-      `melos version --manual-version=${packageName}:${releaseType} --no-changelog --no-git-tag-version --yes --diff ${RELEASED_TAG}`,
-      { cwd: gen.output }
-    );
 
     const newVersion = await getPubspecField(gen.output, 'version');
     if (!newVersion) {
