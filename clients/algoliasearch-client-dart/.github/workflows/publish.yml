@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     tags:
-     - '*-[0-9]+.[0-9]+.[0-9]+*'
+      - '[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   check:
@@ -21,25 +21,19 @@ jobs:
       - name: Check versions
         run: melos test
 
-  get-package-dir:
-    name: Package directory
-    needs: check
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Parse tag into package name
-        id: get-package-dir
-        run: .github/scripts/package.sh
-
-    outputs:
-      package-dir: ${{ steps.get-package-dir.outputs.package-dir }}
-
   publish:
-    needs: get-package-dir
+    needs: check
+    strategy:
+      matrix:
+        package: [
+          packages/client_core,
+          packages/client_search,
+          packages/client_insights,
+          packages/client_recommend,
+          packages/algoliasearch,
+        ]
     permissions:
       id-token: write
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
     with:
-       working-directory: ${{ needs.get-package-dir.outputs.package-dir }}
+      working-directory: ${{ matrix.package }}
