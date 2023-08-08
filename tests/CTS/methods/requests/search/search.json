@@ -475,6 +475,11 @@
             "page": 0,
             "offset": 0,
             "length": 0,
+            "explain": [
+              "foo",
+              "bar"
+            ],
+            "synonyms": true,
             "aroundLatLng": "",
             "aroundLatLngViaIP": true,
             "aroundRadius": "all",
@@ -568,7 +573,6 @@
               "exactPhrase"
             ],
             "distinct": 0,
-            "synonyms": true,
             "replaceSynonymsInHighlight": true,
             "minProximity": 0,
             "responseFields": [

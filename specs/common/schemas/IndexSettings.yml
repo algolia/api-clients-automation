@@ -306,18 +306,7 @@ indexSettingsAsSearchParams:
     mode:
       $ref: '#/mode'
     semanticSearch:
-      type: object
-      description: >
-        Settings for the semantic search part of NeuralSearch.
-        Only used when `mode` is _neuralSearch_.
-      properties:
-        eventSources:
-          description: Indices from which to collect click and conversion events. If null, the current index and replica group will be used as the event source.
-          nullable: true
-          type: array
-          items:
-            type: string
-
+      $ref: '#/semanticSearch'
     advancedSyntax:
       type: boolean
       description: Enables the [advanced query syntax](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#advanced-syntax).
@@ -619,3 +608,16 @@ sortRemainingBy:
       - `hidden`: show only pinned values.
   type: string
   enum: [count, alpha, hidden]
+
+semanticSearch:
+  type: object
+  description: >
+    Settings for the semantic search part of NeuralSearch.
+    Only used when `mode` is _neuralSearch_.
+  properties:
+    eventSources:
+      description: Indices from which to collect click and conversion events. If null, the current index and replica group will be used as the event source.
+      nullable: true
+      type: array
+      items:
+        type: string
