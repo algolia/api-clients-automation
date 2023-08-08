@@ -414,6 +414,10 @@
             "exactPhrase"
           ],
           "distinct": 0,
+          "explain": [
+            "foo",
+            "bar"
+          ],
           "synonyms": true,
           "replaceSynonymsInHighlight": true,
           "minProximity": 0,
