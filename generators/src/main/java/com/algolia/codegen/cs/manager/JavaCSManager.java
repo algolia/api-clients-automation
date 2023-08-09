@@ -2,13 +2,14 @@ package com.algolia.codegen.cs.manager;
 
 import com.algolia.codegen.Utils;
 import java.util.Map;
+import java.util.Objects;
 
 class JavaCSManager implements CSManager {
 
   private final String client;
 
   JavaCSManager(String client) {
-    this.client = client;
+    this.client = Objects.requireNonNull(client);
   }
 
   @Override

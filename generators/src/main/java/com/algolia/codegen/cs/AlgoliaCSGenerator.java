@@ -10,7 +10,6 @@ import com.algolia.codegen.exceptions.CTSException;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.model.ModelMap;
@@ -40,24 +39,17 @@ public class AlgoliaCSGenerator extends DefaultCodegen {
   public void processOpts() {
     super.processOpts();
     language = (String) additionalProperties.get("language");
+    client = (String) additionalProperties.get("client");
+
     setTemplateDir("templates/" + language + "/snippets");
     setOutputDir("snippets/" + language);
 
-    csManager = createCSManager();
+    csManager = CSManagerFactory.create(language, client);
+    if (csManager == null) throw new IllegalStateException("No CS manager found for " + language + ", skipping");
     supportingFiles.addAll(csManager.getSupportingFiles());
 
-    client = (String) additionalProperties.get("client");
     generator = new SnippetsGenerator(language, client);
     supportingFiles.addAll(generator.getSupportingFiles());
-  }
-
-  private CSManager createCSManager() {
-    var manager = CSManagerFactory.create(language, client);
-    if (csManager == null) {
-      logger.log(Level.INFO, "No CS manager found for language {0}, skipping", language);
-      System.exit(0);
-    }
-    return manager;
   }
 
   @Override

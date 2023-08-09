@@ -3,6 +3,7 @@ import { Argument, program } from 'commander';
 import { buildClients } from '../buildClients.js';
 import { buildSpecs } from '../buildSpecs.js';
 import { CI, DOCKER, LANGUAGES, setVerbose } from '../common.js';
+import { csGenerateMany } from '../cs/generate.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { formatter } from '../formatter.js';
@@ -154,6 +155,28 @@ ctsCommand
 
     await runCts(language === ALL ? LANGUAGES : [language]);
   });
+
+const csCommand = program.command('cs');
+csCommand
+  .command('generate')
+  .description('Generate the code snippets')
+  .addArgument(args.language)
+  .addArgument(args.clients)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .option(flags.interactive.flag, flags.interactive.description)
+  .action(
+    async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
+      const { language, client, clientList } = await prompt({
+        langArg,
+        clientArg,
+        interactive,
+      });
+
+      setVerbose(Boolean(verbose));
+
+      await csGenerateMany(generatorList({ language, client, clientList }));
+    }
+  );
 
 program
   .command('playground')
