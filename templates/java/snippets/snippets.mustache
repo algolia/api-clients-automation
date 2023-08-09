@@ -5,10 +5,8 @@
   description: {{{description}}}
   {{/hasDescription}}
   code : | 
-    ```{{language}}
 {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
     client.{{method}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
-    ```
 
 {{/tests}}
 {{/blocksRequests}}
