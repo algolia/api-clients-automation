@@ -4,7 +4,7 @@
   {{#hasDescription}}
   description: {{{description}}}
   {{/hasDescription}}
-  code : | 
+  code : >
 {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
     client.{{method}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
 
