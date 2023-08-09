@@ -28,7 +28,7 @@ public class SnippetsGenerator {
 
   public List<SupportingFile> getSupportingFiles() {
     if (templateNotExist()) return Collections.emptyList();
-    SupportingFile template = new SupportingFile("snippets.mustache", "", client + ".yml");
+    SupportingFile template = new SupportingFile("snippets.mustache", client + ".yml");
     return Collections.singletonList(template);
   }
 
@@ -53,6 +53,10 @@ public class SnippetsGenerator {
       for (Request request : op) {
         var test = new HashMap<String, Object>();
         test.put("method", operationId);
+        if (request.testName != null) {
+          test.put("hasDescription", true);
+          test.put("description", request.testName);
+        }
         try {
           var ope = entry.getValue();
           test.put("isGeneric", ope.vendorExtensions.getOrDefault("x-is-generic", false));

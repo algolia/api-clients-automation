@@ -30,20 +30,4 @@ export async function csGenerateMany(generators: Generator[]): Promise<void> {
     }
     await csGenerate(gen);
   }
-
-  /*
-  const langs = [...new Set(generators.map((gen) => gen.language))];
-  for (const lang of langs) {
-    if (!getTestOutputFolder(lang)) {
-      continue;
-    }
-
-    if (lang === 'javascript') {
-      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', {
-        cwd: 'tests/output/javascript',
-      });
-    }
-
-    await formatter(lang, toAbsolutePath(`tests/output/${lang}`));
-  }*/
 }
