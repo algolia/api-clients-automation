@@ -79,3 +79,12 @@ type Tag = {
  * Paths of a spec.
  */
 type Path = Record<string, Record<string, any>>;
+
+/**
+ * An operation code snippet.
+ */
+export type Snippet = {
+  operationId: string;
+  description?: string;
+  code: string;
+};
