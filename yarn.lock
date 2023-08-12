@@ -4742,22 +4742,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:3.5.5":
-  version: 3.5.5
-  resolution: "eslint-import-resolver-typescript@npm:3.5.5"
+"eslint-import-resolver-typescript@npm:3.6.0":
+  version: 3.6.0
+  resolution: "eslint-import-resolver-typescript@npm:3.6.0"
   dependencies:
     debug: ^4.3.4
     enhanced-resolve: ^5.12.0
     eslint-module-utils: ^2.7.4
+    fast-glob: ^3.3.1
     get-tsconfig: ^4.5.0
-    globby: ^13.1.3
     is-core-module: ^2.11.0
     is-glob: ^4.0.3
-    synckit: ^0.8.5
   peerDependencies:
     eslint: "*"
     eslint-plugin-import: "*"
-  checksum: 27e6276fdff5d377c9036362ff736ac29852106e883ff589ea9092dc57d4bc2a67a82d75134221124f05045f9a7e2114a159b2c827d1f9f64d091f7afeab0f58
+  checksum: 57b1b3859149f847e0d4174ff979cf35362d60c951df047f01b96f4c3794a7ea0d4e1ec85be25e610d3706902c3acfb964a66b825c1a55e3ce3a124b9a7a13bd
   languageName: node
   linkType: hard
 
@@ -5226,6 +5225,19 @@ __metadata:
     merge2: ^1.3.0
     micromatch: ^4.0.4
   checksum: 20df62be28eb5426fe8e40e0d05601a63b1daceb7c3d87534afcad91bdcf1e4b1743cf2d5247d6e225b120b46df0b9053a032b2691ba34ee121e033acd81f547
+  languageName: node
+  linkType: hard
+
+"fast-glob@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "fast-glob@npm:3.3.1"
+  dependencies:
+    "@nodelib/fs.stat": ^2.0.2
+    "@nodelib/fs.walk": ^1.2.3
+    glob-parent: ^5.1.2
+    merge2: ^1.3.0
+    micromatch: ^4.0.4
+  checksum: b6f3add6403e02cf3a798bfbb1183d0f6da2afd368f27456010c0bc1f9640aea308243d4cb2c0ab142f618276e65ecb8be1661d7c62a7b4e5ba774b9ce5432e5
   languageName: node
   linkType: hard
 
@@ -5706,19 +5718,6 @@ __metadata:
     merge2: ^1.4.1
     slash: ^3.0.0
   checksum: b4be8885e0cfa018fc783792942d53926c35c50b3aefd3fdcfb9d22c627639dc26bd2327a40a0b74b074100ce95bb7187bfeae2f236856aa3de183af7a02aea6
-  languageName: node
-  linkType: hard
-
-"globby@npm:^13.1.3":
-  version: 13.2.2
-  resolution: "globby@npm:13.2.2"
-  dependencies:
-    dir-glob: ^3.0.1
-    fast-glob: ^3.3.0
-    ignore: ^5.2.4
-    merge2: ^1.4.1
-    slash: ^4.0.0
-  checksum: f3d84ced58a901b4fcc29c846983108c426631fe47e94872868b65565495f7bee7b3defd68923bd480582771fd4bbe819217803a164a618ad76f1d22f666f41e
   languageName: node
   linkType: hard
 
@@ -9260,7 +9259,7 @@ __metadata:
     commander: 11.0.0
     dotenv: 16.3.1
     eslint: 8.47.0
-    eslint-import-resolver-typescript: 3.5.5
+    eslint-import-resolver-typescript: 3.6.0
     execa: 7.2.0
     folder-hash: 4.0.4
     fs-extra: 11.1.1
@@ -9441,13 +9440,6 @@ __metadata:
   version: 3.0.0
   resolution: "slash@npm:3.0.0"
   checksum: 94a93fff615f25a999ad4b83c9d5e257a7280c90a32a7cb8b4a87996e4babf322e469c42b7f649fd5796edd8687652f3fb452a86dc97a816f01113183393f11c
-  languageName: node
-  linkType: hard
-
-"slash@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "slash@npm:4.0.0"
-  checksum: da8e4af73712253acd21b7853b7e0dbba776b786e82b010a5bfc8b5051a1db38ed8aba8e1e8f400dd2c9f373be91eb1c42b66e91abb407ff42b10feece5e1d2d
   languageName: node
   linkType: hard
 
