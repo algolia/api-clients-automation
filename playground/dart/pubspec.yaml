@@ -6,7 +6,7 @@ environment:
 
 dependencies:
   algoliasearch: ^0.1.0
-  algolia_client_recommend: ^0.1.0
+  algolia_client_recommend: ^0.2.0
   dotenv: ^4.1.0
 
 dev_dependencies:
