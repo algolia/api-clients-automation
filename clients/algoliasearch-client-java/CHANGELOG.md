@@ -1,3 +1,8 @@
+## [4.0.0-beta.3](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.2...4.0.0-beta.3)
+
+- [9d6368a7](https://github.com/algolia/api-clients-automation/commit/9d6368a7) chore(java): use new gradle syntax ([#1891](https://github.com/algolia/api-clients-automation/pull/1891)) by [@millotp](https://github.com/millotp/)
+- [5a9d949d](https://github.com/algolia/api-clients-automation/commit/5a9d949d) fix(specs): mixed `SearchParams` and `IndexSettings` ([#1889](https://github.com/algolia/api-clients-automation/pull/1889)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-beta.2](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.1...4.0.0-beta.2)
 
 - [82d7dcf5a](https://github.com/algolia/api-clients-automation/commit/82d7dcf5a) fix(specs): allow JSON array for `aroundPrecision` ([#1855](https://github.com/algolia/api-clients-automation/pull/1855)) by [@shortcuts](https://github.com/shortcuts/)
