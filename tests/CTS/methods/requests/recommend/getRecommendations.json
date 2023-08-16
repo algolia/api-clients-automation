@@ -114,19 +114,7 @@
           "threshold": 42,
           "maxRecommendations": 10,
           "facetName": "myFacetName",
-          "facetValue": "myFacetValue",
-          "queryParameters": {
-            "query": "myQuery",
-            "facetFilters": [
-              "query"
-            ]
-          },
-          "fallbackParameters": {
-            "query": "myQuery",
-            "facetFilters": [
-              "fallback"
-            ]
-          }
+          "facetValue": "myFacetValue"
         }
       ]
     },
@@ -141,19 +129,7 @@
             "threshold": 42,
             "maxRecommendations": 10,
             "facetName": "myFacetName",
-            "facetValue": "myFacetValue",
-            "queryParameters": {
-              "query": "myQuery",
-              "facetFilters": [
-                "query"
-              ]
-            },
-            "fallbackParameters": {
-              "query": "myQuery",
-              "facetFilters": [
-                "fallback"
-              ]
-            }
+            "facetValue": "myFacetValue"
           }
         ]
       }
