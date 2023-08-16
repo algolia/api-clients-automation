@@ -31,6 +31,10 @@ recommendationRequest:
           $ref: '#/recommendationModels'
         objectID:
           $ref: '../../../common/parameters.yml#/objectID'
+        queryParameters:
+          $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
+        fallbackParameters:
+          $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
       required:
         - model
         - objectID
@@ -54,10 +58,6 @@ baseRecommendRequest:
       type: integer
       default: 0
       description: Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
-    queryParameters:
-      $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
-    fallbackParameters:
-      $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
   required:
     - indexName
     - threshold
