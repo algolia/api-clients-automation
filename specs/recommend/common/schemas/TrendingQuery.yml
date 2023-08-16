@@ -1,8 +1,3 @@
-trendingQuery:
-  oneOf:
-    - $ref: '#/trendingItemsQuery'
-    - $ref: '#/trendingFacetsQuery'
-
 trendingItemsQuery:
   allOf:
     - type: object
