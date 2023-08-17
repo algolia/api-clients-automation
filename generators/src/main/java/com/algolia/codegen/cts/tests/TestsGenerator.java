@@ -63,7 +63,7 @@ public abstract class TestsGenerator {
       case "java":
         return "Java";
       case "javascript":
-        return "Javascript";
+        return "JavaScript";
       case "php":
         return "PHP";
       case "kotlin":
