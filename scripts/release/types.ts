@@ -46,5 +46,3 @@ export type VersionsToRelease = {
 export type Changelog = {
   [lang in Language]?: string;
 };
-
-export type BeforeClientCommitCommand = (params: { dir: string }) => Promise<void>;

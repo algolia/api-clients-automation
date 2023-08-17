@@ -3,8 +3,6 @@ import type config from '../config/clients.config.json';
 /**
  * Config.
  */
-export type ClientsConfig = Record<Language, LanguageConfig>;
-
 export type LanguageConfig = {
   folder: string;
   gitRepoId: string;

@@ -119,17 +119,6 @@ export function toAbsolutePath(ppath: string): string {
   return path.resolve(ROOT_DIR, ppath);
 }
 
-export async function runIfExists(
-  scriptFile: string,
-  args: string,
-  opts: RunOptions = {}
-): Promise<string> {
-  if (await exists(toAbsolutePath(scriptFile))) {
-    return await run(`${scriptFile} ${args}`, opts);
-  }
-  return '';
-}
-
 export async function gitCommit({
   message,
   coAuthors,
@@ -236,15 +225,6 @@ export function getOctokit(): Octokit {
   const token = ensureGitHubToken();
   return new Octokit({
     auth: token,
-  });
-}
-
-export function wait(waitTime: number): Promise<void> {
-  if (waitTime <= 0) {
-    return Promise.resolve();
-  }
-  return new Promise((resolve) => {
-    setTimeout(resolve, waitTime);
   });
 }
 

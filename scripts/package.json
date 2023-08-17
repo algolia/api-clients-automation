@@ -7,6 +7,7 @@
     "createMatrix": "ts-node ci/githubActions/createMatrix.ts",
     "createReleasePR": "NODE_NO_WARNINGS=1 ts-node release/createReleasePR.ts",
     "lint": "eslint --ext=ts,js,mjs,cjs .",
+    "lint:deadcode": "ts-prune | grep -v '(used in module)'",
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
     "setRunVariables": "ts-node ci/githubActions/setRunVariables.ts",
@@ -46,6 +47,7 @@
     "spinnies": "0.5.1",
     "ts-jest": "29.1.1",
     "ts-node": "10.9.1",
+    "ts-prune": "0.10.3",
     "typescript": "5.1.6"
   }
 }
