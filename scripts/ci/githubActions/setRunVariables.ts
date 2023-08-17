@@ -23,7 +23,11 @@ export const DEPENDENCIES = LANGUAGES.reduce(
   (finalDependencies, lang) => {
     const key = `${lang.toUpperCase()}_CLIENT_CHANGED`;
     const langFolder = getLanguageFolder(lang);
-    const langGenerator = capitalize(lang);
+    let langGenerator = capitalize(lang);
+
+    if (lang === 'javascript') {
+      langGenerator = 'JavaScript';
+    }
 
     return {
       ...finalDependencies,

@@ -13,7 +13,7 @@ import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
 
-public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
+public class AlgoliaJavaScriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
   private boolean isAlgoliasearchClient;
