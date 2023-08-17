@@ -6,6 +6,12 @@ import { getLanguageFolder } from '../../config.js';
 
 import { isBaseChanged } from './utils.js';
 
+export const COMMON_DEPENDENCIES = {
+  GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows', '.github/.cache_version'],
+  SCRIPTS_CHANGED: ['scripts', 'eslint', 'yarn.lock', '.eslintrc.js'],
+  COMMON_SPECS_CHANGED: ['specs/common'],
+};
+
 /**
  * This dependency array is generated to match the "external" dependencies of a generated client.
  *
@@ -37,6 +43,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
         'config/openapitools.json',
         'config/clients.config.json',
         'generators/src/main/java/com/algolia/codegen/Utils.java',
+        'generators/src/main/java/com/algolia/codegen/GenericPropagator.java',
         'generators/src/main/java/com/algolia/codegen/cts',
         'tests/CTS',
         '.nvmrc',
@@ -52,6 +59,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
     };
   },
   {
+    ...COMMON_DEPENDENCIES,
     // We default the JS utils client as it's a bit specific
     JAVASCRIPT_UTILS_CHANGED: CLIENTS_JS_UTILS.map(
       (clientName) => `${getLanguageFolder('javascript')}/packages/${clientName}`

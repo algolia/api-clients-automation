@@ -9,7 +9,7 @@ import {
   getTestOutputFolder,
 } from '../../config.js';
 
-import { DEPENDENCIES } from './setRunVariables.js';
+import { COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
 import type { ClientMatrix, CreateMatrix, Matrix, SpecMatrix, ToRunMatrix } from './types.js';
 import { computeCacheKey, isBaseChanged } from './utils.js';
 
@@ -39,10 +39,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     //   - specs that generated the client
     const bundledSpec = client === 'algoliasearch' ? 'search' : client;
     const dependenciesChanged = await isBaseChanged(baseBranch, {
+      ...COMMON_DEPENDENCIES,
       ...languageDependencies,
-      GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows', '.github/.cache_version'],
-      SCRIPTS_CHANGED: ['scripts', 'eslint', 'yarn.lock', '.eslintrc.js'],
-      COMMON_SPECS_CHANGED: ['specs/common'],
       output: [output],
       specs: [`specs/${bundledSpec}`],
     });
