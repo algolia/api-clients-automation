@@ -144,7 +144,7 @@ async function createSpecMatrix(): Promise<void> {
   };
 
   for (const client of CLIENTS) {
-    // The `algoliasearch` spec is created by the `search` spec, for the `lite` JavaScript client.
+    // The `algoliasearch` spec is created by the `search` spec.
     const bundledSpecName = client === 'algoliasearch' ? 'search' : client;
 
     matrix.toRun.push(client);
