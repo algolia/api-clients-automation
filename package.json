@@ -60,7 +60,7 @@
     "renovate-config-algolia": "2.1.10",
     "typescript": "5.1.6"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@3.6.2",
   "engines": {
     "node": "^18.0.0",
     "yarn": "^3.0.0"
