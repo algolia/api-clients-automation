@@ -31,7 +31,7 @@ export const DOCKER = Boolean(process.env.DOCKER);
 export const BUNDLE_WITH_DOC = process.env.BUNDLE_WITH_DOC === 'true';
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
-export const ROOT_DIR = path.resolve(process.cwd(), '..');
+const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 export const ROOT_ENV_PATH = path.resolve(ROOT_DIR, '.env');
 
@@ -246,7 +246,7 @@ export function createClientName(client: string, language: string): string {
  *
  * `search-client` -> `searchClient`.
  */
-export function camelize(str: string, delimiter: string = '-'): string {
+function camelize(str: string, delimiter: string = '-'): string {
   return str
     .split(delimiter)
     .map((part, i) => (i === 0 ? part : capitalize(part)))
