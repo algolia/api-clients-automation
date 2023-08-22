@@ -1,3 +1,7 @@
+## [4.0.0-beta.6](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.5...4.0.0-beta.6)
+
+- [25d2d44d8](https://github.com/algolia/api-clients-automation/commit/25d2d44d8) chore(java): rename artifact to `algoliasearch` ([#1935](https://github.com/algolia/api-clients-automation/pull/1935)) by [@aallam](https://github.com/aallam/)
+
 ## [4.0.0-beta.5](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.4...4.0.0-beta.5)
 
 - [693631cc7](https://github.com/algolia/api-clients-automation/commit/693631cc7) fix(specs): remove some parameters from trending requests ([#1915](https://github.com/algolia/api-clients-automation/pull/1915)) by [@shortcuts](https://github.com/shortcuts/)
