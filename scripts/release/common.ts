@@ -3,8 +3,8 @@ import fsp from 'fs/promises';
 import config from '../../config/release.config.json' assert { type: 'json' };
 import { run } from '../common.js';
 
-export async function getLastReleasedTag(): Promise<string> {
-  return await run(`git describe --abbrev=0 --tags --match "${config.releasedTag}*"`);
+export function getLastReleasedTag(): Promise<string> {
+  return run(`git describe --abbrev=0 --tags --match "${config.releasedTag}*"`);
 }
 
 export function getNewReleasedTag(): string {
