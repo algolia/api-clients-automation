@@ -8,10 +8,10 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public interface Requester {
+public interface Requester extends AutoCloseable {
   public Call newCall(Request request);
 
-  public <T> T handleResponse(Response response, JavaType returnType) throws AlgoliaRuntimeException;
+  public <T> T handleResponse(Response response, JavaType returnType);
 
   /**
    * Enable/disable debugging for this API client.

@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
 
-public abstract class ApiClient {
+public abstract class ApiClient implements AutoCloseable {
 
   private boolean debugging = false;
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
@@ -433,5 +433,10 @@ public abstract class ApiClient {
         reqBuilder.header(header.getKey().toLowerCase(), parameterToString(header.getValue()));
       }
     }
+  }
+
+  @Override
+  public void close() throws Exception {
+    requester.close();
   }
 }

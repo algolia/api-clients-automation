@@ -9,11 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import okhttp3.Call;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import java.util.logging.Logger;
+
+import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 public class HttpRequester implements Requester {
@@ -47,30 +45,18 @@ public class HttpRequester implements Requester {
   }
 
   @Override
-  public <T> T handleResponse(Response response, JavaType returnType) throws AlgoliaRuntimeException {
-    if (response.isSuccessful()) {
-      if (returnType == null || response.code() == 204) {
-        // returning null if the returnType is not defined, or the status code is 204 (No Content)
-        if (response.body() != null) {
-          try {
-            response.body().close();
-          } catch (Exception e) {
-            throw new AlgoliaApiException(response.message(), e, response.code());
-          }
+  public <T> T handleResponse(Response response, JavaType returnType) {
+    try (ResponseBody responseBody = response.body()) {
+      if (response.isSuccessful()) {
+        if (returnType == null || responseBody == null) {
+          return null;  // No need to deserialize, either no content or no type provided
         }
-        return null;
-      } else {
         return deserialize(response, returnType);
+      } else {
+        throw new AlgoliaApiException(response.message(), response.code());
       }
-    } else {
-      if (response.body() != null) {
-        try {
-          response.body().string();
-        } catch (IOException e) {
-          throw new AlgoliaApiException(response.message(), e, response.code());
-        }
-      }
-      throw new AlgoliaApiException(response.message(), response.code());
+    } catch (Exception e) {
+      throw new AlgoliaApiException(response.message(), e, response.code());
     }
   }
 
@@ -154,5 +140,14 @@ public class HttpRequester implements Requester {
 
   public void addInterceptor(Interceptor interceptor) {
     httpClient = httpClient.newBuilder().addInterceptor(interceptor).build();
+  }
+
+  @Override
+  public void close() throws Exception {
+    httpClient.dispatcher().executorService().shutdown();
+    httpClient.connectionPool().evictAll();
+    if (httpClient.cache() != null) {
+      httpClient.cache().close();
+    }
   }
 }
