@@ -52,46 +52,30 @@ public class HttpRequester implements Requester {
           return null;  // No need to deserialize, either no content or no type provided
         }
         return deserialize(response, returnType);
-      } else {
-        throw new AlgoliaApiException(response.message(), response.code());
       }
+      throw new AlgoliaApiException(response.message(), response.code());
     } catch (Exception e) {
       throw new AlgoliaApiException(response.message(), e, response.code());
     }
   }
 
   private <T> T deserialize(Response response, JavaType returnType) throws AlgoliaRuntimeException {
-    if (response == null || returnType == null) {
+    if (response == null || returnType == null || response.body() == null) {
       return null;
     }
 
-    if ("[byte".equals(returnType.getRawClass().getName())) {
-      // Handle binary response (byte array).
-      try {
-        return (T) response.body().bytes();
-      } catch (IOException e) {
-        throw new AlgoliaRuntimeException(e);
+    try (ResponseBody responseBody = response.body()) {
+      if (byte[].class.equals(returnType.getRawClass())) {
+        return (T) responseBody.bytes();
       }
-    }
 
-    String respBody;
-    try {
-      if (response.body() != null) respBody = response.body().string(); else respBody = null;
+      String respBody = responseBody.string();
+      if (respBody.isEmpty()) {
+        return null;
+      }
+
+      return json.readValue(respBody, returnType);
     } catch (IOException e) {
-      throw new AlgoliaRuntimeException(e);
-    }
-
-    if (respBody == null || "".equals(respBody)) {
-      return null;
-    }
-
-    String contentType = response.headers().get("Content-Type");
-    if (contentType == null) {
-      contentType = "application/json";
-    }
-    try {
-      return (T) json.readValue(respBody, returnType);
-    } catch (JsonProcessingException e) {
       throw new AlgoliaRuntimeException(e);
     }
   }
