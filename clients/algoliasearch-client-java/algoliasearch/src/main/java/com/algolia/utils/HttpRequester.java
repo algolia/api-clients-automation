@@ -22,6 +22,7 @@ public class HttpRequester implements Requester {
   private final OkHttpClient httpClient;
   private final RetryStrategy retryStrategy;
   private final ObjectMapper json;
+  private boolean isClosed = false;
 
   private HttpRequester(Builder builder) {
     this.retryStrategy = new RetryStrategy();
@@ -54,6 +55,7 @@ public class HttpRequester implements Requester {
 
   @Override
   public Call newCall(Request request) {
+    if (isClosed) throw new IllegalStateException("HttpRequester is closed");
     return httpClient.newCall(request);
   }
 
@@ -100,11 +102,13 @@ public class HttpRequester implements Requester {
 
   @Override
   public void close() throws Exception {
+    if (isClosed) throw new IllegalStateException("HttpRequester is already closed");
     httpClient.dispatcher().executorService().shutdown();
     httpClient.connectionPool().evictAll();
     if (httpClient.cache() != null) {
       httpClient.cache().close();
     }
+    isClosed = true;
   }
 
   public static class Builder {
