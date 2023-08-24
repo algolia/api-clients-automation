@@ -9,6 +9,7 @@ public class CSManagerFactory {
   public static CSManager create(String language, String client) {
     return switch (language) {
       case "java" -> new JavaCSManager(client);
+      case "javascript" -> new JavascriptCSManager(client);
       default -> null;
     };
   }

@@ -43,15 +43,10 @@ export async function csGenerateMany(generators: Generator[]): Promise<void> {
  * based on matching operationIds. The resulting modified OpenAPI spec will be saved to
  * the provided outputPath.
  */
-async function updateBundle(
-  gen: Generator,
-  override: boolean = false
-): Promise<void> {
+async function updateBundle(gen: Generator, override: boolean = true): Promise<void> {
   try {
     const openapiPath = toAbsolutePath(`specs/bundled/${gen.client}.yml`);
-    const snippetsPath = toAbsolutePath(
-      `snippets/${gen.language}/${gen.client}.yml`
-    );
+    const snippetsPath = toAbsolutePath(`snippets/${gen.language}/${gen.client}.yml`);
     const outputPath = override
       ? openapiPath
       : toAbsolutePath(`specs/bundled/${gen.client}_cs.yml`);
@@ -69,25 +64,21 @@ async function updateBundle(
       addSnippetToPath(snippet, openApiSpec, gen);
     }
     // Serialize and save the modified OpenAPI spec
-    const dumpedYaml = yaml.dump(openApiSpec);
+    const dumpedYaml = yaml.dump(openApiSpec, { lineWidth: 120 });
     await fsp.writeFile(outputPath, dumpedYaml, 'utf8');
   } catch (err) {
     throw new Error(`Failed to update bundled specs: ${err}`);
   }
 }
 
-function addSnippetToPath(
-  snippet: Snippet,
-  openApiSpec: Spec,
-  gen: Generator
-): void {
+function addSnippetToPath(snippet: Snippet, openApiSpec: Spec, gen: Generator): void {
   const operationId = snippet.operationId;
 
   for (const path in openApiSpec.paths) {
-    if (!openApiSpec.paths.hasOwnProperty(path)) continue; // <-- Added this check
+    if (!openApiSpec.paths.hasOwnProperty(path)) continue;
 
     for (const method in openApiSpec.paths[path]) {
-      if (!openApiSpec.paths[path].hasOwnProperty(method)) continue; // <-- Added this check
+      if (!openApiSpec.paths[path].hasOwnProperty(method)) continue;
 
       const endpoint = openApiSpec.paths[path][method];
 
@@ -104,8 +95,12 @@ function addSnippetToPath(
         }
 
         // Add the snippet and its description to the list of examples for the language
+        const formatted = snippet.code
+          .split('\n')
+          .filter((line) => line.trim() !== '')
+          .join('\n');
         endpoint['x-meta'].examples[gen.language].push({
-          code: snippet.code,
+          code: formatted,
           description: snippet.description,
         });
       }

@@ -1,0 +1,10 @@
+{{#blocksRequests}}
+{{#tests}}
+- operationId: {{operationId}}
+  {{#hasDescription}}
+  description: {{{description}}}
+  {{/hasDescription}}
+  code : |
+    client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}})
+{{/tests}}
+{{/blocksRequests}}
