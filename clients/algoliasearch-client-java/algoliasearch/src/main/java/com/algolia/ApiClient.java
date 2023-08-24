@@ -20,20 +20,19 @@ import okhttp3.internal.http.HttpMethod;
 
 public abstract class ApiClient implements AutoCloseable {
 
-  private boolean debugging = false;
-  private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private AlgoliaAgent algoliaAgent;
+  private final Map<String, String> defaultHeaderMap = new HashMap<>();
+  private final AlgoliaAgent algoliaAgent;
 
-  private String contentType;
+  private final String contentType;
 
-  private Requester requester;
-  protected ObjectMapper json;
+  private final Requester requester;
+  protected final ObjectMapper json;
 
-  public ApiClient(String appId, String apiKey, String clientName, String version, ClientOptions options) {
-    if (appId == null || appId.length() == 0) {
+  protected ApiClient(String appId, String apiKey, String clientName, String version, ClientOptions options) {
+    if (appId == null || appId.isEmpty()) {
       throw new AlgoliaRuntimeException("`appId` is missing.");
     }
-    if (apiKey == null || apiKey.length() == 0) {
+    if (apiKey == null || apiKey.isEmpty()) {
       throw new AlgoliaRuntimeException("`apiKey` is missing.");
     }
 
@@ -56,7 +55,7 @@ public abstract class ApiClient implements AutoCloseable {
     if (options != null && options.getRequester() != null) {
       this.requester = options.getRequester();
     } else {
-      this.requester = new HttpRequester();
+      this.requester = new HttpRequester.Builder().build();
     }
 
     this.json = new JSONBuilder().build();
@@ -99,88 +98,6 @@ public abstract class ApiClient implements AutoCloseable {
    */
   public ApiClient addDefaultHeader(String key, String value) {
     defaultHeaderMap.put(key, value);
-    return this;
-  }
-
-  /**
-   * Check that whether debugging is enabled for this API client.
-   *
-   * @return True if debugging is enabled, false otherwise.
-   */
-  public boolean isDebugging() {
-    return debugging;
-  }
-
-  /**
-   * Set the log level of the requester
-   *
-   * @return ApiClient
-   */
-  public ApiClient setLogLevel(LogLevel level) {
-    requester.setLogLevel(level);
-    return this;
-  }
-
-  /**
-   * Get connection timeout (in milliseconds).
-   *
-   * @return Timeout in milliseconds
-   */
-  public int getConnectTimeout() {
-    return requester.getConnectTimeout();
-  }
-
-  /**
-   * Sets the connect timeout (in milliseconds). A value of 0 means no timeout, otherwise values
-   * must be between 1 and {@link Integer#MAX_VALUE}.
-   *
-   * @param connectionTimeout connection timeout in milliseconds
-   * @return Api client
-   */
-  public ApiClient setConnectTimeout(int connectionTimeout) {
-    requester.setConnectTimeout(connectionTimeout);
-    return this;
-  }
-
-  /**
-   * Get read timeout (in milliseconds).
-   *
-   * @return Timeout in milliseconds
-   */
-  public int getReadTimeout() {
-    return requester.getReadTimeout();
-  }
-
-  /**
-   * Sets the read timeout (in milliseconds). A value of 0 means no timeout, otherwise values must
-   * be between 1 and {@link Integer#MAX_VALUE}.
-   *
-   * @param readTimeout read timeout in milliseconds
-   * @return Api client
-   */
-  public ApiClient setReadTimeout(int readTimeout) {
-    requester.setReadTimeout(readTimeout);
-    return this;
-  }
-
-  /**
-   * Get write timeout (in milliseconds).
-   *
-   * @return Timeout in milliseconds
-   */
-  public int getWriteTimeout() {
-    return requester.getWriteTimeout();
-  }
-
-  /**
-   * Sets the write timeout (in milliseconds). A value of 0 means no timeout, otherwise values must
-   * be between 1 and {@link Integer#MAX_VALUE}.
-   *
-   * @param writeTimeout connection timeout in milliseconds
-   * @return Api client
-   */
-  public ApiClient setWriteTimeout(int writeTimeout) {
-    requester.setWriteTimeout(writeTimeout);
     return this;
   }
 
@@ -261,7 +178,6 @@ public abstract class ApiClient implements AutoCloseable {
    *
    * @param <T> Type
    * @param returnType Return type
-   * @see #execute(Call, TypeReference)
    */
   public <T> CompletableFuture<T> executeAsync(Call call, final JavaType returnType) {
     final CompletableFuture<T> future = new CompletableFuture<>();
@@ -319,7 +235,7 @@ public abstract class ApiClient implements AutoCloseable {
     Object body,
     Map<String, String> headerParams,
     RequestOptions requestOptions,
-    Boolean useReadTransporter
+    boolean useReadTransporter
   ) throws AlgoliaRuntimeException {
     Request request = buildRequest(path, method, queryParameters, body, headerParams, requestOptions, useReadTransporter);
 
@@ -349,7 +265,7 @@ public abstract class ApiClient implements AutoCloseable {
     Object body,
     Map<String, String> headerParams,
     RequestOptions requestOptions,
-    Boolean useReadTransporter
+    boolean useReadTransporter
   ) throws AlgoliaRuntimeException {
     boolean hasRequestOptions = requestOptions != null;
     final String url = buildUrl(path, queryParameters, hasRequestOptions ? requestOptions.getExtraQueryParameters() : null);
