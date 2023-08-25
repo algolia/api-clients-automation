@@ -4,7 +4,6 @@ import com.algolia.config.*;
 import com.algolia.exceptions.*;
 import com.algolia.transport.interceptors.GzipRequestInterceptor;
 import com.algolia.transport.interceptors.HeaderInterceptor;
-import com.algolia.utils.JSONBuilder;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -40,11 +39,11 @@ public final class OkHttpRequester implements Requester {
       GzipRequestInterceptor gzip = new GzipRequestInterceptor();
       clientBuilder.addInterceptor(gzip);
     }
-    if (builder.customConfig != null) {
-      builder.customConfig.accept(clientBuilder);
+    if (builder.clientConfig != null) {
+      builder.clientConfig.accept(clientBuilder);
     }
     this.httpClient = clientBuilder.build();
-    this.json = new JSONBuilder().build();
+    this.json = new JSONBuilder().setConfig(builder.mapperConfig).build();
   }
 
   @Override
@@ -106,7 +105,9 @@ public final class OkHttpRequester implements Requester {
 
     private final List<Interceptor> interceptors = new ArrayList<>();
 
-    private Consumer<OkHttpClient.Builder> customConfig;
+    private Consumer<OkHttpClient.Builder> clientConfig;
+
+    private Consumer<ObjectMapper> mapperConfig;
 
     public Builder(ClientConfig clientConfig) {
       this.config = clientConfig;
@@ -117,8 +118,13 @@ public final class OkHttpRequester implements Requester {
       return this;
     }
 
-    public Builder setCustomConfig(Consumer<OkHttpClient.Builder> config) {
-      this.customConfig = config;
+    public Builder setClientConfig(Consumer<OkHttpClient.Builder> config) {
+      this.clientConfig = config;
+      return this;
+    }
+
+    public Builder setMapperConfig(Consumer<ObjectMapper> mapperConfig) {
+      this.mapperConfig = mapperConfig;
       return this;
     }
 

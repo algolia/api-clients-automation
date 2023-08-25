@@ -1,4 +1,4 @@
-package com.algolia.utils;
+package com.algolia.transport;
 
 import static com.fasterxml.jackson.core.JsonGenerator.Feature;
 
@@ -6,12 +6,21 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import java.util.function.Consumer;
+
 public class JSONBuilder {
 
   private boolean failOnUnknown = false;
 
+  private Consumer<ObjectMapper> config;
+
   public JSONBuilder failOnUnknown(boolean failOnUnknown) {
     this.failOnUnknown = failOnUnknown;
+    return this;
+  }
+
+  public JSONBuilder setConfig(Consumer<ObjectMapper> config) {
+    this.config = config;
     return this;
   }
 
@@ -26,6 +35,9 @@ public class JSONBuilder {
     mapper.disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
     mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+    if (config != null) {
+      config.accept(mapper);
+    }
     return mapper;
   }
 }

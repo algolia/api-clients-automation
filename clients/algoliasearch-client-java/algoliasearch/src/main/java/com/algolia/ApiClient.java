@@ -2,6 +2,7 @@ package com.algolia;
 
 import com.algolia.config.*;
 import com.algolia.exceptions.*;
+import com.algolia.transport.JSONBuilder;
 import com.algolia.transport.OkHttpRequester;
 import com.algolia.transport.StatefulHost;
 import com.algolia.transport.interceptors.AuthInterceptor;
