@@ -28,13 +28,14 @@ public final class OkHttpRequester implements Requester {
     HttpLoggingInterceptor.Logger logger = builder.config.getLogger() != null
             ? okhttpLogger(builder.config.getLogger())
             : HttpLoggingInterceptor.Logger.DEFAULT;
+    HttpLoggingInterceptor.Level level = okhttpLogLevel(builder.config.getLogLevel());
 
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
       .connectTimeout(builder.config.getConnectTimeout())
       .readTimeout(builder.config.getReadTimeout())
       .writeTimeout(builder.config.getWriteTimeout())
       .addInterceptor(new HeaderInterceptor(builder.config.getDefaultHeaders()))
-      .addInterceptor(new HttpLoggingInterceptor(logger).setLevel(builder.config.getLogLevel().value()));
+      .addInterceptor(new HttpLoggingInterceptor(logger).setLevel(level));
 
     if (!builder.interceptors.isEmpty()) {
       builder.interceptors.forEach(clientBuilder::addInterceptor);
@@ -52,6 +53,21 @@ public final class OkHttpRequester implements Requester {
 
   private HttpLoggingInterceptor.Logger okhttpLogger(@NotNull Logger logger) {
     return logger::log;
+  }
+
+  private HttpLoggingInterceptor.Level okhttpLogLevel(@NotNull LogLevel logLevel) {
+    switch (logLevel) {
+      case NONE:
+          return HttpLoggingInterceptor.Level.NONE;
+      case BODY:
+        return HttpLoggingInterceptor.Level.BODY;
+      case BASIC:
+        return HttpLoggingInterceptor.Level.BASIC;
+      case HEADERS:
+        return HttpLoggingInterceptor.Level.HEADERS;
+      default:
+        throw new UnsupportedOperationException("Unsupported LogLevel " + logLevel);
+    }
   }
 
   @Override
