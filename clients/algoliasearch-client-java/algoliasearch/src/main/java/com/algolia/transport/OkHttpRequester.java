@@ -17,20 +17,24 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.jetbrains.annotations.NotNull;
 
 public final class OkHttpRequester implements Requester {
-
   private final OkHttpClient httpClient;
   private final ObjectMapper json;
   private boolean isClosed = false;
 
   private OkHttpRequester(Builder builder) {
+    HttpLoggingInterceptor.Logger logger = builder.config.getLogger() != null
+            ? okhttpLogger(builder.config.getLogger())
+            : HttpLoggingInterceptor.Logger.DEFAULT;
+
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
       .connectTimeout(builder.config.getConnectTimeout())
       .readTimeout(builder.config.getReadTimeout())
       .writeTimeout(builder.config.getWriteTimeout())
       .addInterceptor(new HeaderInterceptor(builder.config.getDefaultHeaders()))
-      .addInterceptor(new HttpLoggingInterceptor().setLevel(builder.config.getLogLevel().value()));
+      .addInterceptor(new HttpLoggingInterceptor(logger).setLevel(builder.config.getLogLevel().value()));
 
     if (!builder.interceptors.isEmpty()) {
       builder.interceptors.forEach(clientBuilder::addInterceptor);
@@ -44,6 +48,10 @@ public final class OkHttpRequester implements Requester {
     }
     this.httpClient = clientBuilder.build();
     this.json = new JSONBuilder().setConfig(builder.mapperConfig).build();
+  }
+
+  private HttpLoggingInterceptor.Logger okhttpLogger(@NotNull Logger logger) {
+    return logger::log;
   }
 
   @Override

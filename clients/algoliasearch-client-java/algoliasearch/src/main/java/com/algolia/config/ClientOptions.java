@@ -18,6 +18,7 @@ public final class ClientOptions implements ClientConfig {
   private final Map<String, String> defaultHeaders;
   private final CompressionType compressionType;
   private final Requester customRequester;
+  private final Logger logger;
 
   public ClientOptions() {
     this(new Builder());
@@ -33,6 +34,7 @@ public final class ClientOptions implements ClientConfig {
     this.readTimeout = builder.readTimeout;
     this.defaultHeaders = builder.defaultHeaders;
     this.compressionType = builder.compressionType;
+    this.logger = builder.logger;
   }
 
   @NotNull
@@ -78,10 +80,16 @@ public final class ClientOptions implements ClientConfig {
     return customRequester;
   }
 
+  @NotNull
+  public Logger getLogger() {
+    return logger;
+  }
+
   public static class Builder {
 
     private Requester customRequester;
     private List<Host> hosts;
+    private Logger logger;
     private final List<AlgoliaAgent.Segment> algoliaAgentSegments = new ArrayList<>();
     private final Map<String, String> defaultHeaders = new HashMap<>();
     private LogLevel logLevel = LogLevel.NONE;
@@ -137,6 +145,16 @@ public final class ClientOptions implements ClientConfig {
 
     public Builder setCompressionType(CompressionType compressionType) {
       this.compressionType = compressionType;
+      return this;
+    }
+
+    public Builder setCustomRequester(Requester customRequester) {
+      this.customRequester = customRequester;
+      return this;
+    }
+
+    public Builder setLogger(Logger logger) {
+      this.logger = logger;
       return this;
     }
 

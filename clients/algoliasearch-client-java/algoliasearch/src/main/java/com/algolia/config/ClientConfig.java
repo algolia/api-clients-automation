@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 public interface ClientConfig {
   public @NotNull LogLevel getLogLevel();
 
+  public Logger getLogger();
+
   public @NotNull Duration getConnectTimeout();
 
   public @NotNull Duration getWriteTimeout();
