@@ -163,16 +163,14 @@ public class {{classname}} extends ApiClient {
     }
     {{/required}}{{/allParams}}
 
-    Object bodyObj = {{#bodyParam}}{{paramName}}{{^required}} != null ? {{paramName}} : new Object(){{/required}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
-
     // create path and map variables
     String requestPath = "{{{path}}}"{{#vendorExtensions}}{{#pathParams}}.replaceAll(
         {{=<% %>=}}"\\{<%baseName%>\\}"<%={{ }}=%>,
         {{#x-is-custom-request}}{{{paramName}}}.toString(){{/x-is-custom-request}}{{^x-is-custom-request}}this.escapeString({{{paramName}}}.toString()){{/x-is-custom-request}}
     ){{/pathParams}}{{/vendorExtensions}};
 
-    {{javaUtilPrefix}}Map<String, Object> queryParameters = new {{javaUtilPrefix}}HashMap<String, Object>();
-    {{javaUtilPrefix}}Map<String, String> headers = new {{javaUtilPrefix}}HashMap<String, String>();
+    {{javaUtilPrefix}}Map<String, Object> queryParameters = new {{javaUtilPrefix}}HashMap<>();
+    {{javaUtilPrefix}}Map<String, String> headers = new {{javaUtilPrefix}}HashMap<>();
 
     {{#vendorExtensions}}{{#queryParams}}
     if ({{paramName}} != null) {
@@ -193,7 +191,7 @@ public class {{classname}} extends ApiClient {
     }
 
     {{/headerParams}}
-    Call call = this.buildCall(requestPath, "{{httpMethod}}", queryParameters, bodyObj, headers, requestOptions, {{#vendorExtensions.x-use-read-transporter}}true{{/vendorExtensions.x-use-read-transporter}}{{^vendorExtensions.x-use-read-transporter}}false{{/vendorExtensions.x-use-read-transporter}});
+    Call call = this.buildCall(requestPath, "{{httpMethod}}", queryParameters, {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headers, requestOptions, {{#vendorExtensions.x-use-read-transporter}}true{{/vendorExtensions.x-use-read-transporter}}{{^vendorExtensions.x-use-read-transporter}}false{{/vendorExtensions.x-use-read-transporter}});
     return this.executeAsync(call, {{#vendorExtensions.x-is-generic}}{{{returnType}}}.class, innerType{{/vendorExtensions.x-is-generic}}{{^vendorExtensions.x-is-generic}}new TypeReference<{{{returnType}}}>() {}{{/vendorExtensions.x-is-generic}});
   }
 

@@ -5,7 +5,6 @@ import static com.fasterxml.jackson.core.JsonGenerator.Feature;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-
 import java.util.function.Consumer;
 
 public class JSONBuilder {

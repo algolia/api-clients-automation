@@ -24,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class ApiClient implements AutoCloseable {
@@ -104,29 +105,30 @@ public abstract class ApiClient implements AutoCloseable {
    * Serialize the given Java object into request body according to the object's class and the
    * request Content-Type.
    *
+   * <p>We can't send a null body with okhttp, so we default it to an empty string.
+   *
    * @param obj The Java object
    * @return The serialized request body
    * @throws AlgoliaRuntimeException If fail to serialize the given object
    */
-  public RequestBody serialize(Object obj) throws AlgoliaRuntimeException {
+  public RequestBody serialize(@NotNull Object obj) throws AlgoliaRuntimeException {
     String content;
-
-    if (obj != null) {
-      try {
-        if (obj.getClass().getName().equals("java.lang.Object")) {
-          content = "{}";
-        } else {
-          content = json.writeValueAsString(obj);
-        }
-      } catch (JsonProcessingException e) {
-        throw new AlgoliaRuntimeException(e);
-      }
-    } else {
-      // We can't send a null body with okhttp, so we default it to an empty string
-      content = "";
+    try {
+      content = json.writeValueAsString(obj);
+    } catch (JsonProcessingException e) {
+      throw new AlgoliaRuntimeException(e);
     }
-
     return RequestBody.create(content, MediaType.parse("application/json"));
+  }
+
+  private String jsonEncode(Object obj) {
+    String content;
+    try {
+      content = json.writeValueAsString(obj);
+    } catch (JsonProcessingException e) {
+      throw new AlgoliaRuntimeException(e);
+    }
+    return content;
   }
 
   /**
@@ -233,8 +235,12 @@ public abstract class ApiClient implements AutoCloseable {
     // but also set it for DELETE methods
     if (!HttpMethod.permitsRequestBody(method) || (method.equals("DELETE") && body == null)) {
       reqBody = null;
-    } else {
+    } else if (body != null) {
       reqBody = serialize(body);
+    } else if (HttpMethod.requiresRequestBody(method)) {
+      reqBody = serialize("{}");
+    } else {
+      reqBody = serialize("");
     }
 
     if (useReadTransporter) {
