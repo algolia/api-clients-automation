@@ -1,8 +1,13 @@
 package com.algolia;
 
+import com.algolia.config.*;
 import com.algolia.exceptions.*;
+import com.algolia.transport.OkHttpRequester;
+import com.algolia.transport.StatefulHost;
+import com.algolia.transport.interceptors.AuthInterceptor;
+import com.algolia.transport.interceptors.RetryStrategy;
+import com.algolia.transport.interceptors.UserAgentInterceptor;
 import com.algolia.utils.*;
-import com.algolia.utils.retry.StatefulHost;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
@@ -15,38 +20,45 @@ import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class ApiClient implements AutoCloseable {
 
   private final Requester requester;
   protected final ObjectMapper json;
 
-  protected ApiClient(String appId, String apiKey, String clientName, String version, ClientOptions.Builder options) {
+  protected ApiClient(String appId, String apiKey, String clientName, @Nullable ClientOptions options, List<Host> defaultHosts) {
     if (appId == null || appId.isEmpty()) {
       throw new AlgoliaRuntimeException("`appId` is missing.");
     }
     if (apiKey == null || apiKey.isEmpty()) {
       throw new AlgoliaRuntimeException("`apiKey` is missing.");
     }
-
-    AlgoliaAgent algoliaAgent = new AlgoliaAgent(version).addSegment(new AlgoliaAgent.Segment(clientName, version)).addSegments(options);
-
-    options.addDefaultHeader("X-Algolia-Application-Id", appId)
-            .addDefaultHeader("X-Algolia-API-Key", apiKey)
-            .addDefaultHeader("Accept", "application/json")
-            .addDefaultHeader("Content-Type", "application/json")
-            .addDefaultHeader("User-Agent", algoliaAgent.toString());
-
-    if (options != null && options.getCustomRequester() != null) {
-      this.requester = options.getCustomRequester();
-    } else {
-      this.requester = new HttpRequester.Builder(options)
-              .build();
-    }
-
+    ClientOptions clientOptions = options != null ? options : new ClientOptions();
+    this.requester =
+      clientOptions.getCustomRequester() != null
+        ? clientOptions.getCustomRequester()
+        : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
     this.json = new JSONBuilder().build();
+  }
+
+  private Requester defaultRequester(String appId, String apiKey, String clientName, ClientOptions options, List<Host> defaultHosts) {
+    AlgoliaAgent algoliaAgent = new AlgoliaAgent(BuildConfig.VERSION)
+      .addSegment(new AlgoliaAgent.Segment(clientName, BuildConfig.VERSION))
+      .addSegments(options.getAlgoliaAgentSegments());
+
+    List<Host> hosts = options.getHosts() != null && !options.getHosts().isEmpty() ? options.getHosts() : defaultHosts;
+    List<StatefulHost> statefulHosts = hosts.stream().map(StatefulHost::new).collect(Collectors.toList());
+    new RetryStrategy(statefulHosts);
+
+    return new OkHttpRequester.Builder(options)
+      .addInterceptor(new AuthInterceptor(appId, apiKey))
+      .addInterceptor(new UserAgentInterceptor(algoliaAgent))
+      .addInterceptor(new RetryStrategy(statefulHosts))
+      .build();
   }
 
   /**
@@ -113,7 +125,7 @@ public abstract class ApiClient implements AutoCloseable {
       content = "";
     }
 
-    return RequestBody.create(content, MediaType.parse("this.contentType"));
+    return RequestBody.create(content, MediaType.parse("application/json"));
   }
 
   /**

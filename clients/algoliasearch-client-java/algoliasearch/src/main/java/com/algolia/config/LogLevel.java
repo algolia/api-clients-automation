@@ -1,4 +1,4 @@
-package com.algolia.utils;
+package com.algolia.config;
 
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 

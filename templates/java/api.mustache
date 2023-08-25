@@ -3,6 +3,7 @@
 package {{package}};
 
 import {{invokerPackage}}.ApiClient;
+import {{invokerPackage}}.config.ClientOptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -12,8 +13,7 @@ import okhttp3.Request;
 import {{invokerPackage}}.utils.*;
 import {{modelPackage}}.*;
 import {{invokerPackage}}.exceptions.*;
-import {{invokerPackage}}.utils.retry.CallType;
-import {{invokerPackage}}.utils.retry.StatefulHost;
+import {{invokerPackage}}.config.*;
 import java.util.function.IntUnaryOperator;
 
 import java.util.EnumSet;
@@ -47,12 +47,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, String region, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", "{{{packageVersion}}}", options);
-      if (options != null && options.getHosts() != null) {
-        this.setHosts(options.getHosts());
-      } else {
-        this.setHosts(getDefaultHosts(region));
-      }
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts(region));
     }
     
     {{/hasRegionalHost}}
@@ -62,25 +57,20 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", "{{{packageVersion}}}", options);
-      if (options != null && options.getHosts() != null) {
-        this.setHosts(options.getHosts());
-      } else {
-        this.setHosts(getDefaultHosts(appId));
-      }
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts(appId));
     }
     {{/hasRegionalHost}}
 
     {{^hasRegionalHost}}
-    private static List<StatefulHost> getDefaultHosts(String appId) {
-      List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost(appId + "-dsn.algolia.net", "https", EnumSet.of(CallType.READ)));
-      hosts.add(new StatefulHost(appId + ".algolia.net", "https", EnumSet.of(CallType.WRITE)));
+    private static List<Host> getDefaultHosts(String appId) {
+      List<Host> hosts = new ArrayList<>();
+      hosts.add(new Host(appId + "-dsn.algolia.net", EnumSet.of(CallType.READ)));
+      hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
 
-      List<StatefulHost> commonHosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost(appId + "-1.algolianet.net", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
-      hosts.add(new StatefulHost(appId + "-2.algolianet.net", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
-      hosts.add(new StatefulHost(appId + "-3.algolianet.net", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
+      List<Host> commonHosts = new ArrayList<>();
+      hosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+      hosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+      hosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
 
       Collections.shuffle(commonHosts, new Random());
 
@@ -89,8 +79,8 @@ public class {{classname}} extends ApiClient {
     {{/hasRegionalHost}}
 
     {{#hasRegionalHost}}
-    private static List<StatefulHost> getDefaultHosts(String region) throws AlgoliaRuntimeException {
-      List<StatefulHost> hosts = new ArrayList<StatefulHost>();
+    private static List<Host> getDefaultHosts(String region) throws AlgoliaRuntimeException {
+      List<Host> hosts = new ArrayList<>();
 
       boolean found = {{^fallbackToAliasHost}}false{{/fallbackToAliasHost}}{{#fallbackToAliasHost}}region == null{{/fallbackToAliasHost}};
       if (region != null) {
@@ -108,7 +98,7 @@ public class {{classname}} extends ApiClient {
 
       String url = {{#fallbackToAliasHost}}region == null ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region);
 
-      hosts.add(new StatefulHost(url, "https", EnumSet.of(CallType.READ, CallType.WRITE)));
+      hosts.add(new Host(url, EnumSet.of(CallType.READ, CallType.WRITE)));
       return hosts;
     }
     {{/hasRegionalHost}}

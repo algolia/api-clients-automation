@@ -1,4 +1,4 @@
-package com.algolia.utils;
+package com.algolia.config;
 
 import java.util.HashMap;
 import java.util.Map;

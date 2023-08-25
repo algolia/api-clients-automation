@@ -1,14 +1,16 @@
-package com.algolia.utils;
+package com.algolia.transport;
 
+import com.algolia.config.*;
 import com.algolia.exceptions.*;
-import com.algolia.utils.retry.RetryStrategy;
+import com.algolia.transport.interceptors.GzipRequestInterceptor;
+import com.algolia.transport.interceptors.HeaderInterceptor;
+import com.algolia.utils.JSONBuilder;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
 import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -17,19 +19,19 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-public class HttpRequester implements Requester {
+public final class OkHttpRequester implements Requester {
+
   private final OkHttpClient httpClient;
   private final ObjectMapper json;
   private boolean isClosed = false;
 
-  private HttpRequester(Builder builder) {
+  private OkHttpRequester(Builder builder) {
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-            .addInterceptor(new HeaderInterceptor(builder.config.getDefaultHeaders()))
-            .addInterceptor(new RetryStrategy(builder.config.getHosts()))
-            .addInterceptor(new HttpLoggingInterceptor().setLevel(builder.config.getLogLevel().value()))
-            .connectTimeout(builder.config.getConnectTimeout())
-            .readTimeout(builder.config.getReadTimeout())
-            .writeTimeout(builder.config.getWriteTimeout());
+      .connectTimeout(builder.config.getConnectTimeout())
+      .readTimeout(builder.config.getReadTimeout())
+      .writeTimeout(builder.config.getWriteTimeout())
+      .addInterceptor(new HeaderInterceptor(builder.config.getDefaultHeaders()))
+      .addInterceptor(new HttpLoggingInterceptor().setLevel(builder.config.getLogLevel().value()));
 
     if (!builder.interceptors.isEmpty()) {
       builder.interceptors.forEach(clientBuilder::addInterceptor);
@@ -106,10 +108,6 @@ public class HttpRequester implements Requester {
 
     private Consumer<OkHttpClient.Builder> customConfig;
 
-    public Builder() {
-      this(new ClientOptions());
-    }
-
     public Builder(ClientConfig clientConfig) {
       this.config = clientConfig;
     }
@@ -124,8 +122,8 @@ public class HttpRequester implements Requester {
       return this;
     }
 
-    public HttpRequester build() {
-      return new HttpRequester(this);
+    public OkHttpRequester build() {
+      return new OkHttpRequester(this);
     }
   }
 }

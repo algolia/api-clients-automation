@@ -10,8 +10,6 @@ public class JSONBuilder {
 
   private boolean failOnUnknown = false;
 
-  public JSONBuilder() {}
-
   public JSONBuilder failOnUnknown(boolean failOnUnknown) {
     this.failOnUnknown = failOnUnknown;
     return this;

@@ -74,7 +74,7 @@ public GetApiKeyResponse waitForApiKey(
 ) {
   if (operation == ApiKeyOperation.UPDATE) {
     if (apiKey == null) {
-      throw new AlgoliaRetryException("`apiKey` is required when waiting for an `update` operation.");
+      throw new AlgoliaRuntimeException("`apiKey` is required when waiting for an `update` operation.");
     }
 
     // when updating an api key, we poll the api until we receive a different key
@@ -112,7 +112,7 @@ public GetApiKeyResponse waitForApiKey(
         // magic number to signify we found the key
         return -2;
       } catch (AlgoliaApiException e) {
-        return e.getHttpErrorCode();
+        return e.getStatusCode();
       }
     },
     (Integer status) -> {

@@ -1,10 +1,9 @@
-package com.algolia.utils;
-
-import org.jetbrains.annotations.NotNull;
+package com.algolia.config;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 public final class AlgoliaAgent {
 
@@ -28,7 +27,7 @@ public final class AlgoliaAgent {
   }
 
   public AlgoliaAgent addSegments(@NotNull List<Segment> segments) {
-    for (Segment segment: segments) {
+    for (Segment segment : segments) {
       addSegment(segment);
     }
     return this;
