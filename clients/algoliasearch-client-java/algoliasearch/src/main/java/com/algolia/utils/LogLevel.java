@@ -15,9 +15,9 @@ public enum LogLevel {
   /** Logs request and response lines. */
   BASIC(Level.BASIC);
 
-  private Level value;
+  private final Level value;
 
-  private LogLevel(Level value) {
+  LogLevel(Level value) {
     this.value = value;
   }
 

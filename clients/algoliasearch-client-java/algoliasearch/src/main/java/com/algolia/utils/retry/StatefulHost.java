@@ -3,16 +3,18 @@ package com.algolia.utils.retry;
 import com.algolia.utils.Utils;
 import java.time.OffsetDateTime;
 import java.util.EnumSet;
+import java.util.Set;
 
 public class StatefulHost {
 
-  private String host, scheme;
+  private String host;
+  private String scheme;
   private boolean up = true;
   private int retryCount;
   private OffsetDateTime lastUse = Utils.nowUTC();
-  private EnumSet<CallType> accept;
+  private Set<CallType> accept;
 
-  public StatefulHost(String host, String scheme, EnumSet<CallType> accept) {
+  public StatefulHost(String host, String scheme, Set<CallType> accept) {
     this.host = host;
     this.scheme = scheme;
     this.accept = accept;
@@ -67,7 +69,7 @@ public class StatefulHost {
     return this;
   }
 
-  public EnumSet<CallType> getAccept() {
+  public Set<CallType> getAccept() {
     return accept;
   }
 

@@ -36,11 +36,12 @@ class {{client}}RequestsTests {
 
     @BeforeAll
     void init() {
-        json = new JSONBuilder().failOnUnknown(true).build();
-        HttpRequester requester = new HttpRequester();
-        echo = new EchoInterceptor();
-        requester.addInterceptor(echo.getEchoInterceptor());
-        client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}new ClientOptions().setRequester(requester));
+        this.json = new JSONBuilder().failOnUnknown(true).build();
+        this.echo = new EchoInterceptor();
+        HttpRequester requester = new HttpRequester.Builder()
+                .addInterceptor(echo)
+                .build();
+        this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}new ClientOptions.Builder().setRequester(requester).build());
     }
 
     {{#blocksRequests}}

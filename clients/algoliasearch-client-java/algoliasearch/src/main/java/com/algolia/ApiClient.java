@@ -20,15 +20,10 @@ import okhttp3.internal.http.HttpMethod;
 
 public abstract class ApiClient implements AutoCloseable {
 
-  private final Map<String, String> defaultHeaderMap = new HashMap<>();
-  private final AlgoliaAgent algoliaAgent;
-
-  private final String contentType;
-
   private final Requester requester;
   protected final ObjectMapper json;
 
-  protected ApiClient(String appId, String apiKey, String clientName, String version, ClientOptions options) {
+  protected ApiClient(String appId, String apiKey, String clientName, String version, ClientOptions.Builder options) {
     if (appId == null || appId.isEmpty()) {
       throw new AlgoliaRuntimeException("`appId` is missing.");
     }
@@ -36,74 +31,22 @@ public abstract class ApiClient implements AutoCloseable {
       throw new AlgoliaRuntimeException("`apiKey` is missing.");
     }
 
-    this.contentType = "application/json";
+    AlgoliaAgent algoliaAgent = new AlgoliaAgent(version).addSegment(new AlgoliaAgent.Segment(clientName, version)).addSegments(options);
 
-    this.algoliaAgent = new AlgoliaAgent(version);
-    this.algoliaAgent.addSegment(new AlgoliaAgent.Segment(clientName, version));
-    if (options != null && options.getAlgoliaAgentSegments() != null) {
-      for (AlgoliaAgent.Segment segment : options.getAlgoliaAgentSegments()) {
-        this.algoliaAgent.addSegment(segment);
-      }
-    }
-    refreshUserAgent();
+    options.addDefaultHeader("X-Algolia-Application-Id", appId)
+            .addDefaultHeader("X-Algolia-API-Key", apiKey)
+            .addDefaultHeader("Accept", "application/json")
+            .addDefaultHeader("Content-Type", "application/json")
+            .addDefaultHeader("User-Agent", algoliaAgent.toString());
 
-    addDefaultHeader("X-Algolia-Application-Id", appId);
-    addDefaultHeader("X-Algolia-API-Key", apiKey);
-    addDefaultHeader("Accept", this.contentType);
-    addDefaultHeader("Content-Type", this.contentType);
-
-    if (options != null && options.getRequester() != null) {
-      this.requester = options.getRequester();
+    if (options != null && options.getCustomRequester() != null) {
+      this.requester = options.getCustomRequester();
     } else {
-      this.requester = new HttpRequester.Builder().build();
+      this.requester = new HttpRequester.Builder(options)
+              .build();
     }
 
     this.json = new JSONBuilder().build();
-  }
-
-  private void refreshUserAgent() {
-    addDefaultHeader("User-Agent", this.algoliaAgent.toString());
-  }
-
-  /**
-   * Add a custom user agent segment
-   *
-   * @param segment Algolia Agent Segment
-   * @return ApiClient
-   */
-  public ApiClient addAlgoliaAgent(AlgoliaAgent.Segment segment) {
-    algoliaAgent.addSegment(segment);
-    refreshUserAgent();
-    return this;
-  }
-
-  /**
-   * Remove a user agent segment
-   *
-   * @param segment Algolia Agent Segment
-   * @return ApiClient
-   */
-  public ApiClient removeAlgoliaAgent(AlgoliaAgent.Segment segment) {
-    algoliaAgent.removeSegment(segment);
-    refreshUserAgent();
-    return this;
-  }
-
-  /**
-   * Add a default header.
-   *
-   * @param key The header's key
-   * @param value The header's value
-   * @return ApiClient
-   */
-  public ApiClient addDefaultHeader(String key, String value) {
-    defaultHeaderMap.put(key, value);
-    return this;
-  }
-
-  public ApiClient setHosts(List<StatefulHost> hosts) {
-    this.requester.setHosts(hosts);
-    return this;
   }
 
   /**
@@ -170,7 +113,7 @@ public abstract class ApiClient implements AutoCloseable {
       content = "";
     }
 
-    return RequestBody.create(content, MediaType.parse(this.contentType));
+    return RequestBody.create(content, MediaType.parse("this.contentType"));
   }
 
   /**
@@ -338,11 +281,6 @@ public abstract class ApiClient implements AutoCloseable {
   public void processHeaderParams(Map<String, String> headerParams, Map<String, String> extraHeaderParams, Request.Builder reqBuilder) {
     for (Entry<String, String> param : headerParams.entrySet()) {
       reqBuilder.header(param.getKey().toLowerCase(), parameterToString(param.getValue()));
-    }
-    for (Entry<String, String> header : defaultHeaderMap.entrySet()) {
-      if (!headerParams.containsKey(header.getKey())) {
-        reqBuilder.header(header.getKey().toLowerCase(), parameterToString(header.getValue()));
-      }
     }
     if (extraHeaderParams != null) {
       for (Entry<String, String> header : extraHeaderParams.entrySet()) {

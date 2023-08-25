@@ -23,13 +23,12 @@ class {{client}}ClientTests {
 
   @BeforeAll
   void init() {
-    requester = new HttpRequester();
     echo = new EchoInterceptor();
-    requester.addInterceptor(echo.getEchoInterceptor());
+    requester = new HttpRequester.Builder().addInterceptor(new EchoInterceptor()).build();
   }
 
   {{client}} createClient() {
-      return new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}new ClientOptions().setRequester(requester));
+      return new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}new ClientOptions.Builder().setRequester(requester).build());
   }
 
   {{#blocksClient}}
@@ -38,7 +37,7 @@ class {{client}}ClientTests {
   @DisplayName("{{{testName}}}")
   void {{testType}}Test{{testIndex}}() {
     {{#autoCreateClient}}
-      {{client}} $client = createClient();
+      {{client}} client = createClient();
     {{/autoCreateClient}}
 
     {{#steps}}
