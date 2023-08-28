@@ -58,7 +58,7 @@
     "prettier": "3.0.2",
     "prettier-plugin-java": "2.3.0",
     "renovate-config-algolia": "2.1.10",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   },
   "packageManager": "yarn@3.6.3",
   "engines": {
