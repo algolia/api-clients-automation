@@ -2,14 +2,12 @@ package com.algolia;
 
 import com.algolia.config.*;
 import com.algolia.exceptions.*;
-import com.algolia.transport.JsonSerializer;
 import com.algolia.transport.HttpRequester;
 import com.algolia.transport.StatefulHost;
 import com.algolia.transport.interceptors.AuthInterceptor;
 import com.algolia.transport.interceptors.RetryStrategy;
 import com.algolia.transport.interceptors.UserAgentInterceptor;
 import com.algolia.utils.*;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +22,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
-import okio.BufferedSink;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,9 +40,10 @@ public abstract class ApiClient implements AutoCloseable {
     ClientOptions clientOptions = options != null ? options : new ClientOptions();
     ObjectMapper mapper = new JsonConfig().setCustomConfig(clientOptions.getMapperConfig()).build();
     this.serializer = new JsonSerializer(mapper);
-    this.requester = clientOptions.getCustomRequester() != null
-          ? clientOptions.getCustomRequester()
-          : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
+    this.requester =
+      clientOptions.getCustomRequester() != null
+        ? clientOptions.getCustomRequester()
+        : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
   }
 
   private Requester defaultRequester(String appId, String apiKey, String clientName, ClientOptions options, List<Host> defaultHosts) {
@@ -57,9 +55,9 @@ public abstract class ApiClient implements AutoCloseable {
     List<StatefulHost> statefulHosts = hosts.stream().map(StatefulHost::new).collect(Collectors.toList());
 
     HttpRequester.Builder builder = new HttpRequester.Builder()
-            .addInterceptor(new AuthInterceptor(appId, apiKey))
-            .addInterceptor(new UserAgentInterceptor(algoliaAgent))
-            .addInterceptor(new RetryStrategy(statefulHosts));
+      .addInterceptor(new AuthInterceptor(appId, apiKey))
+      .addInterceptor(new UserAgentInterceptor(algoliaAgent))
+      .addInterceptor(new RetryStrategy(statefulHosts));
     if (options.getRequesterConfig() != null) {
       options.getRequesterConfig().accept(builder);
     }
@@ -214,7 +212,7 @@ public abstract class ApiClient implements AutoCloseable {
     } else if (body != null) {
       reqBody = serializer.serialize(body);
     } else if (HttpMethod.requiresRequestBody(method)) {
-      reqBody = serializer.serialize("{}");
+      reqBody = serializer.serialize(Collections.emptyMap());
     } else {
       reqBody = serializer.serialize("");
     }
@@ -244,7 +242,7 @@ public abstract class ApiClient implements AutoCloseable {
     final StringBuilder url = new StringBuilder();
 
     // The real host will be assigned by the retry strategy
-    url.append("http://temp.path").append(path);
+    url.append("https://algolia.com").append(path);
 
     if (queryParameters != null && !queryParameters.isEmpty()) {
       // support (constant) query string in `path`, e.g. "/posts?draft=1"

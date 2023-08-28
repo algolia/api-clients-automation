@@ -1,17 +1,20 @@
 package com.algolia.config;
 
+import com.algolia.transport.HttpRequester;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
-import com.algolia.transport.HttpRequester;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.jetbrains.annotations.NotNull;
 
 public final class ClientOptions implements ClientConfig {
+
+  public static Builder builder() {
+    return new Builder();
+  }
 
   private final List<AlgoliaAgent.Segment> algoliaAgentSegments;
   private final List<Host> hosts;
@@ -25,7 +28,6 @@ public final class ClientOptions implements ClientConfig {
   private final Logger logger;
   private final Consumer<HttpRequester.Builder> requesterConfig;
   private final Consumer<JsonMapper.Builder> mapperConfig;
-
 
   public ClientOptions() {
     this(new Builder());

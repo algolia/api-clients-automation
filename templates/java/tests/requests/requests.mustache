@@ -8,23 +8,19 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.*;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.BeforeAll;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.junit.jupiter.api.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import com.algolia.utils.JSONBuilder;
-import com.algolia.utils.ClientOptions;
-import com.algolia.utils.RequestOptions;
+import com.algolia.config.*;
 import com.algolia.model.{{import}}.*;
 import com.algolia.api.{{client}};
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
-import com.algolia.utils.HttpRequester;
 import com.algolia.EchoInterceptor;
 import com.algolia.EchoResponse;
 
@@ -36,12 +32,17 @@ class {{client}}RequestsTests {
 
     @BeforeAll
     void init() {
-        this.json = new JSONBuilder().failOnUnknown(true).build();
+        this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
         this.echo = new EchoInterceptor();
-        HttpRequester requester = new HttpRequester.Builder()
-                .addInterceptor(echo)
+        var options = ClientOptions.builder()
+                .setRequesterConfig(requester -> requester.addInterceptor(echo))
                 .build();
-        this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}new ClientOptions.Builder().setRequester(requester).build());
+        this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}options);
+    }
+
+    @AfterAll
+    void tearUp() throws Exception {
+      client.close();
     }
 
     {{#blocksRequests}}

@@ -25,65 +25,40 @@ class Actor extends Hit {
 public class Search {
 
   public static void main(String[] args) throws Exception {
-    Dotenv dotenv = Dotenv.configure().directory("../").load();
+    var dotenv = Dotenv.configure().directory("../").load();
+    var appId = dotenv.get("ALGOLIA_APPLICATION_ID");
+    var apiKey = dotenv.get("ALGOLIA_ADMIN_KEY");
+    var indexName = dotenv.get("SEARCH_INDEX");
+    var query = dotenv.get("SEARCH_QUERY");
 
-    ClientOptions options = new ClientOptions.Builder()
+    var options = new ClientOptions.Builder()
             .addAlgoliaAgentSegment("test", "8.0.0")
             .addAlgoliaAgentSegment("JVM", "11.0.14")
             .addAlgoliaAgentSegment("no version")
             .setLogLevel(LogLevel.BASIC)
             .build();
+    try(var client = new SearchClient(appId, apiKey, options)) {
+      var records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));
+      var batch = records.stream()
+              .map(entry -> new BatchRequest().setAction(Action.ADD_OBJECT).setBody(entry))
+              .toList();
 
-    SearchClient client = new SearchClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), options);
-
-    String indexName = dotenv.get("SEARCH_INDEX");
-    String query = dotenv.get("SEARCH_QUERY");
-
-    try {
-      List<Actor> records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));
-      List<BatchRequest> batch = new ArrayList<>();
-
-      for (Actor record : records) {
-        batch.add(new BatchRequest().setAction(Action.ADD_OBJECT).setBody(record));
-      }
-
-      BatchResponse response = client.batch(indexName, new BatchWriteParams().setRequests(batch));
-
+      var response = client.batch(indexName, new BatchWriteParams().setRequests(batch));
       client.waitForTask(indexName, response.getTaskID());
 
-      SearchMethodParams searchMethodParams = new SearchMethodParams();
-      List<SearchQuery> requests = new ArrayList<>();
-      requests.add(SearchQuery.of(new SearchForHits().setIndexName(indexName).setQuery(query).addAttributesToSnippet("title").addAttributesToSnippet("alternative_titles")));
+      var searchMethodParams = new SearchMethodParams();
+      var searchQuery = new SearchForHits()
+              .setIndexName(indexName)
+              .setQuery(query)
+              .addAttributesToSnippet("title")
+              .addAttributesToSnippet("alternative_titles");
+      var requests = List.of(SearchQuery.of(searchQuery));
       searchMethodParams.setRequests(requests);
 
-      CompletableFuture<SearchResponses<Actor>> result = client.searchAsync(searchMethodParams, Actor.class);
-
-      SearchResponses<Actor> sr = result.get();
-        SearchResult<Actor> actorSearchResult = sr.getResults().get(0).getInsideValue();
-        Actor a = actorSearchResult.getHits().get(0);
-      System.out.println(a.name);
-
-    } catch (InterruptedException e) {
-      System.err.println("InterrupedException" + e.getMessage());
-      e.printStackTrace();
-    } catch (ExecutionException e) {
-      System.err.println("ExecutionException" + e.getMessage());
-      e.printStackTrace();
-    } catch (AlgoliaApiException e) {
-      // the API failed
-      System.err.println("Exception when calling SearchClient#search");
-      System.err.println("Status code: " + e.getHttpErrorCode());
-      System.err.println("Reason: " + e.getMessage());
-      e.printStackTrace();
-    } catch (AlgoliaRetryException e) {
-      // the retry failed
-      System.err.println("Exception in the retry strategy");
-      e.printStackTrace();
-    } catch (AlgoliaRuntimeException e) {
-      // the serialization or something else failed
-      e.printStackTrace();
+      var responses = client.search(searchMethodParams);
+      var actorSearchResult = (SearchResponse<Map>) responses.getResults().get(0).getInsideValue();
+      Map a = actorSearchResult.getHits().get(0);
+      System.out.println(a);
     }
-
-    client.close();
   }
 }
