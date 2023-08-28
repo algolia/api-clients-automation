@@ -2,6 +2,7 @@ package com.algolia;
 
 import static com.fasterxml.jackson.core.JsonGenerator.Feature;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.function.Consumer;
@@ -25,7 +26,8 @@ class JsonConfig {
         .disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS)
         .disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS)
         .enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
-        .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+        .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
+        .serializationInclusion(JsonInclude.Include.NON_NULL);
     if (customerConfig != null) {
       customerConfig.accept(builder);
     }
