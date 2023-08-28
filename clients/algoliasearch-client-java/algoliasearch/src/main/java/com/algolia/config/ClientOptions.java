@@ -127,6 +127,16 @@ public final class ClientOptions implements ClientConfig {
       return this;
     }
 
+    public Builder addAlgoliaAgentSegment(String value, String version) {
+      AlgoliaAgent.Segment segment = new AlgoliaAgent.Segment(value, version);
+      return addAlgoliaAgentSegment(segment);
+    }
+
+    public Builder addAlgoliaAgentSegment(String value) {
+      AlgoliaAgent.Segment segment = new AlgoliaAgent.Segment(value);
+      return addAlgoliaAgentSegment(segment);
+    }
+
     public Builder addAlgoliaAgentSegments(List<AlgoliaAgent.Segment> segments) {
       this.algoliaAgentSegments.addAll(segments);
       return this;

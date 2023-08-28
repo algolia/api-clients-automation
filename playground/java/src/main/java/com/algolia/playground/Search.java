@@ -1,6 +1,8 @@
 package com.algolia.playground;
 
 import com.algolia.api.SearchClient;
+import com.algolia.config.ClientOptions;
+import com.algolia.config.LogLevel;
 import com.algolia.exceptions.*;
 import com.algolia.model.search.*;
 import com.algolia.utils.*;
@@ -22,26 +24,23 @@ class Actor extends Hit {
 
 public class Search {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     Dotenv dotenv = Dotenv.configure().directory("../").load();
 
-    SearchClient client = new SearchClient(
-      dotenv.get("ALGOLIA_APPLICATION_ID"),
-      dotenv.get("ALGOLIA_ADMIN_KEY"),
-      new ClientOptions()
-        .addAlgoliaAgentSegment("test", "8.0.0")
-        .addAlgoliaAgentSegment("JVM", "11.0.14")
-        .addAlgoliaAgentSegment("no version")
-    );
+    ClientOptions options = new ClientOptions.Builder()
+            .addAlgoliaAgentSegment("test", "8.0.0")
+            .addAlgoliaAgentSegment("JVM", "11.0.14")
+            .addAlgoliaAgentSegment("no version")
+            .setLogLevel(LogLevel.BASIC)
+            .build();
 
-    client.setLogLevel(LogLevel.NONE);
+    SearchClient client = new SearchClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), options);
 
     String indexName = dotenv.get("SEARCH_INDEX");
     String query = dotenv.get("SEARCH_QUERY");
 
     try {
       List<Actor> records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));
-
       List<BatchRequest> batch = new ArrayList<>();
 
       for (Actor record : records) {
@@ -52,8 +51,6 @@ public class Search {
 
       client.waitForTask(indexName, response.getTaskID());
 
-      client.setLogLevel(LogLevel.BASIC);
-
       SearchMethodParams searchMethodParams = new SearchMethodParams();
       List<SearchQuery> requests = new ArrayList<>();
       requests.add(SearchQuery.of(new SearchForHits().setIndexName(indexName).setQuery(query).addAttributesToSnippet("title").addAttributesToSnippet("alternative_titles")));
@@ -62,9 +59,10 @@ public class Search {
       CompletableFuture<SearchResponses<Actor>> result = client.searchAsync(searchMethodParams, Actor.class);
 
       SearchResponses<Actor> sr = result.get();
-      Actor a = sr.getResults().get(0).getHits().get(0);
+        SearchResult<Actor> actorSearchResult = sr.getResults().get(0).getInsideValue();
+        Actor a = actorSearchResult.getHits().get(0);
       System.out.println(a.name);
-      
+
     } catch (InterruptedException e) {
       System.err.println("InterrupedException" + e.getMessage());
       e.printStackTrace();
@@ -85,5 +83,7 @@ public class Search {
       // the serialization or something else failed
       e.printStackTrace();
     }
+
+    client.close();
   }
 }
