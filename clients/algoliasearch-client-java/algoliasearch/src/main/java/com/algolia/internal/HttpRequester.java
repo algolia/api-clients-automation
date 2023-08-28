@@ -1,9 +1,9 @@
-package com.algolia.transport;
+package com.algolia.internal;
 
 import com.algolia.config.*;
-import com.algolia.transport.interceptors.GzipRequestInterceptor;
-import com.algolia.transport.interceptors.HeaderInterceptor;
-import com.algolia.transport.interceptors.LogInterceptor;
+import com.algolia.internal.interceptors.GzipRequestInterceptor;
+import com.algolia.internal.interceptors.HeaderInterceptor;
+import com.algolia.internal.interceptors.LogInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -20,14 +20,11 @@ public final class HttpRequester implements Requester {
       .readTimeout(config.getReadTimeout())
       .writeTimeout(config.getWriteTimeout())
       .addInterceptor(new HeaderInterceptor(config.getDefaultHeaders()))
-      .addInterceptor(new LogInterceptor(config.getLogger(), config.getLogLevel()));
-
-    if (!builder.interceptors.isEmpty()) {
-      builder.interceptors.forEach(clientBuilder::addInterceptor);
-    }
+      .addNetworkInterceptor(new LogInterceptor(config.getLogger(), config.getLogLevel()));
+    builder.interceptors.forEach(clientBuilder::addInterceptor);
+    builder.networkInterceptors.forEach(clientBuilder::addNetworkInterceptor);
     if (config.getCompressionType() == CompressionType.GZIP) {
-      GzipRequestInterceptor gzip = new GzipRequestInterceptor();
-      clientBuilder.addInterceptor(gzip);
+      clientBuilder.addInterceptor(new GzipRequestInterceptor());
     }
     if (builder.clientConfig != null) {
       builder.clientConfig.accept(clientBuilder);
@@ -56,10 +53,17 @@ public final class HttpRequester implements Requester {
 
     private final List<Interceptor> interceptors = new ArrayList<>();
 
+    private final List<Interceptor> networkInterceptors = new ArrayList<>();
+
     private Consumer<OkHttpClient.Builder> clientConfig;
 
     public Builder addInterceptor(Interceptor interceptor) {
       interceptors.add(interceptor);
+      return this;
+    }
+
+    public Builder addNetworkInterceptor(Interceptor interceptor) {
+      networkInterceptors.add(interceptor);
       return this;
     }
 

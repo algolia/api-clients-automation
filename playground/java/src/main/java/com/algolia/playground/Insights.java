@@ -2,10 +2,13 @@ package com.algolia.playground;
 
 import com.algolia.api.InsightsClient;
 import com.algolia.config.ClientOptions;
+import com.algolia.config.CompressionType;
 import com.algolia.config.LogLevel;
 import com.algolia.exceptions.*;
 import com.algolia.model.insights.*;
 import io.github.cdimascio.dotenv.Dotenv;
+
+import java.util.List;
 
 public class Insights {
 
@@ -17,7 +20,7 @@ public class Insights {
 
     var options = new ClientOptions.Builder()
             .addAlgoliaAgentSegment("Playground")
-            .setLogLevel(LogLevel.BASIC)
+            .setLogLevel(LogLevel.BODY)
             .build();
 
     try(var client = new InsightsClient(appId, apiKey, options)) {
@@ -26,7 +29,8 @@ public class Insights {
               .setEventType(ClickEvent.CLICK)
               .setUserToken("user")
               .setIndex(indexName)
-              .setEventName("test"));
+              .setObjectIDs(List.of("id123"))
+              .setEventName("click"));
       params.addEvents(event);
       var result = client.pushEvents(params);
       System.out.println(result);

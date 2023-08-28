@@ -1,6 +1,6 @@
 package com.algolia.config;
 
-import com.algolia.transport.HttpRequester;
+import com.algolia.internal.HttpRequester;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ public final class ClientOptions implements ClientConfig {
     private Duration connectTimeout = Duration.ofSeconds(2);
     private Duration writeTimeout = Duration.ofSeconds(30);
     private Duration readTimeout = Duration.ofSeconds(5);
-    private CompressionType compressionType = CompressionType.GZIP;
+    private CompressionType compressionType = CompressionType.NONE;
 
     public Builder setRequester(Requester requester) {
       this.customRequester = requester;

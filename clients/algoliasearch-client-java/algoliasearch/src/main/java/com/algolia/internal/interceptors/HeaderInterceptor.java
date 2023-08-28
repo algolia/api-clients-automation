@@ -1,17 +1,17 @@
-package com.algolia.transport.interceptors;
+package com.algolia.internal.interceptors;
 
-import com.algolia.config.AlgoliaAgent;
 import java.io.IOException;
+import java.util.Map;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-public final class UserAgentInterceptor implements Interceptor {
+public final class HeaderInterceptor implements Interceptor {
 
-  private final AlgoliaAgent agent;
+  private final Map<String, String> headers;
 
-  public UserAgentInterceptor(AlgoliaAgent agent) {
-    this.agent = agent;
+  public HeaderInterceptor(Map<String, String> headers) {
+    this.headers = headers;
   }
 
   @NotNull
@@ -19,7 +19,11 @@ public final class UserAgentInterceptor implements Interceptor {
   public Response intercept(Chain chain) throws IOException {
     okhttp3.Request originalRequest = chain.request();
     okhttp3.Request.Builder builder = originalRequest.newBuilder();
-    builder.header("user-agent", agent.toString());
+
+    for (Map.Entry<String, String> header : headers.entrySet()) {
+      builder.header(header.getKey().toLowerCase(), header.getValue());
+    }
+
     okhttp3.Request newRequest = builder.build();
     return chain.proceed(newRequest);
   }

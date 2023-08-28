@@ -1,11 +1,11 @@
-package com.algolia.transport.interceptors;
+package com.algolia.internal.interceptors;
 
 import com.algolia.config.CallType;
 import com.algolia.exceptions.AlgoliaApiException;
 import com.algolia.exceptions.AlgoliaClientException;
 import com.algolia.exceptions.AlgoliaRequestException;
 import com.algolia.exceptions.AlgoliaRetryException;
-import com.algolia.transport.StatefulHost;
+import com.algolia.internal.StatefulHost;
 import com.algolia.utils.DateTimeUtils;
 import com.algolia.utils.UseReadTransporter;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.algolia.transport.interceptors;
+package com.algolia.internal.interceptors;
 
 import com.algolia.config.LogLevel;
 import com.algolia.config.Logger;

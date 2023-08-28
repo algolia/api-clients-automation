@@ -1,4 +1,4 @@
-package com.algolia.transport;
+package com.algolia.internal;
 
 import com.algolia.config.CallType;
 import com.algolia.config.Host;

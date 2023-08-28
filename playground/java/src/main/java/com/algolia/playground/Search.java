@@ -2,6 +2,7 @@ package com.algolia.playground;
 
 import com.algolia.api.SearchClient;
 import com.algolia.config.ClientOptions;
+import com.algolia.config.CompressionType;
 import com.algolia.config.LogLevel;
 import com.algolia.exceptions.*;
 import com.algolia.model.search.*;
@@ -35,7 +36,7 @@ public class Search {
             .addAlgoliaAgentSegment("test", "8.0.0")
             .addAlgoliaAgentSegment("JVM", "11.0.14")
             .addAlgoliaAgentSegment("no version")
-            .setLogLevel(LogLevel.BASIC)
+            .setLogLevel(LogLevel.BODY)
             .build();
     try(var client = new SearchClient(appId, apiKey, options)) {
       var records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));

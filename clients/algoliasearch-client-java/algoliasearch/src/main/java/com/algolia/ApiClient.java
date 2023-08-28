@@ -2,15 +2,15 @@ package com.algolia;
 
 import com.algolia.config.*;
 import com.algolia.exceptions.*;
-import com.algolia.transport.HttpRequester;
-import com.algolia.transport.StatefulHost;
-import com.algolia.transport.interceptors.AuthInterceptor;
-import com.algolia.transport.interceptors.RetryStrategy;
-import com.algolia.transport.interceptors.UserAgentInterceptor;
+import com.algolia.internal.HttpRequester;
+import com.algolia.internal.JsonSerializer;
+import com.algolia.internal.StatefulHost;
+import com.algolia.internal.interceptors.AuthInterceptor;
+import com.algolia.internal.interceptors.RetryStrategy;
+import com.algolia.internal.interceptors.UserAgentInterceptor;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -38,8 +38,7 @@ public abstract class ApiClient implements AutoCloseable {
       throw new AlgoliaRuntimeException("`apiKey` is missing.");
     }
     ClientOptions clientOptions = options != null ? options : new ClientOptions();
-    ObjectMapper mapper = new JsonConfig().setCustomConfig(clientOptions.getMapperConfig()).build();
-    this.serializer = new JsonSerializer(mapper);
+    this.serializer = JsonSerializer.builder().setCustomConfig(clientOptions.getMapperConfig()).build();
     this.requester =
       clientOptions.getCustomRequester() != null
         ? clientOptions.getCustomRequester()

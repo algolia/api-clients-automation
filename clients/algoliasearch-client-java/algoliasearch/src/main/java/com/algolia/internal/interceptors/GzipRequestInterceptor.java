@@ -1,4 +1,4 @@
-package com.algolia.transport.interceptors;
+package com.algolia.internal.interceptors;
 
 import java.io.IOException;
 import okhttp3.*;
