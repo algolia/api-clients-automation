@@ -2,15 +2,10 @@ package com.algolia.playground;
 
 import com.algolia.api.SearchClient;
 import com.algolia.config.ClientOptions;
-import com.algolia.config.CompressionType;
 import com.algolia.config.LogLevel;
-import com.algolia.exceptions.*;
 import com.algolia.model.search.*;
-import com.algolia.utils.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 class Actor extends Hit {
 
@@ -38,28 +33,47 @@ public class Search {
             .addAlgoliaAgentSegment("no version")
             .setLogLevel(LogLevel.BODY)
             .build();
+
     try(var client = new SearchClient(appId, apiKey, options)) {
       var records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));
       var batch = records.stream()
               .map(entry -> new BatchRequest().setAction(Action.ADD_OBJECT).setBody(entry))
               .toList();
-
       var response = client.batch(indexName, new BatchWriteParams().setRequests(batch));
       client.waitForTask(indexName, response.getTaskID());
 
-      var searchMethodParams = new SearchMethodParams();
-      var searchQuery = new SearchForHits()
-              .setIndexName(indexName)
-              .setQuery(query)
-              .addAttributesToSnippet("title")
-              .addAttributesToSnippet("alternative_titles");
-      var requests = List.of(SearchQuery.of(searchQuery));
-      searchMethodParams.setRequests(requests);
+      singleSearch(client, indexName, query);
+      multiSearch(indexName, query, client);
+    }
+  }
 
-      var responses = client.search(searchMethodParams);
-      var actorSearchResult = (SearchResponse<Map>) responses.getResults().get(0).getInsideValue();
-      Map a = actorSearchResult.getHits().get(0);
-      System.out.println(a);
+  private static void singleSearch(SearchClient client, String indexName, String query) {
+    SearchResponse<Actor> actorSearchResponse = client.searchSingleIndex(indexName, SearchParams.of(new SearchParamsObject().setQuery(query)), Actor.class);
+    System.out.println("-> Single Index Search:");
+    for(var hit: actorSearchResponse.getHits()) {
+      System.out.println("> " + hit.name);
+    }
+  }
+
+  private static void multiSearch(String indexName, String query, SearchClient client) {
+    var searchMethodParams = new SearchMethodParams();
+    var searchQuery = new SearchForHits()
+            .setIndexName(indexName)
+            .setQuery(query)
+            .addAttributesToSnippet("title")
+            .addAttributesToSnippet("alternative_titles");
+    List<SearchQuery> requests = List.of(SearchQuery.of(searchQuery));
+    searchMethodParams.setRequests(requests);
+
+    var responses = client.search(searchMethodParams);
+    var results = responses.getResults();
+    System.out.println("-> Multi Index Search:");
+    for (var result : results) {
+      var response = (SearchResponse) result.get();
+      for (var hit: response.getHits()) {
+        var record = (Map) hit;
+        System.out.println("> " + record.get("name"));
+      }
     }
   }
 }

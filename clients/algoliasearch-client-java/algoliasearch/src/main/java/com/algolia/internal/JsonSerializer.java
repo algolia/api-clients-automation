@@ -6,11 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.io.IOException;
 import java.util.function.Consumer;
-
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -123,15 +121,16 @@ public final class JsonSerializer {
   public static class Builder {
 
     /**
-     * A custom configuration for the JsonMapper builder, allowing clients to customize
-     * the built ObjectMapper beyond the default settings provided in this class.
+     * A custom configuration for the JsonMapper builder, allowing clients to customize the built
+     * ObjectMapper beyond the default settings provided in this class.
      */
     private Consumer<JsonMapper.Builder> customerConfig;
 
     /**
      * Sets a custom configuration to be applied to the JsonMapper builder.
      *
-     * @param config A consumer function that specifies additional configurations for the JsonMapper builder.
+     * @param config A consumer function that specifies additional configurations for the JsonMapper
+     *     builder.
      * @return The current JsonConfig instance, useful for method chaining.
      */
     public Builder setCustomConfig(Consumer<JsonMapper.Builder> config) {
@@ -139,22 +138,20 @@ public final class JsonSerializer {
       return this;
     }
 
-    /**
-     * Builds JsonSerializer instance.
-     */
+    /** Builds JsonSerializer instance. */
     public JsonSerializer build() {
       JsonMapper.Builder builder = JsonMapper
-              .builder()
-              .disable(MapperFeature.ALLOW_COERCION_OF_SCALARS)
-              .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-              .enable(JsonGenerator.Feature.AUTO_CLOSE_JSON_CONTENT)
-              .enable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE)
-              .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-              .disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS)
-              .disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS)
-              .enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
-              .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
-              .serializationInclusion(JsonInclude.Include.NON_NULL);
+        .builder()
+        .disable(MapperFeature.ALLOW_COERCION_OF_SCALARS)
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .enable(JsonGenerator.Feature.AUTO_CLOSE_JSON_CONTENT)
+        .enable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE)
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS)
+        .disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS)
+        .enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
+        .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
+        .serializationInclusion(JsonInclude.Include.NON_NULL);
       if (customerConfig != null) {
         customerConfig.accept(builder);
       }

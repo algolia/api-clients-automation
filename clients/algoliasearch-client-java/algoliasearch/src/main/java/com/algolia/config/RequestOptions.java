@@ -43,10 +43,6 @@ public final class RequestOptions {
 
   @Override
   public String toString() {
-    return "RequestOptions{" +
-            "headers=" + headers +
-            ", queryParameters=" + queryParameters +
-            ", timeout=" + timeout +
-            '}';
+    return "RequestOptions{" + "headers=" + headers + ", queryParameters=" + queryParameters + ", timeout=" + timeout + '}';
   }
 }
