@@ -2,21 +2,26 @@ package com.algolia.transport;
 
 import com.algolia.exceptions.AlgoliaApiException;
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.BufferedSink;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Utility class for JSON serialization and deserialization using Jackson.
  * It provides functionality to convert Java objects to their JSON representation and vice versa.
  */
 public class JsonSerializer {
+
+    private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
 
     private final ObjectMapper mapper;
 
@@ -30,22 +35,34 @@ public class JsonSerializer {
     }
 
     /**
-     * Serializes a Java object into its JSON representation.
+     * Serializes a Java object into its JSON representation and creates a RequestBody.
      *
-     * @param obj The Java object to serialize.
-     * @return A string representing the JSON form of the provided object.
-     * @throws JsonProcessingException if there's an error during serialization.
+     * @param object The Java object to serialize.
+     * @return A RequestBody representing the JSON form of the provided object.
      */
-    public String serialize(@NotNull Object obj) throws JsonProcessingException {
-        return mapper.writeValueAsString(obj);
-    }
+    public RequestBody serialize(@NotNull Object object) {
+        return new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON_MEDIA_TYPE;
+            }
 
+            @Override
+            public void writeTo(@NotNull BufferedSink bufferedSink) {
+                try {
+                    mapper.writeValue(bufferedSink.outputStream(), object);
+                } catch (IOException e) {
+                    throw new AlgoliaRuntimeException(e);
+                }
+            }
+        };
+    }
 
     /**
      * Deserializes a JSON ResponseBody into a Java object of a given type.
      *
-     * @param response The ResponseBody containing the JSON to deserialize.
-     * @param returnType   The JavaType representation of the desired return object.
+     * @param response   The ResponseBody containing the JSON to deserialize.
+     * @param returnType The JavaType representation of the desired return object.
      * @return The deserialized object of the given type.
      */
     public <T> T deserialize(Response response, JavaType returnType) {
@@ -96,5 +113,9 @@ public class JsonSerializer {
      */
     public JavaType getJavaType(@NotNull TypeReference<?> returnType) {
         return mapper.getTypeFactory().constructType(returnType);
+    }
+
+    public void writeValue(OutputStream outputStream, Object obj) {
+
     }
 }

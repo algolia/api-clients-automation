@@ -24,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
+import okio.BufferedSink;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -100,25 +101,6 @@ public abstract class ApiClient implements AutoCloseable {
       return URLEncoder.encode(str, "utf8").replaceAll("\\+", "%20");
     } catch (UnsupportedEncodingException e) {
       return str;
-    }
-  }
-
-  /**
-   * Serialize the given Java object into request body according to the object's class and the
-   * request Content-Type.
-   *
-   * <p>We can't send a null body with okhttp, so we default it to an empty string.
-   *
-   * @param obj The Java object
-   * @return The serialized request body
-   * @throws AlgoliaRuntimeException If fail to serialize the given object
-   */
-  public RequestBody serialize(@NotNull Object obj) throws AlgoliaRuntimeException {
-    try {
-      String content = serializer.serialize(obj);
-      return RequestBody.create(content, MediaType.parse("application/json"));
-    } catch (JsonProcessingException e) {
-      throw new AlgoliaRuntimeException(e);
     }
   }
 
@@ -230,11 +212,11 @@ public abstract class ApiClient implements AutoCloseable {
     if (!HttpMethod.permitsRequestBody(method) || (method.equals("DELETE") && body == null)) {
       reqBody = null;
     } else if (body != null) {
-      reqBody = serialize(body);
+      reqBody = serializer.serialize(body);
     } else if (HttpMethod.requiresRequestBody(method)) {
-      reqBody = serialize("{}");
+      reqBody = serializer.serialize("{}");
     } else {
-      reqBody = serialize("");
+      reqBody = serializer.serialize("");
     }
 
     if (useReadTransporter) {
