@@ -2,8 +2,8 @@ package com.algolia;
 
 import com.algolia.config.*;
 import com.algolia.exceptions.*;
-import com.algolia.transport.JSONBuilder;
-import com.algolia.transport.OkHttpRequester;
+import com.algolia.transport.JsonSerializer;
+import com.algolia.transport.HttpRequester;
 import com.algolia.transport.StatefulHost;
 import com.algolia.transport.interceptors.AuthInterceptor;
 import com.algolia.transport.interceptors.RetryStrategy;
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class ApiClient implements AutoCloseable {
 
   private final Requester requester;
-  protected final ObjectMapper json;
+  private final JsonSerializer serializer;
 
   protected ApiClient(String appId, String apiKey, String clientName, @Nullable ClientOptions options, List<Host> defaultHosts) {
     if (appId == null || appId.isEmpty()) {
@@ -40,11 +40,11 @@ public abstract class ApiClient implements AutoCloseable {
       throw new AlgoliaRuntimeException("`apiKey` is missing.");
     }
     ClientOptions clientOptions = options != null ? options : new ClientOptions();
-    this.requester =
-      clientOptions.getCustomRequester() != null
-        ? clientOptions.getCustomRequester()
-        : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
-    this.json = new JSONBuilder().build();
+    ObjectMapper mapper = new JsonConfig().setCustomConfig(clientOptions.getMapperConfig()).build();
+    this.serializer = new JsonSerializer(mapper);
+    this.requester = clientOptions.getCustomRequester() != null
+          ? clientOptions.getCustomRequester()
+          : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
   }
 
   private Requester defaultRequester(String appId, String apiKey, String clientName, ClientOptions options, List<Host> defaultHosts) {
@@ -54,13 +54,15 @@ public abstract class ApiClient implements AutoCloseable {
 
     List<Host> hosts = options.getHosts() != null && !options.getHosts().isEmpty() ? options.getHosts() : defaultHosts;
     List<StatefulHost> statefulHosts = hosts.stream().map(StatefulHost::new).collect(Collectors.toList());
-    new RetryStrategy(statefulHosts);
 
-    return new OkHttpRequester.Builder(options)
-      .addInterceptor(new AuthInterceptor(appId, apiKey))
-      .addInterceptor(new UserAgentInterceptor(algoliaAgent))
-      .addInterceptor(new RetryStrategy(statefulHosts))
-      .build();
+    HttpRequester.Builder builder = new HttpRequester.Builder()
+            .addInterceptor(new AuthInterceptor(appId, apiKey))
+            .addInterceptor(new UserAgentInterceptor(algoliaAgent))
+            .addInterceptor(new RetryStrategy(statefulHosts));
+    if (options.getRequesterConfig() != null) {
+      options.getRequesterConfig().accept(builder);
+    }
+    return builder.build(options);
   }
 
   /**
@@ -112,23 +114,12 @@ public abstract class ApiClient implements AutoCloseable {
    * @throws AlgoliaRuntimeException If fail to serialize the given object
    */
   public RequestBody serialize(@NotNull Object obj) throws AlgoliaRuntimeException {
-    String content;
     try {
-      content = json.writeValueAsString(obj);
+      String content = serializer.serialize(obj);
+      return RequestBody.create(content, MediaType.parse("application/json"));
     } catch (JsonProcessingException e) {
       throw new AlgoliaRuntimeException(e);
     }
-    return RequestBody.create(content, MediaType.parse("application/json"));
-  }
-
-  private String jsonEncode(Object obj) {
-    String content;
-    try {
-      content = json.writeValueAsString(obj);
-    } catch (JsonProcessingException e) {
-      throw new AlgoliaRuntimeException(e);
-    }
-    return content;
   }
 
   /**
@@ -139,35 +130,38 @@ public abstract class ApiClient implements AutoCloseable {
    */
   public <T> CompletableFuture<T> executeAsync(Call call, final JavaType returnType) {
     final CompletableFuture<T> future = new CompletableFuture<>();
-    call.enqueue(
-      new Callback() {
-        @Override
-        public void onFailure(Call call, IOException e) {
-          future.completeExceptionally(e.getCause());
-        }
-
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
-          try {
-            T result = requester.handleResponse(response, returnType);
-            future.complete(result);
-          } catch (AlgoliaRuntimeException e) {
-            future.completeExceptionally(e);
-          } catch (Exception e) {
-            future.completeExceptionally(new AlgoliaRuntimeException(e));
-          }
-        }
-      }
-    );
+    call.enqueue(getCallback(returnType, future));
     return future;
   }
 
-  public <T> CompletableFuture<T> executeAsync(Call call, final Class<?> returnType, final Class<?> innerType) {
-    return executeAsync(call, json.getTypeFactory().constructParametricType(returnType, innerType));
+  @NotNull
+  private <T> Callback getCallback(JavaType returnType, CompletableFuture<T> future) {
+    return new Callback() {
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(e);
+      }
+
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) {
+        try {
+          T result = serializer.deserialize(response, returnType);
+          future.complete(result);
+        } catch (AlgoliaRuntimeException e) {
+          future.completeExceptionally(e);
+        } catch (Exception e) {
+          future.completeExceptionally(new AlgoliaRuntimeException(e));
+        }
+      }
+    };
   }
 
-  public <T> CompletableFuture<T> executeAsync(Call call, final TypeReference returnType) {
-    return executeAsync(call, json.getTypeFactory().constructType(returnType));
+  public <T> CompletableFuture<T> executeAsync(Call call, final Class<?> returnType, final Class<?> innerType) {
+    return executeAsync(call, serializer.getJavaType(returnType, innerType));
+  }
+
+  public <T> CompletableFuture<T> executeAsync(Call call, final TypeReference<?> returnType) {
+    return executeAsync(call, serializer.getJavaType(returnType));
   }
 
   /**

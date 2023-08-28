@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+
+import com.algolia.transport.HttpRequester;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.jetbrains.annotations.NotNull;
 
 public final class ClientOptions implements ClientConfig {
@@ -19,6 +23,9 @@ public final class ClientOptions implements ClientConfig {
   private final CompressionType compressionType;
   private final Requester customRequester;
   private final Logger logger;
+  private final Consumer<HttpRequester.Builder> requesterConfig;
+  private final Consumer<JsonMapper.Builder> mapperConfig;
+
 
   public ClientOptions() {
     this(new Builder());
@@ -35,6 +42,8 @@ public final class ClientOptions implements ClientConfig {
     this.defaultHeaders = builder.defaultHeaders;
     this.compressionType = builder.compressionType;
     this.logger = builder.logger;
+    this.requesterConfig = builder.requesterConfig;
+    this.mapperConfig = builder.mapperConfig;
   }
 
   @NotNull
@@ -85,11 +94,21 @@ public final class ClientOptions implements ClientConfig {
     return logger;
   }
 
+  public Consumer<HttpRequester.Builder> getRequesterConfig() {
+    return requesterConfig;
+  }
+
+  public Consumer<JsonMapper.Builder> getMapperConfig() {
+    return mapperConfig;
+  }
+
   public static class Builder {
 
     private Requester customRequester;
     private List<Host> hosts;
     private Logger logger;
+    private Consumer<HttpRequester.Builder> requesterConfig;
+    private Consumer<JsonMapper.Builder> mapperConfig;
     private final List<AlgoliaAgent.Segment> algoliaAgentSegments = new ArrayList<>();
     private final Map<String, String> defaultHeaders = new HashMap<>();
     private LogLevel logLevel = LogLevel.NONE;
@@ -155,6 +174,16 @@ public final class ClientOptions implements ClientConfig {
 
     public Builder setLogger(Logger logger) {
       this.logger = logger;
+      return this;
+    }
+
+    public Builder setRequesterConfig(Consumer<HttpRequester.Builder> requesterConfig) {
+      this.requesterConfig = requesterConfig;
+      return this;
+    }
+
+    public Builder setMapperConfig(Consumer<JsonMapper.Builder> mapperConfig) {
+      this.mapperConfig = mapperConfig;
       return this;
     }
 
