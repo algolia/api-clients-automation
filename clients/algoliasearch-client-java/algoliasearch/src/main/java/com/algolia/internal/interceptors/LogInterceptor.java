@@ -9,14 +9,14 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * An interceptor that facilitates HTTP logging based on the provided logging level.
- * This class wraps around the {@link HttpLoggingInterceptor} to provide additional flexibility
- * in log handling. It allows you to specify a custom {@link Logger} and a desired {@link LogLevel}.
+ * An interceptor that facilitates HTTP logging based on the provided logging level. This class
+ * wraps around the {@link HttpLoggingInterceptor} to provide additional flexibility in log
+ * handling. It allows you to specify a custom {@link Logger} and a desired {@link LogLevel}.
  *
- * <p>Usage of this interceptor ensures that HTTP request and response details are logged
- * according to the specified logging level. For example, setting the log level to
- * {@link LogLevel#BODY} would result in detailed logging of both request and response bodies,
- * while a level of {@link LogLevel#BASIC} would log request method, URL, and response status code.
+ * <p>Usage of this interceptor ensures that HTTP request and response details are logged according
+ * to the specified logging level. For example, setting the log level to {@link LogLevel#BODY} would
+ * result in detailed logging of both request and response bodies, while a level of {@link
+ * LogLevel#BASIC} would log request method, URL, and response status code.
  */
 public final class LogInterceptor implements Interceptor {
 

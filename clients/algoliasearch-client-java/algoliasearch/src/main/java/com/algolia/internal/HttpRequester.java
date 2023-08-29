@@ -3,19 +3,16 @@ package com.algolia.internal;
 import com.algolia.config.*;
 import com.algolia.exceptions.AlgoliaApiException;
 import com.algolia.exceptions.AlgoliaClientException;
-import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.algolia.internal.interceptors.GzipRequestInterceptor;
 import com.algolia.internal.interceptors.HeaderInterceptor;
 import com.algolia.internal.interceptors.LogInterceptor;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
 import okio.BufferedSink;
@@ -59,11 +56,7 @@ public final class HttpRequester implements Requester {
     return execute(httpRequest, requestOptions, serializer.getJavaType(returnType));
   }
 
-  private  <T> T execute(
-          HttpRequest httpRequest,
-          RequestOptions requestOptions,
-          JavaType returnType
-  ) {
+  private <T> T execute(HttpRequest httpRequest, RequestOptions requestOptions, JavaType returnType) {
     if (isClosed) {
       throw new IllegalStateException("HttpRequester is closed");
     }
@@ -71,13 +64,9 @@ public final class HttpRequester implements Requester {
     HttpUrl url = buildHttpUrl(httpRequest, requestOptions);
     Headers headers = buildHeaders(httpRequest, requestOptions);
     RequestBody requestBody = buildRequestBody(httpRequest);
-    Request request = new Request.Builder()
-            .url(url)
-            .headers(headers)
-            .method(httpRequest.getMethod(), requestBody)
-            .build();
+    Request request = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody).build();
     Call call = httpClient.newCall(request);
-    try(Response response = call.execute()) {
+    try (Response response = call.execute()) {
       if (!response.isSuccessful()) {
         throw new AlgoliaApiException(response.message(), response.code());
       }

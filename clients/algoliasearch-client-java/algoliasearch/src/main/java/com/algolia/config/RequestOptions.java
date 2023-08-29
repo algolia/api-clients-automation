@@ -62,11 +62,17 @@ public final class RequestOptions {
 
   @Override
   public String toString() {
-    return "RequestOptions{" +
-            "headers=" + headers +
-            ", queryParameters=" + queryParameters +
-            ", readTimeout=" + readTimeout +
-            ", writeTimeout=" + writeTimeout +
-            '}';
+    return (
+      "RequestOptions{" +
+      "headers=" +
+      headers +
+      ", queryParameters=" +
+      queryParameters +
+      ", readTimeout=" +
+      readTimeout +
+      ", writeTimeout=" +
+      writeTimeout +
+      '}'
+    );
   }
 }

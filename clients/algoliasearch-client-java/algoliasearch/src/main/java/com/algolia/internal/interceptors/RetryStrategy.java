@@ -24,19 +24,15 @@ import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A retry strategy that implements {@link Interceptor}, responsible for routing requests to
- * hosts based on their state and call type.
+ * A retry strategy that implements {@link Interceptor}, responsible for routing requests to hosts
+ * based on their state and call type.
  */
 public final class RetryStrategy implements Interceptor {
 
-  /**
-   * Threshold duration after which a host is considered expired.
-   */
+  /** Threshold duration after which a host is considered expired. */
   private static final long EXPIRATION_THRESHOLD_SECONDS = 5 * 60;
 
-  /**
-   * The list of stateful hosts to route requests to.
-   */
+  /** The list of stateful hosts to route requests to. */
   private final List<StatefulHost> hosts;
 
   /**
@@ -64,9 +60,7 @@ public final class RetryStrategy implements Interceptor {
     throw new AlgoliaRetryException(errors);
   }
 
-  /**
-   * Processes the request for a given host.
-   */
+  /** Processes the request for a given host. */
   @NotNull
   private Response processRequest(@NotNull Chain chain, @NotNull Request request, StatefulHost host) throws IOException {
     HttpUrl newUrl = request.url().newBuilder().scheme(host.getScheme()).host(host.getHost()).build();
@@ -76,9 +70,7 @@ public final class RetryStrategy implements Interceptor {
     return handleResponse(host, response);
   }
 
-  /**
-   * Handles the response from the host.
-   */
+  /** Handles the response from the host. */
   @NotNull
   private Response handleResponse(StatefulHost host, @NotNull Response response) throws IOException {
     if (response.isSuccessful()) {
@@ -89,24 +81,20 @@ public final class RetryStrategy implements Interceptor {
     try {
       String message = response.body() != null ? response.body().string() : response.message();
       throw isRetryable(response)
-              ? new AlgoliaRequestException(message, response.code())
-              : new AlgoliaApiException(message, response.code());
+        ? new AlgoliaRequestException(message, response.code())
+        : new AlgoliaApiException(message, response.code());
     } finally {
       response.close();
     }
   }
 
-  /**
-   * Determines if a response should be retried.
-   */
+  /** Determines if a response should be retried. */
   private boolean isRetryable(@NotNull Response response) {
     int statusCode = response.code();
     return (statusCode < 200 || statusCode >= 300) && (statusCode < 400 || statusCode >= 500);
   }
 
-  /**
-   * Handles exceptions that occurred during request processing.
-   */
+  /** Handles exceptions that occurred during request processing. */
   private void handleException(StatefulHost host, Exception exception) {
     if (exception instanceof SocketTimeoutException) {
       host.hasTimedOut();
@@ -119,9 +107,7 @@ public final class RetryStrategy implements Interceptor {
     }
   }
 
-  /**
-   * Fetches a list of hosts that can be used for a specific call type.
-   */
+  /** Fetches a list of hosts that can be used for a specific call type. */
   private synchronized List<StatefulHost> callableHosts(CallType callType) {
     resetExpiredHosts();
     List<StatefulHost> hostsCallType = hosts.stream().filter(h -> h.getAccept().contains(callType)).collect(Collectors.toList());
@@ -133,9 +119,7 @@ public final class RetryStrategy implements Interceptor {
     return hostsCallTypeAreUp;
   }
 
-  /**
-   * Resets hosts that have been down for longer than the defined expiration threshold.
-   */
+  /** Resets hosts that have been down for longer than the defined expiration threshold. */
   private void resetExpiredHosts() {
     OffsetDateTime now = DateTimeUtils.nowUTC();
     for (StatefulHost host : hosts) {
