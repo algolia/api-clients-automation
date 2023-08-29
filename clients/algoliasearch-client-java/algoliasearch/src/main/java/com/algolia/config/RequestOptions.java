@@ -1,5 +1,6 @@
 package com.algolia.config;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
@@ -11,15 +12,16 @@ import javax.annotation.Nonnull;
 public final class RequestOptions {
 
   private final Map<String, String> headers = new HashMap<>();
-  private final Map<String, Object> queryParameters = new HashMap<>();
-  private Integer timeout;
+  private final Map<String, String> queryParameters = new HashMap<>();
+  private Duration readTimeout;
+  private Duration writeTimeout;
 
   public RequestOptions addExtraHeader(@Nonnull String key, @Nonnull String value) {
     headers.put(key, value);
     return this;
   }
 
-  public RequestOptions addExtraQueryParameters(@Nonnull String key, @Nonnull Object value) {
+  public RequestOptions addExtraQueryParameters(@Nonnull String key, @Nonnull String value) {
     queryParameters.put(key, value);
     return this;
   }
@@ -28,21 +30,43 @@ public final class RequestOptions {
     return headers;
   }
 
-  public Map<String, Object> getExtraQueryParameters() {
+  public Map<String, String> getExtraQueryParameters() {
     return queryParameters;
   }
 
-  public Integer getTimeout() {
-    return timeout;
+  public Map<String, String> getHeaders() {
+    return headers;
   }
 
-  public RequestOptions setTimeout(Integer timeout) {
-    this.timeout = timeout;
+  public Map<String, String> getQueryParameters() {
+    return queryParameters;
+  }
+
+  public Duration getReadTimeout() {
+    return readTimeout;
+  }
+
+  public RequestOptions setReadTimeout(Duration readTimeout) {
+    this.readTimeout = readTimeout;
+    return this;
+  }
+
+  public Duration getWriteTimeout() {
+    return writeTimeout;
+  }
+
+  public RequestOptions setWriteTimeout(Duration writeTimeout) {
+    this.writeTimeout = writeTimeout;
     return this;
   }
 
   @Override
   public String toString() {
-    return "RequestOptions{" + "headers=" + headers + ", queryParameters=" + queryParameters + ", timeout=" + timeout + '}';
+    return "RequestOptions{" +
+            "headers=" + headers +
+            ", queryParameters=" + queryParameters +
+            ", readTimeout=" + readTimeout +
+            ", writeTimeout=" + writeTimeout +
+            '}';
   }
 }

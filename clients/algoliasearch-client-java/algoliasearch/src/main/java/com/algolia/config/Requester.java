@@ -1,8 +1,12 @@
 package com.algolia.config;
 
-import okhttp3.Call;
-import okhttp3.Request;
+import com.fasterxml.jackson.core.type.TypeReference;
 
-public interface Requester extends AutoCloseable {
-  Call newCall(Request request);
+import java.io.Closeable;
+
+public interface Requester extends Closeable {
+
+    <T> T execute(HttpRequest httpRequest, RequestOptions requestOptions, Class<?> returnType, Class<?> innerType);
+
+    <T> T execute(HttpRequest httpRequest, RequestOptions requestOptions, TypeReference<?> returnType);
 }

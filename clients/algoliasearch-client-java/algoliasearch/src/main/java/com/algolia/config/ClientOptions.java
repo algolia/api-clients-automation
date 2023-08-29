@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.function.Consumer;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +32,8 @@ public final class ClientOptions implements ClientConfig {
   private final Consumer<HttpRequester.Builder> requesterConfig;
   private final Consumer<JsonMapper.Builder> mapperConfig;
 
+  private final ExecutorService executor;
+
   public ClientOptions() {
     this(new Builder());
   }
@@ -46,6 +51,7 @@ public final class ClientOptions implements ClientConfig {
     this.logger = builder.logger;
     this.requesterConfig = builder.requesterConfig;
     this.mapperConfig = builder.mapperConfig;
+    this.executor = builder.executor != null ? builder.executor : Executors.newCachedThreadPool();
   }
 
   @NotNull
@@ -104,8 +110,13 @@ public final class ClientOptions implements ClientConfig {
     return mapperConfig;
   }
 
+  public ExecutorService getExecutor() {
+    return executor;
+  }
+
   public static class Builder {
 
+    public ExecutorService executor;
     private Requester customRequester;
     private List<Host> hosts;
     private Logger logger;
@@ -196,6 +207,11 @@ public final class ClientOptions implements ClientConfig {
 
     public Builder setMapperConfig(Consumer<JsonMapper.Builder> mapperConfig) {
       this.mapperConfig = mapperConfig;
+      return this;
+    }
+
+    public Builder setExecutor(ExecutorService executor) {
+      this.executor = executor;
       return this;
     }
 
