@@ -66,26 +66,24 @@ class {{client}}RequestsTests {
             client.{{method}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
         });
         EchoResponse req = echo.getLastResponse();
+        {{#request}}
+        assertEquals(req.path, "{{{path}}}");
+        assertEquals(req.method, "{{{method}}}");
+        {{#body}}
+        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", req.body, JSONCompareMode.STRICT));
+        {{/body}}
+        {{^body}}
+        {{#assertNullBody}}
+        assertNull(req.body);
+        {{/assertNullBody}}
+        {{^assertNullBody}}
+        assertEquals(req.body, "{}");
+        {{/assertNullBody}}
+        {{/body}}
 
-        assertEquals(req.path, "{{{request.path}}}");
-        assertEquals(req.method, "{{{request.method}}}");
-        {{#request.body}}
-        assertDoesNotThrow(() -> {
-            JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{request.body}}}{{/lambda.escapeQuotes}}", req.body, JSONCompareMode.STRICT);
-        });
-        {{/request.body}}
-        {{^request.body}}
-          {{#assertNullBody}}
-            assertNull(req.body);
-          {{/assertNullBody}}
-          {{^assertNullBody}}
-            assertEquals(req.body, "");
-          {{/assertNullBody}}
-        {{/request.body}}
-
-        {{#request.queryParameters}}
+        {{#queryParameters}}
         try {
-          Map<String, String> expectedQuery = json.readValue("{{#lambda.escapeQuotes}}{{{request.queryParameters}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
+          Map<String, String> expectedQuery = json.readValue("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
           Map<String, Object> actualQuery = req.queryParameters;
 
           assertEquals(expectedQuery.size(), actualQuery.size());
@@ -95,11 +93,11 @@ class {{client}}RequestsTests {
         } catch(JsonProcessingException e) {
           fail("failed to parse queryParameters json");
         }
-        {{/request.queryParameters}}
+        {{/queryParameters}}
 
-        {{#request.headers}}
+        {{#headers}}
         try {
-          Map<String, String> expectedHeaders = json.readValue("{{#lambda.escapeQuotes}}{{{request.headers}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
+          Map<String, String> expectedHeaders = json.readValue("{{#lambda.escapeQuotes}}{{{headers}}}{{/lambda.escapeQuotes}}", new TypeReference<HashMap<String, String>>() {});
           Map<String, String> actualHeaders = req.headers;
 
           for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
@@ -108,7 +106,8 @@ class {{client}}RequestsTests {
         } catch(JsonProcessingException e) {
           fail("failed to parse headers json");
         }
-        {{/request.headers}}
+        {{/headers}}
+        {{/request}}   
     }
     {{/tests}}
     {{/blocksRequests}}
