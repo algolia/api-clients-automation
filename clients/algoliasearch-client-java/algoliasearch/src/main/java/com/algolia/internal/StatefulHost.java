@@ -29,18 +29,8 @@ public final class StatefulHost {
     return up;
   }
 
-  public StatefulHost setUp(boolean up) {
-    this.up = up;
-    return this;
-  }
-
   public int getRetryCount() {
     return retryCount;
-  }
-
-  public StatefulHost resetCount() {
-    this.retryCount = 0;
-    return this;
   }
 
   public void incrementRetryCount() {
@@ -51,12 +41,24 @@ public final class StatefulHost {
     return lastUse;
   }
 
-  public StatefulHost setLastUse(OffsetDateTime lastUse) {
-    this.lastUse = lastUse;
-    return this;
-  }
-
   public Set<CallType> getAccept() {
     return this.host.getCallTypes();
+  }
+
+  public void reset() {
+    this.up = true;
+    this.lastUse = DateTimeUtils.nowUTC();
+    this.retryCount = 0;
+  }
+
+  public void hasTimedOut() {
+    this.up = true;
+    this.lastUse = DateTimeUtils.nowUTC();
+    this.retryCount++;
+  }
+
+  public void hasFailed() {
+    this.up = false;
+    this.lastUse = DateTimeUtils.nowUTC();
   }
 }

@@ -11,7 +11,9 @@ import com.algolia.utils.UseReadTransporter;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -21,12 +23,27 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A retry strategy that implements {@link Interceptor}, responsible for routing requests to
+ * hosts based on their state and call type.
+ */
 public final class RetryStrategy implements Interceptor {
 
+  /**
+   * Threshold duration after which a host is considered expired.
+   */
+  private static final long EXPIRATION_THRESHOLD_SECONDS = 5 * 60;
+
+  /**
+   * The list of stateful hosts to route requests to.
+   */
   private final List<StatefulHost> hosts;
 
+  /**
+   * @param hosts List of stateful hosts.
+   */
   public RetryStrategy(List<StatefulHost> hosts) {
-    this.hosts = hosts;
+    this.hosts = Collections.unmodifiableList(hosts);
   }
 
   @NotNull
@@ -36,7 +53,7 @@ public final class RetryStrategy implements Interceptor {
     UseReadTransporter useReadTransporter = (UseReadTransporter) request.tag();
     CallType callType = (useReadTransporter != null || request.method().equals("GET")) ? CallType.READ : CallType.WRITE;
     List<Throwable> errors = new ArrayList<>();
-    for (StatefulHost currentHost : getTriableHosts(callType)) {
+    for (StatefulHost currentHost : callableHosts(callType)) {
       try {
         return processRequest(chain, request, currentHost);
       } catch (Exception e) {
@@ -47,47 +64,54 @@ public final class RetryStrategy implements Interceptor {
     throw new AlgoliaRetryException(errors);
   }
 
+  /**
+   * Processes the request for a given host.
+   */
   @NotNull
   private Response processRequest(@NotNull Chain chain, @NotNull Request request, StatefulHost host) throws IOException {
-    // Building the request URL
     HttpUrl newUrl = request.url().newBuilder().scheme(host.getScheme()).host(host.getHost()).build();
     Request newRequest = request.newBuilder().url(newUrl).build();
-    // Computing timeout with the retry count
     chain.withConnectTimeout(chain.connectTimeoutMillis() * (host.getRetryCount() + 1), TimeUnit.MILLISECONDS);
     Response response = chain.proceed(newRequest);
-    host.setLastUse(DateTimeUtils.nowUTC());
     return handleResponse(host, response);
   }
 
+  /**
+   * Handles the response from the host.
+   */
   @NotNull
   private Response handleResponse(StatefulHost host, @NotNull Response response) throws IOException {
     if (response.isSuccessful()) {
-      host.setUp(true);
+      host.reset();
       return response;
-    } else if (isRetryable(response)) {
-      host.setUp(false);
+    }
+
+    try {
+      String message = response.body() != null ? response.body().string() : response.message();
+      throw isRetryable(response)
+              ? new AlgoliaRequestException(message, response.code())
+              : new AlgoliaApiException(message, response.code());
+    } finally {
       response.close();
-      String message = (response.body() != null) ? response.body().string() : response.message();
-      throw new AlgoliaRequestException(message, response.code());
-    } else {
-      String message = (response.body() != null) ? response.body().string() : response.message();
-      throw new AlgoliaApiException(message, response.code());
     }
   }
 
+  /**
+   * Determines if a response should be retried.
+   */
   private boolean isRetryable(@NotNull Response response) {
     int statusCode = response.code();
     return (statusCode < 200 || statusCode >= 300) && (statusCode < 400 || statusCode >= 500);
   }
 
+  /**
+   * Handles exceptions that occurred during request processing.
+   */
   private void handleException(StatefulHost host, Exception exception) {
     if (exception instanceof SocketTimeoutException) {
-      host.setUp(true);
-      host.setLastUse(DateTimeUtils.nowUTC());
-      host.incrementRetryCount();
+      host.hasTimedOut();
     } else if (exception instanceof AlgoliaRequestException || exception instanceof IOException) {
-      host.setUp(false);
-      host.setLastUse(DateTimeUtils.nowUTC());
+      host.hasFailed();
     } else if (exception instanceof AlgoliaApiException) {
       throw (AlgoliaApiException) exception;
     } else {
@@ -95,27 +119,30 @@ public final class RetryStrategy implements Interceptor {
     }
   }
 
-  private synchronized List<StatefulHost> getTriableHosts(CallType callType) {
+  /**
+   * Fetches a list of hosts that can be used for a specific call type.
+   */
+  private synchronized List<StatefulHost> callableHosts(CallType callType) {
     resetExpiredHosts();
-    List<StatefulHost> triableHosts = hosts.stream().filter(h -> h.getAccept().contains(callType)).collect(Collectors.toList());
-    if (triableHosts.stream().anyMatch(StatefulHost::isUp)) {
-      return triableHosts.stream().filter(StatefulHost::isUp).collect(Collectors.toList());
-    } else {
-      triableHosts.forEach(this::reset);
-      return hosts;
+    List<StatefulHost> hostsCallType = hosts.stream().filter(h -> h.getAccept().contains(callType)).collect(Collectors.toList());
+    List<StatefulHost> hostsCallTypeAreUp = hostsCallType.stream().filter(StatefulHost::isUp).collect(Collectors.toList());
+    if (hostsCallTypeAreUp.isEmpty()) {
+      hostsCallType.forEach(StatefulHost::reset);
+      return hostsCallType;
     }
+    return hostsCallTypeAreUp;
   }
 
+  /**
+   * Resets hosts that have been down for longer than the defined expiration threshold.
+   */
   private void resetExpiredHosts() {
+    OffsetDateTime now = DateTimeUtils.nowUTC();
     for (StatefulHost host : hosts) {
-      long lastUse = Duration.between(DateTimeUtils.nowUTC(), host.getLastUse()).getSeconds();
-      if (!host.isUp() && Math.abs(lastUse) > 5 * 60) {
-        reset(host);
+      long lastUse = Duration.between(host.getLastUse(), now).getSeconds();
+      if (!host.isUp() && lastUse > EXPIRATION_THRESHOLD_SECONDS) {
+        host.reset();
       }
     }
-  }
-
-  private void reset(@NotNull StatefulHost host) {
-    host.setUp(true).resetCount().setLastUse(DateTimeUtils.nowUTC());
   }
 }
