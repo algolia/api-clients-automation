@@ -63,10 +63,7 @@ If you need to customize the configuration of the client, use
 `ClientOptions` when instantiating the Algolia `SearchClient` instance.
 
 ```java
-ClientOptions options = new ClientOptions();
-HttpRequester requester = new HttpRequester();
-requester.setLogLevel(LogLevel.BODY);
-options.setRequester(requester);
+ClientOptions options = ClientOptions.builder().setLogLevel(LogLevel.BODY).build();
 SearchClient client = new SearchClient("MY_APPLICATION_ID", "MY_API_KEY", options);
 ```
 
@@ -91,7 +88,11 @@ Contact contact = new Contact()
         .setFollowers(93)
         .setCompany("California Paint");
 
-client.saveObject("contacts", contact);
+List<Actor> records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));
+List<BatchRequest> batch = records.stream()
+        .map(entry -> new BatchRequest().setAction(Action.ADD_OBJECT).setBody(entry))
+        .toList();
+BatchResponse response = client.batch("contacts", new BatchWriteParams().setRequests(batch));
 ```
 
 ### Search
