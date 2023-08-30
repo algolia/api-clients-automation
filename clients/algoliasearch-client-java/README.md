@@ -88,7 +88,7 @@ Contact contact = new Contact()
         .setFollowers(93)
         .setCompany("California Paint");
 
-List<Actor> records = Arrays.asList(new Actor("Tom Cruise"), new Actor("Scarlett Johansson"));
+List<Contact> records = Arrays.asList(contact);
 List<BatchRequest> batch = records.stream()
         .map(entry -> new BatchRequest().setAction(Action.ADD_OBJECT).setBody(entry))
         .toList();
