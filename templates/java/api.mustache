@@ -164,7 +164,7 @@ public class {{classname}} extends ApiClient {
     {{/required}}{{/allParams}}
 
     HttpRequest request = HttpRequest.builder()
-        .setPath("{{{path}}}"{{#vendorExtensions}}{{#x-is-custom-request}}, path{{/x-is-custom-request}}{{^x-is-custom-request}}{{#pathParams}}, {{{paramName}}}{{/pathParams}}{{/x-is-custom-request}}{{/vendorExtensions}})
+        {{#vendorExtensions}}{{#x-is-custom-request}}.setPathEncoded("{{{path}}}", path){{/x-is-custom-request}}{{^x-is-custom-request}}.setPath("{{{path}}}"{{#pathParams}}, {{{paramName}}}{{/pathParams}}){{/x-is-custom-request}}{{/vendorExtensions}}
         .setMethod("{{httpMethod}}")
         {{#bodyParam}}.setBody({{paramName}}){{/bodyParam}}
         {{#vendorExtensions.x-use-read-transporter}}.setRead(true){{/vendorExtensions.x-use-read-transporter}}

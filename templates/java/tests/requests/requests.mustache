@@ -67,8 +67,8 @@ class {{client}}RequestsTests {
         });
         EchoResponse req = echo.getLastResponse();
         {{#request}}
-        assertEquals(req.path, "{{{path}}}");
-        assertEquals(req.method, "{{{method}}}");
+        assertEquals("{{{path}}}", req.path);
+        assertEquals("{{{method}}}", req.method);
         {{#body}}
         assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", req.body, JSONCompareMode.STRICT));
         {{/body}}
@@ -77,7 +77,7 @@ class {{client}}RequestsTests {
         assertNull(req.body);
         {{/assertNullBody}}
         {{^assertNullBody}}
-        assertEquals(req.body, "{}");
+        assertEquals("{}", req.body);
         {{/assertNullBody}}
         {{/body}}
 
@@ -101,7 +101,7 @@ class {{client}}RequestsTests {
           Map<String, String> actualHeaders = req.headers;
 
           for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
-            assertEquals(actualHeaders.get(p.getKey()), p.getValue());
+            assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
           }
         } catch(JsonProcessingException e) {
           fail("failed to parse headers json");

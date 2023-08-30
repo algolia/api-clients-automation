@@ -126,7 +126,7 @@ public class HttpRequest {
 
     public Builder addQueryParameter(String key, Object value) {
       if (value == null) return this;
-      this.queryParameters.put(key, paramToString(value));
+      this.queryParameters.put(key, StringUtils.paramToString(value));
       return this;
     }
 
@@ -142,7 +142,12 @@ public class HttpRequest {
     }
 
     public Builder setPath(String template, Object... values) {
-      this.path = StringUtils.pathFormat(template, values);
+      this.path = StringUtils.pathFormat(template, true, values);
+      return this;
+    }
+
+    public Builder setPathEncoded(String template, Object... values) {
+      this.path = StringUtils.pathFormat(template, false, values);
       return this;
     }
 
@@ -158,7 +163,7 @@ public class HttpRequest {
 
     public Builder addHeader(String key, Object value) {
       if (value == null) return this;
-      this.headers.put(key, paramToString(value));
+      this.headers.put(key.toLowerCase(), StringUtils.paramToString(value));
       return this;
     }
 
@@ -166,13 +171,6 @@ public class HttpRequest {
       if (headers == null) return this;
       headers.forEach(this::addHeader);
       return this;
-    }
-
-    private String paramToString(Object value) {
-      if (value instanceof Date || value instanceof OffsetDateTime || value instanceof LocalDate) {
-        throw new UnsupportedOperationException("Date must come as string (already serialized)");
-      }
-      return value instanceof Collection ? String.join(",", (Collection) value) : String.valueOf(value);
     }
 
     public HttpRequest build() {

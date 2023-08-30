@@ -1,7 +1,16 @@
 package com.algolia.utils;
 
+import com.algolia.config.HttpRequest;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StringUtils {
 
@@ -23,11 +32,12 @@ public class StringUtils {
     }
   }
 
-  public static String pathFormat(String template, Object... values) {
+  public static String pathFormat(String template, boolean escapeValues, Object... values) {
     int i = 0;
     while (template.contains("{") && i < values.length) {
-      String value = escape(String.valueOf(values[i]));
-      template = template.replaceFirst("\\{[^}]+}", value);
+      String value = String.valueOf(values[i]);
+      String string = escapeValues ? escape(value) : value;
+      template = template.replaceFirst("\\{[^}]+}", string);
       i++;
     }
     if (template.contains("{")) {
@@ -37,5 +47,19 @@ public class StringUtils {
       throw new IllegalArgumentException("More replacement values provided than placeholders.");
     }
     return template;
+  }
+
+  public static String paramToString(Object value) {
+    if (value instanceof Date || value instanceof OffsetDateTime || value instanceof LocalDate) {
+      throw new UnsupportedOperationException("Date must come as string (already serialized)");
+    }
+    if (value instanceof Collection) {
+      List<String> strings = ((Collection<?>) value).stream()
+              .map(String::valueOf)
+              .collect(Collectors.toList());
+      return String.join(",", strings);
+    }
+
+    return String.valueOf(value);
   }
 }
