@@ -284,4 +284,4 @@ failureThreshold:
   type: integer
   min: 0
   max: 100
-  description: A percentage representing the accepted failure threshold to determine if a `run` was succeeded or not.
+  description: A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
