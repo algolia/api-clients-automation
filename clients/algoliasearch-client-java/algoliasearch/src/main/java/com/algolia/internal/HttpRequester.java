@@ -72,18 +72,35 @@ public final class HttpRequester implements Requester {
             throw new IllegalStateException("HttpRequester is closed");
         }
 
+        // Create the request components.
         HttpUrl url = createHttpUrl(httpRequest, requestOptions);
         Headers headers = createHeaders(httpRequest, requestOptions);
         RequestBody requestBody = createRequestBody(httpRequest);
-        Request request = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody).build();
-        Call call = httpClient.newCall(request);
+
+        // Build the HTTP request.
+        Request request = new Request.Builder()
+                .url(url)
+                .headers(headers)
+                .method(httpRequest.getMethod(), requestBody)
+                .build();
+
+        // Get or adjust the HTTP client according to request options.
+        OkHttpClient client = getOkHttpClient(requestOptions);
+
+        // Execute the request.
+        Call call = client.newCall(request);
         try (Response response = call.execute()) {
+            // Handle unsuccessful responses.
             if (!response.isSuccessful()) {
                 throw new AlgoliaApiException(response.message(), response.code());
             }
+
+            // Return null if there's no content or the return type isn't provided.
             if (returnType == null || response.body() == null || response.body().contentLength() == 0) {
                 return null; // No need to deserialize, either no content or no type provided
             }
+
+            // Deserialize and return the response.
             return serializer.deserialize(response.body().byteStream(), returnType);
         } catch (IOException exception) {
             throw new AlgoliaClientException(exception);
@@ -149,6 +166,26 @@ public final class HttpRequester implements Requester {
         request.getHeaders().forEach(builder::add);
         if (requestOptions != null) {
             requestOptions.getHeaders().forEach(builder::add);
+        }
+        return builder.build();
+    }
+
+
+    /**
+     * Returns a suitable OkHttpClient instance based on the provided request options.
+     */
+    @NotNull
+    private OkHttpClient getOkHttpClient(RequestOptions requestOptions) {
+        // Return the default client if no request options are provided.
+        if (requestOptions == null) return httpClient;
+
+        // Create a new client builder from the default client and adjust timeouts if provided.
+        OkHttpClient.Builder builder = httpClient.newBuilder();
+        if (requestOptions.getReadTimeout() != null) {
+            builder.readTimeout(requestOptions.getReadTimeout());
+        }
+        if (requestOptions.getWriteTimeout() != null) {
+            builder.writeTimeout(requestOptions.getWriteTimeout());
         }
         return builder.build();
     }
