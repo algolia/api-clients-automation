@@ -282,6 +282,6 @@ ScheduleDateUtilsInput:
 
 failureThreshold:
   type: integer
-  min: 0
-  max: 100
+  minimum: 0
+  maximum: 100
   description: A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
