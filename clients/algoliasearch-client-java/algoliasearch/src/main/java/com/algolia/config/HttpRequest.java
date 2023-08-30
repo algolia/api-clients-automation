@@ -1,8 +1,6 @@
 package com.algolia.config;
 
 import com.algolia.utils.StringUtils;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.*;
 
 public class HttpRequest {

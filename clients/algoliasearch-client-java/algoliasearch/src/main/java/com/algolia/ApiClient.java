@@ -18,18 +18,16 @@ import java.util.stream.Collectors;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a base client for making API requests. The client uses a {@link Requester} for executing requests and
- * an {@link ExecutorService} for asynchronous operations. It is designed to be extended by concrete API client
- * implementations.
+ * Represents a base client for making API requests. The client uses a {@link Requester} for
+ * executing requests and an {@link ExecutorService} for asynchronous operations. It is designed to
+ * be extended by concrete API client implementations.
  */
 public abstract class ApiClient implements Closeable {
 
   private final Requester requester;
   private final ExecutorService executor;
 
-  /**
-   * Constructs a new instance of the {@link ApiClient}.
-   */
+  /** Constructs a new instance of the {@link ApiClient}. */
   protected ApiClient(String appId, String apiKey, String clientName, @Nullable ClientOptions options, List<Host> defaultHosts) {
     if (appId == null || appId.isEmpty()) {
       throw new AlgoliaRuntimeException("`appId` is missing.");
@@ -40,14 +38,12 @@ public abstract class ApiClient implements Closeable {
     final ClientOptions clientOptions = options != null ? options : new ClientOptions();
     this.executor = clientOptions.getExecutor();
     this.requester =
-      clientOptions.getCustomRequester() != null
-        ? clientOptions.getCustomRequester()
-        : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
+    clientOptions.getCustomRequester() != null
+      ? clientOptions.getCustomRequester()
+      : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
   }
 
-  /**
-   * Creates a default {@link Requester} for executing API requests.
-   */
+  /** Creates a default {@link Requester} for executing API requests. */
   private Requester defaultRequester(String appId, String apiKey, String clientName, ClientOptions options, List<Host> defaultHosts) {
     AlgoliaAgent algoliaAgent = new AlgoliaAgent(BuildConfig.VERSION)
       .addSegment(new AlgoliaAgent.Segment(clientName, BuildConfig.VERSION))
@@ -68,18 +64,23 @@ public abstract class ApiClient implements Closeable {
   }
 
   /**
-   * Executes an HTTP request asynchronously and returns a {@link CompletableFuture} of the response deserialized into
-   * a specified type.
+   * Executes an HTTP request asynchronously and returns a {@link CompletableFuture} of the response
+   * deserialized into a specified type.
    */
   protected <T> CompletableFuture<T> executeAsync(HttpRequest httpRequest, RequestOptions requestOptions, TypeReference<T> returnType) {
     return CompletableFuture.supplyAsync(() -> requester.execute(httpRequest, requestOptions, returnType), executor);
   }
 
   /**
-   * Executes an HTTP request asynchronously and returns a {@link CompletableFuture} of the response deserialized into
-   * a specified type.
+   * Executes an HTTP request asynchronously and returns a {@link CompletableFuture} of the response
+   * deserialized into a specified type.
    */
-  protected <T> CompletableFuture<T> executeAsync(HttpRequest httpRequest, RequestOptions requestOptions, Class<?> returnType, Class<?> innerType) {
+  protected <T> CompletableFuture<T> executeAsync(
+    HttpRequest httpRequest,
+    RequestOptions requestOptions,
+    Class<?> returnType,
+    Class<?> innerType
+  ) {
     return CompletableFuture.supplyAsync(() -> requester.execute(httpRequest, requestOptions, returnType, innerType), executor);
   }
 

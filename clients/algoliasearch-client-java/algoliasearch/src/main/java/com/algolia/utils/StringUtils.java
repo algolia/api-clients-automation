@@ -1,7 +1,5 @@
 package com.algolia.utils;
 
-import com.algolia.config.HttpRequest;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDate;
@@ -10,7 +8,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class StringUtils {
 
@@ -54,9 +51,7 @@ public class StringUtils {
       throw new UnsupportedOperationException("Date must come as string (already serialized)");
     }
     if (value instanceof Collection) {
-      List<String> strings = ((Collection<?>) value).stream()
-              .map(String::valueOf)
-              .collect(Collectors.toList());
+      List<String> strings = ((Collection<?>) value).stream().map(String::valueOf).collect(Collectors.toList());
       return String.join(",", strings);
     }
 

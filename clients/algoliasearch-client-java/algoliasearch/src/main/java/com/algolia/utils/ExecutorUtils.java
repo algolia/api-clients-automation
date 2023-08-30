@@ -7,17 +7,24 @@ import java.util.concurrent.TimeUnit;
 
 public class ExecutorUtils {
 
-    private ExecutorUtils() {
-        // Empty.
-    }
+  private ExecutorUtils() {
+    // Empty.
+  }
 
-    private static final String THREAD_NAME = "algolia-worker";
+  private static final String THREAD_NAME = "algolia-worker";
 
-    public static ExecutorService newThreadPool() {
-        return new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, new SynchronousQueue<>(), runnable -> {
-            Thread thread = new Thread(runnable, THREAD_NAME);
-            thread.setDaemon(false);
-            return thread;
-        });
-    }
+  public static ExecutorService newThreadPool() {
+    return new ThreadPoolExecutor(
+      0,
+      Integer.MAX_VALUE,
+      60,
+      TimeUnit.SECONDS,
+      new SynchronousQueue<>(),
+      runnable -> {
+        Thread thread = new Thread(runnable, THREAD_NAME);
+        thread.setDaemon(false);
+        return thread;
+      }
+    );
+  }
 }
