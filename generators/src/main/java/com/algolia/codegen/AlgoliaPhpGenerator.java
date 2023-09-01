@@ -44,6 +44,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.add(new SupportingFile("ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
 
     supportingFiles.add(new SupportingFile("client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php"));
+    supportingFiles.add(new SupportingFile("Algolia.mustache", "lib", "Algolia.php"));
 
     setDefaultGeneratorOptions(client);
     try {
