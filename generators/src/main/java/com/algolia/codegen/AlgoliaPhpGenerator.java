@@ -36,6 +36,9 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
     // Remove base template as we want to change its path
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("Configuration.mustache"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals(".php-cs-fixer.php"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals(".php-cs-fixer.dist.php"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals("phpunit.xml.mustache"));
 
     supportingFiles.add(new SupportingFile("Configuration.mustache", "lib/Configuration", "Configuration.php"));
     supportingFiles.add(new SupportingFile("ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
