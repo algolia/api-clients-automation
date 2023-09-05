@@ -73,6 +73,45 @@ dependencies {
 ```
 
 </TabItem>
+
+<TabItem value="kotlin">
+
+**JVM**
+
+1. Install the Kotlin client by adding the following dependency to your `gradle.build` file:
+
+```groovy
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.algolia:algoliasearch-client-kotlin:$version"
+}
+```
+
+2. Choose and add to your dependencies one of [Ktor's engines](https://ktor.io/docs/http-client-engines.html).
+
+  - **BOM**
+
+    Alternatively, you can use `algoliasearch-client-kotlin-bom`  by adding the following dependency to your `build.gradle` file
+
+    ```groovy
+    dependencies {
+        // import Kotlin API client BOM
+        implementation platform("com.algolia:algoliasearch-client-kotlin-bom:$version")
+
+        // define dependencies without versions
+        implementation 'com.algolia:algoliasearch-client-kotlin'
+        runtimeOnly 'io.ktor:ktor-client-okhttp'
+    }
+    ```
+
+**Multiplaform**
+
+In multiplatform projects, add Algolia API client dependency to `commonMain`, and choose an [engine](https://ktor.io/docs/http-client-engines.html) for each target.
+
+</TabItem>
 </TabsLanguage>
 
 ## Using the client
@@ -177,6 +216,19 @@ try {
 ```
 
 </TabItem>
+
+<TabItem value="kotlin">
+// TBD
+</TabItem>
+
+<TabItem value="dart">
+// TBD
+</TabItem>
+
+<TabItem value="go">
+// TBD
+</TabItem>
+
 </TabsLanguage>
 
 ## Advanced use cases
