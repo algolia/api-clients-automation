@@ -218,7 +218,37 @@ try {
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+import com.algolia.client.api.SearchClient
+import com.algolia.client.model.search.*
+import kotlinx.serialization.json.*
+
+// Instantiate the client
+val client = SearchClient(appId = "<YOUR_APP_ID>", apiKey = "<YOUR_API_KEY>")
+
+// Add a new record to your Algolia index
+val record = buildJsonObject {
+    put("objectID", "id1")
+    put("title", "My Algolia Object")
+}
+client.saveObject(indexName = "<YOUR_INDEX_NAME>", body = record)
+
+// Fetch search results
+val response = client.search(
+    searchMethodParams = SearchMethodParams(
+        requests = listOf(
+            SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>" // Typo tolerant search
+            ),
+        ),
+    )
+)
+
+println(response)
+```
+
 </TabItem>
 
 <TabItem value="dart">
