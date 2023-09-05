@@ -74,6 +74,24 @@ client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
 ```
 
 </TabItem>
+
+<TabItem value="kotlin">
+
+```kotlin
+val response = client.operationIndex(
+    indexName = "<SOURCE_INDEX_NAME>",
+    operationIndexParams = OperationIndexParams(
+        operation = OperationType.Copy,
+        destination = "<DESTINATION_INDEX_NAME>"
+    ),
+)
+
+// Poll the task status until it's done
+client.waitTask("<SOURCE_INDEX_NAME>", response.taskID)
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ## Rename/move an index
@@ -136,6 +154,23 @@ UpdatedAtResponse response = client.operationIndex(
 
 // Poll the task status until it's done
 client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
+```
+
+</TabItem>
+
+<TabItem value="kotlin">
+
+```kotlin
+val response = client.operationIndex(
+    indexName = "<SOURCE_INDEX_NAME>",
+    operationIndexParams = OperationIndexParams(
+        operation = OperationType.Move,
+        destination = "<DESTINATION_INDEX_NAME>"
+    ),
+)
+
+// Poll the task status until it's done
+client.waitTask("<SOURCE_INDEX_NAME>", response.taskID)
 ```
 
 </TabItem>
@@ -206,6 +241,23 @@ UpdatedAtResponse response = client.operationIndex(
 
 // Poll the task status until it's done
 client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
+```
+
+</TabItem>
+
+<TabItem value="kotlin">
+
+```kotlin
+val response = client.operationIndex(
+    indexName = "<SOURCE_INDEX_NAME>",
+    operationIndexParams = OperationIndexParams(
+        operation = OperationType.Move,
+        destination = "<DESTINATION_INDEX_NAME>",
+        scope = listOf(ScopeType.Rules),
+    ),
+)
+
+client.waitTask("<SOURCE_INDEX_NAME>", response.taskID)
 ```
 
 </TabItem>
