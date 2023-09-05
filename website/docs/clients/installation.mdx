@@ -183,6 +183,7 @@ var_dump(
 <TabItem value="java">
 
 ```java
+import com.algolia.api.SearchClient;
 import com.algolia.model.search.*;
 import java.util.*;
 
@@ -196,23 +197,19 @@ body.put("title", "My Algolia Object");
 
 client.saveObject("<YOUR_INDEX_NAME>", body);
 
-// Fetch search results
-SearchMethodParams searchMethodParams = new SearchMethodParams();
-SearchQueries requests = new SearchQueries();
-requests.setIndexName("<YOUR_INDEX_NAME>");
-// Typo tolerant search
-requests.setQuery("my aloglia ojbect");
-searchMethodParams.setRequests(requests);
+// Single index Search
+SearchParamsObject searchParams = new SearchParamsObject().setQuery("my aloglia ojbect");
+SearchResponse<Map> response = client.searchSingleIndex("<YOUR_INDEX_NAME>", SearchParams.of(searchParams), Map.class);
+System.out.println(response);
 
-try {
-  SearchResponse<MyObject> result = client.search(
-    searchMethodParams,
-    MyObject.class
-  );
-  System.out.println(result);
-} catch (AlgoliaRuntimeException e) {
-  e.printStackTrace();
-}
+// Multi index search
+SearchForHits query = new SearchForHits()
+        .setIndexName("<YOUR_INDEX_NAME>")
+        .setQuery("my aloglia ojbect");
+SearchMethodParams searchMethodParams = new SearchMethodParams()
+        .addRequests(SearchQuery.of(query));
+SearchResponses<Object> responses = client.search(searchMethodParams);
+System.out.println(responses);
 ```
 
 </TabItem>
