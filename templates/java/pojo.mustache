@@ -5,7 +5,7 @@
 @Deprecated{{/isDeprecated}}
 {{>additionalModelTypeAnnotations}}
 
-public class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {
+public class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}{{#vendorExtensions.x-one-of-element}} implements {{#vendorExtensions.x-one-of-element-parents}}{{parent_classname}}{{^-last}}, {{/-last}}{{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}} {
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
 
