@@ -124,7 +124,7 @@ DestinationIndexName:
       description: The index name to store data in.
     recordType:
       type: string
-      description: Determines the indexing strategy for used for a given e-commerce source.
+      description: Determines the indexing strategy to use for a given e-commerce source.
       enum: ['product', 'variant']
   required:
     - indexName
