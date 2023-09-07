@@ -1,21 +1,21 @@
 package com.algolia.config;
 
+import javax.annotation.Nonnull;
 import java.time.Duration;
 import java.util.Map;
-import org.jetbrains.annotations.NotNull;
 
 public interface ClientConfig {
-  public @NotNull LogLevel getLogLevel();
+  public @Nonnull LogLevel getLogLevel();
 
   public Logger getLogger();
 
-  public @NotNull Duration getConnectTimeout();
+  public @Nonnull Duration getConnectTimeout();
 
-  public @NotNull Duration getWriteTimeout();
+  public @Nonnull Duration getWriteTimeout();
 
-  public @NotNull Duration getReadTimeout();
+  public @Nonnull Duration getReadTimeout();
 
-  public @NotNull Map<String, String> getDefaultHeaders();
+  public @Nonnull Map<String, String> getDefaultHeaders();
 
-  public @NotNull CompressionType getCompressionType();
+  public @Nonnull CompressionType getCompressionType();
 }
