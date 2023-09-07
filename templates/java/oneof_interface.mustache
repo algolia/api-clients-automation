@@ -22,9 +22,8 @@ public interface {{classname}} {
     {{#vendorExtensions}}
     {{#x-one-of-list}}
     {{^child}}
-
     /** {{classname}} as {{{type}}} wrapper. */
-    static {{classname}} of({{{type}}} value) {
+    static {{classname}} of{{#x-one-of-explicit-name}}{{name}}{{/x-one-of-explicit-name}}({{{type}}} value) {
         return new {{name}}Wrapper(value);
     }
     {{/child}}    
