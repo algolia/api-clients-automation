@@ -123,11 +123,14 @@ DestinationIndexName:
       type: string
       description: The index name to store data in.
     recordType:
-      type: string
-      description: Determines the indexing strategy to use for a given e-commerce source.
-      enum: ['product', 'variant']
+      $ref: '#/RecordType'
   required:
     - indexName
+
+RecordType:
+  type: string
+  description: Determines the indexing strategy to use for a given e-commerce source.
+  enum: [ 'product', 'variant' ]
 
 DestinationInput:
   oneOf:
