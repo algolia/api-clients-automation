@@ -61,7 +61,7 @@ DestinationCreateResponse:
 DestinationUpdate:
   type: object
   additionalProperties: false
-  description: Payload to partialy update a Destination.
+  description: Payload to partially update a Destination.
   properties:
     type:
       $ref: '#/DestinationType'
@@ -122,6 +122,10 @@ DestinationIndexName:
     indexName:
       type: string
       description: The index name to store data in.
+    recordType:
+      type: string
+      description: Determines the indexing strategy for used for a given e-commerce source.
+      enum: ['product', 'variant']
   required:
     - indexName
 
