@@ -50,8 +50,11 @@ public class Search {
     }
 
     private static void singleSearch(SearchClient client, String indexName, String query) {
-        AroundPrecision around = AroundPrecision.of(1000);
-        SearchResponse<Actor> actorSearchResponse = client.searchSingleIndex(indexName, new SearchParamsObject().setQuery(query).setAroundPrecision(around), Actor.class);
+        SearchParamsObject params = new SearchParamsObject()
+                .setQuery(query)
+                .setAroundPrecision(AroundPrecision.of(1000))
+                .setAroundRadius(AroundRadiusAll.ALL);
+        SearchResponse<Actor> actorSearchResponse = client.searchSingleIndex(indexName, params, Actor.class);
         System.out.println("-> Single Index Search:");
         for (var hit : actorSearchResponse.getHits()) {
             System.out.println("> " + hit.name);
