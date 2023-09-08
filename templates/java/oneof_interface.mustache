@@ -70,12 +70,15 @@ public interface {{classname}} {
             if (tree.{{#isObject}}isObject(){{/isObject}}{{#isList}}isArray(){{/isList}}{{^isObject}}{{^isList}}isValueNode(){{/isList}}{{/isObject}}{{#discriminators}} && tree.has("{{field}}"){{/discriminators}}) {
                 try(JsonParser parser = tree.traverse(jp.getCodec())) {  
                     {{#isObject}}
-                    return parser.readValueAs(new TypeReference<{{{type}}}>() {});
+                    return parser.readValueAs({{{type}}}.class);
                     {{/isObject}}
-                    {{^isObject}}
-                    {{{type}}} value = parser.readValueAs(new TypeReference<{{{type}}}>() {});
+                    {{#isList}}
+                    return parser.readValueAs(new TypeReference<{{{type}}}>(){});
+                    {{/isList}}
+                    {{^isObject}}{{^isList}}
+                    {{{type}}} value = parser.readValueAs({{{type}}}.class);
                     return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value);
-                    {{/isObject}}
+                    {{/isList}}{{/isObject}}
                 } catch (Exception e) {
                     // deserialization failed, continue
                     LOGGER.finest("Failed to deserialize oneOf {{{type}}} (error: " + e.getMessage() + ") (type: {{{type}}})");

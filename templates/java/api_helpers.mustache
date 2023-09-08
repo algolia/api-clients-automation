@@ -9,11 +9,12 @@
   * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
   */
 public void waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
-  TaskUtils.retryUntil(() -> {
-    return this.getTask(indexName, taskID, requestOptions);
-  }, (GetTaskResponse task) -> {
-    return task.getStatus() == TaskStatus.PUBLISHED;
-  }, maxRetries, timeout);
+  TaskUtils.retryUntil(
+    () -> this.getTask(indexName, taskID, requestOptions),
+    (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
+    maxRetries, 
+    timeout
+  );
 }
 
 /**
@@ -74,9 +75,7 @@ public GetApiKeyResponse waitForApiKey(
 
     // when updating an api key, we poll the api until we receive a different key
     return TaskUtils.retryUntil(
-      () -> {
-        return this.getApiKey(key, requestOptions);
-      },
+      () -> this.getApiKey(key, requestOptions),
       (GetApiKeyResponse respKey) -> {
         // we need to convert to an ApiKey object to use the `equals` method
         ApiKey sameType = new ApiKey()
@@ -326,6 +325,6 @@ public Iterable<Rule> browseRules(String indexName, SearchRulesParams params) {
   * @param indexName The index in which to perform the request.
   */
 public Iterable<Rule> browseRules(String indexName) {
-  return browseRules(indexName, null, null);
+  return browseRules(indexName, new SearchRulesParams(), null);
 }
 {{/isSearchClient}}

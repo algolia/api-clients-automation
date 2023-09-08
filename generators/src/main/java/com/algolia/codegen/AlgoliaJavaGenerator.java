@@ -80,7 +80,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    // OneOfUtils.propagateOneOfToOperations(operations, models);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
   }

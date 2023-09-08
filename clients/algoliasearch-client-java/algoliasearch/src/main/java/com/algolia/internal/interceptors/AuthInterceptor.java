@@ -1,11 +1,10 @@
 package com.algolia.internal.interceptors;
 
 import java.io.IOException;
+import javax.annotation.Nonnull;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.Response;
-
-import javax.annotation.Nonnull;
 
 public final class AuthInterceptor implements Interceptor {
 

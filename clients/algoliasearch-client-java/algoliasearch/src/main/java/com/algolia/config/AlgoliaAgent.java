@@ -1,9 +1,9 @@
 package com.algolia.config;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.Nonnull;
 
 public final class AlgoliaAgent {
 

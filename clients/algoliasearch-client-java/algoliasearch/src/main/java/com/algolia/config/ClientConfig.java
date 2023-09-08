@@ -1,8 +1,8 @@
 package com.algolia.config;
 
-import javax.annotation.Nonnull;
 import java.time.Duration;
 import java.util.Map;
+import javax.annotation.Nonnull;
 
 public interface ClientConfig {
   public @Nonnull LogLevel getLogLevel();

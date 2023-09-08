@@ -17,12 +17,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import javax.annotation.Nonnull;
 
 /**
  * A retry strategy that implements {@link Interceptor}, responsible for routing requests to hosts

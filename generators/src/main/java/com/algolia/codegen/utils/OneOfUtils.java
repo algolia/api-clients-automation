@@ -107,7 +107,6 @@ public class OneOfUtils {
   private static final Comparator<Map<String, Object>> comparator = (mapA, mapB) -> {
     boolean hasDiscriminatorA = mapA.containsKey("discriminators");
     boolean hasDiscriminatorB = mapB.containsKey("discriminators");
-
     // Maps with "discriminators" come first
     if (hasDiscriminatorA && !hasDiscriminatorB) {
       return -1;
