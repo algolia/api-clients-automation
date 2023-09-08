@@ -99,17 +99,20 @@ public sealed interface SourceInput {
      * @param projectKey
      * @param storeKeys
      * @param locales Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
+     * @param fallbackIsInStockValue Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
      */
     public fun SourceCommercetools(
       url: String,
       projectKey: String,
       storeKeys: List<String>? = null,
       locales: List<String>? = null,
+      fallbackIsInStockValue: Boolean? = null,
     ): SourceCommercetools = com.algolia.client.model.ingestion.SourceCommercetools(
       url = url,
       projectKey = projectKey,
       storeKeys = storeKeys,
       locales = locales,
+      fallbackIsInStockValue = fallbackIsInStockValue,
     )
 
     /**
@@ -120,7 +123,6 @@ public sealed interface SourceInput {
      * @param imageType
      * @param configuration The configuration of the spec.
      * @param version The version of the image, defaults to `latest`.
-     * @param outputFile The full name of the output file.
      */
     public fun SourceDocker(
       registry: DockerRegistry,
@@ -128,14 +130,12 @@ public sealed interface SourceInput {
       imageType: DockerImageType,
       configuration: JsonObject,
       version: String? = null,
-      outputFile: String? = null,
     ): SourceDocker = com.algolia.client.model.ingestion.SourceDocker(
       registry = registry,
       image = image,
       imageType = imageType,
       configuration = configuration,
       version = version,
-      outputFile = outputFile,
     )
 
     /**

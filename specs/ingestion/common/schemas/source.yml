@@ -115,6 +115,11 @@ SourceCommercetools:
       type: string
     projectKey:
       type: string
+    fallbackIsInStockValue:
+      type: boolean
+      default: true
+      description: >
+        Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
   required:
     - url
     - projectKey
@@ -273,10 +278,6 @@ SourceDocker:
       example: v2.1.0
     imageType:
       $ref: '#/DockerImageType'
-    outputFile:
-      type: string
-      description: The full name of the output file.
-      example: output.json
     configuration:
       type: object
       description: The configuration of the spec.
