@@ -1,3 +1,7 @@
+## [4.0.0-beta.5](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.4...4.0.0-beta.5)
+
+- [d18321c1](https://github.com/algolia/api-clients-automation/commit/d18321c1) rafactor(java): improve `oneOf` types DX ([#1990](https://github.com/algolia/api-clients-automation/pull/1990)) by [@aallam](https://github.com/aallam/)
+
 ## [4.0.0-beta.4](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.3...4.0.0-beta.4)
 
 - [24affb264](https://github.com/algolia/api-clients-automation/commit/24affb264) feat(specs): add `recordType` and `fallbackIsInStockValue` in inputs ([#1988](https://github.com/algolia/api-clients-automation/pull/1988)) by [@damcou](https://github.com/damcou/)
