@@ -194,21 +194,14 @@ SearchClient client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 Map<String, String> body = new HashMap<>();
 body.put("objectID", "id1");
 body.put("title", "My Algolia Object");
-
 client.saveObject("<YOUR_INDEX_NAME>", body);
 
-// Single index Search
-SearchParamsObject searchParams = new SearchParamsObject().setQuery("my aloglia ojbect");
-SearchResponse<Map> response = client.searchSingleIndex("<YOUR_INDEX_NAME>", SearchParams.of(searchParams), Map.class);
-System.out.println(response);
-
-// Multi index search
-SearchForHits query = new SearchForHits()
+// Fetch search results
+SearchForHits request = new SearchForHits()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("my aloglia ojbect");
-SearchMethodParams searchMethodParams = new SearchMethodParams()
-        .addRequests(SearchQuery.of(query));
-SearchResponses<Object> responses = client.search(searchMethodParams);
+SearchMethodParams params = new SearchMethodParams().addRequests(request);
+SearchResponses responses = client.search(params);
 System.out.println(responses);
 ```
 
