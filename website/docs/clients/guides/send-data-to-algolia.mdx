@@ -53,7 +53,11 @@ SearchClient client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+val client = SearchClient(appId = "<YOUR_INDEX_NAME>",apiKey = "<YOUR_API_KEY>")
+```
+
 </TabItem>
 
 <TabItem value="dart">
@@ -170,7 +174,37 @@ client.waitForTask("<YOUR_INDEX_NAME>", response.getTaskID());
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+import com.algolia.client.api.SearchClient
+import com.algolia.client.extensions.waitTask
+import com.algolia.client.model.search.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.*
+
+@Serializable
+data class Actor(val name: String)
+
+// The records retrieved by any of your data sources
+val records = listOf(Actor("Tom Cruise"), Actor("Scarlett Johansson"))
+
+// Here we construct the request to be sent to Algolia with the `batch` method
+val response = client.batch(
+    indexName = "<YOUR_INDEX_NAME>",
+    batchWriteParams = BatchWriteParams(
+        requests = records.map { actor ->
+            BatchRequest(
+                action = Action.AddObject,
+                body = Json.encodeToJsonElement(Actor.serializer(), actor).jsonObject,
+            )
+        },
+    )
+)
+
+// Wait for indexing to be finished
+client.waitTask("<YOUR_INDEX_NAME>", response.taskID)
+```
+
 </TabItem>
 
 <TabItem value="dart">
