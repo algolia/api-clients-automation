@@ -78,7 +78,7 @@ import com.algolia.model.search.*;
 client.search(
   new SearchMethodParams()
     .addRequests(
-      new SearchForFacets()
+      new SearchForHits()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .addFacets("author")
@@ -95,7 +95,7 @@ import com.algolia.model.search.*;
 client.search(
   new SearchMethodParams()
     .addRequests(
-      new SearchForFacets()
+      new SearchForHits()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .addFacets("*")
@@ -106,7 +106,41 @@ client.search(
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+import com.algolia.model.search.*;
+
+client.search(
+    searchMethodParams = SearchMethodParams(
+        requests = listOf(
+            SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                facets = listOf("author", "genre"),
+            )
+        )
+    )
+)
+```
+
+To extract all facet information, you can use a wildcard (`*`).
+
+```kotlin
+import com.algolia.model.search.*;
+
+client.search(
+    searchMethodParams = SearchMethodParams(
+        requests = listOf(
+            SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                facets = listOf("*"),
+            )
+        )
+    )
+)
+```
+
 </TabItem>
 
 <TabItem value="dart">
