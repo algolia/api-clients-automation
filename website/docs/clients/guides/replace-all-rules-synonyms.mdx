@@ -44,7 +44,16 @@ client.saveRulesAsync(
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+client.saveRules(
+    indexName = indexName,
+    rules = rules,
+    forwardToReplicas = false,
+    clearExistingRules = true
+)
+```
+
 </TabItem>
 
 <TabItem value="dart">
@@ -96,7 +105,16 @@ client.saveSynonymsAsync(
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+client.saveSynonyms(
+    indexName = indexName,
+    synonymHit = synonymHits,
+    forwardToReplicas = false,
+    replaceExistingSynonyms = true
+)
+```
+
 </TabItem>
 
 <TabItem value="dart">
