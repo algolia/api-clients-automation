@@ -57,7 +57,24 @@ client.batch(indexName, batchWriteParams);
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+val objectIDs = listOf("1", "2", "3", "4", "5")
+client.batch(
+    indexName = "<YOUR_INDEX_NAME>",
+    batchWriteParams = BatchWriteParams(
+        requests = objectIDs.map { objectID ->
+            BatchRequest(
+                action = Action.Delete,
+                body = buildJsonObject {
+                    put("objectID", JsonPrimitive(objectID))
+                },
+            )
+        }
+    )
+)
+```
+
 </TabItem>
 
 <TabItem value="dart">
