@@ -16,13 +16,11 @@ SearchClient client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForHits()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
     )
-  ),
-  MyObject.class
 );
 ```
 

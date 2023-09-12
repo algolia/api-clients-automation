@@ -113,14 +113,12 @@ import com.algolia.utils.RequestOptions;
 
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForHits()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .setHitsPerPage(50)
-    )
   ),
-  MyObject.class,
   new RequestOptions()
     // This header is added to the request
     .addExtraHeader("additional-header", "hello")

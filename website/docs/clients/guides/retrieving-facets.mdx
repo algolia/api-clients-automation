@@ -77,15 +77,13 @@ import com.algolia.model.search.*;
 
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForFacets()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .addFacets("author")
         .addFacets("genre")
     )
-  ),
-  MyObject.class
 );
 ```
 
@@ -96,14 +94,12 @@ import com.algolia.model.search.*;
 
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForFacets()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .addFacets("*")
     )
-  ),
-  MyObject.class
 );
 ```
 

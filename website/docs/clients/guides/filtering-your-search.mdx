@@ -148,40 +148,34 @@ import com.algolia.model.search.*;
 // Only "Scarlett Johansson" actor
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForFacets()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .setFilters("actor:Scarlett Johansson")
     )
-  ),
-  Actor.class
 );
 
 // Only "Tom Cruise" or "Scarlett Johansson" actor
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForFacets()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .setFilters("actor:Tom Cruise OR actor:Scarlett Johansson")
     )
-  ),
-  Actor.class
 );
 
 // Everything but "Nicolas Cage" actor
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForFacets()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .setFilters("NOT actor:Nicolas Cage")
     )
-  ),
-  Actor.class
 );
 ```
 
@@ -265,28 +259,24 @@ import com.algolia.model.search.*;
 // Only "Scarlett Johansson" actor
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForFacets()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .addFacetFilters("actor:Scarlett Johansson")
     )
-  ),
-  Actor.class
 );
 
 // Only "Tom Cruise" or "Scarlett Johansson" actor
 client.search(
   new SearchMethodParams()
-    .addRequests(SearchQuery.of(
+    .addRequests(
       new SearchForFacets()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setQuery("<YOUR_QUERY>")
         .addFacetFilters("actor:Tom Cruise")
         .addFacetFilters("actor:Scarlett Johansson")
     )
-  ),
-  Actor.class
 );
 ```
 
