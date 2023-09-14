@@ -73,7 +73,6 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     super.processOpts();
 
     Arrays.asList("source", "get", "hide", "operator").forEach(reservedWords::remove); // reserved words from dart-keywords.txt
-    //
     if (isAlgoliasearchClient) {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
       supportingFiles.add(new SupportingFile("lib.mustache", libPath, "algoliasearch_lite.dart"));
