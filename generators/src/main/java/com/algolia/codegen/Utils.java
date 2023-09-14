@@ -132,35 +132,6 @@ public class Utils {
 
   /**
    * Get the current version of the given client from the
-   * `clients/algoliasearch-client-dart/packages/${client}/pubspec.yaml` file, defaults to 0.0.1 if
-   * not found
-   */
-  public static String getPubspecVersion(String client) throws ConfigException {
-    try {
-      if (!client.startsWith("algoliasearch")) {
-        client = "client_" + client;
-      }
-
-      Yaml yaml = new Yaml();
-      Map<String, Object> pubspec = yaml.load(
-        new FileInputStream("clients/algoliasearch-client-dart/packages/" + client + "/pubspec.yaml")
-      );
-      String value = (String) pubspec.get("version");
-
-      if (value.isEmpty()) {
-        return "0.0.1";
-      }
-
-      return value;
-    } catch (ConfigException e) {
-      return "0.0.1";
-    } catch (Exception e) {
-      throw new ConfigException("Couldn't retrieve dart package version", e);
-    }
-  }
-
-  /**
-   * Get the current version of the given client from the
    * `clients/algoliasearch-client-javascript/packages/${client}/package.json` file, defaults to
    * 0.0.1 if not found
    */
