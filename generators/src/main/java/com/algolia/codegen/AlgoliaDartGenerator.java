@@ -30,7 +30,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
     isAlgoliasearchClient = client.equals("algoliasearch");
-    String version = Utils.getOpenApiToolsField("dart", client, "packageVersion");
+    String version = Utils.getPubspecVersion(client);
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
 
     // pubspec.yaml
@@ -72,8 +72,8 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     if (isAlgoliasearchClient) {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
       supportingFiles.add(new SupportingFile("lib.mustache", libPath, "algoliasearch_lite.dart"));
-      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("dart", "search", "packageVersion"));
-      additionalProperties.put("insightsVersion", Utils.getOpenApiToolsField("dart", "insights", "packageVersion"));
+      additionalProperties.put("searchVersion", Utils.getPubspecVersion("search"));
+      additionalProperties.put("insightsVersion", Utils.getPubspecVersion("insights"));
     }
 
     // disable documentation and tests
