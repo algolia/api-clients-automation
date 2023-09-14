@@ -151,6 +151,12 @@ async function updateDartPackages(changelog: string, nextVersion: string): Promi
 
   // update `clients.config.json` file for the utils version.
   await writeJsonFile(toAbsolutePath('config/clients.config.json'), clientsConfig);
+
+  // we've bumped generated clients but still need to do the manual ones.
+  await bumpPubspecVersion(
+    toAbsolutePath('clients/algoliasearch-client-dart/packages/client_core/pubspec.yaml'),
+    nextVersion
+  );
 }
 
 /**
@@ -163,6 +169,22 @@ async function getPubspecField(filePath: string, field: string): Promise<string 
 
     return pubspec[field];
   } catch (error) {
-    throw new Error(`Error reading the file: ${error}`);
+    throw new Error(`Error reading file ${filePath}: ${error}`);
+  }
+}
+
+/**
+ * Bump 'version' of the given pubspec.yaml file path.
+ */
+async function bumpPubspecVersion(filePath: string, nextVersion: string): Promise<void> {
+  try {
+    const fileContent = await fsp.readFile(toAbsolutePath(filePath), 'utf8');
+    const pubspec = yaml.load(fileContent) as Record<string, any>;
+
+    pubspec.version = nextVersion;
+
+    await fsp.writeFile(filePath, yaml.dump(pubspec));
+  } catch (error) {
+    throw new Error(`Error writing file ${filePath}: ${error}`);
   }
 }
