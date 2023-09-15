@@ -17,7 +17,7 @@
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts"
   },
   "devDependencies": {
-    "@actions/core": "1.10.0",
+    "@actions/core": "1.10.1",
     "@jest/globals": "^29.6.4",
     "@octokit/rest": "20.0.1",
     "@types/folder-hash": "4.0.2",
