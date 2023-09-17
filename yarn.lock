@@ -51,7 +51,7 @@ __metadata:
     eslint-plugin-json-format: 2.0.1
     eslint-plugin-prettier: 5.0.0
     eslint-plugin-unused-imports: 3.0.0
-    eslint-plugin-yml: 1.8.0
+    eslint-plugin-yml: 1.9.0
     husky: 8.0.3
     js-yaml: 4.1.0
     json: 11.0.0
@@ -4871,9 +4871,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:1.8.0":
-  version: 1.8.0
-  resolution: "eslint-plugin-yml@npm:1.8.0"
+"eslint-plugin-yml@npm:1.9.0":
+  version: 1.9.0
+  resolution: "eslint-plugin-yml@npm:1.9.0"
   dependencies:
     debug: ^4.3.2
     lodash: ^4.17.21
@@ -4881,7 +4881,7 @@ __metadata:
     yaml-eslint-parser: ^1.2.1
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: f07dfe550b10797237cd4a8752813d9fbdad4c9feefef6b1b270af9290ed19f5d3f0379e6ca6945a8123ab95707e8ff9bb1cbe76824c21b3575ad44d6390df0d
+  checksum: d6ee8a32e1230e12aefc951040d06270f8c0fe9a7f93fa091a35eef05ebcf550556620ddabc65fcdb33700767445d6d07f71efd31021660ad51f1b8f0d0ed200
   languageName: node
   linkType: hard
 
