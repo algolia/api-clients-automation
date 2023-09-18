@@ -27,7 +27,6 @@ kotlin {
       languageSettings {
         optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
         optIn("kotlinx.serialization.ExperimentalSerializationApi")
-        optIn("com.algolia.client.InternalAlgoliaClient")
       }
     }
     val commonMain by getting {
