@@ -16,7 +16,7 @@ Event:
     type:
       $ref: '#/EventType'
     batchSize:
-      type: number
+      type: integer
       description: The extracted record batch size.
       example: 10
       minimum: 0
