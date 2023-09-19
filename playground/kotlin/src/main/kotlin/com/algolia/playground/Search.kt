@@ -15,7 +15,7 @@ suspend fun main() {
     val client = SearchClient(
         appId = dotenv["ALGOLIA_APPLICATION_ID"],
         apiKey = dotenv["ALGOLIA_SEARCH_KEY"],
-        options = ClientOptions(logLevel = LogLevel.BODY)
+        options = ClientOptions(logLevel = LogLevel.ALL)
     )
     val indexName = dotenv["SEARCH_INDEX"]
 
@@ -24,7 +24,7 @@ suspend fun main() {
         requests = listOf(
             SearchForHits(
                 indexName = indexName,
-                attributesToSnippet = listOf("title")
+                query = "a",
             )
         )
     )

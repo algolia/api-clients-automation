@@ -1,6 +1,7 @@
 package com.algolia.client.configuration.internal
 
 import com.algolia.client.configuration.ClientOptions
+import com.algolia.client.transport.internal.GzipPlugin
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -26,7 +27,7 @@ internal fun HttpClientConfig<*>.configure(
   appId: String,
   apiKey: String,
   options: ClientOptions,
-  agent: AlgoliaAgent,
+  algoliaAgent: AlgoliaAgent,
 ) {
   // Custom configuration
   options.httpClientConfig?.invoke(this)
@@ -44,13 +45,22 @@ internal fun HttpClientConfig<*>.configure(
   }
 
   // Logging
-  installLogging(options.logLevel, options.logger)
+  if (options.logLevel == LogLevel.NONE) return
+  install(Logging) {
+    level = options.logLevel
+    logger = options.logger
+  }
 
   // Algolia user agent
-  install(algoliaAgent(agent))
+  install(UserAgent) {
+    agent = algoliaAgent.toString()
+  }
 
   // Timeout
   install(HttpTimeout)
+
+  // Compression
+  install(GzipPlugin)
 
   // Defaults
   defaultRequest {
@@ -61,13 +71,4 @@ internal fun HttpClientConfig<*>.configure(
 
   // Enable default (2XX) validation
   expectSuccess = true
-}
-
-/** Installs [Logging] if logging level is superior to [LogLevel.NONE]. */
-private fun HttpClientConfig<*>.installLogging(logLevel: LogLevel, customLogger: Logger) {
-  if (LogLevel.NONE == logLevel) return
-  install(Logging) {
-    level = logLevel
-    logger = customLogger
-  }
 }

@@ -2,6 +2,7 @@ package com.algolia.client.configuration.internal
 
 import com.algolia.client.configuration.AgentSegment
 import io.ktor.client.plugins.api.*
+import io.ktor.http.*
 
 /** Handles to handle algolia agent segments. */
 internal class AlgoliaAgent(clientVersion: String) {
@@ -45,12 +46,6 @@ internal class AlgoliaAgent(clientVersion: String) {
 internal fun algoliaAgent(agent: AlgoliaAgent) =
   createClientPlugin("AlgoliaAgent") {
     onRequest { request, _ ->
-      request.url.parameters.apply {
-        val parameter = "X-Algolia-Agent"
-        val current = getAll(parameter) ?: listOf()
-        val updated = listOf(agent.toString()) + current
-        remove(parameter)
-        append(parameter, updated.joinToString("; "))
-      }
+      request.userAgent(agent.toString())
     }
   }
