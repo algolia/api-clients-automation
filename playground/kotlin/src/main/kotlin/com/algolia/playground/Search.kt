@@ -2,6 +2,7 @@ package com.algolia.playground
 
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.ClientOptions
+import com.algolia.client.configuration.CompressionType
 import com.algolia.client.model.search.SearchForHits
 import com.algolia.client.model.search.SearchMethodParams
 import com.algolia.client.model.search.SearchResponse
@@ -15,7 +16,7 @@ suspend fun main() {
     val client = SearchClient(
         appId = dotenv["ALGOLIA_APPLICATION_ID"],
         apiKey = dotenv["ALGOLIA_SEARCH_KEY"],
-        options = ClientOptions(logLevel = LogLevel.ALL)
+        options = ClientOptions(logLevel = LogLevel.HEADERS, compressionType = CompressionType.GZIP)
     )
     val indexName = dotenv["SEARCH_INDEX"]
 

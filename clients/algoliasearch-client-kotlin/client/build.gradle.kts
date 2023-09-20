@@ -16,6 +16,7 @@ kotlin {
   explicitApi()
   jvm()
 
+  linuxX64()
   if (HostManager.hostIsMac) {
     iosX64()
     iosArm64()
