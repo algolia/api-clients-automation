@@ -60,14 +60,14 @@ internal fun HttpClientConfig<*>.configure(
   // Timeout
   install(HttpTimeout)
 
-  // Auth
-  install(AlgoliaAuth) {
-    this.appId = appId
-    this.apiKey = apiKey
-  }
-
   // Defaults
   defaultRequest {
+    if (!headers.contains(HeaderApplicationID)) {
+      header(HeaderApplicationID, appId)
+    }
+    if (!headers.contains(HeaderAPIKey)) {
+      header(HeaderAPIKey, apiKey)
+    }
     options.defaultHeaders?.forEach { (key, value) -> header(key, value) }
   }
 

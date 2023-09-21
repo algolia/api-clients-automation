@@ -6,11 +6,11 @@ import io.ktor.client.*
 import kotlin.experimental.ExperimentalNativeApi
 
 internal actual fun platformAgentSegment(): AgentSegment {
-    @OptIn(ExperimentalNativeApi::class)
-    val os = "${Platform.osFamily.name} (${Platform.cpuArchitecture.name})"
-    return AgentSegment(os)
+  @OptIn(ExperimentalNativeApi::class)
+  val os = "${Platform.osFamily.name} (${Platform.cpuArchitecture.name})"
+  return AgentSegment(os)
 }
 
 internal actual fun HttpClientConfig<*>.platformConfig(options: ClientOptions) {
-    // NO-OP
+  // NO-OP
 }
