@@ -98,9 +98,7 @@ await client.waitForTask(
   // Number of maximum retries to do
   100,
   // The time to wait between retries
-  retryCount -> {
-    return Math.min(retryCount * 200, 5000);
-  }
+  retryCount -> Math.min(retryCount * 200, 5000);
 );
 ```
 
