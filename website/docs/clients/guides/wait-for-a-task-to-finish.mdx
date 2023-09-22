@@ -107,7 +107,30 @@ await client.waitForTask(
 </TabItem>
 
 <TabItem value="kotlin">
-// TBD
+
+```kotlin
+import com.algolia.client.api.SearchClient
+import com.algolia.client.extensions.waitTask
+import kotlinx.serialization.json.*
+
+val client = SearchClient("appId", "apiKey")
+val body = buildJsonObject {
+    put("title", "My Algolia Object")
+}
+val response = client.saveObject("<YOUR_INDEX_NAME>", body)
+
+// Poll the task status with defaults values
+client.waitTask("<YOUR_INDEX_NAME>", response.taskID)
+
+// Poll the task status with your options
+client.waitTask(
+    indexName = "<YOUR_INDEX_NAME>",
+    taskID = response.taskID,
+    maxRetries = 100,
+    timeout = 1.minutes,
+)
+```
+
 </TabItem>
 
 <TabItem value="dart">
