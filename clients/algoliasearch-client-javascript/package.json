@@ -23,7 +23,7 @@
     "@rollup/plugin-node-resolve": "15.2.1",
     "@rollup/plugin-terser": "0.4.3",
     "@types/jest": "29.5.5",
-    "@types/node": "18.17.15",
+    "@types/node": "18.17.18",
     "@types/rollup-plugin-node-globals": "1.4.1",
     "@types/semver": "7.5.2",
     "bundlesize2": "0.0.31",
