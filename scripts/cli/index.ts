@@ -164,19 +164,17 @@ csCommand
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
   .option(flags.interactive.flag, flags.interactive.description)
-  .action(
-    async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
-      const { language, client, clientList } = await prompt({
-        langArg,
-        clientArg,
-        interactive,
-      });
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
+    const { language, client, clientList } = await prompt({
+      langArg,
+      clientArg,
+      interactive,
+    });
 
-      setVerbose(Boolean(verbose));
+    setVerbose(Boolean(verbose));
 
-      await csGenerateMany(generatorList({ language, client, clientList }));
-    }
-  );
+    await csGenerateMany(generatorList({ language, client, clientList }));
+  });
 
 program
   .command('playground')
