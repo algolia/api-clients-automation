@@ -115,6 +115,11 @@ SourceCommercetools:
       type: string
     projectKey:
       type: string
+    fallbackIsInStockValue:
+      type: boolean
+      default: true
+      description: >
+        Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
   required:
     - url
     - projectKey
@@ -128,8 +133,34 @@ SourceBigCommerce:
       description: The store hash identifying the store the shopper is signing in to.
     channel:
       $ref: '#/BigCommerceChannel'
+    customFields:
+      type: array
+      items:
+        type: string
+    productMetafields:
+      type: array
+      items:
+        $ref: '#/BigCommerceMetafield'
+    variantMetafields:
+      type: array
+      items:
+        $ref: '#/BigCommerceMetafield'
   required:
     - store_hash
+
+BigCommerceMetafield:
+  type: object
+  additionalProperties: false
+  properties:
+    namespace:
+      type: string
+      description: The namespace of the metafield.
+    key:
+      type: string
+      description: The key identifier of the metafield.
+  required:
+    - namespace
+    - key
 
 BigCommerceChannel:
   type: object
@@ -235,6 +266,8 @@ SourceDocker:
   type: object
   additionalProperties: false
   properties:
+    imageType:
+      $ref: '#/DockerImageType'
     registry:
       $ref: '#/DockerRegistry'
     image:
@@ -245,12 +278,6 @@ SourceDocker:
       type: string
       description: The version of the image, defaults to `latest`.
       example: v2.1.0
-    imageType:
-      $ref: '#/DockerImageType'
-    outputFile:
-      type: string
-      description: The full name of the output file.
-      example: output.json
     configuration:
       type: object
       description: The configuration of the spec.
@@ -258,6 +285,26 @@ SourceDocker:
     - registry
     - image
     - imageType
+    - configuration
+
+SourceUpdateDocker:
+  type: object
+  additionalProperties: false
+  properties:
+    registry:
+      $ref: '#/DockerRegistry'
+    image:
+      type: string
+      description: The name of the image to pull.
+      example: algolia/zendesk
+    version:
+      type: string
+      description: The version of the image, defaults to `latest`.
+      example: v2.1.0
+    configuration:
+      type: object
+      description: The configuration of the spec.
+  required:
     - configuration
 
 DockerRegistry:
@@ -301,4 +348,4 @@ SourceUpdateInput:
     - $ref: '#/SourceJSON'
     - $ref: '#/SourceCSV'
     - $ref: '#/SourceBigQuery'
-    - $ref: '#/SourceDocker'
+    - $ref: '#/SourceUpdateDocker'

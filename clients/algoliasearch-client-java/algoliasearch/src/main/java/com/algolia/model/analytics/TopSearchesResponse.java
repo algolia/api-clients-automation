@@ -4,12 +4,14 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** TopSearchesResponse */
-public class TopSearchesResponse {
+@JsonDeserialize(as = TopSearchesResponse.class)
+public class TopSearchesResponse implements GetTopSearchesResponse {
 
   @JsonProperty("searches")
   private List<TopSearch> searches = new ArrayList<>();
@@ -24,11 +26,7 @@ public class TopSearchesResponse {
     return this;
   }
 
-  /**
-   * Top searches with their hits count.
-   *
-   * @return searches
-   */
+  /** Top searches with their hits count. */
   @javax.annotation.Nonnull
   public List<TopSearch> getSearches() {
     return searches;

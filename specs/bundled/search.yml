@@ -185,6 +185,8 @@ components:
     searchParamsString:
       type: object
       additionalProperties: false
+      x-discriminator-fields:
+        - params
       properties:
         params:
           $ref: '#/components/schemas/paramsAsString'
@@ -1283,7 +1285,6 @@ components:
         - dest
         - source
     userData:
-      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -1300,7 +1301,6 @@ components:
         - nbPages
         - hitsPerPage
         - processingTimeMS
-        - exhaustiveNbHits
       properties:
         abTestID:
           type: integer
@@ -2181,6 +2181,8 @@ components:
 
         `editSettings`: required to change index settings.
 
+        `inference`: required to access the Inference API.
+
         `listIndexes`: required to list indices.
 
         `logs`: required to access logs of search and indexing operations.
@@ -2203,6 +2205,7 @@ components:
         - deleteObject
         - deleteIndex
         - editSettings
+        - inference
         - listIndexes
         - logs
         - personalization
@@ -2547,7 +2550,6 @@ components:
             required:
               - objectID
         userData:
-          type: object
           description: >-
             Custom JSON object that will be appended to the userData array in
             the response. This object isn't interpreted by the API. It's limited

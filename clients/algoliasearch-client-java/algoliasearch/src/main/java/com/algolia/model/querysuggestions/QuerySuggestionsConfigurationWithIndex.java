@@ -4,6 +4,7 @@
 package com.algolia.model.querysuggestions;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,11 +35,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /**
-   * Query Suggestions index name.
-   *
-   * @return indexName
-   */
+  /** Query Suggestions index name. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;
@@ -54,11 +51,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /**
-   * Algolia indices from which to get the popular searches for query suggestions.
-   *
-   * @return sourceIndices
-   */
+  /** Algolia indices from which to get the popular searches for query suggestions. */
   @javax.annotation.Nonnull
   public List<SourceIndex> getSourceIndices() {
     return sourceIndices;
@@ -69,11 +62,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /**
-   * Get languages
-   *
-   * @return languages
-   */
+  /** Get languages */
   @javax.annotation.Nullable
   public Languages getLanguages() {
     return languages;
@@ -92,11 +81,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /**
-   * Patterns to exclude from query suggestions.
-   *
-   * @return exclude
-   */
+  /** Patterns to exclude from query suggestions. */
   @javax.annotation.Nullable
   public List<String> getExclude() {
     return exclude;
@@ -107,11 +92,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /**
-   * Turn on personalized query suggestions.
-   *
-   * @return enablePersonalization
-   */
+  /** Turn on personalized query suggestions. */
   @javax.annotation.Nullable
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
@@ -122,11 +103,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /**
-   * Allow suggestions with special characters.
-   *
-   * @return allowSpecialCharacters
-   */
+  /** Allow suggestions with special characters. */
   @javax.annotation.Nullable
   public Boolean getAllowSpecialCharacters() {
     return allowSpecialCharacters;

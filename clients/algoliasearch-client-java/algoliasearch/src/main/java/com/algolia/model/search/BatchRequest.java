@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** BatchRequest */
@@ -20,11 +21,7 @@ public class BatchRequest {
     return this;
   }
 
-  /**
-   * Get action
-   *
-   * @return action
-   */
+  /** Get action */
   @javax.annotation.Nonnull
   public Action getAction() {
     return action;
@@ -35,11 +32,7 @@ public class BatchRequest {
     return this;
   }
 
-  /**
-   * Operation arguments (varies with specified `action`).
-   *
-   * @return body
-   */
+  /** Operation arguments (varies with specified `action`). */
   @javax.annotation.Nonnull
   public Object getBody() {
     return body;

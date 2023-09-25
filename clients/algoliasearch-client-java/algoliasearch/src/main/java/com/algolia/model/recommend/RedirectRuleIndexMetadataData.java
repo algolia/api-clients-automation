@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Redirect rule data. */
@@ -17,11 +18,7 @@ public class RedirectRuleIndexMetadataData {
     return this;
   }
 
-  /**
-   * Get ruleObjectID
-   *
-   * @return ruleObjectID
-   */
+  /** Get ruleObjectID */
   @javax.annotation.Nonnull
   public String getRuleObjectID() {
     return ruleObjectID;

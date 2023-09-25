@@ -4,6 +4,7 @@
 package com.algolia.model.querysuggestions;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,11 +47,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * Your Algolia application ID.
-   *
-   * @return appId
-   */
+  /** Your Algolia application ID. */
   @javax.annotation.Nullable
   public String getAppId() {
     return appId;
@@ -61,11 +58,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * API key used to read from your source index.
-   *
-   * @return sourceIndicesAPIKey
-   */
+  /** API key used to read from your source index. */
   @javax.annotation.Nullable
   public String getSourceIndicesAPIKey() {
     return sourceIndicesAPIKey;
@@ -76,11 +69,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * API key used to write and configure your Query Suggestions index.
-   *
-   * @return suggestionsIndicesAPIKey
-   */
+  /** API key used to write and configure your Query Suggestions index. */
   @javax.annotation.Nullable
   public String getSuggestionsIndicesAPIKey() {
     return suggestionsIndicesAPIKey;
@@ -91,11 +80,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * API key used to read from external Algolia indices.
-   *
-   * @return externalIndicesAPIKey
-   */
+  /** API key used to read from external Algolia indices. */
   @javax.annotation.Nullable
   public String getExternalIndicesAPIKey() {
     return externalIndicesAPIKey;
@@ -106,11 +91,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * Query Suggestions index name.
-   *
-   * @return indexName
-   */
+  /** Query Suggestions index name. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;
@@ -126,11 +107,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * Algolia indices from which to get the popular searches for query suggestions.
-   *
-   * @return sourceIndices
-   */
+  /** Algolia indices from which to get the popular searches for query suggestions. */
   @javax.annotation.Nonnull
   public List<SourceIndex> getSourceIndices() {
     return sourceIndices;
@@ -141,11 +118,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * Get languages
-   *
-   * @return languages
-   */
+  /** Get languages */
   @javax.annotation.Nullable
   public Languages getLanguages() {
     return languages;
@@ -164,11 +137,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * Patterns to exclude from query suggestions.
-   *
-   * @return exclude
-   */
+  /** Patterns to exclude from query suggestions. */
   @javax.annotation.Nullable
   public List<String> getExclude() {
     return exclude;
@@ -179,11 +148,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * Turn on personalized query suggestions.
-   *
-   * @return enablePersonalization
-   */
+  /** Turn on personalized query suggestions. */
   @javax.annotation.Nullable
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
@@ -194,11 +159,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /**
-   * Allow suggestions with special characters.
-   *
-   * @return allowSpecialCharacters
-   */
+  /** Allow suggestions with special characters. */
   @javax.annotation.Nullable
   public Boolean getAllowSpecialCharacters() {
     return allowSpecialCharacters;

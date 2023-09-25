@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,11 +28,7 @@ public class Facets {
     return this;
   }
 
-  /**
-   * Pinned order of facet lists.
-   *
-   * @return order
-   */
+  /** Pinned order of facet lists. */
   @javax.annotation.Nullable
   public List<String> getOrder() {
     return order;

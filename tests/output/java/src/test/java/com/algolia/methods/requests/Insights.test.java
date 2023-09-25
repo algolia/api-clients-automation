@@ -8,19 +8,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 import com.algolia.EchoInterceptor;
 import com.algolia.EchoResponse;
 import com.algolia.api.InsightsClient;
+import com.algolia.config.*;
 import com.algolia.model.insights.*;
-import com.algolia.utils.ClientOptions;
-import com.algolia.utils.HttpRequester;
-import com.algolia.utils.JSONBuilder;
-import com.algolia.utils.RequestOptions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
@@ -33,11 +29,15 @@ class InsightsClientRequestsTests {
 
   @BeforeAll
   void init() {
-    json = new JSONBuilder().failOnUnknown(true).build();
-    HttpRequester requester = new HttpRequester();
-    echo = new EchoInterceptor();
-    requester.addInterceptor(echo.getEchoInterceptor());
-    client = new InsightsClient("appId", "apiKey", "us", new ClientOptions().setRequester(requester));
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+    this.echo = new EchoInterceptor();
+    var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    this.client = new InsightsClient("appId", "apiKey", "us", options);
+  }
+
+  @AfterAll
+  void tearUp() throws Exception {
+    client.close();
   }
 
   @Test
@@ -49,9 +49,8 @@ class InsightsClientRequestsTests {
       client.del(path0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/minimal");
-    assertEquals(req.method, "DELETE");
+    assertEquals("/1/test/minimal", req.path);
+    assertEquals("DELETE", req.method);
     assertNull(req.body);
   }
 
@@ -69,9 +68,8 @@ class InsightsClientRequestsTests {
       client.del(path0, parameters0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/all");
-    assertEquals(req.method, "DELETE");
+    assertEquals("/1/test/all", req.path);
+    assertEquals("DELETE", req.method);
     assertNull(req.body);
 
     try {
@@ -96,9 +94,8 @@ class InsightsClientRequestsTests {
       client.get(path0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/minimal");
-    assertEquals(req.method, "GET");
+    assertEquals("/1/test/minimal", req.path);
+    assertEquals("GET", req.method);
     assertNull(req.body);
   }
 
@@ -116,9 +113,8 @@ class InsightsClientRequestsTests {
       client.get(path0, parameters0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/all");
-    assertEquals(req.method, "GET");
+    assertEquals("/1/test/all", req.path);
+    assertEquals("GET", req.method);
     assertNull(req.body);
 
     try {
@@ -143,12 +139,9 @@ class InsightsClientRequestsTests {
       client.post(path0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/minimal");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/minimal", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test
@@ -170,12 +163,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/all");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"body\":\"parameters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/all", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"body\":\"parameters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue("{\"query\":\"parameters\"}", new TypeReference<HashMap<String, String>>() {});
@@ -212,12 +202,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -257,12 +244,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -302,12 +286,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue("{\"query\":\"parameters\"}", new TypeReference<HashMap<String, String>>() {});
@@ -329,7 +310,7 @@ class InsightsClientRequestsTests {
       Map<String, String> actualHeaders = req.headers;
 
       for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
-        assertEquals(actualHeaders.get(p.getKey()), p.getValue());
+        assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
       }
     } catch (JsonProcessingException e) {
       fail("failed to parse headers json");
@@ -358,12 +339,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue("{\"query\":\"parameters\"}", new TypeReference<HashMap<String, String>>() {});
@@ -385,7 +363,7 @@ class InsightsClientRequestsTests {
       Map<String, String> actualHeaders = req.headers;
 
       for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
-        assertEquals(actualHeaders.get(p.getKey()), p.getValue());
+        assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
       }
     } catch (JsonProcessingException e) {
       fail("failed to parse headers json");
@@ -414,12 +392,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -459,12 +434,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -504,12 +476,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -549,12 +518,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -594,12 +560,9 @@ class InsightsClientRequestsTests {
       client.post(path0, parameters0, body0, requestOptions);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/requestOptions");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -655,7 +618,7 @@ class InsightsClientRequestsTests {
           }
           events_02.setPositions(positions3);
         }
-        events1.add(EventsItems.of(events_02));
+        events1.add(events_02);
       }
       insightsEvents0.setEvents(events1);
     }
@@ -664,17 +627,191 @@ class InsightsClientRequestsTests {
       client.pushEvents(insightsEvents0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/events");
-    assertEquals(req.method, "POST");
-    assertDoesNotThrow(() -> {
+    assertEquals("/1/events", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"events\":[{\"eventType\":\"click\",\"eventName\":\"Product" +
         " Clicked\",\"index\":\"products\",\"userToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\",\"positions\":[7,6]}]}",
         req.body,
         JSONCompareMode.STRICT
-      );
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("Many events type")
+  void pushEventsTest1() {
+    InsightsEvents insightsEvents0 = new InsightsEvents();
+    {
+      List<EventsItems> events1 = new ArrayList<>();
+      {
+        ConvertedObjectIDsAfterSearch events_02 = new ConvertedObjectIDsAfterSearch();
+        {
+          ConversionEvent eventType3 = ConversionEvent.fromValue("conversion");
+          events_02.setEventType(eventType3);
+          String eventName3 = "Product Purchased";
+          events_02.setEventName(eventName3);
+          String index3 = "products";
+          events_02.setIndex(index3);
+          String userToken3 = "user-123456";
+          events_02.setUserToken(userToken3);
+          long timestamp3 = 1641290601962L;
+          events_02.setTimestamp(timestamp3);
+          List<String> objectIDs3 = new ArrayList<>();
+          {
+            String objectIDs_04 = "9780545139700";
+            objectIDs3.add(objectIDs_04);
+            String objectIDs_14 = "9780439784542";
+            objectIDs3.add(objectIDs_14);
+          }
+          events_02.setObjectIDs(objectIDs3);
+          String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
+          events_02.setQueryID(queryID3);
+        }
+        events1.add(events_02);
+        ViewedObjectIDs events_12 = new ViewedObjectIDs();
+        {
+          ViewEvent eventType3 = ViewEvent.fromValue("view");
+          events_12.setEventType(eventType3);
+          String eventName3 = "Product Detail Page Viewed";
+          events_12.setEventName(eventName3);
+          String index3 = "products";
+          events_12.setIndex(index3);
+          String userToken3 = "user-123456";
+          events_12.setUserToken(userToken3);
+          long timestamp3 = 1641290601962L;
+          events_12.setTimestamp(timestamp3);
+          List<String> objectIDs3 = new ArrayList<>();
+          {
+            String objectIDs_04 = "9780545139700";
+            objectIDs3.add(objectIDs_04);
+            String objectIDs_14 = "9780439784542";
+            objectIDs3.add(objectIDs_14);
+          }
+          events_12.setObjectIDs(objectIDs3);
+        }
+        events1.add(events_12);
+      }
+      insightsEvents0.setEvents(events1);
+    }
+
+    assertDoesNotThrow(() -> {
+      client.pushEvents(insightsEvents0);
     });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/events", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
+        " Detail Page" +
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("ConvertedObjectIDsAfterSearch")
+  void pushEventsTest2() {
+    InsightsEvents insightsEvents0 = new InsightsEvents();
+    {
+      List<EventsItems> events1 = new ArrayList<>();
+      {
+        ConvertedObjectIDsAfterSearch events_02 = new ConvertedObjectIDsAfterSearch();
+        {
+          ConversionEvent eventType3 = ConversionEvent.fromValue("conversion");
+          events_02.setEventType(eventType3);
+          String eventName3 = "Product Purchased";
+          events_02.setEventName(eventName3);
+          String index3 = "products";
+          events_02.setIndex(index3);
+          String userToken3 = "user-123456";
+          events_02.setUserToken(userToken3);
+          long timestamp3 = 1641290601962L;
+          events_02.setTimestamp(timestamp3);
+          List<String> objectIDs3 = new ArrayList<>();
+          {
+            String objectIDs_04 = "9780545139700";
+            objectIDs3.add(objectIDs_04);
+            String objectIDs_14 = "9780439784542";
+            objectIDs3.add(objectIDs_14);
+          }
+          events_02.setObjectIDs(objectIDs3);
+          String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
+          events_02.setQueryID(queryID3);
+        }
+        events1.add(events_02);
+      }
+      insightsEvents0.setEvents(events1);
+    }
+
+    assertDoesNotThrow(() -> {
+      client.pushEvents(insightsEvents0);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/events", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("ViewedObjectIDs")
+  void pushEventsTest3() {
+    InsightsEvents insightsEvents0 = new InsightsEvents();
+    {
+      List<EventsItems> events1 = new ArrayList<>();
+      {
+        ViewedObjectIDs events_02 = new ViewedObjectIDs();
+        {
+          ViewEvent eventType3 = ViewEvent.fromValue("view");
+          events_02.setEventType(eventType3);
+          String eventName3 = "Product Detail Page Viewed";
+          events_02.setEventName(eventName3);
+          String index3 = "products";
+          events_02.setIndex(index3);
+          String userToken3 = "user-123456";
+          events_02.setUserToken(userToken3);
+          long timestamp3 = 1641290601962L;
+          events_02.setTimestamp(timestamp3);
+          List<String> objectIDs3 = new ArrayList<>();
+          {
+            String objectIDs_04 = "9780545139700";
+            objectIDs3.add(objectIDs_04);
+            String objectIDs_14 = "9780439784542";
+            objectIDs3.add(objectIDs_14);
+          }
+          events_02.setObjectIDs(objectIDs3);
+        }
+        events1.add(events_02);
+      }
+      insightsEvents0.setEvents(events1);
+    }
+
+    assertDoesNotThrow(() -> {
+      client.pushEvents(insightsEvents0);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/events", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"events\":[{\"eventType\":\"view\",\"eventName\":\"Product Detail Page" +
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
   }
 
   @Test
@@ -686,12 +823,9 @@ class InsightsClientRequestsTests {
       client.put(path0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/minimal");
-    assertEquals(req.method, "PUT");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/minimal", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test
@@ -713,12 +847,9 @@ class InsightsClientRequestsTests {
       client.put(path0, parameters0, body0);
     });
     EchoResponse req = echo.getLastResponse();
-
-    assertEquals(req.path, "/1/test/all");
-    assertEquals(req.method, "PUT");
-    assertDoesNotThrow(() -> {
-      JSONAssert.assertEquals("{\"body\":\"parameters\"}", req.body, JSONCompareMode.STRICT);
-    });
+    assertEquals("/1/test/all", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"body\":\"parameters\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue("{\"query\":\"parameters\"}", new TypeReference<HashMap<String, String>>() {});

@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,11 +35,7 @@ public class Consequence {
     return this;
   }
 
-  /**
-   * Get params
-   *
-   * @return params
-   */
+  /** Get params */
   @javax.annotation.Nullable
   public ConsequenceParams getParams() {
     return params;
@@ -57,11 +54,7 @@ public class Consequence {
     return this;
   }
 
-  /**
-   * Records to promote.
-   *
-   * @return promote
-   */
+  /** Records to promote. */
   @javax.annotation.Nullable
   public List<Promote> getPromote() {
     return promote;
@@ -76,8 +69,6 @@ public class Consequence {
    * Only use in combination with the `promote` consequence. When `true`, promoted results will be
    * restricted to match the filters of the current search. When `false`, the promoted results will
    * show up regardless of the filters.
-   *
-   * @return filterPromotes
    */
   @javax.annotation.Nullable
   public Boolean getFilterPromotes() {
@@ -97,11 +88,7 @@ public class Consequence {
     return this;
   }
 
-  /**
-   * Records to hide. By default, you can hide up to 50 records per rule.
-   *
-   * @return hide
-   */
+  /** Records to hide. By default, you can hide up to 50 records per rule. */
   @javax.annotation.Nullable
   public List<ConsequenceHide> getHide() {
     return hide;
@@ -115,8 +102,6 @@ public class Consequence {
   /**
    * Custom JSON object that will be appended to the userData array in the response. This object
    * isn't interpreted by the API. It's limited to 1kB of minified JSON.
-   *
-   * @return userData
    */
   @javax.annotation.Nullable
   public Object getUserData() {

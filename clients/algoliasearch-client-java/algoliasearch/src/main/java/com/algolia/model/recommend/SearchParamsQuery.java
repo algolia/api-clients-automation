@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** SearchParamsQuery */
@@ -17,11 +18,7 @@ public class SearchParamsQuery {
     return this;
   }
 
-  /**
-   * Text to search for in an index.
-   *
-   * @return query
-   */
+  /** Text to search for in an index. */
   @javax.annotation.Nullable
   public String getQuery() {
     return query;

@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Response and creation timestamp. */
@@ -17,11 +18,7 @@ public class CreatedAtResponse {
     return this;
   }
 
-  /**
-   * Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return createdAt
-   */
+  /** Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;

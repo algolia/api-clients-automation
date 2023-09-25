@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,11 +25,7 @@ public class ListUserIdsResponse {
     return this;
   }
 
-  /**
-   * User IDs.
-   *
-   * @return userIDs
-   */
+  /** User IDs. */
   @javax.annotation.Nonnull
   public List<UserId> getUserIDs() {
     return userIDs;

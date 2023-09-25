@@ -4,12 +4,14 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
  * To update an attribute without pushing the entire record, you can use these built-in operations.
  */
-public class BuiltInOperation {
+@JsonDeserialize(as = BuiltInOperation.class)
+public class BuiltInOperation implements AttributeToUpdate {
 
   @JsonProperty("_operation")
   private BuiltInOperationType operation;
@@ -22,11 +24,7 @@ public class BuiltInOperation {
     return this;
   }
 
-  /**
-   * Get operation
-   *
-   * @return operation
-   */
+  /** Get operation */
   @javax.annotation.Nonnull
   public BuiltInOperationType getOperation() {
     return operation;
@@ -40,8 +38,6 @@ public class BuiltInOperation {
   /**
    * Value that corresponds to the operation, for example an `Increment` or `Decrement` step, `Add`
    * or `Remove` value.
-   *
-   * @return value
    */
   @javax.annotation.Nonnull
   public String getValue() {

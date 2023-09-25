@@ -4,12 +4,14 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** TopHitsResponseWithAnalytics */
-public class TopHitsResponseWithAnalytics {
+@JsonDeserialize(as = TopHitsResponseWithAnalytics.class)
+public class TopHitsResponseWithAnalytics implements GetTopHitsResponse {
 
   @JsonProperty("hits")
   private List<TopHitWithAnalytics> hits = new ArrayList<>();
@@ -24,11 +26,7 @@ public class TopHitsResponseWithAnalytics {
     return this;
   }
 
-  /**
-   * Top hits.
-   *
-   * @return hits
-   */
+  /** Top hits. */
   @javax.annotation.Nonnull
   public List<TopHitWithAnalytics> getHits() {
     return hits;

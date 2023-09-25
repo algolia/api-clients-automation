@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** BaseGetApiKeyResponse */
@@ -20,11 +21,7 @@ public class BaseGetApiKeyResponse {
     return this;
   }
 
-  /**
-   * API key.
-   *
-   * @return value
-   */
+  /** API key. */
   @javax.annotation.Nullable
   public String getValue() {
     return value;
@@ -38,8 +35,6 @@ public class BaseGetApiKeyResponse {
   /**
    * Timestamp of creation in milliseconds in [Unix epoch
    * time](https://wikipedia.org/wiki/Unix_time).
-   *
-   * @return createdAt
    */
   @javax.annotation.Nonnull
   public Long getCreatedAt() {

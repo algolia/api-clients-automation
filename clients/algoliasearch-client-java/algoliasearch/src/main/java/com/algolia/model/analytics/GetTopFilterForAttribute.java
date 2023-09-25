@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** GetTopFilterForAttribute */
@@ -26,11 +27,7 @@ public class GetTopFilterForAttribute {
     return this;
   }
 
-  /**
-   * Attribute name.
-   *
-   * @return attribute
-   */
+  /** Attribute name. */
   @javax.annotation.Nonnull
   public String getAttribute() {
     return attribute;
@@ -41,11 +38,7 @@ public class GetTopFilterForAttribute {
     return this;
   }
 
-  /**
-   * Operator.
-   *
-   * @return operator
-   */
+  /** Operator. */
   @javax.annotation.Nonnull
   public String getOperator() {
     return operator;
@@ -56,11 +49,7 @@ public class GetTopFilterForAttribute {
     return this;
   }
 
-  /**
-   * Attribute value.
-   *
-   * @return value
-   */
+  /** Attribute value. */
   @javax.annotation.Nonnull
   public String getValue() {
     return value;
@@ -71,11 +60,7 @@ public class GetTopFilterForAttribute {
     return this;
   }
 
-  /**
-   * Number of occurrences.
-   *
-   * @return count
-   */
+  /** Number of occurrences. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;

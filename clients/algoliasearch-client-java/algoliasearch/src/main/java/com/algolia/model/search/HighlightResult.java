@@ -4,60 +4,49 @@
 package com.algolia.model.search;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
 /** HighlightResult */
-@JsonDeserialize(using = HighlightResult.HighlightResultDeserializer.class)
-@JsonSerialize(using = HighlightResult.HighlightResultSerializer.class)
-public abstract class HighlightResult implements CompoundType {
-
-  private static final Logger LOGGER = Logger.getLogger(HighlightResult.class.getName());
-
-  public static HighlightResult of(HighlightResultOption inside) {
-    return new HighlightResultHighlightResultOption(inside);
+@JsonDeserialize(using = HighlightResult.Deserializer.class)
+public interface HighlightResult {
+  /** HighlightResult as List<HighlightResultOption> wrapper. */
+  static HighlightResult of(List<HighlightResultOption> value) {
+    return new ListOfHighlightResultOptionWrapper(value);
   }
 
-  public static HighlightResult of(List<HighlightResultOption> inside) {
-    return new HighlightResultListOfHighlightResultOption(inside);
+  /** HighlightResult as List<HighlightResultOption> wrapper. */
+  @JsonSerialize(using = ListOfHighlightResultOptionWrapper.Serializer.class)
+  class ListOfHighlightResultOptionWrapper implements HighlightResult {
+
+    private final List<HighlightResultOption> value;
+
+    ListOfHighlightResultOptionWrapper(List<HighlightResultOption> value) {
+      this.value = value;
+    }
+
+    public List<HighlightResultOption> getValue() {
+      return value;
+    }
+
+    static class Serializer extends JsonSerializer<ListOfHighlightResultOptionWrapper> {
+
+      @Override
+      public void serialize(ListOfHighlightResultOptionWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
   }
 
-  public static class HighlightResultSerializer extends StdSerializer<HighlightResult> {
+  class Deserializer extends JsonDeserializer<HighlightResult> {
 
-    public HighlightResultSerializer(Class<HighlightResult> t) {
-      super(t);
-    }
-
-    public HighlightResultSerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(HighlightResult value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class HighlightResultDeserializer extends StdDeserializer<HighlightResult> {
-
-    public HighlightResultDeserializer() {
-      this(HighlightResult.class);
-    }
-
-    public HighlightResultDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public HighlightResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -66,8 +55,7 @@ public abstract class HighlightResult implements CompoundType {
       // deserialize HighlightResultOption
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          HighlightResultOption value = parser.readValueAs(new TypeReference<HighlightResultOption>() {});
-          return HighlightResult.of(value);
+          return parser.readValueAs(HighlightResultOption.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf HighlightResultOption (error: " + e.getMessage() + ") (type: HighlightResultOption)");
@@ -77,8 +65,7 @@ public abstract class HighlightResult implements CompoundType {
       // deserialize List<HighlightResultOption>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<HighlightResultOption> value = parser.readValueAs(new TypeReference<List<HighlightResultOption>>() {});
-          return HighlightResult.of(value);
+          return parser.readValueAs(new TypeReference<List<HighlightResultOption>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -94,33 +81,5 @@ public abstract class HighlightResult implements CompoundType {
     public HighlightResult getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "HighlightResult cannot be null");
     }
-  }
-}
-
-class HighlightResultHighlightResultOption extends HighlightResult {
-
-  private final HighlightResultOption insideValue;
-
-  HighlightResultHighlightResultOption(HighlightResultOption insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public HighlightResultOption getInsideValue() {
-    return insideValue;
-  }
-}
-
-class HighlightResultListOfHighlightResultOption extends HighlightResult {
-
-  private final List<HighlightResultOption> insideValue;
-
-  HighlightResultListOfHighlightResultOption(List<HighlightResultOption> insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public List<HighlightResultOption> getInsideValue() {
-    return insideValue;
   }
 }

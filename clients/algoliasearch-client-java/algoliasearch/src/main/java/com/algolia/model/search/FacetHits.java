@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** FacetHits */
@@ -23,11 +24,7 @@ public class FacetHits {
     return this;
   }
 
-  /**
-   * Facet value.
-   *
-   * @return value
-   */
+  /** Facet value. */
   @javax.annotation.Nonnull
   public String getValue() {
     return value;
@@ -38,11 +35,7 @@ public class FacetHits {
     return this;
   }
 
-  /**
-   * Markup text with `facetQuery` matches highlighted.
-   *
-   * @return highlighted
-   */
+  /** Markup text with `facetQuery` matches highlighted. */
   @javax.annotation.Nonnull
   public String getHighlighted() {
     return highlighted;
@@ -57,8 +50,6 @@ public class FacetHits {
    * Number of records containing this facet value. This takes into account the extra search
    * parameters specified in the query. Like for a regular search query, the [counts may not be
    * exhaustive](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
-   *
-   * @return count
    */
   @javax.annotation.Nonnull
   public Integer getCount() {

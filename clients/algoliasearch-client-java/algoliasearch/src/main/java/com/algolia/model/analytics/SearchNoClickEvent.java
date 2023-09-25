@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** SearchNoClickEvent */
@@ -23,11 +24,7 @@ public class SearchNoClickEvent {
     return this;
   }
 
-  /**
-   * User query.
-   *
-   * @return search
-   */
+  /** User query. */
   @javax.annotation.Nonnull
   public String getSearch() {
     return search;
@@ -38,11 +35,7 @@ public class SearchNoClickEvent {
     return this;
   }
 
-  /**
-   * Number of occurrences.
-   *
-   * @return count
-   */
+  /** Number of occurrences. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
@@ -53,11 +46,7 @@ public class SearchNoClickEvent {
     return this;
   }
 
-  /**
-   * Number of occurrences.
-   *
-   * @return withFilterCount
-   */
+  /** Number of occurrences. */
   @javax.annotation.Nonnull
   public Integer getWithFilterCount() {
     return withFilterCount;

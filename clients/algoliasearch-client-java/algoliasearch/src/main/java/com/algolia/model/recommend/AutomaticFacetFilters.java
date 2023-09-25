@@ -4,15 +4,11 @@
 package com.algolia.model.recommend;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,46 +17,67 @@ import java.util.logging.Logger;
  * Names of facets to which automatic filtering must be applied; they must match the facet name of a
  * facet value placeholder in the query pattern.
  */
-@JsonDeserialize(using = AutomaticFacetFilters.AutomaticFacetFiltersDeserializer.class)
-@JsonSerialize(using = AutomaticFacetFilters.AutomaticFacetFiltersSerializer.class)
-public abstract class AutomaticFacetFilters implements CompoundType {
-
-  private static final Logger LOGGER = Logger.getLogger(AutomaticFacetFilters.class.getName());
-
-  public static AutomaticFacetFilters ofListOfAutomaticFacetFilter(List<AutomaticFacetFilter> inside) {
-    return new AutomaticFacetFiltersListOfAutomaticFacetFilter(inside);
+@JsonDeserialize(using = AutomaticFacetFilters.Deserializer.class)
+public interface AutomaticFacetFilters {
+  /** AutomaticFacetFilters as List<AutomaticFacetFilter> wrapper. */
+  static AutomaticFacetFilters ofListOfAutomaticFacetFilter(List<AutomaticFacetFilter> value) {
+    return new ListOfAutomaticFacetFilterWrapper(value);
   }
 
-  public static AutomaticFacetFilters ofListOfString(List<String> inside) {
-    return new AutomaticFacetFiltersListOfString(inside);
+  /** AutomaticFacetFilters as List<String> wrapper. */
+  static AutomaticFacetFilters ofListOfString(List<String> value) {
+    return new ListOfStringWrapper(value);
   }
 
-  public static class AutomaticFacetFiltersSerializer extends StdSerializer<AutomaticFacetFilters> {
+  /** AutomaticFacetFilters as List<AutomaticFacetFilter> wrapper. */
+  @JsonSerialize(using = ListOfAutomaticFacetFilterWrapper.Serializer.class)
+  class ListOfAutomaticFacetFilterWrapper implements AutomaticFacetFilters {
 
-    public AutomaticFacetFiltersSerializer(Class<AutomaticFacetFilters> t) {
-      super(t);
+    private final List<AutomaticFacetFilter> value;
+
+    ListOfAutomaticFacetFilterWrapper(List<AutomaticFacetFilter> value) {
+      this.value = value;
     }
 
-    public AutomaticFacetFiltersSerializer() {
-      this(null);
+    public List<AutomaticFacetFilter> getValue() {
+      return value;
     }
 
-    @Override
-    public void serialize(AutomaticFacetFilters value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
+    static class Serializer extends JsonSerializer<ListOfAutomaticFacetFilterWrapper> {
+
+      @Override
+      public void serialize(ListOfAutomaticFacetFilterWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
     }
   }
 
-  public static class AutomaticFacetFiltersDeserializer extends StdDeserializer<AutomaticFacetFilters> {
+  /** AutomaticFacetFilters as List<String> wrapper. */
+  @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
+  class ListOfStringWrapper implements AutomaticFacetFilters {
 
-    public AutomaticFacetFiltersDeserializer() {
-      this(AutomaticFacetFilters.class);
+    private final List<String> value;
+
+    ListOfStringWrapper(List<String> value) {
+      this.value = value;
     }
 
-    public AutomaticFacetFiltersDeserializer(Class<?> vc) {
-      super(vc);
+    public List<String> getValue() {
+      return value;
     }
+
+    static class Serializer extends JsonSerializer<ListOfStringWrapper> {
+
+      @Override
+      public void serialize(ListOfStringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
+  class Deserializer extends JsonDeserializer<AutomaticFacetFilters> {
+
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public AutomaticFacetFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -69,8 +86,7 @@ public abstract class AutomaticFacetFilters implements CompoundType {
       // deserialize List<AutomaticFacetFilter>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<AutomaticFacetFilter> value = parser.readValueAs(new TypeReference<List<AutomaticFacetFilter>>() {});
-          return AutomaticFacetFilters.ofListOfAutomaticFacetFilter(value);
+          return parser.readValueAs(new TypeReference<List<AutomaticFacetFilter>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -82,8 +98,7 @@ public abstract class AutomaticFacetFilters implements CompoundType {
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
-          return AutomaticFacetFilters.ofListOfString(value);
+          return parser.readValueAs(new TypeReference<List<String>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
@@ -97,33 +112,5 @@ public abstract class AutomaticFacetFilters implements CompoundType {
     public AutomaticFacetFilters getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "AutomaticFacetFilters cannot be null");
     }
-  }
-}
-
-class AutomaticFacetFiltersListOfAutomaticFacetFilter extends AutomaticFacetFilters {
-
-  private final List<AutomaticFacetFilter> insideValue;
-
-  AutomaticFacetFiltersListOfAutomaticFacetFilter(List<AutomaticFacetFilter> insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public List<AutomaticFacetFilter> getInsideValue() {
-    return insideValue;
-  }
-}
-
-class AutomaticFacetFiltersListOfString extends AutomaticFacetFilters {
-
-  private final List<String> insideValue;
-
-  AutomaticFacetFiltersListOfString(List<String> insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public List<String> getInsideValue() {
-    return insideValue;
   }
 }

@@ -4,6 +4,7 @@
 package com.algolia.model.personalization;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,11 +31,7 @@ public class PersonalizationStrategyParams {
     return this;
   }
 
-  /**
-   * Scores associated with the events.
-   *
-   * @return eventScoring
-   */
+  /** Scores associated with the events. */
   @javax.annotation.Nonnull
   public List<EventScoring> getEventScoring() {
     return eventScoring;
@@ -50,11 +47,7 @@ public class PersonalizationStrategyParams {
     return this;
   }
 
-  /**
-   * Scores associated with the facets.
-   *
-   * @return facetScoring
-   */
+  /** Scores associated with the facets. */
   @javax.annotation.Nonnull
   public List<FacetScoring> getFacetScoring() {
     return facetScoring;
@@ -68,8 +61,6 @@ public class PersonalizationStrategyParams {
   /**
    * The impact that personalization has on search results: a number between 0 (personalization
    * disabled) and 100 (personalization fully enabled).
-   *
-   * @return personalizationImpact
    */
   @javax.annotation.Nonnull
   public Integer getPersonalizationImpact() {

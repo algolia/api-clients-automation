@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,8 +32,6 @@ public class ClickPosition {
    * Range of positions with the following pattern: - For positions 1 to 10, the number of click
    * events are shown for each position - For positions 11 to 20, all click events are grouped - For
    * positions 21 and up, all click events are grouped.
-   *
-   * @return position
    */
   @javax.annotation.Nonnull
   public List<Integer> getPosition() {
@@ -44,11 +43,7 @@ public class ClickPosition {
     return this;
   }
 
-  /**
-   * Number of click events.
-   *
-   * @return clickCount
-   */
+  /** Number of click events. */
   @javax.annotation.Nonnull
   public Integer getClickCount() {
     return clickCount;

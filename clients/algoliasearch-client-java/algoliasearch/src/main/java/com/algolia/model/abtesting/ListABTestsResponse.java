@@ -4,6 +4,7 @@
 package com.algolia.model.abtesting;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,11 +31,7 @@ public class ListABTestsResponse {
     return this;
   }
 
-  /**
-   * A/B tests.
-   *
-   * @return abtests
-   */
+  /** A/B tests. */
   @javax.annotation.Nonnull
   public List<ABTest> getAbtests() {
     return abtests;
@@ -45,11 +42,7 @@ public class ListABTestsResponse {
     return this;
   }
 
-  /**
-   * Number of A/B tests implemented.
-   *
-   * @return count
-   */
+  /** Number of A/B tests implemented. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
@@ -60,11 +53,7 @@ public class ListABTestsResponse {
     return this;
   }
 
-  /**
-   * Number of retrievable A/B tests.
-   *
-   * @return total
-   */
+  /** Number of retrievable A/B tests. */
   @javax.annotation.Nonnull
   public Integer getTotal() {
     return total;

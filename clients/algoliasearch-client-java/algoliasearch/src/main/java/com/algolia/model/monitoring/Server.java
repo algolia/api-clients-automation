@@ -4,6 +4,7 @@
 package com.algolia.model.monitoring;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Server */
@@ -35,11 +36,7 @@ public class Server {
     return this;
   }
 
-  /**
-   * Server name.
-   *
-   * @return name
-   */
+  /** Server name. */
   @javax.annotation.Nullable
   public String getName() {
     return name;
@@ -50,11 +47,7 @@ public class Server {
     return this;
   }
 
-  /**
-   * Get region
-   *
-   * @return region
-   */
+  /** Get region */
   @javax.annotation.Nullable
   public Region getRegion() {
     return region;
@@ -69,7 +62,6 @@ public class Server {
    * Included to support legacy applications. Do not rely on this attribute being present in the
    * response. Use `is_replica` instead.
    *
-   * @return isSlave
    * @deprecated
    */
   @Deprecated
@@ -83,11 +75,7 @@ public class Server {
     return this;
   }
 
-  /**
-   * Indicates whether this server is a replica of another server.
-   *
-   * @return isReplica
-   */
+  /** Indicates whether this server is a replica of another server. */
   @javax.annotation.Nullable
   public Boolean getIsReplica() {
     return isReplica;
@@ -98,11 +86,7 @@ public class Server {
     return this;
   }
 
-  /**
-   * Name of the cluster to which this server belongs.
-   *
-   * @return cluster
-   */
+  /** Name of the cluster to which this server belongs. */
   @javax.annotation.Nullable
   public String getCluster() {
     return cluster;
@@ -113,11 +97,7 @@ public class Server {
     return this;
   }
 
-  /**
-   * Get status
-   *
-   * @return status
-   */
+  /** Get status */
   @javax.annotation.Nullable
   public ServerStatus getStatus() {
     return status;
@@ -128,11 +108,7 @@ public class Server {
     return this;
   }
 
-  /**
-   * Get type
-   *
-   * @return type
-   */
+  /** Get type */
   @javax.annotation.Nullable
   public Type getType() {
     return type;

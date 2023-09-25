@@ -4,82 +4,41 @@
 package com.algolia.model.search;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** SearchParams */
-@JsonDeserialize(using = SearchParams.SearchParamsDeserializer.class)
-@JsonSerialize(using = SearchParams.SearchParamsSerializer.class)
-public abstract class SearchParams implements CompoundType {
+@JsonDeserialize(using = SearchParams.Deserializer.class)
+public interface SearchParams {
+  class Deserializer extends JsonDeserializer<SearchParams> {
 
-  private static final Logger LOGGER = Logger.getLogger(SearchParams.class.getName());
-
-  public static SearchParams of(SearchParamsObject inside) {
-    return new SearchParamsSearchParamsObject(inside);
-  }
-
-  public static SearchParams of(SearchParamsString inside) {
-    return new SearchParamsSearchParamsString(inside);
-  }
-
-  public static class SearchParamsSerializer extends StdSerializer<SearchParams> {
-
-    public SearchParamsSerializer(Class<SearchParams> t) {
-      super(t);
-    }
-
-    public SearchParamsSerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(SearchParams value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class SearchParamsDeserializer extends StdDeserializer<SearchParams> {
-
-    public SearchParamsDeserializer() {
-      this(SearchParams.class);
-    }
-
-    public SearchParamsDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public SearchParams deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
 
-      // deserialize SearchParamsObject
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          SearchParamsObject value = parser.readValueAs(new TypeReference<SearchParamsObject>() {});
-          return SearchParams.of(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SearchParamsObject (error: " + e.getMessage() + ") (type: SearchParamsObject)");
-        }
-      }
-
       // deserialize SearchParamsString
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("params")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          SearchParamsString value = parser.readValueAs(new TypeReference<SearchParamsString>() {});
-          return SearchParams.of(value);
+          return parser.readValueAs(SearchParamsString.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchParamsString (error: " + e.getMessage() + ") (type: SearchParamsString)");
+        }
+      }
+
+      // deserialize SearchParamsObject
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SearchParamsObject.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SearchParamsObject (error: " + e.getMessage() + ") (type: SearchParamsObject)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
@@ -90,33 +49,5 @@ public abstract class SearchParams implements CompoundType {
     public SearchParams getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "SearchParams cannot be null");
     }
-  }
-}
-
-class SearchParamsSearchParamsObject extends SearchParams {
-
-  private final SearchParamsObject insideValue;
-
-  SearchParamsSearchParamsObject(SearchParamsObject insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public SearchParamsObject getInsideValue() {
-    return insideValue;
-  }
-}
-
-class SearchParamsSearchParamsString extends SearchParams {
-
-  private final SearchParamsString insideValue;
-
-  SearchParamsSearchParamsString(SearchParamsString insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public SearchParamsString getInsideValue() {
-    return insideValue;
   }
 }

@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Unique identifier of the record to hide. */
@@ -17,11 +18,7 @@ public class ConsequenceHide {
     return this;
   }
 
-  /**
-   * Unique object identifier.
-   *
-   * @return objectID
-   */
+  /** Unique object identifier. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;

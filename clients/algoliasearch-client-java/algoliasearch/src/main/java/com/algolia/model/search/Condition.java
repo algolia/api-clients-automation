@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Condition */
@@ -26,11 +27,7 @@ public class Condition {
     return this;
   }
 
-  /**
-   * Query pattern syntax.
-   *
-   * @return pattern
-   */
+  /** Query pattern syntax. */
   @javax.annotation.Nullable
   public String getPattern() {
     return pattern;
@@ -41,11 +38,7 @@ public class Condition {
     return this;
   }
 
-  /**
-   * Get anchoring
-   *
-   * @return anchoring
-   */
+  /** Get anchoring */
   @javax.annotation.Nullable
   public Anchoring getAnchoring() {
     return anchoring;
@@ -56,11 +49,7 @@ public class Condition {
     return this;
   }
 
-  /**
-   * Whether the pattern matches on plurals, synonyms, and typos.
-   *
-   * @return alternatives
-   */
+  /** Whether the pattern matches on plurals, synonyms, and typos. */
   @javax.annotation.Nullable
   public Boolean getAlternatives() {
     return alternatives;
@@ -71,11 +60,7 @@ public class Condition {
     return this;
   }
 
-  /**
-   * Rule context format: [A-Za-z0-9_-]+).
-   *
-   * @return context
-   */
+  /** Rule context format: [A-Za-z0-9_-]+). */
   @javax.annotation.Nullable
   public String getContext() {
     return context;

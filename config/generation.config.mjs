@@ -11,6 +11,7 @@ export const patterns = [
   'clients/algoliasearch-client-java/gradle.properties',
   'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/api/**',
   'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/model/**',
+  'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/BuildConfig.java',
 
   'tests/output/java/build.gradle',
 
@@ -35,6 +36,7 @@ export const patterns = [
   'clients/algoliasearch-client-php/lib/Configuration/*',
   'clients/algoliasearch-client-php/lib/ApiException.php',
   'clients/algoliasearch-client-php/lib/ObjectSerializer.php',
+  'clients/algoliasearch-client-php/lib/Algolia.php',
   'clients/algoliasearch-client-php/composer.json',
 
   // GO
@@ -45,6 +47,8 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/call/*',
   '!clients/algoliasearch-client-go/algolia/compression/*',
   '!clients/algoliasearch-client-go/algolia/debug/*',
+
+  'tests/output/go/go.sum',
 
   // Kotlin
   '!clients/algoliasearch-client-kotlin/**',
@@ -63,9 +67,11 @@ export const patterns = [
   'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
   'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
   'clients/algoliasearch-client-dart/packages/*/lib/src/*.dart',
+  'clients/algoliasearch-client-dart/packages/client_core/pubspec.yaml',
   'clients/algoliasearch-client-dart/packages/*/lib/src/api/**',
   'clients/algoliasearch-client-dart/packages/*/lib/src/model/**',
   '!clients/algoliasearch-client-dart/packages/client_core/**',
+  'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
 

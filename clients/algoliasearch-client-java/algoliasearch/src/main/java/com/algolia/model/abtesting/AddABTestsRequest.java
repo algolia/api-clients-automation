@@ -4,6 +4,7 @@
 package com.algolia.model.abtesting;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,11 +26,7 @@ public class AddABTestsRequest {
     return this;
   }
 
-  /**
-   * A/B test name.
-   *
-   * @return name
-   */
+  /** A/B test name. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -45,11 +42,7 @@ public class AddABTestsRequest {
     return this;
   }
 
-  /**
-   * A/B test variants.
-   *
-   * @return variants
-   */
+  /** A/B test variants. */
   @javax.annotation.Nonnull
   public List<AddABTestsVariant> getVariants() {
     return variants;
@@ -60,11 +53,7 @@ public class AddABTestsRequest {
     return this;
   }
 
-  /**
-   * End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return endAt
-   */
+  /** End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getEndAt() {
     return endAt;

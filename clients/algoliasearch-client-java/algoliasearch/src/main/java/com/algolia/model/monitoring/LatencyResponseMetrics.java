@@ -4,6 +4,7 @@
 package com.algolia.model.monitoring;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +29,7 @@ public class LatencyResponseMetrics {
     return this;
   }
 
-  /**
-   * Get latency
-   *
-   * @return latency
-   */
+  /** Get latency */
   @javax.annotation.Nullable
   public Map<String, List<TimeInner>> getLatency() {
     return latency;

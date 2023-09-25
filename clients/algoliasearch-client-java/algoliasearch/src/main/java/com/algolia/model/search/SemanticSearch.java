@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,8 +33,6 @@ public class SemanticSearch {
   /**
    * Indices from which to collect click and conversion events. If null, the current index and
    * replica group will be used as the event source.
-   *
-   * @return eventSources
    */
   @javax.annotation.Nullable
   public List<String> getEventSources() {

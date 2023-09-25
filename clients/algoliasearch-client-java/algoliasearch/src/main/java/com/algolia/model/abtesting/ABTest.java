@@ -4,6 +4,7 @@
 package com.algolia.model.abtesting;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,11 +41,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * Unique A/B test ID.
-   *
-   * @return abTestID
-   */
+  /** Unique A/B test ID. */
   @javax.annotation.Nonnull
   public Integer getAbTestID() {
     return abTestID;
@@ -59,8 +56,6 @@ public class ABTest {
    * [A/B test
    * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
    * based on click data. A value of 0.95 or over is considered to be _significant_.
-   *
-   * @return clickSignificance
    */
   @javax.annotation.Nonnull
   public Double getClickSignificance() {
@@ -72,11 +67,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return conversionSignificance
-   */
+  /** End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getConversionSignificance() {
     return conversionSignificance;
@@ -87,11 +78,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return updatedAt
-   */
+  /** Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
@@ -102,11 +89,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * Creation date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return createdAt
-   */
+  /** Creation date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -117,11 +100,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * A/B test name.
-   *
-   * @return name
-   */
+  /** A/B test name. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -132,11 +111,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * A/B test status.
-   *
-   * @return status
-   */
+  /** A/B test status. */
   @javax.annotation.Nonnull
   public String getStatus() {
     return status;
@@ -152,11 +127,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * A/B test variants.
-   *
-   * @return variants
-   */
+  /** A/B test variants. */
   @javax.annotation.Nonnull
   public List<Variant> getVariants() {
     return variants;

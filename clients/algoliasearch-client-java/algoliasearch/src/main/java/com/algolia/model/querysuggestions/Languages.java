@@ -4,15 +4,11 @@
 package com.algolia.model.querysuggestions;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,45 +17,67 @@ import java.util.logging.Logger;
  * Set the language for deduplicating singular and plural suggestions. If specified, only the more
  * popular form is included.
  */
-@JsonDeserialize(using = Languages.LanguagesDeserializer.class)
-@JsonSerialize(using = Languages.LanguagesSerializer.class)
-public abstract class Languages implements CompoundType {
-
-  private static final Logger LOGGER = Logger.getLogger(Languages.class.getName());
-
-  public static Languages of(Boolean inside) {
-    return new LanguagesBoolean(inside);
+@JsonDeserialize(using = Languages.Deserializer.class)
+public interface Languages {
+  /** Languages as Boolean wrapper. */
+  static Languages of(Boolean value) {
+    return new BooleanWrapper(value);
   }
 
-  public static Languages of(List<String> inside) {
-    return new LanguagesListOfString(inside);
+  /** Languages as List<String> wrapper. */
+  static Languages of(List<String> value) {
+    return new ListOfStringWrapper(value);
   }
 
-  public static class LanguagesSerializer extends StdSerializer<Languages> {
+  /** Languages as Boolean wrapper. */
+  @JsonSerialize(using = BooleanWrapper.Serializer.class)
+  class BooleanWrapper implements Languages {
 
-    public LanguagesSerializer(Class<Languages> t) {
-      super(t);
+    private final Boolean value;
+
+    BooleanWrapper(Boolean value) {
+      this.value = value;
     }
 
-    public LanguagesSerializer() {
-      this(null);
+    public Boolean getValue() {
+      return value;
     }
 
-    @Override
-    public void serialize(Languages value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
+    static class Serializer extends JsonSerializer<BooleanWrapper> {
+
+      @Override
+      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
     }
   }
 
-  public static class LanguagesDeserializer extends StdDeserializer<Languages> {
+  /** Languages as List<String> wrapper. */
+  @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
+  class ListOfStringWrapper implements Languages {
 
-    public LanguagesDeserializer() {
-      this(Languages.class);
+    private final List<String> value;
+
+    ListOfStringWrapper(List<String> value) {
+      this.value = value;
     }
 
-    public LanguagesDeserializer(Class<?> vc) {
-      super(vc);
+    public List<String> getValue() {
+      return value;
     }
+
+    static class Serializer extends JsonSerializer<ListOfStringWrapper> {
+
+      @Override
+      public void serialize(ListOfStringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
+  class Deserializer extends JsonDeserializer<Languages> {
+
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public Languages deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -68,7 +86,7 @@ public abstract class Languages implements CompoundType {
       // deserialize Boolean
       if (tree.isValueNode()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Boolean value = parser.readValueAs(new TypeReference<Boolean>() {});
+          Boolean value = parser.readValueAs(Boolean.class);
           return Languages.of(value);
         } catch (Exception e) {
           // deserialization failed, continue
@@ -79,8 +97,7 @@ public abstract class Languages implements CompoundType {
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
-          return Languages.of(value);
+          return parser.readValueAs(new TypeReference<List<String>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
@@ -94,33 +111,5 @@ public abstract class Languages implements CompoundType {
     public Languages getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "Languages cannot be null");
     }
-  }
-}
-
-class LanguagesBoolean extends Languages {
-
-  private final Boolean insideValue;
-
-  LanguagesBoolean(Boolean insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public Boolean getInsideValue() {
-    return insideValue;
-  }
-}
-
-class LanguagesListOfString extends Languages {
-
-  private final List<String> insideValue;
-
-  LanguagesListOfString(List<String> insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public List<String> getInsideValue() {
-    return insideValue;
   }
 }

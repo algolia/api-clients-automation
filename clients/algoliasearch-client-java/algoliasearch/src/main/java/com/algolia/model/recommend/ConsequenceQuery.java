@@ -4,15 +4,10 @@
 package com.algolia.model.recommend;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -20,46 +15,39 @@ import java.util.logging.Logger;
  * When providing a string, it replaces the entire query string. When providing an object, it
  * describes incremental edits to be made to the query string (but you can't do both).
  */
-@JsonDeserialize(using = ConsequenceQuery.ConsequenceQueryDeserializer.class)
-@JsonSerialize(using = ConsequenceQuery.ConsequenceQuerySerializer.class)
-public abstract class ConsequenceQuery implements CompoundType {
-
-  private static final Logger LOGGER = Logger.getLogger(ConsequenceQuery.class.getName());
-
-  public static ConsequenceQuery of(ConsequenceQueryObject inside) {
-    return new ConsequenceQueryConsequenceQueryObject(inside);
+@JsonDeserialize(using = ConsequenceQuery.Deserializer.class)
+public interface ConsequenceQuery {
+  /** ConsequenceQuery as String wrapper. */
+  static ConsequenceQuery of(String value) {
+    return new StringWrapper(value);
   }
 
-  public static ConsequenceQuery of(String inside) {
-    return new ConsequenceQueryString(inside);
+  /** ConsequenceQuery as String wrapper. */
+  @JsonSerialize(using = StringWrapper.Serializer.class)
+  class StringWrapper implements ConsequenceQuery {
+
+    private final String value;
+
+    StringWrapper(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    static class Serializer extends JsonSerializer<StringWrapper> {
+
+      @Override
+      public void serialize(StringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
   }
 
-  public static class ConsequenceQuerySerializer extends StdSerializer<ConsequenceQuery> {
+  class Deserializer extends JsonDeserializer<ConsequenceQuery> {
 
-    public ConsequenceQuerySerializer(Class<ConsequenceQuery> t) {
-      super(t);
-    }
-
-    public ConsequenceQuerySerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(ConsequenceQuery value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class ConsequenceQueryDeserializer extends StdDeserializer<ConsequenceQuery> {
-
-    public ConsequenceQueryDeserializer() {
-      this(ConsequenceQuery.class);
-    }
-
-    public ConsequenceQueryDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public ConsequenceQuery deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -68,8 +56,7 @@ public abstract class ConsequenceQuery implements CompoundType {
       // deserialize ConsequenceQueryObject
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          ConsequenceQueryObject value = parser.readValueAs(new TypeReference<ConsequenceQueryObject>() {});
-          return ConsequenceQuery.of(value);
+          return parser.readValueAs(ConsequenceQueryObject.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -81,7 +68,7 @@ public abstract class ConsequenceQuery implements CompoundType {
       // deserialize String
       if (tree.isValueNode()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          String value = parser.readValueAs(new TypeReference<String>() {});
+          String value = parser.readValueAs(String.class);
           return ConsequenceQuery.of(value);
         } catch (Exception e) {
           // deserialization failed, continue
@@ -96,33 +83,5 @@ public abstract class ConsequenceQuery implements CompoundType {
     public ConsequenceQuery getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "ConsequenceQuery cannot be null");
     }
-  }
-}
-
-class ConsequenceQueryConsequenceQueryObject extends ConsequenceQuery {
-
-  private final ConsequenceQueryObject insideValue;
-
-  ConsequenceQueryConsequenceQueryObject(ConsequenceQueryObject insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public ConsequenceQueryObject getInsideValue() {
-    return insideValue;
-  }
-}
-
-class ConsequenceQueryString extends ConsequenceQuery {
-
-  private final String insideValue;
-
-  ConsequenceQueryString(String insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public String getInsideValue() {
-    return insideValue;
   }
 }

@@ -22,13 +22,22 @@ public sealed interface SourceInput {
      *
      * @param storeHash The store hash identifying the store the shopper is signing in to.
      * @param channel
+     * @param customFields
+     * @param productMetafields
+     * @param variantMetafields
      */
     public fun SourceBigCommerce(
       storeHash: String? = null,
       channel: BigCommerceChannel? = null,
+      customFields: List<String>? = null,
+      productMetafields: List<BigCommerceMetafield>? = null,
+      variantMetafields: List<BigCommerceMetafield>? = null,
     ): SourceBigCommerce = com.algolia.client.model.ingestion.SourceBigCommerce(
       storeHash = storeHash,
       channel = channel,
+      customFields = customFields,
+      productMetafields = productMetafields,
+      variantMetafields = variantMetafields,
     )
 
     /**
@@ -90,43 +99,43 @@ public sealed interface SourceInput {
      * @param projectKey
      * @param storeKeys
      * @param locales Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
+     * @param fallbackIsInStockValue Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
      */
     public fun SourceCommercetools(
       url: String,
       projectKey: String,
       storeKeys: List<String>? = null,
       locales: List<String>? = null,
+      fallbackIsInStockValue: Boolean? = null,
     ): SourceCommercetools = com.algolia.client.model.ingestion.SourceCommercetools(
       url = url,
       projectKey = projectKey,
       storeKeys = storeKeys,
       locales = locales,
+      fallbackIsInStockValue = fallbackIsInStockValue,
     )
 
     /**
      * SourceDocker
      *
+     * @param imageType
      * @param registry
      * @param image The name of the image to pull.
-     * @param imageType
      * @param configuration The configuration of the spec.
      * @param version The version of the image, defaults to `latest`.
-     * @param outputFile The full name of the output file.
      */
     public fun SourceDocker(
+      imageType: DockerImageType,
       registry: DockerRegistry,
       image: String,
-      imageType: DockerImageType,
       configuration: JsonObject,
       version: String? = null,
-      outputFile: String? = null,
     ): SourceDocker = com.algolia.client.model.ingestion.SourceDocker(
+      imageType = imageType,
       registry = registry,
       image = image,
-      imageType = imageType,
       configuration = configuration,
       version = version,
-      outputFile = outputFile,
     )
 
     /**

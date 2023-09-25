@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** RemoveUserIdResponse */
@@ -17,11 +18,7 @@ public class RemoveUserIdResponse {
     return this;
   }
 
-  /**
-   * Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return deletedAt
-   */
+  /** Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getDeletedAt() {
     return deletedAt;

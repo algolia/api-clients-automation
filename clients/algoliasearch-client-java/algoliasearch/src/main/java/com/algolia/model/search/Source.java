@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Source. */
@@ -20,11 +21,7 @@ public class Source {
     return this;
   }
 
-  /**
-   * IP address range of the source.
-   *
-   * @return source
-   */
+  /** IP address range of the source. */
   @javax.annotation.Nonnull
   public String getSource() {
     return source;
@@ -35,11 +32,7 @@ public class Source {
     return this;
   }
 
-  /**
-   * Source description.
-   *
-   * @return description
-   */
+  /** Source description. */
   @javax.annotation.Nullable
   public String getDescription() {
     return description;

@@ -4,13 +4,15 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
  * Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet
  * is non-empty.
  */
-public class SnippetResultOption {
+@JsonDeserialize(as = SnippetResultOption.class)
+public class SnippetResultOption implements SnippetResult {
 
   @JsonProperty("value")
   private String value;
@@ -23,11 +25,7 @@ public class SnippetResultOption {
     return this;
   }
 
-  /**
-   * Markup text with `facetQuery` matches highlighted.
-   *
-   * @return value
-   */
+  /** Markup text with `facetQuery` matches highlighted. */
   @javax.annotation.Nonnull
   public String getValue() {
     return value;
@@ -38,11 +36,7 @@ public class SnippetResultOption {
     return this;
   }
 
-  /**
-   * Get matchLevel
-   *
-   * @return matchLevel
-   */
+  /** Get matchLevel */
   @javax.annotation.Nonnull
   public MatchLevel getMatchLevel() {
     return matchLevel;

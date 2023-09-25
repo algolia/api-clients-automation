@@ -4,6 +4,7 @@
 package com.algolia.model.personalization;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** EventScoring */
@@ -23,11 +24,7 @@ public class EventScoring {
     return this;
   }
 
-  /**
-   * The score for the event.
-   *
-   * @return score
-   */
+  /** The score for the event. */
   @javax.annotation.Nonnull
   public Integer getScore() {
     return score;
@@ -38,11 +35,7 @@ public class EventScoring {
     return this;
   }
 
-  /**
-   * The name of the event.
-   *
-   * @return eventName
-   */
+  /** The name of the event. */
   @javax.annotation.Nonnull
   public String getEventName() {
     return eventName;
@@ -53,11 +46,7 @@ public class EventScoring {
     return this;
   }
 
-  /**
-   * The type of the event.
-   *
-   * @return eventType
-   */
+  /** The type of the event. */
   @javax.annotation.Nonnull
   public String getEventType() {
     return eventType;

@@ -4,6 +4,7 @@
 package com.algolia.model.insights;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,8 +30,6 @@ public class InsightsEvents {
    * Events have attributes that describe the interaction, such as an event name, a type, or a user
    * token. Some attributes require other attributes to be declared, and some attributes can't be
    * declared at the same time. **All** events must be valid, otherwise the API returns an error.
-   *
-   * @return events
    */
   @javax.annotation.Nonnull
   public List<EventsItems> getEvents() {

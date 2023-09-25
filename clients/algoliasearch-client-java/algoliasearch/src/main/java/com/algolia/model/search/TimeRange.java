@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** TimeRange */
@@ -20,11 +21,7 @@ public class TimeRange {
     return this;
   }
 
-  /**
-   * Lower bound of the time range (Unix timestamp).
-   *
-   * @return from
-   */
+  /** Lower bound of the time range (Unix timestamp). */
   @javax.annotation.Nonnull
   public Integer getFrom() {
     return from;
@@ -35,11 +32,7 @@ public class TimeRange {
     return this;
   }
 
-  /**
-   * Upper bound of the time range (Unix timestamp).
-   *
-   * @return until
-   */
+  /** Upper bound of the time range (Unix timestamp). */
   @javax.annotation.Nonnull
   public Integer getUntil() {
     return until;

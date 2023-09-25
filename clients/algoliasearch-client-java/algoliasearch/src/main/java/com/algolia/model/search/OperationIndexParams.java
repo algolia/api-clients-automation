@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,11 +26,7 @@ public class OperationIndexParams {
     return this;
   }
 
-  /**
-   * Get operation
-   *
-   * @return operation
-   */
+  /** Get operation */
   @javax.annotation.Nonnull
   public OperationType getOperation() {
     return operation;
@@ -40,11 +37,7 @@ public class OperationIndexParams {
     return this;
   }
 
-  /**
-   * Algolia index name.
-   *
-   * @return destination
-   */
+  /** Algolia index name. */
   @javax.annotation.Nonnull
   public String getDestination() {
     return destination;
@@ -67,8 +60,6 @@ public class OperationIndexParams {
    * **This only applies to the _copy_ operation.** If you omit `scope`, the copy command copies all
    * records, settings, synonyms, and rules. If you specify `scope`, only the specified scopes are
    * copied.
-   *
-   * @return scope
    */
   @javax.annotation.Nullable
   public List<ScopeType> getScope() {

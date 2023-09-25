@@ -4,15 +4,11 @@
 package com.algolia.model.search;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -28,46 +24,67 @@ import java.util.logging.Logger;
  * feature, so that singulars and plurals aren't considered to be the same (\"foot\" will not find
  * \"feet\").
  */
-@JsonDeserialize(using = IgnorePlurals.IgnorePluralsDeserializer.class)
-@JsonSerialize(using = IgnorePlurals.IgnorePluralsSerializer.class)
-public abstract class IgnorePlurals implements CompoundType {
-
-  private static final Logger LOGGER = Logger.getLogger(IgnorePlurals.class.getName());
-
-  public static IgnorePlurals of(Boolean inside) {
-    return new IgnorePluralsBoolean(inside);
+@JsonDeserialize(using = IgnorePlurals.Deserializer.class)
+public interface IgnorePlurals {
+  /** IgnorePlurals as Boolean wrapper. */
+  static IgnorePlurals of(Boolean value) {
+    return new BooleanWrapper(value);
   }
 
-  public static IgnorePlurals of(List<String> inside) {
-    return new IgnorePluralsListOfString(inside);
+  /** IgnorePlurals as List<String> wrapper. */
+  static IgnorePlurals of(List<String> value) {
+    return new ListOfStringWrapper(value);
   }
 
-  public static class IgnorePluralsSerializer extends StdSerializer<IgnorePlurals> {
+  /** IgnorePlurals as Boolean wrapper. */
+  @JsonSerialize(using = BooleanWrapper.Serializer.class)
+  class BooleanWrapper implements IgnorePlurals {
 
-    public IgnorePluralsSerializer(Class<IgnorePlurals> t) {
-      super(t);
+    private final Boolean value;
+
+    BooleanWrapper(Boolean value) {
+      this.value = value;
     }
 
-    public IgnorePluralsSerializer() {
-      this(null);
+    public Boolean getValue() {
+      return value;
     }
 
-    @Override
-    public void serialize(IgnorePlurals value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
+    static class Serializer extends JsonSerializer<BooleanWrapper> {
+
+      @Override
+      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
     }
   }
 
-  public static class IgnorePluralsDeserializer extends StdDeserializer<IgnorePlurals> {
+  /** IgnorePlurals as List<String> wrapper. */
+  @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
+  class ListOfStringWrapper implements IgnorePlurals {
 
-    public IgnorePluralsDeserializer() {
-      this(IgnorePlurals.class);
+    private final List<String> value;
+
+    ListOfStringWrapper(List<String> value) {
+      this.value = value;
     }
 
-    public IgnorePluralsDeserializer(Class<?> vc) {
-      super(vc);
+    public List<String> getValue() {
+      return value;
     }
+
+    static class Serializer extends JsonSerializer<ListOfStringWrapper> {
+
+      @Override
+      public void serialize(ListOfStringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
+  class Deserializer extends JsonDeserializer<IgnorePlurals> {
+
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public IgnorePlurals deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -76,7 +93,7 @@ public abstract class IgnorePlurals implements CompoundType {
       // deserialize Boolean
       if (tree.isValueNode()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Boolean value = parser.readValueAs(new TypeReference<Boolean>() {});
+          Boolean value = parser.readValueAs(Boolean.class);
           return IgnorePlurals.of(value);
         } catch (Exception e) {
           // deserialization failed, continue
@@ -87,8 +104,7 @@ public abstract class IgnorePlurals implements CompoundType {
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
-          return IgnorePlurals.of(value);
+          return parser.readValueAs(new TypeReference<List<String>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
@@ -102,33 +118,5 @@ public abstract class IgnorePlurals implements CompoundType {
     public IgnorePlurals getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "IgnorePlurals cannot be null");
     }
-  }
-}
-
-class IgnorePluralsBoolean extends IgnorePlurals {
-
-  private final Boolean insideValue;
-
-  IgnorePluralsBoolean(Boolean insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public Boolean getInsideValue() {
-    return insideValue;
-  }
-}
-
-class IgnorePluralsListOfString extends IgnorePlurals {
-
-  private final List<String> insideValue;
-
-  IgnorePluralsListOfString(List<String> insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public List<String> getInsideValue() {
-    return insideValue;
   }
 }

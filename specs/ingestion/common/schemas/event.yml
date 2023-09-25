@@ -15,6 +15,12 @@ Event:
       $ref: '#/EventStatus'
     type:
       $ref: '#/EventType'
+    batchSize:
+      type: integer
+      description: The extracted record batch size.
+      example: 10
+      minimum: 0
+      multipleOf: 1
     data:
       type: object
       additionalProperties: true
@@ -25,11 +31,12 @@ Event:
     - runID
     - status
     - type
+    - batchSize
     - publishedAt
 
 EventStatus:
   type: string
-  enum: ['created', 'started', 'retried', 'failed', 'succeeded']
+  enum: ['created', 'started', 'retried', 'failed', 'succeeded', 'critical']
 
 EventType:
   type: string

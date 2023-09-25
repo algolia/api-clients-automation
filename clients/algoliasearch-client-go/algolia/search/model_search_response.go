@@ -19,7 +19,7 @@ type SearchResponse struct {
 	// Indicates whether the facet count is exhaustive (exact) or approximate.
 	ExhaustiveFacetsCount *bool `json:"exhaustiveFacetsCount,omitempty"`
 	// Indicates whether the number of hits `nbHits` is exhaustive (exact) or approximate.
-	ExhaustiveNbHits bool `json:"exhaustiveNbHits" validate:"required"`
+	ExhaustiveNbHits *bool `json:"exhaustiveNbHits,omitempty"`
 	// Indicates whether the search for typos was exhaustive (exact) or approximate.
 	ExhaustiveTypo *bool `json:"exhaustiveTypo,omitempty"`
 	// Mapping of each facet name to the corresponding facet counts.
@@ -52,9 +52,9 @@ type SearchResponse struct {
 	// Host name of the server that processed the request.
 	ServerUsed *string `json:"serverUsed,omitempty"`
 	// Lets you store custom data in your indices.
-	UserData         map[string]interface{} `json:"userData,omitempty"`
-	RenderingContent *RenderingContent      `json:"renderingContent,omitempty"`
-	Hits             []Hit                  `json:"hits" validate:"required"`
+	UserData         interface{}       `json:"userData,omitempty"`
+	RenderingContent *RenderingContent `json:"renderingContent,omitempty"`
+	Hits             []Hit             `json:"hits" validate:"required"`
 	// Text to search for in an index.
 	Query string `json:"query" validate:"required"`
 	// URL-encoded string of all search parameters.
@@ -90,6 +90,12 @@ func WithSearchResponseAutomaticRadius(val string) SearchResponseOption {
 func WithSearchResponseExhaustiveFacetsCount(val bool) SearchResponseOption {
 	return func(f *SearchResponse) {
 		f.ExhaustiveFacetsCount = &val
+	}
+}
+
+func WithSearchResponseExhaustiveNbHits(val bool) SearchResponseOption {
+	return func(f *SearchResponse) {
+		f.ExhaustiveNbHits = &val
 	}
 }
 
@@ -159,7 +165,7 @@ func WithSearchResponseServerUsed(val string) SearchResponseOption {
 	}
 }
 
-func WithSearchResponseUserData(val map[string]interface{}) SearchResponseOption {
+func WithSearchResponseUserData(val interface{}) SearchResponseOption {
 	return func(f *SearchResponse) {
 		f.UserData = val
 	}
@@ -175,9 +181,8 @@ func WithSearchResponseRenderingContent(val RenderingContent) SearchResponseOpti
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSearchResponse(exhaustiveNbHits bool, hitsPerPage int32, nbHits int32, nbPages int32, page int32, processingTimeMS int32, hits []Hit, query string, params string, opts ...SearchResponseOption) *SearchResponse {
+func NewSearchResponse(hitsPerPage int32, nbHits int32, nbPages int32, page int32, processingTimeMS int32, hits []Hit, query string, params string, opts ...SearchResponseOption) *SearchResponse {
 	this := &SearchResponse{}
-	this.ExhaustiveNbHits = exhaustiveNbHits
 	this.HitsPerPage = hitsPerPage
 	this.NbHits = nbHits
 	this.NbPages = nbPages
@@ -366,28 +371,36 @@ func (o *SearchResponse) SetExhaustiveFacetsCount(v bool) {
 	o.ExhaustiveFacetsCount = &v
 }
 
-// GetExhaustiveNbHits returns the ExhaustiveNbHits field value
+// GetExhaustiveNbHits returns the ExhaustiveNbHits field value if set, zero value otherwise.
 func (o *SearchResponse) GetExhaustiveNbHits() bool {
-	if o == nil {
+	if o == nil || o.ExhaustiveNbHits == nil {
 		var ret bool
 		return ret
 	}
-
-	return o.ExhaustiveNbHits
+	return *o.ExhaustiveNbHits
 }
 
-// GetExhaustiveNbHitsOk returns a tuple with the ExhaustiveNbHits field value
+// GetExhaustiveNbHitsOk returns a tuple with the ExhaustiveNbHits field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchResponse) GetExhaustiveNbHitsOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || o.ExhaustiveNbHits == nil {
 		return nil, false
 	}
-	return &o.ExhaustiveNbHits, true
+	return o.ExhaustiveNbHits, true
 }
 
-// SetExhaustiveNbHits sets field value
+// HasExhaustiveNbHits returns a boolean if a field has been set.
+func (o *SearchResponse) HasExhaustiveNbHits() bool {
+	if o != nil && o.ExhaustiveNbHits != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetExhaustiveNbHits gets a reference to the given bool and assigns it to the ExhaustiveNbHits field.
 func (o *SearchResponse) SetExhaustiveNbHits(v bool) {
-	o.ExhaustiveNbHits = v
+	o.ExhaustiveNbHits = &v
 }
 
 // GetExhaustiveTypo returns the ExhaustiveTypo field value if set, zero value otherwise.
@@ -862,10 +875,10 @@ func (o *SearchResponse) SetServerUsed(v string) {
 	o.ServerUsed = &v
 }
 
-// GetUserData returns the UserData field value if set, zero value otherwise.
-func (o *SearchResponse) GetUserData() map[string]interface{} {
-	if o == nil || o.UserData == nil {
-		var ret map[string]interface{}
+// GetUserData returns the UserData field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *SearchResponse) GetUserData() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
 	return o.UserData
@@ -873,11 +886,12 @@ func (o *SearchResponse) GetUserData() map[string]interface{} {
 
 // GetUserDataOk returns a tuple with the UserData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchResponse) GetUserDataOk() (map[string]interface{}, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *SearchResponse) GetUserDataOk() (*interface{}, bool) {
 	if o == nil || o.UserData == nil {
 		return nil, false
 	}
-	return o.UserData, true
+	return &o.UserData, true
 }
 
 // HasUserData returns a boolean if a field has been set.
@@ -889,8 +903,8 @@ func (o *SearchResponse) HasUserData() bool {
 	return false
 }
 
-// SetUserData gets a reference to the given map[string]interface{} and assigns it to the UserData field.
-func (o *SearchResponse) SetUserData(v map[string]interface{}) {
+// SetUserData gets a reference to the given interface{} and assigns it to the UserData field.
+func (o *SearchResponse) SetUserData(v interface{}) {
 	o.UserData = v
 }
 
@@ -1015,7 +1029,7 @@ func (o SearchResponse) MarshalJSON() ([]byte, error) {
 	if o.ExhaustiveFacetsCount != nil {
 		toSerialize["exhaustiveFacetsCount"] = o.ExhaustiveFacetsCount
 	}
-	if true {
+	if o.ExhaustiveNbHits != nil {
 		toSerialize["exhaustiveNbHits"] = o.ExhaustiveNbHits
 	}
 	if o.ExhaustiveTypo != nil {

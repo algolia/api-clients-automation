@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,11 +28,7 @@ public class UserHighlightResult {
     return this;
   }
 
-  /**
-   * Show highlighted section and words matched on a query.
-   *
-   * @return userID
-   */
+  /** Show highlighted section and words matched on a query. */
   @javax.annotation.Nonnull
   public Map<String, HighlightResult> getUserID() {
     return userID;
@@ -47,11 +44,7 @@ public class UserHighlightResult {
     return this;
   }
 
-  /**
-   * Show highlighted section and words matched on a query.
-   *
-   * @return clusterName
-   */
+  /** Show highlighted section and words matched on a query. */
   @javax.annotation.Nonnull
   public Map<String, HighlightResult> getClusterName() {
     return clusterName;

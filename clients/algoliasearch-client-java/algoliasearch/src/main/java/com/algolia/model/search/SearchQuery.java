@@ -4,58 +4,19 @@
 package com.algolia.model.search;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** SearchQuery */
-@JsonDeserialize(using = SearchQuery.SearchQueryDeserializer.class)
-@JsonSerialize(using = SearchQuery.SearchQuerySerializer.class)
-public abstract class SearchQuery implements CompoundType {
+@JsonDeserialize(using = SearchQuery.Deserializer.class)
+public interface SearchQuery {
+  class Deserializer extends JsonDeserializer<SearchQuery> {
 
-  private static final Logger LOGGER = Logger.getLogger(SearchQuery.class.getName());
-
-  public static SearchQuery of(SearchForFacets inside) {
-    return new SearchQuerySearchForFacets(inside);
-  }
-
-  public static SearchQuery of(SearchForHits inside) {
-    return new SearchQuerySearchForHits(inside);
-  }
-
-  public static class SearchQuerySerializer extends StdSerializer<SearchQuery> {
-
-    public SearchQuerySerializer(Class<SearchQuery> t) {
-      super(t);
-    }
-
-    public SearchQuerySerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(SearchQuery value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class SearchQueryDeserializer extends StdDeserializer<SearchQuery> {
-
-    public SearchQueryDeserializer() {
-      this(SearchQuery.class);
-    }
-
-    public SearchQueryDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public SearchQuery deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -64,8 +25,7 @@ public abstract class SearchQuery implements CompoundType {
       // deserialize SearchForFacets
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          SearchForFacets value = parser.readValueAs(new TypeReference<SearchForFacets>() {});
-          return SearchQuery.of(value);
+          return parser.readValueAs(SearchForFacets.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchForFacets (error: " + e.getMessage() + ") (type: SearchForFacets)");
@@ -75,8 +35,7 @@ public abstract class SearchQuery implements CompoundType {
       // deserialize SearchForHits
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          SearchForHits value = parser.readValueAs(new TypeReference<SearchForHits>() {});
-          return SearchQuery.of(value);
+          return parser.readValueAs(SearchForHits.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchForHits (error: " + e.getMessage() + ") (type: SearchForHits)");
@@ -90,33 +49,5 @@ public abstract class SearchQuery implements CompoundType {
     public SearchQuery getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "SearchQuery cannot be null");
     }
-  }
-}
-
-class SearchQuerySearchForFacets extends SearchQuery {
-
-  private final SearchForFacets insideValue;
-
-  SearchQuerySearchForFacets(SearchForFacets insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public SearchForFacets getInsideValue() {
-    return insideValue;
-  }
-}
-
-class SearchQuerySearchForHits extends SearchQuery {
-
-  private final SearchForHits insideValue;
-
-  SearchQuerySearchForHits(SearchForHits insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public SearchForHits getInsideValue() {
-    return insideValue;
   }
 }

@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** RuleResponseMetadata */
@@ -17,11 +18,7 @@ public class RuleResponseMetadata {
     return this;
   }
 
-  /**
-   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return lastUpdate
-   */
+  /** Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nullable
   public String getLastUpdate() {
     return lastUpdate;

@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,8 +33,6 @@ public class GetConversationRateResponse {
    * [Click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    * minimum: 0 maximum: 1
-   *
-   * @return rate
    */
   @javax.annotation.Nonnull
   public Double getRate() {
@@ -48,8 +47,6 @@ public class GetConversationRateResponse {
   /**
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
    * parameter is `true`.
-   *
-   * @return trackedSearchCount
    */
   @javax.annotation.Nonnull
   public Integer getTrackedSearchCount() {
@@ -61,11 +58,7 @@ public class GetConversationRateResponse {
     return this;
   }
 
-  /**
-   * Number of converted clicks.
-   *
-   * @return conversionCount
-   */
+  /** Number of converted clicks. */
   @javax.annotation.Nonnull
   public Integer getConversionCount() {
     return conversionCount;
@@ -81,11 +74,7 @@ public class GetConversationRateResponse {
     return this;
   }
 
-  /**
-   * Conversion events.
-   *
-   * @return dates
-   */
+  /** Conversion events. */
   @javax.annotation.Nonnull
   public List<ConversionRateEvent> getDates() {
     return dates;

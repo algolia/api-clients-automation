@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,11 +25,7 @@ public class GetSearchesNoResultsResponse {
     return this;
   }
 
-  /**
-   * Searches with no results.
-   *
-   * @return searches
-   */
+  /** Searches with no results. */
   @javax.annotation.Nonnull
   public List<SearchNoResultEvent> getSearches() {
     return searches;

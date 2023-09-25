@@ -405,7 +405,7 @@ class InsightsTest {
           insightsEvents = InsightsEvents(
             events = listOf(
               ClickedObjectIDsAfterSearch(
-                eventType = ClickEvent.values().first { it.value == "click" },
+                eventType = ClickEvent.entries.first { it.value == "click" },
                 eventName = "Product Clicked",
                 index = "products",
                 userToken = "user-123456",
@@ -422,6 +422,97 @@ class InsightsTest {
         assertEquals("/1/events".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"events":[{"eventType":"click","eventName":"Product Clicked","index":"products","userToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7","positions":[7,6]}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `Many events type`() = runTest {
+    client.runTest(
+      call = {
+        pushEvents(
+          insightsEvents = InsightsEvents(
+            events = listOf(
+              ConvertedObjectIDsAfterSearch(
+                eventType = ConversionEvent.entries.first { it.value == "conversion" },
+                eventName = "Product Purchased",
+                index = "products",
+                userToken = "user-123456",
+                timestamp = 1641290601962L,
+                objectIDs = listOf("9780545139700", "9780439784542"),
+                queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+              ),
+              ViewedObjectIDs(
+                eventType = ViewEvent.entries.first { it.value == "view" },
+                eventName = "Product Detail Page Viewed",
+                index = "products",
+                userToken = "user-123456",
+                timestamp = 1641290601962L,
+                objectIDs = listOf("9780545139700", "9780439784542"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/events".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"]}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ConvertedObjectIDsAfterSearch`() = runTest {
+    client.runTest(
+      call = {
+        pushEvents(
+          insightsEvents = InsightsEvents(
+            events = listOf(
+              ConvertedObjectIDsAfterSearch(
+                eventType = ConversionEvent.entries.first { it.value == "conversion" },
+                eventName = "Product Purchased",
+                index = "products",
+                userToken = "user-123456",
+                timestamp = 1641290601962L,
+                objectIDs = listOf("9780545139700", "9780439784542"),
+                queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/events".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ViewedObjectIDs`() = runTest {
+    client.runTest(
+      call = {
+        pushEvents(
+          insightsEvents = InsightsEvents(
+            events = listOf(
+              ViewedObjectIDs(
+                eventType = ViewEvent.entries.first { it.value == "view" },
+                eventName = "Product Detail Page Viewed",
+                index = "products",
+                userToken = "user-123456",
+                timestamp = 1641290601962L,
+                objectIDs = listOf("9780545139700", "9780439784542"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/events".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"events":[{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"]}]}""", it.body)
       },
     )
   }

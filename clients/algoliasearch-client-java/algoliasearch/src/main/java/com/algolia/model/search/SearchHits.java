@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,11 +31,7 @@ public class SearchHits<T> {
     return this;
   }
 
-  /**
-   * Get hits
-   *
-   * @return hits
-   */
+  /** Get hits */
   @javax.annotation.Nonnull
   public List<T> getHits() {
     return hits;
@@ -45,11 +42,7 @@ public class SearchHits<T> {
     return this;
   }
 
-  /**
-   * Text to search for in an index.
-   *
-   * @return query
-   */
+  /** Text to search for in an index. */
   @javax.annotation.Nonnull
   public String getQuery() {
     return query;
@@ -60,11 +53,7 @@ public class SearchHits<T> {
     return this;
   }
 
-  /**
-   * URL-encoded string of all search parameters.
-   *
-   * @return params
-   */
+  /** URL-encoded string of all search parameters. */
   @javax.annotation.Nonnull
   public String getParams() {
     return params;

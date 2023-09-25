@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,7 @@ public class HasPendingMappingsResponse {
     return this;
   }
 
-  /**
-   * Indicates whether there are clusters undergoing migration, creation, or deletion.
-   *
-   * @return pending
-   */
+  /** Indicates whether there are clusters undergoing migration, creation, or deletion. */
   @javax.annotation.Nonnull
   public Boolean getPending() {
     return pending;
@@ -46,11 +43,7 @@ public class HasPendingMappingsResponse {
     return this;
   }
 
-  /**
-   * Cluster pending mapping state: migrating, creating, deleting.
-   *
-   * @return clusters
-   */
+  /** Cluster pending mapping state: migrating, creating, deleting. */
   @javax.annotation.Nullable
   public Map<String, List<String>> getClusters() {
     return clusters;

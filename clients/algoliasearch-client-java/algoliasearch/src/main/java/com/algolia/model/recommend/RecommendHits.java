@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,11 +31,7 @@ public class RecommendHits {
     return this;
   }
 
-  /**
-   * Get hits
-   *
-   * @return hits
-   */
+  /** Get hits */
   @javax.annotation.Nonnull
   public List<RecommendHit> getHits() {
     return hits;
@@ -45,11 +42,7 @@ public class RecommendHits {
     return this;
   }
 
-  /**
-   * Text to search for in an index.
-   *
-   * @return query
-   */
+  /** Text to search for in an index. */
   @javax.annotation.Nullable
   public String getQuery() {
     return query;
@@ -60,11 +53,7 @@ public class RecommendHits {
     return this;
   }
 
-  /**
-   * URL-encoded string of all search parameters.
-   *
-   * @return params
-   */
+  /** URL-encoded string of all search parameters. */
   @javax.annotation.Nullable
   public String getParams() {
     return params;

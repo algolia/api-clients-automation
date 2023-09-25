@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** TopCountry */
@@ -20,11 +21,7 @@ public class TopCountry {
     return this;
   }
 
-  /**
-   * Country.
-   *
-   * @return country
-   */
+  /** Country. */
   @javax.annotation.Nonnull
   public String getCountry() {
     return country;
@@ -35,11 +32,7 @@ public class TopCountry {
     return this;
   }
 
-  /**
-   * Number of occurrences.
-   *
-   * @return count
-   */
+  /** Number of occurrences. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;

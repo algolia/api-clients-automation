@@ -4,15 +4,11 @@
 package com.algolia.model.recommend;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,46 +19,67 @@ import java.util.logging.Logger;
  * don't match the optional filter are still included in the results, only their ranking is
  * affected.
  */
-@JsonDeserialize(using = OptionalFilters.OptionalFiltersDeserializer.class)
-@JsonSerialize(using = OptionalFilters.OptionalFiltersSerializer.class)
-public abstract class OptionalFilters implements CompoundType {
-
-  private static final Logger LOGGER = Logger.getLogger(OptionalFilters.class.getName());
-
-  public static OptionalFilters of(List<MixedSearchFilters> inside) {
-    return new OptionalFiltersListOfMixedSearchFilters(inside);
+@JsonDeserialize(using = OptionalFilters.Deserializer.class)
+public interface OptionalFilters {
+  /** OptionalFilters as List<MixedSearchFilters> wrapper. */
+  static OptionalFilters of(List<MixedSearchFilters> value) {
+    return new ListOfMixedSearchFiltersWrapper(value);
   }
 
-  public static OptionalFilters of(String inside) {
-    return new OptionalFiltersString(inside);
+  /** OptionalFilters as String wrapper. */
+  static OptionalFilters of(String value) {
+    return new StringWrapper(value);
   }
 
-  public static class OptionalFiltersSerializer extends StdSerializer<OptionalFilters> {
+  /** OptionalFilters as List<MixedSearchFilters> wrapper. */
+  @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
+  class ListOfMixedSearchFiltersWrapper implements OptionalFilters {
 
-    public OptionalFiltersSerializer(Class<OptionalFilters> t) {
-      super(t);
+    private final List<MixedSearchFilters> value;
+
+    ListOfMixedSearchFiltersWrapper(List<MixedSearchFilters> value) {
+      this.value = value;
     }
 
-    public OptionalFiltersSerializer() {
-      this(null);
+    public List<MixedSearchFilters> getValue() {
+      return value;
     }
 
-    @Override
-    public void serialize(OptionalFilters value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
+    static class Serializer extends JsonSerializer<ListOfMixedSearchFiltersWrapper> {
+
+      @Override
+      public void serialize(ListOfMixedSearchFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
     }
   }
 
-  public static class OptionalFiltersDeserializer extends StdDeserializer<OptionalFilters> {
+  /** OptionalFilters as String wrapper. */
+  @JsonSerialize(using = StringWrapper.Serializer.class)
+  class StringWrapper implements OptionalFilters {
 
-    public OptionalFiltersDeserializer() {
-      this(OptionalFilters.class);
+    private final String value;
+
+    StringWrapper(String value) {
+      this.value = value;
     }
 
-    public OptionalFiltersDeserializer(Class<?> vc) {
-      super(vc);
+    public String getValue() {
+      return value;
     }
+
+    static class Serializer extends JsonSerializer<StringWrapper> {
+
+      @Override
+      public void serialize(StringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
+  class Deserializer extends JsonDeserializer<OptionalFilters> {
+
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public OptionalFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -71,8 +88,7 @@ public abstract class OptionalFilters implements CompoundType {
       // deserialize List<MixedSearchFilters>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<MixedSearchFilters> value = parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
-          return OptionalFilters.of(value);
+          return parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -84,7 +100,7 @@ public abstract class OptionalFilters implements CompoundType {
       // deserialize String
       if (tree.isValueNode()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          String value = parser.readValueAs(new TypeReference<String>() {});
+          String value = parser.readValueAs(String.class);
           return OptionalFilters.of(value);
         } catch (Exception e) {
           // deserialization failed, continue
@@ -99,33 +115,5 @@ public abstract class OptionalFilters implements CompoundType {
     public OptionalFilters getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "OptionalFilters cannot be null");
     }
-  }
-}
-
-class OptionalFiltersListOfMixedSearchFilters extends OptionalFilters {
-
-  private final List<MixedSearchFilters> insideValue;
-
-  OptionalFiltersListOfMixedSearchFilters(List<MixedSearchFilters> insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public List<MixedSearchFilters> getInsideValue() {
-    return insideValue;
-  }
-}
-
-class OptionalFiltersString extends OptionalFilters {
-
-  private final String insideValue;
-
-  OptionalFiltersString(String insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public String getInsideValue() {
-    return insideValue;
   }
 }

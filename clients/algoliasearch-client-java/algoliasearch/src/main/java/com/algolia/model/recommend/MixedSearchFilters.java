@@ -4,60 +4,77 @@
 package com.algolia.model.recommend;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
 /** MixedSearchFilters */
-@JsonDeserialize(using = MixedSearchFilters.MixedSearchFiltersDeserializer.class)
-@JsonSerialize(using = MixedSearchFilters.MixedSearchFiltersSerializer.class)
-public abstract class MixedSearchFilters implements CompoundType {
-
-  private static final Logger LOGGER = Logger.getLogger(MixedSearchFilters.class.getName());
-
-  public static MixedSearchFilters of(List<String> inside) {
-    return new MixedSearchFiltersListOfString(inside);
+@JsonDeserialize(using = MixedSearchFilters.Deserializer.class)
+public interface MixedSearchFilters {
+  /** MixedSearchFilters as List<String> wrapper. */
+  static MixedSearchFilters of(List<String> value) {
+    return new ListOfStringWrapper(value);
   }
 
-  public static MixedSearchFilters of(String inside) {
-    return new MixedSearchFiltersString(inside);
+  /** MixedSearchFilters as String wrapper. */
+  static MixedSearchFilters of(String value) {
+    return new StringWrapper(value);
   }
 
-  public static class MixedSearchFiltersSerializer extends StdSerializer<MixedSearchFilters> {
+  /** MixedSearchFilters as List<String> wrapper. */
+  @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
+  class ListOfStringWrapper implements MixedSearchFilters {
 
-    public MixedSearchFiltersSerializer(Class<MixedSearchFilters> t) {
-      super(t);
+    private final List<String> value;
+
+    ListOfStringWrapper(List<String> value) {
+      this.value = value;
     }
 
-    public MixedSearchFiltersSerializer() {
-      this(null);
+    public List<String> getValue() {
+      return value;
     }
 
-    @Override
-    public void serialize(MixedSearchFilters value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
+    static class Serializer extends JsonSerializer<ListOfStringWrapper> {
+
+      @Override
+      public void serialize(ListOfStringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
     }
   }
 
-  public static class MixedSearchFiltersDeserializer extends StdDeserializer<MixedSearchFilters> {
+  /** MixedSearchFilters as String wrapper. */
+  @JsonSerialize(using = StringWrapper.Serializer.class)
+  class StringWrapper implements MixedSearchFilters {
 
-    public MixedSearchFiltersDeserializer() {
-      this(MixedSearchFilters.class);
+    private final String value;
+
+    StringWrapper(String value) {
+      this.value = value;
     }
 
-    public MixedSearchFiltersDeserializer(Class<?> vc) {
-      super(vc);
+    public String getValue() {
+      return value;
     }
+
+    static class Serializer extends JsonSerializer<StringWrapper> {
+
+      @Override
+      public void serialize(StringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
+  class Deserializer extends JsonDeserializer<MixedSearchFilters> {
+
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public MixedSearchFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -66,8 +83,7 @@ public abstract class MixedSearchFilters implements CompoundType {
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
-          return MixedSearchFilters.of(value);
+          return parser.readValueAs(new TypeReference<List<String>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
@@ -77,7 +93,7 @@ public abstract class MixedSearchFilters implements CompoundType {
       // deserialize String
       if (tree.isValueNode()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          String value = parser.readValueAs(new TypeReference<String>() {});
+          String value = parser.readValueAs(String.class);
           return MixedSearchFilters.of(value);
         } catch (Exception e) {
           // deserialization failed, continue
@@ -92,33 +108,5 @@ public abstract class MixedSearchFilters implements CompoundType {
     public MixedSearchFilters getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "MixedSearchFilters cannot be null");
     }
-  }
-}
-
-class MixedSearchFiltersListOfString extends MixedSearchFilters {
-
-  private final List<String> insideValue;
-
-  MixedSearchFiltersListOfString(List<String> insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public List<String> getInsideValue() {
-    return insideValue;
-  }
-}
-
-class MixedSearchFiltersString extends MixedSearchFilters {
-
-  private final String insideValue;
-
-  MixedSearchFiltersString(String insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public String getInsideValue() {
-    return insideValue;
   }
 }

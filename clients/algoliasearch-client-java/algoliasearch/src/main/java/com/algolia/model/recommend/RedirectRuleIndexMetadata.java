@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** RedirectRuleIndexMetadata */
@@ -29,11 +30,7 @@ public class RedirectRuleIndexMetadata {
     return this;
   }
 
-  /**
-   * Source index for the redirect rule.
-   *
-   * @return source
-   */
+  /** Source index for the redirect rule. */
   @javax.annotation.Nonnull
   public String getSource() {
     return source;
@@ -44,11 +41,7 @@ public class RedirectRuleIndexMetadata {
     return this;
   }
 
-  /**
-   * Destination index for the redirect rule.
-   *
-   * @return dest
-   */
+  /** Destination index for the redirect rule. */
   @javax.annotation.Nonnull
   public String getDest() {
     return dest;
@@ -59,11 +52,7 @@ public class RedirectRuleIndexMetadata {
     return this;
   }
 
-  /**
-   * Reason for the redirect rule.
-   *
-   * @return reason
-   */
+  /** Reason for the redirect rule. */
   @javax.annotation.Nonnull
   public String getReason() {
     return reason;
@@ -74,11 +63,7 @@ public class RedirectRuleIndexMetadata {
     return this;
   }
 
-  /**
-   * Redirect rule status.
-   *
-   * @return succeed
-   */
+  /** Redirect rule status. */
   @javax.annotation.Nonnull
   public Boolean getSucceed() {
     return succeed;
@@ -89,11 +74,7 @@ public class RedirectRuleIndexMetadata {
     return this;
   }
 
-  /**
-   * Get data
-   *
-   * @return data
-   */
+  /** Get data */
   @javax.annotation.Nonnull
   public RedirectRuleIndexMetadataData getData() {
     return data;

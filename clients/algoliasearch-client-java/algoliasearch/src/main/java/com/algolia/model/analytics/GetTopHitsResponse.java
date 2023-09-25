@@ -4,59 +4,19 @@
 package com.algolia.model.analytics;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** GetTopHitsResponse */
-@JsonDeserialize(using = GetTopHitsResponse.GetTopHitsResponseDeserializer.class)
-@JsonSerialize(using = GetTopHitsResponse.GetTopHitsResponseSerializer.class)
-public abstract class GetTopHitsResponse implements CompoundType {
+@JsonDeserialize(using = GetTopHitsResponse.Deserializer.class)
+public interface GetTopHitsResponse {
+  class Deserializer extends JsonDeserializer<GetTopHitsResponse> {
 
-  private static final Logger LOGGER = Logger.getLogger(GetTopHitsResponse.class.getName());
-
-  public static GetTopHitsResponse of(TopHitsResponse inside) {
-    return new GetTopHitsResponseTopHitsResponse(inside);
-  }
-
-  public static GetTopHitsResponse of(TopHitsResponseWithAnalytics inside) {
-    return new GetTopHitsResponseTopHitsResponseWithAnalytics(inside);
-  }
-
-  public static class GetTopHitsResponseSerializer extends StdSerializer<GetTopHitsResponse> {
-
-    public GetTopHitsResponseSerializer(Class<GetTopHitsResponse> t) {
-      super(t);
-    }
-
-    public GetTopHitsResponseSerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(GetTopHitsResponse value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class GetTopHitsResponseDeserializer extends StdDeserializer<GetTopHitsResponse> {
-
-    public GetTopHitsResponseDeserializer() {
-      this(GetTopHitsResponse.class);
-    }
-
-    public GetTopHitsResponseDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public GetTopHitsResponse deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -65,8 +25,7 @@ public abstract class GetTopHitsResponse implements CompoundType {
       // deserialize TopHitsResponse
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          TopHitsResponse value = parser.readValueAs(new TypeReference<TopHitsResponse>() {});
-          return GetTopHitsResponse.of(value);
+          return parser.readValueAs(TopHitsResponse.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf TopHitsResponse (error: " + e.getMessage() + ") (type: TopHitsResponse)");
@@ -76,8 +35,7 @@ public abstract class GetTopHitsResponse implements CompoundType {
       // deserialize TopHitsResponseWithAnalytics
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          TopHitsResponseWithAnalytics value = parser.readValueAs(new TypeReference<TopHitsResponseWithAnalytics>() {});
-          return GetTopHitsResponse.of(value);
+          return parser.readValueAs(TopHitsResponseWithAnalytics.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -93,33 +51,5 @@ public abstract class GetTopHitsResponse implements CompoundType {
     public GetTopHitsResponse getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "GetTopHitsResponse cannot be null");
     }
-  }
-}
-
-class GetTopHitsResponseTopHitsResponse extends GetTopHitsResponse {
-
-  private final TopHitsResponse insideValue;
-
-  GetTopHitsResponseTopHitsResponse(TopHitsResponse insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public TopHitsResponse getInsideValue() {
-    return insideValue;
-  }
-}
-
-class GetTopHitsResponseTopHitsResponseWithAnalytics extends GetTopHitsResponse {
-
-  private final TopHitsResponseWithAnalytics insideValue;
-
-  GetTopHitsResponseTopHitsResponseWithAnalytics(TopHitsResponseWithAnalytics insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public TopHitsResponseWithAnalytics getInsideValue() {
-    return insideValue;
   }
 }

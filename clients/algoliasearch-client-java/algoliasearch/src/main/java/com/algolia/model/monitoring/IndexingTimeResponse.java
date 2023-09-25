@@ -4,6 +4,7 @@
 package com.algolia.model.monitoring;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** IndexingTimeResponse */
@@ -17,11 +18,7 @@ public class IndexingTimeResponse {
     return this;
   }
 
-  /**
-   * Get metrics
-   *
-   * @return metrics
-   */
+  /** Get metrics */
   @javax.annotation.Nullable
   public IndexingTimeResponseMetrics getMetrics() {
     return metrics;

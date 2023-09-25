@@ -4,6 +4,7 @@
 package com.algolia.model.querysuggestions;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Facet to use as category. */
@@ -20,11 +21,7 @@ public class Facet {
     return this;
   }
 
-  /**
-   * Facet name.
-   *
-   * @return attribute
-   */
+  /** Facet name. */
   @javax.annotation.Nullable
   public String getAttribute() {
     return attribute;
@@ -35,11 +32,7 @@ public class Facet {
     return this;
   }
 
-  /**
-   * Number of suggestions.
-   *
-   * @return amount
-   */
+  /** Number of suggestions. */
   @javax.annotation.Nullable
   public Integer getAmount() {
     return amount;

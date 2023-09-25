@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** AroundPrecisionFromValueInner */
@@ -20,11 +21,7 @@ public class AroundPrecisionFromValueInner {
     return this;
   }
 
-  /**
-   * Get from
-   *
-   * @return from
-   */
+  /** Get from */
   @javax.annotation.Nullable
   public Integer getFrom() {
     return from;
@@ -35,11 +32,7 @@ public class AroundPrecisionFromValueInner {
     return this;
   }
 
-  /**
-   * Get value
-   *
-   * @return value
-   */
+  /** Get value */
   @javax.annotation.Nullable
   public Integer getValue() {
     return value;

@@ -22,7 +22,7 @@ import type {
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '5.0.0-alpha.79';
+export const apiClientVersion = '5.0.0-alpha.84';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -162,10 +162,10 @@ export function createLiteClient({
      * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    search<T>(
+    search(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
       requestOptions?: RequestOptions
-    ): Promise<SearchResponses<T>> {
+    ): Promise<SearchResponses> {
       if (searchMethodParams && Array.isArray(searchMethodParams)) {
         const newSignatureRequest: SearchMethodParams = {
           requests: searchMethodParams.map(({ params, ...legacyRequest }) => {

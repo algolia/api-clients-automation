@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Assign userID parameters. */
@@ -17,11 +18,7 @@ public class AssignUserIdParams {
     return this;
   }
 
-  /**
-   * Cluster name.
-   *
-   * @return cluster
-   */
+  /** Cluster name. */
   @javax.annotation.Nonnull
   public String getCluster() {
     return cluster;

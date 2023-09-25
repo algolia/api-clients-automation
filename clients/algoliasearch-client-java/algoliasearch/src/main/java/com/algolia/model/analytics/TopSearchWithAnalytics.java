@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** TopSearchWithAnalytics */
@@ -41,11 +42,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /**
-   * User query.
-   *
-   * @return search
-   */
+  /** User query. */
   @javax.annotation.Nonnull
   public String getSearch() {
     return search;
@@ -58,8 +55,6 @@ public class TopSearchWithAnalytics {
 
   /**
    * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
-   *
-   * @return count
    */
   @javax.annotation.Nonnull
   public Integer getCount() {
@@ -75,8 +70,6 @@ public class TopSearchWithAnalytics {
    * [Click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    * minimum: 0 maximum: 1
-   *
-   * @return clickThroughRate
    */
   @javax.annotation.Nonnull
   public Double getClickThroughRate() {
@@ -92,8 +85,6 @@ public class TopSearchWithAnalytics {
    * Average
    * [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position)
    * of clicked search result.
-   *
-   * @return averageClickPosition
    */
   @javax.annotation.Nonnull
   public Integer getAverageClickPosition() {
@@ -108,8 +99,6 @@ public class TopSearchWithAnalytics {
   /**
    * [Conversion rate
    * (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-   *
-   * @return conversionRate
    */
   @javax.annotation.Nonnull
   public Double getConversionRate() {
@@ -124,8 +113,6 @@ public class TopSearchWithAnalytics {
   /**
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
    * parameter is `true`.
-   *
-   * @return trackedSearchCount
    */
   @javax.annotation.Nonnull
   public Integer getTrackedSearchCount() {
@@ -137,11 +124,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /**
-   * Number of click events.
-   *
-   * @return clickCount
-   */
+  /** Number of click events. */
   @javax.annotation.Nonnull
   public Integer getClickCount() {
     return clickCount;
@@ -152,11 +135,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /**
-   * Number of converted clicks.
-   *
-   * @return conversionCount
-   */
+  /** Number of converted clicks. */
   @javax.annotation.Nonnull
   public Integer getConversionCount() {
     return conversionCount;
@@ -167,11 +146,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /**
-   * Number of hits the search query matched.
-   *
-   * @return nbHits
-   */
+  /** Number of hits the search query matched. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;

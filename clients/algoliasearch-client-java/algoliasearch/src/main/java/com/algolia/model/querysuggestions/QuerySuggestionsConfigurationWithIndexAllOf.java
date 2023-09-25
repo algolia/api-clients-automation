@@ -4,6 +4,7 @@
 package com.algolia.model.querysuggestions;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** QuerySuggestionsConfigurationWithIndexAllOf */
@@ -17,11 +18,7 @@ public class QuerySuggestionsConfigurationWithIndexAllOf {
     return this;
   }
 
-  /**
-   * Query Suggestions index name.
-   *
-   * @return indexName
-   */
+  /** Query Suggestions index name. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

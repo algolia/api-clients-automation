@@ -4,6 +4,8 @@ import type { DockerImageType } from './dockerImageType';
 import type { DockerRegistry } from './dockerRegistry';
 
 export type SourceDocker = {
+  imageType: DockerImageType;
+
   registry: DockerRegistry;
 
   /**
@@ -15,13 +17,6 @@ export type SourceDocker = {
    * The version of the image, defaults to `latest`.
    */
   version?: string;
-
-  imageType: DockerImageType;
-
-  /**
-   * The full name of the output file.
-   */
-  outputFile?: string;
 
   /**
    * The configuration of the spec.

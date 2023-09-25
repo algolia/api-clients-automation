@@ -4,12 +4,14 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** ConsequenceQueryObject */
-public class ConsequenceQueryObject {
+@JsonDeserialize(as = ConsequenceQueryObject.class)
+public class ConsequenceQueryObject implements ConsequenceQuery {
 
   @JsonProperty("remove")
   private List<String> remove;
@@ -30,11 +32,7 @@ public class ConsequenceQueryObject {
     return this;
   }
 
-  /**
-   * Words to remove.
-   *
-   * @return remove
-   */
+  /** Words to remove. */
   @javax.annotation.Nullable
   public List<String> getRemove() {
     return remove;
@@ -53,11 +51,7 @@ public class ConsequenceQueryObject {
     return this;
   }
 
-  /**
-   * Edits to apply.
-   *
-   * @return edits
-   */
+  /** Edits to apply. */
   @javax.annotation.Nullable
   public List<Edit> getEdits() {
     return edits;

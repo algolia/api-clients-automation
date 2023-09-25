@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Custom entries for a dictionary. */
@@ -20,8 +21,6 @@ public class DictionaryLanguage {
   /**
    * If `0`, the dictionary hasn't been customized and only contains standard entries provided by
    * Algolia. If `null`, that feature isn't available or isn't supported for that language.
-   *
-   * @return nbCustomEntries
    */
   @javax.annotation.Nullable
   public Integer getNbCustomEntries() {

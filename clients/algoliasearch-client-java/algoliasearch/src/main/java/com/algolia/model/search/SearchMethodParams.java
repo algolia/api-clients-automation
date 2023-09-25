@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,11 +28,7 @@ public class SearchMethodParams {
     return this;
   }
 
-  /**
-   * Get requests
-   *
-   * @return requests
-   */
+  /** Get requests */
   @javax.annotation.Nonnull
   public List<SearchQuery> getRequests() {
     return requests;
@@ -42,11 +39,7 @@ public class SearchMethodParams {
     return this;
   }
 
-  /**
-   * Get strategy
-   *
-   * @return strategy
-   */
+  /** Get strategy */
   @javax.annotation.Nullable
   public SearchStrategy getStrategy() {
     return strategy;

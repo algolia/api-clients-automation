@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,11 +31,7 @@ public class BaseSearchResponseRedirect {
     return this;
   }
 
-  /**
-   * Get index
-   *
-   * @return index
-   */
+  /** Get index */
   @javax.annotation.Nullable
   public List<RedirectRuleIndexMetadata> getIndex() {
     return index;

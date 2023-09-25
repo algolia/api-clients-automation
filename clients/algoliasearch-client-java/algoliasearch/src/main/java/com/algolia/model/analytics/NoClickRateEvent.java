@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** NoClickRateEvent */
@@ -30,8 +31,6 @@ public class NoClickRateEvent {
    * [Click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    * minimum: 0 maximum: 1
-   *
-   * @return rate
    */
   @javax.annotation.Nonnull
   public Double getRate() {
@@ -45,8 +44,6 @@ public class NoClickRateEvent {
 
   /**
    * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
-   *
-   * @return count
    */
   @javax.annotation.Nonnull
   public Integer getCount() {
@@ -58,11 +55,7 @@ public class NoClickRateEvent {
     return this;
   }
 
-  /**
-   * Number of click events.
-   *
-   * @return noClickCount
-   */
+  /** Number of click events. */
   @javax.annotation.Nonnull
   public Integer getNoClickCount() {
     return noClickCount;
@@ -73,11 +66,7 @@ public class NoClickRateEvent {
     return this;
   }
 
-  /**
-   * Date of the event in the format YYYY-MM-DD.
-   *
-   * @return date
-   */
+  /** Date of the event in the format YYYY-MM-DD. */
   @javax.annotation.Nonnull
   public String getDate() {
     return date;

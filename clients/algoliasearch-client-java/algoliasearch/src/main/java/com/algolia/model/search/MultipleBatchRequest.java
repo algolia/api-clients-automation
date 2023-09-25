@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** MultipleBatchRequest */
@@ -23,11 +24,7 @@ public class MultipleBatchRequest {
     return this;
   }
 
-  /**
-   * Get action
-   *
-   * @return action
-   */
+  /** Get action */
   @javax.annotation.Nonnull
   public Action getAction() {
     return action;
@@ -38,11 +35,7 @@ public class MultipleBatchRequest {
     return this;
   }
 
-  /**
-   * Operation arguments (varies with specified `action`).
-   *
-   * @return body
-   */
+  /** Operation arguments (varies with specified `action`). */
   @javax.annotation.Nonnull
   public Object getBody() {
     return body;
@@ -53,11 +46,7 @@ public class MultipleBatchRequest {
     return this;
   }
 
-  /**
-   * Index to target for this operation.
-   *
-   * @return indexName
-   */
+  /** Index to target for this operation. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

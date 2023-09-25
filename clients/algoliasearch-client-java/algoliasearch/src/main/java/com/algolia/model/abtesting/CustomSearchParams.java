@@ -4,6 +4,7 @@
 package com.algolia.model.abtesting;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
@@ -21,11 +22,7 @@ public class CustomSearchParams {
     return this;
   }
 
-  /**
-   * Get customSearchParameters
-   *
-   * @return customSearchParameters
-   */
+  /** Get customSearchParameters */
   @javax.annotation.Nonnull
   public Object getCustomSearchParameters() {
     return customSearchParameters;

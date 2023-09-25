@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** UpdateApiKeyResponse */
@@ -20,11 +21,7 @@ public class UpdateApiKeyResponse {
     return this;
   }
 
-  /**
-   * API key.
-   *
-   * @return key
-   */
+  /** API key. */
   @javax.annotation.Nonnull
   public String getKey() {
     return key;
@@ -35,11 +32,7 @@ public class UpdateApiKeyResponse {
     return this;
   }
 
-  /**
-   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return updatedAt
-   */
+  /** Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;

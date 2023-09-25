@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** TopSearch */
@@ -23,11 +24,7 @@ public class TopSearch {
     return this;
   }
 
-  /**
-   * User query.
-   *
-   * @return search
-   */
+  /** User query. */
   @javax.annotation.Nonnull
   public String getSearch() {
     return search;
@@ -40,8 +37,6 @@ public class TopSearch {
 
   /**
    * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
-   *
-   * @return count
    */
   @javax.annotation.Nonnull
   public Integer getCount() {
@@ -53,11 +48,7 @@ public class TopSearch {
     return this;
   }
 
-  /**
-   * Number of hits the search query matched.
-   *
-   * @return nbHits
-   */
+  /** Number of hits the search query matched. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;

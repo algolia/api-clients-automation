@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,11 +37,7 @@ public class SearchUserIdsResponse {
     return this;
   }
 
-  /**
-   * User objects that match the query.
-   *
-   * @return hits
-   */
+  /** User objects that match the query. */
   @javax.annotation.Nonnull
   public List<UserHit> getHits() {
     return hits;
@@ -51,11 +48,7 @@ public class SearchUserIdsResponse {
     return this;
   }
 
-  /**
-   * Number of hits the search query matched.
-   *
-   * @return nbHits
-   */
+  /** Number of hits the search query matched. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;
@@ -66,11 +59,7 @@ public class SearchUserIdsResponse {
     return this;
   }
 
-  /**
-   * Page to retrieve (the first page is `0`, not `1`).
-   *
-   * @return page
-   */
+  /** Page to retrieve (the first page is `0`, not `1`). */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;
@@ -81,11 +70,7 @@ public class SearchUserIdsResponse {
     return this;
   }
 
-  /**
-   * Maximum number of hits per page. minimum: 1 maximum: 1000
-   *
-   * @return hitsPerPage
-   */
+  /** Maximum number of hits per page. minimum: 1 maximum: 1000 */
   @javax.annotation.Nonnull
   public Integer getHitsPerPage() {
     return hitsPerPage;
@@ -96,11 +81,7 @@ public class SearchUserIdsResponse {
     return this;
   }
 
-  /**
-   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return updatedAt
-   */
+  /** Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;

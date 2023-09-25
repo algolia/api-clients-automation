@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,8 +26,6 @@ public class BatchDictionaryEntriesParams {
   /**
    * Incidates whether to replace all custom entries in the dictionary with the ones sent with this
    * request.
-   *
-   * @return clearExistingDictionaryEntries
    */
   @javax.annotation.Nullable
   public Boolean getClearExistingDictionaryEntries() {
@@ -43,11 +42,7 @@ public class BatchDictionaryEntriesParams {
     return this;
   }
 
-  /**
-   * Operations to batch.
-   *
-   * @return requests
-   */
+  /** Operations to batch. */
   @javax.annotation.Nonnull
   public List<BatchDictionaryEntriesRequest> getRequests() {
     return requests;

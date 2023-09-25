@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,11 +43,7 @@ public class SearchSynonymsResponse {
     return this;
   }
 
-  /**
-   * Synonym objects.
-   *
-   * @return hits
-   */
+  /** Synonym objects. */
   @javax.annotation.Nonnull
   public List<SynonymHit> getHits() {
     return hits;
@@ -57,11 +54,7 @@ public class SearchSynonymsResponse {
     return this;
   }
 
-  /**
-   * Number of hits the search query matched.
-   *
-   * @return nbHits
-   */
+  /** Number of hits the search query matched. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;

@@ -4,59 +4,19 @@
 package com.algolia.model.abtesting;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** AddABTestsVariant */
-@JsonDeserialize(using = AddABTestsVariant.AddABTestsVariantDeserializer.class)
-@JsonSerialize(using = AddABTestsVariant.AddABTestsVariantSerializer.class)
-public abstract class AddABTestsVariant implements CompoundType {
+@JsonDeserialize(using = AddABTestsVariant.Deserializer.class)
+public interface AddABTestsVariant {
+  class Deserializer extends JsonDeserializer<AddABTestsVariant> {
 
-  private static final Logger LOGGER = Logger.getLogger(AddABTestsVariant.class.getName());
-
-  public static AddABTestsVariant of(AbTestsVariant inside) {
-    return new AddABTestsVariantAbTestsVariant(inside);
-  }
-
-  public static AddABTestsVariant of(AbTestsVariantSearchParams inside) {
-    return new AddABTestsVariantAbTestsVariantSearchParams(inside);
-  }
-
-  public static class AddABTestsVariantSerializer extends StdSerializer<AddABTestsVariant> {
-
-    public AddABTestsVariantSerializer(Class<AddABTestsVariant> t) {
-      super(t);
-    }
-
-    public AddABTestsVariantSerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(AddABTestsVariant value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class AddABTestsVariantDeserializer extends StdDeserializer<AddABTestsVariant> {
-
-    public AddABTestsVariantDeserializer() {
-      this(AddABTestsVariant.class);
-    }
-
-    public AddABTestsVariantDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public AddABTestsVariant deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -65,8 +25,7 @@ public abstract class AddABTestsVariant implements CompoundType {
       // deserialize AbTestsVariant
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          AbTestsVariant value = parser.readValueAs(new TypeReference<AbTestsVariant>() {});
-          return AddABTestsVariant.of(value);
+          return parser.readValueAs(AbTestsVariant.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf AbTestsVariant (error: " + e.getMessage() + ") (type: AbTestsVariant)");
@@ -76,8 +35,7 @@ public abstract class AddABTestsVariant implements CompoundType {
       // deserialize AbTestsVariantSearchParams
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          AbTestsVariantSearchParams value = parser.readValueAs(new TypeReference<AbTestsVariantSearchParams>() {});
-          return AddABTestsVariant.of(value);
+          return parser.readValueAs(AbTestsVariantSearchParams.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -93,33 +51,5 @@ public abstract class AddABTestsVariant implements CompoundType {
     public AddABTestsVariant getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "AddABTestsVariant cannot be null");
     }
-  }
-}
-
-class AddABTestsVariantAbTestsVariant extends AddABTestsVariant {
-
-  private final AbTestsVariant insideValue;
-
-  AddABTestsVariantAbTestsVariant(AbTestsVariant insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public AbTestsVariant getInsideValue() {
-    return insideValue;
-  }
-}
-
-class AddABTestsVariantAbTestsVariantSearchParams extends AddABTestsVariant {
-
-  private final AbTestsVariantSearchParams insideValue;
-
-  AddABTestsVariantAbTestsVariantSearchParams(AbTestsVariantSearchParams insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public AbTestsVariantSearchParams getInsideValue() {
-    return insideValue;
   }
 }

@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,11 +25,7 @@ public class ListApiKeysResponse {
     return this;
   }
 
-  /**
-   * API keys.
-   *
-   * @return keys
-   */
+  /** API keys. */
   @javax.annotation.Nonnull
   public List<GetApiKeyResponse> getKeys() {
     return keys;

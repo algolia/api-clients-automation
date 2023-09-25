@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,11 +34,7 @@ public class SearchRecommendRulesResponse {
     return this;
   }
 
-  /**
-   * Fetched rules.
-   *
-   * @return hits
-   */
+  /** Fetched rules. */
   @javax.annotation.Nonnull
   public List<RuleResponse> getHits() {
     return hits;
@@ -48,11 +45,7 @@ public class SearchRecommendRulesResponse {
     return this;
   }
 
-  /**
-   * Number of fetched rules.
-   *
-   * @return nbHits
-   */
+  /** Number of fetched rules. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;
@@ -63,11 +56,7 @@ public class SearchRecommendRulesResponse {
     return this;
   }
 
-  /**
-   * Current page.
-   *
-   * @return page
-   */
+  /** Current page. */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;
@@ -78,11 +67,7 @@ public class SearchRecommendRulesResponse {
     return this;
   }
 
-  /**
-   * Number of pages.
-   *
-   * @return nbPages
-   */
+  /** Number of pages. */
   @javax.annotation.Nonnull
   public Integer getNbPages() {
     return nbPages;

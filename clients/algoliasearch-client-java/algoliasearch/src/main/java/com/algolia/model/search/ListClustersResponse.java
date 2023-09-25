@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,8 +28,6 @@ public class ListClustersResponse {
   /**
    * Key-value pairs with cluster names as keys and lists of users with the highest number of
    * records per cluster as values.
-   *
-   * @return topUsers
    */
   @javax.annotation.Nonnull
   public List<String> getTopUsers() {

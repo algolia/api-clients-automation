@@ -4,82 +4,41 @@
 package com.algolia.model.search;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** BrowseParams */
-@JsonDeserialize(using = BrowseParams.BrowseParamsDeserializer.class)
-@JsonSerialize(using = BrowseParams.BrowseParamsSerializer.class)
-public abstract class BrowseParams implements CompoundType {
+@JsonDeserialize(using = BrowseParams.Deserializer.class)
+public interface BrowseParams {
+  class Deserializer extends JsonDeserializer<BrowseParams> {
 
-  private static final Logger LOGGER = Logger.getLogger(BrowseParams.class.getName());
-
-  public static BrowseParams of(BrowseParamsObject inside) {
-    return new BrowseParamsBrowseParamsObject(inside);
-  }
-
-  public static BrowseParams of(SearchParamsString inside) {
-    return new BrowseParamsSearchParamsString(inside);
-  }
-
-  public static class BrowseParamsSerializer extends StdSerializer<BrowseParams> {
-
-    public BrowseParamsSerializer(Class<BrowseParams> t) {
-      super(t);
-    }
-
-    public BrowseParamsSerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(BrowseParams value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class BrowseParamsDeserializer extends StdDeserializer<BrowseParams> {
-
-    public BrowseParamsDeserializer() {
-      this(BrowseParams.class);
-    }
-
-    public BrowseParamsDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public BrowseParams deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
 
-      // deserialize BrowseParamsObject
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          BrowseParamsObject value = parser.readValueAs(new TypeReference<BrowseParamsObject>() {});
-          return BrowseParams.of(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf BrowseParamsObject (error: " + e.getMessage() + ") (type: BrowseParamsObject)");
-        }
-      }
-
       // deserialize SearchParamsString
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("params")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          SearchParamsString value = parser.readValueAs(new TypeReference<SearchParamsString>() {});
-          return BrowseParams.of(value);
+          return parser.readValueAs(SearchParamsString.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchParamsString (error: " + e.getMessage() + ") (type: SearchParamsString)");
+        }
+      }
+
+      // deserialize BrowseParamsObject
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(BrowseParamsObject.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf BrowseParamsObject (error: " + e.getMessage() + ") (type: BrowseParamsObject)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
@@ -90,33 +49,5 @@ public abstract class BrowseParams implements CompoundType {
     public BrowseParams getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "BrowseParams cannot be null");
     }
-  }
-}
-
-class BrowseParamsBrowseParamsObject extends BrowseParams {
-
-  private final BrowseParamsObject insideValue;
-
-  BrowseParamsBrowseParamsObject(BrowseParamsObject insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public BrowseParamsObject getInsideValue() {
-    return insideValue;
-  }
-}
-
-class BrowseParamsSearchParamsString extends BrowseParams {
-
-  private final SearchParamsString insideValue;
-
-  BrowseParamsSearchParamsString(SearchParamsString insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public SearchParamsString getInsideValue() {
-    return insideValue;
   }
 }

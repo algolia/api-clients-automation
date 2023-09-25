@@ -4,6 +4,7 @@
 package com.algolia.model.monitoring;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -32,11 +33,7 @@ public class ErrorBase {
     return this;
   }
 
-  /**
-   * Get message
-   *
-   * @return message
-   */
+  /** Get message */
   @javax.annotation.Nullable
   public String getMessage() {
     return message;

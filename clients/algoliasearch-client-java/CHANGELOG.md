@@ -1,22 +1,39 @@
 ## [4.0.0-beta.5](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.4...4.0.0-beta.5)
 
-- [693631cc7](https://github.com/algolia/api-clients-automation/commit/693631cc7) fix(specs): remove some parameters from trending requests ([#1915](https://github.com/algolia/api-clients-automation/pull/1915)) by [@shortcuts](https://github.com/shortcuts/)
+- [265518125](https://github.com/algolia/api-clients-automation/commit/265518125) fix(specs): `exhaustiveNbHits` as optional ([#2007](https://github.com/algolia/api-clients-automation/pull/2007)) by [@aallam](https://github.com/aallam/)
+- [e73b9cf52](https://github.com/algolia/api-clients-automation/commit/e73b9cf52) fix(specs): introduced SourceUpdateDocker ([#2005](https://github.com/algolia/api-clients-automation/pull/2005)) by [@Fluf22](https://github.com/Fluf22/)
+- [02ca9f694](https://github.com/algolia/api-clients-automation/commit/02ca9f694) fix(specs): add 'critical' event status to enum ([#2006](https://github.com/algolia/api-clients-automation/pull/2006)) by [@Fluf22](https://github.com/Fluf22/)
+- [48b23af07](https://github.com/algolia/api-clients-automation/commit/48b23af07) fix(clients): userToken max length ([#2004](https://github.com/algolia/api-clients-automation/pull/2004)) by [@kai687](https://github.com/kai687/)
+- [964962605](https://github.com/algolia/api-clients-automation/commit/964962605) fix(clients): user token character limit ([#2003](https://github.com/algolia/api-clients-automation/pull/2003)) by [@kai687](https://github.com/kai687/)
+- [d18321c1b](https://github.com/algolia/api-clients-automation/commit/d18321c1b) rafactor(java): improve `oneOf` types DX ([#1990](https://github.com/algolia/api-clients-automation/pull/1990)) by [@aallam](https://github.com/aallam/)
 
 ## [4.0.0-beta.4](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.3...4.0.0-beta.4)
 
-- [9d6368a75](https://github.com/algolia/api-clients-automation/commit/9d6368a75) chore(java): use new gradle syntax ([#1891](https://github.com/algolia/api-clients-automation/pull/1891)) by [@millotp](https://github.com/millotp/)
-- [5a9d949db](https://github.com/algolia/api-clients-automation/commit/5a9d949db) fix(specs): mixed `SearchParams` and `IndexSettings` ([#1889](https://github.com/algolia/api-clients-automation/pull/1889)) by [@shortcuts](https://github.com/shortcuts/)
+- [24affb264](https://github.com/algolia/api-clients-automation/commit/24affb264) feat(specs): add `recordType` and `fallbackIsInStockValue` in inputs ([#1988](https://github.com/algolia/api-clients-automation/pull/1988)) by [@damcou](https://github.com/damcou/)
+- [1381b70ff](https://github.com/algolia/api-clients-automation/commit/1381b70ff) feat(specs): add inference ACL to API key object ([#1985](https://github.com/algolia/api-clients-automation/pull/1985)) by [@helenamariano](https://github.com/helenamariano/)
+- [f3d3b28c3](https://github.com/algolia/api-clients-automation/commit/f3d3b28c3) refactor(java): improve client performance and DX ([#1959](https://github.com/algolia/api-clients-automation/pull/1959)) by [@aallam](https://github.com/aallam/)
+- [028bf073b](https://github.com/algolia/api-clients-automation/commit/028bf073b) feat(specs): add `failureThreshold` to Ingestion API ([#1962](https://github.com/algolia/api-clients-automation/pull/1962)) by [@shortcuts](https://github.com/shortcuts/)
+- [b19273392](https://github.com/algolia/api-clients-automation/commit/b19273392) feat(specs): update ingestion specs for BigCommerce ([#1961](https://github.com/algolia/api-clients-automation/pull/1961)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0-beta.3](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.2...4.0.0-beta.3)
+
+- [f89612fe](https://github.com/algolia/api-clients-automation/commit/f89612fe) chore(clients): dependency upgrade ([#1940](https://github.com/algolia/api-clients-automation/pull/1940)) by [@shortcuts](https://github.com/shortcuts/)
 
 ## [4.0.0-beta.2](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.1...4.0.0-beta.2)
 
+- [25d2d44d8](https://github.com/algolia/api-clients-automation/commit/25d2d44d8) chore(java): rename artifact to `algoliasearch` ([#1935](https://github.com/algolia/api-clients-automation/pull/1935)) by [@aallam](https://github.com/aallam/)
+
+## [4.0.0-beta.1](https://github.com/algolia/algoliasearch-client-java-2/next)
+
+- [25d2d44d8](https://github.com/algolia/api-clients-automation/commit/25d2d44d8) chore(java): rename artifact to `algoliasearch` ([#1935](https://github.com/algolia/api-clients-automation/pull/1935)) by [@aallam](https://github.com/aallam/)
+- [693631cc7](https://github.com/algolia/api-clients-automation/commit/693631cc7) fix(specs): remove some parameters from trending requests ([#1915](https://github.com/algolia/api-clients-automation/pull/1915)) by [@shortcuts](https://github.com/shortcuts/)
+- [9d6368a75](https://github.com/algolia/api-clients-automation/commit/9d6368a75) chore(java): use new gradle syntax ([#1891](https://github.com/algolia/api-clients-automation/pull/1891)) by [@millotp](https://github.com/millotp/)
+- [5a9d949db](https://github.com/algolia/api-clients-automation/commit/5a9d949db) fix(specs): mixed `SearchParams` and `IndexSettings` ([#1889](https://github.com/algolia/api-clients-automation/pull/1889)) by [@shortcuts](https://github.com/shortcuts/)
 - [82d7dcf5a](https://github.com/algolia/api-clients-automation/commit/82d7dcf5a) fix(specs): allow JSON array for `aroundPrecision` ([#1855](https://github.com/algolia/api-clients-automation/pull/1855)) by [@shortcuts](https://github.com/shortcuts/)
 - [268f76542](https://github.com/algolia/api-clients-automation/commit/268f76542) feat(java): bump version to beta.1 ([#1863](https://github.com/algolia/api-clients-automation/pull/1863)) by [@millotp](https://github.com/millotp/)
 - [c6a7ab404](https://github.com/algolia/api-clients-automation/commit/c6a7ab404) fix(specs): optional/required `query` and `params` ([#1864](https://github.com/algolia/api-clients-automation/pull/1864)) by [@aallam](https://github.com/aallam/)
 - [a5bf6232c](https://github.com/algolia/api-clients-automation/commit/a5bf6232c) feat(specs): delete Predict ([#1860](https://github.com/algolia/api-clients-automation/pull/1860)) by [@shortcuts](https://github.com/shortcuts/)
 - [c41d3d1e5](https://github.com/algolia/api-clients-automation/commit/c41d3d1e5) refactor(java): normalize client repo structure ([#1854](https://github.com/algolia/api-clients-automation/pull/1854)) by [@aallam](https://github.com/aallam/)
-
-## [4.0.0-beta.1](https://github.com/algolia/algoliasearch-client-java-2/next)
-
 - [58ea5dbf](https://github.com/algolia/api-clients-automation/commit/58ea5dbf) fix(specs): allow partial input update for authentications ([#1856](https://github.com/algolia/api-clients-automation/pull/1856)) by [@Fluf22](https://github.com/Fluf22/)
 - [2ac508ff](https://github.com/algolia/api-clients-automation/commit/2ac508ff) fix(specs): search w/ hits & facets responses ([#1774](https://github.com/algolia/api-clients-automation/pull/1774)) by [@aallam](https://github.com/aallam/)
 - [333368a3b](https://github.com/algolia/api-clients-automation/commit/333368a3b) feat(specs): query suggestions ([#1740](https://github.com/algolia/api-clients-automation/pull/1740)) by [@kai687](https://github.com/kai687/)

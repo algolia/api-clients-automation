@@ -4,6 +4,7 @@
 package com.algolia.model.personalization;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** FacetScoring */
@@ -20,11 +21,7 @@ public class FacetScoring {
     return this;
   }
 
-  /**
-   * The score for the event.
-   *
-   * @return score
-   */
+  /** The score for the event. */
   @javax.annotation.Nonnull
   public Integer getScore() {
     return score;
@@ -35,11 +32,7 @@ public class FacetScoring {
     return this;
   }
 
-  /**
-   * The name of the facet.
-   *
-   * @return facetName
-   */
+  /** The name of the facet. */
   @javax.annotation.Nonnull
   public String getFacetName() {
     return facetName;

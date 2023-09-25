@@ -33,7 +33,7 @@ export type BaseSearchResponse = {
   /**
    * Indicates whether the number of hits `nbHits` is exhaustive (exact) or approximate.
    */
-  exhaustiveNbHits: boolean;
+  exhaustiveNbHits?: boolean;
 
   /**
    * Indicates whether the search for typos was exhaustive (exact) or approximate.
@@ -115,7 +115,7 @@ export type BaseSearchResponse = {
   /**
    * Lets you store custom data in your indices.
    */
-  userData?: Record<string, any>;
+  userData?: any | null;
 
   renderingContent?: RenderingContent;
 };

@@ -4,63 +4,19 @@
 package com.algolia.model.recommend;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** RecommendationsRequest */
-@JsonDeserialize(using = RecommendationsRequest.RecommendationsRequestDeserializer.class)
-@JsonSerialize(using = RecommendationsRequest.RecommendationsRequestSerializer.class)
-public abstract class RecommendationsRequest implements CompoundType {
+@JsonDeserialize(using = RecommendationsRequest.Deserializer.class)
+public interface RecommendationsRequest {
+  class Deserializer extends JsonDeserializer<RecommendationsRequest> {
 
-  private static final Logger LOGGER = Logger.getLogger(RecommendationsRequest.class.getName());
-
-  public static RecommendationsRequest of(RecommendationsQuery inside) {
-    return new RecommendationsRequestRecommendationsQuery(inside);
-  }
-
-  public static RecommendationsRequest of(TrendingFacetsQuery inside) {
-    return new RecommendationsRequestTrendingFacetsQuery(inside);
-  }
-
-  public static RecommendationsRequest of(TrendingItemsQuery inside) {
-    return new RecommendationsRequestTrendingItemsQuery(inside);
-  }
-
-  public static class RecommendationsRequestSerializer extends StdSerializer<RecommendationsRequest> {
-
-    public RecommendationsRequestSerializer(Class<RecommendationsRequest> t) {
-      super(t);
-    }
-
-    public RecommendationsRequestSerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(RecommendationsRequest value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class RecommendationsRequestDeserializer extends StdDeserializer<RecommendationsRequest> {
-
-    public RecommendationsRequestDeserializer() {
-      this(RecommendationsRequest.class);
-    }
-
-    public RecommendationsRequestDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public RecommendationsRequest deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -69,8 +25,7 @@ public abstract class RecommendationsRequest implements CompoundType {
       // deserialize RecommendationsQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          RecommendationsQuery value = parser.readValueAs(new TypeReference<RecommendationsQuery>() {});
-          return RecommendationsRequest.of(value);
+          return parser.readValueAs(RecommendationsQuery.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf RecommendationsQuery (error: " + e.getMessage() + ") (type: RecommendationsQuery)");
@@ -80,8 +35,7 @@ public abstract class RecommendationsRequest implements CompoundType {
       // deserialize TrendingFacetsQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          TrendingFacetsQuery value = parser.readValueAs(new TypeReference<TrendingFacetsQuery>() {});
-          return RecommendationsRequest.of(value);
+          return parser.readValueAs(TrendingFacetsQuery.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf TrendingFacetsQuery (error: " + e.getMessage() + ") (type: TrendingFacetsQuery)");
@@ -91,8 +45,7 @@ public abstract class RecommendationsRequest implements CompoundType {
       // deserialize TrendingItemsQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          TrendingItemsQuery value = parser.readValueAs(new TypeReference<TrendingItemsQuery>() {});
-          return RecommendationsRequest.of(value);
+          return parser.readValueAs(TrendingItemsQuery.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf TrendingItemsQuery (error: " + e.getMessage() + ") (type: TrendingItemsQuery)");
@@ -106,47 +59,5 @@ public abstract class RecommendationsRequest implements CompoundType {
     public RecommendationsRequest getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "RecommendationsRequest cannot be null");
     }
-  }
-}
-
-class RecommendationsRequestRecommendationsQuery extends RecommendationsRequest {
-
-  private final RecommendationsQuery insideValue;
-
-  RecommendationsRequestRecommendationsQuery(RecommendationsQuery insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public RecommendationsQuery getInsideValue() {
-    return insideValue;
-  }
-}
-
-class RecommendationsRequestTrendingFacetsQuery extends RecommendationsRequest {
-
-  private final TrendingFacetsQuery insideValue;
-
-  RecommendationsRequestTrendingFacetsQuery(TrendingFacetsQuery insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public TrendingFacetsQuery getInsideValue() {
-    return insideValue;
-  }
-}
-
-class RecommendationsRequestTrendingItemsQuery extends RecommendationsRequest {
-
-  private final TrendingItemsQuery insideValue;
-
-  RecommendationsRequestTrendingItemsQuery(TrendingItemsQuery insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public TrendingItemsQuery getInsideValue() {
-    return insideValue;
   }
 }

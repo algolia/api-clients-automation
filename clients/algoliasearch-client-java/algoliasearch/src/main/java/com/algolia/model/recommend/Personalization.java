@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Personalization */
@@ -23,11 +24,7 @@ public class Personalization {
     return this;
   }
 
-  /**
-   * The score of the filters.
-   *
-   * @return filtersScore
-   */
+  /** The score of the filters. */
   @javax.annotation.Nullable
   public Integer getFiltersScore() {
     return filtersScore;
@@ -38,11 +35,7 @@ public class Personalization {
     return this;
   }
 
-  /**
-   * The score of the ranking.
-   *
-   * @return rankingScore
-   */
+  /** The score of the ranking. */
   @javax.annotation.Nullable
   public Integer getRankingScore() {
     return rankingScore;
@@ -53,11 +46,7 @@ public class Personalization {
     return this;
   }
 
-  /**
-   * The score of the event.
-   *
-   * @return score
-   */
+  /** The score of the event. */
   @javax.annotation.Nullable
   public Integer getScore() {
     return score;

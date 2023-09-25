@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** BaseTrendingFacetsQuery */
@@ -20,11 +21,7 @@ public class BaseTrendingFacetsQuery {
     return this;
   }
 
-  /**
-   * Facet name for trending models.
-   *
-   * @return facetName
-   */
+  /** Facet name for trending models. */
   @javax.annotation.Nonnull
   public String getFacetName() {
     return facetName;
@@ -35,11 +32,7 @@ public class BaseTrendingFacetsQuery {
     return this;
   }
 
-  /**
-   * Get model
-   *
-   * @return model
-   */
+  /** Get model */
   @javax.annotation.Nullable
   public TrendingFacetsModel getModel() {
     return model;

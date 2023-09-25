@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Edit */
@@ -23,11 +24,7 @@ public class Edit {
     return this;
   }
 
-  /**
-   * Get type
-   *
-   * @return type
-   */
+  /** Get type */
   @javax.annotation.Nullable
   public EditType getType() {
     return type;
@@ -38,11 +35,7 @@ public class Edit {
     return this;
   }
 
-  /**
-   * Text or patterns to remove from the query string.
-   *
-   * @return delete
-   */
+  /** Text or patterns to remove from the query string. */
   @javax.annotation.Nullable
   public String getDelete() {
     return delete;
@@ -53,11 +46,7 @@ public class Edit {
     return this;
   }
 
-  /**
-   * Text that should be inserted in place of the removed text inside the query string.
-   *
-   * @return insert
-   */
+  /** Text that should be inserted in place of the removed text inside the query string. */
   @javax.annotation.Nullable
   public String getInsert() {
     return insert;

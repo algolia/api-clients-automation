@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -90,8 +91,6 @@ public class BaseSearchResponse {
 
   /**
    * A/B test ID. This is only included in the response for indices that are part of an A/B test.
-   *
-   * @return abTestID
    */
   @javax.annotation.Nullable
   public Integer getAbTestID() {
@@ -106,8 +105,6 @@ public class BaseSearchResponse {
   /**
    * Variant ID. This is only included in the response for indices that are part of an A/B test.
    * minimum: 1
-   *
-   * @return abTestVariantID
    */
   @javax.annotation.Nullable
   public Integer getAbTestVariantID() {
@@ -119,11 +116,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Computed geographical location.
-   *
-   * @return aroundLatLng
-   */
+  /** Computed geographical location. */
   @javax.annotation.Nullable
   public String getAroundLatLng() {
     return aroundLatLng;
@@ -134,11 +127,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Automatically-computed radius.
-   *
-   * @return automaticRadius
-   */
+  /** Automatically-computed radius. */
   @javax.annotation.Nullable
   public String getAutomaticRadius() {
     return automaticRadius;
@@ -149,11 +138,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Indicates whether the facet count is exhaustive (exact) or approximate.
-   *
-   * @return exhaustiveFacetsCount
-   */
+  /** Indicates whether the facet count is exhaustive (exact) or approximate. */
   @javax.annotation.Nullable
   public Boolean getExhaustiveFacetsCount() {
     return exhaustiveFacetsCount;
@@ -164,12 +149,8 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Indicates whether the number of hits `nbHits` is exhaustive (exact) or approximate.
-   *
-   * @return exhaustiveNbHits
-   */
-  @javax.annotation.Nonnull
+  /** Indicates whether the number of hits `nbHits` is exhaustive (exact) or approximate. */
+  @javax.annotation.Nullable
   public Boolean getExhaustiveNbHits() {
     return exhaustiveNbHits;
   }
@@ -179,11 +160,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Indicates whether the search for typos was exhaustive (exact) or approximate.
-   *
-   * @return exhaustiveTypo
-   */
+  /** Indicates whether the search for typos was exhaustive (exact) or approximate. */
   @javax.annotation.Nullable
   public Boolean getExhaustiveTypo() {
     return exhaustiveTypo;
@@ -202,11 +179,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Mapping of each facet name to the corresponding facet counts.
-   *
-   * @return facets
-   */
+  /** Mapping of each facet name to the corresponding facet counts. */
   @javax.annotation.Nullable
   public Map<String, Map<String, Integer>> getFacets() {
     return facets;
@@ -225,11 +198,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Statistics for numerical facets.
-   *
-   * @return facetsStats
-   */
+  /** Statistics for numerical facets. */
   @javax.annotation.Nullable
   public Map<String, FacetsStats> getFacetsStats() {
     return facetsStats;
@@ -240,11 +209,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Number of hits per page. minimum: 1 maximum: 1000
-   *
-   * @return hitsPerPage
-   */
+  /** Number of hits per page. minimum: 1 maximum: 1000 */
   @javax.annotation.Nonnull
   public Integer getHitsPerPage() {
     return hitsPerPage;
@@ -255,11 +220,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Index name used for the query.
-   *
-   * @return index
-   */
+  /** Index name used for the query. */
   @javax.annotation.Nullable
   public String getIndex() {
     return index;
@@ -273,8 +234,6 @@ public class BaseSearchResponse {
   /**
    * Index name used for the query. During A/B testing, the targeted index isn't always the index
    * used by the query.
-   *
-   * @return indexUsed
    */
   @javax.annotation.Nullable
   public String getIndexUsed() {
@@ -286,11 +245,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Warnings about the query.
-   *
-   * @return message
-   */
+  /** Warnings about the query. */
   @javax.annotation.Nullable
   public String getMessage() {
     return message;
@@ -301,11 +256,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Number of hits the search query matched.
-   *
-   * @return nbHits
-   */
+  /** Number of hits the search query matched. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;
@@ -316,11 +267,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Number of pages of results for the current query.
-   *
-   * @return nbPages
-   */
+  /** Number of pages of results for the current query. */
   @javax.annotation.Nonnull
   public Integer getNbPages() {
     return nbPages;
@@ -331,11 +278,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Number of hits selected and sorted by the relevant sort algorithm.
-   *
-   * @return nbSortedHits
-   */
+  /** Number of hits selected and sorted by the relevant sort algorithm. */
   @javax.annotation.Nullable
   public Integer getNbSortedHits() {
     return nbSortedHits;
@@ -346,11 +289,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Page to retrieve (the first page is `0`, not `1`).
-   *
-   * @return page
-   */
+  /** Page to retrieve (the first page is `0`, not `1`). */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;
@@ -361,11 +300,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Get redirect
-   *
-   * @return redirect
-   */
+  /** Get redirect */
   @javax.annotation.Nullable
   public BaseSearchResponseRedirect getRedirect() {
     return redirect;
@@ -379,8 +314,6 @@ public class BaseSearchResponse {
   /**
    * Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean)
    * query string that will be searched.
-   *
-   * @return parsedQuery
    */
   @javax.annotation.Nullable
   public String getParsedQuery() {
@@ -392,11 +325,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Time the server took to process the request, in milliseconds.
-   *
-   * @return processingTimeMS
-   */
+  /** Time the server took to process the request, in milliseconds. */
   @javax.annotation.Nonnull
   public Integer getProcessingTimeMS() {
     return processingTimeMS;
@@ -410,8 +339,6 @@ public class BaseSearchResponse {
   /**
    * Markup text indicating which parts of the original query have been removed to retrieve a
    * non-empty result set.
-   *
-   * @return queryAfterRemoval
    */
   @javax.annotation.Nullable
   public String getQueryAfterRemoval() {
@@ -423,11 +350,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Host name of the server that processed the request.
-   *
-   * @return serverUsed
-   */
+  /** Host name of the server that processed the request. */
   @javax.annotation.Nullable
   public String getServerUsed() {
     return serverUsed;
@@ -438,11 +361,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Lets you store custom data in your indices.
-   *
-   * @return userData
-   */
+  /** Lets you store custom data in your indices. */
   @javax.annotation.Nullable
   public Object getUserData() {
     return userData;
@@ -453,11 +372,7 @@ public class BaseSearchResponse {
     return this;
   }
 
-  /**
-   * Get renderingContent
-   *
-   * @return renderingContent
-   */
+  /** Get renderingContent */
   @javax.annotation.Nullable
   public RenderingContent getRenderingContent() {
     return renderingContent;

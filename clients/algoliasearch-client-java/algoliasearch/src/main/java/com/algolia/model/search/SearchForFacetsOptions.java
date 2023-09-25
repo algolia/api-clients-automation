@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** SearchForFacetsOptions */
@@ -29,11 +30,7 @@ public class SearchForFacetsOptions {
     return this;
   }
 
-  /**
-   * Facet name.
-   *
-   * @return facet
-   */
+  /** Facet name. */
   @javax.annotation.Nonnull
   public String getFacet() {
     return facet;
@@ -44,11 +41,7 @@ public class SearchForFacetsOptions {
     return this;
   }
 
-  /**
-   * Algolia index name.
-   *
-   * @return indexName
-   */
+  /** Algolia index name. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;
@@ -59,11 +52,7 @@ public class SearchForFacetsOptions {
     return this;
   }
 
-  /**
-   * Text to search inside the facet's values.
-   *
-   * @return facetQuery
-   */
+  /** Text to search inside the facet's values. */
   @javax.annotation.Nullable
   public String getFacetQuery() {
     return facetQuery;
@@ -78,8 +67,6 @@ public class SearchForFacetsOptions {
    * Maximum number of facet hits to return when [searching for facet
    * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
    * maximum: 100
-   *
-   * @return maxFacetHits
    */
   @javax.annotation.Nullable
   public Integer getMaxFacetHits() {
@@ -91,11 +78,7 @@ public class SearchForFacetsOptions {
     return this;
   }
 
-  /**
-   * Get type
-   *
-   * @return type
-   */
+  /** Get type */
   @javax.annotation.Nonnull
   public SearchTypeFacet getType() {
     return type;

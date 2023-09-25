@@ -4,6 +4,7 @@
 package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** GetRecommendTaskResponse */
@@ -17,11 +18,7 @@ public class GetRecommendTaskResponse {
     return this;
   }
 
-  /**
-   * Get status
-   *
-   * @return status
-   */
+  /** Get status */
   @javax.annotation.Nonnull
   public TaskStatus getStatus() {
     return status;

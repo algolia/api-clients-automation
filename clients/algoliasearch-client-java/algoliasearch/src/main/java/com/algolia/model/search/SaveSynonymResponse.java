@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** SaveSynonymResponse */
@@ -27,8 +28,6 @@ public class SaveSynonymResponse {
    * Unique identifier of a task. A successful API response means that a task was added to a queue.
    * It might not run immediately. You can check the task's progress with the `task` operation and
    * this `taskID`.
-   *
-   * @return taskID
    */
   @javax.annotation.Nonnull
   public Long getTaskID() {
@@ -40,11 +39,7 @@ public class SaveSynonymResponse {
     return this;
   }
 
-  /**
-   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
-   *
-   * @return updatedAt
-   */
+  /** Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
@@ -55,11 +50,7 @@ public class SaveSynonymResponse {
     return this;
   }
 
-  /**
-   * Unique identifier of a synonym object.
-   *
-   * @return id
-   */
+  /** Unique identifier of a synonym object. */
   @javax.annotation.Nonnull
   public String getId() {
     return id;

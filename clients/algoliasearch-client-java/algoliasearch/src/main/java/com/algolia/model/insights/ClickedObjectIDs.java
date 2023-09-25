@@ -4,6 +4,7 @@
 package com.algolia.model.insights;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,8 @@ import java.util.Objects;
  * example, if you don't use Algolia to build your category pages, use this event. To track click
  * events related to Algolia requests, use the \"Clicked object IDs after search\" event.
  */
-public class ClickedObjectIDs {
+@JsonDeserialize(as = ClickedObjectIDs.class)
+public class ClickedObjectIDs implements EventsItems {
 
   @JsonProperty("eventName")
   private String eventName;
@@ -43,8 +45,6 @@ public class ClickedObjectIDs {
    * adopting Segment's
    * [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
    * framework.
-   *
-   * @return eventName
    */
   @javax.annotation.Nonnull
   public String getEventName() {
@@ -56,11 +56,7 @@ public class ClickedObjectIDs {
     return this;
   }
 
-  /**
-   * Get eventType
-   *
-   * @return eventType
-   */
+  /** Get eventType */
   @javax.annotation.Nonnull
   public ClickEvent getEventType() {
     return eventType;
@@ -71,11 +67,7 @@ public class ClickedObjectIDs {
     return this;
   }
 
-  /**
-   * Name of the Algolia index.
-   *
-   * @return index
-   */
+  /** Name of the Algolia index. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;
@@ -91,11 +83,7 @@ public class ClickedObjectIDs {
     return this;
   }
 
-  /**
-   * List of object identifiers for items of an Algolia index.
-   *
-   * @return objectIDs
-   */
+  /** List of object identifiers for items of an Algolia index. */
   @javax.annotation.Nonnull
   public List<String> getObjectIDs() {
     return objectIDs;
@@ -109,8 +97,6 @@ public class ClickedObjectIDs {
   /**
    * Anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable
    * information in user tokens.
-   *
-   * @return userToken
    */
   @javax.annotation.Nonnull
   public String getUserToken() {
@@ -125,8 +111,6 @@ public class ClickedObjectIDs {
   /**
    * Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
    * By default, the Insights API uses the time it receives an event as its timestamp.
-   *
-   * @return timestamp
    */
   @javax.annotation.Nullable
   public Long getTimestamp() {

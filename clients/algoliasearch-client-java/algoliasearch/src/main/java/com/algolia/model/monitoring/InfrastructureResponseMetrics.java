@@ -4,6 +4,7 @@
 package com.algolia.model.monitoring;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +41,7 @@ public class InfrastructureResponseMetrics {
     return this;
   }
 
-  /**
-   * CPU idleness in %.
-   *
-   * @return cpuUsage
-   */
+  /** CPU idleness in %. */
   @javax.annotation.Nullable
   public Map<String, List<ProbesMetric>> getCpuUsage() {
     return cpuUsage;
@@ -63,11 +60,7 @@ public class InfrastructureResponseMetrics {
     return this;
   }
 
-  /**
-   * RAM used for indexing in MB.
-   *
-   * @return ramIndexingUsage
-   */
+  /** RAM used for indexing in MB. */
   @javax.annotation.Nullable
   public Map<String, List<ProbesMetric>> getRamIndexingUsage() {
     return ramIndexingUsage;
@@ -86,11 +79,7 @@ public class InfrastructureResponseMetrics {
     return this;
   }
 
-  /**
-   * RAM used for search in MB.
-   *
-   * @return ramSearchUsage
-   */
+  /** RAM used for search in MB. */
   @javax.annotation.Nullable
   public Map<String, List<ProbesMetric>> getRamSearchUsage() {
     return ramSearchUsage;
@@ -112,8 +101,6 @@ public class InfrastructureResponseMetrics {
   /**
    * Solid-state disk (SSD) usage expressed as % of RAM. 0% means no SSD usage. A value of 50%
    * indicates 32&nbsp;GB SSD usage for a machine with 64&nbsp;RAM.
-   *
-   * @return ssdUsage
    */
   @javax.annotation.Nullable
   public Map<String, List<ProbesMetric>> getSsdUsage() {
@@ -133,11 +120,7 @@ public class InfrastructureResponseMetrics {
     return this;
   }
 
-  /**
-   * Average build time of the indices in seconds.
-   *
-   * @return avgBuildTime
-   */
+  /** Average build time of the indices in seconds. */
   @javax.annotation.Nullable
   public Map<String, List<ProbesMetric>> getAvgBuildTime() {
     return avgBuildTime;

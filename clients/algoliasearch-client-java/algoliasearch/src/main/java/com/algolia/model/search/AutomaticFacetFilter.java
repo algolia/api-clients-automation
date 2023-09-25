@@ -4,6 +4,7 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Automatic facet Filter. */
@@ -23,11 +24,7 @@ public class AutomaticFacetFilter {
     return this;
   }
 
-  /**
-   * Attribute to filter on. This must match a facet placeholder in the Rule's pattern.
-   *
-   * @return facet
-   */
+  /** Attribute to filter on. This must match a facet placeholder in the Rule's pattern. */
   @javax.annotation.Nonnull
   public String getFacet() {
     return facet;
@@ -38,11 +35,7 @@ public class AutomaticFacetFilter {
     return this;
   }
 
-  /**
-   * Score for the filter. Typically used for optional or disjunctive filters.
-   *
-   * @return score
-   */
+  /** Score for the filter. Typically used for optional or disjunctive filters. */
   @javax.annotation.Nullable
   public Integer getScore() {
     return score;
@@ -53,11 +46,7 @@ public class AutomaticFacetFilter {
     return this;
   }
 
-  /**
-   * Whether the filter is disjunctive (true) or conjunctive (false).
-   *
-   * @return disjunctive
-   */
+  /** Whether the filter is disjunctive (true) or conjunctive (false). */
   @javax.annotation.Nullable
   public Boolean getDisjunctive() {
     return disjunctive;

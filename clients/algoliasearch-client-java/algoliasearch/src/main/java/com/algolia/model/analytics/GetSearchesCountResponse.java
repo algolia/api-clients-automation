@@ -4,6 +4,7 @@
 package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,11 +23,7 @@ public class GetSearchesCountResponse {
     return this;
   }
 
-  /**
-   * Number of occurrences.
-   *
-   * @return count
-   */
+  /** Number of occurrences. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
@@ -42,11 +39,7 @@ public class GetSearchesCountResponse {
     return this;
   }
 
-  /**
-   * Search events with their associated dates and hit counts.
-   *
-   * @return dates
-   */
+  /** Search events with their associated dates and hit counts. */
   @javax.annotation.Nonnull
   public List<SearchEvent> getDates() {
     return dates;

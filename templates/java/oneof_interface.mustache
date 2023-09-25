@@ -1,13 +1,11 @@
-import com.algolia.utils.CompoundType;
-import com.algolia.utils.JSON;
+import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.algolia.exceptions.AlgoliaRuntimeException;
+import com.algolia.utils.CompoundType;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,54 +15,70 @@ import java.util.logging.Logger;
  * @deprecated{{/isDeprecated}}
  */{{#isDeprecated}}
 @Deprecated{{/isDeprecated}}
-@JsonDeserialize(using = {{classname}}.{{classname}}Deserializer.class)
-@JsonSerialize(using = {{classname}}.{{classname}}Serializer.class)
+@JsonDeserialize(using = {{classname}}.Deserializer.class)
 {{>additionalModelTypeAnnotations}}
-public abstract class {{classname}}{{#vendorExtensions.x-propagated-generic}}<T>{{/vendorExtensions.x-propagated-generic}} implements CompoundType {
+public interface {{classname}} {
 
-    private static final Logger LOGGER = Logger.getLogger({{classname}}.class.getName());
-
-    {{#vendorExtensions.x-one-of-list}}
-    public static {{classname}} of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}({{{type}}} inside) {
-        return new {{classname}}{{name}}(inside);
+    {{#vendorExtensions}}
+    {{#x-one-of-list}}
+    {{^child}}
+    /** {{classname}} as {{{type}}} wrapper. */
+    static {{classname}} of{{#x-one-of-explicit-name}}{{name}}{{/x-one-of-explicit-name}}({{{type}}} value) {
+        return new {{name}}Wrapper(value);
     }
+    {{/child}}    
+    {{/x-one-of-list}}
 
-    {{/vendorExtensions.x-one-of-list}}
+    {{#x-one-of-list}}
+    {{^child}}
 
-    public static class {{classname}}Serializer extends StdSerializer<{{classname}}> {
-        public {{classname}}Serializer(Class<{{classname}}> t) {
-            super(t);
+    /** {{classname}} as {{{type}}} wrapper. */
+    @JsonSerialize(using = {{name}}Wrapper.Serializer.class)
+    class {{name}}Wrapper implements {{classname}}{
+        private final {{{type}}} value;
+
+        {{name}}Wrapper({{{type}}} value) {
+            this.value = value;
         }
 
-        public {{classname}}Serializer() {
-            this(null);
+        public {{{type}}} getValue() {
+            return value;
         }
+
+        static class Serializer extends JsonSerializer<{{name}}Wrapper> {
+
+            @Override
+            public void serialize({{name}}Wrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+                gen.writeObject(value.getValue());
+            }
+        }
+    }
+    {{/child}}    
+    {{/x-one-of-list}}
+    {{/vendorExtensions}}
+
+    class Deserializer extends JsonDeserializer<{{classname}}> {
+
+        private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
         @Override
-        public void serialize({{classname}} value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-            jgen.writeObject(value.getInsideValue());
-        }
-    }
-
-    public static class {{classname}}Deserializer extends StdDeserializer<{{classname}}> {
-        public {{classname}}Deserializer() {
-            this({{classname}}.class);
-        }
-
-        public {{classname}}Deserializer(Class<?> vc) {
-            super(vc);
-        }
-
-         @Override
         public {{classname}} deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             JsonNode tree = jp.readValueAsTree();
             {{#vendorExtensions.x-one-of-list}}
 
             // deserialize {{{type}}}
             if (tree.{{#isObject}}isObject(){{/isObject}}{{#isList}}isArray(){{/isList}}{{^isObject}}{{^isList}}isValueNode(){{/isList}}{{/isObject}}{{#discriminators}} && tree.has("{{field}}"){{/discriminators}}) {
-                try(JsonParser parser = tree.traverse(jp.getCodec())) {   
-                    {{{type}}} value = parser.readValueAs(new TypeReference<{{{type}}}>() {});
+                try(JsonParser parser = tree.traverse(jp.getCodec())) {  
+                    {{#isObject}}
+                    return parser.readValueAs({{{type}}}.class);
+                    {{/isObject}}
+                    {{#isList}}
+                    return parser.readValueAs(new TypeReference<{{{type}}}>(){});
+                    {{/isList}}
+                    {{^isObject}}{{^isList}}
+                    {{{type}}} value = parser.readValueAs({{{type}}}.class);
                     return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value);
+                    {{/isList}}{{/isObject}}
                 } catch (Exception e) {
                     // deserialization failed, continue
                     LOGGER.finest("Failed to deserialize oneOf {{{type}}} (error: " + e.getMessage() + ") (type: {{{type}}})");
@@ -89,17 +103,3 @@ public abstract class {{classname}}{{#vendorExtensions.x-propagated-generic}}<T>
     }
 }
 
-{{#vendorExtensions.x-one-of-list}}
-class {{classname}}{{name}} extends {{classname}} {
-    private final {{{type}}} insideValue;
-
-    {{classname}}{{name}}({{{type}}} insideValue) {
-        this.insideValue = insideValue;
-    }
-
-    @Override
-    public {{{type}}} getInsideValue() {
-        return insideValue;
-    }
-}
-{{/vendorExtensions.x-one-of-list}}

@@ -4,58 +4,19 @@
 package com.algolia.model.search;
 
 import com.algolia.exceptions.AlgoliaRuntimeException;
-import com.algolia.utils.CompoundType;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** SearchResult */
-@JsonDeserialize(using = SearchResult.SearchResultDeserializer.class)
-@JsonSerialize(using = SearchResult.SearchResultSerializer.class)
-public abstract class SearchResult<T> implements CompoundType {
+@JsonDeserialize(using = SearchResult.Deserializer.class)
+public interface SearchResult {
+  class Deserializer extends JsonDeserializer<SearchResult> {
 
-  private static final Logger LOGGER = Logger.getLogger(SearchResult.class.getName());
-
-  public static SearchResult of(SearchForFacetValuesResponse inside) {
-    return new SearchResultSearchForFacetValuesResponse(inside);
-  }
-
-  public static SearchResult of(SearchResponse inside) {
-    return new SearchResultSearchResponse(inside);
-  }
-
-  public static class SearchResultSerializer extends StdSerializer<SearchResult> {
-
-    public SearchResultSerializer(Class<SearchResult> t) {
-      super(t);
-    }
-
-    public SearchResultSerializer() {
-      this(null);
-    }
-
-    @Override
-    public void serialize(SearchResult value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-      jgen.writeObject(value.getInsideValue());
-    }
-  }
-
-  public static class SearchResultDeserializer extends StdDeserializer<SearchResult> {
-
-    public SearchResultDeserializer() {
-      this(SearchResult.class);
-    }
-
-    public SearchResultDeserializer(Class<?> vc) {
-      super(vc);
-    }
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
     public SearchResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -64,8 +25,7 @@ public abstract class SearchResult<T> implements CompoundType {
       // deserialize SearchForFacetValuesResponse
       if (tree.isObject() && tree.has("facetHits")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          SearchForFacetValuesResponse value = parser.readValueAs(new TypeReference<SearchForFacetValuesResponse>() {});
-          return SearchResult.of(value);
+          return parser.readValueAs(SearchForFacetValuesResponse.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -77,8 +37,7 @@ public abstract class SearchResult<T> implements CompoundType {
       // deserialize SearchResponse
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          SearchResponse value = parser.readValueAs(new TypeReference<SearchResponse>() {});
-          return SearchResult.of(value);
+          return parser.readValueAs(SearchResponse.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchResponse (error: " + e.getMessage() + ") (type: SearchResponse)");
@@ -92,33 +51,5 @@ public abstract class SearchResult<T> implements CompoundType {
     public SearchResult getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "SearchResult cannot be null");
     }
-  }
-}
-
-class SearchResultSearchForFacetValuesResponse extends SearchResult {
-
-  private final SearchForFacetValuesResponse insideValue;
-
-  SearchResultSearchForFacetValuesResponse(SearchForFacetValuesResponse insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public SearchForFacetValuesResponse getInsideValue() {
-    return insideValue;
-  }
-}
-
-class SearchResultSearchResponse extends SearchResult {
-
-  private final SearchResponse insideValue;
-
-  SearchResultSearchResponse(SearchResponse insideValue) {
-    this.insideValue = insideValue;
-  }
-
-  @Override
-  public SearchResponse getInsideValue() {
-    return insideValue;
   }
 }

@@ -1,3 +1,23 @@
+## [4.0.0-alpha.80](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.79...4.0.0-alpha.80)
+
+- [265518125](https://github.com/algolia/api-clients-automation/commit/265518125) fix(specs): `exhaustiveNbHits` as optional ([#2007](https://github.com/algolia/api-clients-automation/pull/2007)) by [@aallam](https://github.com/aallam/)
+- [e73b9cf52](https://github.com/algolia/api-clients-automation/commit/e73b9cf52) fix(specs): introduced SourceUpdateDocker ([#2005](https://github.com/algolia/api-clients-automation/pull/2005)) by [@Fluf22](https://github.com/Fluf22/)
+- [02ca9f694](https://github.com/algolia/api-clients-automation/commit/02ca9f694) fix(specs): add 'critical' event status to enum ([#2006](https://github.com/algolia/api-clients-automation/pull/2006)) by [@Fluf22](https://github.com/Fluf22/)
+- [48b23af07](https://github.com/algolia/api-clients-automation/commit/48b23af07) fix(clients): userToken max length ([#2004](https://github.com/algolia/api-clients-automation/pull/2004)) by [@kai687](https://github.com/kai687/)
+- [964962605](https://github.com/algolia/api-clients-automation/commit/964962605) fix(clients): user token character limit ([#2003](https://github.com/algolia/api-clients-automation/pull/2003)) by [@kai687](https://github.com/kai687/)
+
+## [4.0.0-alpha.79](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.78...4.0.0-alpha.79)
+
+- [24affb264](https://github.com/algolia/api-clients-automation/commit/24affb264) feat(specs): add `recordType` and `fallbackIsInStockValue` in inputs ([#1988](https://github.com/algolia/api-clients-automation/pull/1988)) by [@damcou](https://github.com/damcou/)
+- [1381b70ff](https://github.com/algolia/api-clients-automation/commit/1381b70ff) feat(specs): add inference ACL to API key object ([#1985](https://github.com/algolia/api-clients-automation/pull/1985)) by [@helenamariano](https://github.com/helenamariano/)
+- [ab5d3f630](https://github.com/algolia/api-clients-automation/commit/ab5d3f630) fix(php): lint with more rules ([#1967](https://github.com/algolia/api-clients-automation/pull/1967)) by [@millotp](https://github.com/millotp/)
+- [028bf073b](https://github.com/algolia/api-clients-automation/commit/028bf073b) feat(specs): add `failureThreshold` to Ingestion API ([#1962](https://github.com/algolia/api-clients-automation/pull/1962)) by [@shortcuts](https://github.com/shortcuts/)
+- [b19273392](https://github.com/algolia/api-clients-automation/commit/b19273392) feat(specs): update ingestion specs for BigCommerce ([#1961](https://github.com/algolia/api-clients-automation/pull/1961)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0-alpha.78](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.77...4.0.0-alpha.78)
+
+- [f89612fe](https://github.com/algolia/api-clients-automation/commit/f89612fe) chore(clients): dependency upgrade ([#1940](https://github.com/algolia/api-clients-automation/pull/1940)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-alpha.77](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.76...4.0.0-alpha.77)
 
 - [693631cc7](https://github.com/algolia/api-clients-automation/commit/693631cc7) fix(specs): remove some parameters from trending requests ([#1915](https://github.com/algolia/api-clients-automation/pull/1915)) by [@shortcuts](https://github.com/shortcuts/)

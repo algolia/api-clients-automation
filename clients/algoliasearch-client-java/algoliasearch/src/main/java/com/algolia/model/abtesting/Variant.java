@@ -4,6 +4,7 @@
 package com.algolia.model.abtesting;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Variant */
@@ -59,8 +60,6 @@ public class Variant {
   /**
    * Variant's [average click
    * position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
-   *
-   * @return averageClickPosition
    */
   @javax.annotation.Nonnull
   public Integer getAverageClickPosition() {
@@ -72,11 +71,7 @@ public class Variant {
     return this;
   }
 
-  /**
-   * Number of click events for this variant.
-   *
-   * @return clickCount
-   */
+  /** Number of click events for this variant. */
   @javax.annotation.Nonnull
   public Integer getClickCount() {
     return clickCount;
@@ -90,8 +85,6 @@ public class Variant {
   /**
    * Variant's [click-through
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-   *
-   * @return clickThroughRate
    */
   @javax.annotation.Nonnull
   public Double getClickThroughRate() {
@@ -103,11 +96,7 @@ public class Variant {
     return this;
   }
 
-  /**
-   * Number of click events for this variant.
-   *
-   * @return conversionCount
-   */
+  /** Number of click events for this variant. */
   @javax.annotation.Nonnull
   public Integer getConversionCount() {
     return conversionCount;
@@ -121,8 +110,6 @@ public class Variant {
   /**
    * Variant's [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-   *
-   * @return conversionRate
    */
   @javax.annotation.Nonnull
   public Double getConversionRate() {
@@ -134,11 +121,7 @@ public class Variant {
     return this;
   }
 
-  /**
-   * A/B test description.
-   *
-   * @return description
-   */
+  /** A/B test description. */
   @javax.annotation.Nonnull
   public String getDescription() {
     return description;
@@ -149,11 +132,7 @@ public class Variant {
     return this;
   }
 
-  /**
-   * A/B test index.
-   *
-   * @return index
-   */
+  /** A/B test index. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;
@@ -168,8 +147,6 @@ public class Variant {
    * Number of [searches without
    * results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
    * for that variant.
-   *
-   * @return noResultCount
    */
   @javax.annotation.Nonnull
   public Integer getNoResultCount() {
@@ -186,8 +163,6 @@ public class Variant {
    * traffic](https://www.algolia.com/doc/guides/ab-testing/how-to-read-your-a-b-test-results/#is-the-split-off)
    * that were removed from the A/B test. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
-   *
-   * @return outlierTrackedSearchesCount
    */
   @javax.annotation.Nonnull
   public Integer getOutlierTrackedSearchesCount() {
@@ -203,8 +178,6 @@ public class Variant {
    * Number of users attributed to [outlier
    * traffic](https://www.algolia.com/doc/guides/ab-testing/how-to-read-your-a-b-test-results/#is-the-split-off)
    * that were removed from the A/B test.
-   *
-   * @return outlierUsersCount
    */
   @javax.annotation.Nonnull
   public Integer getOutlierUsersCount() {
@@ -216,11 +189,7 @@ public class Variant {
     return this;
   }
 
-  /**
-   * Number of searches carried out during the A/B test.
-   *
-   * @return searchCount
-   */
+  /** Number of searches carried out during the A/B test. */
   @javax.annotation.Nonnull
   public Integer getSearchCount() {
     return searchCount;
@@ -234,8 +203,6 @@ public class Variant {
   /**
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
    * parameter is `true`.
-   *
-   * @return trackedSearchCount
    */
   @javax.annotation.Nonnull
   public Integer getTrackedSearchCount() {
@@ -247,11 +214,7 @@ public class Variant {
     return this;
   }
 
-  /**
-   * A/B test traffic percentage.
-   *
-   * @return trafficPercentage
-   */
+  /** A/B test traffic percentage. */
   @javax.annotation.Nonnull
   public Integer getTrafficPercentage() {
     return trafficPercentage;
@@ -262,11 +225,7 @@ public class Variant {
     return this;
   }
 
-  /**
-   * Number of users during the A/B test.
-   *
-   * @return userCount
-   */
+  /** Number of users during the A/B test. */
   @javax.annotation.Nonnull
   public Integer getUserCount() {
     return userCount;

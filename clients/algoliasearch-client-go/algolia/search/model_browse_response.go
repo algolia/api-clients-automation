@@ -19,7 +19,7 @@ type BrowseResponse struct {
 	// Indicates whether the facet count is exhaustive (exact) or approximate.
 	ExhaustiveFacetsCount *bool `json:"exhaustiveFacetsCount,omitempty"`
 	// Indicates whether the number of hits `nbHits` is exhaustive (exact) or approximate.
-	ExhaustiveNbHits bool `json:"exhaustiveNbHits" validate:"required"`
+	ExhaustiveNbHits *bool `json:"exhaustiveNbHits,omitempty"`
 	// Indicates whether the search for typos was exhaustive (exact) or approximate.
 	ExhaustiveTypo *bool `json:"exhaustiveTypo,omitempty"`
 	// Mapping of each facet name to the corresponding facet counts.
@@ -52,9 +52,9 @@ type BrowseResponse struct {
 	// Host name of the server that processed the request.
 	ServerUsed *string `json:"serverUsed,omitempty"`
 	// Lets you store custom data in your indices.
-	UserData         map[string]interface{} `json:"userData,omitempty"`
-	RenderingContent *RenderingContent      `json:"renderingContent,omitempty"`
-	Hits             []Hit                  `json:"hits" validate:"required"`
+	UserData         interface{}       `json:"userData,omitempty"`
+	RenderingContent *RenderingContent `json:"renderingContent,omitempty"`
+	Hits             []Hit             `json:"hits" validate:"required"`
 	// Text to search for in an index.
 	Query string `json:"query" validate:"required"`
 	// URL-encoded string of all search parameters.
@@ -92,6 +92,12 @@ func WithBrowseResponseAutomaticRadius(val string) BrowseResponseOption {
 func WithBrowseResponseExhaustiveFacetsCount(val bool) BrowseResponseOption {
 	return func(f *BrowseResponse) {
 		f.ExhaustiveFacetsCount = &val
+	}
+}
+
+func WithBrowseResponseExhaustiveNbHits(val bool) BrowseResponseOption {
+	return func(f *BrowseResponse) {
+		f.ExhaustiveNbHits = &val
 	}
 }
 
@@ -161,7 +167,7 @@ func WithBrowseResponseServerUsed(val string) BrowseResponseOption {
 	}
 }
 
-func WithBrowseResponseUserData(val map[string]interface{}) BrowseResponseOption {
+func WithBrowseResponseUserData(val interface{}) BrowseResponseOption {
 	return func(f *BrowseResponse) {
 		f.UserData = val
 	}
@@ -183,9 +189,8 @@ func WithBrowseResponseCursor(val string) BrowseResponseOption {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBrowseResponse(exhaustiveNbHits bool, hitsPerPage int32, nbHits int32, nbPages int32, page int32, processingTimeMS int32, hits []Hit, query string, params string, opts ...BrowseResponseOption) *BrowseResponse {
+func NewBrowseResponse(hitsPerPage int32, nbHits int32, nbPages int32, page int32, processingTimeMS int32, hits []Hit, query string, params string, opts ...BrowseResponseOption) *BrowseResponse {
 	this := &BrowseResponse{}
-	this.ExhaustiveNbHits = exhaustiveNbHits
 	this.HitsPerPage = hitsPerPage
 	this.NbHits = nbHits
 	this.NbPages = nbPages
@@ -374,28 +379,36 @@ func (o *BrowseResponse) SetExhaustiveFacetsCount(v bool) {
 	o.ExhaustiveFacetsCount = &v
 }
 
-// GetExhaustiveNbHits returns the ExhaustiveNbHits field value
+// GetExhaustiveNbHits returns the ExhaustiveNbHits field value if set, zero value otherwise.
 func (o *BrowseResponse) GetExhaustiveNbHits() bool {
-	if o == nil {
+	if o == nil || o.ExhaustiveNbHits == nil {
 		var ret bool
 		return ret
 	}
-
-	return o.ExhaustiveNbHits
+	return *o.ExhaustiveNbHits
 }
 
-// GetExhaustiveNbHitsOk returns a tuple with the ExhaustiveNbHits field value
+// GetExhaustiveNbHitsOk returns a tuple with the ExhaustiveNbHits field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrowseResponse) GetExhaustiveNbHitsOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || o.ExhaustiveNbHits == nil {
 		return nil, false
 	}
-	return &o.ExhaustiveNbHits, true
+	return o.ExhaustiveNbHits, true
 }
 
-// SetExhaustiveNbHits sets field value
+// HasExhaustiveNbHits returns a boolean if a field has been set.
+func (o *BrowseResponse) HasExhaustiveNbHits() bool {
+	if o != nil && o.ExhaustiveNbHits != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetExhaustiveNbHits gets a reference to the given bool and assigns it to the ExhaustiveNbHits field.
 func (o *BrowseResponse) SetExhaustiveNbHits(v bool) {
-	o.ExhaustiveNbHits = v
+	o.ExhaustiveNbHits = &v
 }
 
 // GetExhaustiveTypo returns the ExhaustiveTypo field value if set, zero value otherwise.
@@ -870,10 +883,10 @@ func (o *BrowseResponse) SetServerUsed(v string) {
 	o.ServerUsed = &v
 }
 
-// GetUserData returns the UserData field value if set, zero value otherwise.
-func (o *BrowseResponse) GetUserData() map[string]interface{} {
-	if o == nil || o.UserData == nil {
-		var ret map[string]interface{}
+// GetUserData returns the UserData field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BrowseResponse) GetUserData() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
 	return o.UserData
@@ -881,11 +894,12 @@ func (o *BrowseResponse) GetUserData() map[string]interface{} {
 
 // GetUserDataOk returns a tuple with the UserData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BrowseResponse) GetUserDataOk() (map[string]interface{}, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BrowseResponse) GetUserDataOk() (*interface{}, bool) {
 	if o == nil || o.UserData == nil {
 		return nil, false
 	}
-	return o.UserData, true
+	return &o.UserData, true
 }
 
 // HasUserData returns a boolean if a field has been set.
@@ -897,8 +911,8 @@ func (o *BrowseResponse) HasUserData() bool {
 	return false
 }
 
-// SetUserData gets a reference to the given map[string]interface{} and assigns it to the UserData field.
-func (o *BrowseResponse) SetUserData(v map[string]interface{}) {
+// SetUserData gets a reference to the given interface{} and assigns it to the UserData field.
+func (o *BrowseResponse) SetUserData(v interface{}) {
 	o.UserData = v
 }
 
@@ -1055,7 +1069,7 @@ func (o BrowseResponse) MarshalJSON() ([]byte, error) {
 	if o.ExhaustiveFacetsCount != nil {
 		toSerialize["exhaustiveFacetsCount"] = o.ExhaustiveFacetsCount
 	}
-	if true {
+	if o.ExhaustiveNbHits != nil {
 		toSerialize["exhaustiveNbHits"] = o.ExhaustiveNbHits
 	}
 	if o.ExhaustiveTypo != nil {

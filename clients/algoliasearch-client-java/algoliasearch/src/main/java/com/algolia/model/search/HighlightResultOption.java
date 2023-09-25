@@ -4,12 +4,14 @@
 package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Show highlighted section and words matched on a query. */
-public class HighlightResultOption {
+@JsonDeserialize(as = HighlightResultOption.class)
+public class HighlightResultOption implements HighlightResult {
 
   @JsonProperty("value")
   private String value;
@@ -28,11 +30,7 @@ public class HighlightResultOption {
     return this;
   }
 
-  /**
-   * Markup text with `facetQuery` matches highlighted.
-   *
-   * @return value
-   */
+  /** Markup text with `facetQuery` matches highlighted. */
   @javax.annotation.Nonnull
   public String getValue() {
     return value;
@@ -43,11 +41,7 @@ public class HighlightResultOption {
     return this;
   }
 
-  /**
-   * Get matchLevel
-   *
-   * @return matchLevel
-   */
+  /** Get matchLevel */
   @javax.annotation.Nonnull
   public MatchLevel getMatchLevel() {
     return matchLevel;
@@ -63,11 +57,7 @@ public class HighlightResultOption {
     return this;
   }
 
-  /**
-   * List of words from the query that matched the object.
-   *
-   * @return matchedWords
-   */
+  /** List of words from the query that matched the object. */
   @javax.annotation.Nonnull
   public List<String> getMatchedWords() {
     return matchedWords;
@@ -78,11 +68,7 @@ public class HighlightResultOption {
     return this;
   }
 
-  /**
-   * Whether the entire attribute value is highlighted.
-   *
-   * @return fullyHighlighted
-   */
+  /** Whether the entire attribute value is highlighted. */
   @javax.annotation.Nullable
   public Boolean getFullyHighlighted() {
     return fullyHighlighted;

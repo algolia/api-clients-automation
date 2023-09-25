@@ -30,7 +30,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
     isAlgoliasearchClient = client.equals("algoliasearch");
-    String version = Utils.getOpenApiToolsField("dart", client, "packageVersion");
+    String version = Utils.getClientConfigField("dart", "packageVersion");
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
 
     // pubspec.yaml
@@ -62,18 +62,22 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     setPubLibrary(libName);
     setPubRepository("https://github.com/algolia/algoliasearch-client-dart/tree/main/packages/" + packageFolder);
 
+    // core package
+    additionalProperties.put("coreVersion", version);
+    final String srcFolder = libPath + sourceFolder;
+    supportingFiles.add(new SupportingFile("version.mustache", "../client_core/" + srcFolder, "version.dart"));
+
     // configs
     additionalProperties.put(CodegenConstants.SERIALIZATION_LIBRARY, SERIALIZATION_LIBRARY_JSON_SERIALIZABLE);
 
     super.processOpts();
 
     Arrays.asList("source", "get", "hide", "operator").forEach(reservedWords::remove); // reserved words from dart-keywords.txt
-
     if (isAlgoliasearchClient) {
       supportingFiles.removeIf(file -> file.getTemplateFile().contains("lib"));
       supportingFiles.add(new SupportingFile("lib.mustache", libPath, "algoliasearch_lite.dart"));
-      additionalProperties.put("searchVersion", Utils.getOpenApiToolsField("dart", "search", "packageVersion"));
-      additionalProperties.put("insightsVersion", Utils.getOpenApiToolsField("dart", "insights", "packageVersion"));
+      additionalProperties.put("searchVersion", version);
+      additionalProperties.put("insightsVersion", version);
     }
 
     // disable documentation and tests
@@ -92,12 +96,11 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("analysis_options"));
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("README"));
 
-    final String srcFolder = libPath + sourceFolder;
     supportingFiles.add(new SupportingFile("version.mustache", srcFolder, "version.dart"));
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("packageVersion", Utils.getClientConfigField("dart", "packageVersion"));
+    additionalProperties.put("packageVersion", version);
 
     // Generate server info
     Utils.generateServer(client, additionalProperties);
