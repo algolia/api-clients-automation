@@ -78,7 +78,22 @@ client.batch(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var objectIDs = ['1', '2', '3', '4', '5'];
+client.batch(
+  indexName: '<YOUR_INDEX_NAME>',
+  batchWriteParams: BatchWriteParams(
+    requests: objectIDs
+        .map((id) => BatchRequest(
+              action: Action.delete,
+              body: {'objectID': id},
+            ))
+        .toList(),
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
