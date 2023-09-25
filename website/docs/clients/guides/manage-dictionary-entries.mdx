@@ -100,7 +100,29 @@ client.batchDictionaryEntries(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.batchDictionaryEntries(
+  dictionaryName: DictionaryType.fromJson('<YOUR_DICTIONARY_NAME>'), // DictionaryType.plurals, DictionaryType.stopwords or DictionaryType.compounds
+  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
+    clearExistingDictionaryEntries: false,
+    requests: [
+      BatchDictionaryEntriesRequest(
+        action: DictionaryAction.addEntry,
+        body: DictionaryEntry(
+          objectID: '1',
+          language: 'en',
+          word: 'fancy',
+          words: ['believe', 'algolia'],
+          decomposition: ['trust', 'algolia'],
+          state: DictionaryEntryState.enabled,
+        ),
+      ),
+    ],
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -199,7 +221,29 @@ client.batchDictionaryEntries(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.batchDictionaryEntries(
+  dictionaryName: DictionaryType.fromJson('<YOUR_DICTIONARY_NAME>'), // DictionaryType.plurals, DictionaryType.stopwords or DictionaryType.compounds
+  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
+    clearExistingDictionaryEntries: true, // Since we replace, we will create a new dictionary from those entries
+    requests: [
+      BatchDictionaryEntriesRequest(
+          action: DictionaryAction.addEntry,
+          body: DictionaryEntry(
+            objectID: '1',
+            language: 'en',
+            word: 'fancy',
+            words: ['believe', 'algolia'],
+            decomposition: ['trust', 'algolia'],
+            state: DictionaryEntryState.enabled,
+          ),
+      )
+    ],
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -263,7 +307,17 @@ client.batchDictionaryEntries(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.batchDictionaryEntries(
+  dictionaryName: DictionaryType.fromJson('<YOUR_DICTIONARY_NAME>'), // DictionaryType.plurals, DictionaryType.stopwords or DictionaryType.compounds
+  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
+    clearExistingDictionaryEntries: true,
+    requests: [], // We don't push any new entries to it
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -343,7 +397,22 @@ client.batchDictionaryEntries(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.batchDictionaryEntries(
+  dictionaryName: DictionaryType.fromJson('<YOUR_DICTIONARY_NAME>'), // DictionaryType.plurals, DictionaryType.stopwords or DictionaryType.compounds
+  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
+    clearExistingDictionaryEntries: false, // we don't want to impact other entries.
+    requests: [
+      BatchDictionaryEntriesRequest(
+        action: DictionaryAction.deleteEntry,
+        body: DictionaryEntry(objectID: '1', language: 'en'),
+      ),
+    ],
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
