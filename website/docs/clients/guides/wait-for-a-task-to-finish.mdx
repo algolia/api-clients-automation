@@ -132,7 +132,26 @@ client.waitTask(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var client = SearchClient(appId: '<YOUR_APP_ID>', apiKey: '<YOUR_API_KEY>');
+var body = {'title', 'My Algolia Object'};
+var response = await client.saveObject(indexName: '<YOUR_INDEX_NAME>', body: body);
+
+// Poll the task status with defaults values
+await client.waitTask('<YOUR_INDEX_NAME>', response.taskID);
+
+// Poll the task status with your options
+await client.waitTask(
+  indexName: '<YOUR_INDEX_NAME>',
+  taskID: response.taskID,
+  params: WaitParams(
+    maxRetries: 100,
+    timeout: Duration(minutes: 1),
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">

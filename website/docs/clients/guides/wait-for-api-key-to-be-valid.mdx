@@ -169,7 +169,30 @@ client.waitKeyDelete(key = keyResponse.key)
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var client = SearchClient(appId: '<YOUR_APP_ID>', apiKey: '<YOUR_API_KEY>');
+
+var keyResponse = await client.addApiKey(apiKey : ApiKey(acl : [Acl.analytics, Acl.browse, Acl.editSettings]));
+// Poll the task status with defaults values
+await client.waitKeyCreation(keyResponse.key);
+
+// The fields to update on your API key
+var updatesToPerform = ApiKey(acl: [Acl.analytics, Acl.search], indexes: ['products']);
+// Call for update
+await client.updateApiKey(key: keyResponse.key, apiKey: updatesToPerform);
+// Wait for update to be done
+await client.waitKeyUpdate(
+  key: keyResponse.key,
+  apiKey: updatesToPerform, // We provide the updated fields to check if the changes have been applied
+);
+
+// Call for delete
+await client.deleteApiKey(key: keyResponse.key);
+// Wait for delete to be done
+await client.waitKeyDelete(key: keyResponse.key);
+```
+
 </TabItem>
 
 <TabItem value="go">

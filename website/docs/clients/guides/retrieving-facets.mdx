@@ -144,7 +144,21 @@ client.search(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.search(
+  searchMethodParams: SearchMethodParams(
+    requests: [
+      SearchForHits(
+        indexName: "<YOUR_INDEX_NAME>",
+        query: "<YOUR_QUERY>",
+        facets: ["author", "genre"],
+      ),
+    ],
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
