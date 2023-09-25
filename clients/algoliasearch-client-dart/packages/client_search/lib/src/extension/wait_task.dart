@@ -1,8 +1,9 @@
 import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_search/src/api/search_client.dart';
-import 'package:algolia_client_search/src/extension/retry.dart';
 import 'package:algolia_client_search/src/model/api_key.dart';
+import 'package:algolia_client_search/src/model/get_api_key_response.dart';
 import 'package:algolia_client_search/src/model/task_status.dart';
+import 'package:collection/collection.dart';
 
 extension WaitTask on SearchClient {
   /// Wait for a [taskID] to complete before executing the next line of code, to synchronize index
@@ -10,108 +11,149 @@ extension WaitTask on SearchClient {
   /// or update an object to your index, our servers will reply to your request with a [taskID] as soon
   /// as they understood the write operation. The actual insert and indexing will be done after
   /// replying to your code. You can wait for a task to complete by using the [taskID] and this method.
-  void waitTask({
+  Future<void> waitTask({
     required String indexName,
     required int taskID,
-    int maxRetries = 50,
-    Duration? timeout,
-    Duration initialDelay = const Duration(milliseconds: 200),
-    Duration maxDelay = const Duration(seconds: 5),
+    WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await retryUntil(
+    await _waitUntil(
+      params: params,
       retry: () => getTask(
         indexName: indexName,
         taskID: taskID,
         requestOptions: requestOptions,
       ),
       until: (response) => response.status == TaskStatus.published,
-      timeout: timeout,
-      maxRetries: maxRetries,
-      initialDelay: initialDelay,
-      maxDelay: maxDelay,
-    );
-  }
-
-  /// Wait on an API key update operation.
-  void waitKeyUpdate({
-    required String key,
-    required ApiKey apiKey,
-    int maxRetries = 50,
-    Duration? timeout,
-    Duration initialDelay = const Duration(milliseconds: 200),
-    Duration maxDelay = const Duration(seconds: 5),
-    RequestOptions? requestOptions,
-  }) async {
-    await retryUntil(
-      retry: () => getApiKey(key: key, requestOptions: requestOptions),
-      until: (response) =>
-          apiKey ==
-          ApiKey(
-            acl: response.acl,
-            description: response.description,
-            indexes: response.indexes,
-            maxHitsPerQuery: response.maxHitsPerQuery,
-            maxQueriesPerIPPerHour: response.maxQueriesPerIPPerHour,
-            queryParameters: response.queryParameters,
-            referers: response.referers,
-            validity: response.validity,
-          ),
-      timeout: timeout,
-      maxRetries: maxRetries,
-      initialDelay: initialDelay,
-      maxDelay: maxDelay,
     );
   }
 
   ///  Wait on an API key creation operation.
-  void waitKeyCreation({
+  Future<void> waitKeyCreation({
     required String key,
     int maxRetries = 50,
-    Duration? timeout,
-    Duration initialDelay = const Duration(milliseconds: 200),
-    Duration maxDelay = const Duration(seconds: 5),
+    WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await retryUntil(
-      retry: () {
+    await _waitUntil(
+      retry: () async {
         try {
-          return getApiKey(key: key, requestOptions: requestOptions);
+          return await getApiKey(key: key, requestOptions: requestOptions);
         } on AlgoliaApiException catch (_) {
-          return Future.value(null);
+          return null;
         }
       },
       until: (result) => result != null,
-      timeout: timeout,
-      maxRetries: maxRetries,
-      initialDelay: initialDelay,
-      maxDelay: maxDelay,
+      params: params,
     );
   }
 
   /// Wait on a delete API ket operation.
-  void waitKeyDeletion({
+  Future<void> waitKeyDeletion({
     required String key,
-    int maxRetries = 50,
-    Duration? timeout,
-    Duration initialDelay = const Duration(milliseconds: 200),
-    Duration maxDelay = const Duration(seconds: 5),
+    WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await retryUntil(
-      retry: () {
+    await _waitUntil(
+      params: params,
+      retry: () async {
         try {
-          return getApiKey(key: key, requestOptions: requestOptions);
+          return await getApiKey(key: key, requestOptions: requestOptions);
         } on AlgoliaApiException catch (e) {
-          return Future.value(e);
+          return e;
         }
       },
       until: (result) =>
-          result is AlgoliaApiException ? result.statusCode == 404 : false,
-      timeout: timeout,
-      maxRetries: maxRetries,
-      initialDelay: initialDelay,
-      maxDelay: maxDelay,
+      result is AlgoliaApiException ? result.statusCode == 404 : false,
     );
   }
+
+  /// Wait on an API key update operation.
+  Future<void> waitKeyUpdate({
+    required String key,
+    required ApiKey apiKey,
+    WaitParams params = const WaitParams(),
+    RequestOptions? requestOptions,
+  }) async {
+    await _waitUntil(
+      params: params,
+      retry: () async =>
+          await getApiKey(key: key, requestOptions: requestOptions),
+      until: (response) => _isExpectedApiKey(apiKey, response),
+    );
+  }
+}
+
+/// Wait operation parameters.
+class WaitParams {
+  final int maxRetries;
+  final Duration? timeout;
+  final Duration initialDelay;
+  final Duration maxDelay;
+
+  const WaitParams({
+    this.maxRetries = 50,
+    this.timeout,
+    this.initialDelay = const Duration(milliseconds: 200),
+    this.maxDelay = const Duration(seconds: 5),
+  });
+}
+
+/// Checks if [response] contains the expected updates in [apiKey].
+bool _isExpectedApiKey(ApiKey apiKey, GetApiKeyResponse response) {
+  return const DeepCollectionEquality.unordered()
+            .equals(apiKey.acl, response.acl) &&
+        (apiKey.description == null ||
+            (apiKey.description != null &&
+                apiKey.description == response.description)) &&
+        (apiKey.indexes == null ||
+            (apiKey.indexes != null &&
+                const DeepCollectionEquality.unordered()
+                    .equals(apiKey.indexes, response.indexes))) &&
+        (apiKey.maxHitsPerQuery == null ||
+            (apiKey.maxHitsPerQuery != null &&
+                apiKey.maxHitsPerQuery == response.maxHitsPerQuery)) &&
+        (apiKey.maxQueriesPerIPPerHour == null ||
+            (apiKey.maxQueriesPerIPPerHour != null &&
+                apiKey.maxQueriesPerIPPerHour ==
+                    response.maxQueriesPerIPPerHour)) &&
+        (apiKey.queryParameters == null ||
+            (apiKey.queryParameters != null &&
+                apiKey.queryParameters == response.queryParameters)) &&
+        (apiKey.referers == null ||
+            (apiKey.referers != null &&
+                const DeepCollectionEquality.unordered()
+                    .equals(apiKey.referers, response.referers))) &&
+        (apiKey.validity == null ||
+            (apiKey.validity != null &&
+                apiKey.validity == response.validity));
+}
+
+/// Retries the given [retry] function until the [until] condition is satisfied or the maximum number
+/// of [maxRetries] or [timeout] is reached.
+Future<T> _waitUntil<T>({
+  required Future<T> Function() retry,
+  required bool Function(T) until,
+  required WaitParams params,
+}) async {
+  Future<T> wait() async {
+    var currentDelay = params.initialDelay;
+    for (var i = 0; i < params.maxRetries; i++) {
+      var result = await retry();
+      if (until(result)) return result;
+      await Future.delayed(currentDelay);
+      var newDelay = currentDelay * 2;
+      currentDelay = newDelay < params.maxDelay ? newDelay : params.maxDelay;
+    }
+    throw AlgoliaWaitException(
+        "The maximum number of retries ($params.maxRetries) exceeded");
+  }
+
+  final timeout = params.timeout;
+  return timeout == null
+      ? wait()
+      : wait().timeout(
+          timeout,
+          onTimeout: () => throw Exception("Timeout of $timeout ms exceeded"),
+        );
 }
