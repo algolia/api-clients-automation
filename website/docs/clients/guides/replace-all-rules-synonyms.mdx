@@ -57,7 +57,16 @@ client.saveRules(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.saveRules(
+  indexName: indexName,
+  rules: rules,
+  forwardToReplicas: false,
+  clearExistingRules: true,
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -118,7 +127,16 @@ client.saveSynonyms(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.saveSynonyms(
+  indexName: indexName,
+  synonymHit: synonymHits,
+  forwardToReplicas: false,
+  replaceExistingSynonyms: true,
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
