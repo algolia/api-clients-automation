@@ -104,7 +104,7 @@ var response = await client.operationIndex(
 );
 
 // Poll the task status until it's done
-client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
+await client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
 ```
 
 </TabItem>
@@ -316,7 +316,7 @@ var response = await client.operationIndex(
   ),
 );
 
-client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
+await client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
 ```
 
 </TabItem>

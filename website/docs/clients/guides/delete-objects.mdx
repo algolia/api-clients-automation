@@ -81,7 +81,7 @@ client.batch(
 
 ```dart
 var objectIDs = ['1', '2', '3', '4', '5'];
-client.batch(
+await client.batch(
   indexName: '<YOUR_INDEX_NAME>',
   batchWriteParams: BatchWriteParams(
     requests: objectIDs
