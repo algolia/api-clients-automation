@@ -93,7 +93,20 @@ client.waitTask("<SOURCE_INDEX_NAME>", response.taskID)
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var response = await client.operationIndex(
+  indexName: '<SOURCE_INDEX_NAME>',
+  operationIndexParams: OperationIndexParams(
+      operation: OperationType.copy,
+      destination: '<DESTINATION_INDEX_NAME>'
+  ),
+);
+
+// Poll the task status until it's done
+client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -169,7 +182,6 @@ client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
 <TabItem value="kotlin">
 
 ```kotlin
-
 val response = client.operationIndex(
     indexName = "<SOURCE_INDEX_NAME>",
     operationIndexParams = OperationIndexParams(
@@ -185,7 +197,20 @@ client.waitTask("<SOURCE_INDEX_NAME>", response.taskID)
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var response = await client.operationIndex(
+  indexName: '<SOURCE_INDEX_NAME>',
+  operationIndexParams: OperationIndexParams(
+      operation: OperationType.move,
+      destination: '<DESTINATION_INDEX_NAME>'
+  ),
+);
+
+// Poll the task status until it's done
+await client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -280,7 +305,20 @@ client.waitTask("<SOURCE_INDEX_NAME>", response.taskID)
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var response = await client.operationIndex(
+  indexName: '<SOURCE_INDEX_NAME>',
+  operationIndexParams: OperationIndexParams(
+    operation: OperationType.move,
+    destination: '<DESTINATION_INDEX_NAME>',
+    scope: [ScopeType.rules],
+  ),
+);
+
+client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
+```
+
 </TabItem>
 
 <TabItem value="go">
