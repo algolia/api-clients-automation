@@ -5,7 +5,9 @@ import com.algolia.codegen.Utils;
 import com.algolia.codegen.cs.manager.CSManager;
 import com.algolia.codegen.cs.manager.CSManagerFactory;
 import com.algolia.codegen.cs.snippets.SnippetsGenerator;
-import com.algolia.codegen.cts.*;
+import com.algolia.codegen.cts.lambda.EscapeQuotesLambda;
+import com.algolia.codegen.cts.lambda.EscapeSlashLambda;
+import com.algolia.codegen.cts.lambda.ReplaceBacktickLambda;
 import com.algolia.codegen.exceptions.CTSException;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
@@ -71,10 +73,7 @@ public class AlgoliaCSGenerator extends DefaultCodegen {
       .addMustacheLambdas()
       .put("escapeQuotes", new EscapeQuotesLambda())
       .put("escapeSlash", new EscapeSlashLambda())
-      .put("replaceBacktick", new ReplaceBacktickLambda())
-      .put("escapeReserved", new EscapeDartLambda())
-      .put("escapeDollarSign", new EscapeDollarSignLambda())
-      .put("lowerCamelCase", new LowerCamelCaseLambda());
+      .put("replaceBacktick", new ReplaceBacktickLambda());
   }
 
   @Override
