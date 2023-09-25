@@ -53,7 +53,15 @@ val client = SearchClient(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var client = SearchClient(
+  appId: '<YOUR_INDEX_NAME>',
+  apiKey: '<YOUR_API_KEY>',
+  options: ClientOptions(logger: print),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -167,7 +175,27 @@ client.search(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+await client.search(
+  searchMethodParams: SearchMethodParams(
+    requests: [
+      SearchForHits(
+        indexName: '<YOUR_INDEX_NAME>',
+        query: '<YOUR_QUERY>',
+        hitsPerPage: 50,
+      )
+    ],
+  ),
+  requestOptions: RequestOptions(
+    // This header is added to the request
+    headers: {'additional-header': 'hello'},
+    // As we re-define `hitsPerPage`, it will override the value defined in the method's parameters.
+    urlParameters: {'hitsPerPage': 100},
+  ),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -250,7 +278,20 @@ val client = SearchClient(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var client = SearchClient(
+  appId: 'YOUR_APP_ID>',
+  apiKey: '<YOUR_API_KEY>',
+  options: ClientOptions(agentSegments: [
+    AgentSegment(
+      value: 'my user agent',
+      version: 'optional version',
+    )
+  ]),
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
@@ -334,7 +375,15 @@ val client = SearchClient(
 </TabItem>
 
 <TabItem value="dart">
-// TBD
+
+```dart
+var client = SearchClient(
+    appId: "<YOUR_APP_ID>",
+    apiKey: "<YOUR_API_KEY>",
+    options: ClientOptions(requester : MyOwnRequester())
+);
+```
+
 </TabItem>
 
 <TabItem value="go">
