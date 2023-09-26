@@ -1,3 +1,7 @@
+## [0.2.4](https://github.com/algolia/algoliasearch-client-dart/compare/0.2.3...0.2.4)
+
+- [b7b6565a](https://github.com/algolia/api-clients-automation/commit/b7b6565a) fix(specs): `userData` type as 'any' ([#2033](https://github.com/algolia/api-clients-automation/pull/2033)) by [@aallam](https://github.com/aallam/)
+
 ## [0.2.3](https://github.com/algolia/algoliasearch-client-dart/compare/0.2.2...0.2.3)
 
 - [6911ec0b5](https://github.com/algolia/api-clients-automation/commit/6911ec0b5) fix(dart): reset only hosts w/ call type ([#2018](https://github.com/algolia/api-clients-automation/pull/2018)) by [@aallam](https://github.com/aallam/)

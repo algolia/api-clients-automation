@@ -1,3 +1,7 @@
+## [4.0.0-alpha.30](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.29...4.0.0-alpha.30)
+
+- [b7b6565a](https://github.com/algolia/api-clients-automation/commit/b7b6565a) fix(specs): `userData` type as 'any' ([#2033](https://github.com/algolia/api-clients-automation/pull/2033)) by [@aallam](https://github.com/aallam/)
+
 ## [4.0.0-alpha.29](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.28...4.0.0-alpha.29)
 
 - [265518125](https://github.com/algolia/api-clients-automation/commit/265518125) fix(specs): `exhaustiveNbHits` as optional ([#2007](https://github.com/algolia/api-clients-automation/pull/2007)) by [@aallam](https://github.com/aallam/)
