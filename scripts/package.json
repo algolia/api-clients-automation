@@ -25,7 +25,7 @@
     "@types/inquirer": "9.0.3",
     "@types/jest": "29.5.5",
     "@types/js-yaml": "4.0.6",
-    "@types/micromatch": "4.0.2",
+    "@types/micromatch": "4.0.3",
     "@types/node": "18.17.18",
     "@types/semver": "7.5.2",
     "@types/spinnies": "0.5.0",
