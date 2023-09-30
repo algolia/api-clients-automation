@@ -2913,10 +2913,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/spinnies@npm:0.5.0":
-  version: 0.5.0
-  resolution: "@types/spinnies@npm:0.5.0"
-  checksum: 165cd9fce48b09f0a77923b86d46e1026cbbf9e02945e79337d9f751a7e6fad14f1f4b0fa7c2e4a38fb8293587a8caeef7a8a6e373837dea3feef986163282f1
+"@types/spinnies@npm:0.5.1":
+  version: 0.5.1
+  resolution: "@types/spinnies@npm:0.5.1"
+  checksum: ac2af303e710320d8dbba5b28f8443945e1805d396ca3ab11af14baa5509326ede72383fc8ea8bd85345e41b8541f23dffcb52058b3a0028655dc4a263408c91
   languageName: node
   linkType: hard
 
@@ -9536,7 +9536,7 @@ __metadata:
     "@types/micromatch": 4.0.3
     "@types/node": 18.17.18
     "@types/semver": 7.5.3
-    "@types/spinnies": 0.5.0
+    "@types/spinnies": 0.5.1
     chalk: 5.3.0
     commander: 11.0.0
     dotenv: 16.3.1
