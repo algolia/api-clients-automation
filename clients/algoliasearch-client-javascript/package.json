@@ -25,7 +25,7 @@
     "@types/jest": "29.5.5",
     "@types/node": "18.17.18",
     "@types/rollup-plugin-node-globals": "1.4.2",
-    "@types/semver": "7.5.2",
+    "@types/semver": "7.5.3",
     "bundlesize2": "0.0.31",
     "execa": "8.0.1",
     "lerna": "7.3.0",

@@ -3013,10 +3013,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:7.5.2":
-  version: 7.5.2
-  resolution: "@types/semver@npm:7.5.2"
-  checksum: 743aa8a2b58e20b329c19bd2459152cb049d12fafab7279b90ac11e0f268c97efbcb606ea0c681cca03f79015381b40d9b1244349b354270bec3f939ed49f6e9
+"@types/semver@npm:7.5.3":
+  version: 7.5.3
+  resolution: "@types/semver@npm:7.5.3"
+  checksum: 349fdd1ab6c213bac5c991bac766bd07b8b12e63762462bb058740dcd2eb09c8193d068bb226f134661275f2022976214c0e727a4e5eb83ec1b131127c980d3e
   languageName: node
   linkType: hard
 
@@ -3189,7 +3189,7 @@ __metadata:
     "@types/jest": 29.5.5
     "@types/node": 18.17.18
     "@types/rollup-plugin-node-globals": 1.4.2
-    "@types/semver": 7.5.2
+    "@types/semver": 7.5.3
     bundlesize2: 0.0.31
     execa: 8.0.1
     lerna: 7.3.0
