@@ -1,5 +1,9 @@
 ## [3.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.0.0-SNAPSHOT...3.0.0-SNAPSHOT)
 
+- [756f19ab](https://github.com/algolia/api-clients-automation/commit/756f19ab) feat(specs): Remove attributeForDistinct from the indexSettingsAsSearc… ([#2078](https://github.com/algolia/api-clients-automation/pull/2078)) by [@clemfromspace](https://github.com/clemfromspace/)
+
+## [3.0.0-SNAPSHOT](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.0.0-SNAPSHOT...3.0.0-SNAPSHOT)
+
 - [2260e903f](https://github.com/algolia/api-clients-automation/commit/2260e903f) feat(specs): add `attributesToExclude` for Ingestion ([#2053](https://github.com/algolia/api-clients-automation/pull/2053)) by [@shortcuts](https://github.com/shortcuts/)
 - [b7b6565ab](https://github.com/algolia/api-clients-automation/commit/b7b6565ab) fix(specs): `userData` type as 'any' ([#2033](https://github.com/algolia/api-clients-automation/pull/2033)) by [@aallam](https://github.com/aallam/)
 

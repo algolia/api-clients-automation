@@ -1,3 +1,7 @@
+## [4.0.0-beta.7](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.6...4.0.0-beta.7)
+
+- [756f19ab](https://github.com/algolia/api-clients-automation/commit/756f19ab) feat(specs): Remove attributeForDistinct from the indexSettingsAsSearc… ([#2078](https://github.com/algolia/api-clients-automation/pull/2078)) by [@clemfromspace](https://github.com/clemfromspace/)
+
 ## [4.0.0-beta.6](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.5...4.0.0-beta.6)
 
 - [2260e903f](https://github.com/algolia/api-clients-automation/commit/2260e903f) feat(specs): add `attributesToExclude` for Ingestion ([#2053](https://github.com/algolia/api-clients-automation/pull/2053)) by [@shortcuts](https://github.com/shortcuts/)
