@@ -2,14 +2,14 @@ type: object
 title: Added to cart object IDs after search
 description: |
   Use this event to track when users add items to their shopping cart after a previous Algolia request.
-  If you use Algolia to build your category pages, you'll also use the `addedToCartObjectIDsAfterSearch` event.
+  If you're building your category pages with Algolia, you'll also use this event.
 additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
   eventType:
     $ref: './ConversionEvent.yml'
-  eventSubType:
+  eventSubtype:
     $ref: './AddToCartEvent.yml'
   index:
     $ref: './EventAttributes.yml#/index'
@@ -28,7 +28,7 @@ properties:
 required:
   - eventName
   - eventType
-  - eventSubType
+  - eventSubtype
   - queryID
   - index
   - objectIDs

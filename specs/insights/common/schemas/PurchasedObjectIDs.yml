@@ -1,13 +1,13 @@
 type: object
 title: Purchased object IDs
-description: Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use `purchasedObjectIDs`.
+description: Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.
 additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
   eventType:
     $ref: './ConversionEvent.yml'
-  eventSubType:
+  eventSubtype:
     $ref: './PurchaseEvent.yml'
   index:
     $ref: './EventAttributes.yml#/index'
@@ -24,7 +24,7 @@ properties:
 required:
   - eventName
   - eventType
-  - eventSubType
+  - eventSubtype
   - index
   - objectIDs
   - userToken

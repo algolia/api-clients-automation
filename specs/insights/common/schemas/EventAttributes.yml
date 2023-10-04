@@ -115,7 +115,7 @@ objectDataList:
   description: |
     Extra information about the records involved in the event—for example, to add price and quantities of purchased products.
 
-    If provided, must be the same length as objectIDs.
+    If provided, must be the same length as `objectIDs`.
   items:
     $ref: '#/objectData'
 
@@ -140,7 +140,7 @@ objectDataAfterSearchList:
   description: |
     Extra information about the records involved in the event—for example, to add price and quantities of purchased products.
 
-    If provided, must be the same length as objectIDs.
+    If provided, must be the same length as `objectIDs`.
   items:
     $ref: '#/objectDataAfterSearch'
 
