@@ -87,12 +87,14 @@ price:
   description: The price of the item. This should be the final price, inclusive of any discounts in effect.
   oneOf:
     - type: number
+      format: float
     - type: string
 
 discount:
   description: Absolute value of the discount in effect for this object, measured in `currency`.
   oneOf:
     - type: number
+      format: float
     - type: string
 
 objectData:
@@ -103,6 +105,7 @@ objectData:
       $ref: '#/price'
     quantity:
       type: integer
+      format: int32
       description: The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
     discount:
       $ref: '#/discount'
@@ -127,6 +130,7 @@ objectDataAfterSearch:
       $ref: '#/price'
     quantity:
       type: integer
+      format: int32
       description: The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
     discount:
       $ref: '#/discount'
