@@ -87,14 +87,14 @@ price:
   description: The price of the item. This should be the final price, inclusive of any discounts in effect.
   oneOf:
     - type: number
-      format: float
+      format: double
     - type: string
 
 discount:
   description: Absolute value of the discount in effect for this object, measured in `currency`.
   oneOf:
     - type: number
-      format: float
+      format: double
     - type: string
 
 objectData:
