@@ -1,7 +1,0 @@
-eventType:
-  type: string
-  enum: [click, conversion, view]
-
-conversionEventSubType:
-  type: string
-  enum: [addToCart, purchase]
