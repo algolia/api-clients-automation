@@ -191,6 +191,7 @@
           "eventSubType": "addToCart",
           "eventName": "Product Added To Cart",
           "index": "products",
+          "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
           "userToken": "user-123456",
           "timestamp": 1641290601962,
           "objectIDs": [
@@ -223,6 +224,7 @@
             "eventSubType": "addToCart",
             "eventName": "Product Added To Cart",
             "index": "products",
+            "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
             "userToken": "user-123456",
             "timestamp": 1641290601962,
             "objectIDs": [
