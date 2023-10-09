@@ -349,3 +349,29 @@ SourceUpdateInput:
     - $ref: '#/SourceCSV'
     - $ref: '#/SourceBigQuery'
     - $ref: '#/SourceUpdateDocker'
+
+DockerSourceDiscover:
+  type: object
+  additionalProperties: false
+  properties:
+    runID:
+      $ref: './common.yml#/runID'
+    createdAt:
+      $ref: './common.yml#/createdAt'
+  required:
+    - runID
+    - createdAt
+
+DockerSourceStreams:
+  type: object
+  additionalProperties: false
+  properties:
+    streams:
+      type: array
+      items:
+        $ref: '#/DockerSourceStream'
+  required:
+    - streams
+
+DockerSourceStream:
+  type: string

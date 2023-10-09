@@ -1,0 +1,38 @@
+get:
+  tags:
+    - sources
+  summary: Retrieve a stream listing.
+  description: Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+  operationId: getDockerSourceStreams
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathSourceID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: dockerSourceStreams
+            type: object
+            $ref: '../../common/schemas/source.yml#/DockerSourceStreams'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+
+post:
+  tags:
+    - sources
+  summary: Trigger a stream listing request.
+  description: Trigger a stream listing request for a Singer specification compatible docker type source.
+  operationId: dockerSourceDiscover
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathSourceID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: dockerSourceDiscover
+            $ref: '../../common/schemas/source.yml#/DockerSourceDiscover'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
