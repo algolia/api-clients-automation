@@ -353,4 +353,4 @@ SourceUpdateInput:
 DockerSourceStream:
   type: object
   additionalProperties: true
-  description: A map of stream name to stream schema.
+  description: A stream definition (see Singer specification for details).
