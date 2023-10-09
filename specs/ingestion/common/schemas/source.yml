@@ -351,4 +351,6 @@ SourceUpdateInput:
     - $ref: '#/SourceUpdateDocker'
 
 DockerSourceStream:
-  type: string
+  type: object
+  additionalProperties: true
+  description: A map of stream name to stream schema.
