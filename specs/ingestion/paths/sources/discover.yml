@@ -14,7 +14,14 @@ get:
           schema:
             title: dockerSourceStreams
             type: object
-            $ref: '../../common/schemas/source.yml#/DockerSourceStreams'
+            additionalProperties: false
+            properties:
+              streams:
+                type: array
+                items:
+                  $ref: '../../common/schemas/source.yml#/DockerSourceStream'
+            required:
+              - streams
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
 
@@ -33,6 +40,15 @@ post:
         application/json:
           schema:
             title: dockerSourceDiscover
-            $ref: '../../common/schemas/source.yml#/DockerSourceDiscover'
+            type: object
+            additionalProperties: false
+            properties:
+              runID:
+                $ref: '../../common/schemas/common.yml#/runID'
+              createdAt:
+                $ref: '../../common/schemas/common.yml#/createdAt'
+            required:
+              - runID
+              - createdAt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
