@@ -352,5 +352,4 @@ SourceUpdateInput:
 
 DockerSourceStream:
   type: object
-  additionalProperties: true
   description: A stream definition (see Singer specification for details).
