@@ -30,7 +30,7 @@ post:
     - sources
   summary: Trigger a stream listing request.
   description: Trigger a stream listing request for a Singer specification compatible docker type source.
-  operationId: dockerSourceDiscover
+  operationId: triggerDockerSourceDiscover
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   responses:
