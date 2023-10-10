@@ -1,3 +1,9 @@
+## [4.0.0-alpha.82](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.81...4.0.0-alpha.82)
+
+- [f8e79a1e](https://github.com/algolia/api-clients-automation/commit/f8e79a1e) fix(specs): search `insideBoundingBox` type ([#2098](https://github.com/algolia/api-clients-automation/pull/2098)) by [@aallam](https://github.com/aallam/)
+- [d3861910](https://github.com/algolia/api-clients-automation/commit/d3861910) feat(specs): add new events type for insights ([#2080](https://github.com/algolia/api-clients-automation/pull/2080)) by [@millotp](https://github.com/millotp/)
+- [756f19ab](https://github.com/algolia/api-clients-automation/commit/756f19ab) feat(specs): Remove attributeForDistinct from the indexSettingsAsSearc… ([#2078](https://github.com/algolia/api-clients-automation/pull/2078)) by [@clemfromspace](https://github.com/clemfromspace/)
+
 ## [4.0.0-alpha.81](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.80...4.0.0-alpha.81)
 
 - [2260e903f](https://github.com/algolia/api-clients-automation/commit/2260e903f) feat(specs): add `attributesToExclude` for Ingestion ([#2053](https://github.com/algolia/api-clients-automation/pull/2053)) by [@shortcuts](https://github.com/shortcuts/)
