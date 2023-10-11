@@ -1,4 +1,4 @@
-export const patterns = [
+const patterns = [
   // Ignore the roots and go down the tree by negating hand written files
   'specs/bundled/*.yml',
 
@@ -21,7 +21,6 @@ export const patterns = [
   '!clients/algoliasearch-client-javascript/.yarn/**',
   '!clients/algoliasearch-client-javascript/scripts/**',
   '!clients/algoliasearch-client-javascript/tests/**',
-  'clients/algoliasearch-client-javascript/packages/**/package.json',
   '!clients/algoliasearch-client-javascript/packages/requester-*/**',
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
@@ -75,3 +74,14 @@ export const patterns = [
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
 ];
+
+// this small case is for release purpose only
+// while we don't want to let users manually update the package.json since it's generated,
+// the release process will update it so we need to allow the script to push it
+if (process.env.RELEASE) {
+  patterns.push('!clients/algoliasearch-client-javascript/packages/**/package.json');
+} else {
+  patterns.push('clients/algoliasearch-client-javascript/packages/**/package.json');
+}
+
+export { patterns };
