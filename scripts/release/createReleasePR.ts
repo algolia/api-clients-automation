@@ -349,7 +349,7 @@ async function prepareGitEnvironment(): Promise<void> {
   console.log('Pulling from origin...');
   await run('git fetch origin');
   await run('git fetch --tags --force');
-  await run('git pull');
+  await run('git pull origin $(git branch --show-current)');
 }
 
 async function createReleasePR(): Promise<void> {
