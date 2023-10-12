@@ -9,8 +9,8 @@ import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
-private const val HeaderApplicationID = "x-algolia-application-id"
-private const val HeaderAPIKey = "x-algolia-api-key"
+private const val HEADER_APPLICATION_ID = "x-algolia-application-id"
+private const val HEADER_APIKEY = "x-algolia-api-key"
 
 internal fun algoliaHttpClient(
   appId: String,
@@ -62,11 +62,11 @@ internal fun HttpClientConfig<*>.configure(
 
   // Defaults
   defaultRequest {
-    if (!headers.contains(HeaderApplicationID)) {
-      header(HeaderApplicationID, appId)
+    if (!headers.contains(HEADER_APPLICATION_ID)) {
+      header(HEADER_APPLICATION_ID, appId)
     }
-    if (!headers.contains(HeaderAPIKey)) {
-      header(HeaderAPIKey, apiKey)
+    if (!headers.contains(HEADER_APIKEY)) {
+      header(HEADER_APIKEY, apiKey)
     }
     options.defaultHeaders?.forEach { (key, value) -> header(key, value) }
   }
