@@ -338,7 +338,7 @@ func isNilorEmpty(i any) bool {
 
 func RetryUntil[T any](
   retry func() (*T, error),
-  until func(*T) bool,
+  until func(*T, error) bool,
   maxRetries *int,
   initialDelay *time.Duration,
   maxDelay *time.Duration,
@@ -360,11 +360,8 @@ func RetryUntil[T any](
 
   for i := 0; i < *maxRetries; i++ {
     res, err := retry()
-    if err != nil {
-      return nil, err
-    }
 
-    if until(res) {
+    if ok := until(res, err); ok {
       return res, nil
     }
 

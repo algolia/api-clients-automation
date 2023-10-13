@@ -17,22 +17,78 @@ func testSearch(appID, apiKey string) int {
 		return 1
 	}
 
-	operationIndexRequest := searchClient.NewApiOperationIndexRequest(
-		indexName,
-		&search.OperationIndexParams{
-			Operation:   search.OPERATIONTYPE_COPY,
-			Destination: "test-go-4",
-		},
-	)
+	apiKeyStruct := search.NewApiKey([]search.Acl{"search"})
 
-	response, err := searchClient.OperationIndex(operationIndexRequest)
+	addApiKeyResponse, err := searchClient.AddApiKey(searchClient.NewApiAddApiKeyRequest(apiKeyStruct))
 	if err != nil {
 		panic(err)
 	}
 
-	taskResponse, err := searchClient.WaitForTask(
-		indexName,
-		response.TaskID,
+	taskResponse, err := searchClient.WaitForApiKey(
+		addApiKeyResponse.Key,
+		apiKeyStruct,
+		"add",
+		nil,
+		nil,
+		nil,
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	printResponse(taskResponse)
+
+	apiKeyStruct.SetAcl([]search.Acl{"search", "addObject"})
+
+	_, err = searchClient.UpdateApiKey(searchClient.NewApiUpdateApiKeyRequest(addApiKeyResponse.Key, apiKeyStruct))
+	if err != nil {
+		panic(err)
+	}
+
+	taskResponse, err = searchClient.WaitForApiKey(
+		addApiKeyResponse.Key,
+		apiKeyStruct,
+		"update",
+		nil,
+		nil,
+		nil,
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	printResponse(taskResponse)
+
+	apiKeyStruct.SetAcl([]search.Acl{"search", "addObject"})
+
+	_, err = searchClient.UpdateApiKey(searchClient.NewApiUpdateApiKeyRequest(addApiKeyResponse.Key, apiKeyStruct))
+	if err != nil {
+		panic(err)
+	}
+
+	taskResponse, err = searchClient.WaitForApiKey(
+		addApiKeyResponse.Key,
+		apiKeyStruct,
+		"update",
+		nil,
+		nil,
+		nil,
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	printResponse(taskResponse)
+
+	_, err = searchClient.DeleteApiKey(searchClient.NewApiDeleteApiKeyRequest(addApiKeyResponse.Key))
+	if err != nil {
+		panic(err)
+	}
+
+	taskResponse, err = searchClient.WaitForApiKey(
+		addApiKeyResponse.Key,
+		apiKeyStruct,
+		"delete",
 		nil,
 		nil,
 		nil,
