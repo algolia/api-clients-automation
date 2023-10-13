@@ -10,6 +10,9 @@ import (
 	"net/http"
 	"net/url"
   "strings"
+  {{#isSearchClient}}
+  "time"
+  {{/isSearchClient}}
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 )
@@ -336,3 +339,26 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 
 {{/operation}}
 {{/operations}}
+
+{{#isSearchClient}}
+func (c *APIClient) WaitForTask(
+  indexName string,
+  taskID int64,
+  maxRetries *int,
+  initialDelay *time.Duration,
+  maxDelay *time.Duration,
+  opts ...Option,
+) (*GetTaskResponse, error) {
+  return RetryUntil(
+    func() (*GetTaskResponse, error) {
+      return c.GetTask(c.NewApiGetTaskRequest(indexName, taskID), opts...)
+    },
+    func(status *GetTaskResponse) bool {
+      return status.Status == TASKSTATUS_PUBLISHED
+    },
+    maxRetries,
+    initialDelay,
+    maxDelay,
+  )
+}
+{{/isSearchClient}}
