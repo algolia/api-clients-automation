@@ -394,6 +394,7 @@ The maxRetries parameter is the maximum number of retries.
 The initialDelay parameter is the initial delay between each retry.
 The maxDelay parameter is the maximum delay between each retry.
 
+  @param ctx context.Context - The context that will be drilled down to the actual request.
   @param indexName string - Index name.
   @param taskID int64 - Task ID.
   @param maxRetries *int - Maximum number of retries.
@@ -491,6 +492,7 @@ The maxDelay parameter is the maximum delay between each retry.
 If the operation is "update", the apiKey parameter must be set.
 If the operation is "delete" or "add", the apiKey parameter is not used.
 
+  @param ctx context.Context - The context that will be drilled down to the actual request.
   @param key string - API key.
   @param apiKey *ApiKey - API key structure - required for update operation.
   @param operation string - Operation type - add, delete or update.
