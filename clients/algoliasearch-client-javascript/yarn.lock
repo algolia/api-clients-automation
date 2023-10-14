@@ -2515,9 +2515,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:15.2.2":
-  version: 15.2.2
-  resolution: "@rollup/plugin-node-resolve@npm:15.2.2"
+"@rollup/plugin-node-resolve@npm:15.2.3":
+  version: 15.2.3
+  resolution: "@rollup/plugin-node-resolve@npm:15.2.3"
   dependencies:
     "@rollup/pluginutils": ^5.0.1
     "@types/resolve": 1.20.2
@@ -2530,7 +2530,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: 478281b12914114eb663e0f9dbdc9fd2c9be694025d7b76572c6574b61b410af349d68418b0157ece792d09cbaf808331d60c253dac95f89b95530a85b3d6231
+  checksum: 730f32c2f8fdddff07cf0fca86a5dac7c475605fb96930197a868c066e62eb6388c557545e4f7d99b7a283411754c9fbf98944ab086b6074e04fc1292e234aa8
   languageName: node
   linkType: hard
 
@@ -3023,7 +3023,7 @@ __metadata:
     "@babel/preset-env": 7.23.2
     "@babel/runtime": 7.23.2
     "@rollup/plugin-babel": 6.0.4
-    "@rollup/plugin-node-resolve": 15.2.2
+    "@rollup/plugin-node-resolve": 15.2.3
     "@rollup/plugin-terser": 0.4.4
     "@types/jest": 29.5.5
     "@types/node": 18.18.1
