@@ -2699,13 +2699,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/inquirer@npm:9.0.3":
-  version: 9.0.3
-  resolution: "@types/inquirer@npm:9.0.3"
+"@types/inquirer@npm:9.0.4":
+  version: 9.0.4
+  resolution: "@types/inquirer@npm:9.0.4"
   dependencies:
     "@types/through": "*"
     rxjs: ^7.2.0
-  checksum: 729a0deefddf95434090d8f6adc120c6de4a023cefd63fb1c3b1d1cfd1abbef4caef87af47589cdbeb16177037e48a0ffc397c39e845d2b7b5dd820eb7b80862
+  checksum: 94d3c75cdd892dbfb5996f53298fcee80e590077d2589ae08eae33252f47462503483b1002710c96a4e2d10661f74bf40aed5d87718a6b020828ec8749192593
   languageName: node
   linkType: hard
 
@@ -9295,7 +9295,7 @@ __metadata:
     "@octokit/rest": 20.0.2
     "@types/folder-hash": 4.0.2
     "@types/fs-extra": 11.0.2
-    "@types/inquirer": 9.0.3
+    "@types/inquirer": 9.0.4
     "@types/jest": 29.5.5
     "@types/js-yaml": 4.0.6
     "@types/micromatch": 4.0.3
