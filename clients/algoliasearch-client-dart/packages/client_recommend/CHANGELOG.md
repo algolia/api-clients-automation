@@ -1,3 +1,7 @@
+## [0.5.1](https://github.com/algolia/algoliasearch-client-dart/compare/0.5.0...0.5.1)
+
+- [a5ff0a76](https://github.com/algolia/api-clients-automation/commit/a5ff0a76) fix(specs): remove duplicate objectID ([#2113](https://github.com/algolia/api-clients-automation/pull/2113)) by [@millotp](https://github.com/millotp/)
+
 ## [0.5.0](https://github.com/algolia/algoliasearch-client-dart/compare/0.4.0...0.5.0)
 
 - [b5ec54151](https://github.com/algolia/api-clients-automation/commit/b5ec54151) feat(specs): revenue and filterEffects typing updates ([#2105](https://github.com/algolia/api-clients-automation/pull/2105)) by [@cdhawke](https://github.com/cdhawke/)

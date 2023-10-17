@@ -1,3 +1,7 @@
+## [4.0.0-alpha.84](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.83...4.0.0-alpha.84)
+
+- [a5ff0a76](https://github.com/algolia/api-clients-automation/commit/a5ff0a76) fix(specs): remove duplicate objectID ([#2113](https://github.com/algolia/api-clients-automation/pull/2113)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-alpha.83](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.82...4.0.0-alpha.83)
 
 - [b5ec54151](https://github.com/algolia/api-clients-automation/commit/b5ec54151) feat(specs): revenue and filterEffects typing updates ([#2105](https://github.com/algolia/api-clients-automation/pull/2105)) by [@cdhawke](https://github.com/cdhawke/)
