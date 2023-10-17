@@ -418,7 +418,7 @@ func (c *APIClient) WaitForTaskWithContext(
       return c.GetTaskWithContext(ctx, c.NewApiGetTaskRequest(indexName, taskID), opts...)
     },
     func(response *GetTaskResponse, err error) bool {
-      return response.Status == TASKSTATUS_PUBLISHED
+      return response.GetStatus() == TASKSTATUS_PUBLISHED
     },
     maxRetries,
     initialDelay,
@@ -591,7 +591,7 @@ func (c *APIClient) WaitForApiKeyWithContext(
     func(response *GetApiKeyResponse, err error) bool {
       switch operation {
       case "add":
-        return err == nil && response != nil && response.CreatedAt > 0
+        return err == nil && response != nil && response.GetCreatedAt() > 0
       case "delete":
         if _, ok := err.(*APIError); ok {
           apiErr := err.(*APIError)
