@@ -11,9 +11,12 @@ type {{classname}} struct {
 {{/isArray}}
 {{/parent}}
 {{#vars}}
-{{#description}}
-	// {{#deprecated}}Deprecated. {{/deprecated}}{{{.}}}
-{{/description}}
+  {{#description}}
+    // {{{.}}}
+  {{/description}}
+  {{#deprecated}}
+    // Deprecated
+  {{/deprecated}}
 	{{name}} {{^isNullable}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isNullable}}{{{dataType}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"{{#required}} validate:"required"{{/required}}{{#vendorExtensions.x-go-custom-tag}} {{{.}}}{{/vendorExtensions.x-go-custom-tag}}`
 {{/vars}}
 {{#isAdditionalPropertiesTrue}}
