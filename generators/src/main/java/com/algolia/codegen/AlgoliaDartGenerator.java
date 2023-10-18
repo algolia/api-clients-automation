@@ -167,9 +167,6 @@ class SchemaSupport {
       ModelsMap modelContainer = entry.getValue();
       ModelMap modelMap = modelContainer.getModels().get(0);
       CodegenModel model = modelMap.getModel();
-      if (model.name.startsWith("base")) {
-        System.out.println(model);
-      }
       if (!model.oneOf.isEmpty()) {
         String classname = modelMap.getModel().classname;
         oneOfs.put(classname, new OneOfMetadata(asImport(libName, classname), model.oneOf));
