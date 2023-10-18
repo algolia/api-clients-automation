@@ -27,6 +27,10 @@ searchForFacetsOptions:
       $ref: '../../../common/schemas/IndexSettings.yml#/maxFacetHits'
     type:
       $ref: '#/searchTypeFacet'
+  x-discriminator-fields:
+    - indexName
+    - type
+    - facet
   required:
     - indexName
     - type
