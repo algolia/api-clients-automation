@@ -1,11 +1,12 @@
 searchResponse:
+  additionalProperties: true
   allOf:
     - $ref: '#/baseSearchResponse'
     - $ref: '#/searchHits'
 
 searchHits:
   type: object
-  additionalProperties: false
+  additionalProperties: true
   properties:
     hits:
       type: array
@@ -24,7 +25,7 @@ searchHits:
 
 baseSearchResponse:
   type: object
-  additionalProperties: false
+  additionalProperties: true
   required:
     - nbHits
     - page
