@@ -1,6 +1,7 @@
 [
   {
     "testName": "search for a single hits request with minimal parameters",
+    "skipForGo": true,
     "parameters": {
       "requests": [
         {
