@@ -63,7 +63,7 @@
   "dart": {
     "folder": "clients/algoliasearch-client-dart",
     "gitRepoId": "algoliasearch-client-dart",
-    "packageVersion": "1.0.0",
+    "packageVersion": "0.6.0",
     "modelFolder": "lib/src/model",
     "apiFolder": "lib/src/api",
     "customGenerator": "algolia-dart",
