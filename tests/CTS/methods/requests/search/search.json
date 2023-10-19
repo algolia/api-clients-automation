@@ -1,9 +1,6 @@
 [
   {
     "testName": "search for a single hits request with minimal parameters",
-    "extras": {
-      "skipForGo": true
-    },
     "parameters": {
       "requests": [
         {
@@ -112,9 +109,6 @@
   },
   {
     "testName": "search for multiple mixed requests in multiple indices with minimal parameters",
-    "extras": {
-      "skipForGo": true
-    },
     "parameters": {
       "requests": [
         {
@@ -201,9 +195,6 @@
   },
   {
     "testName": "search filters accept all of the possible shapes",
-    "extras": {
-      "skipForGo": true
-    },
     "parameters": {
       "requests": [
         {

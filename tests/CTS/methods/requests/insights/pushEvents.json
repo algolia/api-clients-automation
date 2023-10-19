@@ -47,9 +47,6 @@
   },
   {
     "testName": "Many events type",
-    "extras": {
-      "skipForGo": true
-    },
     "parameters": {
       "events": [
         {
@@ -111,9 +108,6 @@
   },
   {
     "testName": "ConvertedObjectIDsAfterSearch",
-    "extras": {
-      "skipForGo": true
-    },
     "parameters": {
       "events": [
         {
