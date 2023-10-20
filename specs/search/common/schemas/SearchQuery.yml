@@ -3,18 +3,6 @@ SearchQuery:
     - $ref: '#/SearchForHits'
     - $ref: '#/SearchForFacets'
 
-#  discriminator:
-#    propertyName: type
-#    mapping:
-#      default: '#/SearchForHits'
-#      nil: '#/SearchForHits'
-#      null: '#/SearchForHits' # eslint-disable-line yml/require-string-key
-#      '': '#/SearchForHits'
-#      undefined: '#/SearchForHits'
-#      facet: '#/SearchForFacets'
-#      0: '#/SearchForHits' # eslint-disable-line yml/require-string-key
-#      false: '#/SearchForHits' # eslint-disable-line yml/require-string-key
-
 SearchForHits:
   allOf:
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
