@@ -113,6 +113,20 @@ public class OneOfUtils {
     } else if (!hasDiscriminatorA && hasDiscriminatorB) {
       return 1;
     } else {
+      // If both maps have or don't have "discriminators," compare their list lengths
+      if (hasDiscriminatorA && hasDiscriminatorB) {
+        List<?> discriminatorsA = (List<?>) mapA.get("discriminators");
+        List<?> discriminatorsB = (List<?>) mapB.get("discriminators");
+
+        // Compare the lengths of the lists
+        int lengthComparison = Integer.compare(discriminatorsB.size(), discriminatorsA.size());
+
+        if (lengthComparison != 0) {
+          return lengthComparison;
+        }
+      }
+
+      // If the lengths are the same or both maps don't have "discriminators," return 0
       return 0;
     }
   };
