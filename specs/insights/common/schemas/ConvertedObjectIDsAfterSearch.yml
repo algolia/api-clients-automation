@@ -30,3 +30,6 @@ required:
   - objectIDs
   - queryID
   - userToken
+x-discriminator-fields:
+  - queryID
+  - eventType

@@ -20,3 +20,6 @@ required:
   - index
   - filters
   - userToken
+x-discriminator-fields:
+  - eventType
+  - filters
