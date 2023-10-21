@@ -2803,10 +2803,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/folder-hash@npm:4.0.2":
-  version: 4.0.2
-  resolution: "@types/folder-hash@npm:4.0.2"
-  checksum: 5ce73a1ea59300469d14df4ca82e4b5605883d945fb344a12aebd1acce3f1936f63cd153c22f99e06c190992159c42421681a9a95e6cfd1858cd69b76db90f18
+"@types/folder-hash@npm:4.0.3":
+  version: 4.0.3
+  resolution: "@types/folder-hash@npm:4.0.3"
+  checksum: bd60b400470d4e748204299eab43c87100a33fcd2d475acb7d45ccde3ddd9b931f7ddcce2d9dc52221da5bdb274370141e57bbb8e25492b30a6f8ddae2eb40c2
   languageName: node
   linkType: hard
 
@@ -9676,7 +9676,7 @@ __metadata:
     "@actions/core": 1.10.1
     "@jest/globals": ^29.7.0
     "@octokit/rest": 20.0.2
-    "@types/folder-hash": 4.0.2
+    "@types/folder-hash": 4.0.3
     "@types/fs-extra": 11.0.2
     "@types/inquirer": 9.0.4
     "@types/jest": 29.5.6
