@@ -117,7 +117,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.89
     "@algolia/requester-node-http": 5.0.0-alpha.89
     "@types/node": 18.18.6
-    rollup: 3.29.4
+    rollup: 4.1.4
     typescript: 5.2.2
   languageName: unknown
   linkType: soft
@@ -2426,6 +2426,90 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-android-arm-eabi@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-android-arm-eabi@npm:4.1.4"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-android-arm64@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-android-arm64@npm:4.1.4"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-darwin-arm64@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-darwin-arm64@npm:4.1.4"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-darwin-x64@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-darwin-x64@npm:4.1.4"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm-gnueabihf@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-linux-arm-gnueabihf@npm:4.1.4"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm64-gnu@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-linux-arm64-gnu@npm:4.1.4"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm64-musl@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-linux-arm64-musl@npm:4.1.4"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-gnu@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.1.4"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-musl@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-linux-x64-musl@npm:4.1.4"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-arm64-msvc@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-win32-arm64-msvc@npm:4.1.4"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-ia32-msvc@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-win32-ia32-msvc@npm:4.1.4"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-x64-msvc@npm:4.1.4":
+  version: 4.1.4
+  resolution: "@rollup/rollup-win32-x64-msvc@npm:4.1.4"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@sigstore/bundle@npm:^1.1.0":
   version: 1.1.0
   resolution: "@sigstore/bundle@npm:1.1.0"
@@ -2902,7 +2986,7 @@ __metadata:
     execa: 8.0.1
     lerna: 7.4.1
     nx: 16.10.0
-    rollup: 3.29.4
+    rollup: 4.1.4
     rollup-plugin-node-globals: 1.4.0
     rollup-plugin-typescript2: 0.36.0
     semver: 7.5.4
@@ -8252,6 +8336,56 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 8bb20a39c8d91130825159c3823eccf4dc2295c9a0a5c4ed851a5bf2167dbf24d9a29f23461a54c955e5506395e6cc188eafc8ab0e20399d7489fb33793b184e
+  languageName: node
+  linkType: hard
+
+"rollup@npm:4.1.4":
+  version: 4.1.4
+  resolution: "rollup@npm:4.1.4"
+  dependencies:
+    "@rollup/rollup-android-arm-eabi": 4.1.4
+    "@rollup/rollup-android-arm64": 4.1.4
+    "@rollup/rollup-darwin-arm64": 4.1.4
+    "@rollup/rollup-darwin-x64": 4.1.4
+    "@rollup/rollup-linux-arm-gnueabihf": 4.1.4
+    "@rollup/rollup-linux-arm64-gnu": 4.1.4
+    "@rollup/rollup-linux-arm64-musl": 4.1.4
+    "@rollup/rollup-linux-x64-gnu": 4.1.4
+    "@rollup/rollup-linux-x64-musl": 4.1.4
+    "@rollup/rollup-win32-arm64-msvc": 4.1.4
+    "@rollup/rollup-win32-ia32-msvc": 4.1.4
+    "@rollup/rollup-win32-x64-msvc": 4.1.4
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    "@rollup/rollup-android-arm-eabi":
+      optional: true
+    "@rollup/rollup-android-arm64":
+      optional: true
+    "@rollup/rollup-darwin-arm64":
+      optional: true
+    "@rollup/rollup-darwin-x64":
+      optional: true
+    "@rollup/rollup-linux-arm-gnueabihf":
+      optional: true
+    "@rollup/rollup-linux-arm64-gnu":
+      optional: true
+    "@rollup/rollup-linux-arm64-musl":
+      optional: true
+    "@rollup/rollup-linux-x64-gnu":
+      optional: true
+    "@rollup/rollup-linux-x64-musl":
+      optional: true
+    "@rollup/rollup-win32-arm64-msvc":
+      optional: true
+    "@rollup/rollup-win32-ia32-msvc":
+      optional: true
+    "@rollup/rollup-win32-x64-msvc":
+      optional: true
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 1a2226627df78c1ce90c0f7ce8e4f589117205c7c699e91403d132d945b3e1d9803d2c2ebaa1a7ef144cc9c08d83b7eb177e6aa5c82517d8faad6a3a59d82666
   languageName: node
   linkType: hard
 
