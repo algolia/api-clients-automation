@@ -23,7 +23,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
     additionalProperties.put("enumClassPrefix", true);
-    //     additionalProperties.put("useOneOfDiscriminatorLookup", true);
     additionalProperties.put("isSearchClient", client.equals("search"));
 
     String outputFolder = "algolia" + File.separator + client;
