@@ -119,11 +119,7 @@ public class OneOfUtils {
         List<?> discriminatorsB = (List<?>) mapB.get("discriminators");
 
         // Compare the lengths of the lists
-        int lengthComparison = Integer.compare(discriminatorsB.size(), discriminatorsA.size());
-
-        if (lengthComparison != 0) {
-          return lengthComparison;
-        }
+        return discriminatorsB.size() - discriminatorsA.size();
       }
 
       // If the lengths are the same or both maps don't have "discriminators," return 0
