@@ -9,16 +9,18 @@ import (
 // ViewedFilters Use this method to capture active filters. For example, when browsing a category page, users see content filtered on that specific category.
 type ViewedFilters struct {
 	// Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
-	EventName string    `json:"eventName" validate:"required"`
-	EventType ViewEvent `json:"eventType" validate:"required"`
+	EventName string    `json:"eventName"`
+	EventType ViewEvent `json:"eventType"`
 	// Name of the Algolia index.
-	Index string `json:"index" validate:"required"`
+	Index string `json:"index"`
 	// Facet filters.  Each facet filter string must be URL-encoded, such as, `discount:10%25`.
-	Filters []string `json:"filters" validate:"required"`
+	Filters []string `json:"filters"`
 	// Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
-	UserToken string `json:"userToken" validate:"required"`
+	UserToken string `json:"userToken"`
 	// Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
 	Timestamp *int64 `json:"timestamp,omitempty"`
+	// User token for authenticated users.
+	AuthenticatedUserToken *string `json:"authenticatedUserToken,omitempty"`
 }
 
 type ViewedFiltersOption func(f *ViewedFilters)
@@ -26,6 +28,12 @@ type ViewedFiltersOption func(f *ViewedFilters)
 func WithViewedFiltersTimestamp(val int64) ViewedFiltersOption {
 	return func(f *ViewedFilters) {
 		f.Timestamp = &val
+	}
+}
+
+func WithViewedFiltersAuthenticatedUserToken(val string) ViewedFiltersOption {
+	return func(f *ViewedFilters) {
+		f.AuthenticatedUserToken = &val
 	}
 }
 
@@ -206,6 +214,38 @@ func (o *ViewedFilters) SetTimestamp(v int64) {
 	o.Timestamp = &v
 }
 
+// GetAuthenticatedUserToken returns the AuthenticatedUserToken field value if set, zero value otherwise.
+func (o *ViewedFilters) GetAuthenticatedUserToken() string {
+	if o == nil || o.AuthenticatedUserToken == nil {
+		var ret string
+		return ret
+	}
+	return *o.AuthenticatedUserToken
+}
+
+// GetAuthenticatedUserTokenOk returns a tuple with the AuthenticatedUserToken field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ViewedFilters) GetAuthenticatedUserTokenOk() (*string, bool) {
+	if o == nil || o.AuthenticatedUserToken == nil {
+		return nil, false
+	}
+	return o.AuthenticatedUserToken, true
+}
+
+// HasAuthenticatedUserToken returns a boolean if a field has been set.
+func (o *ViewedFilters) HasAuthenticatedUserToken() bool {
+	if o != nil && o.AuthenticatedUserToken != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthenticatedUserToken gets a reference to the given string and assigns it to the AuthenticatedUserToken field.
+func (o *ViewedFilters) SetAuthenticatedUserToken(v string) {
+	o.AuthenticatedUserToken = &v
+}
+
 func (o ViewedFilters) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if true {
@@ -226,6 +266,9 @@ func (o ViewedFilters) MarshalJSON() ([]byte, error) {
 	if o.Timestamp != nil {
 		toSerialize["timestamp"] = o.Timestamp
 	}
+	if o.AuthenticatedUserToken != nil {
+		toSerialize["authenticatedUserToken"] = o.AuthenticatedUserToken
+	}
 	return json.Marshal(toSerialize)
 }
 
@@ -237,6 +280,7 @@ func (o ViewedFilters) String() string {
 	out += fmt.Sprintf("  filters=%v\n", o.Filters)
 	out += fmt.Sprintf("  userToken=%v\n", o.UserToken)
 	out += fmt.Sprintf("  timestamp=%v\n", o.Timestamp)
+	out += fmt.Sprintf("  authenticatedUserToken=%v\n", o.AuthenticatedUserToken)
 	return fmt.Sprintf("ViewedFilters {\n%s}", out)
 }
 

@@ -24,6 +24,8 @@ properties:
     $ref: './EventAttributes.yml#/userToken'
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
+  authenticatedUserToken:
+    $ref: './EventAttributes.yml#/authenticatedUserToken'
 required:
   - eventName
   - eventType
@@ -32,3 +34,7 @@ required:
   - positions
   - queryID
   - userToken
+x-discriminator-fields:
+  - positions
+  - queryID
+  - eventType

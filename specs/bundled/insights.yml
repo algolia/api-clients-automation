@@ -132,6 +132,10 @@ components:
         By default, the Insights API uses the time it receives an event as its
         timestamp.
       example: 1687193127
+    authenticatedUserToken:
+      type: string
+      description: User token for authenticated users.
+      example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
     ClickedObjectIDsAfterSearch:
       type: object
       title: Clicked object IDs after search
@@ -159,6 +163,8 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
@@ -167,6 +173,10 @@ components:
         - positions
         - queryID
         - userToken
+      x-discriminator-fields:
+        - positions
+        - queryID
+        - eventType
     ConversionEvent:
       type: string
       enum:
@@ -203,6 +213,8 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
@@ -210,6 +222,9 @@ components:
         - objectIDs
         - queryID
         - userToken
+      x-discriminator-fields:
+        - queryID
+        - eventType
     ClickedObjectIDs:
       type: object
       title: Clicked object IDs
@@ -243,6 +258,9 @@ components:
         - index
         - objectIDs
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
     ConvertedObjectIDs:
       type: object
       title: Converted object IDs
@@ -270,12 +288,17 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
         - index
         - objectIDs
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
     filters:
       type: array
       description: |
@@ -308,12 +331,17 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
         - index
         - filters
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
     ConvertedFilters:
       type: object
       title: Converted filters
@@ -331,12 +359,17 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
         - index
         - filters
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
     ViewEvent:
       type: string
       enum:
@@ -359,12 +392,17 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
         - index
         - objectIDs
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
     ViewedFilters:
       type: object
       title: Viewed filters
@@ -386,12 +424,17 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
         - index
         - filters
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
     AddToCartEvent:
       type: string
       enum:
@@ -480,6 +523,8 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
@@ -488,6 +533,11 @@ components:
         - index
         - objectIDs
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - queryID
+        - objectIDs
     objectData:
       type: object
       additionalProperties: false
@@ -544,6 +594,8 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
@@ -551,6 +603,10 @@ components:
         - index
         - objectIDs
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
     PurchaseEvent:
       type: string
       enum:
@@ -586,6 +642,8 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
@@ -593,6 +651,10 @@ components:
         - index
         - objectIDs
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
     PurchasedObjectIDsAfterSearch:
       type: object
       title: Purchased object IDs after search
@@ -624,6 +686,8 @@ components:
           $ref: '#/components/schemas/userToken'
         timestamp:
           $ref: '#/components/schemas/timestamp'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
       required:
         - eventName
         - eventType
@@ -632,6 +696,11 @@ components:
         - index
         - objectIDs
         - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - queryID
+        - objectIDs
     EventsItems:
       oneOf:
         - $ref: '#/components/schemas/ClickedObjectIDsAfterSearch'

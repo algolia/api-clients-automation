@@ -9,18 +9,20 @@ import (
 // ConvertedObjectIDsAfterSearch Use this event to track when users convert after a previous Algolia request. For example, a user clicks on an item in the search results to view the product detail page. Then, the user adds the item to their shopping cart.  If you're building your category pages with Algolia, you'll also use this event.
 type ConvertedObjectIDsAfterSearch struct {
 	// Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
-	EventName string          `json:"eventName" validate:"required"`
-	EventType ConversionEvent `json:"eventType" validate:"required"`
+	EventName string          `json:"eventName"`
+	EventType ConversionEvent `json:"eventType"`
 	// Name of the Algolia index.
-	Index string `json:"index" validate:"required"`
+	Index string `json:"index"`
 	// List of object identifiers for items of an Algolia index.
-	ObjectIDs []string `json:"objectIDs" validate:"required"`
+	ObjectIDs []string `json:"objectIDs"`
 	// Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
-	QueryID string `json:"queryID" validate:"required"`
+	QueryID string `json:"queryID"`
 	// Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
-	UserToken string `json:"userToken" validate:"required"`
+	UserToken string `json:"userToken"`
 	// Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
 	Timestamp *int64 `json:"timestamp,omitempty"`
+	// User token for authenticated users.
+	AuthenticatedUserToken *string `json:"authenticatedUserToken,omitempty"`
 }
 
 type ConvertedObjectIDsAfterSearchOption func(f *ConvertedObjectIDsAfterSearch)
@@ -28,6 +30,12 @@ type ConvertedObjectIDsAfterSearchOption func(f *ConvertedObjectIDsAfterSearch)
 func WithConvertedObjectIDsAfterSearchTimestamp(val int64) ConvertedObjectIDsAfterSearchOption {
 	return func(f *ConvertedObjectIDsAfterSearch) {
 		f.Timestamp = &val
+	}
+}
+
+func WithConvertedObjectIDsAfterSearchAuthenticatedUserToken(val string) ConvertedObjectIDsAfterSearchOption {
+	return func(f *ConvertedObjectIDsAfterSearch) {
+		f.AuthenticatedUserToken = &val
 	}
 }
 
@@ -233,6 +241,38 @@ func (o *ConvertedObjectIDsAfterSearch) SetTimestamp(v int64) {
 	o.Timestamp = &v
 }
 
+// GetAuthenticatedUserToken returns the AuthenticatedUserToken field value if set, zero value otherwise.
+func (o *ConvertedObjectIDsAfterSearch) GetAuthenticatedUserToken() string {
+	if o == nil || o.AuthenticatedUserToken == nil {
+		var ret string
+		return ret
+	}
+	return *o.AuthenticatedUserToken
+}
+
+// GetAuthenticatedUserTokenOk returns a tuple with the AuthenticatedUserToken field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConvertedObjectIDsAfterSearch) GetAuthenticatedUserTokenOk() (*string, bool) {
+	if o == nil || o.AuthenticatedUserToken == nil {
+		return nil, false
+	}
+	return o.AuthenticatedUserToken, true
+}
+
+// HasAuthenticatedUserToken returns a boolean if a field has been set.
+func (o *ConvertedObjectIDsAfterSearch) HasAuthenticatedUserToken() bool {
+	if o != nil && o.AuthenticatedUserToken != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthenticatedUserToken gets a reference to the given string and assigns it to the AuthenticatedUserToken field.
+func (o *ConvertedObjectIDsAfterSearch) SetAuthenticatedUserToken(v string) {
+	o.AuthenticatedUserToken = &v
+}
+
 func (o ConvertedObjectIDsAfterSearch) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if true {
@@ -256,6 +296,9 @@ func (o ConvertedObjectIDsAfterSearch) MarshalJSON() ([]byte, error) {
 	if o.Timestamp != nil {
 		toSerialize["timestamp"] = o.Timestamp
 	}
+	if o.AuthenticatedUserToken != nil {
+		toSerialize["authenticatedUserToken"] = o.AuthenticatedUserToken
+	}
 	return json.Marshal(toSerialize)
 }
 
@@ -268,6 +311,7 @@ func (o ConvertedObjectIDsAfterSearch) String() string {
 	out += fmt.Sprintf("  queryID=%v\n", o.QueryID)
 	out += fmt.Sprintf("  userToken=%v\n", o.UserToken)
 	out += fmt.Sprintf("  timestamp=%v\n", o.Timestamp)
+	out += fmt.Sprintf("  authenticatedUserToken=%v\n", o.AuthenticatedUserToken)
 	return fmt.Sprintf("ConvertedObjectIDsAfterSearch {\n%s}", out)
 }
 
