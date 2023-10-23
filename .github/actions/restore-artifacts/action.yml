@@ -27,6 +27,9 @@ inputs:
   dart:
     description: Whether this job ran or not
     required: false     
+  python:
+    description: Whether this job ran or not
+    required: false     
 
 runs:
   using: composite
@@ -121,3 +124,17 @@ runs:
       run: |
         rm -rf clients/algoliasearch-client-dart
         unzip -q -o clients-dart.zip && rm clients-dart.zip
+
+    # Python
+    - name: Download clients-python artifact
+      if: ${{ inputs.python == 'true' && inputs.type == 'all' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: clients-dart
+
+    - name: Unzip clients-python artifact
+      if: ${{ inputs.python == 'true' && inputs.type == 'all' }}
+      shell: bash
+      run: |
+        rm -rf clients/algoliasearch-client-python
+        unzip -q -o clients-python.zip && rm clients-python.zip

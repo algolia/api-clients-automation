@@ -75,4 +75,9 @@ export const patterns = [
   'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
+
+  // Python
+  '!clients/algoliasearch-client-python/**',
+  'clients/algoliasearch-client-python/*/model/*.py',
+  'clients/algoliasearch-client-python/*/api/*.py',
 ];

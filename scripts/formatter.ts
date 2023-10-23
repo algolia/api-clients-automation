@@ -34,6 +34,9 @@ export async function formatter(language: string, folder: string): Promise<void>
         cmd = `(cd ${folder} && dart pub get && melos bs && melos build --no-select && melos lint)`;
       }
       break;
+    case 'python':
+      cmd = `cd ${folder} && tox -e format`;
+      break;
     default:
       return;
   }

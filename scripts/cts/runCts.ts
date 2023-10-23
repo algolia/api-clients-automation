@@ -34,6 +34,8 @@ async function runCtsOne(language: string): Promise<void> {
     case 'dart':
       await run('(cd tests/output/dart && dart test)');
       break;
+    case 'python':
+      break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;
