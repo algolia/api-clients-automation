@@ -21,6 +21,8 @@ properties:
     $ref: './EventAttributes.yml#/queryID'
   userToken:
     $ref: './EventAttributes.yml#/userToken'
+  authenticatedUserToken:
+    $ref: './EventAttributes.yml#/authenticatedUserToken'
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
 required:

@@ -17,6 +17,8 @@ properties:
     $ref: './EventAttributes.yml#/objectIDs'
   userToken:
     $ref: './EventAttributes.yml#/userToken'
+  authenticatedUserToken:
+    $ref: './EventAttributes.yml#/authenticatedUserToken'
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
 required:
