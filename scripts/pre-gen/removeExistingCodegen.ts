@@ -52,6 +52,10 @@ export async function removeExistingCodegen({
       clientModel = clientName.toLowerCase();
       clientApi = clientName.toLowerCase();
       break;
+    case 'python':
+      clientModel = clientName.toLowerCase();
+      clientApi = `${clientName}*.py`;
+      break;
     default:
       break;
   }

@@ -1,6 +1,6 @@
 [project]
-name = "{{packageName}}"
-version = "{{packageVersion}}"
+name = "algoliasearch"
+version = "4.0.0-alpha.01"
 authors = [
     { name = "Algolia Team", email = "support@algolia.com" }
 ]
