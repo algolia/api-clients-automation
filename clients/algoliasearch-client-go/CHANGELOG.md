@@ -1,3 +1,9 @@
+## [4.0.0-alpha.34](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.33...4.0.0-alpha.34)
+
+- [daa9867c](https://github.com/algolia/api-clients-automation/commit/daa9867c) fix(go): fix the spec and update the base model template ([#2145](https://github.com/algolia/api-clients-automation/pull/2145)) by [@Fluf22](https://github.com/Fluf22/)
+- [517f9cb7](https://github.com/algolia/api-clients-automation/commit/517f9cb7) revert(specs): insights identify ([#2182](https://github.com/algolia/api-clients-automation/pull/2182)) by [@aallam](https://github.com/aallam/)
+- [fa326a50](https://github.com/algolia/api-clients-automation/commit/fa326a50) feat(specs): add `authenticatedUserToken` and `Identify` to insights ([#2151](https://github.com/algolia/api-clients-automation/pull/2151)) by [@aallam](https://github.com/aallam/)
+
 ## [4.0.0-alpha.33](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.32...4.0.0-alpha.33)
 
 - [d25921cb](https://github.com/algolia/api-clients-automation/commit/d25921cb) fix(specs): Change trigger input for task update ([#2147](https://github.com/algolia/api-clients-automation/pull/2147)) by [@damcou](https://github.com/damcou/)

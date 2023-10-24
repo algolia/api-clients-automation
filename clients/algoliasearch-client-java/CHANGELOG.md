@@ -1,3 +1,8 @@
+## [4.0.0-beta.11](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.10...4.0.0-beta.11)
+
+- [517f9cb7](https://github.com/algolia/api-clients-automation/commit/517f9cb7) revert(specs): insights identify ([#2182](https://github.com/algolia/api-clients-automation/pull/2182)) by [@aallam](https://github.com/aallam/)
+- [fa326a50](https://github.com/algolia/api-clients-automation/commit/fa326a50) feat(specs): add `authenticatedUserToken` and `Identify` to insights ([#2151](https://github.com/algolia/api-clients-automation/pull/2151)) by [@aallam](https://github.com/aallam/)
+
 ## [4.0.0-beta.10](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.9...4.0.0-beta.10)
 
 - [c3a9aceb](https://github.com/algolia/api-clients-automation/commit/c3a9aceb) feat(java): add search helpers `searchForHits` and `searchForFacets` ([#2150](https://github.com/algolia/api-clients-automation/pull/2150)) by [@aallam](https://github.com/aallam/)
