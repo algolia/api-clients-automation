@@ -8,7 +8,7 @@ vi.mock('../../../common.js', async () => {
   const mod = await vi.importActual<typeof import('../../../common.js')>('../../../common.js')
   return {
     ...mod,
-    run: vi.fn().mockResolvedValue('mocked'),
+    run: vi.fn().mockResolvedValue(''),
   }
 });
 
@@ -81,7 +81,6 @@ describe('codegen', () => {
 
       it('returns the right comment for a `cleanup` trigger', async () => {
         vi.spyOn(await import('../../../common.js'), 'run').mockResolvedValue('mocked');
-        //mockedRun.mockResolvedValue('mocked');
 
         expect(await getCommentBody('cleanup')).toMatchInlineSnapshot(`
           "### ✗ The generated branch has been deleted.
@@ -94,7 +93,6 @@ describe('codegen', () => {
       it('fallbacks to the env variable HEAD_BRANCH if found when we are on `main`', async () => {
         process.env.HEAD_BRANCH = 'myFakeBranch';
         vi.spyOn(await import('../../../common.js'), 'run').mockResolvedValue('main');
-        //mockedRun.mockResolvedValue('main');
 
         expect(await getCommentBody('cleanup')).toMatchInlineSnapshot(`
           "### ✗ The generated branch has been deleted.

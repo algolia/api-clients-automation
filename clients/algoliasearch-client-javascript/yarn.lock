@@ -12,7 +12,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -25,7 +25,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -35,6 +35,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
+    "@babel/preset-env": "npm:7.23.2"
+    "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.6"
     "@types/node": "npm:20.8.9"
     jest: "npm:29.7.0"
@@ -51,7 +53,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -64,7 +66,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -77,7 +79,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -90,7 +92,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -103,7 +105,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -116,7 +118,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -129,7 +131,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.89"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.89"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     rollup: "npm:4.1.4"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -140,6 +142,8 @@ __metadata:
   resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
   dependencies:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
+    "@babel/preset-env": "npm:7.23.2"
+    "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.6"
     "@types/node": "npm:20.8.9"
     jest: "npm:29.7.0"
@@ -155,6 +159,8 @@ __metadata:
   resolution: "@algolia/requester-fetch@workspace:packages/requester-fetch"
   dependencies:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
+    "@babel/preset-env": "npm:7.23.2"
+    "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.6"
     "@types/node": "npm:20.8.9"
     cross-fetch: "npm:4.0.0"
@@ -170,6 +176,8 @@ __metadata:
   resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
   dependencies:
     "@algolia/client-common": "npm:5.0.0-alpha.89"
+    "@babel/preset-env": "npm:7.23.2"
+    "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.6"
     "@types/node": "npm:20.8.9"
     jest: "npm:29.7.0"
@@ -2821,13 +2829,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.18.6":
-  version: 18.18.6
-  resolution: "@types/node@npm:18.18.6"
-  checksum: 50312053b0906058aa026e1c85c9125b4f0e8d6ae5e3699fb5bc8e0d5b9d1c2b12303902b2b91477c389f15ad40235d240b882819dd93a49bd6b46983f63be1c
-  languageName: node
-  linkType: hard
-
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.3
   resolution: "@types/normalize-package-data@npm:2.4.3"
@@ -2954,9 +2955,9 @@ __metadata:
   linkType: hard
 
 "acorn-walk@npm:^8.0.2":
-  version: 8.2.0
-  resolution: "acorn-walk@npm:8.2.0"
-  checksum: dbe92f5b2452c93e960c5594e666dd1fae141b965ff2cb4a1e1d0381e3e4db4274c5ce4ffa3d681a86ca2a8d4e29d5efc0670a08e23fd2800051ea387df56ca2
+  version: 8.3.0
+  resolution: "acorn-walk@npm:8.3.0"
+  checksum: 24346e595f507b6e704a60d35f3c5e1aa9891d4fb6a3fc3d856503ab718cc26cabb5e3e1ff0ff8da6ec03d60a8226ebdb602805a94f970e7f797ea3b8b09437f
   languageName: node
   linkType: hard
 
@@ -2970,11 +2971,11 @@ __metadata:
   linkType: hard
 
 "acorn@npm:^8.1.0, acorn@npm:^8.8.1, acorn@npm:^8.8.2":
-  version: 8.10.0
-  resolution: "acorn@npm:8.10.0"
+  version: 8.11.2
+  resolution: "acorn@npm:8.11.2"
   bin:
     acorn: bin/acorn
-  checksum: deaeebfbea6e40f6c0e1070e9b0e16e76ba484de54cbd735914d1d41d19169a450de8630b7a3a0c4e271a3b0c0b075a3427ad1a40d8a69f8747c0e8cb02ee3e2
+  checksum: a3ed76c761b75ec54b1ec3068fb7f113a182e95aea7f322f65098c2958d232e3d211cb6dac35ff9c647024b63714bc528a26d54a925d1fef2c25585b4c8e4017
   languageName: node
   linkType: hard
 
@@ -3055,10 +3056,9 @@ __metadata:
     "@babel/preset-env": "npm:7.23.2"
     "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.6"
-    "@types/node": "npm:18.18.6"
+    "@types/node": "npm:20.8.9"
     jest: "npm:29.7.0"
     rollup: "npm:4.1.4"
-    ts-jest: "npm:29.1.1"
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
@@ -3218,13 +3218,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.0.0, axios@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "axios@npm:1.5.1"
+  version: 1.6.0
+  resolution: "axios@npm:1.6.0"
   dependencies:
     follow-redirects: "npm:^1.15.0"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: f9d975a17a9dff8e325e204d5e09ef07bdd1b6fa63983f184c3cf33249ee38339f1e5d8f874f89116be8942b46d1f4d5ce9ddb03757be69614f5775c2dd6da25
+  checksum: 2879e17b96cbca7e2096d231a44e2d0f03e657d79f8928ea38ec5fbaf5a5b7bf952d580cdb58a66ba328c26eb3528b89d5a32da57cc5cf89813786c044f7e9d6
   languageName: node
   linkType: hard
 
@@ -4332,9 +4332,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.535":
-  version: 1.4.567
-  resolution: "electron-to-chromium@npm:1.4.567"
-  checksum: 323206c97e6251c947dd4518465fa12f91696a9189e8d40efcaf7d0e608767eb29e894ec09bd30154633741ce0d4fb5d2b074262df1e0e108bf9dd2e8b7f958e
+  version: 1.4.568
+  resolution: "electron-to-chromium@npm:1.4.568"
+  checksum: 6100f8327da29225a8b683590e2d14e24743eec1a0c99e374af8bc57187cc6d23767e057cd8ba98a2259e0dcdc8705f706255c131269f9b65129bf7e70fc0fc4
   languageName: node
   linkType: hard
 
