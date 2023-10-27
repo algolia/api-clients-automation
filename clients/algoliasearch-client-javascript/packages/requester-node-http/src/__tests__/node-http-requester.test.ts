@@ -186,7 +186,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...timeoutRequest,
       connectTimeout: 1000,
-      url: 'http://www.google.com:81',
+      url: 'http://localhost:1111/connection_timeout',
     });
 
     const now = Date.now();
@@ -201,7 +201,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...timeoutRequest,
       connectTimeout: 2000,
-      url: 'http://www.google.com:81',
+      url: 'http://localhost:1111/connection_timeout',
     });
 
     const now = Date.now();
