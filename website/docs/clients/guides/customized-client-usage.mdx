@@ -49,12 +49,6 @@ val client = SearchClient(
     )
 )
 ```
-<TabItem value="go">
-
-```go
-// TBD
-```
-
 </TabItem>
 
 <TabItem value="dart">
@@ -70,7 +64,15 @@ var client = SearchClient(
 </TabItem>
 
 <TabItem value="go">
-// TBD
+  If you enable the `debug` property of the Go API client, it will print the request and response to the standard output.
+
+```go
+searchClient := search.NewClientWithConfig(search.Configuration{
+  AppID:         "<YOUR_APP_ID>",
+  ApiKey:        "<YOUR_API_KEY>",
+  Debug:         true,
+})
+```
 </TabItem>
 </TabsLanguage>
 

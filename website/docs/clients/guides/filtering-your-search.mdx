@@ -55,6 +55,37 @@ client.setSettings(
 ```
 
 </TabItem>
+
+<TabItem value="kotlin">
+
+```kotlin
+client.setSettings(
+    indexName = "<YOUR_INDEX_NAME>",
+    indexSettings = IndexSettings(
+        attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)")
+    )
+)
+```
+
+</TabItem>
+
+<TabItem value="dart">
+
+```dart
+client.setSettings(
+  indexName: '<YOUR_INDEX_NAME>',
+  indexSettings: IndexSettings(
+    attributesForFaceting: [
+      'actor',
+      'filterOnly(category)',
+      'searchable(publisher)'
+    ],
+  ),
+);
+```
+
+</TabItem>
+
 <TabItem value="go">
 
 ```go
@@ -93,40 +124,6 @@ taskResponse, err := searchClient.WaitForTask(
 )
 ```
 
-</TabItem>
-
-<TabItem value="kotlin">
-
-```kotlin
-client.setSettings(
-    indexName = "<YOUR_INDEX_NAME>",
-    indexSettings = IndexSettings(
-        attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)")
-    )
-)
-```
-
-</TabItem>
-
-<TabItem value="dart">
-
-```dart
-client.setSettings(
-  indexName: '<YOUR_INDEX_NAME>',
-  indexSettings: IndexSettings(
-    attributesForFaceting: [
-      'actor',
-      'filterOnly(category)',
-      'searchable(publisher)'
-    ],
-  ),
-);
-```
-
-</TabItem>
-
-<TabItem value="go">
-// TBD
 </TabItem>
 
 </TabsLanguage>
