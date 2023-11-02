@@ -1,0 +1,10 @@
+# import apis
+{{#apiInfo}}{{#apis}}from {{apiPackage}}.{{classFilename}} import {{classname}}
+{{/apis}}{{/apiInfo}}
+
+# import models
+{{#models}}
+{{#model}}
+from {{modelPackage}}.{{classFilename}} import {{classname}}
+{{/model}}
+{{/models}}
