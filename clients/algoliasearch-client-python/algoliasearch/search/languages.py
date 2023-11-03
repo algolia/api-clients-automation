@@ -22,12 +22,10 @@ from typing import Optional
 from pydantic import BaseModel, Field
 from algoliasearch.models.dictionary_language import DictionaryLanguage
 
-
 class Languages(BaseModel):
     """
     Dictionary language.  # noqa: E501
     """
-
     plurals: Optional[DictionaryLanguage] = Field(...)
     stopwords: Optional[DictionaryLanguage] = Field(...)
     compounds: Optional[DictionaryLanguage] = Field(...)
@@ -35,7 +33,6 @@ class Languages(BaseModel):
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -54,30 +51,33 @@ class Languages(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of plurals
         if self.plurals:
-            _dict["plurals"] = self.plurals.to_dict()
+            _dict['plurals'] = self.plurals.to_dict()
         # override the default output from pydantic by calling `to_dict()` of stopwords
         if self.stopwords:
-            _dict["stopwords"] = self.stopwords.to_dict()
+            _dict['stopwords'] = self.stopwords.to_dict()
         # override the default output from pydantic by calling `to_dict()` of compounds
         if self.compounds:
-            _dict["compounds"] = self.compounds.to_dict()
+            _dict['compounds'] = self.compounds.to_dict()
         # set to None if plurals (nullable) is None
         # and __fields_set__ contains the field
         if self.plurals is None and "plurals" in self.__fields_set__:
-            _dict["plurals"] = None
+            _dict['plurals'] = None
 
         # set to None if stopwords (nullable) is None
         # and __fields_set__ contains the field
         if self.stopwords is None and "stopwords" in self.__fields_set__:
-            _dict["stopwords"] = None
+            _dict['stopwords'] = None
 
         # set to None if compounds (nullable) is None
         # and __fields_set__ contains the field
         if self.compounds is None and "compounds" in self.__fields_set__:
-            _dict["compounds"] = None
+            _dict['compounds'] = None
 
         return _dict
 
@@ -90,17 +90,11 @@ class Languages(BaseModel):
         if not isinstance(obj, dict):
             return Languages.parse_obj(obj)
 
-        _obj = Languages.parse_obj(
-            {
-                "plurals": DictionaryLanguage.from_dict(obj.get("plurals"))
-                if obj.get("plurals") is not None
-                else None,
-                "stopwords": DictionaryLanguage.from_dict(obj.get("stopwords"))
-                if obj.get("stopwords") is not None
-                else None,
-                "compounds": DictionaryLanguage.from_dict(obj.get("compounds"))
-                if obj.get("compounds") is not None
-                else None,
-            }
-        )
+        _obj = Languages.parse_obj({
+            "plurals": DictionaryLanguage.from_dict(obj.get("plurals")) if obj.get("plurals") is not None else None,
+            "stopwords": DictionaryLanguage.from_dict(obj.get("stopwords")) if obj.get("stopwords") is not None else None,
+            "compounds": DictionaryLanguage.from_dict(obj.get("compounds")) if obj.get("compounds") is not None else None
+        })
         return _obj
+
+

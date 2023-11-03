@@ -13,7 +13,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
@@ -26,12 +25,10 @@ from pydantic import StrictStr, Field
 
 CONSEQUENCEQUERY_ONE_OF_SCHEMAS = ["ConsequenceQueryObject", "str"]
 
-
 class ConsequenceQuery(BaseModel):
     """
     When providing a string, it replaces the entire query string. When providing an object, it describes incremental edits to be made to the query string (but you can't do both).
     """
-
     # data type: ConsequenceQueryObject
     oneof_schema_1_validator: Optional[ConsequenceQueryObject] = None
     # data type: str
@@ -48,27 +45,21 @@ class ConsequenceQuery(BaseModel):
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError(
-                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
-                )
+                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
             if kwargs:
-                raise ValueError(
-                    "If a position argument is used, keyword arguments cannot be used."
-                )
+                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
 
-    @validator("actual_instance")
+    @validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
         instance = ConsequenceQuery.construct()
         error_messages = []
         match = 0
         # validate data type: ConsequenceQueryObject
         if not isinstance(v, ConsequenceQueryObject):
-            error_messages.append(
-                f"Error! Input type `{type(v)}` is not `ConsequenceQueryObject`"
-            )
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ConsequenceQueryObject`")
         else:
             match += 1
         # validate data type: str
@@ -79,16 +70,10 @@ class ConsequenceQuery(BaseModel):
             error_messages.append(str(e))
         if match > 1:
             # more than 1 match
-            raise ValueError(
-                "Multiple matches found when setting `actual_instance` in ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("Multiple matches found when setting `actual_instance` in ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError(
-                "No match found when setting `actual_instance` in ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("No match found when setting `actual_instance` in ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -121,16 +106,10 @@ class ConsequenceQuery(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("Multiple matches found when deserializing the JSON string into ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("No match found when deserializing the JSON string into ConsequenceQuery with oneOf schemas: ConsequenceQueryObject, str. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -160,3 +139,5 @@ class ConsequenceQuery(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
+
+

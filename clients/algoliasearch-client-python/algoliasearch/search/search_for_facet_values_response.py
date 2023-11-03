@@ -18,22 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.facet_hits import FacetHits
-
 
 class SearchForFacetValuesResponse(BaseModel):
     """
     SearchForFacetValuesResponse
     """
-
     facet_hits: conlist(FacetHits) = Field(..., alias="facetHits")
     __properties = ["facetHits"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,14 +48,17 @@ class SearchForFacetValuesResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in facet_hits (list)
         _items = []
         if self.facet_hits:
             for _item in self.facet_hits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["facetHits"] = _items
+            _dict['facetHits'] = _items
         return _dict
 
     @classmethod
@@ -71,13 +70,9 @@ class SearchForFacetValuesResponse(BaseModel):
         if not isinstance(obj, dict):
             return SearchForFacetValuesResponse.parse_obj(obj)
 
-        _obj = SearchForFacetValuesResponse.parse_obj(
-            {
-                "facet_hits": [
-                    FacetHits.from_dict(_item) for _item in obj.get("facetHits")
-                ]
-                if obj.get("facetHits") is not None
-                else None
-            }
-        )
+        _obj = SearchForFacetValuesResponse.parse_obj({
+            "facet_hits": [FacetHits.from_dict(_item) for _item in obj.get("facetHits")] if obj.get("facetHits") is not None else None
+        })
         return _obj
+
+

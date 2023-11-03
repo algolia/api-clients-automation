@@ -18,22 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.user_id import UserId
-
 
 class ListUserIdsResponse(BaseModel):
     """
     User ID data.  # noqa: E501
     """
-
     user_ids: conlist(UserId) = Field(..., alias="userIDs", description="User IDs.")
     __properties = ["userIDs"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,14 +48,17 @@ class ListUserIdsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in user_ids (list)
         _items = []
         if self.user_ids:
             for _item in self.user_ids:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["userIDs"] = _items
+            _dict['userIDs'] = _items
         return _dict
 
     @classmethod
@@ -71,11 +70,9 @@ class ListUserIdsResponse(BaseModel):
         if not isinstance(obj, dict):
             return ListUserIdsResponse.parse_obj(obj)
 
-        _obj = ListUserIdsResponse.parse_obj(
-            {
-                "user_ids": [UserId.from_dict(_item) for _item in obj.get("userIDs")]
-                if obj.get("userIDs") is not None
-                else None
-            }
-        )
+        _obj = ListUserIdsResponse.parse_obj({
+            "user_ids": [UserId.from_dict(_item) for _item in obj.get("userIDs")] if obj.get("userIDs") is not None else None
+        })
         return _obj
+
+

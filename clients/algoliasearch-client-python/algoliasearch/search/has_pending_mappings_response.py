@@ -18,28 +18,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
-
 
 class HasPendingMappingsResponse(BaseModel):
     """
     HasPendingMappingsResponse
     """
-
-    pending: StrictBool = Field(
-        ...,
-        description="Indicates whether there are clusters undergoing migration, creation, or deletion.",
-    )
-    clusters: Optional[Dict[str, conlist(StrictStr)]] = Field(
-        None,
-        description="Cluster pending mapping state: migrating, creating, deleting. ",
-    )
+    pending: StrictBool = Field(..., description="Indicates whether there are clusters undergoing migration, creation, or deletion.")
+    clusters: Optional[Dict[str, conlist(StrictStr)]] = Field(None, description="Cluster pending mapping state: migrating, creating, deleting. ")
     __properties = ["pending", "clusters"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -58,7 +49,10 @@ class HasPendingMappingsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each value in clusters (dict of array)
         _field_dict_of_array = {}
         if self.clusters:
@@ -67,7 +61,7 @@ class HasPendingMappingsResponse(BaseModel):
                     _field_dict_of_array[_key] = [
                         _item.to_dict() for _item in self.clusters[_key]
                     ]
-            _dict["clusters"] = _field_dict_of_array
+            _dict['clusters'] = _field_dict_of_array
         return _dict
 
     @classmethod
@@ -79,7 +73,10 @@ class HasPendingMappingsResponse(BaseModel):
         if not isinstance(obj, dict):
             return HasPendingMappingsResponse.parse_obj(obj)
 
-        _obj = HasPendingMappingsResponse.parse_obj(
-            {"pending": obj.get("pending"), "clusters": obj.get("clusters")}
-        )
+        _obj = HasPendingMappingsResponse.parse_obj({
+            "pending": obj.get("pending"),
+            "clusters": obj.get("clusters")
+        })
         return _obj
+
+

@@ -18,26 +18,20 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, StrictInt, conlist
 from algoliasearch.models.synonym_hit import SynonymHit
-
 
 class SearchSynonymsResponse(BaseModel):
     """
     SearchSynonymsResponse
     """
-
     hits: conlist(SynonymHit) = Field(..., description="Synonym objects.")
-    nb_hits: StrictInt = Field(
-        ..., alias="nbHits", description="Number of hits the search query matched."
-    )
+    nb_hits: StrictInt = Field(..., alias="nbHits", description="Number of hits the search query matched.")
     additional_properties: Dict[str, Any] = {}
     __properties = ["hits", "nbHits"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,16 +50,18 @@ class SearchSynonymsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(
-            by_alias=True, exclude={"additional_properties"}, exclude_none=True
-        )
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                            "additional_properties"
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in hits (list)
         _items = []
         if self.hits:
             for _item in self.hits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["hits"] = _items
+            _dict['hits'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -82,17 +78,15 @@ class SearchSynonymsResponse(BaseModel):
         if not isinstance(obj, dict):
             return SearchSynonymsResponse.parse_obj(obj)
 
-        _obj = SearchSynonymsResponse.parse_obj(
-            {
-                "hits": [SynonymHit.from_dict(_item) for _item in obj.get("hits")]
-                if obj.get("hits") is not None
-                else None,
-                "nb_hits": obj.get("nbHits"),
-            }
-        )
+        _obj = SearchSynonymsResponse.parse_obj({
+            "hits": [SynonymHit.from_dict(_item) for _item in obj.get("hits")] if obj.get("hits") is not None else None,
+            "nb_hits": obj.get("nbHits")
+        })
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
+

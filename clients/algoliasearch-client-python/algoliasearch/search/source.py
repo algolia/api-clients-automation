@@ -21,19 +21,16 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
-
 class Source(BaseModel):
     """
     Source.  # noqa: E501
     """
-
     source: StrictStr = Field(..., description="IP address range of the source.")
     description: Optional[StrictStr] = Field(None, description="Source description.")
     __properties = ["source", "description"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,7 +49,10 @@ class Source(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,7 +64,10 @@ class Source(BaseModel):
         if not isinstance(obj, dict):
             return Source.parse_obj(obj)
 
-        _obj = Source.parse_obj(
-            {"source": obj.get("source"), "description": obj.get("description")}
-        )
+        _obj = Source.parse_obj({
+            "source": obj.get("source"),
+            "description": obj.get("description")
+        })
         return _obj
+
+

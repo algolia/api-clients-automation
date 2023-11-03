@@ -18,22 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, StrictStr, conlist
-
 
 class BatchAssignUserIdsParams(BaseModel):
     """
     Assign userID parameters.  # noqa: E501
     """
-
     cluster: StrictStr = Field(..., description="Cluster name.")
     users: conlist(StrictStr) = Field(..., description="User IDs to assign.")
     __properties = ["cluster", "users"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,7 +48,10 @@ class BatchAssignUserIdsParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,7 +63,10 @@ class BatchAssignUserIdsParams(BaseModel):
         if not isinstance(obj, dict):
             return BatchAssignUserIdsParams.parse_obj(obj)
 
-        _obj = BatchAssignUserIdsParams.parse_obj(
-            {"cluster": obj.get("cluster"), "users": obj.get("users")}
-        )
+        _obj = BatchAssignUserIdsParams.parse_obj({
+            "cluster": obj.get("cluster"),
+            "users": obj.get("users")
+        })
         return _obj
+
+

@@ -22,21 +22,16 @@ from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.search_type_default import SearchTypeDefault
 
-
 class SearchForHitsOptions(BaseModel):
     """
     SearchForHitsOptions
     """
-
-    index_name: StrictStr = Field(
-        ..., alias="indexName", description="Algolia index name."
-    )
+    index_name: StrictStr = Field(..., alias="indexName", description="Algolia index name.")
     type: Optional[SearchTypeDefault] = None
     __properties = ["indexName", "type"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -55,7 +50,10 @@ class SearchForHitsOptions(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -67,7 +65,10 @@ class SearchForHitsOptions(BaseModel):
         if not isinstance(obj, dict):
             return SearchForHitsOptions.parse_obj(obj)
 
-        _obj = SearchForHitsOptions.parse_obj(
-            {"index_name": obj.get("indexName"), "type": obj.get("type")}
-        )
+        _obj = SearchForHitsOptions.parse_obj({
+            "index_name": obj.get("indexName"),
+            "type": obj.get("type")
+        })
         return _obj
+
+

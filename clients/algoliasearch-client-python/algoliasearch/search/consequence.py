@@ -18,39 +18,25 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, List, Optional
+from typing import Any, Optional
 from pydantic import BaseModel, Field, StrictBool, conlist
 from algoliasearch.models.consequence_hide import ConsequenceHide
 from algoliasearch.models.consequence_params import ConsequenceParams
 from algoliasearch.models.promote import Promote
 
-
 class Consequence(BaseModel):
     """
     [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences) of a rule.   # noqa: E501
     """
-
     params: Optional[ConsequenceParams] = None
     promote: Optional[conlist(Promote)] = Field(None, description="Records to promote.")
-    filter_promotes: Optional[StrictBool] = Field(
-        False,
-        alias="filterPromotes",
-        description="Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.",
-    )
-    hide: Optional[conlist(ConsequenceHide)] = Field(
-        None,
-        description="Records to hide. By default, you can hide up to 50 records per rule.",
-    )
-    user_data: Optional[Any] = Field(
-        None,
-        alias="userData",
-        description="Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.",
-    )
+    filter_promotes: Optional[StrictBool] = Field(False, alias="filterPromotes", description="Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.")
+    hide: Optional[conlist(ConsequenceHide)] = Field(None, description="Records to hide. By default, you can hide up to 50 records per rule.")
+    user_data: Optional[Any] = Field(None, alias="userData", description="Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.")
     __properties = ["params", "promote", "filterPromotes", "hide", "userData"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -69,28 +55,31 @@ class Consequence(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of params
         if self.params:
-            _dict["params"] = self.params.to_dict()
+            _dict['params'] = self.params.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in promote (list)
         _items = []
         if self.promote:
             for _item in self.promote:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["promote"] = _items
+            _dict['promote'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in hide (list)
         _items = []
         if self.hide:
             for _item in self.hide:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["hide"] = _items
+            _dict['hide'] = _items
         # set to None if user_data (nullable) is None
         # and __fields_set__ contains the field
         if self.user_data is None and "user_data" in self.__fields_set__:
-            _dict["userData"] = None
+            _dict['userData'] = None
 
         return _dict
 
@@ -103,21 +92,13 @@ class Consequence(BaseModel):
         if not isinstance(obj, dict):
             return Consequence.parse_obj(obj)
 
-        _obj = Consequence.parse_obj(
-            {
-                "params": ConsequenceParams.from_dict(obj.get("params"))
-                if obj.get("params") is not None
-                else None,
-                "promote": [Promote.from_dict(_item) for _item in obj.get("promote")]
-                if obj.get("promote") is not None
-                else None,
-                "filter_promotes": obj.get("filterPromotes")
-                if obj.get("filterPromotes") is not None
-                else False,
-                "hide": [ConsequenceHide.from_dict(_item) for _item in obj.get("hide")]
-                if obj.get("hide") is not None
-                else None,
-                "user_data": obj.get("userData"),
-            }
-        )
+        _obj = Consequence.parse_obj({
+            "params": ConsequenceParams.from_dict(obj.get("params")) if obj.get("params") is not None else None,
+            "promote": [Promote.from_dict(_item) for _item in obj.get("promote")] if obj.get("promote") is not None else None,
+            "filter_promotes": obj.get("filterPromotes") if obj.get("filterPromotes") is not None else False,
+            "hide": [ConsequenceHide.from_dict(_item) for _item in obj.get("hide")] if obj.get("hide") is not None else None,
+            "user_data": obj.get("userData")
+        })
         return _obj
+
+

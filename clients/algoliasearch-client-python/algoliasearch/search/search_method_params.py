@@ -18,24 +18,21 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.search_query import SearchQuery
 from algoliasearch.models.search_strategy import SearchStrategy
-
 
 class SearchMethodParams(BaseModel):
     """
     SearchMethodParams
     """
-
     requests: conlist(SearchQuery) = Field(...)
     strategy: Optional[SearchStrategy] = None
     __properties = ["requests", "strategy"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -54,14 +51,17 @@ class SearchMethodParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in requests (list)
         _items = []
         if self.requests:
             for _item in self.requests:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["requests"] = _items
+            _dict['requests'] = _items
         return _dict
 
     @classmethod
@@ -73,14 +73,10 @@ class SearchMethodParams(BaseModel):
         if not isinstance(obj, dict):
             return SearchMethodParams.parse_obj(obj)
 
-        _obj = SearchMethodParams.parse_obj(
-            {
-                "requests": [
-                    SearchQuery.from_dict(_item) for _item in obj.get("requests")
-                ]
-                if obj.get("requests") is not None
-                else None,
-                "strategy": obj.get("strategy"),
-            }
-        )
+        _obj = SearchMethodParams.parse_obj({
+            "requests": [SearchQuery.from_dict(_item) for _item in obj.get("requests")] if obj.get("requests") is not None else None,
+            "strategy": obj.get("strategy")
+        })
         return _obj
+
+

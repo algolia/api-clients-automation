@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class Anchoring(str, Enum):
@@ -26,12 +28,14 @@ class Anchoring(str, Enum):
     """
     allowed enum values
     """
-    IS = "is"
-    STARTSWITH = "startsWith"
-    ENDSWITH = "endsWith"
-    CONTAINS = "contains"
+    IS = 'is'
+    STARTSWITH = 'startsWith'
+    ENDSWITH = 'endsWith'
+    CONTAINS = 'contains'
 
     @classmethod
     def from_json(cls, json_str: str) -> Anchoring:
         """Create an instance of Anchoring from a JSON string"""
         return Anchoring(json.loads(json_str))
+
+

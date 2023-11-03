@@ -18,20 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from pydantic import BaseModel, Field, StrictStr
 
+from pydantic import BaseModel, Field, StrictStr
 
 class RedirectRuleIndexMetadataData(BaseModel):
     """
     Redirect rule data.  # noqa: E501
     """
-
     rule_object_id: StrictStr = Field(..., alias="ruleObjectID")
     __properties = ["ruleObjectID"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,7 +48,10 @@ class RedirectRuleIndexMetadataData(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -62,7 +63,9 @@ class RedirectRuleIndexMetadataData(BaseModel):
         if not isinstance(obj, dict):
             return RedirectRuleIndexMetadataData.parse_obj(obj)
 
-        _obj = RedirectRuleIndexMetadataData.parse_obj(
-            {"rule_object_id": obj.get("ruleObjectID")}
-        )
+        _obj = RedirectRuleIndexMetadataData.parse_obj({
+            "rule_object_id": obj.get("ruleObjectID")
+        })
         return _obj
+
+

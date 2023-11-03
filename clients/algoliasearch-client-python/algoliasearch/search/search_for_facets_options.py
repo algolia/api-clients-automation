@@ -22,30 +22,19 @@ from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, conint
 from algoliasearch.models.search_type_facet import SearchTypeFacet
 
-
 class SearchForFacetsOptions(BaseModel):
     """
     SearchForFacetsOptions
     """
-
     facet: StrictStr = Field(..., description="Facet name.")
-    index_name: StrictStr = Field(
-        ..., alias="indexName", description="Algolia index name."
-    )
-    facet_query: Optional[StrictStr] = Field(
-        "", alias="facetQuery", description="Text to search inside the facet's values."
-    )
-    max_facet_hits: Optional[conint(strict=True, le=100)] = Field(
-        10,
-        alias="maxFacetHits",
-        description="Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).",
-    )
+    index_name: StrictStr = Field(..., alias="indexName", description="Algolia index name.")
+    facet_query: Optional[StrictStr] = Field('', alias="facetQuery", description="Text to search inside the facet's values.")
+    max_facet_hits: Optional[conint(strict=True, le=100)] = Field(10, alias="maxFacetHits", description="Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).")
     type: SearchTypeFacet = Field(...)
     __properties = ["facet", "indexName", "facetQuery", "maxFacetHits", "type"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -64,7 +53,10 @@ class SearchForFacetsOptions(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -76,17 +68,13 @@ class SearchForFacetsOptions(BaseModel):
         if not isinstance(obj, dict):
             return SearchForFacetsOptions.parse_obj(obj)
 
-        _obj = SearchForFacetsOptions.parse_obj(
-            {
-                "facet": obj.get("facet"),
-                "index_name": obj.get("indexName"),
-                "facet_query": obj.get("facetQuery")
-                if obj.get("facetQuery") is not None
-                else "",
-                "max_facet_hits": obj.get("maxFacetHits")
-                if obj.get("maxFacetHits") is not None
-                else 10,
-                "type": obj.get("type"),
-            }
-        )
+        _obj = SearchForFacetsOptions.parse_obj({
+            "facet": obj.get("facet"),
+            "index_name": obj.get("indexName"),
+            "facet_query": obj.get("facetQuery") if obj.get("facetQuery") is not None else '',
+            "max_facet_hits": obj.get("maxFacetHits") if obj.get("maxFacetHits") is not None else 10,
+            "type": obj.get("type")
+        })
         return _obj
+
+

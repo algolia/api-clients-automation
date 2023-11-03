@@ -18,26 +18,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import Dict, List
+from typing import Dict
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
-
 
 class MultipleBatchResponse(BaseModel):
     """
     MultipleBatchResponse
     """
-
-    task_id: Dict[str, StrictInt] = Field(
-        ..., alias="taskID", description="TaskIDs per index."
-    )
-    object_ids: conlist(StrictStr) = Field(
-        ..., alias="objectIDs", description="Unique object (record) identifiers."
-    )
+    task_id: Dict[str, StrictInt] = Field(..., alias="taskID", description="TaskIDs per index.")
+    object_ids: conlist(StrictStr) = Field(..., alias="objectIDs", description="Unique object (record) identifiers.")
     __properties = ["taskID", "objectIDs"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,7 +49,10 @@ class MultipleBatchResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -68,7 +64,10 @@ class MultipleBatchResponse(BaseModel):
         if not isinstance(obj, dict):
             return MultipleBatchResponse.parse_obj(obj)
 
-        _obj = MultipleBatchResponse.parse_obj(
-            {"task_id": obj.get("taskID"), "object_ids": obj.get("objectIDs")}
-        )
+        _obj = MultipleBatchResponse.parse_obj({
+            "task_id": obj.get("taskID"),
+            "object_ids": obj.get("objectIDs")
+        })
         return _obj
+
+

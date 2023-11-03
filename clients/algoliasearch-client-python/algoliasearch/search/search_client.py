@@ -13,22 +13,11 @@
 
 
 import re  # noqa: F401
-import io
-import warnings
 
-from pydantic import validate_arguments, ValidationError
+from pydantic import validate_arguments
 
 from typing_extensions import Annotated
-from pydantic import (
-    Field,
-    StrictBool,
-    StrictInt,
-    StrictStr,
-    conint,
-    conlist,
-    constr,
-    validator,
-)
+from pydantic import Field, StrictBool, StrictInt, StrictStr, conint, conlist, constr
 
 from typing import Any, Dict, List, Optional
 
@@ -37,9 +26,7 @@ from algoliasearch.models.api_key import ApiKey
 from algoliasearch.models.assign_user_id_params import AssignUserIdParams
 from algoliasearch.models.attribute_to_update import AttributeToUpdate
 from algoliasearch.models.batch_assign_user_ids_params import BatchAssignUserIdsParams
-from algoliasearch.models.batch_dictionary_entries_params import (
-    BatchDictionaryEntriesParams,
-)
+from algoliasearch.models.batch_dictionary_entries_params import BatchDictionaryEntriesParams
 from algoliasearch.models.batch_params import BatchParams
 from algoliasearch.models.batch_response import BatchResponse
 from algoliasearch.models.batch_write_params import BatchWriteParams
@@ -53,17 +40,13 @@ from algoliasearch.models.deleted_at_response import DeletedAtResponse
 from algoliasearch.models.dictionary_settings_params import DictionarySettingsParams
 from algoliasearch.models.dictionary_type import DictionaryType
 from algoliasearch.models.get_api_key_response import GetApiKeyResponse
-from algoliasearch.models.get_dictionary_settings_response import (
-    GetDictionarySettingsResponse,
-)
+from algoliasearch.models.get_dictionary_settings_response import GetDictionarySettingsResponse
 from algoliasearch.models.get_logs_response import GetLogsResponse
 from algoliasearch.models.get_objects_params import GetObjectsParams
 from algoliasearch.models.get_objects_response import GetObjectsResponse
 from algoliasearch.models.get_task_response import GetTaskResponse
 from algoliasearch.models.get_top_user_ids_response import GetTopUserIdsResponse
-from algoliasearch.models.has_pending_mappings_response import (
-    HasPendingMappingsResponse,
-)
+from algoliasearch.models.has_pending_mappings_response import HasPendingMappingsResponse
 from algoliasearch.models.index_settings import IndexSettings
 from algoliasearch.models.languages import Languages
 from algoliasearch.models.list_api_keys_response import ListApiKeysResponse
@@ -78,15 +61,9 @@ from algoliasearch.models.replace_source_response import ReplaceSourceResponse
 from algoliasearch.models.rule import Rule
 from algoliasearch.models.save_object_response import SaveObjectResponse
 from algoliasearch.models.save_synonym_response import SaveSynonymResponse
-from algoliasearch.models.search_dictionary_entries_params import (
-    SearchDictionaryEntriesParams,
-)
-from algoliasearch.models.search_for_facet_values_request import (
-    SearchForFacetValuesRequest,
-)
-from algoliasearch.models.search_for_facet_values_response import (
-    SearchForFacetValuesResponse,
-)
+from algoliasearch.models.search_dictionary_entries_params import SearchDictionaryEntriesParams
+from algoliasearch.models.search_for_facet_values_request import SearchForFacetValuesRequest
+from algoliasearch.models.search_for_facet_values_response import SearchForFacetValuesResponse
 from algoliasearch.models.search_method_params import SearchMethodParams
 from algoliasearch.models.search_params import SearchParams
 from algoliasearch.models.search_response import SearchResponse
@@ -102,9 +79,7 @@ from algoliasearch.models.synonym_hit import SynonymHit
 from algoliasearch.models.synonym_type import SynonymType
 from algoliasearch.models.update_api_key_response import UpdateApiKeyResponse
 from algoliasearch.models.updated_at_response import UpdatedAtResponse
-from algoliasearch.models.updated_at_with_object_id_response import (
-    UpdatedAtWithObjectIdResponse,
-)
+from algoliasearch.models.updated_at_with_object_id_response import UpdatedAtWithObjectIdResponse
 from algoliasearch.models.updated_rule_response import UpdatedRuleResponse
 from algoliasearch.models.user_id import UserId
 
@@ -112,7 +87,7 @@ from algoliasearch.api_client import ApiClient
 from algoliasearch.api_response import ApiResponse
 from algoliasearch.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError,
+    ApiValueError
 )
 
 
@@ -129,7 +104,7 @@ class SearchClient:
         self.api_client = api_client
 
     @validate_arguments
-    def add_api_key(self, api_key: ApiKey, **kwargs) -> AddApiKeyResponse:  # noqa: E501
+    def add_api_key(self, api_key : ApiKey, **kwargs) -> AddApiKeyResponse:  # noqa: E501
         """Add API key.  # noqa: E501
 
         Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string.   # noqa: E501
@@ -152,14 +127,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: AddApiKeyResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the add_api_key_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.add_api_key_with_http_info(api_key, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def add_api_key_with_http_info(self, api_key: ApiKey, **kwargs) -> ApiResponse:  # noqa: E501
+    def add_api_key_with_http_info(self, api_key : ApiKey, **kwargs) -> ApiResponse:  # noqa: E501
         """Add API key.  # noqa: E501
 
         Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string.   # noqa: E501
@@ -198,28 +173,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["api_key"]
+        _all_params = [
+            'api_key'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method add_api_key" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -229,42 +206,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["api_key"] is not None:
-            _body_params = _params["api_key"]
+        if _params['api_key'] is not None:
+            _body_params = _params['api_key']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "AddApiKeyResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "AddApiKeyResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/keys",
-            "POST",
+            '/1/keys', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -273,26 +247,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def add_or_update_object(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        body: Annotated[Dict[str, Any], Field(..., description="Algolia record.")],
-        **kwargs,
-    ) -> UpdatedAtWithObjectIdResponse:  # noqa: E501
+    def add_or_update_object(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], body : Annotated[Dict[str, Any], Field(..., description="Algolia record.")], **kwargs) -> UpdatedAtWithObjectIdResponse:  # noqa: E501
         """Add or update a record (using objectID).  # noqa: E501
 
         If you use an existing `objectID`, the existing record will be replaced with the new one.  To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.  To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).   # noqa: E501
@@ -319,26 +282,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtWithObjectIdResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the add_or_update_object_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.add_or_update_object_with_http_info(
-            index_name, object_id, body, **kwargs
-        )  # noqa: E501
+        return self.add_or_update_object_with_http_info(index_name, object_id, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def add_or_update_object_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        body: Annotated[Dict[str, Any], Field(..., description="Algolia record.")],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def add_or_update_object_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], body : Annotated[Dict[str, Any], Field(..., description="Algolia record.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Add or update a record (using objectID).  # noqa: E501
 
         If you use an existing `objectID`, the existing record will be replaced with the new one.  To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.  To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).   # noqa: E501
@@ -381,78 +332,80 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id", "body"]
+        _all_params = [
+            'index_name',
+            'object_id',
+            'body'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method add_or_update_object" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["body"] is not None:
-            _body_params = _params["body"]
+        if _params['body'] is not None:
+            _body_params = _params['body']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtWithObjectIdResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtWithObjectIdResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/{objectID}",
-            "PUT",
+            '/1/indexes/{indexName}/{objectID}', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -461,20 +414,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def append_source(
-        self,
-        source: Annotated[Source, Field(..., description="Source to add.")],
-        **kwargs,
-    ) -> CreatedAtResponse:  # noqa: E501
+    def append_source(self, source : Annotated[Source, Field(..., description="Source to add.")], **kwargs) -> CreatedAtResponse:  # noqa: E501
         """Add a source.  # noqa: E501
 
         Add a source to the list of allowed sources.  # noqa: E501
@@ -497,18 +445,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: CreatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the append_source_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.append_source_with_http_info(source, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def append_source_with_http_info(
-        self,
-        source: Annotated[Source, Field(..., description="Source to add.")],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def append_source_with_http_info(self, source : Annotated[Source, Field(..., description="Source to add.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Add a source.  # noqa: E501
 
         Add a source to the list of allowed sources.  # noqa: E501
@@ -547,28 +491,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["source"]
+        _all_params = [
+            'source'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method append_source" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -578,42 +524,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["source"] is not None:
-            _body_params = _params["source"]
+        if _params['source'] is not None:
+            _body_params = _params['source']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "CreatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "CreatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/security/sources/append",
-            "POST",
+            '/1/security/sources/append', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -622,23 +565,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def assign_user_id(
-        self,
-        x_algolia_user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        assign_user_id_params: AssignUserIdParams,
-        **kwargs,
-    ) -> CreatedAtResponse:  # noqa: E501
+    def assign_user_id(self, x_algolia_user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], assign_user_id_params : AssignUserIdParams, **kwargs) -> CreatedAtResponse:  # noqa: E501
         """Assign or move a user ID.  # noqa: E501
 
         Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the amount of data linked to the user ID.   # noqa: E501
@@ -663,23 +598,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: CreatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the assign_user_id_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.assign_user_id_with_http_info(
-            x_algolia_user_id, assign_user_id_params, **kwargs
-        )  # noqa: E501
+        return self.assign_user_id_with_http_info(x_algolia_user_id, assign_user_id_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def assign_user_id_with_http_info(
-        self,
-        x_algolia_user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        assign_user_id_params: AssignUserIdParams,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def assign_user_id_with_http_info(self, x_algolia_user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], assign_user_id_params : AssignUserIdParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Assign or move a user ID.  # noqa: E501
 
         Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the amount of data linked to the user ID.   # noqa: E501
@@ -720,28 +646,31 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["x_algolia_user_id", "assign_user_id_params"]
+        _all_params = [
+            'x_algolia_user_id',
+            'assign_user_id_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method assign_user_id" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -751,45 +680,42 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
-        if _params["x_algolia_user_id"]:
-            _header_params["X-Algolia-User-ID"] = _params["x_algolia_user_id"]
+        _header_params = dict(_params.get('_headers', {}))
+        if _params['x_algolia_user_id']:
+            _header_params['X-Algolia-User-ID'] = _params['x_algolia_user_id']
 
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["assign_user_id_params"] is not None:
-            _body_params = _params["assign_user_id_params"]
+        if _params['assign_user_id_params'] is not None:
+            _body_params = _params['assign_user_id_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "CreatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "CreatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping",
-            "POST",
+            '/1/clusters/mapping', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -798,23 +724,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def batch(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        batch_write_params: BatchWriteParams,
-        **kwargs,
-    ) -> BatchResponse:  # noqa: E501
+    def batch(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], batch_write_params : BatchWriteParams, **kwargs) -> BatchResponse:  # noqa: E501
         """Batch write operations on one index.  # noqa: E501
 
         To reduce the time spent on network round trips, you can perform several write actions in a single API call. Actions are applied in the order they are specified. The supported `action`s are equivalent to the individual operations of the same name.   # noqa: E501
@@ -839,21 +757,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: BatchResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the batch_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.batch_with_http_info(index_name, batch_write_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def batch_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        batch_write_params: BatchWriteParams,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def batch_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], batch_write_params : BatchWriteParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Batch write operations on one index.  # noqa: E501
 
         To reduce the time spent on network round trips, you can perform several write actions in a single API call. Actions are applied in the order they are specified. The supported `action`s are equivalent to the individual operations of the same name.   # noqa: E501
@@ -894,74 +805,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "batch_write_params"]
+        _all_params = [
+            'index_name',
+            'batch_write_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'" " to method batch" % _key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method batch" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["batch_write_params"] is not None:
-            _body_params = _params["batch_write_params"]
+        if _params['batch_write_params'] is not None:
+            _body_params = _params['batch_write_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "BatchResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "BatchResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/batch",
-            "POST",
+            '/1/indexes/{indexName}/batch', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -970,23 +883,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def batch_assign_user_ids(
-        self,
-        x_algolia_user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        batch_assign_user_ids_params: BatchAssignUserIdsParams,
-        **kwargs,
-    ) -> CreatedAtResponse:  # noqa: E501
+    def batch_assign_user_ids(self, x_algolia_user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], batch_assign_user_ids_params : BatchAssignUserIdsParams, **kwargs) -> CreatedAtResponse:  # noqa: E501
         """Batch assign userIDs.  # noqa: E501
 
         Assign multiple user IDs to a cluster. **You can't _move_ users with this operation.**.   # noqa: E501
@@ -1011,23 +916,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: CreatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the batch_assign_user_ids_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.batch_assign_user_ids_with_http_info(
-            x_algolia_user_id, batch_assign_user_ids_params, **kwargs
-        )  # noqa: E501
+        return self.batch_assign_user_ids_with_http_info(x_algolia_user_id, batch_assign_user_ids_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def batch_assign_user_ids_with_http_info(
-        self,
-        x_algolia_user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        batch_assign_user_ids_params: BatchAssignUserIdsParams,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def batch_assign_user_ids_with_http_info(self, x_algolia_user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], batch_assign_user_ids_params : BatchAssignUserIdsParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Batch assign userIDs.  # noqa: E501
 
         Assign multiple user IDs to a cluster. **You can't _move_ users with this operation.**.   # noqa: E501
@@ -1068,28 +964,31 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["x_algolia_user_id", "batch_assign_user_ids_params"]
+        _all_params = [
+            'x_algolia_user_id',
+            'batch_assign_user_ids_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method batch_assign_user_ids" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -1099,45 +998,42 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
-        if _params["x_algolia_user_id"]:
-            _header_params["X-Algolia-User-ID"] = _params["x_algolia_user_id"]
+        _header_params = dict(_params.get('_headers', {}))
+        if _params['x_algolia_user_id']:
+            _header_params['X-Algolia-User-ID'] = _params['x_algolia_user_id']
 
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["batch_assign_user_ids_params"] is not None:
-            _body_params = _params["batch_assign_user_ids_params"]
+        if _params['batch_assign_user_ids_params'] is not None:
+            _body_params = _params['batch_assign_user_ids_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "CreatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "CreatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping/batch",
-            "POST",
+            '/1/clusters/mapping/batch', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -1146,23 +1042,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def batch_dictionary_entries(
-        self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(..., description="Dictionary to search in.")
-        ],
-        batch_dictionary_entries_params: BatchDictionaryEntriesParams,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def batch_dictionary_entries(self, dictionary_name : Annotated[DictionaryType, Field(..., description="Dictionary to search in.")], batch_dictionary_entries_params : BatchDictionaryEntriesParams, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Batch dictionary entries.  # noqa: E501
 
         Add or remove a batch of dictionary entries.  # noqa: E501
@@ -1187,23 +1075,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the batch_dictionary_entries_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.batch_dictionary_entries_with_http_info(
-            dictionary_name, batch_dictionary_entries_params, **kwargs
-        )  # noqa: E501
+        return self.batch_dictionary_entries_with_http_info(dictionary_name, batch_dictionary_entries_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def batch_dictionary_entries_with_http_info(
-        self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(..., description="Dictionary to search in.")
-        ],
-        batch_dictionary_entries_params: BatchDictionaryEntriesParams,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def batch_dictionary_entries_with_http_info(self, dictionary_name : Annotated[DictionaryType, Field(..., description="Dictionary to search in.")], batch_dictionary_entries_params : BatchDictionaryEntriesParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Batch dictionary entries.  # noqa: E501
 
         Add or remove a batch of dictionary entries.  # noqa: E501
@@ -1244,75 +1123,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["dictionary_name", "batch_dictionary_entries_params"]
+        _all_params = [
+            'dictionary_name',
+            'batch_dictionary_entries_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method batch_dictionary_entries" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["dictionary_name"]:
-            _path_params["dictionaryName"] = _params["dictionary_name"]
+        if _params['dictionary_name']:
+            _path_params['dictionaryName'] = _params['dictionary_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["batch_dictionary_entries_params"] is not None:
-            _body_params = _params["batch_dictionary_entries_params"]
+        if _params['batch_dictionary_entries_params'] is not None:
+            _body_params = _params['batch_dictionary_entries_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/dictionaries/{dictionaryName}/batch",
-            "POST",
+            '/1/dictionaries/{dictionaryName}/batch', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -1321,23 +1201,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def browse(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        browse_params: Optional[BrowseParams] = None,
-        **kwargs,
-    ) -> BrowseResponse:  # noqa: E501
+    def browse(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], browse_params : Optional[BrowseParams] = None, **kwargs) -> BrowseResponse:  # noqa: E501
         """Get all records from an index.  # noqa: E501
 
         Retrieve up to 1,000 records per call. Supports full-text search and filters. For better performance, it doesn't support: - The `distinct` query parameter - Sorting by typos, proximity, words, or geographical distance.   # noqa: E501
@@ -1362,21 +1234,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: BrowseResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the browse_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.browse_with_http_info(index_name, browse_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def browse_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        browse_params: Optional[BrowseParams] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def browse_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], browse_params : Optional[BrowseParams] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get all records from an index.  # noqa: E501
 
         Retrieve up to 1,000 records per call. Supports full-text search and filters. For better performance, it doesn't support: - The `distinct` query parameter - Sorting by typos, proximity, words, or geographical distance.   # noqa: E501
@@ -1417,74 +1282,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "browse_params"]
+        _all_params = [
+            'index_name',
+            'browse_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'" " to method browse" % _key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method browse" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["browse_params"] is not None:
-            _body_params = _params["browse_params"]
+        if _params['browse_params'] is not None:
+            _body_params = _params['browse_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "BrowseResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "BrowseResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/browse",
-            "POST",
+            '/1/indexes/{indexName}/browse', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -1493,30 +1360,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def call_del(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        **kwargs,
-    ) -> object:  # noqa: E501
+    def call_del(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -1541,28 +1393,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the call_del_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.call_del_with_http_info(path, parameters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def call_del_with_http_info(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def call_del_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -1603,67 +1441,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["path", "parameters"]
+        _all_params = [
+            'path',
+            'parameters'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method call_del" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["path"]:
-            _path_params["path"] = _params["path"]
+        if _params['path']:
+            _path_params['path'] = _params['path']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("parameters") is not None:  # noqa: E501
-            _query_params.append(("parameters", _params["parameters"]))
+        if _params.get('parameters') is not None:  # noqa: E501
+            _query_params.append(('parameters', _params['parameters']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "object",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "object",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1{path}",
-            "DELETE",
+            '/1{path}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -1672,28 +1512,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def clear_all_synonyms(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def clear_all_synonyms(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Delete all synonyms.  # noqa: E501
 
         Delete all synonyms in the index.  # noqa: E501
@@ -1718,28 +1545,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the clear_all_synonyms_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.clear_all_synonyms_with_http_info(
-            index_name, forward_to_replicas, **kwargs
-        )  # noqa: E501
+        return self.clear_all_synonyms_with_http_info(index_name, forward_to_replicas, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def clear_all_synonyms_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def clear_all_synonyms_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete all synonyms.  # noqa: E501
 
         Delete all synonyms in the index.  # noqa: E501
@@ -1780,67 +1593,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "forward_to_replicas"]
+        _all_params = [
+            'index_name',
+            'forward_to_replicas'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method clear_all_synonyms" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/synonyms/clear",
-            "POST",
+            '/1/indexes/{indexName}/synonyms/clear', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -1849,22 +1664,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def clear_objects(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def clear_objects(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Delete all records from an index.  # noqa: E501
 
         Delete the records but leave settings and index-specific API keys untouched.  # noqa: E501
@@ -1887,20 +1695,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the clear_objects_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.clear_objects_with_http_info(index_name, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def clear_objects_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def clear_objects_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete all records from an index.  # noqa: E501
 
         Delete the records but leave settings and index-specific API keys untouched.  # noqa: E501
@@ -1939,64 +1741,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name"]
+        _all_params = [
+            'index_name'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method clear_objects" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/clear",
-            "POST",
+            '/1/indexes/{indexName}/clear', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -2005,28 +1808,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def clear_rules(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def clear_rules(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Delete all rules.  # noqa: E501
 
         Delete all rules in the index.  # noqa: E501
@@ -2051,28 +1841,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the clear_rules_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.clear_rules_with_http_info(
-            index_name, forward_to_replicas, **kwargs
-        )  # noqa: E501
+        return self.clear_rules_with_http_info(index_name, forward_to_replicas, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def clear_rules_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def clear_rules_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete all rules.  # noqa: E501
 
         Delete all rules in the index.  # noqa: E501
@@ -2113,67 +1889,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "forward_to_replicas"]
+        _all_params = [
+            'index_name',
+            'forward_to_replicas'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method clear_rules" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/rules/clear",
-            "POST",
+            '/1/indexes/{indexName}/rules/clear', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -2182,18 +1960,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_api_key(
-        self, key: Annotated[StrictStr, Field(..., description="API key.")], **kwargs
-    ) -> DeleteApiKeyResponse:  # noqa: E501
+    def delete_api_key(self, key : Annotated[StrictStr, Field(..., description="API key.")], **kwargs) -> DeleteApiKeyResponse:  # noqa: E501
         """Delete API key.  # noqa: E501
 
         Delete an existing API key. The request must be authenticated with the admin API key.   # noqa: E501
@@ -2216,16 +1991,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: DeleteApiKeyResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the delete_api_key_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.delete_api_key_with_http_info(key, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_api_key_with_http_info(
-        self, key: Annotated[StrictStr, Field(..., description="API key.")], **kwargs
-    ) -> ApiResponse:  # noqa: E501
+    def delete_api_key_with_http_info(self, key : Annotated[StrictStr, Field(..., description="API key.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete API key.  # noqa: E501
 
         Delete an existing API key. The request must be authenticated with the admin API key.   # noqa: E501
@@ -2264,64 +2037,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["key"]
+        _all_params = [
+            'key'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_api_key" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["key"]:
-            _path_params["key"] = _params["key"]
+        if _params['key']:
+            _path_params['key'] = _params['key']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "DeleteApiKeyResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "DeleteApiKeyResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/keys/{key}",
-            "DELETE",
+            '/1/keys/{key}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -2330,23 +2104,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_by(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        delete_by_params: DeleteByParams,
-        **kwargs,
-    ) -> DeletedAtResponse:  # noqa: E501
+    def delete_by(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], delete_by_params : DeleteByParams, **kwargs) -> DeletedAtResponse:  # noqa: E501
         """Delete all records matching a query.  # noqa: E501
 
         This operation doesn't support all the query options, only its filters (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.   # noqa: E501
@@ -2371,21 +2137,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: DeletedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the delete_by_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.delete_by_with_http_info(index_name, delete_by_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_by_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        delete_by_params: DeleteByParams,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def delete_by_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], delete_by_params : DeleteByParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete all records matching a query.  # noqa: E501
 
         This operation doesn't support all the query options, only its filters (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.   # noqa: E501
@@ -2426,75 +2185,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "delete_by_params"]
+        _all_params = [
+            'index_name',
+            'delete_by_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_by" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["delete_by_params"] is not None:
-            _body_params = _params["delete_by_params"]
+        if _params['delete_by_params'] is not None:
+            _body_params = _params['delete_by_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "DeletedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "DeletedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/deleteByQuery",
-            "POST",
+            '/1/indexes/{indexName}/deleteByQuery', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -2503,22 +2263,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_index(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        **kwargs,
-    ) -> DeletedAtResponse:  # noqa: E501
+    def delete_index(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], **kwargs) -> DeletedAtResponse:  # noqa: E501
         """Delete index.  # noqa: E501
 
         Delete an existing index.  # noqa: E501
@@ -2541,20 +2294,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: DeletedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the delete_index_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.delete_index_with_http_info(index_name, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_index_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def delete_index_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete index.  # noqa: E501
 
         Delete an existing index.  # noqa: E501
@@ -2593,64 +2340,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name"]
+        _all_params = [
+            'index_name'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_index" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "DeletedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "DeletedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}",
-            "DELETE",
+            '/1/indexes/{indexName}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -2659,25 +2407,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_object(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        **kwargs,
-    ) -> DeletedAtResponse:  # noqa: E501
+    def delete_object(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], **kwargs) -> DeletedAtResponse:  # noqa: E501
         """Delete a record.  # noqa: E501
 
         To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.  # noqa: E501
@@ -2702,23 +2440,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: DeletedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the delete_object_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.delete_object_with_http_info(index_name, object_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_object_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def delete_object_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete a record.  # noqa: E501
 
         To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.  # noqa: E501
@@ -2759,67 +2488,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id"]
+        _all_params = [
+            'index_name',
+            'object_id'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_object" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "DeletedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "DeletedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/{objectID}",
-            "DELETE",
+            '/1/indexes/{indexName}/{objectID}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -2828,31 +2559,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_rule(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a rule object.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def delete_rule(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a rule object.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Delete a rule.  # noqa: E501
 
         Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).  # noqa: E501
@@ -2879,31 +2594,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the delete_rule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.delete_rule_with_http_info(
-            index_name, object_id, forward_to_replicas, **kwargs
-        )  # noqa: E501
+        return self.delete_rule_with_http_info(index_name, object_id, forward_to_replicas, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_rule_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a rule object.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def delete_rule_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a rule object.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete a rule.  # noqa: E501
 
         Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).  # noqa: E501
@@ -2946,70 +2644,73 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id", "forward_to_replicas"]
+        _all_params = [
+            'index_name',
+            'object_id',
+            'forward_to_replicas'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_rule" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/rules/{objectID}",
-            "DELETE",
+            '/1/indexes/{indexName}/rules/{objectID}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -3018,22 +2719,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_source(
-        self,
-        source: Annotated[
-            StrictStr, Field(..., description="IP address range of the source.")
-        ],
-        **kwargs,
-    ) -> DeleteSourceResponse:  # noqa: E501
+    def delete_source(self, source : Annotated[StrictStr, Field(..., description="IP address range of the source.")], **kwargs) -> DeleteSourceResponse:  # noqa: E501
         """Remove a source.  # noqa: E501
 
         Remove a source from the list of allowed sources.  # noqa: E501
@@ -3056,20 +2750,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: DeleteSourceResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the delete_source_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.delete_source_with_http_info(source, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_source_with_http_info(
-        self,
-        source: Annotated[
-            StrictStr, Field(..., description="IP address range of the source.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def delete_source_with_http_info(self, source : Annotated[StrictStr, Field(..., description="IP address range of the source.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Remove a source.  # noqa: E501
 
         Remove a source from the list of allowed sources.  # noqa: E501
@@ -3108,64 +2796,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["source"]
+        _all_params = [
+            'source'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_source" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["source"]:
-            _path_params["source"] = _params["source"]
+        if _params['source']:
+            _path_params['source'] = _params['source']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "DeleteSourceResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "DeleteSourceResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/security/sources/{source}",
-            "DELETE",
+            '/1/security/sources/{source}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -3174,31 +2863,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_synonym(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a synonym object.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> DeletedAtResponse:  # noqa: E501
+    def delete_synonym(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a synonym object.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> DeletedAtResponse:  # noqa: E501
         """Delete a synonym.  # noqa: E501
 
         Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).  # noqa: E501
@@ -3225,31 +2898,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: DeletedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the delete_synonym_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.delete_synonym_with_http_info(
-            index_name, object_id, forward_to_replicas, **kwargs
-        )  # noqa: E501
+        return self.delete_synonym_with_http_info(index_name, object_id, forward_to_replicas, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_synonym_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a synonym object.")
-        ],
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def delete_synonym_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a synonym object.")], forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete a synonym.  # noqa: E501
 
         Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).  # noqa: E501
@@ -3292,70 +2948,73 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id", "forward_to_replicas"]
+        _all_params = [
+            'index_name',
+            'object_id',
+            'forward_to_replicas'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_synonym" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "DeletedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "DeletedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/synonyms/{objectID}",
-            "DELETE",
+            '/1/indexes/{indexName}/synonyms/{objectID}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -3364,30 +3023,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        **kwargs,
-    ) -> object:  # noqa: E501
+    def get(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -3412,28 +3056,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_with_http_info(path, parameters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_with_http_info(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -3474,66 +3104,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["path", "parameters"]
+        _all_params = [
+            'path',
+            'parameters'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'" " to method get" % _key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["path"]:
-            _path_params["path"] = _params["path"]
+        if _params['path']:
+            _path_params['path'] = _params['path']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("parameters") is not None:  # noqa: E501
-            _query_params.append(("parameters", _params["parameters"]))
+        if _params.get('parameters') is not None:  # noqa: E501
+            _query_params.append(('parameters', _params['parameters']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "object",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "object",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1{path}",
-            "GET",
+            '/1{path}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -3542,18 +3175,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_api_key(
-        self, key: Annotated[StrictStr, Field(..., description="API key.")], **kwargs
-    ) -> GetApiKeyResponse:  # noqa: E501
+    def get_api_key(self, key : Annotated[StrictStr, Field(..., description="API key.")], **kwargs) -> GetApiKeyResponse:  # noqa: E501
         """Get API key permissions.  # noqa: E501
 
         Get the permissions and restrictions of a specific API key. When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.   # noqa: E501
@@ -3576,16 +3206,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: GetApiKeyResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_api_key_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_api_key_with_http_info(key, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_api_key_with_http_info(
-        self, key: Annotated[StrictStr, Field(..., description="API key.")], **kwargs
-    ) -> ApiResponse:  # noqa: E501
+    def get_api_key_with_http_info(self, key : Annotated[StrictStr, Field(..., description="API key.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get API key permissions.  # noqa: E501
 
         Get the permissions and restrictions of a specific API key. When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.   # noqa: E501
@@ -3624,64 +3252,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["key"]
+        _all_params = [
+            'key'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_api_key" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["key"]:
-            _path_params["key"] = _params["key"]
+        if _params['key']:
+            _path_params['key'] = _params['key']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "GetApiKeyResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "GetApiKeyResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/keys/{key}",
-            "GET",
+            '/1/keys/{key}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -3690,13 +3319,12 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def get_dictionary_languages(self, **kwargs) -> Dict[str, Languages]:  # noqa: E501
@@ -3720,8 +3348,8 @@ class SearchClient:
                  returns the request thread.
         :rtype: Dict[str, Languages]
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_dictionary_languages_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_dictionary_languages_with_http_info(**kwargs)  # noqa: E501
@@ -3764,28 +3392,29 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = []
+        _all_params = [
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_dictionary_languages" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -3795,31 +3424,29 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "Dict[str, Languages]",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "Dict[str, Languages]",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/dictionaries/*/languages",
-            "GET",
+            '/1/dictionaries/*/languages', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -3828,13 +3455,12 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def get_dictionary_settings(self, **kwargs) -> GetDictionarySettingsResponse:  # noqa: E501
@@ -3858,8 +3484,8 @@ class SearchClient:
                  returns the request thread.
         :rtype: GetDictionarySettingsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_dictionary_settings_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_dictionary_settings_with_http_info(**kwargs)  # noqa: E501
@@ -3902,28 +3528,29 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = []
+        _all_params = [
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_dictionary_settings" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -3933,31 +3560,29 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "GetDictionarySettingsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "GetDictionarySettingsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/dictionaries/*/settings",
-            "GET",
+            '/1/dictionaries/*/settings', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -3966,41 +3591,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_logs(
-        self,
-        offset: Annotated[
-            Optional[StrictInt],
-            Field(
-                description="First log entry to retrieve. Sorted by decreasing date with 0 being the most recent."
-            ),
-        ] = None,
-        length: Annotated[
-            Optional[conint(strict=True, le=1000)],
-            Field(description="Maximum number of entries to retrieve."),
-        ] = None,
-        index_name: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[LogType],
-            Field(
-                description="Type of log entries to retrieve. When omitted, all log entries are retrieved."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> GetLogsResponse:  # noqa: E501
+    def get_logs(self, offset : Annotated[Optional[StrictInt], Field(description="First log entry to retrieve. Sorted by decreasing date with 0 being the most recent.")] = None, length : Annotated[Optional[conint(strict=True, le=1000)], Field(description="Maximum number of entries to retrieve.")] = None, index_name : Annotated[Optional[StrictStr], Field(description="Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices.")] = None, type : Annotated[Optional[LogType], Field(description="Type of log entries to retrieve. When omitted, all log entries are retrieved.")] = None, **kwargs) -> GetLogsResponse:  # noqa: E501
         """Return the latest log entries.  # noqa: E501
 
         The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are held for the last seven days. There's also a logging limit of 1,000 API calls per server. This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN's endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).   # noqa: E501
@@ -4029,39 +3628,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: GetLogsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_logs_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_logs_with_http_info(offset, length, index_name, type, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_logs_with_http_info(
-        self,
-        offset: Annotated[
-            Optional[StrictInt],
-            Field(
-                description="First log entry to retrieve. Sorted by decreasing date with 0 being the most recent."
-            ),
-        ] = None,
-        length: Annotated[
-            Optional[conint(strict=True, le=1000)],
-            Field(description="Maximum number of entries to retrieve."),
-        ] = None,
-        index_name: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[LogType],
-            Field(
-                description="Type of log entries to retrieve. When omitted, all log entries are retrieved."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_logs_with_http_info(self, offset : Annotated[Optional[StrictInt], Field(description="First log entry to retrieve. Sorted by decreasing date with 0 being the most recent.")] = None, length : Annotated[Optional[conint(strict=True, le=1000)], Field(description="Maximum number of entries to retrieve.")] = None, index_name : Annotated[Optional[StrictStr], Field(description="Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices.")] = None, type : Annotated[Optional[LogType], Field(description="Type of log entries to retrieve. When omitted, all log entries are retrieved.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Return the latest log entries.  # noqa: E501
 
         The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are held for the last seven days. There's also a logging limit of 1,000 API calls per server. This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN's endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).   # noqa: E501
@@ -4106,28 +3680,33 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["offset", "length", "index_name", "type"]
+        _all_params = [
+            'offset',
+            'length',
+            'index_name',
+            'type'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_logs" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -4136,44 +3715,42 @@ class SearchClient:
 
         # process the query parameters
         _query_params = []
-        if _params.get("offset") is not None:  # noqa: E501
-            _query_params.append(("offset", _params["offset"]))
+        if _params.get('offset') is not None:  # noqa: E501
+            _query_params.append(('offset', _params['offset']))
 
-        if _params.get("length") is not None:  # noqa: E501
-            _query_params.append(("length", _params["length"]))
+        if _params.get('length') is not None:  # noqa: E501
+            _query_params.append(('length', _params['length']))
 
-        if _params.get("index_name") is not None:  # noqa: E501
-            _query_params.append(("indexName", _params["index_name"]))
+        if _params.get('index_name') is not None:  # noqa: E501
+            _query_params.append(('indexName', _params['index_name']))
 
-        if _params.get("type") is not None:  # noqa: E501
-            _query_params.append(("type", _params["type"].value))
+        if _params.get('type') is not None:  # noqa: E501
+            _query_params.append(('type', _params['type'].value))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "GetLogsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "GetLogsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/logs",
-            "GET",
+            '/1/logs', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -4182,31 +3759,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_object(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        attributes_to_retrieve: Annotated[
-            Optional[conlist(StrictStr)],
-            Field(
-                description="Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key. "
-            ),
-        ] = None,
-        **kwargs,
-    ) -> Dict[str, str]:  # noqa: E501
+    def get_object(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], attributes_to_retrieve : Annotated[Optional[conlist(StrictStr)], Field(description="Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key. ")] = None, **kwargs) -> Dict[str, str]:  # noqa: E501
         """Get a record.  # noqa: E501
 
         To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).  # noqa: E501
@@ -4220,7 +3781,7 @@ class SearchClient:
         :type index_name: str
         :param object_id: Unique record (object) identifier. (required)
         :type object_id: str
-        :param attributes_to_retrieve: Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key.
+        :param attributes_to_retrieve: Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key. 
         :type attributes_to_retrieve: List[str]
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -4233,31 +3794,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: Dict[str, str]
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_object_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_object_with_http_info(
-            index_name, object_id, attributes_to_retrieve, **kwargs
-        )  # noqa: E501
+        return self.get_object_with_http_info(index_name, object_id, attributes_to_retrieve, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_object_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        attributes_to_retrieve: Annotated[
-            Optional[conlist(StrictStr)],
-            Field(
-                description="Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key. "
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_object_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], attributes_to_retrieve : Annotated[Optional[conlist(StrictStr)], Field(description="Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key. ")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get a record.  # noqa: E501
 
         To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).  # noqa: E501
@@ -4271,7 +3815,7 @@ class SearchClient:
         :type index_name: str
         :param object_id: Unique record (object) identifier. (required)
         :type object_id: str
-        :param attributes_to_retrieve: Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key.
+        :param attributes_to_retrieve: Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key. 
         :type attributes_to_retrieve: List[str]
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -4300,73 +3844,74 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id", "attributes_to_retrieve"]
+        _all_params = [
+            'index_name',
+            'object_id',
+            'attributes_to_retrieve'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_object" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("attributes_to_retrieve") is not None:  # noqa: E501
-            _query_params.append(
-                ("attributesToRetrieve", _params["attributes_to_retrieve"])
-            )
-            _collection_formats["attributesToRetrieve"] = "multi"
+        if _params.get('attributes_to_retrieve') is not None:  # noqa: E501
+            _query_params.append(('attributesToRetrieve', _params['attributes_to_retrieve']))
+            _collection_formats['attributesToRetrieve'] = 'multi'
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "Dict[str, str]",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "Dict[str, str]",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/{objectID}",
-            "GET",
+            '/1/indexes/{indexName}/{objectID}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -4375,22 +3920,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_objects(
-        self,
-        get_objects_params: Annotated[
-            GetObjectsParams, Field(..., description="Request object.")
-        ],
-        **kwargs,
-    ) -> GetObjectsResponse:  # noqa: E501
+    def get_objects(self, get_objects_params : Annotated[GetObjectsParams, Field(..., description="Request object.")], **kwargs) -> GetObjectsResponse:  # noqa: E501
         """Get multiple records.  # noqa: E501
 
         Retrieve one or more records, potentially from different indices, in a single API operation. Results will be received in the same order as the requests.   # noqa: E501
@@ -4413,20 +3951,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: GetObjectsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_objects_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_objects_with_http_info(get_objects_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_objects_with_http_info(
-        self,
-        get_objects_params: Annotated[
-            GetObjectsParams, Field(..., description="Request object.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_objects_with_http_info(self, get_objects_params : Annotated[GetObjectsParams, Field(..., description="Request object.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get multiple records.  # noqa: E501
 
         Retrieve one or more records, potentially from different indices, in a single API operation. Results will be received in the same order as the requests.   # noqa: E501
@@ -4465,28 +3997,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["get_objects_params"]
+        _all_params = [
+            'get_objects_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_objects" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -4496,42 +4030,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["get_objects_params"] is not None:
-            _body_params = _params["get_objects_params"]
+        if _params['get_objects_params'] is not None:
+            _body_params = _params['get_objects_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "GetObjectsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "GetObjectsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/*/objects",
-            "POST",
+            '/1/indexes/*/objects', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -4540,25 +4071,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_rule(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a rule object.")
-        ],
-        **kwargs,
-    ) -> Rule:  # noqa: E501
+    def get_rule(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a rule object.")], **kwargs) -> Rule:  # noqa: E501
         """Get a rule.  # noqa: E501
 
         Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).  # noqa: E501
@@ -4583,23 +4104,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: Rule
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_rule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_rule_with_http_info(index_name, object_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_rule_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a rule object.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_rule_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a rule object.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get a rule.  # noqa: E501
 
         Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).  # noqa: E501
@@ -4640,67 +4152,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id"]
+        _all_params = [
+            'index_name',
+            'object_id'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_rule" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "Rule",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "Rule",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/rules/{objectID}",
-            "GET",
+            '/1/indexes/{indexName}/rules/{objectID}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -4709,22 +4223,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_settings(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        **kwargs,
-    ) -> IndexSettings:  # noqa: E501
+    def get_settings(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], **kwargs) -> IndexSettings:  # noqa: E501
         """Get index settings.  # noqa: E501
 
         Return an object containing an index's [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).  # noqa: E501
@@ -4747,20 +4254,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: IndexSettings
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_settings_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_settings_with_http_info(index_name, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_settings_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_settings_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get index settings.  # noqa: E501
 
         Return an object containing an index's [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).  # noqa: E501
@@ -4799,64 +4300,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name"]
+        _all_params = [
+            'index_name'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_settings" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "IndexSettings",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "IndexSettings",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/settings",
-            "GET",
+            '/1/indexes/{indexName}/settings', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -4865,13 +4367,12 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def get_sources(self, **kwargs) -> List[Source]:  # noqa: E501
@@ -4895,8 +4396,8 @@ class SearchClient:
                  returns the request thread.
         :rtype: List[Source]
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_sources_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_sources_with_http_info(**kwargs)  # noqa: E501
@@ -4939,28 +4440,29 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = []
+        _all_params = [
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_sources" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -4970,31 +4472,29 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "List[Source]",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "List[Source]",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/security/sources",
-            "GET",
+            '/1/security/sources', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -5003,25 +4503,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_synonym(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a synonym object.")
-        ],
-        **kwargs,
-    ) -> SynonymHit:  # noqa: E501
+    def get_synonym(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a synonym object.")], **kwargs) -> SynonymHit:  # noqa: E501
         """Get a synonym object.  # noqa: E501
 
         Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).  # noqa: E501
@@ -5046,23 +4536,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SynonymHit
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_synonym_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_synonym_with_http_info(index_name, object_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_synonym_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a synonym object.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_synonym_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a synonym object.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get a synonym object.  # noqa: E501
 
         Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).  # noqa: E501
@@ -5103,67 +4584,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id"]
+        _all_params = [
+            'index_name',
+            'object_id'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_synonym" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SynonymHit",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SynonymHit",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/synonyms/{objectID}",
-            "GET",
+            '/1/indexes/{indexName}/synonyms/{objectID}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -5172,25 +4655,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_task(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        task_id: Annotated[
-            StrictInt, Field(..., description="Unique task identifier.")
-        ],
-        **kwargs,
-    ) -> GetTaskResponse:  # noqa: E501
+    def get_task(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], task_id : Annotated[StrictInt, Field(..., description="Unique task identifier.")], **kwargs) -> GetTaskResponse:  # noqa: E501
         """Check a task's status.  # noqa: E501
 
         Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.  # noqa: E501
@@ -5215,23 +4688,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: GetTaskResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_task_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_task_with_http_info(index_name, task_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_task_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        task_id: Annotated[
-            StrictInt, Field(..., description="Unique task identifier.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_task_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], task_id : Annotated[StrictInt, Field(..., description="Unique task identifier.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Check a task's status.  # noqa: E501
 
         Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.  # noqa: E501
@@ -5272,67 +4736,69 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "task_id"]
+        _all_params = [
+            'index_name',
+            'task_id'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_task" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["task_id"]:
-            _path_params["taskID"] = _params["task_id"]
+        if _params['task_id']:
+            _path_params['taskID'] = _params['task_id']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "GetTaskResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "GetTaskResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/task/{taskID}",
-            "GET",
+            '/1/indexes/{indexName}/task/{taskID}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -5341,13 +4807,12 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def get_top_user_ids(self, **kwargs) -> GetTopUserIdsResponse:  # noqa: E501
@@ -5371,8 +4836,8 @@ class SearchClient:
                  returns the request thread.
         :rtype: GetTopUserIdsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_top_user_ids_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_top_user_ids_with_http_info(**kwargs)  # noqa: E501
@@ -5415,28 +4880,29 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = []
+        _all_params = [
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_top_user_ids" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -5446,31 +4912,29 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "GetTopUserIdsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "GetTopUserIdsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping/top",
-            "GET",
+            '/1/clusters/mapping/top', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -5479,22 +4943,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_user_id(
-        self,
-        user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        **kwargs,
-    ) -> UserId:  # noqa: E501
+    def get_user_id(self, user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], **kwargs) -> UserId:  # noqa: E501
         """Get userID.  # noqa: E501
 
         Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.   # noqa: E501
@@ -5517,20 +4974,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UserId
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the get_user_id_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_user_id_with_http_info(user_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_user_id_with_http_info(
-        self,
-        user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def get_user_id_with_http_info(self, user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get userID.  # noqa: E501
 
         Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.   # noqa: E501
@@ -5569,64 +5020,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["user_id"]
+        _all_params = [
+            'user_id'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_user_id" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["user_id"]:
-            _path_params["userID"] = _params["user_id"]
+        if _params['user_id']:
+            _path_params['userID'] = _params['user_id']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UserId",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UserId",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping/{userID}",
-            "GET",
+            '/1/clusters/mapping/{userID}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -5635,25 +5087,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def has_pending_mappings(
-        self,
-        get_clusters: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether to include the cluster's pending mapping state in the response."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> HasPendingMappingsResponse:  # noqa: E501
+    def has_pending_mappings(self, get_clusters : Annotated[Optional[StrictBool], Field(description="Indicates whether to include the cluster's pending mapping state in the response.")] = None, **kwargs) -> HasPendingMappingsResponse:  # noqa: E501
         """Get migration and user mapping status.  # noqa: E501
 
         To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.   # noqa: E501
@@ -5676,23 +5118,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: HasPendingMappingsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the has_pending_mappings_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.has_pending_mappings_with_http_info(get_clusters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def has_pending_mappings_with_http_info(
-        self,
-        get_clusters: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether to include the cluster's pending mapping state in the response."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def has_pending_mappings_with_http_info(self, get_clusters : Annotated[Optional[StrictBool], Field(description="Indicates whether to include the cluster's pending mapping state in the response.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get migration and user mapping status.  # noqa: E501
 
         To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.   # noqa: E501
@@ -5731,28 +5164,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["get_clusters"]
+        _all_params = [
+            'get_clusters'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method has_pending_mappings" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -5761,35 +5196,33 @@ class SearchClient:
 
         # process the query parameters
         _query_params = []
-        if _params.get("get_clusters") is not None:  # noqa: E501
-            _query_params.append(("getClusters", _params["get_clusters"]))
+        if _params.get('get_clusters') is not None:  # noqa: E501
+            _query_params.append(('getClusters', _params['get_clusters']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "HasPendingMappingsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "HasPendingMappingsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping/pending",
-            "GET",
+            '/1/clusters/mapping/pending', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -5798,13 +5231,12 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def list_api_keys(self, **kwargs) -> ListApiKeysResponse:  # noqa: E501
@@ -5828,8 +5260,8 @@ class SearchClient:
                  returns the request thread.
         :rtype: ListApiKeysResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the list_api_keys_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.list_api_keys_with_http_info(**kwargs)  # noqa: E501
@@ -5872,28 +5304,29 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = []
+        _all_params = [
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_api_keys" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -5903,31 +5336,29 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "ListApiKeysResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "ListApiKeysResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/keys",
-            "GET",
+            '/1/keys', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -5936,13 +5367,12 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def list_clusters(self, **kwargs) -> ListClustersResponse:  # noqa: E501
@@ -5966,8 +5396,8 @@ class SearchClient:
                  returns the request thread.
         :rtype: ListClustersResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the list_clusters_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.list_clusters_with_http_info(**kwargs)  # noqa: E501
@@ -6010,28 +5440,29 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = []
+        _all_params = [
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_clusters" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -6041,31 +5472,29 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "ListClustersResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "ListClustersResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters",
-            "GET",
+            '/1/clusters', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -6074,28 +5503,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_indices(
-        self,
-        page: Annotated[
-            Optional[conint(strict=True, ge=0)],
-            Field(
-                description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. "
-            ),
-        ] = None,
-        hits_per_page: Annotated[
-            Optional[StrictInt], Field(description="Maximum number of hits per page.")
-        ] = None,
-        **kwargs,
-    ) -> ListIndicesResponse:  # noqa: E501
+    def list_indices(self, page : Annotated[Optional[conint(strict=True, ge=0)], Field(description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. ")] = None, hits_per_page : Annotated[Optional[StrictInt], Field(description="Maximum number of hits per page.")] = None, **kwargs) -> ListIndicesResponse:  # noqa: E501
         """List indices.  # noqa: E501
 
         List indices in an Algolia application.  # noqa: E501
@@ -6105,7 +5521,7 @@ class SearchClient:
         >>> thread = api.list_indices(page, hits_per_page, async_req=True)
         >>> result = thread.get()
 
-        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. 
         :type page: int
         :param hits_per_page: Maximum number of hits per page.
         :type hits_per_page: int
@@ -6120,26 +5536,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: ListIndicesResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the list_indices_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.list_indices_with_http_info(page, hits_per_page, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_indices_with_http_info(
-        self,
-        page: Annotated[
-            Optional[conint(strict=True, ge=0)],
-            Field(
-                description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. "
-            ),
-        ] = None,
-        hits_per_page: Annotated[
-            Optional[StrictInt], Field(description="Maximum number of hits per page.")
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def list_indices_with_http_info(self, page : Annotated[Optional[conint(strict=True, ge=0)], Field(description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. ")] = None, hits_per_page : Annotated[Optional[StrictInt], Field(description="Maximum number of hits per page.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List indices.  # noqa: E501
 
         List indices in an Algolia application.  # noqa: E501
@@ -6149,7 +5553,7 @@ class SearchClient:
         >>> thread = api.list_indices_with_http_info(page, hits_per_page, async_req=True)
         >>> result = thread.get()
 
-        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. 
         :type page: int
         :param hits_per_page: Maximum number of hits per page.
         :type hits_per_page: int
@@ -6180,28 +5584,31 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["page", "hits_per_page"]
+        _all_params = [
+            'page',
+            'hits_per_page'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_indices" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -6210,38 +5617,36 @@ class SearchClient:
 
         # process the query parameters
         _query_params = []
-        if _params.get("page") is not None:  # noqa: E501
-            _query_params.append(("page", _params["page"]))
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
 
-        if _params.get("hits_per_page") is not None:  # noqa: E501
-            _query_params.append(("hitsPerPage", _params["hits_per_page"]))
+        if _params.get('hits_per_page') is not None:  # noqa: E501
+            _query_params.append(('hitsPerPage', _params['hits_per_page']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "ListIndicesResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "ListIndicesResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes",
-            "GET",
+            '/1/indexes', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -6250,28 +5655,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_user_ids(
-        self,
-        page: Annotated[
-            Optional[conint(strict=True, ge=0)],
-            Field(
-                description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. "
-            ),
-        ] = None,
-        hits_per_page: Annotated[
-            Optional[StrictInt], Field(description="Maximum number of hits per page.")
-        ] = None,
-        **kwargs,
-    ) -> ListUserIdsResponse:  # noqa: E501
+    def list_user_ids(self, page : Annotated[Optional[conint(strict=True, ge=0)], Field(description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. ")] = None, hits_per_page : Annotated[Optional[StrictInt], Field(description="Maximum number of hits per page.")] = None, **kwargs) -> ListUserIdsResponse:  # noqa: E501
         """List userIDs.  # noqa: E501
 
         List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.   # noqa: E501
@@ -6281,7 +5673,7 @@ class SearchClient:
         >>> thread = api.list_user_ids(page, hits_per_page, async_req=True)
         >>> result = thread.get()
 
-        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. 
         :type page: int
         :param hits_per_page: Maximum number of hits per page.
         :type hits_per_page: int
@@ -6296,26 +5688,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: ListUserIdsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the list_user_ids_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.list_user_ids_with_http_info(page, hits_per_page, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_user_ids_with_http_info(
-        self,
-        page: Annotated[
-            Optional[conint(strict=True, ge=0)],
-            Field(
-                description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. "
-            ),
-        ] = None,
-        hits_per_page: Annotated[
-            Optional[StrictInt], Field(description="Maximum number of hits per page.")
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def list_user_ids_with_http_info(self, page : Annotated[Optional[conint(strict=True, ge=0)], Field(description="Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. ")] = None, hits_per_page : Annotated[Optional[StrictInt], Field(description="Maximum number of hits per page.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List userIDs.  # noqa: E501
 
         List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.   # noqa: E501
@@ -6325,7 +5705,7 @@ class SearchClient:
         >>> thread = api.list_user_ids_with_http_info(page, hits_per_page, async_req=True)
         >>> result = thread.get()
 
-        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+        :param page: Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated. 
         :type page: int
         :param hits_per_page: Maximum number of hits per page.
         :type hits_per_page: int
@@ -6356,28 +5736,31 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["page", "hits_per_page"]
+        _all_params = [
+            'page',
+            'hits_per_page'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_user_ids" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -6386,38 +5769,36 @@ class SearchClient:
 
         # process the query parameters
         _query_params = []
-        if _params.get("page") is not None:  # noqa: E501
-            _query_params.append(("page", _params["page"]))
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
 
-        if _params.get("hits_per_page") is not None:  # noqa: E501
-            _query_params.append(("hitsPerPage", _params["hits_per_page"]))
+        if _params.get('hits_per_page') is not None:  # noqa: E501
+            _query_params.append(('hitsPerPage', _params['hits_per_page']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "ListUserIdsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "ListUserIdsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping",
-            "GET",
+            '/1/clusters/mapping', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -6426,18 +5807,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def multiple_batch(
-        self, batch_params: BatchParams, **kwargs
-    ) -> MultipleBatchResponse:  # noqa: E501
+    def multiple_batch(self, batch_params : BatchParams, **kwargs) -> MultipleBatchResponse:  # noqa: E501
         """Batch write operations on multiple indices.  # noqa: E501
 
         To reduce the time spent on network round trips, you can perform several write actions in a single request. It's a multi-index version of the [`batch` operation](#tag/Records/operation/batch). Actions are applied in the order they are specified. The supported actions are equivalent to the individual operations of the same name.   # noqa: E501
@@ -6460,16 +5838,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: MultipleBatchResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the multiple_batch_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.multiple_batch_with_http_info(batch_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def multiple_batch_with_http_info(
-        self, batch_params: BatchParams, **kwargs
-    ) -> ApiResponse:  # noqa: E501
+    def multiple_batch_with_http_info(self, batch_params : BatchParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Batch write operations on multiple indices.  # noqa: E501
 
         To reduce the time spent on network round trips, you can perform several write actions in a single request. It's a multi-index version of the [`batch` operation](#tag/Records/operation/batch). Actions are applied in the order they are specified. The supported actions are equivalent to the individual operations of the same name.   # noqa: E501
@@ -6508,28 +5884,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["batch_params"]
+        _all_params = [
+            'batch_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method multiple_batch" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -6539,42 +5917,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["batch_params"] is not None:
-            _body_params = _params["batch_params"]
+        if _params['batch_params'] is not None:
+            _body_params = _params['batch_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "MultipleBatchResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "MultipleBatchResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/*/batch",
-            "POST",
+            '/1/indexes/*/batch', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -6583,23 +5958,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def operation_index(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        operation_index_params: OperationIndexParams,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def operation_index(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], operation_index_params : OperationIndexParams, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Copy, move, or rename an index.  # noqa: E501
 
         This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the destination index exists, it will be replaced, except for index-specific API keys and analytics data. If the destination index doesn't exist, it will be created.  The choice between moving or copying an index depends on your needs. Choose:  - **Move** to rename an index. - **Copy** to create a new index with the same records and configuration as an existing one.  > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).  # noqa: E501
@@ -6624,23 +5991,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the operation_index_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.operation_index_with_http_info(
-            index_name, operation_index_params, **kwargs
-        )  # noqa: E501
+        return self.operation_index_with_http_info(index_name, operation_index_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def operation_index_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        operation_index_params: OperationIndexParams,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def operation_index_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], operation_index_params : OperationIndexParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Copy, move, or rename an index.  # noqa: E501
 
         This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the destination index exists, it will be replaced, except for index-specific API keys and analytics data. If the destination index doesn't exist, it will be created.  The choice between moving or copying an index depends on your needs. Choose:  - **Move** to rename an index. - **Copy** to create a new index with the same records and configuration as an existing one.  > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).  # noqa: E501
@@ -6681,75 +6039,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "operation_index_params"]
+        _all_params = [
+            'index_name',
+            'operation_index_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method operation_index" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["operation_index_params"] is not None:
-            _body_params = _params["operation_index_params"]
+        if _params['operation_index_params'] is not None:
+            _body_params = _params['operation_index_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/operation",
-            "POST",
+            '/1/indexes/{indexName}/operation', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -6758,35 +6117,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def partial_update_object(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        attributes_to_update: Annotated[
-            Dict[str, AttributeToUpdate],
-            Field(..., description="Object with attributes to update."),
-        ],
-        create_if_not_exists: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether to create a new record if it doesn't exist yet. "
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedAtWithObjectIdResponse:  # noqa: E501
+    def partial_update_object(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], attributes_to_update : Annotated[Dict[str, AttributeToUpdate], Field(..., description="Object with attributes to update.")], create_if_not_exists : Annotated[Optional[StrictBool], Field(description="Indicates whether to create a new record if it doesn't exist yet. ")] = None, **kwargs) -> UpdatedAtWithObjectIdResponse:  # noqa: E501
         """Update record attributes.  # noqa: E501
 
         Add new attributes or update current ones in an existing record. You can use any first-level attribute but not nested attributes. If you specify a [nested attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/), the engine treats it as a replacement for its first-level ancestor.   # noqa: E501
@@ -6802,7 +6141,7 @@ class SearchClient:
         :type object_id: str
         :param attributes_to_update: Object with attributes to update. (required)
         :type attributes_to_update: Dict[str, AttributeToUpdate]
-        :param create_if_not_exists: Indicates whether to create a new record if it doesn't exist yet.
+        :param create_if_not_exists: Indicates whether to create a new record if it doesn't exist yet. 
         :type create_if_not_exists: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -6815,35 +6154,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtWithObjectIdResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the partial_update_object_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.partial_update_object_with_http_info(
-            index_name, object_id, attributes_to_update, create_if_not_exists, **kwargs
-        )  # noqa: E501
+        return self.partial_update_object_with_http_info(index_name, object_id, attributes_to_update, create_if_not_exists, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def partial_update_object_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique record (object) identifier.")
-        ],
-        attributes_to_update: Annotated[
-            Dict[str, AttributeToUpdate],
-            Field(..., description="Object with attributes to update."),
-        ],
-        create_if_not_exists: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether to create a new record if it doesn't exist yet. "
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def partial_update_object_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], attributes_to_update : Annotated[Dict[str, AttributeToUpdate], Field(..., description="Object with attributes to update.")], create_if_not_exists : Annotated[Optional[StrictBool], Field(description="Indicates whether to create a new record if it doesn't exist yet. ")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Update record attributes.  # noqa: E501
 
         Add new attributes or update current ones in an existing record. You can use any first-level attribute but not nested attributes. If you specify a [nested attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/), the engine treats it as a replacement for its first-level ancestor.   # noqa: E501
@@ -6859,7 +6177,7 @@ class SearchClient:
         :type object_id: str
         :param attributes_to_update: Object with attributes to update. (required)
         :type attributes_to_update: Dict[str, AttributeToUpdate]
-        :param create_if_not_exists: Indicates whether to create a new record if it doesn't exist yet.
+        :param create_if_not_exists: Indicates whether to create a new record if it doesn't exist yet. 
         :type create_if_not_exists: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -6889,85 +6207,83 @@ class SearchClient:
         _params = locals()
 
         _all_params = [
-            "index_name",
-            "object_id",
-            "attributes_to_update",
-            "create_if_not_exists",
+            'index_name',
+            'object_id',
+            'attributes_to_update',
+            'create_if_not_exists'
         ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method partial_update_object" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("create_if_not_exists") is not None:  # noqa: E501
-            _query_params.append(("createIfNotExists", _params["create_if_not_exists"]))
+        if _params.get('create_if_not_exists') is not None:  # noqa: E501
+            _query_params.append(('createIfNotExists', _params['create_if_not_exists']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["attributes_to_update"] is not None:
-            _body_params = _params["attributes_to_update"]
+        if _params['attributes_to_update'] is not None:
+            _body_params = _params['attributes_to_update']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtWithObjectIdResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtWithObjectIdResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/{objectID}/partial",
-            "POST",
+            '/1/indexes/{indexName}/{objectID}/partial', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -6976,34 +6292,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def post(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        body: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Parameters to send with the custom request."),
-        ] = None,
-        **kwargs,
-    ) -> object:  # noqa: E501
+    def post(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -7030,32 +6327,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the post_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.post_with_http_info(path, parameters, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def post_with_http_info(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        body: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Parameters to send with the custom request."),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def post_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -7098,77 +6377,80 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["path", "parameters", "body"]
+        _all_params = [
+            'path',
+            'parameters',
+            'body'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'" " to method post" % _key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method post" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["path"]:
-            _path_params["path"] = _params["path"]
+        if _params['path']:
+            _path_params['path'] = _params['path']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("parameters") is not None:  # noqa: E501
-            _query_params.append(("parameters", _params["parameters"]))
+        if _params.get('parameters') is not None:  # noqa: E501
+            _query_params.append(('parameters', _params['parameters']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["body"] is not None:
-            _body_params = _params["body"]
+        if _params['body'] is not None:
+            _body_params = _params['body']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "object",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "object",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1{path}",
-            "POST",
+            '/1{path}', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -7177,34 +6459,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def put(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        body: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Parameters to send with the custom request."),
-        ] = None,
-        **kwargs,
-    ) -> object:  # noqa: E501
+    def put(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -7231,32 +6494,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the put_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.put_with_http_info(path, parameters, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_with_http_info(
-        self,
-        path: Annotated[
-            StrictStr,
-            Field(
-                ...,
-                description='Path of the endpoint, anything after "/1" must be specified.',
-            ),
-        ],
-        parameters: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Query parameters to apply to the current query."),
-        ] = None,
-        body: Annotated[
-            Optional[Dict[str, Any]],
-            Field(description="Parameters to send with the custom request."),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def put_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -7299,77 +6544,80 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["path", "parameters", "body"]
+        _all_params = [
+            'path',
+            'parameters',
+            'body'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'" " to method put" % _key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method put" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["path"]:
-            _path_params["path"] = _params["path"]
+        if _params['path']:
+            _path_params['path'] = _params['path']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("parameters") is not None:  # noqa: E501
-            _query_params.append(("parameters", _params["parameters"]))
+        if _params.get('parameters') is not None:  # noqa: E501
+            _query_params.append(('parameters', _params['parameters']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["body"] is not None:
-            _body_params = _params["body"]
+        if _params['body'] is not None:
+            _body_params = _params['body']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "object",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "object",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1{path}",
-            "PUT",
+            '/1{path}', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -7378,22 +6626,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def remove_user_id(
-        self,
-        user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        **kwargs,
-    ) -> RemoveUserIdResponse:  # noqa: E501
+    def remove_user_id(self, user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], **kwargs) -> RemoveUserIdResponse:  # noqa: E501
         """Remove userID.  # noqa: E501
 
         Remove a userID and its associated data from the multi-clusters.  # noqa: E501
@@ -7416,20 +6657,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: RemoveUserIdResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the remove_user_id_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.remove_user_id_with_http_info(user_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def remove_user_id_with_http_info(
-        self,
-        user_id: Annotated[
-            constr(strict=True), Field(..., description="userID to assign.")
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def remove_user_id_with_http_info(self, user_id : Annotated[constr(strict=True), Field(..., description="userID to assign.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Remove userID.  # noqa: E501
 
         Remove a userID and its associated data from the multi-clusters.  # noqa: E501
@@ -7468,64 +6703,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["user_id"]
+        _all_params = [
+            'user_id'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method remove_user_id" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["user_id"]:
-            _path_params["userID"] = _params["user_id"]
+        if _params['user_id']:
+            _path_params['userID'] = _params['user_id']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "RemoveUserIdResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "RemoveUserIdResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping/{userID}",
-            "DELETE",
+            '/1/clusters/mapping/{userID}', 'DELETE',
             _path_params,
             _query_params,
             _header_params,
@@ -7534,20 +6770,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def replace_sources(
-        self,
-        source: Annotated[conlist(Source), Field(..., description="Allowed sources.")],
-        **kwargs,
-    ) -> ReplaceSourceResponse:  # noqa: E501
+    def replace_sources(self, source : Annotated[conlist(Source), Field(..., description="Allowed sources.")], **kwargs) -> ReplaceSourceResponse:  # noqa: E501
         """Replace all sources.  # noqa: E501
 
         Replace all allowed sources.  # noqa: E501
@@ -7570,18 +6801,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: ReplaceSourceResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the replace_sources_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.replace_sources_with_http_info(source, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def replace_sources_with_http_info(
-        self,
-        source: Annotated[conlist(Source), Field(..., description="Allowed sources.")],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def replace_sources_with_http_info(self, source : Annotated[conlist(Source), Field(..., description="Allowed sources.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Replace all sources.  # noqa: E501
 
         Replace all allowed sources.  # noqa: E501
@@ -7620,28 +6847,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["source"]
+        _all_params = [
+            'source'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method replace_sources" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -7651,42 +6880,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["source"] is not None:
-            _body_params = _params["source"]
+        if _params['source'] is not None:
+            _body_params = _params['source']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "ReplaceSourceResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "ReplaceSourceResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/security/sources",
-            "PUT",
+            '/1/security/sources', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -7695,18 +6921,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def restore_api_key(
-        self, key: Annotated[StrictStr, Field(..., description="API key.")], **kwargs
-    ) -> AddApiKeyResponse:  # noqa: E501
+    def restore_api_key(self, key : Annotated[StrictStr, Field(..., description="API key.")], **kwargs) -> AddApiKeyResponse:  # noqa: E501
         """Restore API key.  # noqa: E501
 
         Restore a deleted API key, along with its associated permissions. The request must be authenticated with the admin API key.   # noqa: E501
@@ -7729,16 +6952,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: AddApiKeyResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the restore_api_key_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.restore_api_key_with_http_info(key, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def restore_api_key_with_http_info(
-        self, key: Annotated[StrictStr, Field(..., description="API key.")], **kwargs
-    ) -> ApiResponse:  # noqa: E501
+    def restore_api_key_with_http_info(self, key : Annotated[StrictStr, Field(..., description="API key.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Restore API key.  # noqa: E501
 
         Restore a deleted API key, along with its associated permissions. The request must be authenticated with the admin API key.   # noqa: E501
@@ -7777,64 +6998,65 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["key"]
+        _all_params = [
+            'key'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method restore_api_key" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["key"]:
-            _path_params["key"] = _params["key"]
+        if _params['key']:
+            _path_params['key'] = _params['key']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "AddApiKeyResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "AddApiKeyResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/keys/{key}/restore",
-            "POST",
+            '/1/keys/{key}/restore', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -7843,23 +7065,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def save_object(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        body: Annotated[Dict[str, Any], Field(..., description="The Algolia record.")],
-        **kwargs,
-    ) -> SaveObjectResponse:  # noqa: E501
+    def save_object(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], body : Annotated[Dict[str, Any], Field(..., description="The Algolia record.")], **kwargs) -> SaveObjectResponse:  # noqa: E501
         """Add or update a record.  # noqa: E501
 
         Add a record (object) to an index or replace it. If the record doesn't contain an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing record is replaced with the new one. To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).   # noqa: E501
@@ -7884,21 +7098,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SaveObjectResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the save_object_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.save_object_with_http_info(index_name, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def save_object_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        body: Annotated[Dict[str, Any], Field(..., description="The Algolia record.")],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def save_object_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], body : Annotated[Dict[str, Any], Field(..., description="The Algolia record.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Add or update a record.  # noqa: E501
 
         Add a record (object) to an index or replace it. If the record doesn't contain an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing record is replaced with the new one. To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).   # noqa: E501
@@ -7939,75 +7146,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "body"]
+        _all_params = [
+            'index_name',
+            'body'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method save_object" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["body"] is not None:
-            _body_params = _params["body"]
+        if _params['body'] is not None:
+            _body_params = _params['body']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SaveObjectResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SaveObjectResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}",
-            "POST",
+            '/1/indexes/{indexName}', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -8016,32 +7224,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def save_rule(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a rule object.")
-        ],
-        rule: Rule,
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedRuleResponse:  # noqa: E501
+    def save_rule(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a rule object.")], rule : Rule, forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> UpdatedRuleResponse:  # noqa: E501
         """Create or update a rule.  # noqa: E501
 
         To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).  # noqa: E501
@@ -8070,32 +7261,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedRuleResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the save_rule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.save_rule_with_http_info(
-            index_name, object_id, rule, forward_to_replicas, **kwargs
-        )  # noqa: E501
+        return self.save_rule_with_http_info(index_name, object_id, rule, forward_to_replicas, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def save_rule_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a rule object.")
-        ],
-        rule: Rule,
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def save_rule_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a rule object.")], rule : Rule, forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Create or update a rule.  # noqa: E501
 
         To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).  # noqa: E501
@@ -8140,81 +7313,84 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id", "rule", "forward_to_replicas"]
+        _all_params = [
+            'index_name',
+            'object_id',
+            'rule',
+            'forward_to_replicas'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method save_rule" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["rule"] is not None:
-            _body_params = _params["rule"]
+        if _params['rule'] is not None:
+            _body_params = _params['rule']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedRuleResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedRuleResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/rules/{objectID}",
-            "PUT",
+            '/1/indexes/{indexName}/rules/{objectID}', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -8223,35 +7399,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def save_rules(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        rules: conlist(Rule),
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        clear_existing_rules: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether existing rules should be deleted before adding this batch."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def save_rules(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], rules : conlist(Rule), forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, clear_existing_rules : Annotated[Optional[StrictBool], Field(description="Indicates whether existing rules should be deleted before adding this batch.")] = None, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Save a batch of rules.  # noqa: E501
 
         Create or update multiple rules.  # noqa: E501
@@ -8280,35 +7436,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the save_rules_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.save_rules_with_http_info(
-            index_name, rules, forward_to_replicas, clear_existing_rules, **kwargs
-        )  # noqa: E501
+        return self.save_rules_with_http_info(index_name, rules, forward_to_replicas, clear_existing_rules, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def save_rules_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        rules: conlist(Rule),
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        clear_existing_rules: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether existing rules should be deleted before adding this batch."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def save_rules_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], rules : conlist(Rule), forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, clear_existing_rules : Annotated[Optional[StrictBool], Field(description="Indicates whether existing rules should be deleted before adding this batch.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Save a batch of rules.  # noqa: E501
 
         Create or update multiple rules.  # noqa: E501
@@ -8354,87 +7489,83 @@ class SearchClient:
         _params = locals()
 
         _all_params = [
-            "index_name",
-            "rules",
-            "forward_to_replicas",
-            "clear_existing_rules",
+            'index_name',
+            'rules',
+            'forward_to_replicas',
+            'clear_existing_rules'
         ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method save_rules" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
-        if _params.get("clear_existing_rules") is not None:  # noqa: E501
-            _query_params.append(
-                ("clearExistingRules", _params["clear_existing_rules"])
-            )
+        if _params.get('clear_existing_rules') is not None:  # noqa: E501
+            _query_params.append(('clearExistingRules', _params['clear_existing_rules']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["rules"] is not None:
-            _body_params = _params["rules"]
+        if _params['rules'] is not None:
+            _body_params = _params['rules']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/rules/batch",
-            "POST",
+            '/1/indexes/{indexName}/rules/batch', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -8443,32 +7574,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def save_synonym(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a synonym object.")
-        ],
-        synonym_hit: SynonymHit,
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> SaveSynonymResponse:  # noqa: E501
+    def save_synonym(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a synonym object.")], synonym_hit : SynonymHit, forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> SaveSynonymResponse:  # noqa: E501
         """Save a synonym.  # noqa: E501
 
         Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).   # noqa: E501
@@ -8497,32 +7611,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SaveSynonymResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the save_synonym_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.save_synonym_with_http_info(
-            index_name, object_id, synonym_hit, forward_to_replicas, **kwargs
-        )  # noqa: E501
+        return self.save_synonym_with_http_info(index_name, object_id, synonym_hit, forward_to_replicas, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def save_synonym_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        object_id: Annotated[
-            StrictStr, Field(..., description="Unique identifier of a synonym object.")
-        ],
-        synonym_hit: SynonymHit,
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def save_synonym_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], object_id : Annotated[StrictStr, Field(..., description="Unique identifier of a synonym object.")], synonym_hit : SynonymHit, forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Save a synonym.  # noqa: E501
 
         Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).   # noqa: E501
@@ -8567,81 +7663,84 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "object_id", "synonym_hit", "forward_to_replicas"]
+        _all_params = [
+            'index_name',
+            'object_id',
+            'synonym_hit',
+            'forward_to_replicas'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method save_synonym" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["object_id"]:
-            _path_params["objectID"] = _params["object_id"]
+        if _params['object_id']:
+            _path_params['objectID'] = _params['object_id']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["synonym_hit"] is not None:
-            _body_params = _params["synonym_hit"]
+        if _params['synonym_hit'] is not None:
+            _body_params = _params['synonym_hit']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SaveSynonymResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SaveSynonymResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/synonyms/{objectID}",
-            "PUT",
+            '/1/indexes/{indexName}/synonyms/{objectID}', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -8650,35 +7749,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def save_synonyms(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        synonym_hit: conlist(SynonymHit),
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        replace_existing_synonyms: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether to replace all synonyms in the index with the ones sent with this request."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def save_synonyms(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], synonym_hit : conlist(SynonymHit), forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, replace_existing_synonyms : Annotated[Optional[StrictBool], Field(description="Indicates whether to replace all synonyms in the index with the ones sent with this request.")] = None, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Save a batch of synonyms.  # noqa: E501
 
         Create or update multiple synonyms.  # noqa: E501
@@ -8707,39 +7786,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the save_synonyms_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.save_synonyms_with_http_info(
-            index_name,
-            synonym_hit,
-            forward_to_replicas,
-            replace_existing_synonyms,
-            **kwargs,
-        )  # noqa: E501
+        return self.save_synonyms_with_http_info(index_name, synonym_hit, forward_to_replicas, replace_existing_synonyms, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def save_synonyms_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        synonym_hit: conlist(SynonymHit),
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        replace_existing_synonyms: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether to replace all synonyms in the index with the ones sent with this request."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def save_synonyms_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], synonym_hit : conlist(SynonymHit), forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, replace_existing_synonyms : Annotated[Optional[StrictBool], Field(description="Indicates whether to replace all synonyms in the index with the ones sent with this request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Save a batch of synonyms.  # noqa: E501
 
         Create or update multiple synonyms.  # noqa: E501
@@ -8785,87 +7839,83 @@ class SearchClient:
         _params = locals()
 
         _all_params = [
-            "index_name",
-            "synonym_hit",
-            "forward_to_replicas",
-            "replace_existing_synonyms",
+            'index_name',
+            'synonym_hit',
+            'forward_to_replicas',
+            'replace_existing_synonyms'
         ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method save_synonyms" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
-        if _params.get("replace_existing_synonyms") is not None:  # noqa: E501
-            _query_params.append(
-                ("replaceExistingSynonyms", _params["replace_existing_synonyms"])
-            )
+        if _params.get('replace_existing_synonyms') is not None:  # noqa: E501
+            _query_params.append(('replaceExistingSynonyms', _params['replace_existing_synonyms']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["synonym_hit"] is not None:
-            _body_params = _params["synonym_hit"]
+        if _params['synonym_hit'] is not None:
+            _body_params = _params['synonym_hit']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/synonyms/batch",
-            "POST",
+            '/1/indexes/{indexName}/synonyms/batch', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -8874,26 +7924,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def search(
-        self,
-        search_method_params: Annotated[
-            SearchMethodParams,
-            Field(
-                ...,
-                description="Query requests and strategies. Results will be received in the same order as the queries.",
-            ),
-        ],
-        **kwargs,
-    ) -> SearchResponses:  # noqa: E501
+    def search(self, search_method_params : Annotated[SearchMethodParams, Field(..., description="Query requests and strategies. Results will be received in the same order as the queries.")], **kwargs) -> SearchResponses:  # noqa: E501
         """Search multiple indices.  # noqa: E501
 
         Send multiple search queries to one or more indices.  # noqa: E501
@@ -8916,24 +7955,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SearchResponses
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the search_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.search_with_http_info(search_method_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def search_with_http_info(
-        self,
-        search_method_params: Annotated[
-            SearchMethodParams,
-            Field(
-                ...,
-                description="Query requests and strategies. Results will be received in the same order as the queries.",
-            ),
-        ],
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def search_with_http_info(self, search_method_params : Annotated[SearchMethodParams, Field(..., description="Query requests and strategies. Results will be received in the same order as the queries.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Search multiple indices.  # noqa: E501
 
         Send multiple search queries to one or more indices.  # noqa: E501
@@ -8972,27 +8001,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["search_method_params"]
+        _all_params = [
+            'search_method_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'" " to method search" % _key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method search" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -9002,42 +8034,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["search_method_params"] is not None:
-            _body_params = _params["search_method_params"]
+        if _params['search_method_params'] is not None:
+            _body_params = _params['search_method_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SearchResponses",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SearchResponses",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/*/queries",
-            "POST",
+            '/1/indexes/*/queries', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -9046,23 +8075,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def search_dictionary_entries(
-        self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(..., description="Dictionary to search in.")
-        ],
-        search_dictionary_entries_params: SearchDictionaryEntriesParams,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def search_dictionary_entries(self, dictionary_name : Annotated[DictionaryType, Field(..., description="Dictionary to search in.")], search_dictionary_entries_params : SearchDictionaryEntriesParams, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Search dictionary entries.  # noqa: E501
 
         Search for standard and [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.  # noqa: E501
@@ -9087,23 +8108,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the search_dictionary_entries_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.search_dictionary_entries_with_http_info(
-            dictionary_name, search_dictionary_entries_params, **kwargs
-        )  # noqa: E501
+        return self.search_dictionary_entries_with_http_info(dictionary_name, search_dictionary_entries_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def search_dictionary_entries_with_http_info(
-        self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(..., description="Dictionary to search in.")
-        ],
-        search_dictionary_entries_params: SearchDictionaryEntriesParams,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def search_dictionary_entries_with_http_info(self, dictionary_name : Annotated[DictionaryType, Field(..., description="Dictionary to search in.")], search_dictionary_entries_params : SearchDictionaryEntriesParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Search dictionary entries.  # noqa: E501
 
         Search for standard and [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.  # noqa: E501
@@ -9144,75 +8156,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["dictionary_name", "search_dictionary_entries_params"]
+        _all_params = [
+            'dictionary_name',
+            'search_dictionary_entries_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method search_dictionary_entries" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["dictionary_name"]:
-            _path_params["dictionaryName"] = _params["dictionary_name"]
+        if _params['dictionary_name']:
+            _path_params['dictionaryName'] = _params['dictionary_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["search_dictionary_entries_params"] is not None:
-            _body_params = _params["search_dictionary_entries_params"]
+        if _params['search_dictionary_entries_params'] is not None:
+            _body_params = _params['search_dictionary_entries_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/dictionaries/{dictionaryName}/search",
-            "POST",
+            '/1/dictionaries/{dictionaryName}/search', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -9221,24 +8234,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def search_for_facet_values(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        facet_name: Annotated[StrictStr, Field(..., description="Facet name.")],
-        search_for_facet_values_request: Optional[SearchForFacetValuesRequest] = None,
-        **kwargs,
-    ) -> SearchForFacetValuesResponse:  # noqa: E501
+    def search_for_facet_values(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], facet_name : Annotated[StrictStr, Field(..., description="Facet name.")], search_for_facet_values_request : Optional[SearchForFacetValuesRequest] = None, **kwargs) -> SearchForFacetValuesResponse:  # noqa: E501
         """Search for facet values.  # noqa: E501
 
         [Search for a facet's values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.   # noqa: E501
@@ -9265,24 +8269,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SearchForFacetValuesResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the search_for_facet_values_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.search_for_facet_values_with_http_info(
-            index_name, facet_name, search_for_facet_values_request, **kwargs
-        )  # noqa: E501
+        return self.search_for_facet_values_with_http_info(index_name, facet_name, search_for_facet_values_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def search_for_facet_values_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        facet_name: Annotated[StrictStr, Field(..., description="Facet name.")],
-        search_for_facet_values_request: Optional[SearchForFacetValuesRequest] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def search_for_facet_values_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], facet_name : Annotated[StrictStr, Field(..., description="Facet name.")], search_for_facet_values_request : Optional[SearchForFacetValuesRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Search for facet values.  # noqa: E501
 
         [Search for a facet's values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.   # noqa: E501
@@ -9325,78 +8319,80 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "facet_name", "search_for_facet_values_request"]
+        _all_params = [
+            'index_name',
+            'facet_name',
+            'search_for_facet_values_request'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method search_for_facet_values" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
 
-        if _params["facet_name"]:
-            _path_params["facetName"] = _params["facet_name"]
+        if _params['facet_name']:
+            _path_params['facetName'] = _params['facet_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["search_for_facet_values_request"] is not None:
-            _body_params = _params["search_for_facet_values_request"]
+        if _params['search_for_facet_values_request'] is not None:
+            _body_params = _params['search_for_facet_values_request']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SearchForFacetValuesResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SearchForFacetValuesResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/facets/{facetName}/query",
-            "POST",
+            '/1/indexes/{indexName}/facets/{facetName}/query', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -9405,23 +8401,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def search_rules(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        search_rules_params: Optional[SearchRulesParams] = None,
-        **kwargs,
-    ) -> SearchRulesResponse:  # noqa: E501
+    def search_rules(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], search_rules_params : Optional[SearchRulesParams] = None, **kwargs) -> SearchRulesResponse:  # noqa: E501
         """Search for rules.  # noqa: E501
 
         Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.  # noqa: E501
@@ -9446,23 +8434,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SearchRulesResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the search_rules_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.search_rules_with_http_info(
-            index_name, search_rules_params, **kwargs
-        )  # noqa: E501
+        return self.search_rules_with_http_info(index_name, search_rules_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def search_rules_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        search_rules_params: Optional[SearchRulesParams] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def search_rules_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], search_rules_params : Optional[SearchRulesParams] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Search for rules.  # noqa: E501
 
         Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.  # noqa: E501
@@ -9503,75 +8482,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "search_rules_params"]
+        _all_params = [
+            'index_name',
+            'search_rules_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method search_rules" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["search_rules_params"] is not None:
-            _body_params = _params["search_rules_params"]
+        if _params['search_rules_params'] is not None:
+            _body_params = _params['search_rules_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SearchRulesResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SearchRulesResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/rules/search",
-            "POST",
+            '/1/indexes/{indexName}/rules/search', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -9580,23 +8560,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def search_single_index(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        search_params: Optional[SearchParams] = None,
-        **kwargs,
-    ) -> SearchResponse:  # noqa: E501
+    def search_single_index(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], search_params : Optional[SearchParams] = None, **kwargs) -> SearchResponse:  # noqa: E501
         """Search an index.  # noqa: E501
 
         Return records that match the query.  # noqa: E501
@@ -9621,23 +8593,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SearchResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the search_single_index_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.search_single_index_with_http_info(
-            index_name, search_params, **kwargs
-        )  # noqa: E501
+        return self.search_single_index_with_http_info(index_name, search_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def search_single_index_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        search_params: Optional[SearchParams] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def search_single_index_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], search_params : Optional[SearchParams] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Search an index.  # noqa: E501
 
         Return records that match the query.  # noqa: E501
@@ -9678,75 +8641,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "search_params"]
+        _all_params = [
+            'index_name',
+            'search_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method search_single_index" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["search_params"] is not None:
-            _body_params = _params["search_params"]
+        if _params['search_params'] is not None:
+            _body_params = _params['search_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SearchResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SearchResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/query",
-            "POST",
+            '/1/indexes/{indexName}/query', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -9755,41 +8719,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def search_synonyms(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        type: Annotated[
-            Optional[SynonymType],
-            Field(
-                description="Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)."
-            ),
-        ] = None,
-        page: Annotated[
-            Optional[conint(strict=True, ge=0)],
-            Field(
-                description="Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination. "
-            ),
-        ] = None,
-        hits_per_page: Annotated[
-            Optional[StrictInt], Field(description="Maximum number of hits per page.")
-        ] = None,
-        search_synonyms_params: Annotated[
-            Optional[SearchSynonymsParams],
-            Field(description="Body of the `searchSynonyms` operation."),
-        ] = None,
-        **kwargs,
-    ) -> SearchSynonymsResponse:  # noqa: E501
+    def search_synonyms(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], type : Annotated[Optional[SynonymType], Field(description="Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).")] = None, page : Annotated[Optional[conint(strict=True, ge=0)], Field(description="Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination. ")] = None, hits_per_page : Annotated[Optional[StrictInt], Field(description="Maximum number of hits per page.")] = None, search_synonyms_params : Annotated[Optional[SearchSynonymsParams], Field(description="Body of the `searchSynonyms` operation.")] = None, **kwargs) -> SearchSynonymsResponse:  # noqa: E501
         """Search for synonyms.  # noqa: E501
 
         Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.  # noqa: E501
@@ -9803,7 +8741,7 @@ class SearchClient:
         :type index_name: str
         :param type: Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
         :type type: SynonymType
-        :param page: Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
+        :param page: Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination. 
         :type page: int
         :param hits_per_page: Maximum number of hits per page.
         :type hits_per_page: int
@@ -9820,41 +8758,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SearchSynonymsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the search_synonyms_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.search_synonyms_with_http_info(
-            index_name, type, page, hits_per_page, search_synonyms_params, **kwargs
-        )  # noqa: E501
+        return self.search_synonyms_with_http_info(index_name, type, page, hits_per_page, search_synonyms_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def search_synonyms_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        type: Annotated[
-            Optional[SynonymType],
-            Field(
-                description="Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)."
-            ),
-        ] = None,
-        page: Annotated[
-            Optional[conint(strict=True, ge=0)],
-            Field(
-                description="Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination. "
-            ),
-        ] = None,
-        hits_per_page: Annotated[
-            Optional[StrictInt], Field(description="Maximum number of hits per page.")
-        ] = None,
-        search_synonyms_params: Annotated[
-            Optional[SearchSynonymsParams],
-            Field(description="Body of the `searchSynonyms` operation."),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def search_synonyms_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], type : Annotated[Optional[SynonymType], Field(description="Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).")] = None, page : Annotated[Optional[conint(strict=True, ge=0)], Field(description="Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination. ")] = None, hits_per_page : Annotated[Optional[StrictInt], Field(description="Maximum number of hits per page.")] = None, search_synonyms_params : Annotated[Optional[SearchSynonymsParams], Field(description="Body of the `searchSynonyms` operation.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Search for synonyms.  # noqa: E501
 
         Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.  # noqa: E501
@@ -9868,7 +8779,7 @@ class SearchClient:
         :type index_name: str
         :param type: Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
         :type type: SynonymType
-        :param page: Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
+        :param page: Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination. 
         :type page: int
         :param hits_per_page: Maximum number of hits per page.
         :type hits_per_page: int
@@ -9902,89 +8813,87 @@ class SearchClient:
         _params = locals()
 
         _all_params = [
-            "index_name",
-            "type",
-            "page",
-            "hits_per_page",
-            "search_synonyms_params",
+            'index_name',
+            'type',
+            'page',
+            'hits_per_page',
+            'search_synonyms_params'
         ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method search_synonyms" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("type") is not None:  # noqa: E501
-            _query_params.append(("type", _params["type"].value))
+        if _params.get('type') is not None:  # noqa: E501
+            _query_params.append(('type', _params['type'].value))
 
-        if _params.get("page") is not None:  # noqa: E501
-            _query_params.append(("page", _params["page"]))
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
 
-        if _params.get("hits_per_page") is not None:  # noqa: E501
-            _query_params.append(("hitsPerPage", _params["hits_per_page"]))
+        if _params.get('hits_per_page') is not None:  # noqa: E501
+            _query_params.append(('hitsPerPage', _params['hits_per_page']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["search_synonyms_params"] is not None:
-            _body_params = _params["search_synonyms_params"]
+        if _params['search_synonyms_params'] is not None:
+            _body_params = _params['search_synonyms_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SearchSynonymsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SearchSynonymsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/synonyms/search",
-            "POST",
+            '/1/indexes/{indexName}/synonyms/search', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -9993,18 +8902,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def search_user_ids(
-        self, search_user_ids_params: SearchUserIdsParams, **kwargs
-    ) -> SearchUserIdsResponse:  # noqa: E501
+    def search_user_ids(self, search_user_ids_params : SearchUserIdsParams, **kwargs) -> SearchUserIdsResponse:  # noqa: E501
         """Search for a user ID.  # noqa: E501
 
         Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the update of user ID usage. For example, if you add or move a user ID, the search will show an old value until the next time the mapping is rebuilt (every 12 hours).    # noqa: E501
@@ -10027,16 +8933,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: SearchUserIdsResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the search_user_ids_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.search_user_ids_with_http_info(search_user_ids_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def search_user_ids_with_http_info(
-        self, search_user_ids_params: SearchUserIdsParams, **kwargs
-    ) -> ApiResponse:  # noqa: E501
+    def search_user_ids_with_http_info(self, search_user_ids_params : SearchUserIdsParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Search for a user ID.  # noqa: E501
 
         Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the update of user ID usage. For example, if you add or move a user ID, the search will show an old value until the next time the mapping is rebuilt (every 12 hours).    # noqa: E501
@@ -10075,28 +8979,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["search_user_ids_params"]
+        _all_params = [
+            'search_user_ids_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method search_user_ids" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -10106,42 +9012,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["search_user_ids_params"] is not None:
-            _body_params = _params["search_user_ids_params"]
+        if _params['search_user_ids_params'] is not None:
+            _body_params = _params['search_user_ids_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "SearchUserIdsResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "SearchUserIdsResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/clusters/mapping/search",
-            "POST",
+            '/1/clusters/mapping/search', 'POST',
             _path_params,
             _query_params,
             _header_params,
@@ -10150,18 +9053,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def set_dictionary_settings(
-        self, dictionary_settings_params: DictionarySettingsParams, **kwargs
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def set_dictionary_settings(self, dictionary_settings_params : DictionarySettingsParams, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Set stop word settings.  # noqa: E501
 
         Set stop word settings for a specific language.  # noqa: E501
@@ -10184,18 +9084,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the set_dictionary_settings_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.set_dictionary_settings_with_http_info(
-            dictionary_settings_params, **kwargs
-        )  # noqa: E501
+        return self.set_dictionary_settings_with_http_info(dictionary_settings_params, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def set_dictionary_settings_with_http_info(
-        self, dictionary_settings_params: DictionarySettingsParams, **kwargs
-    ) -> ApiResponse:  # noqa: E501
+    def set_dictionary_settings_with_http_info(self, dictionary_settings_params : DictionarySettingsParams, **kwargs) -> ApiResponse:  # noqa: E501
         """Set stop word settings.  # noqa: E501
 
         Set stop word settings for a specific language.  # noqa: E501
@@ -10234,28 +9130,30 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["dictionary_settings_params"]
+        _all_params = [
+            'dictionary_settings_params'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method set_dictionary_settings" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
@@ -10265,42 +9163,39 @@ class SearchClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["dictionary_settings_params"] is not None:
-            _body_params = _params["dictionary_settings_params"]
+        if _params['dictionary_settings_params'] is not None:
+            _body_params = _params['dictionary_settings_params']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/dictionaries/*/settings",
-            "PUT",
+            '/1/dictionaries/*/settings', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -10309,29 +9204,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def set_settings(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        index_settings: IndexSettings,
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> UpdatedAtResponse:  # noqa: E501
+    def set_settings(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], index_settings : IndexSettings, forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> UpdatedAtResponse:  # noqa: E501
         """Update index settings.  # noqa: E501
 
         Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.  # noqa: E501
@@ -10358,29 +9239,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdatedAtResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the set_settings_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.set_settings_with_http_info(
-            index_name, index_settings, forward_to_replicas, **kwargs
-        )  # noqa: E501
+        return self.set_settings_with_http_info(index_name, index_settings, forward_to_replicas, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def set_settings_with_http_info(
-        self,
-        index_name: Annotated[
-            StrictStr, Field(..., description="Index on which to perform the request.")
-        ],
-        index_settings: IndexSettings,
-        forward_to_replicas: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Indicates whether changed index settings are forwarded to the replica indices."
-            ),
-        ] = None,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def set_settings_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], index_settings : IndexSettings, forward_to_replicas : Annotated[Optional[StrictBool], Field(description="Indicates whether changed index settings are forwarded to the replica indices.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Update index settings.  # noqa: E501
 
         Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.  # noqa: E501
@@ -10423,78 +9289,80 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["index_name", "index_settings", "forward_to_replicas"]
+        _all_params = [
+            'index_name',
+            'index_settings',
+            'forward_to_replicas'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method set_settings" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["index_name"]:
-            _path_params["indexName"] = _params["index_name"]
+        if _params['index_name']:
+            _path_params['indexName'] = _params['index_name']
+
 
         # process the query parameters
         _query_params = []
-        if _params.get("forward_to_replicas") is not None:  # noqa: E501
-            _query_params.append(("forwardToReplicas", _params["forward_to_replicas"]))
+        if _params.get('forward_to_replicas') is not None:  # noqa: E501
+            _query_params.append(('forwardToReplicas', _params['forward_to_replicas']))
 
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["index_settings"] is not None:
-            _body_params = _params["index_settings"]
+        if _params['index_settings'] is not None:
+            _body_params = _params['index_settings']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdatedAtResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdatedAtResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/indexes/{indexName}/settings",
-            "PUT",
+            '/1/indexes/{indexName}/settings', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -10503,21 +9371,15 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_api_key(
-        self,
-        key: Annotated[StrictStr, Field(..., description="API key.")],
-        api_key: ApiKey,
-        **kwargs,
-    ) -> UpdateApiKeyResponse:  # noqa: E501
+    def update_api_key(self, key : Annotated[StrictStr, Field(..., description="API key.")], api_key : ApiKey, **kwargs) -> UpdateApiKeyResponse:  # noqa: E501
         """Update an API key.  # noqa: E501
 
         Replace the permissions of an existing API key. Any unspecified parameter resets that permission to its default value. The request must be authenticated with the admin API key.   # noqa: E501
@@ -10542,19 +9404,14 @@ class SearchClient:
                  returns the request thread.
         :rtype: UpdateApiKeyResponse
         """
-        kwargs["_return_http_data_only"] = True
-        if "_preload_content" in kwargs:
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
             message = "Error! Please call the update_api_key_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.update_api_key_with_http_info(key, api_key, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_api_key_with_http_info(
-        self,
-        key: Annotated[StrictStr, Field(..., description="API key.")],
-        api_key: ApiKey,
-        **kwargs,
-    ) -> ApiResponse:  # noqa: E501
+    def update_api_key_with_http_info(self, key : Annotated[StrictStr, Field(..., description="API key.")], api_key : ApiKey, **kwargs) -> ApiResponse:  # noqa: E501
         """Update an API key.  # noqa: E501
 
         Replace the permissions of an existing API key. Any unspecified parameter resets that permission to its default value. The request must be authenticated with the admin API key.   # noqa: E501
@@ -10595,75 +9452,76 @@ class SearchClient:
 
         _params = locals()
 
-        _all_params = ["key", "api_key"]
+        _all_params = [
+            'key',
+            'api_key'
+        ]
         _all_params.extend(
             [
-                "async_req",
-                "_return_http_data_only",
-                "_preload_content",
-                "_request_timeout",
-                "_request_auth",
-                "_content_type",
-                "_headers",
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params["kwargs"].items():
+        for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_api_key" % _key
                 )
             _params[_key] = _val
-        del _params["kwargs"]
+        del _params['kwargs']
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params["key"]:
-            _path_params["key"] = _params["key"]
+        if _params['key']:
+            _path_params['key'] = _params['key']
+
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get("_headers", {}))
+        _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params["api_key"] is not None:
-            _body_params = _params["api_key"]
+        if _params['api_key'] is not None:
+            _body_params = _params['api_key']
 
         # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get(
-            "_content_type",
-            self.api_client.select_header_content_type(["application/json"]),
-        )
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
         if _content_types_list:
-            _header_params["Content-Type"] = _content_types_list
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ["apiKey", "appId"]  # noqa: E501
+        _auth_settings = ['apiKey', 'appId']  # noqa: E501
 
         _response_types_map = {
-            "200": "UpdateApiKeyResponse",
-            "400": "ErrorBase",
-            "402": "ErrorBase",
-            "403": "ErrorBase",
-            "404": "ErrorBase",
+            '200': "UpdateApiKeyResponse",
+            '400': "ErrorBase",
+            '402': "ErrorBase",
+            '403': "ErrorBase",
+            '404': "ErrorBase",
         }
 
         return self.api_client.call_api(
-            "/1/keys/{key}",
-            "PUT",
+            '/1/keys/{key}', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -10672,10 +9530,9 @@ class SearchClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get("async_req"),
-            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
-            _preload_content=_params.get("_preload_content", True),
-            _request_timeout=_params.get("_request_timeout"),
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
             collection_formats=_collection_formats,
-            _request_auth=_params.get("_request_auth"),
-        )
+            _request_auth=_params.get('_request_auth'))

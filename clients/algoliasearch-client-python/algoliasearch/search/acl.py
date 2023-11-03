@@ -13,36 +13,40 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class Acl(str, Enum):
     """
-    API key permissions:  `addObject`: required to add or update records, copy or move an index. `analytics`: required to access the Analytics API. `browse`: required to view records `deleteIndex`: required to delete indices. `deleteObject`: required to delete records. `editSettings`: required to change index settings. `inference`: required to access the Inference API. `listIndexes`: required to list indices. `logs`: required to access logs of search and indexing operations. `recommendation`: required to access the Personalization and Recommend APIs. `search`: required to search records `seeUnretrievableAttributes`: required to retrieve [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) for all operations that return records. `settings`: required to examine index settings.
+    API key permissions:  `addObject`: required to add or update records, copy or move an index. `analytics`: required to access the Analytics API. `browse`: required to view records `deleteIndex`: required to delete indices. `deleteObject`: required to delete records. `editSettings`: required to change index settings. `inference`: required to access the Inference API. `listIndexes`: required to list indices. `logs`: required to access logs of search and indexing operations. `recommendation`: required to access the Personalization and Recommend APIs. `search`: required to search records `seeUnretrievableAttributes`: required to retrieve [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) for all operations that return records. `settings`: required to examine index settings. 
     """
 
     """
     allowed enum values
     """
-    ADDOBJECT = "addObject"
-    ANALYTICS = "analytics"
-    BROWSE = "browse"
-    DELETEOBJECT = "deleteObject"
-    DELETEINDEX = "deleteIndex"
-    EDITSETTINGS = "editSettings"
-    INFERENCE = "inference"
-    LISTINDEXES = "listIndexes"
-    LOGS = "logs"
-    PERSONALIZATION = "personalization"
-    RECOMMENDATION = "recommendation"
-    SEARCH = "search"
-    SEEUNRETRIEVABLEATTRIBUTES = "seeUnretrievableAttributes"
-    SETTINGS = "settings"
-    USAGE = "usage"
+    ADDOBJECT = 'addObject'
+    ANALYTICS = 'analytics'
+    BROWSE = 'browse'
+    DELETEOBJECT = 'deleteObject'
+    DELETEINDEX = 'deleteIndex'
+    EDITSETTINGS = 'editSettings'
+    INFERENCE = 'inference'
+    LISTINDEXES = 'listIndexes'
+    LOGS = 'logs'
+    PERSONALIZATION = 'personalization'
+    RECOMMENDATION = 'recommendation'
+    SEARCH = 'search'
+    SEEUNRETRIEVABLEATTRIBUTES = 'seeUnretrievableAttributes'
+    SETTINGS = 'settings'
+    USAGE = 'usage'
 
     @classmethod
     def from_json(cls, json_str: str) -> Acl:
         """Create an instance of Acl from a JSON string"""
         return Acl(json.loads(json_str))
+
+

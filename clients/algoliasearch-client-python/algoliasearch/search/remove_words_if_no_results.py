@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class RemoveWordsIfNoResults(str, Enum):
@@ -26,12 +28,14 @@ class RemoveWordsIfNoResults(str, Enum):
     """
     allowed enum values
     """
-    NONE = "none"
-    LASTWORDS = "lastWords"
-    FIRSTWORDS = "firstWords"
-    ALLOPTIONAL = "allOptional"
+    NONE = 'none'
+    LASTWORDS = 'lastWords'
+    FIRSTWORDS = 'firstWords'
+    ALLOPTIONAL = 'allOptional'
 
     @classmethod
     def from_json(cls, json_str: str) -> RemoveWordsIfNoResults:
         """Create an instance of RemoveWordsIfNoResults from a JSON string"""
         return RemoveWordsIfNoResults(json.loads(json_str))
+
+

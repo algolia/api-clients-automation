@@ -21,23 +21,16 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr
 
-
 class BaseGetApiKeyResponse(BaseModel):
     """
     BaseGetApiKeyResponse
     """
-
     value: Optional[StrictStr] = Field(None, description="API key.")
-    created_at: StrictInt = Field(
-        ...,
-        alias="createdAt",
-        description="Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).",
-    )
+    created_at: StrictInt = Field(..., alias="createdAt", description="Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).")
     __properties = ["value", "createdAt"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,7 +49,10 @@ class BaseGetApiKeyResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -68,7 +64,10 @@ class BaseGetApiKeyResponse(BaseModel):
         if not isinstance(obj, dict):
             return BaseGetApiKeyResponse.parse_obj(obj)
 
-        _obj = BaseGetApiKeyResponse.parse_obj(
-            {"value": obj.get("value"), "created_at": obj.get("createdAt")}
-        )
+        _obj = BaseGetApiKeyResponse.parse_obj({
+            "value": obj.get("value"),
+            "created_at": obj.get("createdAt")
+        })
         return _obj
+
+

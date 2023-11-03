@@ -18,38 +18,22 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conint, conlist
 from algoliasearch.models.user_hit import UserHit
-
 
 class SearchUserIdsResponse(BaseModel):
     """
     userIDs data.  # noqa: E501
     """
-
-    hits: conlist(UserHit) = Field(
-        ..., description="User objects that match the query."
-    )
-    nb_hits: StrictInt = Field(
-        ..., alias="nbHits", description="Number of hits the search query matched."
-    )
-    page: StrictInt = Field(
-        ..., description="Page to retrieve (the first page is `0`, not `1`)."
-    )
-    hits_per_page: conint(strict=True, le=1000, ge=1) = Field(
-        ..., alias="hitsPerPage", description="Maximum number of hits per page."
-    )
-    updated_at: StrictStr = Field(
-        ...,
-        alias="updatedAt",
-        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
-    )
+    hits: conlist(UserHit) = Field(..., description="User objects that match the query.")
+    nb_hits: StrictInt = Field(..., alias="nbHits", description="Number of hits the search query matched.")
+    page: StrictInt = Field(..., description="Page to retrieve (the first page is `0`, not `1`).")
+    hits_per_page: conint(strict=True, le=1000, ge=1) = Field(..., alias="hitsPerPage", description="Maximum number of hits per page.")
+    updated_at: StrictStr = Field(..., alias="updatedAt", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
     __properties = ["hits", "nbHits", "page", "hitsPerPage", "updatedAt"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -68,14 +52,17 @@ class SearchUserIdsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in hits (list)
         _items = []
         if self.hits:
             for _item in self.hits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["hits"] = _items
+            _dict['hits'] = _items
         return _dict
 
     @classmethod
@@ -87,17 +74,13 @@ class SearchUserIdsResponse(BaseModel):
         if not isinstance(obj, dict):
             return SearchUserIdsResponse.parse_obj(obj)
 
-        _obj = SearchUserIdsResponse.parse_obj(
-            {
-                "hits": [UserHit.from_dict(_item) for _item in obj.get("hits")]
-                if obj.get("hits") is not None
-                else None,
-                "nb_hits": obj.get("nbHits"),
-                "page": obj.get("page") if obj.get("page") is not None else 0,
-                "hits_per_page": obj.get("hitsPerPage")
-                if obj.get("hitsPerPage") is not None
-                else 20,
-                "updated_at": obj.get("updatedAt"),
-            }
-        )
+        _obj = SearchUserIdsResponse.parse_obj({
+            "hits": [UserHit.from_dict(_item) for _item in obj.get("hits")] if obj.get("hits") is not None else None,
+            "nb_hits": obj.get("nbHits"),
+            "page": obj.get("page") if obj.get("page") is not None else 0,
+            "hits_per_page": obj.get("hitsPerPage") if obj.get("hitsPerPage") is not None else 20,
+            "updated_at": obj.get("updatedAt")
+        })
         return _obj
+
+

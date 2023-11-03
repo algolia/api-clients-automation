@@ -22,18 +22,15 @@ from typing import Optional
 from pydantic import BaseModel, Field
 from algoliasearch.models.facet_ordering import FacetOrdering
 
-
 class RenderingContent(BaseModel):
     """
     Extra content for the search UI, for example, to control the [ordering and display of facets](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/merchandising-facets/#merchandise-facets-and-their-values-in-the-manual-editor). You can set a default value and dynamically override it with [Rules](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/).  # noqa: E501
     """
-
     facet_ordering: Optional[FacetOrdering] = Field(None, alias="facetOrdering")
     __properties = ["facetOrdering"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,10 +49,13 @@ class RenderingContent(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of facet_ordering
         if self.facet_ordering:
-            _dict["facetOrdering"] = self.facet_ordering.to_dict()
+            _dict['facetOrdering'] = self.facet_ordering.to_dict()
         return _dict
 
     @classmethod
@@ -67,11 +67,9 @@ class RenderingContent(BaseModel):
         if not isinstance(obj, dict):
             return RenderingContent.parse_obj(obj)
 
-        _obj = RenderingContent.parse_obj(
-            {
-                "facet_ordering": FacetOrdering.from_dict(obj.get("facetOrdering"))
-                if obj.get("facetOrdering") is not None
-                else None
-            }
-        )
+        _obj = RenderingContent.parse_obj({
+            "facet_ordering": FacetOrdering.from_dict(obj.get("facetOrdering")) if obj.get("facetOrdering") is not None else None
+        })
         return _obj
+
+

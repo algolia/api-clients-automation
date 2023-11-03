@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class EditType(str, Enum):
@@ -26,10 +28,12 @@ class EditType(str, Enum):
     """
     allowed enum values
     """
-    REMOVE = "remove"
-    REPLACE = "replace"
+    REMOVE = 'remove'
+    REPLACE = 'replace'
 
     @classmethod
     def from_json(cls, json_str: str) -> EditType:
         """Create an instance of EditType from a JSON string"""
         return EditType(json.loads(json_str))
+
+

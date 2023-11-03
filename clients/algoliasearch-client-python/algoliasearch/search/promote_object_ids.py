@@ -18,29 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
-
 
 class PromoteObjectIDs(BaseModel):
     """
     Records to promote.  # noqa: E501
     """
-
-    object_ids: conlist(StrictStr) = Field(
-        ...,
-        alias="objectIDs",
-        description="Unique identifiers of the records to promote.",
-    )
-    position: StrictInt = Field(
-        ...,
-        description="The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.",
-    )
+    object_ids: conlist(StrictStr) = Field(..., alias="objectIDs", description="Unique identifiers of the records to promote.")
+    position: StrictInt = Field(..., description="The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.")
     __properties = ["objectIDs", "position"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -59,7 +48,10 @@ class PromoteObjectIDs(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -71,7 +63,10 @@ class PromoteObjectIDs(BaseModel):
         if not isinstance(obj, dict):
             return PromoteObjectIDs.parse_obj(obj)
 
-        _obj = PromoteObjectIDs.parse_obj(
-            {"object_ids": obj.get("objectIDs"), "position": obj.get("position")}
-        )
+        _obj = PromoteObjectIDs.parse_obj({
+            "object_ids": obj.get("objectIDs"),
+            "position": obj.get("position")
+        })
         return _obj
+
+

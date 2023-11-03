@@ -18,23 +18,19 @@ import re  # noqa: F401
 import json
 
 
+
 from pydantic import BaseModel, Field
 from algoliasearch.models.standard_entries import StandardEntries
-
 
 class GetDictionarySettingsResponse(BaseModel):
     """
     GetDictionarySettingsResponse
     """
-
-    disable_standard_entries: StandardEntries = Field(
-        ..., alias="disableStandardEntries"
-    )
+    disable_standard_entries: StandardEntries = Field(..., alias="disableStandardEntries")
     __properties = ["disableStandardEntries"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -53,10 +49,13 @@ class GetDictionarySettingsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of disable_standard_entries
         if self.disable_standard_entries:
-            _dict["disableStandardEntries"] = self.disable_standard_entries.to_dict()
+            _dict['disableStandardEntries'] = self.disable_standard_entries.to_dict()
         return _dict
 
     @classmethod
@@ -68,13 +67,9 @@ class GetDictionarySettingsResponse(BaseModel):
         if not isinstance(obj, dict):
             return GetDictionarySettingsResponse.parse_obj(obj)
 
-        _obj = GetDictionarySettingsResponse.parse_obj(
-            {
-                "disable_standard_entries": StandardEntries.from_dict(
-                    obj.get("disableStandardEntries")
-                )
-                if obj.get("disableStandardEntries") is not None
-                else None
-            }
-        )
+        _obj = GetDictionarySettingsResponse.parse_obj({
+            "disable_standard_entries": StandardEntries.from_dict(obj.get("disableStandardEntries")) if obj.get("disableStandardEntries") is not None else None
+        })
         return _obj
+
+

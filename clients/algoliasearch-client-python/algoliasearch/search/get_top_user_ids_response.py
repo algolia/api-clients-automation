@@ -18,26 +18,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import Dict, List
+from typing import Dict
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.user_id import UserId
-
 
 class GetTopUserIdsResponse(BaseModel):
     """
     User IDs and clusters.  # noqa: E501
     """
-
-    top_users: conlist(Dict[str, conlist(UserId)]) = Field(
-        ...,
-        alias="topUsers",
-        description="Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.",
-    )
+    top_users: conlist(Dict[str, conlist(UserId)]) = Field(..., alias="topUsers", description="Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.")
     __properties = ["topUsers"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,7 +49,10 @@ class GetTopUserIdsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -68,5 +64,9 @@ class GetTopUserIdsResponse(BaseModel):
         if not isinstance(obj, dict):
             return GetTopUserIdsResponse.parse_obj(obj)
 
-        _obj = GetTopUserIdsResponse.parse_obj({"top_users": obj.get("topUsers")})
+        _obj = GetTopUserIdsResponse.parse_obj({
+            "top_users": obj.get("topUsers")
+        })
         return _obj
+
+

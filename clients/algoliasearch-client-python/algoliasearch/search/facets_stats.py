@@ -21,29 +21,18 @@ import json
 from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
-
 class FacetsStats(BaseModel):
     """
     FacetsStats
     """
-
-    min: Optional[Union[StrictFloat, StrictInt]] = Field(
-        None, description="Minimum value in the results."
-    )
-    max: Optional[Union[StrictFloat, StrictInt]] = Field(
-        None, description="Maximum value in the results."
-    )
-    avg: Optional[Union[StrictFloat, StrictInt]] = Field(
-        None, description="Average facet value in the results."
-    )
-    sum: Optional[Union[StrictFloat, StrictInt]] = Field(
-        None, description="Sum of all values in the results."
-    )
+    min: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Minimum value in the results.")
+    max: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Maximum value in the results.")
+    avg: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Average facet value in the results.")
+    sum: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Sum of all values in the results.")
     __properties = ["min", "max", "avg", "sum"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -62,7 +51,10 @@ class FacetsStats(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -74,12 +66,12 @@ class FacetsStats(BaseModel):
         if not isinstance(obj, dict):
             return FacetsStats.parse_obj(obj)
 
-        _obj = FacetsStats.parse_obj(
-            {
-                "min": obj.get("min"),
-                "max": obj.get("max"),
-                "avg": obj.get("avg"),
-                "sum": obj.get("sum"),
-            }
-        )
+        _obj = FacetsStats.parse_obj({
+            "min": obj.get("min"),
+            "max": obj.get("max"),
+            "avg": obj.get("avg"),
+            "sum": obj.get("sum")
+        })
         return _obj
+
+

@@ -13,22 +13,26 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class SearchTypeFacet(str, Enum):
     """
-    - `default`: perform a search query - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+    - `default`: perform a search query - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values). 
     """
 
     """
     allowed enum values
     """
-    FACET = "facet"
+    FACET = 'facet'
 
     @classmethod
     def from_json(cls, json_str: str) -> SearchTypeFacet:
         """Create an instance of SearchTypeFacet from a JSON string"""
         return SearchTypeFacet(json.loads(json_str))
+
+

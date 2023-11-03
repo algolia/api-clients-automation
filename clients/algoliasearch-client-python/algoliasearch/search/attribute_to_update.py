@@ -13,7 +13,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
@@ -26,16 +25,12 @@ from pydantic import StrictStr, Field
 
 ATTRIBUTETOUPDATE_ONE_OF_SCHEMAS = ["BuiltInOperation", "str"]
 
-
 class AttributeToUpdate(BaseModel):
     """
     AttributeToUpdate
     """
-
     # data type: str
-    oneof_schema_1_validator: Optional[StrictStr] = Field(
-        None, description="Value of the attribute to be updated."
-    )
+    oneof_schema_1_validator: Optional[StrictStr] = Field(None, description="Value of the attribute to be updated.")
     # data type: BuiltInOperation
     oneof_schema_2_validator: Optional[BuiltInOperation] = None
     if TYPE_CHECKING:
@@ -50,18 +45,14 @@ class AttributeToUpdate(BaseModel):
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError(
-                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
-                )
+                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
             if kwargs:
-                raise ValueError(
-                    "If a position argument is used, keyword arguments cannot be used."
-                )
+                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
 
-    @validator("actual_instance")
+    @validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
         instance = AttributeToUpdate.construct()
         error_messages = []
@@ -74,23 +65,15 @@ class AttributeToUpdate(BaseModel):
             error_messages.append(str(e))
         # validate data type: BuiltInOperation
         if not isinstance(v, BuiltInOperation):
-            error_messages.append(
-                f"Error! Input type `{type(v)}` is not `BuiltInOperation`"
-            )
+            error_messages.append(f"Error! Input type `{type(v)}` is not `BuiltInOperation`")
         else:
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError(
-                "Multiple matches found when setting `actual_instance` in AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("Multiple matches found when setting `actual_instance` in AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError(
-                "No match found when setting `actual_instance` in AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("No match found when setting `actual_instance` in AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -123,16 +106,10 @@ class AttributeToUpdate(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("Multiple matches found when deserializing the JSON string into AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("No match found when deserializing the JSON string into AttributeToUpdate with oneOf schemas: BuiltInOperation, str. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -162,3 +139,5 @@ class AttributeToUpdate(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
+
+

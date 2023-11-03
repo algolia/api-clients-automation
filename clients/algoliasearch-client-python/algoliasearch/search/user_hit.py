@@ -18,56 +18,31 @@ import re  # noqa: F401
 import json
 
 
+
 from pydantic import BaseModel, Field, StrictInt, StrictStr, constr, validator
 from algoliasearch.models.user_highlight_result import UserHighlightResult
-
 
 class UserHit(BaseModel):
     """
     UserHit
     """
-
-    user_id: constr(strict=True) = Field(
-        ..., alias="userID", description="userID of the user."
-    )
-    cluster_name: StrictStr = Field(
-        ..., alias="clusterName", description="Cluster name."
-    )
-    nb_records: StrictInt = Field(
-        ..., alias="nbRecords", description="Number of records in the cluster."
-    )
-    data_size: StrictInt = Field(
-        ...,
-        alias="dataSize",
-        description="Data size taken by all the users assigned to the cluster.",
-    )
-    object_id: StrictStr = Field(
-        ...,
-        alias="objectID",
-        description="userID of the requested user. Same as userID.",
-    )
+    user_id: constr(strict=True) = Field(..., alias="userID", description="userID of the user.")
+    cluster_name: StrictStr = Field(..., alias="clusterName", description="Cluster name.")
+    nb_records: StrictInt = Field(..., alias="nbRecords", description="Number of records in the cluster.")
+    data_size: StrictInt = Field(..., alias="dataSize", description="Data size taken by all the users assigned to the cluster.")
+    object_id: StrictStr = Field(..., alias="objectID", description="userID of the requested user. Same as userID.")
     highlight_result: UserHighlightResult = Field(..., alias="_highlightResult")
-    __properties = [
-        "userID",
-        "clusterName",
-        "nbRecords",
-        "dataSize",
-        "objectID",
-        "_highlightResult",
-    ]
+    __properties = ["userID", "clusterName", "nbRecords", "dataSize", "objectID", "_highlightResult"]
 
-    @validator("user_id")
+    @validator('user_id')
     def user_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if not re.match(r"^[a-zA-Z0-9 \-*.]+$", value):
-            raise ValueError(
-                r"must validate the regular expression /^[a-zA-Z0-9 \-*.]+$/"
-            )
+            raise ValueError(r"must validate the regular expression /^[a-zA-Z0-9 \-*.]+$/")
         return value
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -86,10 +61,13 @@ class UserHit(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of highlight_result
         if self.highlight_result:
-            _dict["_highlightResult"] = self.highlight_result.to_dict()
+            _dict['_highlightResult'] = self.highlight_result.to_dict()
         return _dict
 
     @classmethod
@@ -101,18 +79,14 @@ class UserHit(BaseModel):
         if not isinstance(obj, dict):
             return UserHit.parse_obj(obj)
 
-        _obj = UserHit.parse_obj(
-            {
-                "user_id": obj.get("userID"),
-                "cluster_name": obj.get("clusterName"),
-                "nb_records": obj.get("nbRecords"),
-                "data_size": obj.get("dataSize"),
-                "object_id": obj.get("objectID"),
-                "highlight_result": UserHighlightResult.from_dict(
-                    obj.get("_highlightResult")
-                )
-                if obj.get("_highlightResult") is not None
-                else None,
-            }
-        )
+        _obj = UserHit.parse_obj({
+            "user_id": obj.get("userID"),
+            "cluster_name": obj.get("clusterName"),
+            "nb_records": obj.get("nbRecords"),
+            "data_size": obj.get("dataSize"),
+            "object_id": obj.get("objectID"),
+            "highlight_result": UserHighlightResult.from_dict(obj.get("_highlightResult")) if obj.get("_highlightResult") is not None else None
+        })
         return _obj
+
+

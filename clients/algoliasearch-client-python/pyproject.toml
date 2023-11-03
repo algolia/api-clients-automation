@@ -29,6 +29,7 @@ disallow_untyped_calls = true
 target-version = "py38"
 fix = true
 line-length = 88
+ignore-init-module-imports = true
 
 [build-system]
 requires = ["poetry-core"]

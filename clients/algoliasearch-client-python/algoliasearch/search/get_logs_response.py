@@ -18,22 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.log import Log
-
 
 class GetLogsResponse(BaseModel):
     """
     GetLogsResponse
     """
-
     logs: conlist(Log) = Field(...)
     __properties = ["logs"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,14 +48,17 @@ class GetLogsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in logs (list)
         _items = []
         if self.logs:
             for _item in self.logs:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["logs"] = _items
+            _dict['logs'] = _items
         return _dict
 
     @classmethod
@@ -71,11 +70,9 @@ class GetLogsResponse(BaseModel):
         if not isinstance(obj, dict):
             return GetLogsResponse.parse_obj(obj)
 
-        _obj = GetLogsResponse.parse_obj(
-            {
-                "logs": [Log.from_dict(_item) for _item in obj.get("logs")]
-                if obj.get("logs") is not None
-                else None
-            }
-        )
+        _obj = GetLogsResponse.parse_obj({
+            "logs": [Log.from_dict(_item) for _item in obj.get("logs")] if obj.get("logs") is not None else None
+        })
         return _obj
+
+

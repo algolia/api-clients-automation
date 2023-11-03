@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class ExactOnSingleWordQuery(str, Enum):
@@ -26,11 +28,13 @@ class ExactOnSingleWordQuery(str, Enum):
     """
     allowed enum values
     """
-    ATTRIBUTE = "attribute"
-    NONE = "none"
-    WORD = "word"
+    ATTRIBUTE = 'attribute'
+    NONE = 'none'
+    WORD = 'word'
 
     @classmethod
     def from_json(cls, json_str: str) -> ExactOnSingleWordQuery:
         """Create an instance of ExactOnSingleWordQuery from a JSON string"""
         return ExactOnSingleWordQuery(json.loads(json_str))
+
+

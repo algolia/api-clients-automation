@@ -13,26 +13,23 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
 
 from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
+from pydantic import BaseModel, Field, ValidationError, validator
 from algoliasearch.models.search_params_object import SearchParamsObject
 from algoliasearch.models.search_params_string import SearchParamsString
 from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
+from pydantic import Field
 
 SEARCHPARAMS_ONE_OF_SCHEMAS = ["SearchParamsObject", "SearchParamsString"]
-
 
 class SearchParams(BaseModel):
     """
     SearchParams
     """
-
     # data type: SearchParamsString
     oneof_schema_1_validator: Optional[SearchParamsString] = None
     # data type: SearchParamsObject
@@ -49,48 +46,34 @@ class SearchParams(BaseModel):
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError(
-                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
-                )
+                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
             if kwargs:
-                raise ValueError(
-                    "If a position argument is used, keyword arguments cannot be used."
-                )
+                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
 
-    @validator("actual_instance")
+    @validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
         instance = SearchParams.construct()
         error_messages = []
         match = 0
         # validate data type: SearchParamsString
         if not isinstance(v, SearchParamsString):
-            error_messages.append(
-                f"Error! Input type `{type(v)}` is not `SearchParamsString`"
-            )
+            error_messages.append(f"Error! Input type `{type(v)}` is not `SearchParamsString`")
         else:
             match += 1
         # validate data type: SearchParamsObject
         if not isinstance(v, SearchParamsObject):
-            error_messages.append(
-                f"Error! Input type `{type(v)}` is not `SearchParamsObject`"
-            )
+            error_messages.append(f"Error! Input type `{type(v)}` is not `SearchParamsObject`")
         else:
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError(
-                "Multiple matches found when setting `actual_instance` in SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("Multiple matches found when setting `actual_instance` in SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError(
-                "No match found when setting `actual_instance` in SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("No match found when setting `actual_instance` in SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -120,16 +103,10 @@ class SearchParams(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("Multiple matches found when deserializing the JSON string into SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: "
-                + ", ".join(error_messages)
-            )
+            raise ValueError("No match found when deserializing the JSON string into SearchParams with oneOf schemas: SearchParamsObject, SearchParamsString. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -159,3 +136,5 @@ class SearchParams(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
+
+

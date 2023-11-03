@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class TaskStatus(str, Enum):
@@ -26,10 +28,12 @@ class TaskStatus(str, Enum):
     """
     allowed enum values
     """
-    PUBLISHED = "published"
-    NOTPUBLISHED = "notPublished"
+    PUBLISHED = 'published'
+    NOTPUBLISHED = 'notPublished'
 
     @classmethod
     def from_json(cls, json_str: str) -> TaskStatus:
         """Create an instance of TaskStatus from a JSON string"""
         return TaskStatus(json.loads(json_str))
+
+

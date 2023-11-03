@@ -18,23 +18,20 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 from algoliasearch.models.edit import Edit
-
 
 class ConsequenceQueryObject(BaseModel):
     """
     ConsequenceQueryObject
     """
-
     remove: Optional[conlist(StrictStr)] = Field(None, description="Words to remove.")
     edits: Optional[conlist(Edit)] = Field(None, description="Edits to apply.")
     __properties = ["remove", "edits"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -53,14 +50,17 @@ class ConsequenceQueryObject(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in edits (list)
         _items = []
         if self.edits:
             for _item in self.edits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["edits"] = _items
+            _dict['edits'] = _items
         return _dict
 
     @classmethod
@@ -72,12 +72,10 @@ class ConsequenceQueryObject(BaseModel):
         if not isinstance(obj, dict):
             return ConsequenceQueryObject.parse_obj(obj)
 
-        _obj = ConsequenceQueryObject.parse_obj(
-            {
-                "remove": obj.get("remove"),
-                "edits": [Edit.from_dict(_item) for _item in obj.get("edits")]
-                if obj.get("edits") is not None
-                else None,
-            }
-        )
+        _obj = ConsequenceQueryObject.parse_obj({
+            "remove": obj.get("remove"),
+            "edits": [Edit.from_dict(_item) for _item in obj.get("edits")] if obj.get("edits") is not None else None
+        })
         return _obj
+
+

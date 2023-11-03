@@ -24,39 +24,20 @@ from algoliasearch.models.highlight_result import HighlightResult
 from algoliasearch.models.ranking_info import RankingInfo
 from algoliasearch.models.snippet_result import SnippetResult
 
-
 class Hit(BaseModel):
     """
     A single hit.  # noqa: E501
     """
-
-    object_id: StrictStr = Field(
-        ..., alias="objectID", description="Unique object identifier."
-    )
-    highlight_result: Optional[Dict[str, HighlightResult]] = Field(
-        None,
-        alias="_highlightResult",
-        description="Show highlighted section and words matched on a query.",
-    )
-    snippet_result: Optional[Dict[str, SnippetResult]] = Field(
-        None,
-        alias="_snippetResult",
-        description="Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
-    )
+    object_id: StrictStr = Field(..., alias="objectID", description="Unique object identifier.")
+    highlight_result: Optional[Dict[str, HighlightResult]] = Field(None, alias="_highlightResult", description="Show highlighted section and words matched on a query.")
+    snippet_result: Optional[Dict[str, SnippetResult]] = Field(None, alias="_snippetResult", description="Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.")
     ranking_info: Optional[RankingInfo] = Field(None, alias="_rankingInfo")
     distinct_seq_id: Optional[StrictInt] = Field(None, alias="_distinctSeqID")
     additional_properties: Dict[str, Any] = {}
-    __properties = [
-        "objectID",
-        "_highlightResult",
-        "_snippetResult",
-        "_rankingInfo",
-        "_distinctSeqID",
-    ]
+    __properties = ["objectID", "_highlightResult", "_snippetResult", "_rankingInfo", "_distinctSeqID"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -75,26 +56,28 @@ class Hit(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(
-            by_alias=True, exclude={"additional_properties"}, exclude_none=True
-        )
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                            "additional_properties"
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each value in highlight_result (dict)
         _field_dict = {}
         if self.highlight_result:
             for _key in self.highlight_result:
                 if self.highlight_result[_key]:
                     _field_dict[_key] = self.highlight_result[_key].to_dict()
-            _dict["_highlightResult"] = _field_dict
+            _dict['_highlightResult'] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of each value in snippet_result (dict)
         _field_dict = {}
         if self.snippet_result:
             for _key in self.snippet_result:
                 if self.snippet_result[_key]:
                     _field_dict[_key] = self.snippet_result[_key].to_dict()
-            _dict["_snippetResult"] = _field_dict
+            _dict['_snippetResult'] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of ranking_info
         if self.ranking_info:
-            _dict["_rankingInfo"] = self.ranking_info.to_dict()
+            _dict['_rankingInfo'] = self.ranking_info.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -111,30 +94,28 @@ class Hit(BaseModel):
         if not isinstance(obj, dict):
             return Hit.parse_obj(obj)
 
-        _obj = Hit.parse_obj(
-            {
-                "object_id": obj.get("objectID"),
-                "highlight_result": dict(
-                    (_k, HighlightResult.from_dict(_v))
-                    for _k, _v in obj.get("_highlightResult").items()
-                )
-                if obj.get("_highlightResult") is not None
-                else None,
-                "snippet_result": dict(
-                    (_k, SnippetResult.from_dict(_v))
-                    for _k, _v in obj.get("_snippetResult").items()
-                )
-                if obj.get("_snippetResult") is not None
-                else None,
-                "ranking_info": RankingInfo.from_dict(obj.get("_rankingInfo"))
-                if obj.get("_rankingInfo") is not None
-                else None,
-                "distinct_seq_id": obj.get("_distinctSeqID"),
-            }
-        )
+        _obj = Hit.parse_obj({
+            "object_id": obj.get("objectID"),
+            "highlight_result": dict(
+                (_k, HighlightResult.from_dict(_v))
+                for _k, _v in obj.get("_highlightResult").items()
+            )
+            if obj.get("_highlightResult") is not None
+            else None,
+            "snippet_result": dict(
+                (_k, SnippetResult.from_dict(_v))
+                for _k, _v in obj.get("_snippetResult").items()
+            )
+            if obj.get("_snippetResult") is not None
+            else None,
+            "ranking_info": RankingInfo.from_dict(obj.get("_rankingInfo")) if obj.get("_rankingInfo") is not None else None,
+            "distinct_seq_id": obj.get("_distinctSeqID")
+        })
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
+

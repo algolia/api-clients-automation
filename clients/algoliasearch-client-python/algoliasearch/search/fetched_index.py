@@ -18,75 +18,28 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist
-
 
 class FetchedIndex(BaseModel):
     """
     FetchedIndex
     """
-
     name: StrictStr = Field(..., description="Index name.")
-    created_at: StrictStr = Field(
-        ...,
-        alias="createdAt",
-        description="Index creation date. An empty string means that the index has no records.",
-    )
-    updated_at: StrictStr = Field(
-        ...,
-        alias="updatedAt",
-        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
-    )
-    entries: StrictInt = Field(
-        ..., description="Number of records contained in the index."
-    )
-    data_size: StrictInt = Field(
-        ...,
-        alias="dataSize",
-        description="Number of bytes of the index in minified format.",
-    )
-    file_size: StrictInt = Field(
-        ..., alias="fileSize", description="Number of bytes of the index binary file."
-    )
-    last_build_time_s: StrictInt = Field(
-        ..., alias="lastBuildTimeS", description="Last build time."
-    )
-    number_of_pending_tasks: StrictInt = Field(
-        ...,
-        alias="numberOfPendingTasks",
-        description="Number of pending indexing operations. This value is deprecated and should not be used.",
-    )
-    pending_task: StrictBool = Field(
-        ...,
-        alias="pendingTask",
-        description="A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.",
-    )
-    primary: Optional[StrictStr] = Field(
-        None,
-        description="Only present if the index is a replica. Contains the name of the related primary index.",
-    )
-    replicas: Optional[conlist(StrictStr)] = Field(
-        None,
-        description="Only present if the index is a primary index with replicas. Contains the names of all linked replicas.",
-    )
-    __properties = [
-        "name",
-        "createdAt",
-        "updatedAt",
-        "entries",
-        "dataSize",
-        "fileSize",
-        "lastBuildTimeS",
-        "numberOfPendingTasks",
-        "pendingTask",
-        "primary",
-        "replicas",
-    ]
+    created_at: StrictStr = Field(..., alias="createdAt", description="Index creation date. An empty string means that the index has no records.")
+    updated_at: StrictStr = Field(..., alias="updatedAt", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+    entries: StrictInt = Field(..., description="Number of records contained in the index.")
+    data_size: StrictInt = Field(..., alias="dataSize", description="Number of bytes of the index in minified format.")
+    file_size: StrictInt = Field(..., alias="fileSize", description="Number of bytes of the index binary file.")
+    last_build_time_s: StrictInt = Field(..., alias="lastBuildTimeS", description="Last build time.")
+    number_of_pending_tasks: StrictInt = Field(..., alias="numberOfPendingTasks", description="Number of pending indexing operations. This value is deprecated and should not be used.")
+    pending_task: StrictBool = Field(..., alias="pendingTask", description="A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.")
+    primary: Optional[StrictStr] = Field(None, description="Only present if the index is a replica. Contains the name of the related primary index.")
+    replicas: Optional[conlist(StrictStr)] = Field(None, description="Only present if the index is a primary index with replicas. Contains the names of all linked replicas.")
+    __properties = ["name", "createdAt", "updatedAt", "entries", "dataSize", "fileSize", "lastBuildTimeS", "numberOfPendingTasks", "pendingTask", "primary", "replicas"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -105,7 +58,10 @@ class FetchedIndex(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -117,23 +73,19 @@ class FetchedIndex(BaseModel):
         if not isinstance(obj, dict):
             return FetchedIndex.parse_obj(obj)
 
-        _obj = FetchedIndex.parse_obj(
-            {
-                "name": obj.get("name"),
-                "created_at": obj.get("createdAt"),
-                "updated_at": obj.get("updatedAt"),
-                "entries": obj.get("entries"),
-                "data_size": obj.get("dataSize"),
-                "file_size": obj.get("fileSize"),
-                "last_build_time_s": obj.get("lastBuildTimeS"),
-                "number_of_pending_tasks": obj.get("numberOfPendingTasks")
-                if obj.get("numberOfPendingTasks") is not None
-                else 0,
-                "pending_task": obj.get("pendingTask")
-                if obj.get("pendingTask") is not None
-                else False,
-                "primary": obj.get("primary"),
-                "replicas": obj.get("replicas"),
-            }
-        )
+        _obj = FetchedIndex.parse_obj({
+            "name": obj.get("name"),
+            "created_at": obj.get("createdAt"),
+            "updated_at": obj.get("updatedAt"),
+            "entries": obj.get("entries"),
+            "data_size": obj.get("dataSize"),
+            "file_size": obj.get("fileSize"),
+            "last_build_time_s": obj.get("lastBuildTimeS"),
+            "number_of_pending_tasks": obj.get("numberOfPendingTasks") if obj.get("numberOfPendingTasks") is not None else 0,
+            "pending_task": obj.get("pendingTask") if obj.get("pendingTask") is not None else False,
+            "primary": obj.get("primary"),
+            "replicas": obj.get("replicas")
+        })
         return _obj
+
+

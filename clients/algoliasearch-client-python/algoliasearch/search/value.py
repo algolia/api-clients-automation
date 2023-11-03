@@ -18,25 +18,20 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 from algoliasearch.models.sort_remaining_by import SortRemainingBy
-
 
 class Value(BaseModel):
     """
     Value
     """
-
-    order: Optional[conlist(StrictStr)] = Field(
-        None, description="Pinned order of facet lists."
-    )
+    order: Optional[conlist(StrictStr)] = Field(None, description="Pinned order of facet lists.")
     sort_remaining_by: Optional[SortRemainingBy] = Field(None, alias="sortRemainingBy")
     __properties = ["order", "sortRemainingBy"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -55,7 +50,10 @@ class Value(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -67,7 +65,10 @@ class Value(BaseModel):
         if not isinstance(obj, dict):
             return Value.parse_obj(obj)
 
-        _obj = Value.parse_obj(
-            {"order": obj.get("order"), "sort_remaining_by": obj.get("sortRemainingBy")}
-        )
+        _obj = Value.parse_obj({
+            "order": obj.get("order"),
+            "sort_remaining_by": obj.get("sortRemainingBy")
+        })
         return _obj
+
+

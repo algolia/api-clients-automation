@@ -13,24 +13,28 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class SortRemainingBy(str, Enum):
     """
-    How to display the remaining items:    - `count`: facet count (descending).   - `alpha`: alphabetical (ascending).   - `hidden`: show only pinned values.
+    How to display the remaining items:    - `count`: facet count (descending).   - `alpha`: alphabetical (ascending).   - `hidden`: show only pinned values. 
     """
 
     """
     allowed enum values
     """
-    COUNT = "count"
-    ALPHA = "alpha"
-    HIDDEN = "hidden"
+    COUNT = 'count'
+    ALPHA = 'alpha'
+    HIDDEN = 'hidden'
 
     @classmethod
     def from_json(cls, json_str: str) -> SortRemainingBy:
         """Create an instance of SortRemainingBy from a JSON string"""
         return SortRemainingBy(json.loads(json_str))
+
+

@@ -18,32 +18,20 @@ import re  # noqa: F401
 import json
 
 
-from pydantic import BaseModel, Field, StrictInt, StrictStr
 
+from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 class UpdatedRuleResponse(BaseModel):
     """
     UpdatedRuleResponse
     """
-
-    object_id: StrictStr = Field(
-        ..., alias="objectID", description="Unique object identifier."
-    )
-    updated_at: StrictStr = Field(
-        ...,
-        alias="updatedAt",
-        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
-    )
-    task_id: StrictInt = Field(
-        ...,
-        alias="taskID",
-        description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ",
-    )
+    object_id: StrictStr = Field(..., alias="objectID", description="Unique object identifier.")
+    updated_at: StrictStr = Field(..., alias="updatedAt", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+    task_id: StrictInt = Field(..., alias="taskID", description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ")
     __properties = ["objectID", "updatedAt", "taskID"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -62,7 +50,10 @@ class UpdatedRuleResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -74,11 +65,11 @@ class UpdatedRuleResponse(BaseModel):
         if not isinstance(obj, dict):
             return UpdatedRuleResponse.parse_obj(obj)
 
-        _obj = UpdatedRuleResponse.parse_obj(
-            {
-                "object_id": obj.get("objectID"),
-                "updated_at": obj.get("updatedAt"),
-                "task_id": obj.get("taskID"),
-            }
-        )
+        _obj = UpdatedRuleResponse.parse_obj({
+            "object_id": obj.get("objectID"),
+            "updated_at": obj.get("updatedAt"),
+            "task_id": obj.get("taskID")
+        })
         return _obj
+
+

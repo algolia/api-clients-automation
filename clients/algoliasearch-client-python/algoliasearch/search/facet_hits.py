@@ -18,27 +18,20 @@ import re  # noqa: F401
 import json
 
 
-from pydantic import BaseModel, Field, StrictInt, StrictStr
 
+from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 class FacetHits(BaseModel):
     """
     FacetHits
     """
-
     value: StrictStr = Field(..., description="Facet value.")
-    highlighted: StrictStr = Field(
-        ..., description="Markup text with `facetQuery` matches highlighted."
-    )
-    count: StrictInt = Field(
-        ...,
-        description="Number of records containing this facet value. This takes into account the extra search parameters specified in the query. Like for a regular search query, the [counts may not be exhaustive](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).",
-    )
+    highlighted: StrictStr = Field(..., description="Markup text with `facetQuery` matches highlighted.")
+    count: StrictInt = Field(..., description="Number of records containing this facet value. This takes into account the extra search parameters specified in the query. Like for a regular search query, the [counts may not be exhaustive](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).")
     __properties = ["value", "highlighted", "count"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -57,7 +50,10 @@ class FacetHits(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -69,11 +65,11 @@ class FacetHits(BaseModel):
         if not isinstance(obj, dict):
             return FacetHits.parse_obj(obj)
 
-        _obj = FacetHits.parse_obj(
-            {
-                "value": obj.get("value"),
-                "highlighted": obj.get("highlighted"),
-                "count": obj.get("count"),
-            }
-        )
+        _obj = FacetHits.parse_obj({
+            "value": obj.get("value"),
+            "highlighted": obj.get("highlighted"),
+            "count": obj.get("count")
+        })
         return _obj
+
+

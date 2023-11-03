@@ -21,30 +21,17 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr
 
-
 class UpdatedAtWithObjectIdResponse(BaseModel):
     """
     Response, taskID, unique object identifier, and an update timestamp.  # noqa: E501
     """
-
-    task_id: Optional[StrictInt] = Field(
-        None,
-        alias="taskID",
-        description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ",
-    )
-    updated_at: Optional[StrictStr] = Field(
-        None,
-        alias="updatedAt",
-        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
-    )
-    object_id: Optional[StrictStr] = Field(
-        None, alias="objectID", description="Unique object identifier."
-    )
+    task_id: Optional[StrictInt] = Field(None, alias="taskID", description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ")
+    updated_at: Optional[StrictStr] = Field(None, alias="updatedAt", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+    object_id: Optional[StrictStr] = Field(None, alias="objectID", description="Unique object identifier.")
     __properties = ["taskID", "updatedAt", "objectID"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -63,7 +50,10 @@ class UpdatedAtWithObjectIdResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -75,11 +65,11 @@ class UpdatedAtWithObjectIdResponse(BaseModel):
         if not isinstance(obj, dict):
             return UpdatedAtWithObjectIdResponse.parse_obj(obj)
 
-        _obj = UpdatedAtWithObjectIdResponse.parse_obj(
-            {
-                "task_id": obj.get("taskID"),
-                "updated_at": obj.get("updatedAt"),
-                "object_id": obj.get("objectID"),
-            }
-        )
+        _obj = UpdatedAtWithObjectIdResponse.parse_obj({
+            "task_id": obj.get("taskID"),
+            "updated_at": obj.get("updatedAt"),
+            "object_id": obj.get("objectID")
+        })
         return _obj
+
+

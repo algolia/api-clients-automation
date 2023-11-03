@@ -22,27 +22,16 @@ from typing import Dict
 from pydantic import BaseModel, Field
 from algoliasearch.models.highlight_result import HighlightResult
 
-
 class UserHighlightResult(BaseModel):
     """
     UserHighlightResult
     """
-
-    user_id: Dict[str, HighlightResult] = Field(
-        ...,
-        alias="userID",
-        description="Show highlighted section and words matched on a query.",
-    )
-    cluster_name: Dict[str, HighlightResult] = Field(
-        ...,
-        alias="clusterName",
-        description="Show highlighted section and words matched on a query.",
-    )
+    user_id: Dict[str, HighlightResult] = Field(..., alias="userID", description="Show highlighted section and words matched on a query.")
+    cluster_name: Dict[str, HighlightResult] = Field(..., alias="clusterName", description="Show highlighted section and words matched on a query.")
     __properties = ["userID", "clusterName"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -61,21 +50,24 @@ class UserHighlightResult(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each value in user_id (dict)
         _field_dict = {}
         if self.user_id:
             for _key in self.user_id:
                 if self.user_id[_key]:
                     _field_dict[_key] = self.user_id[_key].to_dict()
-            _dict["userID"] = _field_dict
+            _dict['userID'] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of each value in cluster_name (dict)
         _field_dict = {}
         if self.cluster_name:
             for _key in self.cluster_name:
                 if self.cluster_name[_key]:
                     _field_dict[_key] = self.cluster_name[_key].to_dict()
-            _dict["clusterName"] = _field_dict
+            _dict['clusterName'] = _field_dict
         return _dict
 
     @classmethod
@@ -87,20 +79,20 @@ class UserHighlightResult(BaseModel):
         if not isinstance(obj, dict):
             return UserHighlightResult.parse_obj(obj)
 
-        _obj = UserHighlightResult.parse_obj(
-            {
-                "user_id": dict(
-                    (_k, HighlightResult.from_dict(_v))
-                    for _k, _v in obj.get("userID").items()
-                )
-                if obj.get("userID") is not None
-                else None,
-                "cluster_name": dict(
-                    (_k, HighlightResult.from_dict(_v))
-                    for _k, _v in obj.get("clusterName").items()
-                )
-                if obj.get("clusterName") is not None
-                else None,
-            }
-        )
+        _obj = UserHighlightResult.parse_obj({
+            "user_id": dict(
+                (_k, HighlightResult.from_dict(_v))
+                for _k, _v in obj.get("userID").items()
+            )
+            if obj.get("userID") is not None
+            else None,
+            "cluster_name": dict(
+                (_k, HighlightResult.from_dict(_v))
+                for _k, _v in obj.get("clusterName").items()
+            )
+            if obj.get("clusterName") is not None
+            else None
+        })
         return _obj
+
+

@@ -18,56 +18,26 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 from algoliasearch.models.synonym_type import SynonymType
-
 
 class SynonymHit(BaseModel):
     """
     Synonym object.  # noqa: E501
     """
-
-    object_id: StrictStr = Field(
-        ..., alias="objectID", description="Unique identifier of a synonym object."
-    )
+    object_id: StrictStr = Field(..., alias="objectID", description="Unique identifier of a synonym object.")
     type: SynonymType = Field(...)
-    synonyms: Optional[conlist(StrictStr)] = Field(
-        None, description="Words or phrases considered equivalent."
-    )
-    input: Optional[StrictStr] = Field(
-        None,
-        description="Word or phrase to appear in query strings (for [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).",
-    )
-    word: Optional[StrictStr] = Field(
-        None,
-        description="Word or phrase to appear in query strings (for [`altcorrection1` and `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).",
-    )
-    corrections: Optional[conlist(StrictStr)] = Field(
-        None, description="Words to be matched in records."
-    )
-    placeholder: Optional[StrictStr] = Field(
-        None,
-        description="[Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records. ",
-    )
-    replacements: Optional[conlist(StrictStr)] = Field(
-        None,
-        description="Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).",
-    )
-    __properties = [
-        "objectID",
-        "type",
-        "synonyms",
-        "input",
-        "word",
-        "corrections",
-        "placeholder",
-        "replacements",
-    ]
+    synonyms: Optional[conlist(StrictStr)] = Field(None, description="Words or phrases considered equivalent.")
+    input: Optional[StrictStr] = Field(None, description="Word or phrase to appear in query strings (for [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).")
+    word: Optional[StrictStr] = Field(None, description="Word or phrase to appear in query strings (for [`altcorrection1` and `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).")
+    corrections: Optional[conlist(StrictStr)] = Field(None, description="Words to be matched in records.")
+    placeholder: Optional[StrictStr] = Field(None, description="[Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records. ")
+    replacements: Optional[conlist(StrictStr)] = Field(None, description="Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).")
+    __properties = ["objectID", "type", "synonyms", "input", "word", "corrections", "placeholder", "replacements"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -86,7 +56,10 @@ class SynonymHit(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -98,16 +71,16 @@ class SynonymHit(BaseModel):
         if not isinstance(obj, dict):
             return SynonymHit.parse_obj(obj)
 
-        _obj = SynonymHit.parse_obj(
-            {
-                "object_id": obj.get("objectID"),
-                "type": obj.get("type"),
-                "synonyms": obj.get("synonyms"),
-                "input": obj.get("input"),
-                "word": obj.get("word"),
-                "corrections": obj.get("corrections"),
-                "placeholder": obj.get("placeholder"),
-                "replacements": obj.get("replacements"),
-            }
-        )
+        _obj = SynonymHit.parse_obj({
+            "object_id": obj.get("objectID"),
+            "type": obj.get("type"),
+            "synonyms": obj.get("synonyms"),
+            "input": obj.get("input"),
+            "word": obj.get("word"),
+            "corrections": obj.get("corrections"),
+            "placeholder": obj.get("placeholder"),
+            "replacements": obj.get("replacements")
+        })
         return _obj
+
+

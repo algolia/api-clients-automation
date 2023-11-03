@@ -21,26 +21,17 @@ import json
 from typing import Dict, Optional
 from pydantic import BaseModel, Field, StrictBool
 
-
 class StandardEntries(BaseModel):
     """
     Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and boolean values.   # noqa: E501
     """
-
-    plurals: Optional[Dict[str, StrictBool]] = Field(
-        None, description="Key-value pair of a language ISO code and a boolean value."
-    )
-    stopwords: Optional[Dict[str, StrictBool]] = Field(
-        None, description="Key-value pair of a language ISO code and a boolean value."
-    )
-    compounds: Optional[Dict[str, StrictBool]] = Field(
-        None, description="Key-value pair of a language ISO code and a boolean value."
-    )
+    plurals: Optional[Dict[str, StrictBool]] = Field(None, description="Key-value pair of a language ISO code and a boolean value.")
+    stopwords: Optional[Dict[str, StrictBool]] = Field(None, description="Key-value pair of a language ISO code and a boolean value.")
+    compounds: Optional[Dict[str, StrictBool]] = Field(None, description="Key-value pair of a language ISO code and a boolean value.")
     __properties = ["plurals", "stopwords", "compounds"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -59,21 +50,24 @@ class StandardEntries(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # set to None if plurals (nullable) is None
         # and __fields_set__ contains the field
         if self.plurals is None and "plurals" in self.__fields_set__:
-            _dict["plurals"] = None
+            _dict['plurals'] = None
 
         # set to None if stopwords (nullable) is None
         # and __fields_set__ contains the field
         if self.stopwords is None and "stopwords" in self.__fields_set__:
-            _dict["stopwords"] = None
+            _dict['stopwords'] = None
 
         # set to None if compounds (nullable) is None
         # and __fields_set__ contains the field
         if self.compounds is None and "compounds" in self.__fields_set__:
-            _dict["compounds"] = None
+            _dict['compounds'] = None
 
         return _dict
 
@@ -86,11 +80,11 @@ class StandardEntries(BaseModel):
         if not isinstance(obj, dict):
             return StandardEntries.parse_obj(obj)
 
-        _obj = StandardEntries.parse_obj(
-            {
-                "plurals": obj.get("plurals"),
-                "stopwords": obj.get("stopwords"),
-                "compounds": obj.get("compounds"),
-            }
-        )
+        _obj = StandardEntries.parse_obj({
+            "plurals": obj.get("plurals"),
+            "stopwords": obj.get("stopwords"),
+            "compounds": obj.get("compounds")
+        })
         return _obj
+
+

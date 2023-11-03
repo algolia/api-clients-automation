@@ -18,28 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
-
 
 class BatchResponse(BaseModel):
     """
     BatchResponse
     """
-
-    task_id: StrictInt = Field(
-        ...,
-        alias="taskID",
-        description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ",
-    )
-    object_ids: conlist(StrictStr) = Field(
-        ..., alias="objectIDs", description="Unique object (record) identifiers."
-    )
+    task_id: StrictInt = Field(..., alias="taskID", description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ")
+    object_ids: conlist(StrictStr) = Field(..., alias="objectIDs", description="Unique object (record) identifiers.")
     __properties = ["taskID", "objectIDs"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -58,7 +48,10 @@ class BatchResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -70,7 +63,10 @@ class BatchResponse(BaseModel):
         if not isinstance(obj, dict):
             return BatchResponse.parse_obj(obj)
 
-        _obj = BatchResponse.parse_obj(
-            {"task_id": obj.get("taskID"), "object_ids": obj.get("objectIDs")}
-        )
+        _obj = BatchResponse.parse_obj({
+            "task_id": obj.get("taskID"),
+            "object_ids": obj.get("objectIDs")
+        })
         return _obj
+
+

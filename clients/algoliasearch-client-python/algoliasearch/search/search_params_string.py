@@ -21,20 +21,15 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
-
 class SearchParamsString(BaseModel):
     """
     SearchParamsString
     """
-
-    params: Optional[StrictStr] = Field(
-        "", description="Search parameters as a URL-encoded query string."
-    )
+    params: Optional[StrictStr] = Field('', description="Search parameters as a URL-encoded query string.")
     __properties = ["params"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -53,7 +48,10 @@ class SearchParamsString(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,7 +63,9 @@ class SearchParamsString(BaseModel):
         if not isinstance(obj, dict):
             return SearchParamsString.parse_obj(obj)
 
-        _obj = SearchParamsString.parse_obj(
-            {"params": obj.get("params") if obj.get("params") is not None else ""}
-        )
+        _obj = SearchParamsString.parse_obj({
+            "params": obj.get("params") if obj.get("params") is not None else ''
+        })
         return _obj
+
+

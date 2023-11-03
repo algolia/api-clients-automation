@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class QueryType(str, Enum):
@@ -26,11 +28,13 @@ class QueryType(str, Enum):
     """
     allowed enum values
     """
-    PREFIXLAST = "prefixLast"
-    PREFIXALL = "prefixAll"
-    PREFIXNONE = "prefixNone"
+    PREFIXLAST = 'prefixLast'
+    PREFIXALL = 'prefixAll'
+    PREFIXNONE = 'prefixNone'
 
     @classmethod
     def from_json(cls, json_str: str) -> QueryType:
         """Create an instance of QueryType from a JSON string"""
         return QueryType(json.loads(json_str))
+
+

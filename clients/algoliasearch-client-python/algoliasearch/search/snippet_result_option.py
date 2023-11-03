@@ -18,24 +18,20 @@ import re  # noqa: F401
 import json
 
 
+
 from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.match_level import MatchLevel
-
 
 class SnippetResultOption(BaseModel):
     """
     Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.  # noqa: E501
     """
-
-    value: StrictStr = Field(
-        ..., description="Markup text with `facetQuery` matches highlighted."
-    )
+    value: StrictStr = Field(..., description="Markup text with `facetQuery` matches highlighted.")
     match_level: MatchLevel = Field(..., alias="matchLevel")
     __properties = ["value", "matchLevel"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -54,7 +50,10 @@ class SnippetResultOption(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -66,7 +65,10 @@ class SnippetResultOption(BaseModel):
         if not isinstance(obj, dict):
             return SnippetResultOption.parse_obj(obj)
 
-        _obj = SnippetResultOption.parse_obj(
-            {"value": obj.get("value"), "match_level": obj.get("matchLevel")}
-        )
+        _obj = SnippetResultOption.parse_obj({
+            "value": obj.get("value"),
+            "match_level": obj.get("matchLevel")
+        })
         return _obj
+
+

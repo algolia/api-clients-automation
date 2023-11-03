@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class LogType(str, Enum):
@@ -26,12 +28,14 @@ class LogType(str, Enum):
     """
     allowed enum values
     """
-    ALL = "all"
-    QUERY = "query"
-    BUILD = "build"
-    ERROR = "error"
+    ALL = 'all'
+    QUERY = 'query'
+    BUILD = 'build'
+    ERROR = 'error'
 
     @classmethod
     def from_json(cls, json_str: str) -> LogType:
         """Create an instance of LogType from a JSON string"""
         return LogType(json.loads(json_str))
+
+

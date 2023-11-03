@@ -18,22 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.batch_request import BatchRequest
-
 
 class BatchWriteParams(BaseModel):
     """
     Batch parameters.  # noqa: E501
     """
-
     requests: conlist(BatchRequest) = Field(...)
     __properties = ["requests"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,14 +48,17 @@ class BatchWriteParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in requests (list)
         _items = []
         if self.requests:
             for _item in self.requests:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["requests"] = _items
+            _dict['requests'] = _items
         return _dict
 
     @classmethod
@@ -71,13 +70,9 @@ class BatchWriteParams(BaseModel):
         if not isinstance(obj, dict):
             return BatchWriteParams.parse_obj(obj)
 
-        _obj = BatchWriteParams.parse_obj(
-            {
-                "requests": [
-                    BatchRequest.from_dict(_item) for _item in obj.get("requests")
-                ]
-                if obj.get("requests") is not None
-                else None
-            }
-        )
+        _obj = BatchWriteParams.parse_obj({
+            "requests": [BatchRequest.from_dict(_item) for _item in obj.get("requests")] if obj.get("requests") is not None else None
+        })
         return _obj
+
+

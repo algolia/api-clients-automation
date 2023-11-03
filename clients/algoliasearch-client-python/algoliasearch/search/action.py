@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class Action(str, Enum):
@@ -26,15 +28,17 @@ class Action(str, Enum):
     """
     allowed enum values
     """
-    ADDOBJECT = "addObject"
-    UPDATEOBJECT = "updateObject"
-    PARTIALUPDATEOBJECT = "partialUpdateObject"
-    PARTIALUPDATEOBJECTNOCREATE = "partialUpdateObjectNoCreate"
-    DELETEOBJECT = "deleteObject"
-    DELETE = "delete"
-    CLEAR = "clear"
+    ADDOBJECT = 'addObject'
+    UPDATEOBJECT = 'updateObject'
+    PARTIALUPDATEOBJECT = 'partialUpdateObject'
+    PARTIALUPDATEOBJECTNOCREATE = 'partialUpdateObjectNoCreate'
+    DELETEOBJECT = 'deleteObject'
+    DELETE = 'delete'
+    CLEAR = 'clear'
 
     @classmethod
     def from_json(cls, json_str: str) -> Action:
         """Create an instance of Action from a JSON string"""
         return Action(json.loads(json_str))
+
+

@@ -18,27 +18,21 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
 from pydantic import BaseModel, Field, StrictStr, conlist
 from algoliasearch.models.hit import Hit
-
 
 class SearchHits(BaseModel):
     """
     SearchHits
     """
-
     hits: conlist(Hit) = Field(...)
     query: StrictStr = Field(..., description="Text to search for in an index.")
-    params: StrictStr = Field(
-        ..., description="URL-encoded string of all search parameters."
-    )
+    params: StrictStr = Field(..., description="URL-encoded string of all search parameters.")
     additional_properties: Dict[str, Any] = {}
     __properties = ["hits", "query", "params"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -57,16 +51,18 @@ class SearchHits(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(
-            by_alias=True, exclude={"additional_properties"}, exclude_none=True
-        )
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                            "additional_properties"
+                          },
+                          exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in hits (list)
         _items = []
         if self.hits:
             for _item in self.hits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["hits"] = _items
+            _dict['hits'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -83,18 +79,16 @@ class SearchHits(BaseModel):
         if not isinstance(obj, dict):
             return SearchHits.parse_obj(obj)
 
-        _obj = SearchHits.parse_obj(
-            {
-                "hits": [Hit.from_dict(_item) for _item in obj.get("hits")]
-                if obj.get("hits") is not None
-                else None,
-                "query": obj.get("query") if obj.get("query") is not None else "",
-                "params": obj.get("params"),
-            }
-        )
+        _obj = SearchHits.parse_obj({
+            "hits": [Hit.from_dict(_item) for _item in obj.get("hits")] if obj.get("hits") is not None else None,
+            "query": obj.get("query") if obj.get("query") is not None else '',
+            "params": obj.get("params")
+        })
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
+

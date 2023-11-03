@@ -18,33 +18,20 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
-
 
 class GetObjectsRequest(BaseModel):
     """
     Record retrieval operation.  # noqa: E501
     """
-
-    attributes_to_retrieve: Optional[conlist(StrictStr)] = Field(
-        None,
-        alias="attributesToRetrieve",
-        description="Attributes to retrieve. If not specified, all retrievable attributes are returned.",
-    )
-    object_id: StrictStr = Field(
-        ..., alias="objectID", description="Record's objectID."
-    )
-    index_name: StrictStr = Field(
-        ...,
-        alias="indexName",
-        description="Name of the index containing the required records.",
-    )
+    attributes_to_retrieve: Optional[conlist(StrictStr)] = Field(None, alias="attributesToRetrieve", description="Attributes to retrieve. If not specified, all retrievable attributes are returned.")
+    object_id: StrictStr = Field(..., alias="objectID", description="Record's objectID.")
+    index_name: StrictStr = Field(..., alias="indexName", description="Name of the index containing the required records.")
     __properties = ["attributesToRetrieve", "objectID", "indexName"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -63,7 +50,10 @@ class GetObjectsRequest(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -75,11 +65,11 @@ class GetObjectsRequest(BaseModel):
         if not isinstance(obj, dict):
             return GetObjectsRequest.parse_obj(obj)
 
-        _obj = GetObjectsRequest.parse_obj(
-            {
-                "attributes_to_retrieve": obj.get("attributesToRetrieve"),
-                "object_id": obj.get("objectID"),
-                "index_name": obj.get("indexName"),
-            }
-        )
+        _obj = GetObjectsRequest.parse_obj({
+            "attributes_to_retrieve": obj.get("attributesToRetrieve"),
+            "object_id": obj.get("objectID"),
+            "index_name": obj.get("indexName")
+        })
         return _obj
+
+

@@ -18,35 +18,22 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
 from algoliasearch.models.match_level import MatchLevel
-
 
 class HighlightResultOption(BaseModel):
     """
     Show highlighted section and words matched on a query.  # noqa: E501
     """
-
-    value: StrictStr = Field(
-        ..., description="Markup text with `facetQuery` matches highlighted."
-    )
+    value: StrictStr = Field(..., description="Markup text with `facetQuery` matches highlighted.")
     match_level: MatchLevel = Field(..., alias="matchLevel")
-    matched_words: conlist(StrictStr) = Field(
-        ...,
-        alias="matchedWords",
-        description="List of words from the query that matched the object.",
-    )
-    fully_highlighted: Optional[StrictBool] = Field(
-        None,
-        alias="fullyHighlighted",
-        description="Whether the entire attribute value is highlighted.",
-    )
+    matched_words: conlist(StrictStr) = Field(..., alias="matchedWords", description="List of words from the query that matched the object.")
+    fully_highlighted: Optional[StrictBool] = Field(None, alias="fullyHighlighted", description="Whether the entire attribute value is highlighted.")
     __properties = ["value", "matchLevel", "matchedWords", "fullyHighlighted"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -65,7 +52,10 @@ class HighlightResultOption(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -77,12 +67,12 @@ class HighlightResultOption(BaseModel):
         if not isinstance(obj, dict):
             return HighlightResultOption.parse_obj(obj)
 
-        _obj = HighlightResultOption.parse_obj(
-            {
-                "value": obj.get("value"),
-                "match_level": obj.get("matchLevel"),
-                "matched_words": obj.get("matchedWords"),
-                "fully_highlighted": obj.get("fullyHighlighted"),
-            }
-        )
+        _obj = HighlightResultOption.parse_obj({
+            "value": obj.get("value"),
+            "match_level": obj.get("matchLevel"),
+            "matched_words": obj.get("matchedWords"),
+            "fully_highlighted": obj.get("fullyHighlighted")
+        })
         return _obj
+
+

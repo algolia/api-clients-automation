@@ -13,9 +13,11 @@
 
 
 import json
-import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from aenum import Enum
+
+
+
 
 
 class OperationType(str, Enum):
@@ -26,10 +28,12 @@ class OperationType(str, Enum):
     """
     allowed enum values
     """
-    MOVE = "move"
-    COPY = "copy"
+    MOVE = 'move'
+    COPY = 'copy'
 
     @classmethod
     def from_json(cls, json_str: str) -> OperationType:
         """Create an instance of OperationType from a JSON string"""
         return OperationType(json.loads(json_str))
+
+

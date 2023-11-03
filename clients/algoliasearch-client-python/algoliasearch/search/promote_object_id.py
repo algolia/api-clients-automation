@@ -18,26 +18,19 @@ import re  # noqa: F401
 import json
 
 
-from pydantic import BaseModel, Field, StrictInt, StrictStr
 
+from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 class PromoteObjectID(BaseModel):
     """
     Record to promote.  # noqa: E501
     """
-
-    object_id: StrictStr = Field(
-        ..., alias="objectID", description="Unique identifier of the record to promote."
-    )
-    position: StrictInt = Field(
-        ...,
-        description="The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.",
-    )
+    object_id: StrictStr = Field(..., alias="objectID", description="Unique identifier of the record to promote.")
+    position: StrictInt = Field(..., description="The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.")
     __properties = ["objectID", "position"]
 
     class Config:
         """Pydantic configuration"""
-
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,7 +49,10 @@ class PromoteObjectID(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
         return _dict
 
     @classmethod
@@ -68,7 +64,10 @@ class PromoteObjectID(BaseModel):
         if not isinstance(obj, dict):
             return PromoteObjectID.parse_obj(obj)
 
-        _obj = PromoteObjectID.parse_obj(
-            {"object_id": obj.get("objectID"), "position": obj.get("position")}
-        )
+        _obj = PromoteObjectID.parse_obj({
+            "object_id": obj.get("objectID"),
+            "position": obj.get("position")
+        })
         return _obj
+
+
