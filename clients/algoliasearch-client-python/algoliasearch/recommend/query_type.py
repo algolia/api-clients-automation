@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class QueryType(str, Enum):
     """
     Determines how query words are [interpreted as prefixes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
@@ -29,13 +26,11 @@ class QueryType(str, Enum):
     """
     allowed enum values
     """
-    PREFIXLAST = 'prefixLast'
-    PREFIXALL = 'prefixAll'
-    PREFIXNONE = 'prefixNone'
+    PREFIXLAST = "prefixLast"
+    PREFIXALL = "prefixAll"
+    PREFIXNONE = "prefixNone"
 
     @classmethod
     def from_json(cls, json_str: str) -> QueryType:
         """Create an instance of QueryType from a JSON string"""
         return QueryType(json.loads(json_str))
-
-

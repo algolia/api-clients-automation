@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class RemoveWordsIfNoResults(str, Enum):
     """
     Strategy to [remove words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/) from the query when it doesn't match any hits.
@@ -29,14 +26,12 @@ class RemoveWordsIfNoResults(str, Enum):
     """
     allowed enum values
     """
-    NONE = 'none'
-    LASTWORDS = 'lastWords'
-    FIRSTWORDS = 'firstWords'
-    ALLOPTIONAL = 'allOptional'
+    NONE = "none"
+    LASTWORDS = "lastWords"
+    FIRSTWORDS = "firstWords"
+    ALLOPTIONAL = "allOptional"
 
     @classmethod
     def from_json(cls, json_str: str) -> RemoveWordsIfNoResults:
         """Create an instance of RemoveWordsIfNoResults from a JSON string"""
         return RemoveWordsIfNoResults(json.loads(json_str))
-
-

@@ -21,15 +21,22 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 
+
 class SemanticSearch(BaseModel):
     """
     Settings for the semantic search part of NeuralSearch. Only used when `mode` is _neuralSearch_.   # noqa: E501
     """
-    event_sources: Optional[conlist(StrictStr)] = Field(None, alias="eventSources", description="Indices from which to collect click and conversion events. If null, the current index and replica group will be used as the event source.")
+
+    event_sources: Optional[conlist(StrictStr)] = Field(
+        None,
+        alias="eventSources",
+        description="Indices from which to collect click and conversion events. If null, the current index and replica group will be used as the event source.",
+    )
     __properties = ["eventSources"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,14 +55,11 @@ class SemanticSearch(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # set to None if event_sources (nullable) is None
         # and __fields_set__ contains the field
         if self.event_sources is None and "event_sources" in self.__fields_set__:
-            _dict['eventSources'] = None
+            _dict["eventSources"] = None
 
         return _dict
 
@@ -68,9 +72,5 @@ class SemanticSearch(BaseModel):
         if not isinstance(obj, dict):
             return SemanticSearch.parse_obj(obj)
 
-        _obj = SemanticSearch.parse_obj({
-            "event_sources": obj.get("eventSources")
-        })
+        _obj = SemanticSearch.parse_obj({"event_sources": obj.get("eventSources")})
         return _obj
-
-

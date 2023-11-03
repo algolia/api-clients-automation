@@ -24,20 +24,44 @@ from algoliasearch.models.condition import Condition
 from algoliasearch.models.consequence import Consequence
 from algoliasearch.models.time_range import TimeRange
 
+
 class Rule(BaseModel):
     """
     Rule object.  # noqa: E501
     """
-    object_id: StrictStr = Field(..., alias="objectID", description="Unique identifier for a rule object.")
-    conditions: Optional[conlist(Condition)] = Field(None, description="[Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule. ")
+
+    object_id: StrictStr = Field(
+        ..., alias="objectID", description="Unique identifier for a rule object."
+    )
+    conditions: Optional[conlist(Condition)] = Field(
+        None,
+        description="[Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule. ",
+    )
     consequence: Optional[Consequence] = None
-    description: Optional[StrictStr] = Field(None, description="Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.")
-    enabled: Optional[StrictBool] = Field(True, description="Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.")
-    validity: Optional[conlist(TimeRange)] = Field(None, description="If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.")
-    __properties = ["objectID", "conditions", "consequence", "description", "enabled", "validity"]
+    description: Optional[StrictStr] = Field(
+        None,
+        description="Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.",
+    )
+    enabled: Optional[StrictBool] = Field(
+        True,
+        description="Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.",
+    )
+    validity: Optional[conlist(TimeRange)] = Field(
+        None,
+        description="If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.",
+    )
+    __properties = [
+        "objectID",
+        "conditions",
+        "consequence",
+        "description",
+        "enabled",
+        "validity",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,27 +80,24 @@ class Rule(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in conditions (list)
         _items = []
         if self.conditions:
             for _item in self.conditions:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['conditions'] = _items
+            _dict["conditions"] = _items
         # override the default output from pydantic by calling `to_dict()` of consequence
         if self.consequence:
-            _dict['consequence'] = self.consequence.to_dict()
+            _dict["consequence"] = self.consequence.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in validity (list)
         _items = []
         if self.validity:
             for _item in self.validity:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['validity'] = _items
+            _dict["validity"] = _items
         return _dict
 
     @classmethod
@@ -88,14 +109,26 @@ class Rule(BaseModel):
         if not isinstance(obj, dict):
             return Rule.parse_obj(obj)
 
-        _obj = Rule.parse_obj({
-            "object_id": obj.get("objectID"),
-            "conditions": [Condition.from_dict(_item) for _item in obj.get("conditions")] if obj.get("conditions") is not None else None,
-            "consequence": Consequence.from_dict(obj.get("consequence")) if obj.get("consequence") is not None else None,
-            "description": obj.get("description"),
-            "enabled": obj.get("enabled") if obj.get("enabled") is not None else True,
-            "validity": [TimeRange.from_dict(_item) for _item in obj.get("validity")] if obj.get("validity") is not None else None
-        })
+        _obj = Rule.parse_obj(
+            {
+                "object_id": obj.get("objectID"),
+                "conditions": [
+                    Condition.from_dict(_item) for _item in obj.get("conditions")
+                ]
+                if obj.get("conditions") is not None
+                else None,
+                "consequence": Consequence.from_dict(obj.get("consequence"))
+                if obj.get("consequence") is not None
+                else None,
+                "description": obj.get("description"),
+                "enabled": obj.get("enabled")
+                if obj.get("enabled") is not None
+                else True,
+                "validity": [
+                    TimeRange.from_dict(_item) for _item in obj.get("validity")
+                ]
+                if obj.get("validity") is not None
+                else None,
+            }
+        )
         return _obj
-
-

@@ -18,28 +18,40 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictInt, StrictStr, constr, validator
+
 
 class UserId(BaseModel):
     """
     Unique user ID.  # noqa: E501
     """
-    user_id: constr(strict=True) = Field(..., alias="userID", description="userID of the user.")
-    cluster_name: StrictStr = Field(..., alias="clusterName", description="Cluster to which the user is assigned.")
-    nb_records: StrictInt = Field(..., alias="nbRecords", description="Number of records belonging to the user.")
-    data_size: StrictInt = Field(..., alias="dataSize", description="Data size used by the user.")
+
+    user_id: constr(strict=True) = Field(
+        ..., alias="userID", description="userID of the user."
+    )
+    cluster_name: StrictStr = Field(
+        ..., alias="clusterName", description="Cluster to which the user is assigned."
+    )
+    nb_records: StrictInt = Field(
+        ..., alias="nbRecords", description="Number of records belonging to the user."
+    )
+    data_size: StrictInt = Field(
+        ..., alias="dataSize", description="Data size used by the user."
+    )
     __properties = ["userID", "clusterName", "nbRecords", "dataSize"]
 
-    @validator('user_id')
+    @validator("user_id")
     def user_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if not re.match(r"^[a-zA-Z0-9 \-*.]+$", value):
-            raise ValueError(r"must validate the regular expression /^[a-zA-Z0-9 \-*.]+$/")
+            raise ValueError(
+                r"must validate the regular expression /^[a-zA-Z0-9 \-*.]+$/"
+            )
         return value
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -58,10 +70,7 @@ class UserId(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -73,12 +82,12 @@ class UserId(BaseModel):
         if not isinstance(obj, dict):
             return UserId.parse_obj(obj)
 
-        _obj = UserId.parse_obj({
-            "user_id": obj.get("userID"),
-            "cluster_name": obj.get("clusterName"),
-            "nb_records": obj.get("nbRecords"),
-            "data_size": obj.get("dataSize")
-        })
+        _obj = UserId.parse_obj(
+            {
+                "user_id": obj.get("userID"),
+                "cluster_name": obj.get("clusterName"),
+                "nb_records": obj.get("nbRecords"),
+                "data_size": obj.get("dataSize"),
+            }
+        )
         return _obj
-
-

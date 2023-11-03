@@ -18,23 +18,18 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class SearchStrategy(str, Enum):
     """
-    - `none`: executes all queries. - `stopIfEnoughMatches`: executes queries one by one, stopping further query execution as soon as a query matches at least the `hitsPerPage` number of results.  
+    - `none`: executes all queries. - `stopIfEnoughMatches`: executes queries one by one, stopping further query execution as soon as a query matches at least the `hitsPerPage` number of results.
     """
 
     """
     allowed enum values
     """
-    NONE = 'none'
-    STOPIFENOUGHMATCHES = 'stopIfEnoughMatches'
+    NONE = "none"
+    STOPIFENOUGHMATCHES = "stopIfEnoughMatches"
 
     @classmethod
     def from_json(cls, json_str: str) -> SearchStrategy:
         """Create an instance of SearchStrategy from a JSON string"""
         return SearchStrategy(json.loads(json_str))
-
-

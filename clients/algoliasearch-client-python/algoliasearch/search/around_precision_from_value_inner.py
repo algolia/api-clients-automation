@@ -21,16 +21,19 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt
 
+
 class AroundPrecisionFromValueInner(BaseModel):
     """
     AroundPrecisionFromValueInner
     """
+
     var_from: Optional[StrictInt] = Field(None, alias="from")
     value: Optional[StrictInt] = None
     __properties = ["from", "value"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,10 +52,7 @@ class AroundPrecisionFromValueInner(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,10 +64,7 @@ class AroundPrecisionFromValueInner(BaseModel):
         if not isinstance(obj, dict):
             return AroundPrecisionFromValueInner.parse_obj(obj)
 
-        _obj = AroundPrecisionFromValueInner.parse_obj({
-            "var_from": obj.get("from"),
-            "value": obj.get("value")
-        })
+        _obj = AroundPrecisionFromValueInner.parse_obj(
+            {"var_from": obj.get("from"), "value": obj.get("value")}
+        )
         return _obj
-
-

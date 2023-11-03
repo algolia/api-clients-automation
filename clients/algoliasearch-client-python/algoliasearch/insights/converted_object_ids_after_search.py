@@ -22,43 +22,82 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, constr, validator
 from algoliasearch.models.conversion_event import ConversionEvent
 
+
 class ConvertedObjectIDsAfterSearch(BaseModel):
     """
     Use this event to track when users convert after a previous Algolia request. For example, a user clicks on an item in the search results to view the product detail page. Then, the user adds the item to their shopping cart.  If you're building your category pages with Algolia, you'll also use this event.   # noqa: E501
     """
-    event_name: constr(strict=True, max_length=64, min_length=1) = Field(..., alias="eventName", description="Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework. ")
+
+    event_name: constr(strict=True, max_length=64, min_length=1) = Field(
+        ...,
+        alias="eventName",
+        description="Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework. ",
+    )
     event_type: ConversionEvent = Field(..., alias="eventType")
     index: StrictStr = Field(..., description="Name of the Algolia index.")
-    object_ids: conlist(StrictStr, max_items=20, min_items=1) = Field(..., alias="objectIDs", description="List of object identifiers for items of an Algolia index.")
-    query_id: constr(strict=True, max_length=32, min_length=32) = Field(..., alias="queryID", description="Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. ")
-    user_token: constr(strict=True, max_length=129, min_length=1) = Field(..., alias="userToken", description="Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens. ")
-    timestamp: Optional[StrictInt] = Field(None, description="Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. ")
-    authenticated_user_token: Optional[StrictStr] = Field(None, alias="authenticatedUserToken", description="User token for authenticated users.")
-    __properties = ["eventName", "eventType", "index", "objectIDs", "queryID", "userToken", "timestamp", "authenticatedUserToken"]
+    object_ids: conlist(StrictStr, max_items=20, min_items=1) = Field(
+        ...,
+        alias="objectIDs",
+        description="List of object identifiers for items of an Algolia index.",
+    )
+    query_id: constr(strict=True, max_length=32, min_length=32) = Field(
+        ...,
+        alias="queryID",
+        description="Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. ",
+    )
+    user_token: constr(strict=True, max_length=129, min_length=1) = Field(
+        ...,
+        alias="userToken",
+        description="Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens. ",
+    )
+    timestamp: Optional[StrictInt] = Field(
+        None,
+        description="Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. ",
+    )
+    authenticated_user_token: Optional[StrictStr] = Field(
+        None,
+        alias="authenticatedUserToken",
+        description="User token for authenticated users.",
+    )
+    __properties = [
+        "eventName",
+        "eventType",
+        "index",
+        "objectIDs",
+        "queryID",
+        "userToken",
+        "timestamp",
+        "authenticatedUserToken",
+    ]
 
-    @validator('event_name')
+    @validator("event_name")
     def event_name_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if not re.match(r"[\x20-\x7E]{1,64}", value):
-            raise ValueError(r"must validate the regular expression /[\x20-\x7E]{1,64}/")
+            raise ValueError(
+                r"must validate the regular expression /[\x20-\x7E]{1,64}/"
+            )
         return value
 
-    @validator('query_id')
+    @validator("query_id")
     def query_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if not re.match(r"[0-9a-f]{32}", value):
             raise ValueError(r"must validate the regular expression /[0-9a-f]{32}/")
         return value
 
-    @validator('user_token')
+    @validator("user_token")
     def user_token_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if not re.match(r"[a-zA-Z0-9_=\/+-]{1,129}", value):
-            raise ValueError(r"must validate the regular expression /[a-zA-Z0-9_=\/+-]{1,129}/")
+            raise ValueError(
+                r"must validate the regular expression /[a-zA-Z0-9_=\/+-]{1,129}/"
+            )
         return value
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -77,10 +116,7 @@ class ConvertedObjectIDsAfterSearch(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -92,16 +128,16 @@ class ConvertedObjectIDsAfterSearch(BaseModel):
         if not isinstance(obj, dict):
             return ConvertedObjectIDsAfterSearch.parse_obj(obj)
 
-        _obj = ConvertedObjectIDsAfterSearch.parse_obj({
-            "event_name": obj.get("eventName"),
-            "event_type": obj.get("eventType"),
-            "index": obj.get("index"),
-            "object_ids": obj.get("objectIDs"),
-            "query_id": obj.get("queryID"),
-            "user_token": obj.get("userToken"),
-            "timestamp": obj.get("timestamp"),
-            "authenticated_user_token": obj.get("authenticatedUserToken")
-        })
+        _obj = ConvertedObjectIDsAfterSearch.parse_obj(
+            {
+                "event_name": obj.get("eventName"),
+                "event_type": obj.get("eventType"),
+                "index": obj.get("index"),
+                "object_ids": obj.get("objectIDs"),
+                "query_id": obj.get("queryID"),
+                "user_token": obj.get("userToken"),
+                "timestamp": obj.get("timestamp"),
+                "authenticated_user_token": obj.get("authenticatedUserToken"),
+            }
+        )
         return _obj
-
-

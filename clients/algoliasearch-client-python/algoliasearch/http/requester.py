@@ -1,11 +1,9 @@
-from typing import Union
-
 import requests
-from requests import RequestException, Session, Timeout
+from requests import RequestException, Timeout
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
-from algoliasearch.http.transporter import Request, Response
+from algoliasearch.http.transporter import Response
 
 
 class Requester(object):

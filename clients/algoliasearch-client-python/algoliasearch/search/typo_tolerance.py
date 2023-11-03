@@ -26,10 +26,12 @@ from pydantic import StrictStr, Field
 
 TYPOTOLERANCE_ONE_OF_SCHEMAS = ["TypoToleranceEnum", "bool"]
 
+
 class TypoTolerance(BaseModel):
     """
     Controls whether [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) is enabled and how it is applied.
     """
+
     # data type: bool
     oneof_schema_1_validator: Optional[StrictBool] = True
     # data type: TypoToleranceEnum
@@ -46,14 +48,18 @@ class TypoTolerance(BaseModel):
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
+                raise ValueError(
+                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
+                )
             if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
+                raise ValueError(
+                    "If a position argument is used, keyword arguments cannot be used."
+                )
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
 
-    @validator('actual_instance')
+    @validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
         instance = TypoTolerance.construct()
         error_messages = []
@@ -66,15 +72,23 @@ class TypoTolerance(BaseModel):
             error_messages.append(str(e))
         # validate data type: TypoToleranceEnum
         if not isinstance(v, TypoToleranceEnum):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `TypoToleranceEnum`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `TypoToleranceEnum`"
+            )
         else:
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when setting `actual_instance` in TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when setting `actual_instance` in TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return v
 
@@ -107,10 +121,16 @@ class TypoTolerance(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when deserializing the JSON string into TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when deserializing the JSON string into TypoTolerance with oneOf schemas: TypoToleranceEnum, bool. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return instance
 
@@ -140,5 +160,3 @@ class TypoTolerance(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
-
-

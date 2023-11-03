@@ -21,15 +21,22 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt
 
+
 class DictionaryLanguage(BaseModel):
     """
     Custom entries for a dictionary.  # noqa: E501
     """
-    nb_custom_entries: Optional[StrictInt] = Field(None, alias="nbCustomEntries", description="If `0`, the dictionary hasn't been customized and only contains standard entries provided by Algolia. If `null`, that feature isn't available or isn't supported for that language. ")
+
+    nb_custom_entries: Optional[StrictInt] = Field(
+        None,
+        alias="nbCustomEntries",
+        description="If `0`, the dictionary hasn't been customized and only contains standard entries provided by Algolia. If `null`, that feature isn't available or isn't supported for that language. ",
+    )
     __properties = ["nbCustomEntries"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +55,7 @@ class DictionaryLanguage(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +67,7 @@ class DictionaryLanguage(BaseModel):
         if not isinstance(obj, dict):
             return DictionaryLanguage.parse_obj(obj)
 
-        _obj = DictionaryLanguage.parse_obj({
-            "nb_custom_entries": obj.get("nbCustomEntries")
-        })
+        _obj = DictionaryLanguage.parse_obj(
+            {"nb_custom_entries": obj.get("nbCustomEntries")}
+        )
         return _obj
-
-

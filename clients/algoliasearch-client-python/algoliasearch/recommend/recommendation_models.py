@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class RecommendationModels(str, Enum):
     """
     Recommendation model.
@@ -29,12 +26,10 @@ class RecommendationModels(str, Enum):
     """
     allowed enum values
     """
-    RELATED_MINUS_PRODUCTS = 'related-products'
-    BOUGHT_MINUS_TOGETHER = 'bought-together'
+    RELATED_MINUS_PRODUCTS = "related-products"
+    BOUGHT_MINUS_TOGETHER = "bought-together"
 
     @classmethod
     def from_json(cls, json_str: str) -> RecommendationModels:
         """Create an instance of RecommendationModels from a JSON string"""
         return RecommendationModels(json.loads(json_str))
-
-

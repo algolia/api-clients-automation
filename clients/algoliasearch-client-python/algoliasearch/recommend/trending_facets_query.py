@@ -22,19 +22,39 @@ from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conint
 from algoliasearch.models.trending_facets_model import TrendingFacetsModel
 
+
 class TrendingFacetsQuery(BaseModel):
     """
     TrendingFacetsQuery
     """
-    facet_name: StrictStr = Field(..., alias="facetName", description="Facet name for trending models.")
+
+    facet_name: StrictStr = Field(
+        ..., alias="facetName", description="Facet name for trending models."
+    )
     model: Optional[TrendingFacetsModel] = None
-    index_name: StrictStr = Field(..., alias="indexName", description="Algolia index name.")
-    threshold: Optional[conint(strict=True, le=100, ge=0)] = Field(None, description="Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are. ")
-    max_recommendations: Optional[StrictInt] = Field(0, alias="maxRecommendations", description="Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.")
-    __properties = ["facetName", "model", "indexName", "threshold", "maxRecommendations"]
+    index_name: StrictStr = Field(
+        ..., alias="indexName", description="Algolia index name."
+    )
+    threshold: Optional[conint(strict=True, le=100, ge=0)] = Field(
+        None,
+        description="Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are. ",
+    )
+    max_recommendations: Optional[StrictInt] = Field(
+        0,
+        alias="maxRecommendations",
+        description="Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.",
+    )
+    __properties = [
+        "facetName",
+        "model",
+        "indexName",
+        "threshold",
+        "maxRecommendations",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -53,10 +73,7 @@ class TrendingFacetsQuery(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -68,13 +85,15 @@ class TrendingFacetsQuery(BaseModel):
         if not isinstance(obj, dict):
             return TrendingFacetsQuery.parse_obj(obj)
 
-        _obj = TrendingFacetsQuery.parse_obj({
-            "facet_name": obj.get("facetName"),
-            "model": obj.get("model"),
-            "index_name": obj.get("indexName"),
-            "threshold": obj.get("threshold"),
-            "max_recommendations": obj.get("maxRecommendations") if obj.get("maxRecommendations") is not None else 0
-        })
+        _obj = TrendingFacetsQuery.parse_obj(
+            {
+                "facet_name": obj.get("facetName"),
+                "model": obj.get("model"),
+                "index_name": obj.get("indexName"),
+                "threshold": obj.get("threshold"),
+                "max_recommendations": obj.get("maxRecommendations")
+                if obj.get("maxRecommendations") is not None
+                else 0,
+            }
+        )
         return _obj
-
-

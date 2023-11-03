@@ -21,15 +21,21 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
+
 class Cursor(BaseModel):
     """
     Cursor
     """
-    cursor: Optional[StrictStr] = Field(None, description="Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response. ")
+
+    cursor: Optional[StrictStr] = Field(
+        None,
+        description="Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response. ",
+    )
     __properties = ["cursor"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +54,7 @@ class Cursor(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +66,5 @@ class Cursor(BaseModel):
         if not isinstance(obj, dict):
             return Cursor.parse_obj(obj)
 
-        _obj = Cursor.parse_obj({
-            "cursor": obj.get("cursor")
-        })
+        _obj = Cursor.parse_obj({"cursor": obj.get("cursor")})
         return _obj
-
-

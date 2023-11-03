@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class AdvancedSyntaxFeatures(str, Enum):
     """
     AdvancedSyntaxFeatures
@@ -29,12 +26,10 @@ class AdvancedSyntaxFeatures(str, Enum):
     """
     allowed enum values
     """
-    EXACTPHRASE = 'exactPhrase'
-    EXCLUDEWORDS = 'excludeWords'
+    EXACTPHRASE = "exactPhrase"
+    EXCLUDEWORDS = "excludeWords"
 
     @classmethod
     def from_json(cls, json_str: str) -> AdvancedSyntaxFeatures:
         """Create an instance of AdvancedSyntaxFeatures from a JSON string"""
         return AdvancedSyntaxFeatures(json.loads(json_str))
-
-

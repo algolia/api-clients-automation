@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class DictionaryEntryState(str, Enum):
     """
     Indicates whether a dictionary entry is active (`enabled`) or inactive (`disabled`).
@@ -29,12 +26,10 @@ class DictionaryEntryState(str, Enum):
     """
     allowed enum values
     """
-    ENABLED = 'enabled'
-    DISABLED = 'disabled'
+    ENABLED = "enabled"
+    DISABLED = "disabled"
 
     @classmethod
     def from_json(cls, json_str: str) -> DictionaryEntryState:
         """Create an instance of DictionaryEntryState from a JSON string"""
         return DictionaryEntryState(json.loads(json_str))
-
-

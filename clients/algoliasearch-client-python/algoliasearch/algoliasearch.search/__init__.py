@@ -11,7 +11,9 @@ from algoliasearch.search.alternatives_as_exact import AlternativesAsExact
 from algoliasearch.search.anchoring import Anchoring
 from algoliasearch.search.api_key import ApiKey
 from algoliasearch.search.around_precision import AroundPrecision
-from algoliasearch.search.around_precision_from_value_inner import AroundPrecisionFromValueInner
+from algoliasearch.search.around_precision_from_value_inner import (
+    AroundPrecisionFromValueInner,
+)
 from algoliasearch.search.around_radius import AroundRadius
 from algoliasearch.search.around_radius_all import AroundRadiusAll
 from algoliasearch.search.assign_user_id_params import AssignUserIdParams
@@ -21,11 +23,17 @@ from algoliasearch.search.automatic_facet_filters import AutomaticFacetFilters
 from algoliasearch.search.base_get_api_key_response import BaseGetApiKeyResponse
 from algoliasearch.search.base_index_settings import BaseIndexSettings
 from algoliasearch.search.base_search_params import BaseSearchParams
-from algoliasearch.search.base_search_params_without_query import BaseSearchParamsWithoutQuery
+from algoliasearch.search.base_search_params_without_query import (
+    BaseSearchParamsWithoutQuery,
+)
 from algoliasearch.search.base_search_response import BaseSearchResponse
 from algoliasearch.search.batch_assign_user_ids_params import BatchAssignUserIdsParams
-from algoliasearch.search.batch_dictionary_entries_params import BatchDictionaryEntriesParams
-from algoliasearch.search.batch_dictionary_entries_request import BatchDictionaryEntriesRequest
+from algoliasearch.search.batch_dictionary_entries_params import (
+    BatchDictionaryEntriesParams,
+)
+from algoliasearch.search.batch_dictionary_entries_request import (
+    BatchDictionaryEntriesRequest,
+)
 from algoliasearch.search.batch_params import BatchParams
 from algoliasearch.search.batch_request import BatchRequest
 from algoliasearch.search.batch_response import BatchResponse
@@ -66,20 +74,26 @@ from algoliasearch.search.facets import Facets
 from algoliasearch.search.facets_stats import FacetsStats
 from algoliasearch.search.fetched_index import FetchedIndex
 from algoliasearch.search.get_api_key_response import GetApiKeyResponse
-from algoliasearch.search.get_dictionary_settings_response import GetDictionarySettingsResponse
+from algoliasearch.search.get_dictionary_settings_response import (
+    GetDictionarySettingsResponse,
+)
 from algoliasearch.search.get_logs_response import GetLogsResponse
 from algoliasearch.search.get_objects_params import GetObjectsParams
 from algoliasearch.search.get_objects_request import GetObjectsRequest
 from algoliasearch.search.get_objects_response import GetObjectsResponse
 from algoliasearch.search.get_task_response import GetTaskResponse
 from algoliasearch.search.get_top_user_ids_response import GetTopUserIdsResponse
-from algoliasearch.search.has_pending_mappings_response import HasPendingMappingsResponse
+from algoliasearch.search.has_pending_mappings_response import (
+    HasPendingMappingsResponse,
+)
 from algoliasearch.search.highlight_result import HighlightResult
 from algoliasearch.search.highlight_result_option import HighlightResultOption
 from algoliasearch.search.hit import Hit
 from algoliasearch.search.ignore_plurals import IgnorePlurals
 from algoliasearch.search.index_settings import IndexSettings
-from algoliasearch.search.index_settings_as_search_params import IndexSettingsAsSearchParams
+from algoliasearch.search.index_settings_as_search_params import (
+    IndexSettingsAsSearchParams,
+)
 from algoliasearch.search.languages import Languages
 from algoliasearch.search.list_api_keys_response import ListApiKeysResponse
 from algoliasearch.search.list_clusters_response import ListClustersResponse
@@ -108,7 +122,9 @@ from algoliasearch.search.ranking_info import RankingInfo
 from algoliasearch.search.re_ranking_apply_filter import ReRankingApplyFilter
 from algoliasearch.search.redirect import Redirect
 from algoliasearch.search.redirect_rule_index_metadata import RedirectRuleIndexMetadata
-from algoliasearch.search.redirect_rule_index_metadata_data import RedirectRuleIndexMetadataData
+from algoliasearch.search.redirect_rule_index_metadata_data import (
+    RedirectRuleIndexMetadataData,
+)
 from algoliasearch.search.remove_stop_words import RemoveStopWords
 from algoliasearch.search.remove_user_id_response import RemoveUserIdResponse
 from algoliasearch.search.remove_words_if_no_results import RemoveWordsIfNoResults
@@ -118,9 +134,15 @@ from algoliasearch.search.rule import Rule
 from algoliasearch.search.save_object_response import SaveObjectResponse
 from algoliasearch.search.save_synonym_response import SaveSynonymResponse
 from algoliasearch.search.scope_type import ScopeType
-from algoliasearch.search.search_dictionary_entries_params import SearchDictionaryEntriesParams
-from algoliasearch.search.search_for_facet_values_request import SearchForFacetValuesRequest
-from algoliasearch.search.search_for_facet_values_response import SearchForFacetValuesResponse
+from algoliasearch.search.search_dictionary_entries_params import (
+    SearchDictionaryEntriesParams,
+)
+from algoliasearch.search.search_for_facet_values_request import (
+    SearchForFacetValuesRequest,
+)
+from algoliasearch.search.search_for_facet_values_response import (
+    SearchForFacetValuesResponse,
+)
 from algoliasearch.search.search_for_facets import SearchForFacets
 from algoliasearch.search.search_for_facets_options import SearchForFacetsOptions
 from algoliasearch.search.search_for_hits import SearchForHits
@@ -159,7 +181,9 @@ from algoliasearch.search.typo_tolerance import TypoTolerance
 from algoliasearch.search.typo_tolerance_enum import TypoToleranceEnum
 from algoliasearch.search.update_api_key_response import UpdateApiKeyResponse
 from algoliasearch.search.updated_at_response import UpdatedAtResponse
-from algoliasearch.search.updated_at_with_object_id_response import UpdatedAtWithObjectIdResponse
+from algoliasearch.search.updated_at_with_object_id_response import (
+    UpdatedAtWithObjectIdResponse,
+)
 from algoliasearch.search.updated_rule_response import UpdatedRuleResponse
 from algoliasearch.search.user_highlight_result import UserHighlightResult
 from algoliasearch.search.user_hit import UserHit

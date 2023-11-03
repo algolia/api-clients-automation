@@ -22,17 +22,24 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 from algoliasearch.models.recommend_hit import RecommendHit
 
+
 class RecommendHits(BaseModel):
     """
     RecommendHits
     """
+
     hits: conlist(RecommendHit) = Field(...)
-    query: Optional[StrictStr] = Field('', description="Text to search for in an index.")
-    params: Optional[StrictStr] = Field(None, description="URL-encoded string of all search parameters.")
+    query: Optional[StrictStr] = Field(
+        "", description="Text to search for in an index."
+    )
+    params: Optional[StrictStr] = Field(
+        None, description="URL-encoded string of all search parameters."
+    )
     __properties = ["hits", "query", "params"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -51,17 +58,14 @@ class RecommendHits(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in hits (list)
         _items = []
         if self.hits:
             for _item in self.hits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['hits'] = _items
+            _dict["hits"] = _items
         return _dict
 
     @classmethod
@@ -73,11 +77,13 @@ class RecommendHits(BaseModel):
         if not isinstance(obj, dict):
             return RecommendHits.parse_obj(obj)
 
-        _obj = RecommendHits.parse_obj({
-            "hits": [RecommendHit.from_dict(_item) for _item in obj.get("hits")] if obj.get("hits") is not None else None,
-            "query": obj.get("query") if obj.get("query") is not None else '',
-            "params": obj.get("params")
-        })
+        _obj = RecommendHits.parse_obj(
+            {
+                "hits": [RecommendHit.from_dict(_item) for _item in obj.get("hits")]
+                if obj.get("hits") is not None
+                else None,
+                "query": obj.get("query") if obj.get("query") is not None else "",
+                "params": obj.get("params"),
+            }
+        )
         return _obj
-
-

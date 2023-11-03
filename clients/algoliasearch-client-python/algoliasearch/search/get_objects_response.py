@@ -21,15 +21,18 @@ import json
 from typing import Any, Dict, List
 from pydantic import BaseModel, Field, conlist
 
+
 class GetObjectsResponse(BaseModel):
     """
     GetObjectsResponse
     """
+
     results: conlist(Dict[str, Any]) = Field(..., description="Retrieved results.")
     __properties = ["results"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +51,7 @@ class GetObjectsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +63,5 @@ class GetObjectsResponse(BaseModel):
         if not isinstance(obj, dict):
             return GetObjectsResponse.parse_obj(obj)
 
-        _obj = GetObjectsResponse.parse_obj({
-            "results": obj.get("results")
-        })
+        _obj = GetObjectsResponse.parse_obj({"results": obj.get("results")})
         return _obj
-
-

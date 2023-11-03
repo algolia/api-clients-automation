@@ -4,7 +4,9 @@ from algoliasearch.version import VERSION
 
 
 class UserAgent(object):
-    value = "Algolia for Python ({}); Python ({})".format(VERSION, str(python_version()))
+    value = "Algolia for Python ({}); Python ({})".format(
+        VERSION, str(python_version())
+    )
 
     @staticmethod
     def get():

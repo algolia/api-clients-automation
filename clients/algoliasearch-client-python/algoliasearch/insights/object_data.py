@@ -23,17 +23,23 @@ from pydantic import BaseModel, Field, StrictInt
 from algoliasearch.models.discount import Discount
 from algoliasearch.models.price import Price
 
+
 class ObjectData(BaseModel):
     """
     ObjectData
     """
+
     price: Optional[Price] = None
-    quantity: Optional[StrictInt] = Field(None, description="The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.")
+    quantity: Optional[StrictInt] = Field(
+        None,
+        description="The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.",
+    )
     discount: Optional[Discount] = None
     __properties = ["price", "quantity", "discount"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,16 +58,13 @@ class ObjectData(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of price
         if self.price:
-            _dict['price'] = self.price.to_dict()
+            _dict["price"] = self.price.to_dict()
         # override the default output from pydantic by calling `to_dict()` of discount
         if self.discount:
-            _dict['discount'] = self.discount.to_dict()
+            _dict["discount"] = self.discount.to_dict()
         return _dict
 
     @classmethod
@@ -73,11 +76,15 @@ class ObjectData(BaseModel):
         if not isinstance(obj, dict):
             return ObjectData.parse_obj(obj)
 
-        _obj = ObjectData.parse_obj({
-            "price": Price.from_dict(obj.get("price")) if obj.get("price") is not None else None,
-            "quantity": obj.get("quantity"),
-            "discount": Discount.from_dict(obj.get("discount")) if obj.get("discount") is not None else None
-        })
+        _obj = ObjectData.parse_obj(
+            {
+                "price": Price.from_dict(obj.get("price"))
+                if obj.get("price") is not None
+                else None,
+                "quantity": obj.get("quantity"),
+                "discount": Discount.from_dict(obj.get("discount"))
+                if obj.get("discount") is not None
+                else None,
+            }
+        )
         return _obj
-
-

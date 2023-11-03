@@ -23,17 +23,23 @@ from pydantic import BaseModel, Field, StrictStr, conlist
 from algoliasearch.models.operation_type import OperationType
 from algoliasearch.models.scope_type import ScopeType
 
+
 class OperationIndexParams(BaseModel):
     """
     OperationIndexParams
     """
+
     operation: OperationType = Field(...)
     destination: StrictStr = Field(..., description="Algolia index name.")
-    scope: Optional[conlist(ScopeType)] = Field(None, description="**This only applies to the _copy_ operation.**  If you omit `scope`, the copy command copies all records, settings, synonyms, and rules.  If you specify `scope`, only the specified scopes are copied.")
+    scope: Optional[conlist(ScopeType)] = Field(
+        None,
+        description="**This only applies to the _copy_ operation.**  If you omit `scope`, the copy command copies all records, settings, synonyms, and rules.  If you specify `scope`, only the specified scopes are copied.",
+    )
     __properties = ["operation", "destination", "scope"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,10 +58,7 @@ class OperationIndexParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -67,11 +70,11 @@ class OperationIndexParams(BaseModel):
         if not isinstance(obj, dict):
             return OperationIndexParams.parse_obj(obj)
 
-        _obj = OperationIndexParams.parse_obj({
-            "operation": obj.get("operation"),
-            "destination": obj.get("destination"),
-            "scope": obj.get("scope")
-        })
+        _obj = OperationIndexParams.parse_obj(
+            {
+                "operation": obj.get("operation"),
+                "destination": obj.get("destination"),
+                "scope": obj.get("scope"),
+            }
+        )
         return _obj
-
-

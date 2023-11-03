@@ -21,20 +21,44 @@ import json
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conint, conlist
 
+
 class SearchRecommendRulesParams(BaseModel):
     """
     Recommend rules search parameters.  # noqa: E501
     """
-    query: Optional[StrictStr] = Field('', description="Full-text query.")
-    context: Optional[StrictStr] = Field(None, description="Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).")
-    page: Optional[conint(strict=True, ge=0)] = Field(None, description="Requested page (the first page is page 0).")
-    hits_per_page: Optional[conint(strict=True, le=1000, ge=1)] = Field(20, alias="hitsPerPage", description="Maximum number of hits per page.")
-    enabled: Optional[StrictBool] = Field(None, description="Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.")
-    request_options: Optional[conlist(Dict[str, Any])] = Field(None, alias="requestOptions", description="Request options to send with the API call.")
-    __properties = ["query", "context", "page", "hitsPerPage", "enabled", "requestOptions"]
+
+    query: Optional[StrictStr] = Field("", description="Full-text query.")
+    context: Optional[StrictStr] = Field(
+        None,
+        description="Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).",
+    )
+    page: Optional[conint(strict=True, ge=0)] = Field(
+        None, description="Requested page (the first page is page 0)."
+    )
+    hits_per_page: Optional[conint(strict=True, le=1000, ge=1)] = Field(
+        20, alias="hitsPerPage", description="Maximum number of hits per page."
+    )
+    enabled: Optional[StrictBool] = Field(
+        None,
+        description="Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.",
+    )
+    request_options: Optional[conlist(Dict[str, Any])] = Field(
+        None,
+        alias="requestOptions",
+        description="Request options to send with the API call.",
+    )
+    __properties = [
+        "query",
+        "context",
+        "page",
+        "hitsPerPage",
+        "enabled",
+        "requestOptions",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -53,14 +77,11 @@ class SearchRecommendRulesParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # set to None if enabled (nullable) is None
         # and __fields_set__ contains the field
         if self.enabled is None and "enabled" in self.__fields_set__:
-            _dict['enabled'] = None
+            _dict["enabled"] = None
 
         return _dict
 
@@ -73,14 +94,16 @@ class SearchRecommendRulesParams(BaseModel):
         if not isinstance(obj, dict):
             return SearchRecommendRulesParams.parse_obj(obj)
 
-        _obj = SearchRecommendRulesParams.parse_obj({
-            "query": obj.get("query") if obj.get("query") is not None else '',
-            "context": obj.get("context"),
-            "page": obj.get("page"),
-            "hits_per_page": obj.get("hitsPerPage") if obj.get("hitsPerPage") is not None else 20,
-            "enabled": obj.get("enabled"),
-            "request_options": obj.get("requestOptions")
-        })
+        _obj = SearchRecommendRulesParams.parse_obj(
+            {
+                "query": obj.get("query") if obj.get("query") is not None else "",
+                "context": obj.get("context"),
+                "page": obj.get("page"),
+                "hits_per_page": obj.get("hitsPerPage")
+                if obj.get("hitsPerPage") is not None
+                else 20,
+                "enabled": obj.get("enabled"),
+                "request_options": obj.get("requestOptions"),
+            }
+        )
         return _obj
-
-

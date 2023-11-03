@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class TypoToleranceEnum(str, Enum):
     """
     TypoToleranceEnum
@@ -29,12 +26,10 @@ class TypoToleranceEnum(str, Enum):
     """
     allowed enum values
     """
-    MIN = 'min'
-    STRICT = 'strict'
+    MIN = "min"
+    STRICT = "strict"
 
     @classmethod
     def from_json(cls, json_str: str) -> TypoToleranceEnum:
         """Create an instance of TypoToleranceEnum from a JSON string"""
         return TypoToleranceEnum(json.loads(json_str))
-
-

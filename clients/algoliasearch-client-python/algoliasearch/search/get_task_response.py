@@ -18,19 +18,21 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field
 from algoliasearch.models.task_status import TaskStatus
+
 
 class GetTaskResponse(BaseModel):
     """
     GetTaskResponse
     """
+
     status: TaskStatus = Field(...)
     __properties = ["status"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,10 +51,7 @@ class GetTaskResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,9 +63,5 @@ class GetTaskResponse(BaseModel):
         if not isinstance(obj, dict):
             return GetTaskResponse.parse_obj(obj)
 
-        _obj = GetTaskResponse.parse_obj({
-            "status": obj.get("status")
-        })
+        _obj = GetTaskResponse.parse_obj({"status": obj.get("status")})
         return _obj
-
-

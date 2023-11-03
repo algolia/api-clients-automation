@@ -23,19 +23,36 @@ from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.search_params_object import SearchParamsObject
 from algoliasearch.models.trending_items_model import TrendingItemsModel
 
+
 class BaseTrendingItemsQuery(BaseModel):
     """
     BaseTrendingItemsQuery
     """
-    facet_name: Optional[StrictStr] = Field(None, alias="facetName", description="Facet name for trending models.")
-    facet_value: Optional[StrictStr] = Field(None, alias="facetValue", description="Facet value for trending models.")
+
+    facet_name: Optional[StrictStr] = Field(
+        None, alias="facetName", description="Facet name for trending models."
+    )
+    facet_value: Optional[StrictStr] = Field(
+        None, alias="facetValue", description="Facet value for trending models."
+    )
     model: Optional[TrendingItemsModel] = None
-    query_parameters: Optional[SearchParamsObject] = Field(None, alias="queryParameters")
-    fallback_parameters: Optional[SearchParamsObject] = Field(None, alias="fallbackParameters")
-    __properties = ["facetName", "facetValue", "model", "queryParameters", "fallbackParameters"]
+    query_parameters: Optional[SearchParamsObject] = Field(
+        None, alias="queryParameters"
+    )
+    fallback_parameters: Optional[SearchParamsObject] = Field(
+        None, alias="fallbackParameters"
+    )
+    __properties = [
+        "facetName",
+        "facetValue",
+        "model",
+        "queryParameters",
+        "fallbackParameters",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -54,16 +71,13 @@ class BaseTrendingItemsQuery(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of query_parameters
         if self.query_parameters:
-            _dict['queryParameters'] = self.query_parameters.to_dict()
+            _dict["queryParameters"] = self.query_parameters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of fallback_parameters
         if self.fallback_parameters:
-            _dict['fallbackParameters'] = self.fallback_parameters.to_dict()
+            _dict["fallbackParameters"] = self.fallback_parameters.to_dict()
         return _dict
 
     @classmethod
@@ -75,13 +89,21 @@ class BaseTrendingItemsQuery(BaseModel):
         if not isinstance(obj, dict):
             return BaseTrendingItemsQuery.parse_obj(obj)
 
-        _obj = BaseTrendingItemsQuery.parse_obj({
-            "facet_name": obj.get("facetName"),
-            "facet_value": obj.get("facetValue"),
-            "model": obj.get("model"),
-            "query_parameters": SearchParamsObject.from_dict(obj.get("queryParameters")) if obj.get("queryParameters") is not None else None,
-            "fallback_parameters": SearchParamsObject.from_dict(obj.get("fallbackParameters")) if obj.get("fallbackParameters") is not None else None
-        })
+        _obj = BaseTrendingItemsQuery.parse_obj(
+            {
+                "facet_name": obj.get("facetName"),
+                "facet_value": obj.get("facetValue"),
+                "model": obj.get("model"),
+                "query_parameters": SearchParamsObject.from_dict(
+                    obj.get("queryParameters")
+                )
+                if obj.get("queryParameters") is not None
+                else None,
+                "fallback_parameters": SearchParamsObject.from_dict(
+                    obj.get("fallbackParameters")
+                )
+                if obj.get("fallbackParameters") is not None
+                else None,
+            }
+        )
         return _obj
-
-

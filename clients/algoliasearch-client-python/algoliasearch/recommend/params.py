@@ -24,18 +24,32 @@ from algoliasearch.models.automatic_facet_filters import AutomaticFacetFilters
 from algoliasearch.models.consequence_query import ConsequenceQuery
 from algoliasearch.models.rendering_content import RenderingContent
 
+
 class Params(BaseModel):
     """
     Additional search parameters.  # noqa: E501
     """
+
     query: Optional[ConsequenceQuery] = None
-    automatic_facet_filters: Optional[AutomaticFacetFilters] = Field(None, alias="automaticFacetFilters")
-    automatic_optional_facet_filters: Optional[AutomaticFacetFilters] = Field(None, alias="automaticOptionalFacetFilters")
-    rendering_content: Optional[RenderingContent] = Field(None, alias="renderingContent")
-    __properties = ["query", "automaticFacetFilters", "automaticOptionalFacetFilters", "renderingContent"]
+    automatic_facet_filters: Optional[AutomaticFacetFilters] = Field(
+        None, alias="automaticFacetFilters"
+    )
+    automatic_optional_facet_filters: Optional[AutomaticFacetFilters] = Field(
+        None, alias="automaticOptionalFacetFilters"
+    )
+    rendering_content: Optional[RenderingContent] = Field(
+        None, alias="renderingContent"
+    )
+    __properties = [
+        "query",
+        "automaticFacetFilters",
+        "automaticOptionalFacetFilters",
+        "renderingContent",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -54,22 +68,21 @@ class Params(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of query
         if self.query:
-            _dict['query'] = self.query.to_dict()
+            _dict["query"] = self.query.to_dict()
         # override the default output from pydantic by calling `to_dict()` of automatic_facet_filters
         if self.automatic_facet_filters:
-            _dict['automaticFacetFilters'] = self.automatic_facet_filters.to_dict()
+            _dict["automaticFacetFilters"] = self.automatic_facet_filters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of automatic_optional_facet_filters
         if self.automatic_optional_facet_filters:
-            _dict['automaticOptionalFacetFilters'] = self.automatic_optional_facet_filters.to_dict()
+            _dict[
+                "automaticOptionalFacetFilters"
+            ] = self.automatic_optional_facet_filters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of rendering_content
         if self.rendering_content:
-            _dict['renderingContent'] = self.rendering_content.to_dict()
+            _dict["renderingContent"] = self.rendering_content.to_dict()
         return _dict
 
     @classmethod
@@ -81,12 +94,26 @@ class Params(BaseModel):
         if not isinstance(obj, dict):
             return Params.parse_obj(obj)
 
-        _obj = Params.parse_obj({
-            "query": ConsequenceQuery.from_dict(obj.get("query")) if obj.get("query") is not None else None,
-            "automatic_facet_filters": AutomaticFacetFilters.from_dict(obj.get("automaticFacetFilters")) if obj.get("automaticFacetFilters") is not None else None,
-            "automatic_optional_facet_filters": AutomaticFacetFilters.from_dict(obj.get("automaticOptionalFacetFilters")) if obj.get("automaticOptionalFacetFilters") is not None else None,
-            "rendering_content": RenderingContent.from_dict(obj.get("renderingContent")) if obj.get("renderingContent") is not None else None
-        })
+        _obj = Params.parse_obj(
+            {
+                "query": ConsequenceQuery.from_dict(obj.get("query"))
+                if obj.get("query") is not None
+                else None,
+                "automatic_facet_filters": AutomaticFacetFilters.from_dict(
+                    obj.get("automaticFacetFilters")
+                )
+                if obj.get("automaticFacetFilters") is not None
+                else None,
+                "automatic_optional_facet_filters": AutomaticFacetFilters.from_dict(
+                    obj.get("automaticOptionalFacetFilters")
+                )
+                if obj.get("automaticOptionalFacetFilters") is not None
+                else None,
+                "rendering_content": RenderingContent.from_dict(
+                    obj.get("renderingContent")
+                )
+                if obj.get("renderingContent") is not None
+                else None,
+            }
+        )
         return _obj
-
-

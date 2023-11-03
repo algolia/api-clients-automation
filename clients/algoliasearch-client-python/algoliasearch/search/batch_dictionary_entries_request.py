@@ -18,21 +18,23 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field
 from algoliasearch.models.dictionary_action import DictionaryAction
 from algoliasearch.models.dictionary_entry import DictionaryEntry
+
 
 class BatchDictionaryEntriesRequest(BaseModel):
     """
     BatchDictionaryEntriesRequest
     """
+
     action: DictionaryAction = Field(...)
     body: DictionaryEntry = Field(...)
     __properties = ["action", "body"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -51,13 +53,10 @@ class BatchDictionaryEntriesRequest(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of body
         if self.body:
-            _dict['body'] = self.body.to_dict()
+            _dict["body"] = self.body.to_dict()
         return _dict
 
     @classmethod
@@ -69,10 +68,12 @@ class BatchDictionaryEntriesRequest(BaseModel):
         if not isinstance(obj, dict):
             return BatchDictionaryEntriesRequest.parse_obj(obj)
 
-        _obj = BatchDictionaryEntriesRequest.parse_obj({
-            "action": obj.get("action"),
-            "body": DictionaryEntry.from_dict(obj.get("body")) if obj.get("body") is not None else None
-        })
+        _obj = BatchDictionaryEntriesRequest.parse_obj(
+            {
+                "action": obj.get("action"),
+                "body": DictionaryEntry.from_dict(obj.get("body"))
+                if obj.get("body") is not None
+                else None,
+            }
+        )
         return _obj
-
-

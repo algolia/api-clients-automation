@@ -22,15 +22,18 @@ from typing import List
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.get_api_key_response import GetApiKeyResponse
 
+
 class ListApiKeysResponse(BaseModel):
     """
     ListApiKeysResponse
     """
+
     keys: conlist(GetApiKeyResponse) = Field(..., description="API keys.")
     __properties = ["keys"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,17 +52,14 @@ class ListApiKeysResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in keys (list)
         _items = []
         if self.keys:
             for _item in self.keys:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['keys'] = _items
+            _dict["keys"] = _items
         return _dict
 
     @classmethod
@@ -71,9 +71,13 @@ class ListApiKeysResponse(BaseModel):
         if not isinstance(obj, dict):
             return ListApiKeysResponse.parse_obj(obj)
 
-        _obj = ListApiKeysResponse.parse_obj({
-            "keys": [GetApiKeyResponse.from_dict(_item) for _item in obj.get("keys")] if obj.get("keys") is not None else None
-        })
+        _obj = ListApiKeysResponse.parse_obj(
+            {
+                "keys": [
+                    GetApiKeyResponse.from_dict(_item) for _item in obj.get("keys")
+                ]
+                if obj.get("keys") is not None
+                else None
+            }
+        )
         return _obj
-
-

@@ -21,18 +21,30 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conint
 
+
 class SearchUserIdsParams(BaseModel):
     """
     OK  # noqa: E501
     """
-    query: StrictStr = Field(..., description="Query to search. The search is a prefix search with [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) enabled. An empty query will retrieve all users.")
-    cluster_name: Optional[StrictStr] = Field(None, alias="clusterName", description="Cluster name.")
-    page: Optional[StrictInt] = Field(0, description="Page to retrieve (the first page is `0`, not `1`).")
-    hits_per_page: Optional[conint(strict=True, le=1000, ge=1)] = Field(20, alias="hitsPerPage", description="Number of hits per page.")
+
+    query: StrictStr = Field(
+        ...,
+        description="Query to search. The search is a prefix search with [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) enabled. An empty query will retrieve all users.",
+    )
+    cluster_name: Optional[StrictStr] = Field(
+        None, alias="clusterName", description="Cluster name."
+    )
+    page: Optional[StrictInt] = Field(
+        0, description="Page to retrieve (the first page is `0`, not `1`)."
+    )
+    hits_per_page: Optional[conint(strict=True, le=1000, ge=1)] = Field(
+        20, alias="hitsPerPage", description="Number of hits per page."
+    )
     __properties = ["query", "clusterName", "page", "hitsPerPage"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -51,10 +63,7 @@ class SearchUserIdsParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -66,12 +75,14 @@ class SearchUserIdsParams(BaseModel):
         if not isinstance(obj, dict):
             return SearchUserIdsParams.parse_obj(obj)
 
-        _obj = SearchUserIdsParams.parse_obj({
-            "query": obj.get("query"),
-            "cluster_name": obj.get("clusterName"),
-            "page": obj.get("page") if obj.get("page") is not None else 0,
-            "hits_per_page": obj.get("hitsPerPage") if obj.get("hitsPerPage") is not None else 20
-        })
+        _obj = SearchUserIdsParams.parse_obj(
+            {
+                "query": obj.get("query"),
+                "cluster_name": obj.get("clusterName"),
+                "page": obj.get("page") if obj.get("page") is not None else 0,
+                "hits_per_page": obj.get("hitsPerPage")
+                if obj.get("hitsPerPage") is not None
+                else 20,
+            }
+        )
         return _obj
-
-

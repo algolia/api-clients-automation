@@ -21,19 +21,41 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool
 
+
 class Exhaustive(BaseModel):
     """
     Whether certain properties of the search response are calculated exhaustive (exact) or approximated.  # noqa: E501
     """
-    facets_count: Optional[StrictBool] = Field(None, alias="facetsCount", description="Whether the facet count is exhaustive (`true`) or approximate (`false`). See the [related discussion](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).")
-    facet_values: Optional[StrictBool] = Field(None, alias="facetValues", description="The value is `false` if not all facet values are retrieved.")
-    nb_hits: Optional[StrictBool] = Field(None, alias="nbHits", description="Whether the `nbHits` is exhaustive (`true`) or approximate (`false`). When the query takes more than 50ms to be processed, the engine makes an approximation. This can happen when using complex filters on millions of records, when typo-tolerance was not exhaustive, or when enough hits have been retrieved (for example, after the engine finds 10,000 exact matches). `nbHits` is reported as non-exhaustive whenever an approximation is made, even if the approximation didn’t, in the end, impact the exhaustivity of the query.")
-    rules_match: Optional[StrictBool] = Field(None, alias="rulesMatch", description="Rules matching exhaustivity. The value is `false` if rules were enable for this query, and could not be fully processed due a timeout. This is generally caused by the number of alternatives (such as typos) which is too large.")
-    typo: Optional[StrictBool] = Field(None, description="Whether the typo search was exhaustive (`true`) or approximate (`false`). An approximation is done when the typo search query part takes more than 10% of the query budget (ie. 5ms by default) to be processed (this can happen when a lot of typo alternatives exist for the query). This field will not be included when typo-tolerance is entirely disabled.")
+
+    facets_count: Optional[StrictBool] = Field(
+        None,
+        alias="facetsCount",
+        description="Whether the facet count is exhaustive (`true`) or approximate (`false`). See the [related discussion](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).",
+    )
+    facet_values: Optional[StrictBool] = Field(
+        None,
+        alias="facetValues",
+        description="The value is `false` if not all facet values are retrieved.",
+    )
+    nb_hits: Optional[StrictBool] = Field(
+        None,
+        alias="nbHits",
+        description="Whether the `nbHits` is exhaustive (`true`) or approximate (`false`). When the query takes more than 50ms to be processed, the engine makes an approximation. This can happen when using complex filters on millions of records, when typo-tolerance was not exhaustive, or when enough hits have been retrieved (for example, after the engine finds 10,000 exact matches). `nbHits` is reported as non-exhaustive whenever an approximation is made, even if the approximation didn’t, in the end, impact the exhaustivity of the query.",
+    )
+    rules_match: Optional[StrictBool] = Field(
+        None,
+        alias="rulesMatch",
+        description="Rules matching exhaustivity. The value is `false` if rules were enable for this query, and could not be fully processed due a timeout. This is generally caused by the number of alternatives (such as typos) which is too large.",
+    )
+    typo: Optional[StrictBool] = Field(
+        None,
+        description="Whether the typo search was exhaustive (`true`) or approximate (`false`). An approximation is done when the typo search query part takes more than 10% of the query budget (ie. 5ms by default) to be processed (this can happen when a lot of typo alternatives exist for the query). This field will not be included when typo-tolerance is entirely disabled.",
+    )
     __properties = ["facetsCount", "facetValues", "nbHits", "rulesMatch", "typo"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,10 +74,7 @@ class Exhaustive(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -67,13 +86,13 @@ class Exhaustive(BaseModel):
         if not isinstance(obj, dict):
             return Exhaustive.parse_obj(obj)
 
-        _obj = Exhaustive.parse_obj({
-            "facets_count": obj.get("facetsCount"),
-            "facet_values": obj.get("facetValues"),
-            "nb_hits": obj.get("nbHits"),
-            "rules_match": obj.get("rulesMatch"),
-            "typo": obj.get("typo")
-        })
+        _obj = Exhaustive.parse_obj(
+            {
+                "facets_count": obj.get("facetsCount"),
+                "facet_values": obj.get("facetValues"),
+                "nb_hits": obj.get("nbHits"),
+                "rules_match": obj.get("rulesMatch"),
+                "typo": obj.get("typo"),
+            }
+        )
         return _obj
-
-

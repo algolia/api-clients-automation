@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class PurchaseEvent(str, Enum):
     """
     PurchaseEvent
@@ -29,11 +26,9 @@ class PurchaseEvent(str, Enum):
     """
     allowed enum values
     """
-    PURCHASE = 'purchase'
+    PURCHASE = "purchase"
 
     @classmethod
     def from_json(cls, json_str: str) -> PurchaseEvent:
         """Create an instance of PurchaseEvent from a JSON string"""
         return PurchaseEvent(json.loads(json_str))
-
-

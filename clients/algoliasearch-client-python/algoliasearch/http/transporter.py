@@ -1,7 +1,5 @@
 import time
-from typing import Any, Dict, List, Optional, Union
 
-from algoliasearch.configs import Config
 from algoliasearch.exceptions import AlgoliaUnreachableHostException, RequestException
 from algoliasearch.http.hosts import Host
 from algoliasearch.request_options import RequestOptions
@@ -99,9 +97,7 @@ class Transporter(object):
 
 
 class Request(object):
-    def __init__(
-        self, verb, headers, data, connect_timeout, timeout, proxies={}
-    ):  # noqa: E501
+    def __init__(self, verb, headers, data, connect_timeout, timeout, proxies={}):  # noqa: E501
         # type: (str, dict, Optional[Union[dict, list]], int, int, dict) -> None  # noqa: E501
 
         self.verb = verb

@@ -22,16 +22,21 @@ from typing import Any, Dict
 from pydantic import BaseModel, Field
 from algoliasearch.models.action import Action
 
+
 class BatchRequest(BaseModel):
     """
     BatchRequest
     """
+
     action: Action = Field(...)
-    body: Dict[str, Any] = Field(..., description="Operation arguments (varies with specified `action`).")
+    body: Dict[str, Any] = Field(
+        ..., description="Operation arguments (varies with specified `action`)."
+    )
     __properties = ["action", "body"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +55,7 @@ class BatchRequest(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,10 +67,7 @@ class BatchRequest(BaseModel):
         if not isinstance(obj, dict):
             return BatchRequest.parse_obj(obj)
 
-        _obj = BatchRequest.parse_obj({
-            "action": obj.get("action"),
-            "body": obj.get("body")
-        })
+        _obj = BatchRequest.parse_obj(
+            {"action": obj.get("action"), "body": obj.get("body")}
+        )
         return _obj
-
-

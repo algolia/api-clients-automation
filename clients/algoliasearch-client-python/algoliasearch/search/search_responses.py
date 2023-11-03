@@ -22,15 +22,18 @@ from typing import List
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.search_result import SearchResult
 
+
 class SearchResponses(BaseModel):
     """
     SearchResponses
     """
+
     results: conlist(SearchResult) = Field(...)
     __properties = ["results"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,17 +52,14 @@ class SearchResponses(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in results (list)
         _items = []
         if self.results:
             for _item in self.results:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['results'] = _items
+            _dict["results"] = _items
         return _dict
 
     @classmethod
@@ -71,9 +71,13 @@ class SearchResponses(BaseModel):
         if not isinstance(obj, dict):
             return SearchResponses.parse_obj(obj)
 
-        _obj = SearchResponses.parse_obj({
-            "results": [SearchResult.from_dict(_item) for _item in obj.get("results")] if obj.get("results") is not None else None
-        })
+        _obj = SearchResponses.parse_obj(
+            {
+                "results": [
+                    SearchResult.from_dict(_item) for _item in obj.get("results")
+                ]
+                if obj.get("results") is not None
+                else None
+            }
+        )
         return _obj
-
-

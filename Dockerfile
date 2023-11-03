@@ -50,7 +50,7 @@ COPY --from=python-builder /usr/local/bin/ /usr/local/bin/
 COPY --from=python-builder /usr/local/lib/ /usr/local/lib/
 RUN echo "export PATH=$PATH:/usr/local/bin/python" > ~/.profile && source ~/.profile \
     && pip install --upgrade pip \
-    && pip install tox
+    && pip install poetry
 
 WORKDIR /app
 

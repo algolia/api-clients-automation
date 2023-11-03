@@ -21,16 +21,19 @@ import json
 from typing import Optional
 from pydantic import BaseModel, StrictStr
 
+
 class ErrorBase(BaseModel):
     """
     Error.  # noqa: E501
     """
+
     message: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties = ["message"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,11 +52,9 @@ class ErrorBase(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+        _dict = self.dict(
+            by_alias=True, exclude={"additional_properties"}, exclude_none=True
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -70,14 +71,10 @@ class ErrorBase(BaseModel):
         if not isinstance(obj, dict):
             return ErrorBase.parse_obj(obj)
 
-        _obj = ErrorBase.parse_obj({
-            "message": obj.get("message")
-        })
+        _obj = ErrorBase.parse_obj({"message": obj.get("message")})
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
-
-

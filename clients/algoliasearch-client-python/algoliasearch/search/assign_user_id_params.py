@@ -18,18 +18,20 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictStr
+
 
 class AssignUserIdParams(BaseModel):
     """
     Assign userID parameters.  # noqa: E501
     """
+
     cluster: StrictStr = Field(..., description="Cluster name.")
     __properties = ["cluster"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +50,7 @@ class AssignUserIdParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +62,5 @@ class AssignUserIdParams(BaseModel):
         if not isinstance(obj, dict):
             return AssignUserIdParams.parse_obj(obj)
 
-        _obj = AssignUserIdParams.parse_obj({
-            "cluster": obj.get("cluster")
-        })
+        _obj = AssignUserIdParams.parse_obj({"cluster": obj.get("cluster")})
         return _obj
-
-

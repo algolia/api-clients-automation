@@ -22,18 +22,23 @@ from typing import List
 from pydantic import BaseModel, Field, StrictInt, conlist
 from algoliasearch.models.rule_response import RuleResponse
 
+
 class SearchRecommendRulesResponse(BaseModel):
     """
     SearchRecommendRulesResponse
     """
+
     hits: conlist(RuleResponse) = Field(..., description="Fetched rules.")
-    nb_hits: StrictInt = Field(..., alias="nbHits", description="Number of fetched rules.")
+    nb_hits: StrictInt = Field(
+        ..., alias="nbHits", description="Number of fetched rules."
+    )
     page: StrictInt = Field(..., description="Current page.")
     nb_pages: StrictInt = Field(..., alias="nbPages", description="Number of pages.")
     __properties = ["hits", "nbHits", "page", "nbPages"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,17 +57,14 @@ class SearchRecommendRulesResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in hits (list)
         _items = []
         if self.hits:
             for _item in self.hits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['hits'] = _items
+            _dict["hits"] = _items
         return _dict
 
     @classmethod
@@ -74,12 +76,14 @@ class SearchRecommendRulesResponse(BaseModel):
         if not isinstance(obj, dict):
             return SearchRecommendRulesResponse.parse_obj(obj)
 
-        _obj = SearchRecommendRulesResponse.parse_obj({
-            "hits": [RuleResponse.from_dict(_item) for _item in obj.get("hits")] if obj.get("hits") is not None else None,
-            "nb_hits": obj.get("nbHits"),
-            "page": obj.get("page"),
-            "nb_pages": obj.get("nbPages")
-        })
+        _obj = SearchRecommendRulesResponse.parse_obj(
+            {
+                "hits": [RuleResponse.from_dict(_item) for _item in obj.get("hits")]
+                if obj.get("hits") is not None
+                else None,
+                "nb_hits": obj.get("nbHits"),
+                "page": obj.get("page"),
+                "nb_pages": obj.get("nbPages"),
+            }
+        )
         return _obj
-
-

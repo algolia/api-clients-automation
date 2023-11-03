@@ -18,19 +18,25 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictStr
+
 
 class AddApiKeyResponse(BaseModel):
     """
     AddApiKeyResponse
     """
+
     key: StrictStr = Field(..., description="API key.")
-    created_at: StrictStr = Field(..., alias="createdAt", description="Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.")
+    created_at: StrictStr = Field(
+        ...,
+        alias="createdAt",
+        description="Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.",
+    )
     __properties = ["key", "createdAt"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,10 +55,7 @@ class AddApiKeyResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,10 +67,7 @@ class AddApiKeyResponse(BaseModel):
         if not isinstance(obj, dict):
             return AddApiKeyResponse.parse_obj(obj)
 
-        _obj = AddApiKeyResponse.parse_obj({
-            "key": obj.get("key"),
-            "created_at": obj.get("createdAt")
-        })
+        _obj = AddApiKeyResponse.parse_obj(
+            {"key": obj.get("key"), "created_at": obj.get("createdAt")}
+        )
         return _obj
-
-

@@ -22,16 +22,21 @@ from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.trending_facets_model import TrendingFacetsModel
 
+
 class BaseTrendingFacetsQuery(BaseModel):
     """
     BaseTrendingFacetsQuery
     """
-    facet_name: StrictStr = Field(..., alias="facetName", description="Facet name for trending models.")
+
+    facet_name: StrictStr = Field(
+        ..., alias="facetName", description="Facet name for trending models."
+    )
     model: Optional[TrendingFacetsModel] = None
     __properties = ["facetName", "model"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +55,7 @@ class BaseTrendingFacetsQuery(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,10 +67,7 @@ class BaseTrendingFacetsQuery(BaseModel):
         if not isinstance(obj, dict):
             return BaseTrendingFacetsQuery.parse_obj(obj)
 
-        _obj = BaseTrendingFacetsQuery.parse_obj({
-            "facet_name": obj.get("facetName"),
-            "model": obj.get("model")
-        })
+        _obj = BaseTrendingFacetsQuery.parse_obj(
+            {"facet_name": obj.get("facetName"), "model": obj.get("model")}
+        )
         return _obj
-
-

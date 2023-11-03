@@ -22,18 +22,26 @@ from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr
 from algoliasearch.models.anchoring import Anchoring
 
+
 class Condition(BaseModel):
     """
     Condition
     """
+
     pattern: Optional[StrictStr] = Field(None, description="Query pattern syntax.")
     anchoring: Optional[Anchoring] = None
-    alternatives: Optional[StrictBool] = Field(False, description="Whether the pattern matches on plurals, synonyms, and typos.")
-    context: Optional[StrictStr] = Field(None, description="Rule context format: [A-Za-z0-9_-]+).")
+    alternatives: Optional[StrictBool] = Field(
+        False,
+        description="Whether the pattern matches on plurals, synonyms, and typos.",
+    )
+    context: Optional[StrictStr] = Field(
+        None, description="Rule context format: [A-Za-z0-9_-]+)."
+    )
     __properties = ["pattern", "anchoring", "alternatives", "context"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,10 +60,7 @@ class Condition(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -67,12 +72,14 @@ class Condition(BaseModel):
         if not isinstance(obj, dict):
             return Condition.parse_obj(obj)
 
-        _obj = Condition.parse_obj({
-            "pattern": obj.get("pattern"),
-            "anchoring": obj.get("anchoring"),
-            "alternatives": obj.get("alternatives") if obj.get("alternatives") is not None else False,
-            "context": obj.get("context")
-        })
+        _obj = Condition.parse_obj(
+            {
+                "pattern": obj.get("pattern"),
+                "anchoring": obj.get("anchoring"),
+                "alternatives": obj.get("alternatives")
+                if obj.get("alternatives") is not None
+                else False,
+                "context": obj.get("context"),
+            }
+        )
         return _obj
-
-

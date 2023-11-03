@@ -22,15 +22,18 @@ from typing import List, Optional
 from pydantic import BaseModel, conlist
 from algoliasearch.models.recommendations_response import RecommendationsResponse
 
+
 class GetRecommendationsResponse(BaseModel):
     """
     GetRecommendationsResponse
     """
+
     results: Optional[conlist(RecommendationsResponse)] = None
     __properties = ["results"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,17 +52,14 @@ class GetRecommendationsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in results (list)
         _items = []
         if self.results:
             for _item in self.results:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['results'] = _items
+            _dict["results"] = _items
         return _dict
 
     @classmethod
@@ -71,9 +71,14 @@ class GetRecommendationsResponse(BaseModel):
         if not isinstance(obj, dict):
             return GetRecommendationsResponse.parse_obj(obj)
 
-        _obj = GetRecommendationsResponse.parse_obj({
-            "results": [RecommendationsResponse.from_dict(_item) for _item in obj.get("results")] if obj.get("results") is not None else None
-        })
+        _obj = GetRecommendationsResponse.parse_obj(
+            {
+                "results": [
+                    RecommendationsResponse.from_dict(_item)
+                    for _item in obj.get("results")
+                ]
+                if obj.get("results") is not None
+                else None
+            }
+        )
         return _obj
-
-

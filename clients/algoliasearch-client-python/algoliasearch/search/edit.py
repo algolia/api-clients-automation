@@ -22,17 +22,25 @@ from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.edit_type import EditType
 
+
 class Edit(BaseModel):
     """
     Edit
     """
+
     type: Optional[EditType] = None
-    delete: Optional[StrictStr] = Field(None, description="Text or patterns to remove from the query string.")
-    insert: Optional[StrictStr] = Field(None, description="Text that should be inserted in place of the removed text inside the query string.")
+    delete: Optional[StrictStr] = Field(
+        None, description="Text or patterns to remove from the query string."
+    )
+    insert: Optional[StrictStr] = Field(
+        None,
+        description="Text that should be inserted in place of the removed text inside the query string.",
+    )
     __properties = ["type", "delete", "insert"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -51,10 +59,7 @@ class Edit(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -66,11 +71,11 @@ class Edit(BaseModel):
         if not isinstance(obj, dict):
             return Edit.parse_obj(obj)
 
-        _obj = Edit.parse_obj({
-            "type": obj.get("type"),
-            "delete": obj.get("delete"),
-            "insert": obj.get("insert")
-        })
+        _obj = Edit.parse_obj(
+            {
+                "type": obj.get("type"),
+                "delete": obj.get("delete"),
+                "insert": obj.get("insert"),
+            }
+        )
         return _obj
-
-

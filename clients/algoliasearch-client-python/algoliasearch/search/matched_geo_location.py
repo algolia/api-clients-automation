@@ -21,17 +21,27 @@ import json
 from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
+
 class MatchedGeoLocation(BaseModel):
     """
     MatchedGeoLocation
     """
-    lat: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Latitude of the matched location.")
-    lng: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Longitude of the matched location.")
-    distance: Optional[StrictInt] = Field(None, description="Distance between the matched location and the search location (in meters).")
+
+    lat: Optional[Union[StrictFloat, StrictInt]] = Field(
+        None, description="Latitude of the matched location."
+    )
+    lng: Optional[Union[StrictFloat, StrictInt]] = Field(
+        None, description="Longitude of the matched location."
+    )
+    distance: Optional[StrictInt] = Field(
+        None,
+        description="Distance between the matched location and the search location (in meters).",
+    )
     __properties = ["lat", "lng", "distance"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +60,7 @@ class MatchedGeoLocation(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,11 +72,11 @@ class MatchedGeoLocation(BaseModel):
         if not isinstance(obj, dict):
             return MatchedGeoLocation.parse_obj(obj)
 
-        _obj = MatchedGeoLocation.parse_obj({
-            "lat": obj.get("lat"),
-            "lng": obj.get("lng"),
-            "distance": obj.get("distance")
-        })
+        _obj = MatchedGeoLocation.parse_obj(
+            {
+                "lat": obj.get("lat"),
+                "lng": obj.get("lng"),
+                "distance": obj.get("distance"),
+            }
+        )
         return _obj
-
-

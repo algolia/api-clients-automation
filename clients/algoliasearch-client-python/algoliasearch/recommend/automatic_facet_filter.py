@@ -21,17 +21,29 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr
 
+
 class AutomaticFacetFilter(BaseModel):
     """
     Automatic facet Filter.  # noqa: E501
     """
-    facet: StrictStr = Field(..., description="Attribute to filter on. This must match a facet placeholder in the Rule's pattern.")
-    score: Optional[StrictInt] = Field(1, description="Score for the filter. Typically used for optional or disjunctive filters.")
-    disjunctive: Optional[StrictBool] = Field(False, description="Whether the filter is disjunctive (true) or conjunctive (false).")
+
+    facet: StrictStr = Field(
+        ...,
+        description="Attribute to filter on. This must match a facet placeholder in the Rule's pattern.",
+    )
+    score: Optional[StrictInt] = Field(
+        1,
+        description="Score for the filter. Typically used for optional or disjunctive filters.",
+    )
+    disjunctive: Optional[StrictBool] = Field(
+        False,
+        description="Whether the filter is disjunctive (true) or conjunctive (false).",
+    )
     __properties = ["facet", "score", "disjunctive"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +62,7 @@ class AutomaticFacetFilter(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,11 +74,13 @@ class AutomaticFacetFilter(BaseModel):
         if not isinstance(obj, dict):
             return AutomaticFacetFilter.parse_obj(obj)
 
-        _obj = AutomaticFacetFilter.parse_obj({
-            "facet": obj.get("facet"),
-            "score": obj.get("score") if obj.get("score") is not None else 1,
-            "disjunctive": obj.get("disjunctive") if obj.get("disjunctive") is not None else False
-        })
+        _obj = AutomaticFacetFilter.parse_obj(
+            {
+                "facet": obj.get("facet"),
+                "score": obj.get("score") if obj.get("score") is not None else 1,
+                "disjunctive": obj.get("disjunctive")
+                if obj.get("disjunctive") is not None
+                else False,
+            }
+        )
         return _obj
-
-

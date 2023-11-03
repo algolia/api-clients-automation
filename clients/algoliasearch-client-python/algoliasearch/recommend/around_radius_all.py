@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class AroundRadiusAll(str, Enum):
     """
     AroundRadiusAll
@@ -29,11 +26,9 @@ class AroundRadiusAll(str, Enum):
     """
     allowed enum values
     """
-    ALL = 'all'
+    ALL = "all"
 
     @classmethod
     def from_json(cls, json_str: str) -> AroundRadiusAll:
         """Create an instance of AroundRadiusAll from a JSON string"""
         return AroundRadiusAll(json.loads(json_str))
-
-

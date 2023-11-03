@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class AddToCartEvent(str, Enum):
     """
     AddToCartEvent
@@ -29,11 +26,9 @@ class AddToCartEvent(str, Enum):
     """
     allowed enum values
     """
-    ADDTOCART = 'addToCart'
+    ADDTOCART = "addToCart"
 
     @classmethod
     def from_json(cls, json_str: str) -> AddToCartEvent:
         """Create an instance of AddToCartEvent from a JSON string"""
         return AddToCartEvent(json.loads(json_str))
-
-

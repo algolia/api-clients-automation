@@ -21,17 +21,24 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt
 
+
 class Personalization(BaseModel):
     """
     Personalization
     """
-    filters_score: Optional[StrictInt] = Field(None, alias="filtersScore", description="The score of the filters.")
-    ranking_score: Optional[StrictInt] = Field(None, alias="rankingScore", description="The score of the ranking.")
+
+    filters_score: Optional[StrictInt] = Field(
+        None, alias="filtersScore", description="The score of the filters."
+    )
+    ranking_score: Optional[StrictInt] = Field(
+        None, alias="rankingScore", description="The score of the ranking."
+    )
     score: Optional[StrictInt] = Field(None, description="The score of the event.")
     __properties = ["filtersScore", "rankingScore", "score"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +57,7 @@ class Personalization(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,11 +69,11 @@ class Personalization(BaseModel):
         if not isinstance(obj, dict):
             return Personalization.parse_obj(obj)
 
-        _obj = Personalization.parse_obj({
-            "filters_score": obj.get("filtersScore"),
-            "ranking_score": obj.get("rankingScore"),
-            "score": obj.get("score")
-        })
+        _obj = Personalization.parse_obj(
+            {
+                "filters_score": obj.get("filtersScore"),
+                "ranking_score": obj.get("rankingScore"),
+                "score": obj.get("score"),
+            }
+        )
         return _obj
-
-

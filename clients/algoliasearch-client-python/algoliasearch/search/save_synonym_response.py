@@ -18,20 +18,30 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictInt, StrictStr
+
 
 class SaveSynonymResponse(BaseModel):
     """
     SaveSynonymResponse
     """
-    task_id: StrictInt = Field(..., alias="taskID", description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ")
-    updated_at: StrictStr = Field(..., alias="updatedAt", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+
+    task_id: StrictInt = Field(
+        ...,
+        alias="taskID",
+        description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ",
+    )
+    updated_at: StrictStr = Field(
+        ...,
+        alias="updatedAt",
+        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
+    )
     id: StrictStr = Field(..., description="Unique identifier of a synonym object.")
     __properties = ["taskID", "updatedAt", "id"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +60,7 @@ class SaveSynonymResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,11 +72,11 @@ class SaveSynonymResponse(BaseModel):
         if not isinstance(obj, dict):
             return SaveSynonymResponse.parse_obj(obj)
 
-        _obj = SaveSynonymResponse.parse_obj({
-            "task_id": obj.get("taskID"),
-            "updated_at": obj.get("updatedAt"),
-            "id": obj.get("id")
-        })
+        _obj = SaveSynonymResponse.parse_obj(
+            {
+                "task_id": obj.get("taskID"),
+                "updated_at": obj.get("updatedAt"),
+                "id": obj.get("id"),
+            }
+        )
         return _obj
-
-

@@ -18,20 +18,25 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.built_in_operation_type import BuiltInOperationType
+
 
 class BuiltInOperation(BaseModel):
     """
     To update an attribute without pushing the entire record, you can use these built-in operations.  # noqa: E501
     """
+
     operation: BuiltInOperationType = Field(..., alias="_operation")
-    value: StrictStr = Field(..., description="Value that corresponds to the operation, for example an `Increment` or `Decrement` step, `Add` or `Remove` value.")
+    value: StrictStr = Field(
+        ...,
+        description="Value that corresponds to the operation, for example an `Increment` or `Decrement` step, `Add` or `Remove` value.",
+    )
     __properties = ["_operation", "value"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +55,7 @@ class BuiltInOperation(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,10 +67,7 @@ class BuiltInOperation(BaseModel):
         if not isinstance(obj, dict):
             return BuiltInOperation.parse_obj(obj)
 
-        _obj = BuiltInOperation.parse_obj({
-            "operation": obj.get("_operation"),
-            "value": obj.get("value")
-        })
+        _obj = BuiltInOperation.parse_obj(
+            {"operation": obj.get("_operation"), "value": obj.get("value")}
+        )
         return _obj
-
-

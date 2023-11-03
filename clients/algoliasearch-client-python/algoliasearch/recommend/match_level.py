@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class MatchLevel(str, Enum):
     """
     Indicates how well the attribute matched the search query.
@@ -29,13 +26,11 @@ class MatchLevel(str, Enum):
     """
     allowed enum values
     """
-    NONE = 'none'
-    PARTIAL = 'partial'
-    FULL = 'full'
+    NONE = "none"
+    PARTIAL = "partial"
+    FULL = "full"
 
     @classmethod
     def from_json(cls, json_str: str) -> MatchLevel:
         """Create an instance of MatchLevel from a JSON string"""
         return MatchLevel(json.loads(json_str))
-
-

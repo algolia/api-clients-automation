@@ -21,16 +21,23 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr
 
+
 class EventsResponse(BaseModel):
     """
     The response of the Insights API.  # noqa: E501
     """
-    message: Optional[StrictStr] = Field(None, description="Details about the response, such as error messages.")
-    status: Optional[StrictInt] = Field(None, description="The HTTP status code of the response.")
+
+    message: Optional[StrictStr] = Field(
+        None, description="Details about the response, such as error messages."
+    )
+    status: Optional[StrictInt] = Field(
+        None, description="The HTTP status code of the response."
+    )
     __properties = ["message", "status"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,10 +56,7 @@ class EventsResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,10 +68,7 @@ class EventsResponse(BaseModel):
         if not isinstance(obj, dict):
             return EventsResponse.parse_obj(obj)
 
-        _obj = EventsResponse.parse_obj({
-            "message": obj.get("message"),
-            "status": obj.get("status")
-        })
+        _obj = EventsResponse.parse_obj(
+            {"message": obj.get("message"), "status": obj.get("status")}
+        )
         return _obj
-
-

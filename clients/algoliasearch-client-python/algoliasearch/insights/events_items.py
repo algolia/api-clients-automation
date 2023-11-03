@@ -21,26 +21,49 @@ import re  # noqa: F401
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
 from algoliasearch.models.added_to_cart_object_ids import AddedToCartObjectIDs
-from algoliasearch.models.added_to_cart_object_ids_after_search import AddedToCartObjectIDsAfterSearch
+from algoliasearch.models.added_to_cart_object_ids_after_search import (
+    AddedToCartObjectIDsAfterSearch,
+)
 from algoliasearch.models.clicked_filters import ClickedFilters
 from algoliasearch.models.clicked_object_ids import ClickedObjectIDs
-from algoliasearch.models.clicked_object_ids_after_search import ClickedObjectIDsAfterSearch
+from algoliasearch.models.clicked_object_ids_after_search import (
+    ClickedObjectIDsAfterSearch,
+)
 from algoliasearch.models.converted_filters import ConvertedFilters
 from algoliasearch.models.converted_object_ids import ConvertedObjectIDs
-from algoliasearch.models.converted_object_ids_after_search import ConvertedObjectIDsAfterSearch
+from algoliasearch.models.converted_object_ids_after_search import (
+    ConvertedObjectIDsAfterSearch,
+)
 from algoliasearch.models.purchased_object_ids import PurchasedObjectIDs
-from algoliasearch.models.purchased_object_ids_after_search import PurchasedObjectIDsAfterSearch
+from algoliasearch.models.purchased_object_ids_after_search import (
+    PurchasedObjectIDsAfterSearch,
+)
 from algoliasearch.models.viewed_filters import ViewedFilters
 from algoliasearch.models.viewed_object_ids import ViewedObjectIDs
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
-EVENTSITEMS_ONE_OF_SCHEMAS = ["AddedToCartObjectIDs", "AddedToCartObjectIDsAfterSearch", "ClickedFilters", "ClickedObjectIDs", "ClickedObjectIDsAfterSearch", "ConvertedFilters", "ConvertedObjectIDs", "ConvertedObjectIDsAfterSearch", "PurchasedObjectIDs", "PurchasedObjectIDsAfterSearch", "ViewedFilters", "ViewedObjectIDs"]
+EVENTSITEMS_ONE_OF_SCHEMAS = [
+    "AddedToCartObjectIDs",
+    "AddedToCartObjectIDsAfterSearch",
+    "ClickedFilters",
+    "ClickedObjectIDs",
+    "ClickedObjectIDsAfterSearch",
+    "ConvertedFilters",
+    "ConvertedObjectIDs",
+    "ConvertedObjectIDsAfterSearch",
+    "PurchasedObjectIDs",
+    "PurchasedObjectIDsAfterSearch",
+    "ViewedFilters",
+    "ViewedObjectIDs",
+]
+
 
 class EventsItems(BaseModel):
     """
     EventsItems
     """
+
     # data type: ClickedObjectIDsAfterSearch
     oneof_schema_1_validator: Optional[ClickedObjectIDsAfterSearch] = None
     # data type: ConvertedObjectIDsAfterSearch
@@ -66,7 +89,20 @@ class EventsItems(BaseModel):
     # data type: PurchasedObjectIDsAfterSearch
     oneof_schema_12_validator: Optional[PurchasedObjectIDsAfterSearch] = None
     if TYPE_CHECKING:
-        actual_instance: Union[AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs]
+        actual_instance: Union[
+            AddedToCartObjectIDs,
+            AddedToCartObjectIDsAfterSearch,
+            ClickedFilters,
+            ClickedObjectIDs,
+            ClickedObjectIDsAfterSearch,
+            ConvertedFilters,
+            ConvertedObjectIDs,
+            ConvertedObjectIDsAfterSearch,
+            PurchasedObjectIDs,
+            PurchasedObjectIDsAfterSearch,
+            ViewedFilters,
+            ViewedObjectIDs,
+        ]
     else:
         actual_instance: Any
     one_of_schemas: List[str] = Field(EVENTSITEMS_ONE_OF_SCHEMAS, const=True)
@@ -77,84 +113,118 @@ class EventsItems(BaseModel):
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
+                raise ValueError(
+                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
+                )
             if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
+                raise ValueError(
+                    "If a position argument is used, keyword arguments cannot be used."
+                )
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
 
-    @validator('actual_instance')
+    @validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
         instance = EventsItems.construct()
         error_messages = []
         match = 0
         # validate data type: ClickedObjectIDsAfterSearch
         if not isinstance(v, ClickedObjectIDsAfterSearch):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ClickedObjectIDsAfterSearch`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ClickedObjectIDsAfterSearch`"
+            )
         else:
             match += 1
         # validate data type: ConvertedObjectIDsAfterSearch
         if not isinstance(v, ConvertedObjectIDsAfterSearch):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ConvertedObjectIDsAfterSearch`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ConvertedObjectIDsAfterSearch`"
+            )
         else:
             match += 1
         # validate data type: ClickedObjectIDs
         if not isinstance(v, ClickedObjectIDs):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ClickedObjectIDs`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ClickedObjectIDs`"
+            )
         else:
             match += 1
         # validate data type: ConvertedObjectIDs
         if not isinstance(v, ConvertedObjectIDs):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ConvertedObjectIDs`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ConvertedObjectIDs`"
+            )
         else:
             match += 1
         # validate data type: ClickedFilters
         if not isinstance(v, ClickedFilters):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ClickedFilters`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ClickedFilters`"
+            )
         else:
             match += 1
         # validate data type: ConvertedFilters
         if not isinstance(v, ConvertedFilters):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ConvertedFilters`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ConvertedFilters`"
+            )
         else:
             match += 1
         # validate data type: ViewedObjectIDs
         if not isinstance(v, ViewedObjectIDs):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ViewedObjectIDs`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ViewedObjectIDs`"
+            )
         else:
             match += 1
         # validate data type: ViewedFilters
         if not isinstance(v, ViewedFilters):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ViewedFilters`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ViewedFilters`"
+            )
         else:
             match += 1
         # validate data type: AddedToCartObjectIDsAfterSearch
         if not isinstance(v, AddedToCartObjectIDsAfterSearch):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AddedToCartObjectIDsAfterSearch`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `AddedToCartObjectIDsAfterSearch`"
+            )
         else:
             match += 1
         # validate data type: AddedToCartObjectIDs
         if not isinstance(v, AddedToCartObjectIDs):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AddedToCartObjectIDs`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `AddedToCartObjectIDs`"
+            )
         else:
             match += 1
         # validate data type: PurchasedObjectIDs
         if not isinstance(v, PurchasedObjectIDs):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PurchasedObjectIDs`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `PurchasedObjectIDs`"
+            )
         else:
             match += 1
         # validate data type: PurchasedObjectIDsAfterSearch
         if not isinstance(v, PurchasedObjectIDsAfterSearch):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PurchasedObjectIDsAfterSearch`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `PurchasedObjectIDsAfterSearch`"
+            )
         else:
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when setting `actual_instance` in EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when setting `actual_instance` in EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return v
 
@@ -219,7 +289,9 @@ class EventsItems(BaseModel):
             error_messages.append(str(e))
         # deserialize data into AddedToCartObjectIDsAfterSearch
         try:
-            instance.actual_instance = AddedToCartObjectIDsAfterSearch.from_json(json_str)
+            instance.actual_instance = AddedToCartObjectIDsAfterSearch.from_json(
+                json_str
+            )
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -244,10 +316,16 @@ class EventsItems(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when deserializing the JSON string into EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when deserializing the JSON string into EventsItems with oneOf schemas: AddedToCartObjectIDs, AddedToCartObjectIDsAfterSearch, ClickedFilters, ClickedObjectIDs, ClickedObjectIDsAfterSearch, ConvertedFilters, ConvertedObjectIDs, ConvertedObjectIDsAfterSearch, PurchasedObjectIDs, PurchasedObjectIDsAfterSearch, ViewedFilters, ViewedObjectIDs. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return instance
 
@@ -277,5 +355,3 @@ class EventsItems(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
-
-

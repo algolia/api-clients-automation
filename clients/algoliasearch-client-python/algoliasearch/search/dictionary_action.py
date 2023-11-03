@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class DictionaryAction(str, Enum):
     """
     Actions to perform.
@@ -29,12 +26,10 @@ class DictionaryAction(str, Enum):
     """
     allowed enum values
     """
-    ADDENTRY = 'addEntry'
-    DELETEENTRY = 'deleteEntry'
+    ADDENTRY = "addEntry"
+    DELETEENTRY = "deleteEntry"
 
     @classmethod
     def from_json(cls, json_str: str) -> DictionaryAction:
         """Create an instance of DictionaryAction from a JSON string"""
         return DictionaryAction(json.loads(json_str))
-
-

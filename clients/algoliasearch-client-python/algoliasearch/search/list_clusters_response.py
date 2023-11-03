@@ -21,15 +21,22 @@ import json
 from typing import List
 from pydantic import BaseModel, Field, StrictStr, conlist
 
+
 class ListClustersResponse(BaseModel):
     """
     Clusters.  # noqa: E501
     """
-    top_users: conlist(StrictStr) = Field(..., alias="topUsers", description="Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.")
+
+    top_users: conlist(StrictStr) = Field(
+        ...,
+        alias="topUsers",
+        description="Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.",
+    )
     __properties = ["topUsers"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +55,7 @@ class ListClustersResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +67,5 @@ class ListClustersResponse(BaseModel):
         if not isinstance(obj, dict):
             return ListClustersResponse.parse_obj(obj)
 
-        _obj = ListClustersResponse.parse_obj({
-            "top_users": obj.get("topUsers")
-        })
+        _obj = ListClustersResponse.parse_obj({"top_users": obj.get("topUsers")})
         return _obj
-
-

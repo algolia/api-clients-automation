@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class TrendingItemsModel(str, Enum):
     """
     Trending items model.
@@ -29,11 +26,9 @@ class TrendingItemsModel(str, Enum):
     """
     allowed enum values
     """
-    TRENDING_MINUS_ITEMS = 'trending-items'
+    TRENDING_MINUS_ITEMS = "trending-items"
 
     @classmethod
     def from_json(cls, json_str: str) -> TrendingItemsModel:
         """Create an instance of TrendingItemsModel from a JSON string"""
         return TrendingItemsModel(json.loads(json_str))
-
-

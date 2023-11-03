@@ -18,18 +18,22 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictStr
+
 
 class ConsequenceHide(BaseModel):
     """
     Unique identifier of the record to hide.  # noqa: E501
     """
-    object_id: StrictStr = Field(..., alias="objectID", description="Unique object identifier.")
+
+    object_id: StrictStr = Field(
+        ..., alias="objectID", description="Unique object identifier."
+    )
     __properties = ["objectID"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +52,7 @@ class ConsequenceHide(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +64,5 @@ class ConsequenceHide(BaseModel):
         if not isinstance(obj, dict):
             return ConsequenceHide.parse_obj(obj)
 
-        _obj = ConsequenceHide.parse_obj({
-            "object_id": obj.get("objectID")
-        })
+        _obj = ConsequenceHide.parse_obj({"object_id": obj.get("objectID")})
         return _obj
-
-

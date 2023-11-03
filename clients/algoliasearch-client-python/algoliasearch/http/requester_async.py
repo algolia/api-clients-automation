@@ -4,7 +4,7 @@ import aiohttp
 import async_timeout
 
 from algoliasearch.http.requester import Requester
-from algoliasearch.http.transporter import Request, Response
+from algoliasearch.http.transporter import Response
 
 
 class RequesterAsync(Requester):

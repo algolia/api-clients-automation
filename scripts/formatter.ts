@@ -35,7 +35,7 @@ export async function formatter(language: string, folder: string): Promise<void>
       }
       break;
     case 'python':
-      cmd = `cd ${folder} && tox -e format`;
+      cmd = `(cd ${folder} && poetry install && poetry run ruff check . && poetry run format .)`;
       break;
     default:
       return;

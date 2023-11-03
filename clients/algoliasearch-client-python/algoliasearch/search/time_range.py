@@ -18,19 +18,25 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictInt
+
 
 class TimeRange(BaseModel):
     """
     TimeRange
     """
-    var_from: StrictInt = Field(..., alias="from", description="Lower bound of the time range (Unix timestamp).")
-    until: StrictInt = Field(..., description="Upper bound of the time range (Unix timestamp).")
+
+    var_from: StrictInt = Field(
+        ..., alias="from", description="Lower bound of the time range (Unix timestamp)."
+    )
+    until: StrictInt = Field(
+        ..., description="Upper bound of the time range (Unix timestamp)."
+    )
     __properties = ["from", "until"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,10 +55,7 @@ class TimeRange(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,10 +67,7 @@ class TimeRange(BaseModel):
         if not isinstance(obj, dict):
             return TimeRange.parse_obj(obj)
 
-        _obj = TimeRange.parse_obj({
-            "var_from": obj.get("from"),
-            "until": obj.get("until")
-        })
+        _obj = TimeRange.parse_obj(
+            {"var_from": obj.get("from"), "until": obj.get("until")}
+        )
         return _obj
-
-

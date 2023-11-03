@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class DictionaryType(str, Enum):
     """
     DictionaryType
@@ -29,13 +26,11 @@ class DictionaryType(str, Enum):
     """
     allowed enum values
     """
-    PLURALS = 'plurals'
-    STOPWORDS = 'stopwords'
-    COMPOUNDS = 'compounds'
+    PLURALS = "plurals"
+    STOPWORDS = "stopwords"
+    COMPOUNDS = "compounds"
 
     @classmethod
     def from_json(cls, json_str: str) -> DictionaryType:
         """Create an instance of DictionaryType from a JSON string"""
         return DictionaryType(json.loads(json_str))
-
-

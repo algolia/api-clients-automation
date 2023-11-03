@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class ClickEvent(str, Enum):
     """
     ClickEvent
@@ -29,11 +26,9 @@ class ClickEvent(str, Enum):
     """
     allowed enum values
     """
-    CLICK = 'click'
+    CLICK = "click"
 
     @classmethod
     def from_json(cls, json_str: str) -> ClickEvent:
         """Create an instance of ClickEvent from a JSON string"""
         return ClickEvent(json.loads(json_str))
-
-

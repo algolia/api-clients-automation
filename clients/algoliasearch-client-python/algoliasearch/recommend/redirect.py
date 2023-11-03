@@ -22,15 +22,18 @@ from typing import List, Optional
 from pydantic import BaseModel, conlist
 from algoliasearch.models.redirect_rule_index_metadata import RedirectRuleIndexMetadata
 
+
 class Redirect(BaseModel):
     """
     [Redirect results to a URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/).   # noqa: E501
     """
+
     index: Optional[conlist(RedirectRuleIndexMetadata)] = None
     __properties = ["index"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,17 +52,14 @@ class Redirect(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in index (list)
         _items = []
         if self.index:
             for _item in self.index:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['index'] = _items
+            _dict["index"] = _items
         return _dict
 
     @classmethod
@@ -71,9 +71,14 @@ class Redirect(BaseModel):
         if not isinstance(obj, dict):
             return Redirect.parse_obj(obj)
 
-        _obj = Redirect.parse_obj({
-            "index": [RedirectRuleIndexMetadata.from_dict(_item) for _item in obj.get("index")] if obj.get("index") is not None else None
-        })
+        _obj = Redirect.parse_obj(
+            {
+                "index": [
+                    RedirectRuleIndexMetadata.from_dict(_item)
+                    for _item in obj.get("index")
+                ]
+                if obj.get("index") is not None
+                else None
+            }
+        )
         return _obj
-
-

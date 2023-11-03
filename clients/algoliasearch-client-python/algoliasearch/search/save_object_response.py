@@ -21,17 +21,28 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr
 
+
 class SaveObjectResponse(BaseModel):
     """
     SaveObjectResponse
     """
-    created_at: StrictStr = Field(..., alias="createdAt", description="Date of creation (ISO-8601 format).")
-    task_id: StrictInt = Field(..., alias="taskID", description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ")
-    object_id: Optional[StrictStr] = Field(None, alias="objectID", description="Unique object identifier.")
+
+    created_at: StrictStr = Field(
+        ..., alias="createdAt", description="Date of creation (ISO-8601 format)."
+    )
+    task_id: StrictInt = Field(
+        ...,
+        alias="taskID",
+        description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ",
+    )
+    object_id: Optional[StrictStr] = Field(
+        None, alias="objectID", description="Unique object identifier."
+    )
     __properties = ["createdAt", "taskID", "objectID"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +61,7 @@ class SaveObjectResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,11 +73,11 @@ class SaveObjectResponse(BaseModel):
         if not isinstance(obj, dict):
             return SaveObjectResponse.parse_obj(obj)
 
-        _obj = SaveObjectResponse.parse_obj({
-            "created_at": obj.get("createdAt"),
-            "task_id": obj.get("taskID"),
-            "object_id": obj.get("objectID")
-        })
+        _obj = SaveObjectResponse.parse_obj(
+            {
+                "created_at": obj.get("createdAt"),
+                "task_id": obj.get("taskID"),
+                "object_id": obj.get("objectID"),
+            }
+        )
         return _obj
-
-

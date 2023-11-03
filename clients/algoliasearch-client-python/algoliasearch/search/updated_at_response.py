@@ -18,19 +18,29 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictInt, StrictStr
+
 
 class UpdatedAtResponse(BaseModel):
     """
     Response, taskID, and update timestamp.  # noqa: E501
     """
-    task_id: StrictInt = Field(..., alias="taskID", description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ")
-    updated_at: StrictStr = Field(..., alias="updatedAt", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+
+    task_id: StrictInt = Field(
+        ...,
+        alias="taskID",
+        description="Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`. ",
+    )
+    updated_at: StrictStr = Field(
+        ...,
+        alias="updatedAt",
+        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
+    )
     __properties = ["taskID", "updatedAt"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,10 +59,7 @@ class UpdatedAtResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -64,10 +71,7 @@ class UpdatedAtResponse(BaseModel):
         if not isinstance(obj, dict):
             return UpdatedAtResponse.parse_obj(obj)
 
-        _obj = UpdatedAtResponse.parse_obj({
-            "task_id": obj.get("taskID"),
-            "updated_at": obj.get("updatedAt")
-        })
+        _obj = UpdatedAtResponse.parse_obj(
+            {"task_id": obj.get("taskID"), "updated_at": obj.get("updatedAt")}
+        )
         return _obj
-
-

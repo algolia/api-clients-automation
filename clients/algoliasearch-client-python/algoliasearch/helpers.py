@@ -2,7 +2,6 @@ import json
 import math
 import sys
 import time
-from typing import Any, Dict, Iterable, Iterator, List, Optional, Union
 
 from algoliasearch.exceptions import MissingObjectIdException
 

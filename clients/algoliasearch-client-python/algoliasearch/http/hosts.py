@@ -1,5 +1,5 @@
 from random import shuffle
-from typing import List, Optional, cast
+from typing import cast
 
 
 class Host(object):

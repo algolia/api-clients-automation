@@ -23,18 +23,27 @@ from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.recommendation_models import RecommendationModels
 from algoliasearch.models.search_params_object import SearchParamsObject
 
+
 class BaseRecommendationsQuery(BaseModel):
     """
     BaseRecommendationsQuery
     """
+
     model: RecommendationModels = Field(...)
-    object_id: StrictStr = Field(..., alias="objectID", description="Unique object identifier.")
-    query_parameters: Optional[SearchParamsObject] = Field(None, alias="queryParameters")
-    fallback_parameters: Optional[SearchParamsObject] = Field(None, alias="fallbackParameters")
+    object_id: StrictStr = Field(
+        ..., alias="objectID", description="Unique object identifier."
+    )
+    query_parameters: Optional[SearchParamsObject] = Field(
+        None, alias="queryParameters"
+    )
+    fallback_parameters: Optional[SearchParamsObject] = Field(
+        None, alias="fallbackParameters"
+    )
     __properties = ["model", "objectID", "queryParameters", "fallbackParameters"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -53,16 +62,13 @@ class BaseRecommendationsQuery(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of query_parameters
         if self.query_parameters:
-            _dict['queryParameters'] = self.query_parameters.to_dict()
+            _dict["queryParameters"] = self.query_parameters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of fallback_parameters
         if self.fallback_parameters:
-            _dict['fallbackParameters'] = self.fallback_parameters.to_dict()
+            _dict["fallbackParameters"] = self.fallback_parameters.to_dict()
         return _dict
 
     @classmethod
@@ -74,12 +80,20 @@ class BaseRecommendationsQuery(BaseModel):
         if not isinstance(obj, dict):
             return BaseRecommendationsQuery.parse_obj(obj)
 
-        _obj = BaseRecommendationsQuery.parse_obj({
-            "model": obj.get("model"),
-            "object_id": obj.get("objectID"),
-            "query_parameters": SearchParamsObject.from_dict(obj.get("queryParameters")) if obj.get("queryParameters") is not None else None,
-            "fallback_parameters": SearchParamsObject.from_dict(obj.get("fallbackParameters")) if obj.get("fallbackParameters") is not None else None
-        })
+        _obj = BaseRecommendationsQuery.parse_obj(
+            {
+                "model": obj.get("model"),
+                "object_id": obj.get("objectID"),
+                "query_parameters": SearchParamsObject.from_dict(
+                    obj.get("queryParameters")
+                )
+                if obj.get("queryParameters") is not None
+                else None,
+                "fallback_parameters": SearchParamsObject.from_dict(
+                    obj.get("fallbackParameters")
+                )
+                if obj.get("fallbackParameters") is not None
+                else None,
+            }
+        )
         return _obj
-
-

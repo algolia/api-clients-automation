@@ -21,17 +21,28 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, conint
 
+
 class SearchForFacetValuesRequest(BaseModel):
     """
     SearchForFacetValuesRequest
     """
-    params: Optional[StrictStr] = Field('', description="Search parameters as a URL-encoded query string.")
-    facet_query: Optional[StrictStr] = Field('', alias="facetQuery", description="Text to search inside the facet's values.")
-    max_facet_hits: Optional[conint(strict=True, le=100)] = Field(10, alias="maxFacetHits", description="Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).")
+
+    params: Optional[StrictStr] = Field(
+        "", description="Search parameters as a URL-encoded query string."
+    )
+    facet_query: Optional[StrictStr] = Field(
+        "", alias="facetQuery", description="Text to search inside the facet's values."
+    )
+    max_facet_hits: Optional[conint(strict=True, le=100)] = Field(
+        10,
+        alias="maxFacetHits",
+        description="Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).",
+    )
     __properties = ["params", "facetQuery", "maxFacetHits"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +61,7 @@ class SearchForFacetValuesRequest(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,11 +73,15 @@ class SearchForFacetValuesRequest(BaseModel):
         if not isinstance(obj, dict):
             return SearchForFacetValuesRequest.parse_obj(obj)
 
-        _obj = SearchForFacetValuesRequest.parse_obj({
-            "params": obj.get("params") if obj.get("params") is not None else '',
-            "facet_query": obj.get("facetQuery") if obj.get("facetQuery") is not None else '',
-            "max_facet_hits": obj.get("maxFacetHits") if obj.get("maxFacetHits") is not None else 10
-        })
+        _obj = SearchForFacetValuesRequest.parse_obj(
+            {
+                "params": obj.get("params") if obj.get("params") is not None else "",
+                "facet_query": obj.get("facetQuery")
+                if obj.get("facetQuery") is not None
+                else "",
+                "max_facet_hits": obj.get("maxFacetHits")
+                if obj.get("maxFacetHits") is not None
+                else 10,
+            }
+        )
         return _obj
-
-

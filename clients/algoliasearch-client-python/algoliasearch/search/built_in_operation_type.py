@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class BuiltInOperationType(str, Enum):
     """
     Operation to apply to the attribute.
@@ -29,17 +26,15 @@ class BuiltInOperationType(str, Enum):
     """
     allowed enum values
     """
-    INCREMENT = 'Increment'
-    DECREMENT = 'Decrement'
-    ADD = 'Add'
-    REMOVE = 'Remove'
-    ADDUNIQUE = 'AddUnique'
-    INCREMENTFROM = 'IncrementFrom'
-    INCREMENTSET = 'IncrementSet'
+    INCREMENT = "Increment"
+    DECREMENT = "Decrement"
+    ADD = "Add"
+    REMOVE = "Remove"
+    ADDUNIQUE = "AddUnique"
+    INCREMENTFROM = "IncrementFrom"
+    INCREMENTSET = "IncrementSet"
 
     @classmethod
     def from_json(cls, json_str: str) -> BuiltInOperationType:
         """Create an instance of BuiltInOperationType from a JSON string"""
         return BuiltInOperationType(json.loads(json_str))
-
-

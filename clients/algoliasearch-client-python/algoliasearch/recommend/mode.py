@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class Mode(str, Enum):
     """
     Search mode the index will use to query for results.
@@ -29,12 +26,10 @@ class Mode(str, Enum):
     """
     allowed enum values
     """
-    NEURALSEARCH = 'neuralSearch'
-    KEYWORDSEARCH = 'keywordSearch'
+    NEURALSEARCH = "neuralSearch"
+    KEYWORDSEARCH = "keywordSearch"
 
     @classmethod
     def from_json(cls, json_str: str) -> Mode:
         """Create an instance of Mode from a JSON string"""
         return Mode(json.loads(json_str))
-
-

@@ -7,7 +7,9 @@ from algoliasearch.recommend.advanced_syntax_features import AdvancedSyntaxFeatu
 from algoliasearch.recommend.alternatives_as_exact import AlternativesAsExact
 from algoliasearch.recommend.anchoring import Anchoring
 from algoliasearch.recommend.around_precision import AroundPrecision
-from algoliasearch.recommend.around_precision_from_value_inner import AroundPrecisionFromValueInner
+from algoliasearch.recommend.around_precision_from_value_inner import (
+    AroundPrecisionFromValueInner,
+)
 from algoliasearch.recommend.around_radius import AroundRadius
 from algoliasearch.recommend.around_radius_all import AroundRadiusAll
 from algoliasearch.recommend.automatic_facet_filter import AutomaticFacetFilter
@@ -15,7 +17,9 @@ from algoliasearch.recommend.automatic_facet_filters import AutomaticFacetFilter
 from algoliasearch.recommend.base_recommend_request import BaseRecommendRequest
 from algoliasearch.recommend.base_recommendations_query import BaseRecommendationsQuery
 from algoliasearch.recommend.base_search_params import BaseSearchParams
-from algoliasearch.recommend.base_search_params_without_query import BaseSearchParamsWithoutQuery
+from algoliasearch.recommend.base_search_params_without_query import (
+    BaseSearchParamsWithoutQuery,
+)
 from algoliasearch.recommend.base_search_response import BaseSearchResponse
 from algoliasearch.recommend.base_trending_facets_query import BaseTrendingFacetsQuery
 from algoliasearch.recommend.base_trending_items_query import BaseTrendingItemsQuery
@@ -38,11 +42,15 @@ from algoliasearch.recommend.facets import Facets
 from algoliasearch.recommend.facets_stats import FacetsStats
 from algoliasearch.recommend.get_recommend_task_response import GetRecommendTaskResponse
 from algoliasearch.recommend.get_recommendations_params import GetRecommendationsParams
-from algoliasearch.recommend.get_recommendations_response import GetRecommendationsResponse
+from algoliasearch.recommend.get_recommendations_response import (
+    GetRecommendationsResponse,
+)
 from algoliasearch.recommend.highlight_result import HighlightResult
 from algoliasearch.recommend.highlight_result_option import HighlightResultOption
 from algoliasearch.recommend.ignore_plurals import IgnorePlurals
-from algoliasearch.recommend.index_settings_as_search_params import IndexSettingsAsSearchParams
+from algoliasearch.recommend.index_settings_as_search_params import (
+    IndexSettingsAsSearchParams,
+)
 from algoliasearch.recommend.match_level import MatchLevel
 from algoliasearch.recommend.matched_geo_location import MatchedGeoLocation
 from algoliasearch.recommend.mixed_search_filters import MixedSearchFilters
@@ -65,8 +73,12 @@ from algoliasearch.recommend.recommendations_query import RecommendationsQuery
 from algoliasearch.recommend.recommendations_request import RecommendationsRequest
 from algoliasearch.recommend.recommendations_response import RecommendationsResponse
 from algoliasearch.recommend.redirect import Redirect
-from algoliasearch.recommend.redirect_rule_index_metadata import RedirectRuleIndexMetadata
-from algoliasearch.recommend.redirect_rule_index_metadata_data import RedirectRuleIndexMetadataData
+from algoliasearch.recommend.redirect_rule_index_metadata import (
+    RedirectRuleIndexMetadata,
+)
+from algoliasearch.recommend.redirect_rule_index_metadata_data import (
+    RedirectRuleIndexMetadataData,
+)
 from algoliasearch.recommend.remove_stop_words import RemoveStopWords
 from algoliasearch.recommend.remove_words_if_no_results import RemoveWordsIfNoResults
 from algoliasearch.recommend.rendering_content import RenderingContent
@@ -74,8 +86,12 @@ from algoliasearch.recommend.rule_response import RuleResponse
 from algoliasearch.recommend.rule_response_metadata import RuleResponseMetadata
 from algoliasearch.recommend.search_params_object import SearchParamsObject
 from algoliasearch.recommend.search_params_query import SearchParamsQuery
-from algoliasearch.recommend.search_recommend_rules_params import SearchRecommendRulesParams
-from algoliasearch.recommend.search_recommend_rules_response import SearchRecommendRulesResponse
+from algoliasearch.recommend.search_recommend_rules_params import (
+    SearchRecommendRulesParams,
+)
+from algoliasearch.recommend.search_recommend_rules_response import (
+    SearchRecommendRulesResponse,
+)
 from algoliasearch.recommend.semantic_search import SemanticSearch
 from algoliasearch.recommend.snippet_result import SnippetResult
 from algoliasearch.recommend.snippet_result_option import SnippetResultOption

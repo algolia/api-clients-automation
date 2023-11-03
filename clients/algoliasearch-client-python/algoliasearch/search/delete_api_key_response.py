@@ -18,18 +18,24 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictStr
+
 
 class DeleteApiKeyResponse(BaseModel):
     """
     DeleteApiKeyResponse
     """
-    deleted_at: StrictStr = Field(..., alias="deletedAt", description="Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+
+    deleted_at: StrictStr = Field(
+        ...,
+        alias="deletedAt",
+        description="Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
+    )
     __properties = ["deletedAt"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +54,7 @@ class DeleteApiKeyResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +66,5 @@ class DeleteApiKeyResponse(BaseModel):
         if not isinstance(obj, dict):
             return DeleteApiKeyResponse.parse_obj(obj)
 
-        _obj = DeleteApiKeyResponse.parse_obj({
-            "deleted_at": obj.get("deletedAt")
-        })
+        _obj = DeleteApiKeyResponse.parse_obj({"deleted_at": obj.get("deletedAt")})
         return _obj
-
-

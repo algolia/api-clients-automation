@@ -18,18 +18,24 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictStr
+
 
 class ReplaceSourceResponse(BaseModel):
     """
     ReplaceSourceResponse
     """
-    updated_at: StrictStr = Field(..., alias="updatedAt", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+
+    updated_at: StrictStr = Field(
+        ...,
+        alias="updatedAt",
+        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
+    )
     __properties = ["updatedAt"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +54,7 @@ class ReplaceSourceResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +66,5 @@ class ReplaceSourceResponse(BaseModel):
         if not isinstance(obj, dict):
             return ReplaceSourceResponse.parse_obj(obj)
 
-        _obj = ReplaceSourceResponse.parse_obj({
-            "updated_at": obj.get("updatedAt")
-        })
+        _obj = ReplaceSourceResponse.parse_obj({"updated_at": obj.get("updatedAt")})
         return _obj
-
-

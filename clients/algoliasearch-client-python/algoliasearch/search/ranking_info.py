@@ -23,27 +23,82 @@ from pydantic import BaseModel, Field, StrictBool, StrictInt
 from algoliasearch.models.matched_geo_location import MatchedGeoLocation
 from algoliasearch.models.personalization import Personalization
 
+
 class RankingInfo(BaseModel):
     """
     RankingInfo
     """
-    filters: StrictInt = Field(..., description="This field is reserved for advanced usage.")
-    first_matched_word: StrictInt = Field(..., alias="firstMatchedWord", description="Position of the most important matched attribute in the attributes to index list.")
-    geo_distance: StrictInt = Field(..., alias="geoDistance", description="Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).")
-    geo_precision: Optional[StrictInt] = Field(None, alias="geoPrecision", description="Precision used when computing the geo distance, in meters.")
-    matched_geo_location: Optional[MatchedGeoLocation] = Field(None, alias="matchedGeoLocation")
+
+    filters: StrictInt = Field(
+        ..., description="This field is reserved for advanced usage."
+    )
+    first_matched_word: StrictInt = Field(
+        ...,
+        alias="firstMatchedWord",
+        description="Position of the most important matched attribute in the attributes to index list.",
+    )
+    geo_distance: StrictInt = Field(
+        ...,
+        alias="geoDistance",
+        description="Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).",
+    )
+    geo_precision: Optional[StrictInt] = Field(
+        None,
+        alias="geoPrecision",
+        description="Precision used when computing the geo distance, in meters.",
+    )
+    matched_geo_location: Optional[MatchedGeoLocation] = Field(
+        None, alias="matchedGeoLocation"
+    )
     personalization: Optional[Personalization] = None
-    nb_exact_words: StrictInt = Field(..., alias="nbExactWords", description="Number of exactly matched words.")
-    nb_typos: StrictInt = Field(..., alias="nbTypos", description="Number of typos encountered when matching the record.")
-    promoted: StrictBool = Field(..., description="Present and set to true if a Rule promoted the hit.")
-    proximity_distance: Optional[StrictInt] = Field(None, alias="proximityDistance", description="When the query contains more than one word, the sum of the distances between matched words (in meters).")
-    user_score: StrictInt = Field(..., alias="userScore", description="Custom ranking for the object, expressed as a single integer value.")
-    words: StrictInt = Field(..., description="Number of matched words, including prefixes and typos.")
-    promoted_by_re_ranking: Optional[StrictBool] = Field(None, alias="promotedByReRanking", description="Wether the record are promoted by the re-ranking strategy.")
-    __properties = ["filters", "firstMatchedWord", "geoDistance", "geoPrecision", "matchedGeoLocation", "personalization", "nbExactWords", "nbTypos", "promoted", "proximityDistance", "userScore", "words", "promotedByReRanking"]
+    nb_exact_words: StrictInt = Field(
+        ..., alias="nbExactWords", description="Number of exactly matched words."
+    )
+    nb_typos: StrictInt = Field(
+        ...,
+        alias="nbTypos",
+        description="Number of typos encountered when matching the record.",
+    )
+    promoted: StrictBool = Field(
+        ..., description="Present and set to true if a Rule promoted the hit."
+    )
+    proximity_distance: Optional[StrictInt] = Field(
+        None,
+        alias="proximityDistance",
+        description="When the query contains more than one word, the sum of the distances between matched words (in meters).",
+    )
+    user_score: StrictInt = Field(
+        ...,
+        alias="userScore",
+        description="Custom ranking for the object, expressed as a single integer value.",
+    )
+    words: StrictInt = Field(
+        ..., description="Number of matched words, including prefixes and typos."
+    )
+    promoted_by_re_ranking: Optional[StrictBool] = Field(
+        None,
+        alias="promotedByReRanking",
+        description="Wether the record are promoted by the re-ranking strategy.",
+    )
+    __properties = [
+        "filters",
+        "firstMatchedWord",
+        "geoDistance",
+        "geoPrecision",
+        "matchedGeoLocation",
+        "personalization",
+        "nbExactWords",
+        "nbTypos",
+        "promoted",
+        "proximityDistance",
+        "userScore",
+        "words",
+        "promotedByReRanking",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -62,16 +117,13 @@ class RankingInfo(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of matched_geo_location
         if self.matched_geo_location:
-            _dict['matchedGeoLocation'] = self.matched_geo_location.to_dict()
+            _dict["matchedGeoLocation"] = self.matched_geo_location.to_dict()
         # override the default output from pydantic by calling `to_dict()` of personalization
         if self.personalization:
-            _dict['personalization'] = self.personalization.to_dict()
+            _dict["personalization"] = self.personalization.to_dict()
         return _dict
 
     @classmethod
@@ -83,21 +135,27 @@ class RankingInfo(BaseModel):
         if not isinstance(obj, dict):
             return RankingInfo.parse_obj(obj)
 
-        _obj = RankingInfo.parse_obj({
-            "filters": obj.get("filters"),
-            "first_matched_word": obj.get("firstMatchedWord"),
-            "geo_distance": obj.get("geoDistance"),
-            "geo_precision": obj.get("geoPrecision"),
-            "matched_geo_location": MatchedGeoLocation.from_dict(obj.get("matchedGeoLocation")) if obj.get("matchedGeoLocation") is not None else None,
-            "personalization": Personalization.from_dict(obj.get("personalization")) if obj.get("personalization") is not None else None,
-            "nb_exact_words": obj.get("nbExactWords"),
-            "nb_typos": obj.get("nbTypos"),
-            "promoted": obj.get("promoted"),
-            "proximity_distance": obj.get("proximityDistance"),
-            "user_score": obj.get("userScore"),
-            "words": obj.get("words"),
-            "promoted_by_re_ranking": obj.get("promotedByReRanking")
-        })
+        _obj = RankingInfo.parse_obj(
+            {
+                "filters": obj.get("filters"),
+                "first_matched_word": obj.get("firstMatchedWord"),
+                "geo_distance": obj.get("geoDistance"),
+                "geo_precision": obj.get("geoPrecision"),
+                "matched_geo_location": MatchedGeoLocation.from_dict(
+                    obj.get("matchedGeoLocation")
+                )
+                if obj.get("matchedGeoLocation") is not None
+                else None,
+                "personalization": Personalization.from_dict(obj.get("personalization"))
+                if obj.get("personalization") is not None
+                else None,
+                "nb_exact_words": obj.get("nbExactWords"),
+                "nb_typos": obj.get("nbTypos"),
+                "promoted": obj.get("promoted"),
+                "proximity_distance": obj.get("proximityDistance"),
+                "user_score": obj.get("userScore"),
+                "words": obj.get("words"),
+                "promoted_by_re_ranking": obj.get("promotedByReRanking"),
+            }
+        )
         return _obj
-
-

@@ -26,12 +26,18 @@ from algoliasearch.models.trending_items_query import TrendingItemsQuery
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
-RECOMMENDATIONSREQUEST_ONE_OF_SCHEMAS = ["RecommendationsQuery", "TrendingFacetsQuery", "TrendingItemsQuery"]
+RECOMMENDATIONSREQUEST_ONE_OF_SCHEMAS = [
+    "RecommendationsQuery",
+    "TrendingFacetsQuery",
+    "TrendingItemsQuery",
+]
+
 
 class RecommendationsRequest(BaseModel):
     """
     RecommendationsRequest
     """
+
     # data type: TrendingItemsQuery
     oneof_schema_1_validator: Optional[TrendingItemsQuery] = None
     # data type: TrendingFacetsQuery
@@ -39,7 +45,9 @@ class RecommendationsRequest(BaseModel):
     # data type: RecommendationsQuery
     oneof_schema_3_validator: Optional[RecommendationsQuery] = None
     if TYPE_CHECKING:
-        actual_instance: Union[RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery]
+        actual_instance: Union[
+            RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery
+        ]
     else:
         actual_instance: Any
     one_of_schemas: List[str] = Field(RECOMMENDATIONSREQUEST_ONE_OF_SCHEMAS, const=True)
@@ -50,39 +58,55 @@ class RecommendationsRequest(BaseModel):
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
+                raise ValueError(
+                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
+                )
             if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
+                raise ValueError(
+                    "If a position argument is used, keyword arguments cannot be used."
+                )
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
 
-    @validator('actual_instance')
+    @validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
         instance = RecommendationsRequest.construct()
         error_messages = []
         match = 0
         # validate data type: TrendingItemsQuery
         if not isinstance(v, TrendingItemsQuery):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `TrendingItemsQuery`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `TrendingItemsQuery`"
+            )
         else:
             match += 1
         # validate data type: TrendingFacetsQuery
         if not isinstance(v, TrendingFacetsQuery):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `TrendingFacetsQuery`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `TrendingFacetsQuery`"
+            )
         else:
             match += 1
         # validate data type: RecommendationsQuery
         if not isinstance(v, RecommendationsQuery):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RecommendationsQuery`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `RecommendationsQuery`"
+            )
         else:
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when setting `actual_instance` in RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when setting `actual_instance` in RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return v
 
@@ -118,10 +142,16 @@ class RecommendationsRequest(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when deserializing the JSON string into RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when deserializing the JSON string into RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return instance
 
@@ -151,5 +181,3 @@ class RecommendationsRequest(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
-
-

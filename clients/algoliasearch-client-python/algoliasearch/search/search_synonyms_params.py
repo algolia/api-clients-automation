@@ -21,15 +21,20 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
+
 class SearchSynonymsParams(BaseModel):
     """
     SearchSynonymsParams
     """
-    query: Optional[StrictStr] = Field('', description="Text to search for in an index.")
+
+    query: Optional[StrictStr] = Field(
+        "", description="Text to search for in an index."
+    )
     __properties = ["query"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +53,7 @@ class SearchSynonymsParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +65,7 @@ class SearchSynonymsParams(BaseModel):
         if not isinstance(obj, dict):
             return SearchSynonymsParams.parse_obj(obj)
 
-        _obj = SearchSynonymsParams.parse_obj({
-            "query": obj.get("query") if obj.get("query") is not None else ''
-        })
+        _obj = SearchSynonymsParams.parse_obj(
+            {"query": obj.get("query") if obj.get("query") is not None else ""}
+        )
         return _obj
-
-

@@ -24,20 +24,41 @@ from algoliasearch.models.condition import Condition
 from algoliasearch.models.consequence import Consequence
 from algoliasearch.models.rule_response_metadata import RuleResponseMetadata
 
+
 class RuleResponse(BaseModel):
     """
     Rule object.  # noqa: E501
     """
+
     metadata: Optional[RuleResponseMetadata] = Field(None, alias="_metadata")
-    object_id: StrictStr = Field(..., alias="objectID", description="Unique identifier for a rule object.")
-    conditions: Optional[conlist(Condition)] = Field(None, description="[Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule. ")
+    object_id: StrictStr = Field(
+        ..., alias="objectID", description="Unique identifier for a rule object."
+    )
+    conditions: Optional[conlist(Condition)] = Field(
+        None,
+        description="[Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule. ",
+    )
     consequence: Optional[Consequence] = None
-    description: Optional[StrictStr] = Field(None, description="Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.")
-    enabled: Optional[StrictBool] = Field(True, description="Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.")
-    __properties = ["_metadata", "objectID", "conditions", "consequence", "description", "enabled"]
+    description: Optional[StrictStr] = Field(
+        None,
+        description="Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.",
+    )
+    enabled: Optional[StrictBool] = Field(
+        True,
+        description="Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.",
+    )
+    __properties = [
+        "_metadata",
+        "objectID",
+        "conditions",
+        "consequence",
+        "description",
+        "enabled",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,23 +77,20 @@ class RuleResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of metadata
         if self.metadata:
-            _dict['_metadata'] = self.metadata.to_dict()
+            _dict["_metadata"] = self.metadata.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in conditions (list)
         _items = []
         if self.conditions:
             for _item in self.conditions:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['conditions'] = _items
+            _dict["conditions"] = _items
         # override the default output from pydantic by calling `to_dict()` of consequence
         if self.consequence:
-            _dict['consequence'] = self.consequence.to_dict()
+            _dict["consequence"] = self.consequence.to_dict()
         return _dict
 
     @classmethod
@@ -84,14 +102,24 @@ class RuleResponse(BaseModel):
         if not isinstance(obj, dict):
             return RuleResponse.parse_obj(obj)
 
-        _obj = RuleResponse.parse_obj({
-            "metadata": RuleResponseMetadata.from_dict(obj.get("_metadata")) if obj.get("_metadata") is not None else None,
-            "object_id": obj.get("objectID"),
-            "conditions": [Condition.from_dict(_item) for _item in obj.get("conditions")] if obj.get("conditions") is not None else None,
-            "consequence": Consequence.from_dict(obj.get("consequence")) if obj.get("consequence") is not None else None,
-            "description": obj.get("description"),
-            "enabled": obj.get("enabled") if obj.get("enabled") is not None else True
-        })
+        _obj = RuleResponse.parse_obj(
+            {
+                "metadata": RuleResponseMetadata.from_dict(obj.get("_metadata"))
+                if obj.get("_metadata") is not None
+                else None,
+                "object_id": obj.get("objectID"),
+                "conditions": [
+                    Condition.from_dict(_item) for _item in obj.get("conditions")
+                ]
+                if obj.get("conditions") is not None
+                else None,
+                "consequence": Consequence.from_dict(obj.get("consequence"))
+                if obj.get("consequence") is not None
+                else None,
+                "description": obj.get("description"),
+                "enabled": obj.get("enabled")
+                if obj.get("enabled") is not None
+                else True,
+            }
+        )
         return _obj
-
-

@@ -25,22 +25,51 @@ from algoliasearch.models.facet_filters import FacetFilters
 from algoliasearch.models.numeric_filters import NumericFilters
 from algoliasearch.models.tag_filters import TagFilters
 
+
 class DeleteByParams(BaseModel):
     """
     DeleteByParams
     """
+
     facet_filters: Optional[FacetFilters] = Field(None, alias="facetFilters")
-    filters: Optional[StrictStr] = Field('', description="[Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. ")
+    filters: Optional[StrictStr] = Field(
+        "",
+        description="[Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. ",
+    )
     numeric_filters: Optional[NumericFilters] = Field(None, alias="numericFilters")
     tag_filters: Optional[TagFilters] = Field(None, alias="tagFilters")
-    around_lat_lng: Optional[StrictStr] = Field('', alias="aroundLatLng", description="Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.")
+    around_lat_lng: Optional[StrictStr] = Field(
+        "",
+        alias="aroundLatLng",
+        description="Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.",
+    )
     around_radius: Optional[AroundRadius] = Field(None, alias="aroundRadius")
-    inside_bounding_box: Optional[conlist(conlist(Union[StrictFloat, StrictInt]))] = Field(None, alias="insideBoundingBox", description="Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).")
-    inside_polygon: Optional[conlist(conlist(Union[StrictFloat, StrictInt]))] = Field(None, alias="insidePolygon", description="Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).")
-    __properties = ["facetFilters", "filters", "numericFilters", "tagFilters", "aroundLatLng", "aroundRadius", "insideBoundingBox", "insidePolygon"]
+    inside_bounding_box: Optional[
+        conlist(conlist(Union[StrictFloat, StrictInt]))
+    ] = Field(
+        None,
+        alias="insideBoundingBox",
+        description="Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).",
+    )
+    inside_polygon: Optional[conlist(conlist(Union[StrictFloat, StrictInt]))] = Field(
+        None,
+        alias="insidePolygon",
+        description="Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).",
+    )
+    __properties = [
+        "facetFilters",
+        "filters",
+        "numericFilters",
+        "tagFilters",
+        "aroundLatLng",
+        "aroundRadius",
+        "insideBoundingBox",
+        "insidePolygon",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -59,22 +88,19 @@ class DeleteByParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of facet_filters
         if self.facet_filters:
-            _dict['facetFilters'] = self.facet_filters.to_dict()
+            _dict["facetFilters"] = self.facet_filters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of numeric_filters
         if self.numeric_filters:
-            _dict['numericFilters'] = self.numeric_filters.to_dict()
+            _dict["numericFilters"] = self.numeric_filters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of tag_filters
         if self.tag_filters:
-            _dict['tagFilters'] = self.tag_filters.to_dict()
+            _dict["tagFilters"] = self.tag_filters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of around_radius
         if self.around_radius:
-            _dict['aroundRadius'] = self.around_radius.to_dict()
+            _dict["aroundRadius"] = self.around_radius.to_dict()
         return _dict
 
     @classmethod
@@ -86,16 +112,26 @@ class DeleteByParams(BaseModel):
         if not isinstance(obj, dict):
             return DeleteByParams.parse_obj(obj)
 
-        _obj = DeleteByParams.parse_obj({
-            "facet_filters": FacetFilters.from_dict(obj.get("facetFilters")) if obj.get("facetFilters") is not None else None,
-            "filters": obj.get("filters") if obj.get("filters") is not None else '',
-            "numeric_filters": NumericFilters.from_dict(obj.get("numericFilters")) if obj.get("numericFilters") is not None else None,
-            "tag_filters": TagFilters.from_dict(obj.get("tagFilters")) if obj.get("tagFilters") is not None else None,
-            "around_lat_lng": obj.get("aroundLatLng") if obj.get("aroundLatLng") is not None else '',
-            "around_radius": AroundRadius.from_dict(obj.get("aroundRadius")) if obj.get("aroundRadius") is not None else None,
-            "inside_bounding_box": obj.get("insideBoundingBox"),
-            "inside_polygon": obj.get("insidePolygon")
-        })
+        _obj = DeleteByParams.parse_obj(
+            {
+                "facet_filters": FacetFilters.from_dict(obj.get("facetFilters"))
+                if obj.get("facetFilters") is not None
+                else None,
+                "filters": obj.get("filters") if obj.get("filters") is not None else "",
+                "numeric_filters": NumericFilters.from_dict(obj.get("numericFilters"))
+                if obj.get("numericFilters") is not None
+                else None,
+                "tag_filters": TagFilters.from_dict(obj.get("tagFilters"))
+                if obj.get("tagFilters") is not None
+                else None,
+                "around_lat_lng": obj.get("aroundLatLng")
+                if obj.get("aroundLatLng") is not None
+                else "",
+                "around_radius": AroundRadius.from_dict(obj.get("aroundRadius"))
+                if obj.get("aroundRadius") is not None
+                else None,
+                "inside_bounding_box": obj.get("insideBoundingBox"),
+                "inside_polygon": obj.get("insidePolygon"),
+            }
+        )
         return _obj
-
-

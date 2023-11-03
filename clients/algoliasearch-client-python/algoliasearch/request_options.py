@@ -1,13 +1,18 @@
 import copy
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
-from algoliasearch.configs import Config
 from algoliasearch.helpers import get_items
 
-class RequestOptions(object):
 
-    def __init__(self, headers: Dict[str, str], query_parameters: Dict[str, any], write_timeout: int, read_timeout: int,
-                 data: Dict[str, Any]):
+class RequestOptions(object):
+    def __init__(
+        self,
+        headers: Dict[str, str],
+        query_parameters: Dict[str, any],
+        write_timeout: int,
+        read_timeout: int,
+        data: Dict[str, Any],
+    ):
         self.headers = headers
         self.query_parameters = query_parameters
         self.write_timeout = write_timeout

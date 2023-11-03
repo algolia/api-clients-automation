@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class ScopeType(str, Enum):
     """
     ScopeType
@@ -29,13 +26,11 @@ class ScopeType(str, Enum):
     """
     allowed enum values
     """
-    SETTINGS = 'settings'
-    SYNONYMS = 'synonyms'
-    RULES = 'rules'
+    SETTINGS = "settings"
+    SYNONYMS = "synonyms"
+    RULES = "rules"
 
     @classmethod
     def from_json(cls, json_str: str) -> ScopeType:
         """Create an instance of ScopeType from a JSON string"""
         return ScopeType(json.loads(json_str))
-
-

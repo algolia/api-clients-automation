@@ -23,16 +23,21 @@ from pydantic import BaseModel, Field
 from algoliasearch.models.facets import Facets
 from algoliasearch.models.value import Value
 
+
 class FacetOrdering(BaseModel):
     """
     Defines the ordering of facets (widgets).  # noqa: E501
     """
+
     facets: Optional[Facets] = None
-    values: Optional[Dict[str, Value]] = Field(None, description="Ordering of facet values within an individual facet.")
+    values: Optional[Dict[str, Value]] = Field(
+        None, description="Ordering of facet values within an individual facet."
+    )
     __properties = ["facets", "values"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -51,20 +56,17 @@ class FacetOrdering(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of facets
         if self.facets:
-            _dict['facets'] = self.facets.to_dict()
+            _dict["facets"] = self.facets.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each value in values (dict)
         _field_dict = {}
         if self.values:
             for _key in self.values:
                 if self.values[_key]:
                     _field_dict[_key] = self.values[_key].to_dict()
-            _dict['values'] = _field_dict
+            _dict["values"] = _field_dict
         return _dict
 
     @classmethod
@@ -76,15 +78,16 @@ class FacetOrdering(BaseModel):
         if not isinstance(obj, dict):
             return FacetOrdering.parse_obj(obj)
 
-        _obj = FacetOrdering.parse_obj({
-            "facets": Facets.from_dict(obj.get("facets")) if obj.get("facets") is not None else None,
-            "values": dict(
-                (_k, Value.from_dict(_v))
-                for _k, _v in obj.get("values").items()
-            )
-            if obj.get("values") is not None
-            else None
-        })
+        _obj = FacetOrdering.parse_obj(
+            {
+                "facets": Facets.from_dict(obj.get("facets"))
+                if obj.get("facets") is not None
+                else None,
+                "values": dict(
+                    (_k, Value.from_dict(_v)) for _k, _v in obj.get("values").items()
+                )
+                if obj.get("values") is not None
+                else None,
+            }
+        )
         return _obj
-
-

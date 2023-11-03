@@ -22,16 +22,23 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, conlist
 from algoliasearch.models.fetched_index import FetchedIndex
 
+
 class ListIndicesResponse(BaseModel):
     """
     ListIndicesResponse
     """
-    items: conlist(FetchedIndex) = Field(..., description="All indices in your Algolia application.")
-    nb_pages: Optional[StrictInt] = Field(None, alias="nbPages", description="Number of pages.")
+
+    items: conlist(FetchedIndex) = Field(
+        ..., description="All indices in your Algolia application."
+    )
+    nb_pages: Optional[StrictInt] = Field(
+        None, alias="nbPages", description="Number of pages."
+    )
     __properties = ["items", "nbPages"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,17 +57,14 @@ class ListIndicesResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in items (list)
         _items = []
         if self.items:
             for _item in self.items:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['items'] = _items
+            _dict["items"] = _items
         return _dict
 
     @classmethod
@@ -72,10 +76,12 @@ class ListIndicesResponse(BaseModel):
         if not isinstance(obj, dict):
             return ListIndicesResponse.parse_obj(obj)
 
-        _obj = ListIndicesResponse.parse_obj({
-            "items": [FetchedIndex.from_dict(_item) for _item in obj.get("items")] if obj.get("items") is not None else None,
-            "nb_pages": obj.get("nbPages")
-        })
+        _obj = ListIndicesResponse.parse_obj(
+            {
+                "items": [FetchedIndex.from_dict(_item) for _item in obj.get("items")]
+                if obj.get("items") is not None
+                else None,
+                "nb_pages": obj.get("nbPages"),
+            }
+        )
         return _obj
-
-

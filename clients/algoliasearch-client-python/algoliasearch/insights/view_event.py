@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class ViewEvent(str, Enum):
     """
     ViewEvent
@@ -29,11 +26,9 @@ class ViewEvent(str, Enum):
     """
     allowed enum values
     """
-    VIEW = 'view'
+    VIEW = "view"
 
     @classmethod
     def from_json(cls, json_str: str) -> ViewEvent:
         """Create an instance of ViewEvent from a JSON string"""
         return ViewEvent(json.loads(json_str))
-
-

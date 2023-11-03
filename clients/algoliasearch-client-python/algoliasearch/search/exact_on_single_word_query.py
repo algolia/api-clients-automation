@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class ExactOnSingleWordQuery(str, Enum):
     """
     Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the query contains only one word.
@@ -29,13 +26,11 @@ class ExactOnSingleWordQuery(str, Enum):
     """
     allowed enum values
     """
-    ATTRIBUTE = 'attribute'
-    NONE = 'none'
-    WORD = 'word'
+    ATTRIBUTE = "attribute"
+    NONE = "none"
+    WORD = "word"
 
     @classmethod
     def from_json(cls, json_str: str) -> ExactOnSingleWordQuery:
         """Create an instance of ExactOnSingleWordQuery from a JSON string"""
         return ExactOnSingleWordQuery(json.loads(json_str))
-
-

@@ -30,7 +30,7 @@ from algoliasearch.api_client import ApiClient
 from algoliasearch.api_response import ApiResponse
 from algoliasearch.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError
+    ApiValueError,
 )
 
 
@@ -47,7 +47,21 @@ class InsightsClient:
         self.api_client = api_client
 
     @validate_arguments
-    def call_del(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> object:  # noqa: E501
+    def call_del(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -72,14 +86,28 @@ class InsightsClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the call_del_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.call_del_with_http_info(path, parameters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def call_del_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def call_del_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -120,69 +148,67 @@ class InsightsClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters'
-        ]
+        _all_params = ["path", "parameters"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method call_del" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'DELETE',
+            "/1{path}",
+            "DELETE",
             _path_params,
             _query_params,
             _header_params,
@@ -191,15 +217,30 @@ class InsightsClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> object:  # noqa: E501
+    def get(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -224,14 +265,28 @@ class InsightsClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_with_http_info(path, parameters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -272,69 +327,66 @@ class InsightsClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters'
-        ]
+        _all_params = ["path", "parameters"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get" % _key
+                    "Got an unexpected keyword argument '%s'" " to method get" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'GET',
+            "/1{path}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -343,15 +395,34 @@ class InsightsClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def post(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> object:  # noqa: E501
+    def post(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -378,14 +449,32 @@ class InsightsClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the post_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.post_with_http_info(path, parameters, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def post_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def post_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -428,80 +517,77 @@ class InsightsClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters',
-            'body'
-        ]
+        _all_params = ["path", "parameters", "body"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method post" % _key
+                    "Got an unexpected keyword argument '%s'" " to method post" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['body'] is not None:
-            _body_params = _params['body']
+        if _params["body"] is not None:
+            _body_params = _params["body"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'POST',
+            "/1{path}",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -510,15 +596,16 @@ class InsightsClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def push_events(self, insights_events : InsightsEvents, **kwargs) -> EventsResponse:  # noqa: E501
+    def push_events(self, insights_events: InsightsEvents, **kwargs) -> EventsResponse:  # noqa: E501
         """Send events.  # noqa: E501
 
         Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.   # noqa: E501
@@ -541,14 +628,16 @@ class InsightsClient:
                  returns the request thread.
         :rtype: EventsResponse
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the push_events_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.push_events_with_http_info(insights_events, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def push_events_with_http_info(self, insights_events : InsightsEvents, **kwargs) -> ApiResponse:  # noqa: E501
+    def push_events_with_http_info(
+        self, insights_events: InsightsEvents, **kwargs
+    ) -> ApiResponse:  # noqa: E501
         """Send events.  # noqa: E501
 
         Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.   # noqa: E501
@@ -587,30 +676,28 @@ class InsightsClient:
 
         _params = locals()
 
-        _all_params = [
-            'insights_events'
-        ]
+        _all_params = ["insights_events"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method push_events" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
@@ -620,41 +707,44 @@ class InsightsClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['insights_events'] is not None:
-            _body_params = _params['insights_events']
+        if _params["insights_events"] is not None:
+            _body_params = _params["insights_events"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/html'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json", "text/html"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "EventsResponse",
-            '400': "str",
-            '401': "EventsResponse",
-            '404': "EventsResponse",
-            '405': "EventsResponse",
-            '413': "EventsResponse",
-            '422': "EventsResponse",
+            "200": "EventsResponse",
+            "400": "str",
+            "401": "EventsResponse",
+            "404": "EventsResponse",
+            "405": "EventsResponse",
+            "413": "EventsResponse",
+            "422": "EventsResponse",
         }
 
         return self.api_client.call_api(
-            '/1/events', 'POST',
+            "/1/events",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -663,15 +753,34 @@ class InsightsClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def put(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> object:  # noqa: E501
+    def put(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -698,14 +807,32 @@ class InsightsClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the put_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.put_with_http_info(path, parameters, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -748,80 +875,77 @@ class InsightsClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters',
-            'body'
-        ]
+        _all_params = ["path", "parameters", "body"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method put" % _key
+                    "Got an unexpected keyword argument '%s'" " to method put" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['body'] is not None:
-            _body_params = _params['body']
+        if _params["body"] is not None:
+            _body_params = _params["body"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'PUT',
+            "/1{path}",
+            "PUT",
             _path_params,
             _query_params,
             _header_params,
@@ -830,9 +954,10 @@ class InsightsClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

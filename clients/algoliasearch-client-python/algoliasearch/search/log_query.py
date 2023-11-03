@@ -21,17 +21,22 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
+
 class LogQuery(BaseModel):
     """
     LogQuery
     """
-    index_name: Optional[StrictStr] = Field(None, description="Index targeted by the query.")
+
+    index_name: Optional[StrictStr] = Field(
+        None, description="Index targeted by the query."
+    )
     user_token: Optional[StrictStr] = Field(None, description="User identifier.")
     query_id: Optional[StrictStr] = Field(None, description="Unique query identifier.")
     __properties = ["index_name", "user_token", "query_id"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -50,10 +55,7 @@ class LogQuery(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -65,11 +67,11 @@ class LogQuery(BaseModel):
         if not isinstance(obj, dict):
             return LogQuery.parse_obj(obj)
 
-        _obj = LogQuery.parse_obj({
-            "index_name": obj.get("index_name"),
-            "user_token": obj.get("user_token"),
-            "query_id": obj.get("query_id")
-        })
+        _obj = LogQuery.parse_obj(
+            {
+                "index_name": obj.get("index_name"),
+                "user_token": obj.get("user_token"),
+                "query_id": obj.get("query_id"),
+            }
+        )
         return _obj
-
-

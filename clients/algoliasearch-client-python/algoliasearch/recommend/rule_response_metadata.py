@@ -21,15 +21,22 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
+
 class RuleResponseMetadata(BaseModel):
     """
     RuleResponseMetadata
     """
-    last_update: Optional[StrictStr] = Field(None, alias="lastUpdate", description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.")
+
+    last_update: Optional[StrictStr] = Field(
+        None,
+        alias="lastUpdate",
+        description="Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.",
+    )
     __properties = ["lastUpdate"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +55,7 @@ class RuleResponseMetadata(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +67,5 @@ class RuleResponseMetadata(BaseModel):
         if not isinstance(obj, dict):
             return RuleResponseMetadata.parse_obj(obj)
 
-        _obj = RuleResponseMetadata.parse_obj({
-            "last_update": obj.get("lastUpdate")
-        })
+        _obj = RuleResponseMetadata.parse_obj({"last_update": obj.get("lastUpdate")})
         return _obj
-
-

@@ -22,17 +22,24 @@ from typing import Any, Dict
 from pydantic import BaseModel, Field, StrictStr
 from algoliasearch.models.action import Action
 
+
 class MultipleBatchRequest(BaseModel):
     """
     MultipleBatchRequest
     """
+
     action: Action = Field(...)
-    body: Dict[str, Any] = Field(..., description="Operation arguments (varies with specified `action`).")
-    index_name: StrictStr = Field(..., alias="indexName", description="Index to target for this operation.")
+    body: Dict[str, Any] = Field(
+        ..., description="Operation arguments (varies with specified `action`)."
+    )
+    index_name: StrictStr = Field(
+        ..., alias="indexName", description="Index to target for this operation."
+    )
     __properties = ["action", "body", "indexName"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -51,10 +58,7 @@ class MultipleBatchRequest(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -66,11 +70,11 @@ class MultipleBatchRequest(BaseModel):
         if not isinstance(obj, dict):
             return MultipleBatchRequest.parse_obj(obj)
 
-        _obj = MultipleBatchRequest.parse_obj({
-            "action": obj.get("action"),
-            "body": obj.get("body"),
-            "index_name": obj.get("indexName")
-        })
+        _obj = MultipleBatchRequest.parse_obj(
+            {
+                "action": obj.get("action"),
+                "body": obj.get("body"),
+                "index_name": obj.get("indexName"),
+            }
+        )
         return _obj
-
-

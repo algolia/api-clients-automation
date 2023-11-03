@@ -1,11 +1,6 @@
-from algoliasearch.configs import Config
 from algoliasearch.exceptions import AlgoliaUnreachableHostException, RequestException
-from algoliasearch.http.hosts import HostsCollection
-from algoliasearch.http.requester_async import RequesterAsync
 from algoliasearch.http.transporter import (
-    Request,
     RetryOutcome,
-    RetryStrategy,
     Transporter,
 )
 

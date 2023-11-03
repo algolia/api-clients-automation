@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class ConversionEvent(str, Enum):
     """
     ConversionEvent
@@ -29,11 +26,9 @@ class ConversionEvent(str, Enum):
     """
     allowed enum values
     """
-    CONVERSION = 'conversion'
+    CONVERSION = "conversion"
 
     @classmethod
     def from_json(cls, json_str: str) -> ConversionEvent:
         """Create an instance of ConversionEvent from a JSON string"""
         return ConversionEvent(json.loads(json_str))
-
-

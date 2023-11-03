@@ -1,6 +1,5 @@
 import abc
 import os
-from typing import Optional
 
 from algoliasearch.http.hosts import CallType, Host, HostsCollection
 from algoliasearch.user_agent import UserAgent

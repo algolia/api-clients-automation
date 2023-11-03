@@ -29,14 +29,18 @@ from algoliasearch.models.get_recommendations_params import GetRecommendationsPa
 from algoliasearch.models.get_recommendations_response import GetRecommendationsResponse
 from algoliasearch.models.recommend_models import RecommendModels
 from algoliasearch.models.rule_response import RuleResponse
-from algoliasearch.models.search_recommend_rules_params import SearchRecommendRulesParams
-from algoliasearch.models.search_recommend_rules_response import SearchRecommendRulesResponse
+from algoliasearch.models.search_recommend_rules_params import (
+    SearchRecommendRulesParams,
+)
+from algoliasearch.models.search_recommend_rules_response import (
+    SearchRecommendRulesResponse,
+)
 
 from algoliasearch.api_client import ApiClient
 from algoliasearch.api_response import ApiResponse
 from algoliasearch.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError
+    ApiValueError,
 )
 
 
@@ -53,7 +57,21 @@ class RecommendClient:
         self.api_client = api_client
 
     @validate_arguments
-    def call_del(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> object:  # noqa: E501
+    def call_del(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -78,14 +96,28 @@ class RecommendClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the call_del_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.call_del_with_http_info(path, parameters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def call_del_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def call_del_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -126,69 +158,67 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters'
-        ]
+        _all_params = ["path", "parameters"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method call_del" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'DELETE',
+            "/1{path}",
+            "DELETE",
             _path_params,
             _query_params,
             _header_params,
@@ -197,15 +227,32 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def delete_recommend_rule(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], **kwargs) -> DeletedAtResponse:  # noqa: E501
+    def delete_recommend_rule(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        object_id: Annotated[
+            StrictStr, Field(..., description="Unique record (object) identifier.")
+        ],
+        **kwargs,
+    ) -> DeletedAtResponse:  # noqa: E501
         """Delete a Recommend rule.  # noqa: E501
 
         Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).  # noqa: E501
@@ -232,14 +279,32 @@ class RecommendClient:
                  returns the request thread.
         :rtype: DeletedAtResponse
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the delete_recommend_rule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.delete_recommend_rule_with_http_info(index_name, model, object_id, **kwargs)  # noqa: E501
+        return self.delete_recommend_rule_with_http_info(
+            index_name, model, object_id, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def delete_recommend_rule_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_recommend_rule_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        object_id: Annotated[
+            StrictStr, Field(..., description="Unique record (object) identifier.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Delete a Recommend rule.  # noqa: E501
 
         Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).  # noqa: E501
@@ -282,73 +347,70 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'index_name',
-            'model',
-            'object_id'
-        ]
+        _all_params = ["index_name", "model", "object_id"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_recommend_rule" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['index_name']:
-            _path_params['indexName'] = _params['index_name']
+        if _params["index_name"]:
+            _path_params["indexName"] = _params["index_name"]
 
-        if _params['model']:
-            _path_params['model'] = _params['model']
+        if _params["model"]:
+            _path_params["model"] = _params["model"]
 
-        if _params['object_id']:
-            _path_params['objectID'] = _params['object_id']
-
+        if _params["object_id"]:
+            _path_params["objectID"] = _params["object_id"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "DeletedAtResponse",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "DeletedAtResponse",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}', 'DELETE',
+            "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}",
+            "DELETE",
             _path_params,
             _query_params,
             _header_params,
@@ -357,15 +419,30 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> object:  # noqa: E501
+    def get(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -390,14 +467,28 @@ class RecommendClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_with_http_info(path, parameters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -438,69 +529,66 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters'
-        ]
+        _all_params = ["path", "parameters"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get" % _key
+                    "Got an unexpected keyword argument '%s'" " to method get" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'GET',
+            "/1{path}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -509,15 +597,32 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_recommend_rule(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], **kwargs) -> RuleResponse:  # noqa: E501
+    def get_recommend_rule(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        object_id: Annotated[
+            StrictStr, Field(..., description="Unique record (object) identifier.")
+        ],
+        **kwargs,
+    ) -> RuleResponse:  # noqa: E501
         """Get a Recommend rule.  # noqa: E501
 
         Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).  # noqa: E501
@@ -544,14 +649,32 @@ class RecommendClient:
                  returns the request thread.
         :rtype: RuleResponse
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_recommend_rule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_recommend_rule_with_http_info(index_name, model, object_id, **kwargs)  # noqa: E501
+        return self.get_recommend_rule_with_http_info(
+            index_name, model, object_id, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def get_recommend_rule_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], object_id : Annotated[StrictStr, Field(..., description="Unique record (object) identifier.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_recommend_rule_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        object_id: Annotated[
+            StrictStr, Field(..., description="Unique record (object) identifier.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get a Recommend rule.  # noqa: E501
 
         Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).  # noqa: E501
@@ -594,73 +717,70 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'index_name',
-            'model',
-            'object_id'
-        ]
+        _all_params = ["index_name", "model", "object_id"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_recommend_rule" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['index_name']:
-            _path_params['indexName'] = _params['index_name']
+        if _params["index_name"]:
+            _path_params["indexName"] = _params["index_name"]
 
-        if _params['model']:
-            _path_params['model'] = _params['model']
+        if _params["model"]:
+            _path_params["model"] = _params["model"]
 
-        if _params['object_id']:
-            _path_params['objectID'] = _params['object_id']
-
+        if _params["object_id"]:
+            _path_params["objectID"] = _params["object_id"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "RuleResponse",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "RuleResponse",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}', 'GET',
+            "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -669,15 +789,36 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_recommend_status(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], task_id : Annotated[StrictInt, Field(..., description="Unique identifier of a task. Numeric value (up to 64bits).")], **kwargs) -> GetRecommendTaskResponse:  # noqa: E501
+    def get_recommend_status(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        task_id: Annotated[
+            StrictInt,
+            Field(
+                ...,
+                description="Unique identifier of a task. Numeric value (up to 64bits).",
+            ),
+        ],
+        **kwargs,
+    ) -> GetRecommendTaskResponse:  # noqa: E501
         """Get a Recommend task's status.  # noqa: E501
 
         Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.  # noqa: E501
@@ -704,14 +845,36 @@ class RecommendClient:
                  returns the request thread.
         :rtype: GetRecommendTaskResponse
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_recommend_status_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_recommend_status_with_http_info(index_name, model, task_id, **kwargs)  # noqa: E501
+        return self.get_recommend_status_with_http_info(
+            index_name, model, task_id, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def get_recommend_status_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], task_id : Annotated[StrictInt, Field(..., description="Unique identifier of a task. Numeric value (up to 64bits).")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_recommend_status_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        task_id: Annotated[
+            StrictInt,
+            Field(
+                ...,
+                description="Unique identifier of a task. Numeric value (up to 64bits).",
+            ),
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get a Recommend task's status.  # noqa: E501
 
         Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.  # noqa: E501
@@ -754,73 +917,70 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'index_name',
-            'model',
-            'task_id'
-        ]
+        _all_params = ["index_name", "model", "task_id"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_recommend_status" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['index_name']:
-            _path_params['indexName'] = _params['index_name']
+        if _params["index_name"]:
+            _path_params["indexName"] = _params["index_name"]
 
-        if _params['model']:
-            _path_params['model'] = _params['model']
+        if _params["model"]:
+            _path_params["model"] = _params["model"]
 
-        if _params['task_id']:
-            _path_params['taskID'] = _params['task_id']
-
+        if _params["task_id"]:
+            _path_params["taskID"] = _params["task_id"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetRecommendTaskResponse",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "GetRecommendTaskResponse",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1/indexes/{indexName}/{model}/task/{taskID}', 'GET',
+            "/1/indexes/{indexName}/{model}/task/{taskID}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -829,15 +989,18 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_recommendations(self, get_recommendations_params : GetRecommendationsParams, **kwargs) -> GetRecommendationsResponse:  # noqa: E501
+    def get_recommendations(
+        self, get_recommendations_params: GetRecommendationsParams, **kwargs
+    ) -> GetRecommendationsResponse:  # noqa: E501
         """Get recommendations and trending items.  # noqa: E501
 
         Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).   # noqa: E501
@@ -860,14 +1023,18 @@ class RecommendClient:
                  returns the request thread.
         :rtype: GetRecommendationsResponse
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_recommendations_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_recommendations_with_http_info(get_recommendations_params, **kwargs)  # noqa: E501
+        return self.get_recommendations_with_http_info(
+            get_recommendations_params, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def get_recommendations_with_http_info(self, get_recommendations_params : GetRecommendationsParams, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_recommendations_with_http_info(
+        self, get_recommendations_params: GetRecommendationsParams, **kwargs
+    ) -> ApiResponse:  # noqa: E501
         """Get recommendations and trending items.  # noqa: E501
 
         Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).   # noqa: E501
@@ -906,30 +1073,28 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'get_recommendations_params'
-        ]
+        _all_params = ["get_recommendations_params"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_recommendations" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
@@ -939,39 +1104,42 @@ class RecommendClient:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['get_recommendations_params'] is not None:
-            _body_params = _params['get_recommendations_params']
+        if _params["get_recommendations_params"] is not None:
+            _body_params = _params["get_recommendations_params"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetRecommendationsResponse",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "GetRecommendationsResponse",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1/indexes/*/recommendations', 'POST',
+            "/1/indexes/*/recommendations",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -980,15 +1148,34 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def post(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> object:  # noqa: E501
+    def post(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -1015,14 +1202,32 @@ class RecommendClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the post_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.post_with_http_info(path, parameters, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def post_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def post_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -1065,80 +1270,77 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters',
-            'body'
-        ]
+        _all_params = ["path", "parameters", "body"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method post" % _key
+                    "Got an unexpected keyword argument '%s'" " to method post" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['body'] is not None:
-            _body_params = _params['body']
+        if _params["body"] is not None:
+            _body_params = _params["body"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'POST',
+            "/1{path}",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -1147,15 +1349,34 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def put(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> object:  # noqa: E501
+    def put(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> object:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -1182,14 +1403,32 @@ class RecommendClient:
                  returns the request thread.
         :rtype: object
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the put_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.put_with_http_info(path, parameters, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_with_http_info(self, path : Annotated[StrictStr, Field(..., description="Path of the endpoint, anything after \"/1\" must be specified.")], parameters : Annotated[Optional[Dict[str, Any]], Field(description="Query parameters to apply to the current query.")] = None, body : Annotated[Optional[Dict[str, Any]], Field(description="Parameters to send with the custom request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_with_http_info(
+        self,
+        path: Annotated[
+            StrictStr,
+            Field(
+                ...,
+                description='Path of the endpoint, anything after "/1" must be specified.',
+            ),
+        ],
+        parameters: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Query parameters to apply to the current query."),
+        ] = None,
+        body: Annotated[
+            Optional[Dict[str, Any]],
+            Field(description="Parameters to send with the custom request."),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Send requests to the Algolia REST API.  # noqa: E501
 
         This method allow you to send requests to the Algolia REST API.  # noqa: E501
@@ -1232,80 +1471,77 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'path',
-            'parameters',
-            'body'
-        ]
+        _all_params = ["path", "parameters", "body"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method put" % _key
+                    "Got an unexpected keyword argument '%s'" " to method put" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['path']:
-            _path_params['path'] = _params['path']
-
+        if _params["path"]:
+            _path_params["path"] = _params["path"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('parameters') is not None:  # noqa: E501
-            _query_params.append(('parameters', _params['parameters']))
+        if _params.get("parameters") is not None:  # noqa: E501
+            _query_params.append(("parameters", _params["parameters"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['body'] is not None:
-            _body_params = _params['body']
+        if _params["body"] is not None:
+            _body_params = _params["body"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "object",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "object",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1{path}', 'PUT',
+            "/1{path}",
+            "PUT",
             _path_params,
             _query_params,
             _header_params,
@@ -1314,15 +1550,30 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def search_recommend_rules(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], search_recommend_rules_params : Optional[SearchRecommendRulesParams] = None, **kwargs) -> SearchRecommendRulesResponse:  # noqa: E501
+    def search_recommend_rules(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        search_recommend_rules_params: Optional[SearchRecommendRulesParams] = None,
+        **kwargs,
+    ) -> SearchRecommendRulesResponse:  # noqa: E501
         """List Recommend rules.  # noqa: E501
 
         List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).  # noqa: E501
@@ -1349,14 +1600,30 @@ class RecommendClient:
                  returns the request thread.
         :rtype: SearchRecommendRulesResponse
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the search_recommend_rules_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.search_recommend_rules_with_http_info(index_name, model, search_recommend_rules_params, **kwargs)  # noqa: E501
+        return self.search_recommend_rules_with_http_info(
+            index_name, model, search_recommend_rules_params, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def search_recommend_rules_with_http_info(self, index_name : Annotated[StrictStr, Field(..., description="Index on which to perform the request.")], model : Annotated[RecommendModels, Field(..., description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ")], search_recommend_rules_params : Optional[SearchRecommendRulesParams] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def search_recommend_rules_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr, Field(..., description="Index on which to perform the request.")
+        ],
+        model: Annotated[
+            RecommendModels,
+            Field(
+                ...,
+                description="[Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). ",
+            ),
+        ],
+        search_recommend_rules_params: Optional[SearchRecommendRulesParams] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """List Recommend rules.  # noqa: E501
 
         List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).  # noqa: E501
@@ -1399,80 +1666,78 @@ class RecommendClient:
 
         _params = locals()
 
-        _all_params = [
-            'index_name',
-            'model',
-            'search_recommend_rules_params'
-        ]
+        _all_params = ["index_name", "model", "search_recommend_rules_params"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method search_recommend_rules" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['index_name']:
-            _path_params['indexName'] = _params['index_name']
+        if _params["index_name"]:
+            _path_params["indexName"] = _params["index_name"]
 
-        if _params['model']:
-            _path_params['model'] = _params['model']
-
+        if _params["model"]:
+            _path_params["model"] = _params["model"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['search_recommend_rules_params'] is not None:
-            _body_params = _params['search_recommend_rules_params']
+        if _params["search_recommend_rules_params"] is not None:
+            _body_params = _params["search_recommend_rules_params"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['apiKey', 'appId']  # noqa: E501
+        _auth_settings = ["apiKey", "appId"]  # noqa: E501
 
         _response_types_map = {
-            '200': "SearchRecommendRulesResponse",
-            '400': "ErrorBase",
-            '402': "ErrorBase",
-            '403': "ErrorBase",
-            '404': "ErrorBase",
+            "200": "SearchRecommendRulesResponse",
+            "400": "ErrorBase",
+            "402": "ErrorBase",
+            "403": "ErrorBase",
+            "404": "ErrorBase",
         }
 
         return self.api_client.call_api(
-            '/1/indexes/{indexName}/{model}/recommend/rules/search', 'POST',
+            "/1/indexes/{indexName}/{model}/recommend/rules/search",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -1481,9 +1746,10 @@ class RecommendClient:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

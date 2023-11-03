@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class SynonymType(str, Enum):
     """
     Synonym type.
@@ -29,15 +26,13 @@ class SynonymType(str, Enum):
     """
     allowed enum values
     """
-    SYNONYM = 'synonym'
-    ONEWAYSYNONYM = 'onewaysynonym'
-    ALTCORRECTION1 = 'altcorrection1'
-    ALTCORRECTION2 = 'altcorrection2'
-    PLACEHOLDER = 'placeholder'
+    SYNONYM = "synonym"
+    ONEWAYSYNONYM = "onewaysynonym"
+    ALTCORRECTION1 = "altcorrection1"
+    ALTCORRECTION2 = "altcorrection2"
+    PLACEHOLDER = "placeholder"
 
     @classmethod
     def from_json(cls, json_str: str) -> SynonymType:
         """Create an instance of SynonymType from a JSON string"""
         return SynonymType(json.loads(json_str))
-
-

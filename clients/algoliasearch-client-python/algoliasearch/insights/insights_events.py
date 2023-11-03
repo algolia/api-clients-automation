@@ -22,15 +22,21 @@ from typing import List
 from pydantic import BaseModel, Field, conlist
 from algoliasearch.models.events_items import EventsItems
 
+
 class InsightsEvents(BaseModel):
     """
     InsightsEvents
     """
-    events: conlist(EventsItems, max_items=1000, min_items=1) = Field(..., description="List of click and conversion events.  An event is an object representing a user interaction. Events have attributes that describe the interaction, such as an event name, a type, or a user token. Some attributes require other attributes to be declared, and some attributes can't be declared at the same time.  **All** events must be valid, otherwise the API returns an error. ")
+
+    events: conlist(EventsItems, max_items=1000, min_items=1) = Field(
+        ...,
+        description="List of click and conversion events.  An event is an object representing a user interaction. Events have attributes that describe the interaction, such as an event name, a type, or a user token. Some attributes require other attributes to be declared, and some attributes can't be declared at the same time.  **All** events must be valid, otherwise the API returns an error. ",
+    )
     __properties = ["events"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -49,17 +55,14 @@ class InsightsEvents(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in events (list)
         _items = []
         if self.events:
             for _item in self.events:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['events'] = _items
+            _dict["events"] = _items
         return _dict
 
     @classmethod
@@ -71,9 +74,11 @@ class InsightsEvents(BaseModel):
         if not isinstance(obj, dict):
             return InsightsEvents.parse_obj(obj)
 
-        _obj = InsightsEvents.parse_obj({
-            "events": [EventsItems.from_dict(_item) for _item in obj.get("events")] if obj.get("events") is not None else None
-        })
+        _obj = InsightsEvents.parse_obj(
+            {
+                "events": [EventsItems.from_dict(_item) for _item in obj.get("events")]
+                if obj.get("events") is not None
+                else None
+            }
+        )
         return _obj
-
-

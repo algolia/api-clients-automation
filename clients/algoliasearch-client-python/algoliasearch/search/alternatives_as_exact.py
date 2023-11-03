@@ -18,9 +18,6 @@ import re  # noqa: F401
 from aenum import Enum, no_arg
 
 
-
-
-
 class AlternativesAsExact(str, Enum):
     """
     AlternativesAsExact
@@ -29,13 +26,11 @@ class AlternativesAsExact(str, Enum):
     """
     allowed enum values
     """
-    IGNOREPLURALS = 'ignorePlurals'
-    SINGLEWORDSYNONYM = 'singleWordSynonym'
-    MULTIWORDSSYNONYM = 'multiWordsSynonym'
+    IGNOREPLURALS = "ignorePlurals"
+    SINGLEWORDSYNONYM = "singleWordSynonym"
+    MULTIWORDSSYNONYM = "multiWordsSynonym"
 
     @classmethod
     def from_json(cls, json_str: str) -> AlternativesAsExact:
         """Create an instance of AlternativesAsExact from a JSON string"""
         return AlternativesAsExact(json.loads(json_str))
-
-

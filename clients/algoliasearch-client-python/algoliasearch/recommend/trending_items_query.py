@@ -23,22 +23,51 @@ from pydantic import BaseModel, Field, StrictInt, StrictStr, conint
 from algoliasearch.models.search_params_object import SearchParamsObject
 from algoliasearch.models.trending_items_model import TrendingItemsModel
 
+
 class TrendingItemsQuery(BaseModel):
     """
     TrendingItemsQuery
     """
-    facet_name: Optional[StrictStr] = Field(None, alias="facetName", description="Facet name for trending models.")
-    facet_value: Optional[StrictStr] = Field(None, alias="facetValue", description="Facet value for trending models.")
+
+    facet_name: Optional[StrictStr] = Field(
+        None, alias="facetName", description="Facet name for trending models."
+    )
+    facet_value: Optional[StrictStr] = Field(
+        None, alias="facetValue", description="Facet value for trending models."
+    )
     model: Optional[TrendingItemsModel] = None
-    query_parameters: Optional[SearchParamsObject] = Field(None, alias="queryParameters")
-    fallback_parameters: Optional[SearchParamsObject] = Field(None, alias="fallbackParameters")
-    index_name: StrictStr = Field(..., alias="indexName", description="Algolia index name.")
-    threshold: Optional[conint(strict=True, le=100, ge=0)] = Field(None, description="Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are. ")
-    max_recommendations: Optional[StrictInt] = Field(0, alias="maxRecommendations", description="Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.")
-    __properties = ["facetName", "facetValue", "model", "queryParameters", "fallbackParameters", "indexName", "threshold", "maxRecommendations"]
+    query_parameters: Optional[SearchParamsObject] = Field(
+        None, alias="queryParameters"
+    )
+    fallback_parameters: Optional[SearchParamsObject] = Field(
+        None, alias="fallbackParameters"
+    )
+    index_name: StrictStr = Field(
+        ..., alias="indexName", description="Algolia index name."
+    )
+    threshold: Optional[conint(strict=True, le=100, ge=0)] = Field(
+        None,
+        description="Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are. ",
+    )
+    max_recommendations: Optional[StrictInt] = Field(
+        0,
+        alias="maxRecommendations",
+        description="Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.",
+    )
+    __properties = [
+        "facetName",
+        "facetValue",
+        "model",
+        "queryParameters",
+        "fallbackParameters",
+        "indexName",
+        "threshold",
+        "maxRecommendations",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -57,16 +86,13 @@ class TrendingItemsQuery(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of query_parameters
         if self.query_parameters:
-            _dict['queryParameters'] = self.query_parameters.to_dict()
+            _dict["queryParameters"] = self.query_parameters.to_dict()
         # override the default output from pydantic by calling `to_dict()` of fallback_parameters
         if self.fallback_parameters:
-            _dict['fallbackParameters'] = self.fallback_parameters.to_dict()
+            _dict["fallbackParameters"] = self.fallback_parameters.to_dict()
         return _dict
 
     @classmethod
@@ -78,16 +104,26 @@ class TrendingItemsQuery(BaseModel):
         if not isinstance(obj, dict):
             return TrendingItemsQuery.parse_obj(obj)
 
-        _obj = TrendingItemsQuery.parse_obj({
-            "facet_name": obj.get("facetName"),
-            "facet_value": obj.get("facetValue"),
-            "model": obj.get("model"),
-            "query_parameters": SearchParamsObject.from_dict(obj.get("queryParameters")) if obj.get("queryParameters") is not None else None,
-            "fallback_parameters": SearchParamsObject.from_dict(obj.get("fallbackParameters")) if obj.get("fallbackParameters") is not None else None,
-            "index_name": obj.get("indexName"),
-            "threshold": obj.get("threshold"),
-            "max_recommendations": obj.get("maxRecommendations") if obj.get("maxRecommendations") is not None else 0
-        })
+        _obj = TrendingItemsQuery.parse_obj(
+            {
+                "facet_name": obj.get("facetName"),
+                "facet_value": obj.get("facetValue"),
+                "model": obj.get("model"),
+                "query_parameters": SearchParamsObject.from_dict(
+                    obj.get("queryParameters")
+                )
+                if obj.get("queryParameters") is not None
+                else None,
+                "fallback_parameters": SearchParamsObject.from_dict(
+                    obj.get("fallbackParameters")
+                )
+                if obj.get("fallbackParameters") is not None
+                else None,
+                "index_name": obj.get("indexName"),
+                "threshold": obj.get("threshold"),
+                "max_recommendations": obj.get("maxRecommendations")
+                if obj.get("maxRecommendations") is not None
+                else 0,
+            }
+        )
         return _obj
-
-

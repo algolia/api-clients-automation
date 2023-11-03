@@ -21,15 +21,20 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 
+
 class Facets(BaseModel):
     """
     Ordering of facets (widgets).  # noqa: E501
     """
-    order: Optional[conlist(StrictStr)] = Field(None, description="Pinned order of facet lists.")
+
+    order: Optional[conlist(StrictStr)] = Field(
+        None, description="Pinned order of facet lists."
+    )
     __properties = ["order"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -48,10 +53,7 @@ class Facets(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -63,9 +65,5 @@ class Facets(BaseModel):
         if not isinstance(obj, dict):
             return Facets.parse_obj(obj)
 
-        _obj = Facets.parse_obj({
-            "order": obj.get("order")
-        })
+        _obj = Facets.parse_obj({"order": obj.get("order")})
         return _obj
-
-
