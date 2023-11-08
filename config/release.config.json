@@ -11,7 +11,8 @@
     "go": "next",
     "kotlin": "next",
     "dart": "main",
-    "python": "next"
+    "python": "next",
+    "scala": "next"
   },
   "defaultTargetBranch": "next",
   "gitAuthor": {

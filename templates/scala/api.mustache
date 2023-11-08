@@ -1,0 +1,122 @@
+/**
+* {{{generationBanner}}}
+*/
+package {{package}}
+
+{{#imports}}
+import {{import}}
+{{/imports}}
+import {{modelPackage}}._
+import algoliasearch.ApiClient
+import algoliasearch.api.{{classname}}.hosts
+import algoliasearch.config._
+import algoliasearch.internal.util._
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Random
+
+{{#operations}}
+object {{classname}} {
+
+  /** Creates a new SearchApi instance using default hosts.
+    *
+    * @param appId
+    *   application ID
+    * @param apiKey
+    *   api key
+    {{#hasRegionalHost}} * @param region
+    *   region{{/hasRegionalHost}} 
+    * @param clientOptions
+    *   client options
+    */
+  def apply(
+      appId: String,
+      apiKey: String,
+      {{#hasRegionalHost}}
+      region: {{#fallbackToAliasHost}}Option[String] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}String{{/fallbackToAliasHost}},
+      {{/hasRegionalHost}}
+      clientOptions: ClientOptions = ClientOptions()
+  ) = new {{classname}}(
+    appId = appId,
+    apiKey = apiKey,
+    {{#hasRegionalHost}}region = region,{{/hasRegionalHost}} 
+    clientOptions = clientOptions
+  )
+
+  {{#hasRegionalHost}}
+  private def hosts(region: {{#fallbackToAliasHost}}Option[String] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}String{{/fallbackToAliasHost}}): Seq[Host] = {
+    val allowedRegions = Seq({{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}})
+    {{^fallbackToAliasHost}}
+    if (!allowedRegions.contains(region)) {
+      throw new IllegalArgumentException(s"`region` is required and must be one of the following: ${allowedRegions.mkString(", ")}")
+    }
+    {{/fallbackToAliasHost}}
+    {{#fallbackToAliasHost}}
+    if (region.isEmpty || !allowedRegions.contains(region.get)) {
+      throw new IllegalArgumentException(s"`region` must be one of the following: ${allowedRegions.mkString(", ")}")
+    }
+    {{/fallbackToAliasHost}}
+    val url = {{#fallbackToAliasHost}}if (region.isEmpty) "{{{hostWithFallback}}}" else {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region{{#fallbackToAliasHost}}.get{{/fallbackToAliasHost}})
+    Seq(Host(url = url, callTypes = Set(CallType.Read, CallType.Write)))
+  }
+  {{/hasRegionalHost}}
+  {{^hasRegionalHost}}
+  private def hosts(appId: String): Seq[Host] = {
+    val commonHosts = Random.shuffle(
+      List(
+        Host(appId + "-1.algolianet.net", Set(CallType.Read, CallType.Write)),
+        Host(appId + "-2.algolianet.net", Set(CallType.Read, CallType.Write)),
+        Host(appId + "-3.algolianet.net", Set(CallType.Read, CallType.Write))
+      )
+    )
+    List(
+      Host(appId + "-dsn.algolia.net", Set(CallType.Read)),
+      Host(appId + ".algolia.net", Set(CallType.Write))
+    ) ++ commonHosts
+  }
+  {{/hasRegionalHost}}
+}
+
+class {{classname}}(
+    appId: String,
+    apiKey: String,
+    {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Option[String] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}String{{/fallbackToAliasHost}},{{/hasRegionalHost}}
+    clientOptions: ClientOptions = ClientOptions()
+) extends ApiClient(
+      appId = appId,
+      apiKey = apiKey,
+      clientName = "{{{baseName}}}",
+      defaultHosts = {{^hasRegionalHost}}hosts(appId){{/hasRegionalHost}}{{#hasRegionalHost}}hosts(region){{/hasRegionalHost}},
+      formats = JsonSupport.format,
+      options = clientOptions
+    ) {
+  
+{{#operation}}
+/** {{{notes}}}
+*
+{{#allParams}}
+{{#description}}
+* @param {{{paramName}}} 
+*   {{{.}}}
+{{/description}}
+{{/allParams}}
+*/
+  def {{operationId}}{{#vendorExtensions}}{{#x-is-custom-request}}[T: Manifest]{{/x-is-custom-request}}{{/vendorExtensions}}({{>methodParameters}} requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}] = Future {
+    {{#requiredParams}}
+    requireNotNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+    {{/requiredParams}}
+
+    val request = HttpRequest.builder()
+      .withMethod("{{httpMethod}}")
+      .withPath(s"{{{path}}}")      
+      {{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
+      {{#headerParams}}.withHeader("{{baseName}}", {{paramName}}){{/headerParams}}   
+      {{#vendorExtensions.x-use-read-transporter}}.withRead(true){{/vendorExtensions.x-use-read-transporter}}
+      {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.withQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.withQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
+      .build()
+    execute[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}](request, requestOptions)
+  }
+
+{{/operation}}
+}
+{{/operations}}

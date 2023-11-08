@@ -8,7 +8,7 @@ fi
 
 cd $ROOT
 
-JAVA_VERSION=$(cat config/.java-version | awk -F '.' '{ print $1 }')
+JAVA_VERSION=$(cat config/.java-version)
 NODE_VERSION=$(cat .nvmrc)
 PHP_VERSION=$(cat config/.php-version)
 GO_VERSION=$(cat config/.go-version)

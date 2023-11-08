@@ -84,4 +84,10 @@ export const patterns = [
   'clients/algoliasearch-client-python/poetry.lock',
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
+
+  // Scala
+  '!clients/algoliasearch-client-scala/**',
+  'clients/algoliasearch-client-scala/version.sbt',
+  'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/model/**',
+  'clients/algoliasearch-client-dart/src/main/scala/algoliasearch/api/**',
 ];

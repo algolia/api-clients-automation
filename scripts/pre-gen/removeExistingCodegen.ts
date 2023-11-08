@@ -58,6 +58,10 @@ export async function removeExistingCodegen({
       baseModelFolder = '';
       baseApiFolder = '';
       break;
+    case 'scala':
+      clientModel = client.replace('-', '');
+      clientApi = `${clientName}*.scala`;
+      break;
     default:
       break;
   }

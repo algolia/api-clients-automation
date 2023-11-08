@@ -4,6 +4,7 @@ import com.algolia.codegen.Utils;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenProperty;
+import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 
 public class OneOfUtils {
@@ -36,15 +37,23 @@ public class OneOfUtils {
         sealedChilds.add(compoundModel);
       } else {
         CodegenModel newModel = new CodegenModel();
-        String name = oneOf.replace("<", "Of").replace(">", "");
+        String name = oneOf.replace("<", "Of").replace(">", "").replace("[", "Of").replace("]", "");
         newModel.setClassname(name + "Wrapper");
         newModel.setDescription(model.classname + " as " + oneOf);
+        newModel.setIsNumber(isNumberType(oneOf));
+        newModel.isInteger = oneOf.equals("Int");
+        newModel.isLong = oneOf.equals("Long");
+        newModel.isFloat = oneOf.equals("Float");
+        newModel.isDouble = oneOf.equals("Double");
+        newModel.isBoolean = oneOf.equals("Boolean");
+        newModel.isString = oneOf.equals("String");
+        newModel.isMap = oneOf.contains("Map");
+        newModel.isArray = oneOf.contains("Array") || oneOf.contains("Seq") || oneOf.contains("List");
         CodegenProperty property = new CodegenProperty();
         property.setName("value");
         property.setRequired(true);
         property.setDatatypeWithEnum(oneOf);
         newModel.setVars(Collections.singletonList(property));
-        newModel.vendorExtensions.put("x-is-number", newModel.isNumber);
         newModel.vendorExtensions.put("x-one-of-explicit-name", isNumberType(oneOf) ? "Number" : name);
         newModel.vendorExtensions.put("x-fully-qualified-classname", newModel.classname);
         sealedChilds.add(newModel);
@@ -56,25 +65,58 @@ public class OneOfUtils {
   private static void markOneOfChildren(Map<String, ModelsMap> models, CodegenModel model) {
     var oneOfList = new ArrayList<Map<String, Object>>();
     for (String oneOf : model.oneOf) {
-      var oneOfModel = new HashMap<String, Object>();
-      oneOfModel.put("type", oneOf);
-      oneOfModel.put("name", oneOf.replace("<", "Of").replace(">", ""));
-      oneOfModel.put("listElementType", oneOf.replace("List<", "").replace(">", ""));
-      oneOfModel.put("isList", oneOf.contains("List"));
+      var oneOfModel = buildOneOfModel(oneOf);
       markCompounds(models, oneOf, oneOfModel, model);
       oneOfList.add(oneOfModel);
     }
     oneOfList.sort(comparator); // have fields with "discriminators" in the start of the list
     model.vendorExtensions.put("x-one-of-list", oneOfList);
+
+    // Check if at least one child is "object"
+    boolean containsObject = oneOfList
+      .stream()
+      .anyMatch(oneOf -> oneOf.containsKey("isObject") && Boolean.TRUE.equals(oneOf.get("isObject")));
+    if (containsObject) {
+      model.vendorExtensions.put("x-one-of-contains-object", true);
+    }
+
+    // Check if at least two children are "array". Used to detect generic erased types.
+    boolean hasMoreThenOneArray = oneOfList.stream().filter(map -> Boolean.TRUE.equals(map.get("isArray"))).limit(2).count() >= 2;
+    if (hasMoreThenOneArray) {
+      model.vendorExtensions.put("x-one-of-multi-array", true);
+    }
+  }
+
+  private static Map<String, Object> buildOneOfModel(String oneOf) {
+    var oneOfModel = new HashMap<String, Object>();
+    oneOfModel.put("type", oneOf);
+    oneOfModel.put("name", oneOf.replace("<", "Of").replace(">", "").replace("[", "Of").replace("]", ""));
+    oneOfModel.put("listElementType", oneOf.replace("List<", "").replace(">", "").replace("Seq[", "").replace("]", ""));
+    oneOfModel.put("isList", oneOf.contains("List") || oneOf.contains("Seq"));
+    oneOfModel.put("isInteger", oneOf.equals("Int"));
+    oneOfModel.put("isLong", oneOf.equals("Long"));
+    oneOfModel.put("isFloat", oneOf.equals("Float"));
+    oneOfModel.put("isDouble", oneOf.equals("Double"));
+    oneOfModel.put("isBoolean", oneOf.equals("Boolean"));
+    oneOfModel.put("isString", oneOf.equals("String"));
+    oneOfModel.put("isMap", oneOf.contains("Map"));
+    oneOfModel.put("isArray", oneOf.contains("Array") || oneOf.contains("Seq") || oneOf.contains("List"));
+    return oneOfModel;
   }
 
   private static void markCompounds(Map<String, ModelsMap> models, String oneOf, Map<String, Object> oneOfModel, CodegenModel model) {
-    // 1. Find child model
+    // 1. Find the child model
     var modelsMap = models.get(oneOf);
     if (modelsMap == null) return;
-    oneOfModel.put("isObject", true);
+    oneOfModel.put("isNumber", isNumberType(oneOf));
+    var childModels = modelsMap.getModels();
+    if (isEnumModel(childModels)) {
+      oneOfModel.put("isEnum", true);
+    } else {
+      oneOfModel.put("isObject", true);
+    }
 
-    // 2. add the child to parent model
+    // 2. add the child to the parent model
     var compoundModel = modelsMap.getModels().get(0).getModel();
     oneOfModel.put("child", compoundModel.classname);
 
@@ -89,6 +131,16 @@ public class OneOfUtils {
       List<Map<String, String>> newValues = values.stream().map(value -> Collections.singletonMap("field", value)).toList();
       oneOfModel.put("discriminators", newValues);
     }
+    var isGeneric = (Boolean) compoundModel.vendorExtensions.get("x-has-child-generic");
+    if (isGeneric != null) {
+      oneOfModel.put("has-child-generic", isGeneric);
+    }
+  }
+
+  private static boolean isEnumModel(List<ModelMap> childModels) {
+    return (
+      childModels != null && childModels.get(0) != null && childModels.get(0).getModel() != null && childModels.get(0).getModel().isEnum
+    );
   }
 
   private static Set<Map<String, String>> compoundParent(CodegenModel model) {

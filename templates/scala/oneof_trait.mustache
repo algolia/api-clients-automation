@@ -1,0 +1,103 @@
+import org.json4s._
+{{#vendorExtensions.x-one-of-multi-array}}import {{package}}.{{classname}}._{{/vendorExtensions.x-one-of-multi-array}}
+
+/**
+ * {{{description}}}{{^description}}{{classname}}{{/description}}{{#isDeprecated}}
+ * @deprecated{{/isDeprecated}}
+ */
+sealed trait {{classname}}
+
+{{#vendorExtensions}}
+{{#x-one-of-contains-object}}
+trait {{classname}}Trait extends {{classname}}
+{{/x-one-of-contains-object}}
+
+{{#x-one-of-list}}
+{{^child}}
+case class {{classname}}{{name}}(value: {{{type}}}) extends {{classname}}
+{{/child}}
+{{/x-one-of-list}}
+
+{{#x-one-of-multi-array}}
+{{#x-one-of-list}}
+{{^child}}
+{{#isArray}}
+trait {{classname}}{{name}}Evidence
+{{/isArray}}
+{{/child}}
+{{/x-one-of-list}}
+{{/x-one-of-multi-array}}
+
+{{/vendorExtensions}}
+
+object {{classname}} {
+  {{#vendorExtensions}}
+  {{#x-one-of-multi-array}}
+  {{#x-one-of-list}}
+  {{^child}}
+  {{#isArray}}
+  implicit object {{classname}}{{name}}Evidence extends {{classname}}{{name}}Evidence
+  {{/isArray}}
+  {{/child}}
+  {{/x-one-of-list}}
+  {{/x-one-of-multi-array}}
+
+
+  {{#x-one-of-list}}
+  {{^child}}
+
+  /** {{classname}} as {{{type}}} wrapper. */
+  {{#x-one-of-multi-array}}
+  def apply(value: {{{type}}}){{#isArray}}(implicit ev: {{classname}}{{name}}Evidence){{/isArray}}: {{classname}} = {
+  {{/x-one-of-multi-array}}
+  {{^x-one-of-multi-array}}
+  def apply(value: {{{type}}}): {{classname}} = {
+  {{/x-one-of-multi-array}}
+    {{classname}}{{name}}(value)
+  }
+  {{/child}}    
+  {{/x-one-of-list}}
+  {{/vendorExtensions}}
+}
+
+object {{classname}}Serializer extends Serializer[{{classname}}] {
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), {{classname}}] = {
+
+    case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => 
+      json match {
+        {{#vendorExtensions}}
+        {{#x-one-of-list}}
+        {{#isObject}}
+        case value: JObject {{#discriminators}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.contains("{{field}}"){{/discriminators}} => Extraction.extract[{{{type}}}](value)
+        {{/isObject}}
+        {{#isEnum}}
+        case value: JString => Extraction.extract[{{{type}}}](value)
+        {{/isEnum}}
+        {{#isList}}
+        case JArray(value) => {{{classname}}}(value.map(_.extract[{{{listElementType}}}]))
+        {{/isList}}
+        {{#isInteger}}
+        case JInt(value) => {{{classname}}}(value.toInt)
+        {{/isInteger}}
+        {{#isLong}}
+        case JLong(value) => {{{classname}}}(value.toLong)
+        {{/isLong}}
+        {{#isDouble}}
+        case JDouble(value) => {{{classname}}}(value.toDouble)
+        {{/isDouble}}
+        {{#isBoolean}}
+        case JBool(value) => {{{classname}}}(value)
+        {{/isBoolean}}
+        {{#isString}}
+        case JString(value) => {{{classname}}}(value)
+        {{/isString}}
+        {{/x-one-of-list}}
+        {{/vendorExtensions}} 
+        case _ => throw new MappingException("Can't convert " + json + " to {{classname}}")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case value => Extraction.decompose(value)(format - this)
+  }
+}
