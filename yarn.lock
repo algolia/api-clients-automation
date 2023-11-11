@@ -4016,10 +4016,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/folder-hash@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@types/folder-hash@npm:4.0.3"
-  checksum: ac1aecf93e904cf82c231e09af82a5e6a30c71ffe5c1b22816826fcc9bd92c72e7460a00bfb655b2f190d8ffffc863bff49da253c9e6fb6a91a067e1b06ee370
+"@types/folder-hash@npm:4.0.4":
+  version: 4.0.4
+  resolution: "@types/folder-hash@npm:4.0.4"
+  checksum: dfef81bbd4bd807f6182cf97796c3c9e404298c9bc224d6a12d954b64b9b1f56de120fa8a12eae8e3b49504037dee4c33695762175fa200bd26768b4907707ce
   languageName: node
   linkType: hard
 
@@ -11289,7 +11289,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:1.10.1"
     "@octokit/rest": "npm:20.0.2"
-    "@types/folder-hash": "npm:4.0.3"
+    "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
     "@types/inquirer": "npm:9.0.6"
     "@types/js-yaml": "npm:4.0.8"
