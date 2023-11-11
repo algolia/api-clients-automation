@@ -3733,13 +3733,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/rollup-plugin-node-globals@npm:1.4.3":
-  version: 1.4.3
-  resolution: "@types/rollup-plugin-node-globals@npm:1.4.3"
+"@types/rollup-plugin-node-globals@npm:1.4.4":
+  version: 1.4.4
+  resolution: "@types/rollup-plugin-node-globals@npm:1.4.4"
   dependencies:
     "@types/node": "npm:*"
     rollup: "npm:^0.63.4"
-  checksum: 7d286252171eeb4727784bc74384888c4deae89425574ccf54f754737e3d0a794c573aba1a41fe683bcca20e014ee31ae7a8d6def553a33d560f12d7e0dcb1a2
+  checksum: 98bcece28b066aee5fb4b9643a089ed1ee3e4e8498d46b8badd142bc5f891eb33ca0d76c2b74bc84d9edb76e75f06818b373d9339d98feeab841d73a3c6ff4c1
   languageName: node
   linkType: hard
 
@@ -3918,7 +3918,7 @@ __metadata:
     "@rollup/plugin-terser": "npm:0.4.4"
     "@types/jest": "npm:29.5.8"
     "@types/node": "npm:20.9.0"
-    "@types/rollup-plugin-node-globals": "npm:1.4.3"
+    "@types/rollup-plugin-node-globals": "npm:1.4.4"
     "@types/semver": "npm:7.5.4"
     bundlesize2: "npm:0.0.31"
     execa: "npm:8.0.1"
