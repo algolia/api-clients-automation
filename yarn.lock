@@ -4107,10 +4107,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-yaml@npm:4.0.8":
-  version: 4.0.8
-  resolution: "@types/js-yaml@npm:4.0.8"
-  checksum: 171a5c54d5b5c86a89300d14a004c49321f1a290fd2f625e2ef682e100ce78715a0eb8eac1ff09114dadaec8ccdb98251ddb5e06f1f3d6aa2ec83930e7a16039
+"@types/js-yaml@npm:4.0.9":
+  version: 4.0.9
+  resolution: "@types/js-yaml@npm:4.0.9"
+  checksum: 24de857aa8d61526bbfbbaa383aa538283ad17363fcd5bb5148e2c7f604547db36646440e739d78241ed008702a8920665d1add5618687b6743858fae00da211
   languageName: node
   linkType: hard
 
@@ -11292,7 +11292,7 @@ __metadata:
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
     "@types/inquirer": "npm:9.0.7"
-    "@types/js-yaml": "npm:4.0.8"
+    "@types/js-yaml": "npm:4.0.9"
     "@types/micromatch": "npm:4.0.5"
     "@types/node": "npm:20.9.0"
     "@types/semver": "npm:7.5.4"
