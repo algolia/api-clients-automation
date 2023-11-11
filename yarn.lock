@@ -2209,7 +2209,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ljharb/through@npm:^2.3.9":
+"@ljharb/through@npm:^2.3.11":
   version: 2.3.11
   resolution: "@ljharb/through@npm:2.3.11"
   dependencies:
@@ -4062,13 +4062,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/inquirer@npm:9.0.6":
-  version: 9.0.6
-  resolution: "@types/inquirer@npm:9.0.6"
+"@types/inquirer@npm:9.0.7":
+  version: 9.0.7
+  resolution: "@types/inquirer@npm:9.0.7"
   dependencies:
     "@types/through": "npm:*"
     rxjs: "npm:^7.2.0"
-  checksum: b19237abf78e01cc326cadc24feb161a51d582ea5977d8d2bb20ccfa9fc4ac00fd724202fcbb9b74c7d1425a4a33ec8cb616257edad4f660433f310d9bcbc7d4
+  checksum: b7138af41226c0457b99ff9b179da4a82078bc1674762e812d3cc3e3276936d7326b9fa6b98212b8eb055b2b6aaebe3c20359eebe176a6ca71061f4e08ce3a0f
   languageName: node
   linkType: hard
 
@@ -7765,11 +7765,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer@npm:9.2.11":
-  version: 9.2.11
-  resolution: "inquirer@npm:9.2.11"
+"inquirer@npm:9.2.12":
+  version: 9.2.12
+  resolution: "inquirer@npm:9.2.12"
   dependencies:
-    "@ljharb/through": "npm:^2.3.9"
+    "@ljharb/through": "npm:^2.3.11"
     ansi-escapes: "npm:^4.3.2"
     chalk: "npm:^5.3.0"
     cli-cursor: "npm:^3.1.0"
@@ -7784,7 +7784,7 @@ __metadata:
     string-width: "npm:^4.2.3"
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^6.2.0"
-  checksum: 4bc2db9a3c04432ba6f10b236b1975c5e112d42c2364ffa62e1b5bca5d3d358e7bee0c4d2b5b50294d05a8b452b66cf274b25b5d3c4a71df6c90c372102dee8a
+  checksum: efc19864bea5f4b22a47e686aa88684ee42352db4e96dd6307da7140496c16e5ef0e74be664fba490b068714dc24d72f66dc1907a1ccbaf9d58d6156cbdc5908
   languageName: node
   linkType: hard
 
@@ -11291,7 +11291,7 @@ __metadata:
     "@octokit/rest": "npm:20.0.2"
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
-    "@types/inquirer": "npm:9.0.6"
+    "@types/inquirer": "npm:9.0.7"
     "@types/js-yaml": "npm:4.0.8"
     "@types/micromatch": "npm:4.0.5"
     "@types/node": "npm:20.9.0"
@@ -11305,7 +11305,7 @@ __metadata:
     execa: "npm:8.0.1"
     folder-hash: "npm:4.0.4"
     fs-extra: "npm:11.1.1"
-    inquirer: "npm:9.2.11"
+    inquirer: "npm:9.2.12"
     js-yaml: "npm:4.1.0"
     knip: "npm:2.39.0"
     micromatch: "npm:4.0.5"
