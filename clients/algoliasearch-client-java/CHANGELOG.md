@@ -1,3 +1,7 @@
+## [4.0.0-beta.14](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.13...4.0.0-beta.14)
+
+- [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-beta.13](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.12...4.0.0-beta.13)
 
 - [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)

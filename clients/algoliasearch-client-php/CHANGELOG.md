@@ -1,3 +1,7 @@
+## [4.0.0-alpha.88](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.87...4.0.0-alpha.88)
+
+- [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-alpha.87](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.86...4.0.0-alpha.87)
 
 - [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)

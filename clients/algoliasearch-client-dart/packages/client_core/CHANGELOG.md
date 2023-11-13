@@ -1,3 +1,7 @@
+## [1.2.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.2.1...1.2.2)
+
+- [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.2.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.2.0...1.2.1)
 
 - [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)
