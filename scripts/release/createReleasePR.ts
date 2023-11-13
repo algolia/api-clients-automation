@@ -207,22 +207,13 @@ export async function decideReleaseStrategy({
     );
 
     const currentVersion = versions[lang].current;
-    let hasChanges = false;
+    const nbGitDiff = await getNbGitDiff({
+      branch: await getLastReleasedTag(),
+      head: null,
+      path: getLanguageFolder(lang as Language),
+    });
 
-    for (const commitPerLang of commitsPerLang) {
-      const nbGitDiff = await getNbGitDiff({
-        branch: commitPerLang.hash,
-        head: null,
-        path: getLanguageFolder(lang as Language),
-      });
-
-      if (nbGitDiff > 0) {
-        hasChanges = true;
-        break;
-      }
-    }
-
-    if (!hasChanges || commitsPerLang.length === 0) {
+    if (nbGitDiff === 0 || commitsPerLang.length === 0) {
       versionsToPublish[lang] = {
         ...version,
         noCommit: true,
@@ -390,6 +381,10 @@ async function createReleasePR(): Promise<void> {
     commits: validCommits,
   });
   const versionChanges = getVersionChangesText(versions);
+
+  if (validCommits.length !== 0) {
+    return;
+  }
 
   console.log('Creating changelogs for all languages...');
   const changelog: Changelog = LANGUAGES.reduce((newChangelog, lang) => {
