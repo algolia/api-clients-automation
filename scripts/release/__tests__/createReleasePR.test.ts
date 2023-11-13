@@ -37,12 +37,19 @@ vi.mock('../../common.js', async () => {
   }
 })
 
-// Mock `getOctokit` to bypass the API call and credential requirements
 vi.mock('../../ci/utils.js', async () => {
   const mod = await vi.importActual<typeof import('../../ci/utils.js')>('../../ci/utils.js')
   return {
     ...mod,
     getNbGitDiff: vi.fn().mockReturnValue(1)
+  }
+})
+
+vi.mock('../common.js', async () => {
+  const mod = await vi.importActual<typeof import('../common.js')>('../common.js')
+  return {
+    ...mod,
+    getLastReleasedTag: vi.fn().mockReturnValue("foobar")
   }
 })
 
