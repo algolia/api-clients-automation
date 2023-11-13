@@ -3427,16 +3427,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/react@npm:1.6.22":
-  version: 1.6.22
-  resolution: "@mdx-js/react@npm:1.6.22"
-  peerDependencies:
-    react: ^16.13.1 || ^17.0.0
-  checksum: ed896671ffab04c1f11cdba45bfb2786acff58cd0b749b0a13d9b7a7022ac75cc036bec067ca946e6540e2934727e0ba8bf174e4ae10c916f30cda6aecac8992
-  languageName: node
-  linkType: hard
-
-"@mdx-js/react@npm:^3.0.0":
+"@mdx-js/react@npm:3.0.0, @mdx-js/react@npm:^3.0.0":
   version: 3.0.0
   resolution: "@mdx-js/react@npm:3.0.0"
   dependencies:
@@ -4279,35 +4270,6 @@ __metadata:
   dependencies:
     "@types/yargs-parser": "npm:*"
   checksum: d8c965c101f7ee3e2f301c02a83dfd5680e4d999d3503c788c13f336868f03ee1498f019552e7d357635a1a36912cbe6751a563e9c339075d30cd131dc361c98
-  languageName: node
-  linkType: hard
-
-"@typescript/twoslash@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@typescript/twoslash@npm:3.1.0"
-  dependencies:
-    "@typescript/vfs": "npm:1.3.5"
-    debug: "npm:^4.1.1"
-    lz-string: "npm:^1.4.4"
-  checksum: 564b3353b77ffb5a6c9ca9ef5555a8771b5c45bbb84c87a09947c1fd4b9a500a02da9bd681eac08226f71d5e43e3b59a0c348468c96b61ff7ad95c3521f08a9f
-  languageName: node
-  linkType: hard
-
-"@typescript/vfs@npm:1.3.4":
-  version: 1.3.4
-  resolution: "@typescript/vfs@npm:1.3.4"
-  dependencies:
-    debug: "npm:^4.1.1"
-  checksum: 0458b311d68a8b43cc9df48f9cb63592ad232f8afd9d738e3a6249c024c73c800835d4740985f97ea089428223b6a6af7807b2babbc24517d3b19e4b6ac5de9d
-  languageName: node
-  linkType: hard
-
-"@typescript/vfs@npm:1.3.5":
-  version: 1.3.5
-  resolution: "@typescript/vfs@npm:1.3.5"
-  dependencies:
-    debug: "npm:^4.1.1"
-  checksum: b3512eb50b6dc6affbd0402eb6cf6ee31b2877c262588520753f5a4de8ecf73f396843ac776b3b1ab681d34448154672b6fd6f826184cb9318c9835e5511b3da
   languageName: node
   linkType: hard
 
@@ -5727,7 +5689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copy-text-to-clipboard@npm:^3.0.1, copy-text-to-clipboard@npm:^3.2.0":
+"copy-text-to-clipboard@npm:^3.2.0":
   version: 3.2.0
   resolution: "copy-text-to-clipboard@npm:3.2.0"
   checksum: d60fdadc59d526e19d56ad23cec2b292d33c771a5091621bd322d138804edd3c10eb2367d46ec71b39f5f7f7116a2910b332281aeb36a5b679199d746a8a5381
@@ -6337,17 +6299,6 @@ __metadata:
   peerDependencies:
     "@docusaurus/utils": ^3.0.0
   checksum: 3baf4c73aa184c27b38cdc344c85cc6aeb97f548ec8fae993fef4d540b6e335899845e4197a45b9362b5c5ae27aa5b8ccdb7d4f991c78549d98720a6e4d5072f
-  languageName: node
-  linkType: hard
-
-"docusaurus-preset-shiki-twoslash@npm:1.1.41":
-  version: 1.1.41
-  resolution: "docusaurus-preset-shiki-twoslash@npm:1.1.41"
-  dependencies:
-    copy-text-to-clipboard: "npm:^3.0.1"
-    remark-shiki-twoslash: "npm:3.1.3"
-    typescript: "npm:>3"
-  checksum: 674049b4423ef76a9e21cc5ecfe4468a1e1eea72f84fd5e8a1352120ec98a8fd531c12b8750cff79fface837c18faf6a5031d8e5be4de682316490ff1b77bc82
   languageName: node
   linkType: hard
 
@@ -6996,13 +6947,6 @@ __metadata:
   dependencies:
     xml-js: "npm:^1.6.11"
   checksum: c0849bde569da94493224525db00614fd1855a5d7c2e990f6e8637bd0298e85c3d329efe476cba77e711e438c3fb48af60cd5ef0c409da5bcd1f479790b0a372
-  languageName: node
-  linkType: hard
-
-"fenceparser@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "fenceparser@npm:1.1.1"
-  checksum: de0e0311d266b87d98ac512521896494145de9b0457f314cc3f6b216a464a08a2f803a128bdf99988d15a8a4da3e52f8a9e6cea567fe22e0332c366444d10bca
   languageName: node
   linkType: hard
 
@@ -8632,13 +8576,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonc-parser@npm:^3.0.0":
-  version: 3.2.0
-  resolution: "jsonc-parser@npm:3.2.0"
-  checksum: 5a12d4d04dad381852476872a29dcee03a57439574e4181d91dca71904fcdcc5e8e4706c0a68a2c61ad9810e1e1c5806b5100d52d3e727b78f5cdc595401045b
-  languageName: node
-  linkType: hard
-
 "jsonfile@npm:^6.0.1":
   version: 6.1.0
   resolution: "jsonfile@npm:6.1.0"
@@ -8931,15 +8868,6 @@ __metadata:
   version: 2.3.9
   resolution: "lunr@npm:2.3.9"
   checksum: 77d7dbb4fbd602aac161e2b50887d8eda28c0fa3b799159cee380fbb311f1e614219126ecbbd2c3a9c685f1720a8109b3c1ca85cc893c39b6c9cc6a62a1d8a8b
-  languageName: node
-  linkType: hard
-
-"lz-string@npm:^1.4.4":
-  version: 1.5.0
-  resolution: "lz-string@npm:1.5.0"
-  bin:
-    lz-string: bin/bin.js
-  checksum: 36128e4de34791838abe979b19927c26e67201ca5acf00880377af7d765b38d1c60847e01c5ec61b1a260c48029084ab3893a3925fd6e48a04011364b089991b
   languageName: node
   linkType: hard
 
@@ -11879,13 +11807,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.7":
-  version: 0.13.11
-  resolution: "regenerator-runtime@npm:0.13.11"
-  checksum: 12b069dc774001fbb0014f6a28f11c09ebfe3c0d984d88c9bced77fdb6fedbacbca434d24da9ae9371bfbf23f754869307fb51a4c98a8b8b18e5ef748677ca24
-  languageName: node
-  linkType: hard
-
 "regenerator-runtime@npm:^0.14.0":
   version: 0.14.0
   resolution: "regenerator-runtime@npm:0.14.0"
@@ -12046,25 +11967,6 @@ __metadata:
     unified: "npm:^11.0.0"
     vfile: "npm:^6.0.0"
   checksum: d88180819f6695bc4f257cffcbe201973fc946144cc0101da589f25f3238932e384e98a8897b6060948ad2b5679eb2de5a720866b8b6f36b74e9f20e3e0b1d5d
-  languageName: node
-  linkType: hard
-
-"remark-shiki-twoslash@npm:3.1.3":
-  version: 3.1.3
-  resolution: "remark-shiki-twoslash@npm:3.1.3"
-  dependencies:
-    "@types/unist": "npm:^2.0.0"
-    "@typescript/twoslash": "npm:3.1.0"
-    "@typescript/vfs": "npm:1.3.4"
-    fenceparser: "npm:^1.1.0"
-    regenerator-runtime: "npm:^0.13.7"
-    shiki: "npm:0.10.1"
-    shiki-twoslash: "npm:3.1.2"
-    tslib: "npm:2.1.0"
-    unist-util-visit: "npm:^2.0.0"
-  peerDependencies:
-    typescript: ">3"
-  checksum: bda8534d835c60d8231e7732471faff9989714fa35139a1bb0d78c5db8ecbf108a7ecc67a5011ea26edceab00cbee571845b184d923a4d1937fa7fc24b822daa
   languageName: node
   linkType: hard
 
@@ -12556,31 +12458,6 @@ __metadata:
   bin:
     shjs: bin/shjs
   checksum: feb25289a12e4bcd04c40ddfab51aff98a3729f5c2602d5b1a1b95f6819ec7804ac8147ebd8d9a85dfab69d501bcf92d7acef03247320f51c1552cec8d8e2382
-  languageName: node
-  linkType: hard
-
-"shiki-twoslash@npm:3.1.2":
-  version: 3.1.2
-  resolution: "shiki-twoslash@npm:3.1.2"
-  dependencies:
-    "@typescript/twoslash": "npm:3.1.0"
-    "@typescript/vfs": "npm:1.3.4"
-    fenceparser: "npm:^1.1.0"
-    shiki: "npm:0.10.1"
-  peerDependencies:
-    typescript: ">3"
-  checksum: 2a880b9c88860e1c1a1d81aaf2ee70694c0ec22a071a47f6200861bf1e34b0c5c15193427b9b8c1da27fe51116bb679e7c67fe0772f587d1303d2107c6c74bbc
-  languageName: node
-  linkType: hard
-
-"shiki@npm:0.10.1":
-  version: 0.10.1
-  resolution: "shiki@npm:0.10.1"
-  dependencies:
-    jsonc-parser: "npm:^3.0.0"
-    vscode-oniguruma: "npm:^1.6.1"
-    vscode-textmate: "npm:5.2.0"
-  checksum: cc4db3462722261cb9ce0f7c0dbe278af3b99ad57dfab77b80c4dc9c8e3198f1d3f3c3433044a731c16f7afede9e60747f8a62290fbbaa18c26026f7b94cde8b
   languageName: node
   linkType: hard
 
@@ -13336,13 +13213,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.1.0":
-  version: 2.1.0
-  resolution: "tslib@npm:2.1.0"
-  checksum: e95c8fb198d0209bba917db7b0f399d1aed3c4d6408bf1e4c30deebfeffb4076dc3786500100a3b5c55a535abaaeb5e6bd1da04d0cb49d4228e5a62362cee0b2
-  languageName: node
-  linkType: hard
-
 "tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.5.0, tslib@npm:^2.6.0":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
@@ -13380,26 +13250,6 @@ __metadata:
   dependencies:
     is-typedarray: "npm:^1.0.0"
   checksum: 4ac5b7a93d604edabf3ac58d3a2f7e07487e9f6e98195a080e81dbffdc4127817f470f219d794a843b87052cedef102b53ac9b539855380b8c2172054b7d5027
-  languageName: node
-  linkType: hard
-
-"typescript@npm:>3":
-  version: 5.2.2
-  resolution: "typescript@npm:5.2.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 91ae3e6193d0ddb8656d4c418a033f0f75dec5e077ebbc2bd6d76439b93f35683936ee1bdc0e9cf94ec76863aa49f27159b5788219b50e1cd0cd6d110aa34b07
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A>3#optional!builtin<compat/typescript>":
-  version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 062c1cee1990e6b9419ce8a55162b8dc917eb87f807e4de0327dbc1c2fa4e5f61bc0dd4e034d38ff541d1ed0479b53bcee8e4de3a4075c51a1724eb6216cb6f5
   languageName: node
   linkType: hard
 
@@ -13497,13 +13347,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-is@npm:^4.0.0":
-  version: 4.1.0
-  resolution: "unist-util-is@npm:4.1.0"
-  checksum: 21ca3d7bacc88853b880b19cb1b133a056c501617d7f9b8cce969cd8b430ed7e1bc416a3a11b02540d5de6fb86807e169d00596108a459d034cf5faec97c055e
-  languageName: node
-  linkType: hard
-
 "unist-util-is@npm:^6.0.0":
   version: 6.0.0
   resolution: "unist-util-is@npm:6.0.0"
@@ -13550,16 +13393,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-visit-parents@npm:^3.0.0":
-  version: 3.1.1
-  resolution: "unist-util-visit-parents@npm:3.1.1"
-  dependencies:
-    "@types/unist": "npm:^2.0.0"
-    unist-util-is: "npm:^4.0.0"
-  checksum: 231c80c5ba8e79263956fcaa25ed2a11ad7fe77ac5ba0d322e9d51bbc4238501e3bb52f405e518bcdc5471e27b33eff520db0aa4a3b1feb9fb6e2de6ae385d49
-  languageName: node
-  linkType: hard
-
 "unist-util-visit-parents@npm:^6.0.0":
   version: 6.0.1
   resolution: "unist-util-visit-parents@npm:6.0.1"
@@ -13567,17 +13400,6 @@ __metadata:
     "@types/unist": "npm:^3.0.0"
     unist-util-is: "npm:^6.0.0"
   checksum: 51b1a5b0aa23c97d3e03e7288f0cdf136974df2217d0999d3de573c05001ef04cccd246f51d2ebdfb9e8b0ed2704451ad90ba85ae3f3177cf9772cef67f56206
-  languageName: node
-  linkType: hard
-
-"unist-util-visit@npm:^2.0.0":
-  version: 2.0.3
-  resolution: "unist-util-visit@npm:2.0.3"
-  dependencies:
-    "@types/unist": "npm:^2.0.0"
-    unist-util-is: "npm:^4.0.0"
-    unist-util-visit-parents: "npm:^3.0.0"
-  checksum: 7b11303d82271ca53a2ced2d56c87a689dd518596c99ff4a11cdff750f5cc5c0e4b64b146bd2363557cb29443c98713bfd1e8dc6d1c3f9d474b9eb1f23a60888
   languageName: node
   linkType: hard
 
@@ -13796,20 +13618,6 @@ __metadata:
     unist-util-stringify-position: "npm:^4.0.0"
     vfile-message: "npm:^4.0.0"
   checksum: 443bda43e5ad3b73c5976e987dba2b2d761439867ba7d5d7c5f4b01d3c1cb1b976f5f0e6b2399a00dc9b4eaec611bd9984ce9ce8a75a72e60aed518b10a902d2
-  languageName: node
-  linkType: hard
-
-"vscode-oniguruma@npm:^1.6.1":
-  version: 1.7.0
-  resolution: "vscode-oniguruma@npm:1.7.0"
-  checksum: bef0073c665ddf8c86e51da94529c905856559e9aba97a9882f951acd572da560384775941ab6e7e8db94d9c578b25fefb951e4b73c37e8712e16b0231de2689
-  languageName: node
-  linkType: hard
-
-"vscode-textmate@npm:5.2.0":
-  version: 5.2.0
-  resolution: "vscode-textmate@npm:5.2.0"
-  checksum: 87c4786606cf7a49d78b690b37236f919db594ff81f1a405f9d9a0a9ee66ff3450fe51c0d8731f270268f7be550adffb6711a4bbc6f56d76b71abe41949817c7
   languageName: node
   linkType: hard
 
@@ -14036,9 +13844,8 @@ __metadata:
     "@docusaurus/core": "npm:3.0.0"
     "@docusaurus/preset-classic": "npm:3.0.0"
     "@docusaurus/types": "npm:3.0.0"
-    "@mdx-js/react": "npm:1.6.22"
+    "@mdx-js/react": "npm:3.0.0"
     clsx: "npm:2.0.0"
-    docusaurus-preset-shiki-twoslash: "npm:1.1.41"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     redocusaurus: "npm:2.0.0"
