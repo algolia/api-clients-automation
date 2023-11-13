@@ -1,3 +1,10 @@
+## [4.0.0-alpha.38](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.37...4.0.0-alpha.38)
+
+- [5a7a8aeb4](https://github.com/algolia/api-clients-automation/commit/5a7a8aeb4) chore(specs): publish docs specs ([#2255](https://github.com/algolia/api-clients-automation/pull/2255)) by [@shortcuts](https://github.com/shortcuts/)
+- [80a6f2bca](https://github.com/algolia/api-clients-automation/commit/80a6f2bca) chore(go): update go docs ([#2200](https://github.com/algolia/api-clients-automation/pull/2200)) by [@Fluf22](https://github.com/Fluf22/)
+- [c2e9fb52c](https://github.com/algolia/api-clients-automation/commit/c2e9fb52c) feat(specs): add `startDate` and `endDate` query parameter to list events ([#2229](https://github.com/algolia/api-clients-automation/pull/2229)) by [@shortcuts](https://github.com/shortcuts/)
+- [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-alpha.37](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.36...4.0.0-alpha.37)
 
 - [80a6f2bca](https://github.com/algolia/api-clients-automation/commit/80a6f2bca) chore(go): update go docs ([#2200](https://github.com/algolia/api-clients-automation/pull/2200)) by [@Fluf22](https://github.com/Fluf22/)
