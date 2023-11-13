@@ -382,10 +382,6 @@ async function createReleasePR(): Promise<void> {
   });
   const versionChanges = getVersionChangesText(versions);
 
-  if (validCommits.length !== 0) {
-    return;
-  }
-
   console.log('Creating changelogs for all languages...');
   const changelog: Changelog = LANGUAGES.reduce((newChangelog, lang) => {
     if (versions[lang].noCommit) {
