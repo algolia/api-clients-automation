@@ -210,18 +210,13 @@ export async function decideReleaseStrategy({
     let hasChanges = false;
 
     for (const commitPerLang of commitsPerLang) {
-      const nbChanges = parseInt(
-        (
-          await run(
-            `git diff --shortstat ${commitPerLang.hash} -- ${getLanguageFolder(
-              lang as Language
-            )} | wc -l`
-          )
-        ).trim(),
-        10
-      );
+      const nbGitDiff = await getNbGitDiff({
+        branch: commitPerLang.hash,
+        head: null,
+        path: getLanguageFolder(lang as Language),
+      });
 
-      if (nbChanges > 0) {
+      if (nbGitDiff > 0) {
         hasChanges = true;
         break;
       }
