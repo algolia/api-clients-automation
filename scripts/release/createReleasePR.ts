@@ -213,6 +213,8 @@ export async function decideReleaseStrategy({
       path: getLanguageFolder(lang as Language),
     });
 
+    console.log(`Deciding next version bump for ${lang}.`);
+
     if (nbGitDiff === 0 || commitsPerLang.length === 0) {
       versionsToPublish[lang] = {
         ...version,
@@ -221,14 +223,17 @@ export async function decideReleaseStrategy({
         next: getNextVersion(currentVersion, null),
       };
 
-      console.log(
-        `Skipping ${lang}, found no commits (${commitsPerLang.length}) or no changes in the selected commits.`
-      );
+      const msg =
+        commitsPerLang.length === 0
+          ? 'no commits found'
+          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${
+              commitsPerLang.length
+            }' commits`;
+
+      console.log(`    > Skipping, ${msg}`);
 
       continue;
     }
-
-    console.log(`Deciding next version bump for ${lang}.`);
 
     // snapshots should not be bumped as prerelease
     if (semver.prerelease(currentVersion) && !currentVersion.endsWith('-SNAPSHOT')) {
