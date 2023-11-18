@@ -60,7 +60,7 @@ __metadata:
     mustache: "npm:4.2.0"
     pinst: "npm:3.0.0"
     prettier: "npm:3.1.0"
-    prettier-plugin-java: "npm:2.3.1"
+    prettier-plugin-java: "npm:2.4.0"
     renovate-config-algolia: "npm:2.1.10"
     typescript: "npm:5.2.2"
   languageName: unknown
@@ -8124,13 +8124,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"java-parser@npm:2.0.5":
-  version: 2.0.5
-  resolution: "java-parser@npm:2.0.5"
+"java-parser@npm:2.1.0":
+  version: 2.1.0
+  resolution: "java-parser@npm:2.1.0"
   dependencies:
     chevrotain: "npm:6.5.0"
     lodash: "npm:4.17.21"
-  checksum: 04dc5185b3db52ae5fa0e0a1b02e395a472393b440e1c07883a1f94fc198daae37671abdd5fcf158862eda2b77aec99c27aea829cfe0078a890f9ea4bb9e0d70
+  checksum: 87c6fda1b62112e72d30db5fd6380faf21bbd74e6f48e9a10d973b3606896e8ec13d3b6776245892fbdac31bbc9bdc85aaf44a9eecb2a3195c0cbebfd331d5b4
   languageName: node
   linkType: hard
 
@@ -10500,14 +10500,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:2.3.1":
-  version: 2.3.1
-  resolution: "prettier-plugin-java@npm:2.3.1"
+"prettier-plugin-java@npm:2.4.0":
+  version: 2.4.0
+  resolution: "prettier-plugin-java@npm:2.4.0"
   dependencies:
-    java-parser: "npm:2.0.5"
+    java-parser: "npm:2.1.0"
     lodash: "npm:4.17.21"
     prettier: "npm:3.0.3"
-  checksum: 546be5da057afbcfec1d0927ea0ab30b7add5fd5f6db8c598a4e6750ca6ff2e4fa7eeb70305d0338e048a1f96f9346782b97a0d95d0cbac263a48048d5d9ca9b
+  checksum: 2b5c34dc16531dbad047c926f51dc4c85fc2883577ab326cb0633e490a6add21ea99ef7f5d3f5fd8b606aaa64e18452f256fff23795463019cc00a189a2fefbf
   languageName: node
   linkType: hard
 
