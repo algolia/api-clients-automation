@@ -8811,9 +8811,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:2.41.0":
-  version: 2.41.0
-  resolution: "knip@npm:2.41.0"
+"knip@npm:2.41.3":
+  version: 2.41.3
+  resolution: "knip@npm:2.41.3"
   dependencies:
     "@ericcornelissen/bash-parser": "npm:^0.5.2"
     "@npmcli/map-workspaces": "npm:^3.0.4"
@@ -8837,7 +8837,7 @@ __metadata:
     zod-validation-error: "npm:1.5.0"
   bin:
     knip: dist/cli.js
-  checksum: b7dceb9657754bac6cdb876c87f96d264307aecf7e8d017359b9b33c79169962b98333e0ea7b292619cb5b67dd2cd707eae27b566841d6eb14f9a667db03e8d3
+  checksum: d4842fd8d63f44da2f7db1b6ee5802e9b0600455c53d3933d394166083a50cb4d81835a1d5382705389290e50d741201b15e00b0b42371e6e163792057fc4107
   languageName: node
   linkType: hard
 
@@ -11189,7 +11189,7 @@ __metadata:
     fs-extra: "npm:11.1.1"
     inquirer: "npm:9.2.12"
     js-yaml: "npm:4.1.0"
-    knip: "npm:2.41.0"
+    knip: "npm:2.41.3"
     micromatch: "npm:4.0.5"
     semver: "npm:7.5.4"
     spinnies: "npm:0.5.1"
