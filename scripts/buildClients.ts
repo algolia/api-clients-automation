@@ -16,7 +16,9 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`);
       break;
     case 'php':
+      break;
     case 'python':
+      await run('poetry build', { cwd });
       break;
     case 'javascript':
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');

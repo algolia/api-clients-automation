@@ -1,17 +1,3 @@
-from __future__ import annotations
-import pprint
-import re  # noqa: F401
-import json
-
-{{#vendorExtensions.x-py-datetime-imports}}{{#-first}}from datetime import{{/-first}} {{{.}}}{{^-last}},{{/-last}}{{/vendorExtensions.x-py-datetime-imports}}
-{{#vendorExtensions.x-py-typing-imports}}{{#-first}}from typing import{{/-first}} {{{.}}}{{^-last}},{{/-last}}{{/vendorExtensions.x-py-typing-imports}}
-{{#vendorExtensions.x-py-pydantic-imports}}{{#-first}}from pydantic import{{/-first}} {{{.}}}{{^-last}},{{/-last}}{{/vendorExtensions.x-py-pydantic-imports}}
-{{#vendorExtensions.x-py-other-imports}}
-{{{.}}}
-{{/vendorExtensions.x-py-other-imports}}
-{{#vendorExtensions.x-py-model-imports}}
-{{{.}}}
-{{/vendorExtensions.x-py-model-imports}}
 try:
     from typing import Self
 except ImportError:
@@ -21,6 +7,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     """
     {{#description}}{{{description}}}{{/description}}{{^description}}{{{classname}}}{{/description}}
     """ # noqa: E501
+
 {{#vars}}
     {{name}}: {{{vendorExtensions.x-py-typing}}}
 {{/vars}}
@@ -47,7 +34,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/isNullable}}
         {{/required}}
         if not re.match(r"{{{.}}}", value{{#vendorExtensions.x-modifiers}} ,re.{{{.}}}{{/vendorExtensions.x-modifiers}}):
-            raise ValueError(r"must validate the regular expression {{{vendorExtensions.x-pattern}}}")
+            raise ValueError(r"must validate the regular expression {{{vendorExtensions.x-pattern}}}") # noqa: E501
         return value
     {{/vendorExtensions.x-regex}}
     {{#isEnum}}
@@ -70,11 +57,11 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{#isArray}}
         for i in value:
             if i not in ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}):
-                raise ValueError("each list item must be one of ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}})")
+                raise ValueError("each list item must be one of ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}})") # noqa: E501
         {{/isArray}}
         {{^isArray}}
         if value not in ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}):
-            raise ValueError("must be one of enum values ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}})")
+            raise ValueError("must be one of enum values ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}})") # noqa: E501
         {{/isArray}}
         return value
     {{/isEnum}}
@@ -249,7 +236,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         else:
             raise ValueError("{{{classname}}} failed to lookup discriminator value from " +
                              json.dumps(obj) + ". Discriminator property name: " + cls.__discriminator_property_name +
-                             ", mapping: " + json.dumps(cls.__discriminator_value_class_map))
+                             ", mapping: " + json.dumps(cls.__discriminator_value_class_map)) # noqa: E501
         {{/discriminator}}
         {{/hasChildren}}
         {{^hasChildren}}
@@ -264,7 +251,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         # raise errors for additional fields in the input
         for _key in obj.keys():
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in {{classname}}) in the input: " + _key)
+                raise ValueError("Error due to additional fields (not defined in {{classname}}) in the input: " + _key) # noqa: E501
 
         {{/isAdditionalPropertiesTrue}}
         {{/disallowAdditionalPropertiesIfNotPresent}}

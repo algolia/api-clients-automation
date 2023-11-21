@@ -25,7 +25,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
 
     setPackageName(client);
     setApiPackage("api");
-    setModelPackage("model");
+    setModelPackage("models");
 
     super.processOpts();
 

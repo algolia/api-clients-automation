@@ -1,20 +1,3 @@
-from __future__ import annotations
-from inspect import getfullargspec
-import json
-import pprint
-import re
-{{#vendorExtensions.x-py-datetime-imports}}{{#-first}}from datetime import{{/-first}} {{{.}}}{{^-last}},{{/-last}}{{/vendorExtensions.x-py-datetime-imports}}
-{{#vendorExtensions.x-py-typing-imports}}{{#-first}}from typing import{{/-first}} {{{.}}}{{^-last}},{{/-last}}{{/vendorExtensions.x-py-typing-imports}}
-{{#vendorExtensions.x-py-pydantic-imports}}{{#-first}}from pydantic import{{/-first}} {{{.}}}{{^-last}},{{/-last}}{{/vendorExtensions.x-py-pydantic-imports}}
-{{#vendorExtensions.x-py-other-imports}}
-{{{.}}}
-{{/vendorExtensions.x-py-other-imports}}
-{{#vendorExtensions.x-py-model-imports}}
-{{{.}}}
-{{/vendorExtensions.x-py-model-imports}}
-from typing import Union, Any, List, TYPE_CHECKING, Optional, Dict
-from typing_extensions import Literal
-from pydantic import StrictStr, Field
 try:
     from typing import Self
 except ImportError:
@@ -25,7 +8,7 @@ except ImportError:
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
     """
     {{{description}}}{{^description}}{{{classname}}}{{/description}}
-    """
+    """ # noqa: E501
 
 {{#composedSchemas.anyOf}}
     # data type: {{{dataType}}}
@@ -52,9 +35,9 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
+                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`") # noqa: E501
             if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
+                raise ValueError("If a position argument is used, keyword arguments cannot be used.") # noqa: E501
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
@@ -96,7 +79,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/composedSchemas.anyOf}}
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))  # noqa: E501
         else:
             return v
 
@@ -151,7 +134,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages)) # noqa: E501
         else:
             return instance
 
