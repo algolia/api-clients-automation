@@ -34,6 +34,9 @@ export async function formatter(language: string, folder: string): Promise<void>
         cmd = `(cd ${folder} && dart pub get && melos bs && melos build --no-select && melos lint)`;
       }
       break;
+    case 'python':
+      cmd = `(cd ${folder} && poetry install && pip freeze > requirements.txt && poetry run black . && poetry run flake8 .)`;
+      break;
     default:
       return;
   }
