@@ -149,6 +149,30 @@ runs:
       shell: bash
       run: dart pub global activate melos    
 
+    # Python deps 
+    - name: Get Python version
+      if: ${{ inputs.language == 'python' }}
+      id: python-version
+      shell: bash
+      run: |
+        echo "PYTHON_VERSION=$(cat config/.python-version)" >> $GITHUB_OUTPUT
+
+    - name: Install poetry
+      if: ${{ inputs.language == 'python' }}
+      shell: bash
+      run: pipx install poetry
+
+    - uses: actions/setup-python@v4
+      if: ${{ inputs.language == 'python' }}
+      shell: bash
+      with:
+        python-version: ${{ steps.python-version.outputs.PYTHON_VERSION }}
+        cache: 'poetry'
+
+    - run: poetry install
+      if: ${{ inputs.language == 'python' }}
+      shell: bash
+
     # Computing jobs that should run
     - name: Setting diff outputs variables
       if: inputs.type == 'matrix'
