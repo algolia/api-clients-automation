@@ -2,7 +2,7 @@ import { run, runComposerUpdate } from './common.js';
 import { createSpinner } from './spinners.js';
 
 export async function formatter(language: string, folder: string): Promise<void> {
-  const spinner = createSpinner(`formatting '${language}' in '${folder}'`);
+  const spinner = createSpinner(`running formatter for '${language}' in '${folder}'`);
   let cmd = '';
   switch (language) {
     case 'javascript':
@@ -35,7 +35,7 @@ export async function formatter(language: string, folder: string): Promise<void>
       }
       break;
     case 'python':
-      cmd = `(cd ${folder} && poetry install && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run flake8 .)`;
+      cmd = `(cd ${folder} && poetry install && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 .)`;
       break;
     default:
       return;

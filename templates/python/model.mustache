@@ -9,8 +9,8 @@ import json
 import re
 
 from enum import Enum
+
 from typing_extensions import Literal
-from pydantic import Annotated, Field
 
 {{#models}}
 {{#model}}
@@ -19,11 +19,11 @@ from pydantic import Annotated, Field
 {{/-last}}{{#-last}}
 ){{/-last}}{{/vendorExtensions.x-py-datetime-imports}}
 {{#vendorExtensions.x-py-typing-imports}}{{#-first}}from typing import (
-{{/-first}}{{{.}}}{{^-last}},
+Dict,Union,{{/-first}}{{{.}}}{{^-last}},
 {{/-last}}{{#-last}}
 ){{/-last}}{{/vendorExtensions.x-py-typing-imports}}
-{{#vendorExtensions.x-py-pydantic-imports}}{{#-first}}from typing import (
-{{/-first}}{{{.}}}{{^-last}},
+{{#vendorExtensions.x-py-pydantic-imports}}{{#-first}}from pydantic import (
+Field, Annotated,{{/-first}}{{{.}}}{{^-last}},
 {{/-last}}{{#-last}}
 ){{/-last}}{{/vendorExtensions.x-py-pydantic-imports}}
 {{/model}}

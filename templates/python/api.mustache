@@ -5,13 +5,8 @@
 import io
 import warnings
 
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
+from pydantic import validate_call, StrictFloat, StrictInt
+from typing import Tuple, List
 
 {{#imports}}
 {{import}}
@@ -40,6 +35,10 @@ class {{classname}}:
     @validate_call
     {{#asyncio}}async {{/asyncio}}def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
 {{>partial_api}}
+        _response_types_map: Dict[str, Optional[str]] = {
+            {{#returnType}}{{#responses}}{{^isWildcard}}'{{code}}': {{#dataType}}"{{.}}"{{/dataType}}{{^dataType}}None{{/dataType}}{{/isWildcard}}{{^-last}},{{/-last}}
+            {{/responses}}{{/returnType}}
+        }
         response_data = {{#asyncio}}await {{/asyncio}}self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
@@ -54,6 +53,10 @@ class {{classname}}:
     @validate_call
     {{#asyncio}}async {{/asyncio}}def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
 {{>partial_api}}
+        _response_types_map: Dict[str, Optional[str]] = {
+            {{#returnType}}{{#responses}}{{^isWildcard}}'{{code}}': {{#dataType}}"{{.}}"{{/dataType}}{{^dataType}}None{{/dataType}}{{/isWildcard}}{{^-last}},{{/-last}}
+            {{/responses}}{{/returnType}}
+        }
         response_data = {{#asyncio}}await {{/asyncio}}self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout

@@ -8,7 +8,7 @@ except ImportError:
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
     """
     {{{description}}}{{^description}}{{{classname}}}{{/description}}
-    """ # noqa: E501
+    """ 
 
 {{#composedSchemas.oneOf}}
     # data type: {{{dataType}}}
@@ -33,9 +33,9 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`") # noqa: E501
+                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`") 
             if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")  # noqa: E501
+                raise ValueError("If a position argument is used, keyword arguments cannot be used.")  
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
@@ -69,7 +69,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/isPrimitiveType}}
         {{^isPrimitiveType}}
         if not isinstance(v, {{{dataType}}}):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `{{{dataType}}}`")
+            error_messages.append(f"Error! Input type `{type(v)}` is not `{{{dataType}}}`") # noqa: E501
         else:
             match += 1
         {{/isPrimitiveType}}
@@ -77,10 +77,10 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/composedSchemas.oneOf}}
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages)) # noqa: E501
+            raise ValueError("Multiple matches found when setting `actual_instance` in {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages)) 
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages)) # noqa: E501
+            raise ValueError("No match found when setting `actual_instance` in {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages)) 
         else:
             return v
 
@@ -107,7 +107,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         # use oneOf discriminator to lookup the data type
         _data_type = json.loads(json_str).get("{{{propertyBaseName}}}")
         if not _data_type:
-            raise ValueError("Failed to lookup data type from the field `{{{propertyBaseName}}}` in the input.") # noqa: E501
+            raise ValueError("Failed to lookup data type from the field `{{{propertyBaseName}}}` in the input.") 
 
         {{/-first}}
         # check if data type is `{{{modelName}}}`
@@ -155,10 +155,10 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages)) # noqa: E501
+            raise ValueError("Multiple matches found when deserializing the JSON string into {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages)) # noqa: E501
+            raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages))
         else:
             return instance
 

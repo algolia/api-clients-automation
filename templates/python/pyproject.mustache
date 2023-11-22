@@ -23,9 +23,12 @@ types-requests = "2.31.0.10"
 flake8 = "6.1.0"
 autoflake = "2.2.1"
 autopep8 = "2.0.4"
+black = "23.11.0"
+isort = "5.12.0"
 
 [tool.flake8]
-max-line-length = 79
+max-line-length = 88
+ignore = ['E501']
 
 [build-system]
 requires = ["poetry-core"]

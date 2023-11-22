@@ -23,7 +23,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
 
     setApiNameSuffix(Utils.API_SUFFIX);
 
-    setPackageName(client);
+    setPackageName(Utils.toSnakeCase(client));
     setApiPackage("api");
     setModelPackage("models");
 

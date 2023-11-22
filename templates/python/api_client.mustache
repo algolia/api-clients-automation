@@ -13,9 +13,6 @@ import tempfile
 
 from urllib.parse import quote
 from typing import Tuple, Optional, List
-{{#tornado}}
-import tornado.gen
-{{/tornado}}
 
 from {{packageName}}.configuration import Configuration
 from {{packageName}}.api_response import ApiResponse
@@ -247,9 +244,6 @@ class ApiClient:
         return method, url, header_params, body, post_params
 
 
-    {{#tornado}}
-    @tornado.gen.coroutine
-    {{/tornado}}
     {{#asyncio}}async {{/asyncio}}def call_api(
         self,
         method,
@@ -273,7 +267,7 @@ class ApiClient:
 
         try:
             # perform request and return response
-            response_data = {{#asyncio}}await {{/asyncio}}{{#tornado}}yield {{/tornado}}self.rest_client.request(
+            response_data = {{#asyncio}}await {{/asyncio}}self.rest_client.request(
                 method, url,
                 headers=header_params,
                 body=body, post_params=post_params,

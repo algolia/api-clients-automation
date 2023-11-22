@@ -28,7 +28,7 @@
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """
         {{#isDeprecated}}
         warnings.warn("{{{httpMethod}}} {{{path}}} is deprecated.", DeprecationWarning)
         {{/isDeprecated}}
@@ -42,8 +42,3 @@
             _headers=_headers,
             _host_index=_host_index
         )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            {{#returnType}}{{#responses}}{{^isWildcard}}'{{code}}': {{#dataType}}"{{.}}"{{/dataType}}{{^dataType}}None{{/dataType}}{{/isWildcard}}{{^-last}},{{/-last}}
-            {{/responses}}{{/returnType}}
-        }

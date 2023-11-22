@@ -8,7 +8,7 @@ except ImportError:
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
     """
     {{{description}}}{{^description}}{{{classname}}}{{/description}}
-    """ # noqa: E501
+    """ 
 
 {{#composedSchemas.anyOf}}
     # data type: {{{dataType}}}
@@ -35,9 +35,9 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`") # noqa: E501
+                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`") 
             if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.") # noqa: E501
+                raise ValueError("If a position argument is used, keyword arguments cannot be used.") 
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
@@ -70,7 +70,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/isPrimitiveType}}
         {{^isPrimitiveType}}
         if not isinstance(v, {{{dataType}}}):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `{{{dataType}}}`")
+            error_messages.append(f"Error! Input type `{type(v)}` is not `{{{dataType}}}`") # noqa: E501
         else:
             return v
 
@@ -79,7 +79,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/composedSchemas.anyOf}}
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))  # noqa: E501
+            raise ValueError("No match found when setting the actual_instance in {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))  
         else:
             return v
 
@@ -134,7 +134,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages)) # noqa: E501
+            raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))
         else:
             return instance
 
