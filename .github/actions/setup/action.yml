@@ -164,7 +164,6 @@ runs:
 
     - uses: actions/setup-python@v4
       if: ${{ inputs.language == 'python' }}
-      shell: bash
       with:
         python-version: ${{ steps.python-version.outputs.PYTHON_VERSION }}
         cache: 'poetry'
