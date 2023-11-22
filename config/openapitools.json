@@ -169,6 +169,9 @@
       },
       "dart-recommend": {
         "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_recommend"
+      },
+      "csharp-algoliasearch": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/packages/algoliasearch"
       }
     }
   }
