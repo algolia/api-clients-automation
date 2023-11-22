@@ -39,28 +39,26 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     modelTestTemplateFiles.clear();
 
     // Remove some files we don't want to output or change their paths
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("git_push.sh.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("requirements.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("test-requirements.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("tox.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("setup_cfg.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("setup.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("pyproject.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("py.typed.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("rest.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("README.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("api_test.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("model_test.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("github-workflow.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("travis.mustache"));
-    supportingFiles.removeIf(file -> file.getTemplateFile().equals("gitlab-ci.mustache"));
+    supportingFiles.removeIf(file ->
+      file.getTemplateFile().equals("git_push.sh.mustache") ||
+      file.getTemplateFile().equals("requirements.mustache") ||
+      file.getTemplateFile().equals("test-requirements.mustache") ||
+      file.getTemplateFile().equals("tox.mustache") ||
+      file.getTemplateFile().equals("setup_cfg.mustache") ||
+      file.getTemplateFile().equals("setup.mustache") ||
+      file.getTemplateFile().equals("pyproject.mustache") ||
+      file.getTemplateFile().equals("py.typed.mustache") ||
+      file.getTemplateFile().equals("rest.mustache") ||
+      file.getTemplateFile().equals("README.mustache") ||
+      file.getTemplateFile().equals("api_test.mustache") ||
+      file.getTemplateFile().equals("model_test.mustache") ||
+      file.getTemplateFile().equals("github-workflow.mustache") ||
+      file.getTemplateFile().equals("travis.mustache") ||
+      file.getTemplateFile().equals("gitlab-ci.mustache")
+    );
 
     // repository
     supportingFiles.add(new SupportingFile("pyproject.mustache", "../", "pyproject.toml"));
-    supportingFiles.add(new SupportingFile("LICENSE.mustache", "../", "LICENSE"));
-    supportingFiles.add(new SupportingFile("SECURITY.mustache", "../", "SECURITY.md"));
-    supportingFiles.add(new SupportingFile("CONTRIBUTING.mustache", "../", "CONTRIBUTING.md"));
-    supportingFiles.add(new SupportingFile("README.mustache", "../", "README.md"));
 
     try {
       Utils.generateServer(client, additionalProperties);

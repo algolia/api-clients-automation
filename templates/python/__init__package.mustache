@@ -1,8 +1,6 @@
-# coding: utf-8
-
-# flake8: noqa
-
 {{>partial_header}}
+
+# coding: utf-8
 
 __version__ = "{{packageVersion}}"
 
@@ -29,7 +27,3 @@ from {{packageName}}.signing import HttpSigningConfiguration
 from {{modelPackage}}.{{classFilename}} import {{classname}}
 {{/model}}
 {{/models}}
-{{#recursionLimit}}
-
-__import__('sys').setrecursionlimit({{{.}}})
-{{/recursionLimit}}
