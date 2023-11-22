@@ -170,6 +170,7 @@ runs:
 
     - run: poetry install
       if: ${{ inputs.language == 'python' }}
+      working-directory: clients/algoliasearch-client-python
       shell: bash
 
     # Computing jobs that should run
